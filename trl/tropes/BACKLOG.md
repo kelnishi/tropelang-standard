@@ -23,7 +23,7 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 - [ ] The Big Bad
 
 ## Conflict
-- [ ] Conflict — the engine (vs Man / Self / Nature / Society / Fate)   ← **up next**
+- [x] Conflict — the engine (vs Man / Self / Nature / Society / Fate)   (Omnipresent)
 - [ ] Rivalry
 - [~] The Dilemma                 (`philosophy.trl` → `MoralDilemma`)
 
@@ -60,8 +60,8 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 - [ ] Mentor and Student
 
 ## Recommended order (simple building blocks first)
-1. **Conflict** — the engine that Protagonist + Antagonist create.
-2. **The Hero / The Mentor** — finish the core cast.
+1. ~~Conflict~~ ✓ — the engine that Protagonist + Antagonist create.
+2. **The Hero / The Mentor** — finish the core cast.   ← **up next**
 3. **Call to Adventure / Three-Act Structure** — the spine of plot.
 4. **Chekhov's Gun / Red Herring** — promote from `foreshadowing.trl`'s imply to full tropes.
 Then converge with the drams gap on the eval stories.
