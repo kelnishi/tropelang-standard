@@ -22,6 +22,7 @@ import "trl/tropes/the_deuteragonist.trl"
 import "trl/tropes/conflict.trl"
 import "trl/tropes/the_hero.trl"
 import "trl/tropes/the_mentor.trl"
+import "trl/tropes/call_to_adventure.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -55,3 +56,7 @@ concept hero [+Trope(category="Universal", source="allthetropes.org/wiki/The_Her
 // THE MENTOR — the wise guide of the protagonist. New entry; built on the prelude
 // Mentor_Of / Student_Of relations and the Wise / Ally roles.
 concept mentor [+Trope(category="Universal", source="allthetropes.org/wiki/Mentors")] [%Narrative]
+
+// CALL TO ADVENTURE — the inciting summons out of the ordinary world. Reuses the `calling`
+// concept (narrative.trl).
+concept call_to_adventure [+Trope(category="Universal", source="allthetropes.org/wiki/Call_to_Adventure")] [%Narrative]

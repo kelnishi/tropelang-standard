@@ -1,0 +1,76 @@
+// === PREAMBLE ===
+// @trope    Call to Adventure
+// @category Universal Tropes
+// @source   https://allthetropes.org/wiki/Call_to_Adventure
+// @version  1.3
+//
+// Laconic: the inciting event that disrupts the protagonist's ordinary world and summons
+// them to the quest — the first beat of the Hero's Journey, often delivered by a herald.
+// It can be refused (Refusal of the Call).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/narrative.trl"    // calling, duty
+import "trl/concepts/universal.trl"    // change
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc call_to_adventure -> [
+  calling : "answers",
+  change  : "forces",
+  duty    : "may impose",
+  hero    : "launches",
+  refusal : "may be refused as"
+]
+
+
+// === ONTOLOGY ===
+
+imply CallToAdventure -> [Inciting, Threshold, Narrative]
+
+
+// === ABSTRACT RULE ===
+// A summons reaches a protagonist in their ordinary world and calls them out of it; the
+// ordinary world is left behind and the call is answered. (Reuses the `calling` concept.)
+rule CallToAdventure {
+  when:
+    char $hero [+Protagonist] [+OrdinaryWorld]
+    evt  $summons [&Calls(agent=$herald, target=$hero)]
+  then:
+    $hero [-OrdinaryWorld]
+    $hero [+Called]
+    $hero -- calling
+    $summons [+CallToAdventure]
+}
+
+
+// === CONCRETE VIGNETTE: The Matrix — Neo takes the red pill (film) ===
+
+// NEO (THOMAS ANDERSON)
+char neo [+Protagonist] [+OrdinaryWorld]
+
+// MORPHEUS, THE HERALD
+char morpheus [+Herald] [+Mysterious]
+
+// THE RED PILL
+obj red_pill [+Threshold]
+
+// THE CONSTRUCT
+set the_construct [+Liminal]
+
+scene the_choice {
+  beat 1 {
+    neo @ the_construct
+    morpheus @ the_construct
+    evt offer [&Calls(agent=morpheus, target=neo)]
+        dialog(inject=[speaker=morpheus], inline="""
+               speaker: "{speaker}"
+               cue: "two pills in an open palm"
+               tone: portentous
+               text: "You take the red pill — you stay in Wonderland."
+               """)
+    neo -- calling
+    neo [-OrdinaryWorld]
+    neo [+Called]
+    offer [+CallToAdventure]
+  }
+}
