@@ -29,7 +29,7 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 
 ## Plot structure & arc
 - [x] Three-Act Structure        (Universal)
-- [ ] The Hero's Journey                                             ← **up next**
+- [x] The Hero's Journey         (system — `trl/modules/heros_journey.trl`)
 - [x] Call to Adventure          (Universal)
 - [x] Refusal of the Call        (Universal)
 - [ ] In Medias Res
@@ -58,6 +58,16 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 - [ ] Found Family
 - [ ] Star-Crossed Lovers
 - [ ] Mentor and Student
+
+## Storytelling systems & frameworks (`trl/modules/`)
+Higher-level structures that *organize* tropes — name + sequence the stages, link the beats.
+- [x] The Hero's Journey / Monomyth   (Campbell — `heros_journey.trl`)
+- [ ] Freytag's Pyramid               (exposition / rising / climax / falling / dénouement)   ← **up next**
+- [ ] Dan Harmon's Story Circle       (the 8-step you/need/go/search/find/take/return/change)
+- [ ] Save the Cat beat sheet         (Blake Snyder, 15 beats)
+- [ ] The Seven Basic Plots           (Booker)
+- [ ] Propp's Morphology              (31 narrative functions)
+- [ ] Kishōtenketsu                   (4-act, no central conflict — East Asian)
 
 ## Recommended order (simple building blocks first)
 1. ~~Conflict~~ ✓ — the engine that Protagonist + Antagonist create.

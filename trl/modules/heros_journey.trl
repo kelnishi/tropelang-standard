@@ -1,0 +1,84 @@
+// @title    The Hero's Journey (the Monomyth)
+// @author   Joseph Campbell — "The Hero with a Thousand Faces" (1949)
+// @category Storytelling Systems
+// @version  0.1
+// @note     The cyclical departure–initiation–return structure Campbell distilled from world
+//           myth. This module expands the vocabulary: it NAMES all seventeen stages as
+//           concept nodes, SEQUENCES them with directed edges, and links the stages already
+//           converted as full tropes (Call to Adventure, Refusal of the Call, the Mentor).
+//
+// Import: import "trl/modules/heros_journey.trl"
+
+
+// === DEPENDENCIES ===
+import "trl/concepts/index.trl"               // return, transformation, fate, …
+import "trl/tropes/call_to_adventure.trl"     // stage 1 — a full trope
+import "trl/tropes/refusal_of_the_call.trl"   // stage 2 — a full trope
+import "trl/tropes/the_mentor.trl"            // the giver of supernatural aid
+
+
+// === THE SYSTEM ===
+
+concept heros_journey [+Monomyth] [%Narrative]
+imply Monomyth -> [Structure, Cyclical, Narrative]
+
+
+// === THE SEVENTEEN STAGES (vocabulary) ===
+
+// — DEPARTURE (separation from the ordinary world) —
+//   call_to_adventure, refusal_of_the_call — imported above as full tropes.
+concept supernatural_aid              [+JourneyStage]   // a mentor/guide grants the hero means
+concept crossing_the_threshold        [+JourneyStage]   // leaving the known world for the unknown
+concept belly_of_the_whale            [+JourneyStage]   // a final separation; the point of no return
+
+// — INITIATION (trials and transformation) —
+concept road_of_trials                [+JourneyStage]   // a series of tests, often failed at first
+concept meeting_the_goddess           [+JourneyStage]   // encounter with unconditional love
+concept temptation                    [+JourneyStage]   // lured away from the path
+concept atonement                     [+JourneyStage]   // confronting the holder of ultimate power
+concept apotheosis                    [+JourneyStage]   // death of the ego; a higher state of being
+concept the_ultimate_boon             [+JourneyStage]   // the goal of the quest, achieved
+
+// — RETURN —
+concept refusal_of_the_return         [+JourneyStage]   // reluctance to bring the boon home
+concept the_magic_flight              [+JourneyStage]   // the escape back, sometimes pursued
+concept rescue_from_without           [+JourneyStage]   // outside aid to bring the hero home
+concept crossing_the_return_threshold [+JourneyStage]   // re-entering the ordinary world, changed
+concept master_of_two_worlds          [+JourneyStage]   // balance of the inner and outer life
+concept freedom_to_live               [+JourneyStage]   // mastery brings freedom from the fear of death
+
+
+// === THE SEQUENCE (departure -> initiation -> return) ===
+call_to_adventure -> refusal_of_the_call -> supernatural_aid -> crossing_the_threshold -> belly_of_the_whale
+belly_of_the_whale -> road_of_trials -> meeting_the_goddess -> temptation -> atonement -> apotheosis -> the_ultimate_boon
+the_ultimate_boon -> refusal_of_the_return -> the_magic_flight -> rescue_from_without -> crossing_the_return_threshold -> master_of_two_worlds -> freedom_to_live
+
+
+// === ASSOCIATIONS ===
+assoc heros_journey -> [
+  call_to_adventure   : "opens with",
+  the_mentor          : "supernatural aid is",
+  transformation      : "effects",
+  return              : "completes the cycle with",
+  three_act_structure : "parallels"
+]
+
+
+// === CONCRETE VIGNETTE: The Lion King — Simba's journey (animated film) ===
+
+// SIMBA
+char simba [+Protagonist]
+
+arc simbas_journey [+HerosJourney]
+
+act departure {
+  beat 1 { simba -- call_to_adventure   : "Born To Be King" }
+  beat 2 { simba -- refusal_of_the_call : "Flees After Mufasa's Death" }
+}
+act initiation {
+  beat 1 { simba -- road_of_trials : "Exile; Hakuna Matata" }
+  beat 2 { simba -- apotheosis     : "Mufasa's Ghost — Remember Who You Are" }
+}
+act return {
+  beat 1 { simba -- master_of_two_worlds : "Defeats Scar; Becomes King" }
+}

@@ -13,3 +13,4 @@ import "trl/concepts/index.trl"
 import "trl/modules/philosophy.trl"
 import "trl/modules/theory_of_mind.trl"
 import "trl/modules/cognitive_biases.trl"
+import "trl/modules/heros_journey.trl"     // storytelling system (Campbell's monomyth)
