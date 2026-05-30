@@ -1,0 +1,120 @@
+// === PREAMBLE ===
+// @trope    Hope Spot
+// @category Omnipresent Tropes
+// @source   https://allthetropes.org/wiki/Hope_Spot
+// @version  1.3
+//
+// Laconic: a brief, vivid moment when escape or victory seems certain — then it is
+// snatched away. If the glimmer turns out real instead, that is its sibling,
+// Eucatastrophe.
+
+
+// === ONTOLOGY ===
+// The crush and its inverse are both reversals of an imperiled situation; a Hope Spot's
+// glimmer is, secretly, FalseHope.
+
+imply HopeSpot      -> [Reversal, Emotional, Narrative]
+imply Eucatastrophe -> [Reversal, Deliverance, Narrative]
+imply FalseHope     -> [Deceptive, Crushing]
+
+
+// === ABSTRACT RULE ===
+// An imperiled character is offered an apparent way out; hope surges. The glimmer is
+// secretly a FalseDawn — a LATENT (?...?) fact the character cannot see. The resolution
+// forks: the hope is Crushed (the trope proper) or Delivered (the Eucatastrophe
+// subversion). Each branch carries its own narration, resolved only if it is taken;
+// the crush asserts the deeper despair as ABSOLUTE (!...!) ground truth.
+rule HopeSpot {
+  when:
+    char $victim [#Imperiled]
+    evt $glimmer [&OffersEscape(to=$victim)]
+    not ( $glimmer [+Resolved] )
+  then:
+    $victim [#Hopeful]
+    ?$glimmer [+FalseDawn]?
+    fork(
+      target = $victim
+      duration = 10
+      ui_text = "A way out — is it real?"
+      branches = {
+        "Crushed" : {
+          triggers = [ ui_click(1), evt $snap -> $glimmer !@ $victim ]
+          apply = {
+            $glimmer [+Resolved] [+FalseHope]
+            $victim [-Hopeful]
+            !$victim [#Despairing]!
+            dialog(kind=narration, inline="""
+                   cue: "the light resolves into the very thing they feared"
+                   tone: devastating
+                   text: "For a breath, it looked like the way out. It was the drop."
+                   """)
+          }
+        }
+        "Delivered" : {
+          triggers = [ ui_click(2), evt $save -> $glimmer @ $victim ]
+          apply = {
+            $glimmer [+Resolved] [+TrueRescue]
+            $victim [+Saved]
+            dialog(kind=narration, inline="""
+                   cue: "the impossible hand reaches in"
+                   tone: triumphant
+                   text: "Against every odd, the glimmer was real."
+                   """)
+          }
+        }
+      }
+      timeout_apply = {
+        $victim [#Uncertain]
+      }
+    )
+}
+
+
+// === CONCRETE VIGNETTE: Toy Story 3 — the incinerator ===
+
+// WOODY
+char woody [+Protagonist] [#Imperiled]
+
+// BUZZ LIGHTYEAR
+char buzz [+Protagonist] [#Imperiled]
+
+// LOTSO
+char lotso [+Betrayer]
+
+// INT. THE DUMP INCINERATOR - DAY
+set incinerator [+Interior] [+Inferno] [+Liminal]
+
+// THE EMERGENCY SHUTOFF
+obj shutoff [+Salvation]
+
+scene the_conveyor {
+  beat 1 {
+    woody @ incinerator
+    buzz @ incinerator
+    lotso @ incinerator
+    evt glimmer [&OffersEscape(to=woody, via=shutoff)]
+        dialog(kind=narration, inline="""
+               cue: "the toys hoist Lotso toward the red emergency button"
+               tone: desperate
+               text: "There — the shutoff. Lift him up. He can reach it."
+               """)
+    woody [#Hopeful]
+    buzz [#Hopeful]
+    // The button is in reach, but the hope is already doomed — Lotso will not press it.
+    ?glimmer [+FalseDawn]?
+  }
+  beat 2 {
+    evt betrayal [&Dashes(hope=glimmer)]
+        dialog(inject=[speaker=lotso], inline="""
+               speaker: "{speaker}"
+               cue: "a slow grin, hand resting on the button he will not press"
+               tone: cruel
+               text: "Where's your kid now, Sheriff?"
+               """)
+    glimmer [+Resolved] [+FalseHope]
+    woody [-Hopeful]
+    buzz [-Hopeful]
+    !woody [#Despairing]!
+    !buzz [#Despairing]!
+  }
+}

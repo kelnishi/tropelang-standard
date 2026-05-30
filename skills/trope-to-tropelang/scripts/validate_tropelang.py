@@ -290,9 +290,127 @@ def validate(src, label=""):
     return toks
 
 
+# ---------------------------------------------------------------------------
+# Report mode — where did each tag come from?
+# ---------------------------------------------------------------------------
+def declarations_with_lines(tokens):
+    """name -> (declaring keyword, line) — the in-file source of each tag/entity."""
+    reg = {}
+    all_decl_kw = ENTITY_TYPES | DECL_TYPES
+    for i in range(len(tokens) - 1):
+        kind, val, line = tokens[i]
+        if kind == 'ID' and val in all_decl_kw:
+            k2, v2, _ = tokens[i + 1]
+            if k2 in ('ID', 'VAR'):
+                reg.setdefault(v2, (val, line))
+    return reg
+
+
+def imply_decls(tokens):
+    """[(lhs, line, [components]), ...] from each `imply Name -> [A, B, ...]`."""
+    out, i = [], 0
+    while i < len(tokens):
+        if tokens[i][0] == 'ID' and tokens[i][1] == 'imply':
+            line = tokens[i][2]
+            lhs = tokens[i + 1][1] if i + 1 < len(tokens) and tokens[i + 1][0] == 'ID' else '?'
+            j, comps = i + 2, []
+            while j < len(tokens) and tokens[j][1] not in ('[', '{', '}'):
+                j += 1
+            if j < len(tokens) and tokens[j][1] == '[':
+                j += 1
+                while j < len(tokens) and tokens[j][1] != ']':
+                    if tokens[j][0] == 'ID':
+                        comps.append(tokens[j][1])
+                    j += 1
+            out.append((lhs, line, comps))
+            i = j
+        i += 1
+    return out
+
+
+def tag_usages(tokens):
+    """{name: {sigils, lines}} for every `[sigil? Name …]` TAG. A `[` is a tag only when
+    it follows an operand (ID/VAR/STR/]/)); value/component lists (after `=` or `->`) and
+    variable tags ([+$x]) are skipped."""
+    uses = {}
+    for i in range(len(tokens)):
+        if not (tokens[i][0] == 'OP' and tokens[i][1] == '[') or i == 0:
+            continue
+        pk, pv, _ = tokens[i - 1]
+        if not (pk in ('ID', 'VAR', 'STR') or (pk == 'OP' and pv in (']', ')'))):
+            continue
+        j = i + 1
+        sigil = '+'
+        if j < len(tokens) and tokens[j][0] == 'OP' and tokens[j][1] in ALL_SIGILS:
+            sigil = tokens[j][1]; j += 1
+        if j < len(tokens) and tokens[j][0] == 'ID':
+            name, line = tokens[j][1], tokens[j][2]
+            e = uses.setdefault(name, {'sigils': set(), 'lines': []})
+            e['sigils'].add(sigil)
+            if line not in e['lines']:
+                e['lines'].append(line)
+    for e in uses.values():
+        e['lines'].sort()
+    return uses
+
+
+def report(src, label):
+    """Print, for every tag used in the file, where it originated."""
+    toks = lex(src, label)
+    decls = declarations_with_lines(toks)
+    implies = imply_decls(toks)
+    imply_lhs = {lhs: line for lhs, line, _ in implies}
+    imply_comps = {lhs: comps for lhs, _, comps in implies}
+    comp_of = {}
+    for lhs, line, comps in implies:
+        for c in comps:
+            comp_of.setdefault(c, (lhs, line))
+    uses = tag_usages(toks)
+
+    groups = {"declared": [], "imply": [], "component": [], "external": []}
+    for name in sorted(uses):
+        sig = ''.join(sorted(uses[name]['sigils']))
+        disp = f"[{sig}]{name}"
+        used = "used: " + ", ".join(str(n) for n in uses[name]['lines'])
+        if name in decls:
+            kind, dl = decls[name]
+            groups["declared"].append((disp, f"{kind} declared @ line {dl}", used))
+        elif name in imply_lhs:
+            groups["imply"].append((disp, f"imply @ line {imply_lhs[name]} -> [{', '.join(imply_comps[name])}]", used))
+        elif name in comp_of:
+            er, el = comp_of[name]
+            groups["component"].append((disp, f"imply-component of {er} @ line {el}", used))
+        else:
+            groups["external"].append((disp, "no in-file source (prelude / imported / inline)", used))
+
+    titles = {"declared": "declared in this file",
+              "imply": "defined by imply",
+              "component": "imply components (expanded)",
+              "external": "no in-file source (prelude / imported / inline)"}
+    width = max((len(r[0]) for g in groups.values() for r in g), default=0)
+    print(f"TAG ORIGINS — {label}   ({len(uses)} distinct tags)")
+    for key in ("declared", "imply", "component", "external"):
+        if not groups[key]:
+            continue
+        print(f"\n  ▸ {titles[key]}  ({len(groups[key])})")
+        for disp, origin, used in groups[key]:
+            print(f"      {disp.ljust(width)}  {origin}   [{used}]")
+
+
 if __name__ == "__main__":
-    label = sys.argv[1] if len(sys.argv) > 1 else "file"
-    src = open(sys.argv[1]).read()
+    argv = sys.argv[1:]
+    flags = {a for a in argv if a.startswith("-")}
+    files = [a for a in argv if not a.startswith("-")]
+    if not files:
+        print("usage: validate_tropelang.py <file.trl> [--report]")
+        sys.exit(2)
+    label = files[0]
+    src = open(files[0]).read()
+
+    if "--report" in flags:
+        report(src, label)
+        sys.exit(0)
+
     toks = validate(src, label)
 
     if errors:
