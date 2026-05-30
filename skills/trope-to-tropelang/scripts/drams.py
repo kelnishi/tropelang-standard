@@ -8,9 +8,11 @@ drams — the trope-coverage metric, reported as `density over coverage` (e.g. 1
 
 A story is a set of facts (here: tag-applications) in its .trl encoding — the story
 described in isolation. Each database trope that matches explains the facts it binds — the
-overlay. This tool computes the cheap PROXY (the exact metric runs the S3 evaluation
-engine): a fact is "touched" by a trope when the trope's source references that fact's tag.
-The uncovered facts are the GAP — the prioritized worklist of tropes still to convert.
+overlay. This tool computes the cheap PROXY (the exact metric runs the S3 evaluation engine): a fact
+is "touched" by a trope when the trope's PATTERN — its `imply` expansion + abstract rule,
+NOT its concrete vignette — references that fact's tag. (Excluding the vignette stops a
+same-world example from inflating coverage by coincidence.) The uncovered facts are the
+GAP — the prioritized worklist of tropes still to convert.
 
 The database is the imply-defined tropes in trl/modules + trl/tropes (the overlay), NOT the
 prelude/concepts (the base vocabulary a story is written in).
@@ -25,6 +27,44 @@ import sys, os, json, glob
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from validate_tropelang import lex, tag_usages, imply_decls
+
+
+def _match(toks, i, opn, cls):
+    depth = 0
+    while i < len(toks):
+        v = toks[i][1]
+        if v == opn:
+            depth += 1
+        elif v == cls:
+            depth -= 1
+            if depth == 0:
+                return i
+        i += 1
+    return len(toks) - 1
+
+
+def pattern_tags(toks):
+    """The tags that define a trope's PATTERN — its `imply` (LHS + components) and the tags
+    inside its abstract `rule` blocks. The concrete vignette (top-level cast + scene facts)
+    is EXCLUDED, so coverage reflects what a trope structurally explains, not what story its
+    example happens to borrow vocabulary from."""
+    tags = set()
+    for lhs, _, comps in imply_decls(toks):
+        tags.add(lhs)
+        tags.update(comps)
+    i = 0
+    while i < len(toks):
+        if toks[i][0] == 'ID' and toks[i][1] == 'rule':
+            j = i + 1
+            while j < len(toks) and toks[j][1] != '{':
+                j += 1
+            if j < len(toks):
+                end = _match(toks, j, '{', '}')
+                tags |= set(tag_usages(toks[j:end + 1]))
+                i = end + 1
+                continue
+        i += 1
+    return tags
 
 
 def corpus_root(start):
@@ -50,7 +90,7 @@ def trope_db(root, exclude_abs):
             titles = [lhs for lhs, _, _ in imply_decls(toks)]
             if not titles:
                 continue
-            for tag in tag_usages(toks):
+            for tag in pattern_tags(toks):     # pattern only — the vignette is excluded
                 tag_to_tropes.setdefault(tag, set()).update(titles)
     return tag_to_tropes
 
