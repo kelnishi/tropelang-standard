@@ -1,0 +1,91 @@
+// === PREAMBLE ===
+// @trope    Heel Face Turn (and its mirror, Face Heel Turn)
+// @category Character Development / Alignment
+// @source   https://allthetropes.org/wiki/Heel_Face_Turn
+// @version  1.3
+//
+// Laconic: a villain abandons the dark side and joins the heroes — a moral reversal usually
+// catalyzed by guilt, mercy received, or disillusionment with one's own cause. The wrestling
+// terms: a "heel" (villain) becomes a "face" (hero). The mirror, FACE HEEL TURN, is the fall
+// the other way. Both ride the emotion-dynamics appraisal layer (the catalyst -> the feeling
+// that flips allegiance).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"               // redemption, guilt, mercy, betrayal, loyalty
+import "trl/modules/emotion_dynamics.trl"     // the appraisal that produces the catalyst feeling
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc heel_face_turn -> [
+  redemption     : "arrives at",
+  guilt          : "often catalyzed by",
+  mercy          : "answered by",
+  loyalty        : "switches",
+  face_heel_turn : "the mirror image of"
+]
+
+
+// === ONTOLOGY ===
+
+imply HeelFaceTurn -> [Reversal, Redemption, Narrative]
+imply FaceHeelTurn -> [Reversal, Corruption, Narrative]
+
+
+// === ABSTRACT RULES ===
+// An antagonist moved to guilt, then acting on it, defects to the heroes' side and is redeemed.
+rule HeelFaceTurn {
+  when:
+    char $c [+Antagonist] [#Guilty]
+    evt  $turn [&Defects(agent=$c)]
+  then:
+    $c [-Antagonist]
+    $c [+Ally]
+    $c -- redemption
+}
+
+// The fall the other way: a hero, broken or corrupted, forsakes the cause and turns villain.
+rule FaceHeelTurn {
+  when:
+    char $c [+Protagonist]
+    evt  $fall [&Forsakes(agent=$c)]
+  then:
+    $c [-Protagonist]
+    $c [+Antagonist]
+    $c -- betrayal
+}
+
+
+// === CONCRETE VIGNETTE A: Avatar: The Last Airbender — Prince Zuko (animated series) ===
+
+// ZUKO — begins hunting the Avatar to restore his honor; his uncle is his conscience
+char zuko [+Antagonist]
+char iroh [+Mentor]
+char aang [+Protagonist]
+
+scene zukos_turn {
+  beat 1 {
+    iroh -> zuko : "counsel"
+    zuko [#Guilty]                     // shame at his nation's cruelty; Iroh's patient influence
+  }
+  beat 2 {
+    evt defection [&Defects(agent=zuko)]
+    zuko -> aang : "joins"
+    // HeelFaceTurn -> [-Antagonist] [+Ally] -- redemption
+  }
+}
+
+
+// === CONCRETE VIGNETTE B: The Dark Knight — Harvey Dent / Two-Face (film) ===
+
+// HARVEY DENT — Gotham's "White Knight," broken into Two-Face by grief
+char dent [+Protagonist]
+
+scene dents_fall {
+  beat 1 {
+    dent [#Grieving] [#Resentful]      // Rachel's death and his disfigurement shatter him
+  }
+  beat 2 {
+    evt fall [&Forsakes(agent=dent)]
+    // FaceHeelTurn -> [-Protagonist] [+Antagonist] -- betrayal
+  }
+}

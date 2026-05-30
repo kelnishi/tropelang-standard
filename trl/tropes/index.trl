@@ -29,6 +29,7 @@ import "trl/tropes/red_herring.trl"
 import "trl/tropes/refusal_of_the_call.trl"
 import "trl/tropes/revenge.trl"
 import "trl/tropes/despair_event_horizon.trl"
+import "trl/tropes/heel_face_turn.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -58,6 +59,11 @@ revenge [+Trope(category="Death Tropes", source="allthetropes.org/wiki/Revenge")
 // DESPAIR EVENT HORIZON — the irreversible crossing into total despair. Rides the
 // emotion-dynamics hope -> despair thread; the dark mirror of Hope Spot.
 concept despair_event_horizon [+Trope(category="Despair", source="allthetropes.org/wiki/Despair_Event_Horizon")] [%Narrative]
+
+// HEEL FACE TURN / FACE HEEL TURN — a moral-alignment reversal (villain -> hero, or the
+// fall back). Rides the emotion-dynamics appraisal layer (guilt / grief catalyzes the flip).
+concept heel_face_turn [+Trope(category="Character Development", source="allthetropes.org/wiki/Heel_Face_Turn")] [%Narrative]
+concept face_heel_turn [+Trope(category="Character Development", source="allthetropes.org/wiki/Face_Heel_Turn")] [%Narrative]
 
 // CHARACTER-ROLE BUILDING BLOCKS (Universal Tropes) — the cast structure. The applied
 // forms are the prelude roles [+Protagonist] / [+Antagonist]; these are the canonical
