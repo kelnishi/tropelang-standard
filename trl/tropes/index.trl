@@ -20,6 +20,7 @@ import "trl/tropes/the_protagonist.trl"
 import "trl/tropes/the_antagonist.trl"
 import "trl/tropes/the_deuteragonist.trl"
 import "trl/tropes/conflict.trl"
+import "trl/tropes/the_hero.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -45,3 +46,7 @@ concept deuteragonist [+Trope(category="Universal", source="allthetropes.org/wik
 
 // CONFLICT — the engine of narrative. Reuses concept `conflict` (narrative.trl).
 conflict [+Trope(category="Omnipresent", source="allthetropes.org/wiki/Conflict")]
+
+// THE HERO — the courageous protagonist who sacrifices for others. New entry; built on
+// the prelude [+Protagonist]/[+Courageous] and the `sacrifice` concept.
+concept hero [+Trope(category="Universal", source="allthetropes.org/wiki/The_Hero")] [%Narrative]

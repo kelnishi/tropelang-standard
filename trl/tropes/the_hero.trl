@@ -1,0 +1,56 @@
+// === PREAMBLE ===
+// @trope    The Hero
+// @category Universal Tropes
+// @source   https://allthetropes.org/wiki/The_Hero
+// @version  1.3
+// @uses     trl/concepts/narrative.trl — the `sacrifice` concept
+//
+// Laconic: the courageous central character who acts for something beyond themselves —
+// the protagonist's most common form, but not its only one. Distinct from The Protagonist
+// (a structural role); The Hero is a moral / archetypal one. Builds on the prelude
+// [+Protagonist] and [+Courageous].
+
+
+// === ONTOLOGY ===
+
+imply Hero -> [Protagonist, Courageous, Aspirational]
+
+
+// === ABSTRACT RULE ===
+// A courageous protagonist who acts in sacrifice for another rises to The Hero. (Reuses
+// the prelude Protagonist / Courageous roles and the Sacrificed_For verb; ties to the
+// `sacrifice` concept.)
+rule TheHero {
+  when:
+    char $c [+Protagonist] [+Courageous]
+    evt  $deed [&Sacrificed_For(agent=$c, other=$beneficiary)]
+  then:
+    $c [+Hero]
+    $c -- sacrifice
+}
+
+
+// === CONCRETE VIGNETTE: Beowulf — the hero against Grendel (Old English epic poem) ===
+
+// BEOWULF
+char beowulf [+Protagonist] [+Courageous] [+Warrior]
+
+// GRENDEL
+char grendel [+Monster]
+
+// THE DANES
+char danes [+Folk] [+Besieged]
+
+// HEOROT, THE MEAD-HALL
+set heorot [+Interior] [+Besieged]
+
+scene the_deed {
+  beat 1 {
+    beowulf @ heorot
+    grendel @ heorot
+    evt fight [&Sacrificed_For(agent=beowulf, other=danes)]
+    fight -> beowulf > grendel : "Faces The Monster Bare-Handed"
+    beowulf [+Hero]
+    beowulf -- sacrifice
+  }
+}
