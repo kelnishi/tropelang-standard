@@ -1,0 +1,106 @@
+// === PREAMBLE ===
+// @trope    Survivor's Guilt
+// @category Trauma / Psychological
+// @source   https://allthetropes.org/wiki/Survivor_Guilt
+// @version  1.3
+//
+// Laconic: the persistent guilt of having lived through a catastrophe that others did not.
+// A trauma that lies dormant and re-surfaces on reminders of the lost, turning the emotion-
+// dynamics BLAME intent *inward* (self-blame is its signature) — and resolving through
+// atonement/catharsis or, refused, festering under numbness. Composes with S8 (Memory &
+// Psychological Simulation): the imprint -> trigger -> catharsis / repression state machine.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"               // guilt, grief, memory
+import "trl/modules/emotion_dynamics.trl"     // [~Blames], [#Grieving], [#AtPeace]
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc survivors_guilt -> [
+  guilt    : "a self-directed form of",
+  grief    : "entangled with",
+  memory   : "carried as traumatic",
+  trauma   : "an instance of",
+  atonement : "released by"
+]
+
+
+// === ONTOLOGY ===
+
+imply SurvivorsGuilt -> [Guilt, Trauma, Narrative]
+
+
+// === ABSTRACT RULES (the S8 imprint -> trigger -> catharsis / repression arc) ===
+
+// IMPRINT — surviving a catastrophe that takes another writes survivor's guilt as trauma.
+rule SurvivorsGuilt_Imprint {
+  when:
+    char $c [+Alive]
+    evt  $catastrophe [&Survives(agent=$c)]
+    char $lost [+Dead]
+  then:
+    $c [#Guilty]
+    $c [+Memory_Trauma(source=$lost)]
+    $c -- survivors_guilt
+}
+
+// TRIGGER — a reminder of the lost re-surfaces the dormant trauma; the blame points inward.
+rule SurvivorsGuilt_Trigger {
+  when:
+    char $c [+Memory_Trauma(source=$lost)]
+    evt  $reminder [&Recalls(agent=$c, object=$lost)]
+  then:
+    $c [#Grieving]
+    $c [~Blames(target=$c)]
+}
+
+// CATHARSIS — atonement or absolution resolves the trauma (S8 cathartic path).
+rule SurvivorsGuilt_Catharsis {
+  when:
+    char $c [+Memory_Trauma(source=$lost)] [#Guilty]
+    evt  $absolution [&Atones(agent=$c)]
+  then:
+    $c [-Memory_Trauma]
+    $c [-Guilty]
+    $c [#AtPeace]
+    $c -- atonement
+}
+
+// REPRESSION — refusing to face it buries the trauma under numbness, forfeiting catharsis
+// (the S8 repression path: [-Memory_Trauma] + [+Status_Numb]).
+rule SurvivorsGuilt_Repression {
+  when:
+    char $c [+Memory_Trauma(source=$lost)]
+    evt  $burial [&Represses(agent=$c)]
+  then:
+    $c [-Memory_Trauma]
+    $c [+Status_Numb]
+    $c -- repression
+}
+
+
+// === CONCRETE VIGNETTE: Ordinary People — Conrad Jarrett (novel / film) ===
+
+// CONRAD — survived the sailing accident that drowned his brother
+char conrad [+Protagonist] [+Alive]
+// BUCK — the older brother he could not save
+char buck [+Dead]
+// DR. BERGER — the therapist who guides the catharsis
+char berger [+Mentor]
+
+scene the_weight {
+  beat 1 {
+    evt accident [&Survives(agent=conrad)]
+    // SurvivorsGuilt_Imprint -> [#Guilty] [+Memory_Trauma(buck)] -- survivors_guilt
+  }
+  beat 2 {
+    evt remembers [&Recalls(agent=conrad, object=buck)]
+    conrad [~Blames(target=conrad)]              // "why him and not me?"
+    // SurvivorsGuilt_Trigger -> [#Grieving]
+  }
+  beat 3 {
+    berger -> conrad : "you can live with it"
+    evt breakthrough [&Atones(agent=conrad)]
+    // SurvivorsGuilt_Catharsis -> [-Memory_Trauma] [#AtPeace] -- atonement
+  }
+}

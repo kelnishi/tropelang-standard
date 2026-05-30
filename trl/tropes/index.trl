@@ -30,6 +30,7 @@ import "trl/tropes/refusal_of_the_call.trl"
 import "trl/tropes/revenge.trl"
 import "trl/tropes/despair_event_horizon.trl"
 import "trl/tropes/heel_face_turn.trl"
+import "trl/tropes/survivors_guilt.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -64,6 +65,10 @@ concept despair_event_horizon [+Trope(category="Despair", source="allthetropes.o
 // fall back). Rides the emotion-dynamics appraisal layer (guilt / grief catalyzes the flip).
 concept heel_face_turn [+Trope(category="Character Development", source="allthetropes.org/wiki/Heel_Face_Turn")] [%Narrative]
 concept face_heel_turn [+Trope(category="Character Development", source="allthetropes.org/wiki/Face_Heel_Turn")] [%Narrative]
+
+// SURVIVOR'S GUILT — the guilt of having lived when others died. A self-directed trauma
+// that composes with S8 (Memory): imprint -> trigger -> catharsis / repression.
+concept survivors_guilt [+Trope(category="Trauma", source="allthetropes.org/wiki/Survivor_Guilt")] [%Psychological]
 
 // CHARACTER-ROLE BUILDING BLOCKS (Universal Tropes) — the cast structure. The applied
 // forms are the prelude roles [+Protagonist] / [+Antagonist]; these are the canonical
