@@ -1,0 +1,103 @@
+// === PREAMBLE ===
+// @trope    The Reveal
+// @category Omnipresent Tropes
+// @source   https://allthetropes.org/wiki/The_Reveal
+// @version  1.3
+// @uses     trl/concepts/narrative.trl — the `secret` and `revelation` concept nodes
+//
+// Laconic: a pivot where information withheld to build suspense is disclosed. A concealed
+// truth — LATENT in the graph, perceived as something else — collapses into knowledge.
+// Subverted as The Un-Reveal (set up, then withheld).
+
+
+// === ONTOLOGY ===
+
+imply TheReveal      -> [Disclosure, Concealment_Broken, Narrative]
+imply InternalReveal -> [TheReveal, Asymmetric_Knowledge]
+imply UnReveal       -> [TheReveal, Subverted]
+
+
+// === ABSTRACT RULES ===
+
+// CONCEALMENT (setup) — a subject wears an alias; observers perceive the cover, the real
+// truth is LATENT (?...?): present in the graph, surfaced to no one. The subject holds a
+// `secret` (concept reused from narrative.trl).
+rule TheReveal_Concealment {
+  when:
+    char $subject [+Alias(name=$cover)]
+    char $observer
+    not ( $observer [#Knows(target=$subject)] )
+  then:
+    $observer [+Perceives(target=$subject, as=$cover)]
+    $subject -- secret : "Holds"
+    ?$subject [+Concealed_Truth]?
+}
+
+// THE REVEAL (payoff) — a revelatory event discloses the truth to an observer who
+// perceived only the cover. Perception collapses to knowledge; the truth becomes ABSOLUTE.
+rule TheReveal_Disclosed {
+  when:
+    char $subject [+Alias(name=$cover)]
+    char $observer [+Perceives(target=$subject, as=$cover)]
+    obj  $evidence [+Revelation]
+    evt  $disclosure [&Reveals(fact=$truth)]
+    $disclosure -> $observer
+  then:
+    $observer [-Perceives(target=$subject, as=$cover)]
+    $observer [#Knows(target=$subject)]
+    !$subject [+Revealed(truth=$truth)]!
+    $disclosure -- revelation : "Is"
+    $disclosure [+TheReveal]
+    surface_global(title="The Reveal", description="What was hidden is now known.")
+}
+
+// THE UN-REVEAL (subversion) — the story ends with the cover intact; the promised
+// disclosure never comes.
+rule TheReveal_UnReveal {
+  when:
+    char $subject [+Alias(name=$cover)]
+    char $observer [+Perceives(target=$subject, as=$cover)]
+    scene $current [+Endgame]
+    not ( $observer [#Knows(target=$subject)] )
+  then:
+    $subject [+The_UnReveal]
+    surface_global(title="No Reveal", description="The truth was set up — and withheld.")
+}
+
+
+// === CONCRETE VIGNETTE: The Empire Strikes Back — "I am your father" ===
+
+// LUKE SKYWALKER
+char luke [+Protagonist] [#Despairing]
+
+// DARTH VADER
+char vader [+Villain]
+vader [+Alias(name="Vader")]
+
+// EXT. CLOUD CITY GANTRY
+set gantry [+Exterior] [+Liminal]
+
+scene the_revelation {
+  beat 1 {
+    luke @ gantry
+    vader @ gantry
+    luke [+Perceives(target=vader, as="enemy")]
+    // What Luke believes (Obi-Wan's account) versus the truth — contingent, unresolved.
+    *(vader [+Slew_Lukes_Father] | vader [+Is_Lukes_Father] | ...)* as vaders_identity
+  }
+  beat 2 {
+    evt disclosure [&Reveals]
+        dialog(inject=[speaker=vader], inline="""
+               speaker: "{speaker}"
+               cue: "the mechanical breath, then the words that split a galaxy"
+               tone: cold
+               text: "No. I am your father."
+               """)
+    // The reveal collapses the contested identity to the truth.
+    resolve vaders_identity -> vader [+Is_Lukes_Father]
+    luke [-Perceives(target=vader, as="enemy")]
+    luke [#Knows(target=vader)]
+    !vader -- luke : "Father Of"!
+    disclosure [+TheReveal]
+  }
+}

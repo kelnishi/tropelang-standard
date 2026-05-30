@@ -15,6 +15,7 @@ import "trl/concepts/index.trl"
 
 import "trl/tropes/foreshadowing.trl"
 import "trl/tropes/hope_spot.trl"
+import "trl/tropes/the_reveal.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -26,3 +27,7 @@ foreshadowing [+Trope(category="Omnipresent", source="allthetropes.org/wiki/Fore
 // HOPE SPOT — a glimmer of escape, snatched away (sibling: Eucatastrophe). New entry; built
 // on the existing `hope` / `despair` concepts (trl/concepts/emotional.trl).
 concept hope_spot [+Trope(category="Omnipresent", source="allthetropes.org/wiki/Hope_Spot")] [%Narrative]
+
+// THE REVEAL — a concealed truth disclosed. Reuses concept `revelation` (narrative.trl);
+// the cover/payoff is an epistemic collapse (perception -> knowledge).
+revelation [+Trope(category="Omnipresent", source="allthetropes.org/wiki/The_Reveal")]
