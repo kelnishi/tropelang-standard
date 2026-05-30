@@ -23,7 +23,7 @@ Checks performed:
   - Even count of * epistemic wrappers (warns if odd)
 """
 
-import sys, re as _re
+import sys, os, glob, re as _re
 
 ENTITY_TYPES = {"char", "set", "obj", "evt", "arc", "concept"}  # v1.3: concept added
 SCOPE_TYPES  = {"scene", "act", "beat"}
@@ -354,8 +354,64 @@ def tag_usages(tokens):
     return uses
 
 
-def report(src, label):
-    """Print, for every tag used in the file, where it originated."""
+def _trl_root(path):
+    """Walk up from a file to the `trl/` corpus root (the dir holding prelude.trl)."""
+    d = os.path.dirname(os.path.abspath(path)) if path else None
+    while d and d != os.path.dirname(d):
+        if os.path.exists(os.path.join(d, 'prelude.trl')):
+            return d
+        d = os.path.dirname(d)
+    return None
+
+
+def build_corpus_index(target_path):
+    """name -> 'kind in trl/<relfile>' for every declaration and imply across the whole
+    corpus (prelude + concepts + modules + tropes), excluding the target file itself.
+    Lets the report resolve an otherwise-'external' element to where it actually lives."""
+    root = _trl_root(target_path)
+    if not root:
+        return {}
+    index, target_abs = {}, os.path.abspath(target_path)
+    for f in sorted(glob.glob(os.path.join(root, '**', '*.trl'), recursive=True)):
+        if os.path.abspath(f) == target_abs:
+            continue
+        rel = os.path.relpath(f, root)
+        toks = lex(open(f).read(), rel)
+        for name, (kind, _l) in declarations_with_lines(toks).items():
+            index.setdefault(name, f"{kind} in trl/{rel}")
+        for lhs, _l, _c in imply_decls(toks):
+            index.setdefault(lhs, f"imply in trl/{rel}")
+    return index
+
+
+_RESERVED = (ENTITY_TYPES | SCOPE_TYPES | DECL_TYPES | PLANNED_KW |
+             {'rule', 'when', 'then', 'not', 'count', 'imply', 'surface', 'surface_global',
+              'prompt', 'fork', 'past', 'future', 'foreach', 'where', 'unique', 'true',
+              'false', 'in', 'timeout_apply', 'triggers', 'apply', 'branches', 'dialog',
+              'narration', 'monologue', 'exposition', 'aside'})
+
+
+def node_refs(tokens):
+    """Identifiers used as node references (edge operands / param values), excluding
+    keywords, param keys, function calls, and tag names. Used to spot concept reuse."""
+    out = {}
+    for i, (k, v, line) in enumerate(tokens):
+        if k != 'ID' or v in _RESERVED:
+            continue
+        nxt = tokens[i + 1][1] if i + 1 < len(tokens) else ''
+        if nxt in ('=', '('):          # param key or function/verb call
+            continue
+        p = tokens[i - 1] if i > 0 else ('', '', '')
+        if p[0] == 'OP' and (p[1] == '[' or p[1] in ALL_SIGILS):   # tag name
+            continue
+        out.setdefault(v, []).append(line)
+    return out
+
+
+def report(src, label, target_path=None):
+    """For every tag used in the file, show where it originated — resolving across the
+    whole corpus (prelude/concepts/modules/tropes), so the only true 'inline' tags are
+    the bespoke ones invented here. Also lists node references that reuse the corpus."""
     toks = lex(src, label)
     decls = declarations_with_lines(toks)
     implies = imply_decls(toks)
@@ -366,8 +422,9 @@ def report(src, label):
         for c in comps:
             comp_of.setdefault(c, (lhs, line))
     uses = tag_usages(toks)
+    corpus = build_corpus_index(target_path) if target_path else {}
 
-    groups = {"declared": [], "imply": [], "component": [], "external": []}
+    groups = {"declared": [], "imply": [], "component": [], "corpus": [], "inline": []}
     for name in sorted(uses):
         sig = ''.join(sorted(uses[name]['sigils']))
         disp = f"[{sig}]{name}"
@@ -380,21 +437,37 @@ def report(src, label):
         elif name in comp_of:
             er, el = comp_of[name]
             groups["component"].append((disp, f"imply-component of {er} @ line {el}", used))
+        elif name in corpus:
+            groups["corpus"].append((disp, corpus[name], used))
         else:
-            groups["external"].append((disp, "no in-file source (prelude / imported / inline)", used))
+            groups["inline"].append((disp, "INLINE — no source in the corpus (consolidation candidate)", used))
 
     titles = {"declared": "declared in this file",
-              "imply": "defined by imply",
-              "component": "imply components (expanded)",
-              "external": "no in-file source (prelude / imported / inline)"}
+              "imply": "defined by imply (this file)",
+              "component": "imply components (this file)",
+              "corpus": "reused from the corpus",
+              "inline": "inline — invented here (consolidation candidates)"}
     width = max((len(r[0]) for g in groups.values() for r in g), default=0)
     print(f"TAG ORIGINS — {label}   ({len(uses)} distinct tags)")
-    for key in ("declared", "imply", "component", "external"):
+    for key in ("declared", "imply", "component", "corpus", "inline"):
         if not groups[key]:
             continue
         print(f"\n  ▸ {titles[key]}  ({len(groups[key])})")
         for disp, origin, used in groups[key]:
             print(f"      {disp.ljust(width)}  {origin}   [{used}]")
+
+    # Node references that reuse the corpus (concepts are referenced as nodes, not tags).
+    local = set(decls)
+    cref = {}
+    for name, lines in node_refs(toks).items():
+        if name not in local and name in corpus:
+            cref[name] = (corpus[name], lines)
+    if cref:
+        print(f"\n  ▸ corpus node references (concepts/entities reused)  ({len(cref)})")
+        nwidth = max(len(n) for n in cref)
+        for name in sorted(cref):
+            origin, lines = cref[name]
+            print(f"      {name.ljust(nwidth)}  {origin}   [used: {', '.join(map(str, lines))}]")
 
 
 if __name__ == "__main__":
@@ -408,7 +481,7 @@ if __name__ == "__main__":
     src = open(files[0]).read()
 
     if "--report" in flags:
-        report(src, label)
+        report(src, label, target_path=files[0])
         sys.exit(0)
 
     toks = validate(src, label)

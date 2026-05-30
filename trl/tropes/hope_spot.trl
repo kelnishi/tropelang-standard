@@ -7,6 +7,10 @@
 // Laconic: a brief, vivid moment when escape or victory seems certain — then it is
 // snatched away. If the glimmer turns out real instead, that is its sibling,
 // Eucatastrophe.
+//
+// @uses  trl/concepts/emotional.trl — the `hope` and `despair` concept nodes are reused
+//        as edge targets (not re-invented); the [#Hopeful]/[#Despairing] states are the
+//        prelude's. The glimmer promises hope; the crush is a fall into despair.
 
 
 // === ONTOLOGY ===
@@ -20,7 +24,7 @@ imply FalseHope     -> [Deceptive, Crushing]
 
 // === ABSTRACT RULE ===
 // An imperiled character is offered an apparent way out; hope surges. The glimmer is
-// secretly a FalseDawn — a LATENT (?...?) fact the character cannot see. The resolution
+// secretly [+Deceptive] — a LATENT (?...?) fact the character cannot see. The resolution
 // forks: the hope is Crushed (the trope proper) or Delivered (the Eucatastrophe
 // subversion). Each branch carries its own narration, resolved only if it is taken;
 // the crush asserts the deeper despair as ABSOLUTE (!...!) ground truth.
@@ -31,7 +35,8 @@ rule HopeSpot {
     not ( $glimmer [+Resolved] )
   then:
     $victim [#Hopeful]
-    ?$glimmer [+FalseDawn]?
+    $glimmer -- hope : "Promises"
+    ?$glimmer [+Deceptive]?
     fork(
       target = $victim
       duration = 10
@@ -42,6 +47,7 @@ rule HopeSpot {
           apply = {
             $glimmer [+Resolved] [+FalseHope]
             $victim [-Hopeful]
+            $victim -> despair : "Falls Into"
             !$victim [#Despairing]!
             dialog(kind=narration, inline="""
                    cue: "the light resolves into the very thing they feared"
@@ -100,8 +106,9 @@ scene the_conveyor {
                """)
     woody [#Hopeful]
     buzz [#Hopeful]
+    glimmer -- hope : "Promises"
     // The button is in reach, but the hope is already doomed — Lotso will not press it.
-    ?glimmer [+FalseDawn]?
+    ?glimmer [+Deceptive]?
   }
   beat 2 {
     evt betrayal [&Dashes(hope=glimmer)]
@@ -114,6 +121,8 @@ scene the_conveyor {
     glimmer [+Resolved] [+FalseHope]
     woody [-Hopeful]
     buzz [-Hopeful]
+    woody -> despair : "Falls Into"
+    buzz -> despair : "Falls Into"
     !woody [#Despairing]!
     !buzz [#Despairing]!
   }

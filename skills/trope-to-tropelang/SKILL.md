@@ -154,6 +154,44 @@ Modeling notes: [1–3 sentences on key choices]
 
 ---
 
+## Corpus reuse & consolidation (DRY)
+
+A conversion should reuse what the corpus already defines, not reinvent it. The denser the
+corpus, the more overlapping narratives can later be collapsed onto shared elements. After
+drafting, run the reuse assist and consolidate.
+
+**See where every tag comes from:**
+```bash
+python3 scripts/validate_tropelang.py <file>.trl --report
+```
+Resolves each tag across the whole corpus (prelude + concepts + modules + tropes) into:
+declared here / defined by imply / **reused from the corpus** / **inline — invented here**.
+The inline group is the consolidation worklist. Concepts are referenced as *nodes*, so the
+report's "corpus node references" section is where concept reuse shows up.
+
+**Get reuse candidates for the inline tags:**
+```bash
+python3 scripts/corpus_reuse.py <file>.trl          # deterministic name shortlist
+python3 scripts/corpus_reuse.py <file>.trl --json   # inline tags + corpus vocab, for an agent
+```
+Name-matching is precision-only — it misses meaning (`[+Imperiled]`, `[&OffersEscape]`).
+Hand the `--json` task to an agent for meaning-level matches.
+
+**Consolidation rules** — how the agent (and the author) decide each inline element:
+- **DRY only if absolutely the same.** Consolidate to a corpus element only when they mean
+  the *same thing*. A loose association is not enough.
+- **Convert flavor.** A word that is *primarily flavor* for an existing plain meaning →
+  reuse the corpus element. (e.g. inline `[+FalseDawn]` → prelude `[+Deceptive]`.)
+- **Keep different specificity.** If the inline element sits at a *different level of
+  specificity*, keep it. (e.g. `[+Inferno]` is more specific than `[+Dangerous]`; `[+Saved]`
+  ≠ socio-political `[+Liberated]`.) Never consolidate away meaning.
+- **Titles get their own entries.** A trope's title and the proper nouns from the source
+  (works, characters, places) may warrant their own declarations / `imply`, so later
+  references can be **rehydrated** — resolved back to the full element they name.
+
+Inlining an existing element is not illegal, but consolidate it when it's absolutely the
+same. Reuse is the default; invention is for what the corpus genuinely lacks.
+
 ## Naming conventions
 
 - **Identifiers**: short, lowercase, `snake_case` — `jimmy`, `golden_palace`, `the_briefcase`. These are the Tamarian proper nouns; keep them lean.
@@ -199,15 +237,20 @@ Both are pending grammar updates to lib.rs.
 After generating output, save it and run:
 
 ```bash
-python3 scripts/validate_tropelang.py output.trl
+python3 scripts/validate_tropelang.py output.trl            # validate
+python3 scripts/validate_tropelang.py output.trl --report   # tag origins (reuse vs inline)
 ```
 
-Checks: balanced braces, tag syntax, no fractional identifiers, `when:`/`then:` in every rule.
+Checks: balanced braces, tag syntax, no fractional identifiers, `when:`/`then:` in every
+rule, no sidecar labels, and reference existence/type (param values must name a declared
+node; `event=`/`site=` must match entity type). Then consolidate (see above).
 
 ---
 
 ## Reference files
 
-- `references/grammar.md` — complete v1.1 syntax reference
-- `references/examples.md` — four worked trope mappings in the updated format
-- `scripts/validate_tropelang.py` — structural validator (Python 3, no dependencies)
+- `references/grammar.md` — complete syntax reference (✓ = in the Rust parser, ◎ = validator-only)
+- `references/examples.md` — worked trope mappings
+- `scripts/validate_tropelang.py` — structural validator + `--report` tag-origin mode (Python 3, no deps)
+- `scripts/corpus_reuse.py` — consolidation assist: inline tags + corpus vocab, `--json` for an agent
+- `scripts/dialog_context.py` — interrogates `dialog(...)` annotations (preconditions / motivations / postconditions / context)
