@@ -28,8 +28,8 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 - [~] The Dilemma                 (`philosophy.trl` → `MoralDilemma`)
 
 ## Plot structure & arc
-- [ ] Three-Act Structure                                            ← **up next**
-- [ ] The Hero's Journey
+- [x] Three-Act Structure        (Universal)
+- [ ] The Hero's Journey                                             ← **up next**
 - [x] Call to Adventure          (Universal)
 - [ ] Refusal of the Call        (cf. `call_to_adventure.trl` assoc `refusal`)
 - [ ] In Medias Res
@@ -62,6 +62,6 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 ## Recommended order (simple building blocks first)
 1. ~~Conflict~~ ✓ — the engine that Protagonist + Antagonist create.
 2. ~~The Hero~~ ✓ / ~~The Mentor~~ ✓ — core cast well underway.
-3. ~~Call to Adventure~~ ✓ / **Three-Act Structure** — the spine of plot.   ← **up next**
-4. **Chekhov's Gun / Red Herring** — promote from `foreshadowing.trl`'s imply to full tropes.
+3. ~~Call to Adventure~~ ✓ / ~~Three-Act Structure~~ ✓ — the spine of plot.
+4. **Chekhov's Gun / Red Herring** — promote from `foreshadowing.trl`'s imply to full tropes.   ← **up next**
 Then converge with the drams gap on the eval stories.

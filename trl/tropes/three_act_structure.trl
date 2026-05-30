@@ -1,0 +1,81 @@
+// === PREAMBLE ===
+// @trope    Three-Act Structure
+// @category Universal Tropes
+// @source   https://allthetropes.org/wiki/Three_Act_Structure
+// @version  1.3
+//
+// Laconic: the dramatic spine — Setup (Act I), Confrontation (Act II), Resolution (Act III).
+// Maps directly onto TropeLang's built-in `act` temporal scopes; the arc passes through all
+// three phases.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/narrative.trl"    // conflict, point_of_no_return
+import "trl/concepts/universal.trl"    // beginning, ending
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc three_act_structure -> [
+  conflict           : "rises across",
+  beginning          : "opens in act 1",
+  ending             : "closes in act 3",
+  call_to_adventure  : "incites in act 1",
+  point_of_no_return : "often breaks act 2"
+]
+
+
+// === ONTOLOGY ===
+
+imply ThreeActStructure -> [Structure, Narrative]
+imply Act_Setup         -> [Beginning, Establishing]
+imply Act_Confrontation -> [Rising_Action, Complication]
+imply Act_Resolution    -> [Ending, Denouement]
+
+
+// === ABSTRACT RULE ===
+// A story arc that has passed through all three phases exhibits Three-Act Structure.
+rule ThreeActStructure {
+  when:
+    arc $story [+Act_Setup] [+Act_Confrontation] [+Act_Resolution]
+  then:
+    $story [+ThreeActStructure]
+}
+
+
+// === CONCRETE VIGNETTE: Cinderella — the three acts (fairy tale) ===
+
+// CINDERELLA
+char cinderella [+Protagonist]
+
+// THE PRINCE
+char prince [+LoveInterest]
+
+// THE GLASS SLIPPER
+obj slipper [+Token]
+
+// THE TALE
+arc the_tale [+ThreeActStructure]
+
+act setup {
+  beat 1 {
+    cinderella [#Despairing]
+    evt invitation -> cinderella @ the_tale : "The Ball Is Announced"
+    the_tale [+Act_Setup]
+  }
+}
+
+act confrontation {
+  beat 1 {
+    evt magic  -> cinderella @ the_tale : "The Fairy Godmother Transforms Her"
+    cinderella -- prince : "Dances With"
+    evt flight -> cinderella !@ prince : "Flees At Midnight"
+    the_tale [+Act_Confrontation]
+  }
+}
+
+act resolution {
+  beat 1 {
+    evt fit    -> slipper @ cinderella : "The Slipper Fits"
+    cinderella -- prince : "Married"
+    the_tale [+Act_Resolution]
+  }
+}

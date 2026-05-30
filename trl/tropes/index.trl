@@ -23,6 +23,7 @@ import "trl/tropes/conflict.trl"
 import "trl/tropes/the_hero.trl"
 import "trl/tropes/the_mentor.trl"
 import "trl/tropes/call_to_adventure.trl"
+import "trl/tropes/three_act_structure.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -60,3 +61,7 @@ concept mentor [+Trope(category="Universal", source="allthetropes.org/wiki/Mento
 // CALL TO ADVENTURE — the inciting summons out of the ordinary world. Reuses the `calling`
 // concept (narrative.trl).
 concept call_to_adventure [+Trope(category="Universal", source="allthetropes.org/wiki/Call_to_Adventure")] [%Narrative]
+
+// THREE-ACT STRUCTURE — the dramatic spine (setup / confrontation / resolution). Maps onto
+// the built-in `act` temporal scopes.
+concept three_act_structure [+Trope(category="Universal", source="allthetropes.org/wiki/Three_Act_Structure")] [%Narrative]
