@@ -1,0 +1,164 @@
+// === PREAMBLE ===
+// @title    Motivation Dynamics — desire, pursuit, and the fate of a goal
+// @category Psychological Systems
+// @source   (general goal/motivation theory; expectancy + appraisal)
+// @version  0.1
+// @note     The PROACTIVE complement to emotion_dynamics' reactive appraisal: how a desire
+//           crystallizes into a pursued GOAL, how obstacles frustrate it, and how the goal
+//           ends — attained (satisfaction), hardened into obsession, or abandoned (and then
+//           rationalized away). DETERMINATION is the hinge: set when the goal forms, eroded by
+//           frustration unless the pursuer is [+Resilient]; that single switch forks the
+//           obsession path from the abandonment path. Outcomes hand off to emotion_dynamics
+//           through the shared `&Attains` verb (goal bookkeeping here; the *feeling* there).
+//
+// Import: import "trl/modules/motivation_dynamics.trl"
+
+import "trl/concepts/index.trl"            // purpose, hope, longing
+import "trl/modules/emotion_dynamics.trl"  // shares &Attains -> joy (Appraise_Fulfillment)
+
+concept motivation_dynamics [+System] [%Psychological]
+
+
+// === GOAL FORMATION ===
+
+// A desire not yet acted on crystallizes into a pursued goal, with the resolve to chase it.
+rule Form_Goal {
+  when:
+    char $c [~Desires(target=$goal)]
+    not ( $c [~Pursues(target=$goal)] )
+  then:
+    $c [~Pursues(target=$goal)]
+    $c [#Determined]
+    $c -- ambition
+}
+
+// A goal that depends on a precondition spawns that precondition as an instrumental sub-goal.
+rule Adopt_Means {
+  when:
+    char $c [~Pursues(target=$end)]
+    evt  $dep [&Requires(subject=$end, object=$means)]
+  then:
+    $c [~Pursues(target=$means)]
+    $c -- instrumental
+}
+
+
+// === PURSUIT & OBSTACLE ===
+
+// An obstacle in the way of a pursuit produces frustration.
+rule Thwarted {
+  when:
+    char $c [~Pursues(target=$goal)]
+    evt  $obstacle [&Thwarts(target=$c)]
+  then:
+    $c [#Frustrated]
+    $c -- frustration
+}
+
+// Repeated frustration erodes a non-resilient pursuer's resolve (the road to giving up).
+rule Erode_Resolve {
+  when:
+    char $c [#Frustrated]
+    count( evt $block [&Thwarts(target=$c)] ) >= 2
+    not ( $c [+Resilient] )
+  then:
+    $c [-Determined]
+    $c -- discouragement
+}
+
+// A resilient pursuer, thwarted again and again, hardens instead into obsession.
+rule Hardens_Into_Obsession {
+  when:
+    char $c [~Pursues(target=$goal)] [+Resilient]
+    count( evt $block [&Thwarts(target=$c)] ) >= 3
+  then:
+    $c [~Obsessed_With(target=$goal)]
+    $c -- obsession
+}
+
+
+// === OUTCOME ===
+
+// Reaching the goal closes the pursuit and satisfies it. (emotion_dynamics' Appraise_Fulfillment
+// also fires on &Attains and supplies the joy; this rule keeps the goal books.)
+rule Attained {
+  when:
+    char $c [~Pursues(target=$goal)]
+    evt  $win [&Attains(agent=$c, object=$goal)]
+  then:
+    $c [-Pursues]
+    $c [#Satisfied]
+    $c -- fulfillment
+}
+
+// A pursuer whose resolve is gone, thwarted past endurance, abandons the goal.
+rule Abandoned {
+  when:
+    char $c [~Pursues(target=$goal)]
+    count( evt $block [&Thwarts(target=$c)] ) >= 3
+    not ( $c [#Determined] )
+  then:
+    $c [-Pursues]
+    $c [#Resigned]
+    $c -- resignation
+}
+
+
+// === TRANSFORMATIONS ===
+
+// Sour grapes: the abandoned goal is reframed as never-wanted, shedding the lingering desire
+// (a rationalization — see cognitive_biases).
+rule Sour_Grapes {
+  when:
+    char $c [#Resigned]
+    $c [~Desires(target=$goal)]
+  then:
+    $c [-Desires(target=$goal)]
+    $c -- rationalization
+}
+
+// Two live pursuits that cannot both be served leave the character conflicted (cf. MoralDilemma).
+rule Goal_Conflict {
+  when:
+    char $c [~Pursues(target=$a)]
+    char $c [~Pursues(target=$b)]
+    evt  $clash [&Excludes(subject=$a, object=$b)]
+  then:
+    $c [#Conflicted]
+    $c -- dilemma
+}
+
+
+// === ASSOCIATIONS ===
+assoc motivation_dynamics -> [
+  purpose          : "organizes pursuit toward",
+  longing          : "desire unmet becomes",
+  hope             : "pursuit is sustained by",
+  emotion_dynamics : "hands outcomes to"
+]
+
+
+// === CONCRETE VIGNETTE: Moby-Dick — Captain Ahab (novel) ===
+
+// AHAB — resilient past all reason; the white whale took his leg
+char ahab [+Protagonist] [+Resilient] [~Desires(target=the_whale)]
+// MOBY DICK — the goal that will not be caught
+char the_whale [+Antagonist]
+
+scene the_hunt {
+  beat 1 {
+    ahab [~Pursues(target=the_whale)]
+    ahab [#Determined]
+    // Form_Goal -> [~Pursues] [#Determined] -- ambition
+  }
+  beat 2 {
+    evt eludes [&Thwarts(target=ahab)]
+    // Thwarted -> [#Frustrated]
+  }
+  beat 3 {
+    evt eludes_again  [&Thwarts(target=ahab)]
+    evt eludes_thrice [&Thwarts(target=ahab)]
+    ahab [~Obsessed_With(target=the_whale)]
+    // Hardens_Into_Obsession (resilient + 3 thwarts) -> [~Obsessed_With] -- obsession
+  }
+}

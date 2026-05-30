@@ -68,7 +68,7 @@ motivation, and state transitions — general enough to compose arbitrary emotio
 - [x] Five Stages of Grief         (system — `five_stages_of_grief.trl`: staged denial → … → acceptance thread)
 - [x] Heel Face Turn / Face Heel Turn   (paired trope — `heel_face_turn.trl`: alignment reversal riding the appraisal layer)
 - [x] Survivor's Guilt / Trauma    (trope — `survivors_guilt.trl`: S8 imprint → trigger → catharsis/repression; self-directed blame)
-- [ ] Motivation / goals system    (desire → pursuit → satisfaction/frustration)   ← **up next**
+- [x] Motivation / goals system    (system — `motivation_dynamics.trl`: desire → pursuit → attainment/obsession/abandonment; determination is the hinge)
 
 ## Storytelling systems & frameworks (`trl/modules/`)
 Higher-level structures that *organize* tropes — name + sequence the stages, link the beats.
