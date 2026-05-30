@@ -1,0 +1,131 @@
+// === PREAMBLE ===
+// @trope    Foreshadowing
+// @category Omnipresent Tropes
+// @source   https://tvtropes.org/pmwiki/pmwiki.php/Main/Foreshadowing
+// @version  1.3
+//
+// Laconic: a hint planted early that, when it pays off later, the audience
+// connects back to. Broader than Chekhov's Gun (an object that must be used);
+// its deliberate false form is the Red Herring.
+
+
+// === ONTOLOGY ===
+// The trope taxonomy: a Chekhov's Gun and a Red Herring are both species of
+// Foreshadowing — one honest about an object, one a deliberate misdirection.
+
+imply Foreshadowing -> [Anticipatory, Planted, Narrative]
+imply Prophecy      -> [Foreshadowing, Explicit, Binding]
+imply ChekhovsGun   -> [Foreshadowing, Object]
+imply RedHerring    -> [Foreshadowing, Misdirection, Deceptive]
+
+
+// === ABSTRACT RULES ===
+
+// PLANT — an omen declares what it foreshadows. A `future` window registers the
+// anticipated outcome (the prospective dual of `past`); a tracker arc carries the
+// obligation forward; and the anticipation is asserted as a LATENT fact (?...?) —
+// present in the graph but unsurfaced, since no character yet understands the sign.
+rule Foreshadowing_Plant {
+  when:
+    evt $omen [&Foreshadows(event=$outcome)]
+    not ( $omen [+Planted] )
+    future scene $later {
+      evt $outcome
+    }
+  then:
+    arc $thread
+    $thread [+PendingForeshadow(omen=$omen, outcome=$outcome)]
+    $omen [+Planted]
+    ?$thread [@Anticipates(outcome=$outcome)]?
+}
+
+// PAYOFF — the foreshadowed event occurs; a backward `past` query confirms the sign
+// was planted earlier; the thread resolves; and the anticipation, now borne out, is
+// re-asserted as an ABSOLUTE fact (!...!) — immutable, no longer merely anticipated.
+rule Foreshadowing_Payoff {
+  when:
+    arc $thread [+PendingForeshadow(omen=$omen, outcome=$outcome)]
+    evt $outcome
+    past scene $earlier {
+      evt $omen [&Foreshadows(event=$outcome)]
+    }
+  then:
+    $thread [-PendingForeshadow]
+    $thread [+Fulfilled(omen=$omen)]
+    !$omen [+Realized]!
+    $outcome [+Payoff(omen=$omen)]
+    surface_global(title="It Was Foretold", description="The earlier sign pointed to this all along.")
+}
+
+// RED HERRING (subversion) — the story reaches its end and the foreshadowed
+// outcome never came. The sign was a deliberate false trail.
+rule Foreshadowing_RedHerring {
+  when:
+    arc $thread [+PendingForeshadow(omen=$omen, outcome=$outcome)]
+    scene $current [+Endgame]
+    not ( evt $outcome )
+  then:
+    $thread [-PendingForeshadow]
+    $thread [+Subverted]
+    $omen [+RedHerring]
+    $omen [#Revealed]
+    surface_global(title="A False Trail", description="The sign was a deliberate misdirection.")
+}
+
+
+// === CONCRETE VIGNETTE: Macbeth — the witches' equivocal prophecy ===
+
+// THE WEIRD SISTERS
+char witches [+Supernatural] [+Equivocal]
+
+// MACBETH
+char macbeth [+TragicHero] [+Ambitious]
+
+// MACDUFF
+char macduff [+Avenger]
+
+// EXT. THE BLASTED HEATH - STORM
+set heath [+Exterior] [+Storm] [+Liminal]
+
+// INT. DUNSINANE CASTLE - DAY
+set dunsinane [+Interior] [+Day]
+
+scene the_prophecy {
+  beat 1 {
+    witches @ heath
+    macbeth @ heath
+    evt prophecy [&Foreshadows(event=macbeth_falls)]
+        dialog(inject=[speaker=witches],
+               inline="""
+               speaker: "{speaker}"
+               cue: "in unison, voices fading into the fog"
+               tone: ominous
+               text: "None of woman born shall harm Macbeth."
+               """)
+    // The prophecy's meaning is genuinely unresolved: true invincibility, or a loophole?
+    (macbeth [+Invincible] | macbeth [+Doomed_By_Loophole] | ...) as prophecy_meaning
+    // Macbeth's true end is planted in the graph, but he is unaware of it.
+    ?macbeth -- macduff : "Falls To"?
+  }
+}
+
+scene the_payoff {
+  beat 1 {
+    macbeth @ dunsinane
+    macduff @ dunsinane
+    evt reveal [&Reveals]
+        dialog(inject=[speaker=macduff],
+               inline="""
+               speaker: "{speaker}"
+               cue: "closing the distance, sword level"
+               tone: cold
+               text: "Macduff was from his mother's womb untimely ripp'd."
+               """)
+    macduff [+NotOfWomanBorn]
+    // The loophole lands: the ambiguity collapses and the doom is made manifest.
+    resolve prophecy_meaning -> macbeth [+Doomed_By_Loophole]
+    evt macbeth_falls [&Slain(agent=macduff, target=macbeth)]
+    macbeth -- macduff : "Falls To"
+    prophecy [#Revealed]
+  }
+}

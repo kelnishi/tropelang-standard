@@ -197,19 +197,49 @@ def check_epistemic_balance(tokens, label):
 def build_declaration_registry(tokens):
     """Build a set of all declared names (entities + attr decls) from the token stream.
     Used by the reference validation pass to check that referenced identifiers exist."""
-    registry = set()
+    return set(build_kind_registry(tokens).keys())
+
+
+def build_kind_registry(tokens):
+    """Map each declared name to its declaring keyword (char/set/obj/evt/arc/concept/
+    attr/prop/state/verb/rel). Used for existence + entity-type checks on references."""
+    reg = {}
     all_decl_kw = ENTITY_TYPES | DECL_TYPES
-    i = 0
-    while i < len(tokens):
-        kind, val, line = tokens[i]
-        # Entity or attr declaration: keyword followed by identifier
+    for i in range(len(tokens) - 1):
+        kind, val, _ = tokens[i]
         if kind == 'ID' and val in all_decl_kw:
-            if i + 1 < len(tokens):
-                k2, v2, _ = tokens[i + 1]
-                if k2 in ('ID', 'VAR'):
-                    registry.add(v2)
-        i += 1
-    return registry
+            k2, v2, _ = tokens[i + 1]
+            if k2 in ('ID', 'VAR'):
+                reg.setdefault(v2, val)
+    return reg
+
+
+# Reserved param keys whose value must reference a node of a specific entity type (01 §5.3).
+EXPECTED_KIND = {"site": "set", "event": "evt"}
+
+
+def check_references(tokens, kinds, label):
+    """Check tag parameter VALUES that reference graph nodes. A bare identifier value
+    (e.g. `[&Foreshadows(event=macbeth_falls)]`) must name a node declared in this file,
+    and — for entity-typed reserved keys — be of the expected type. Variables, strings,
+    numbers, and booleans are skipped. Warning-level: an unknown name may be imported."""
+    in_tag = 0
+    for idx in range(len(tokens)):
+        kind, val, line = tokens[idx]
+        if kind == 'OP' and val == '[':
+            in_tag += 1
+        elif kind == 'OP' and val == ']':
+            in_tag = max(0, in_tag - 1)
+        elif in_tag > 0 and kind == 'ID' and idx >= 2 and tokens[idx - 1] == ('OP', '=', tokens[idx - 1][2]):
+            if val in ('true', 'false') or not val[:1].islower():
+                continue  # boolean / enum / Tag-shaped value — not a node reference
+            key = tokens[idx - 2][1]
+            if val not in kinds:
+                warnings.append(f"[{label}] line {line}: param {key}={val} references "
+                                f"'{val}', not declared in this file — ensure it is imported")
+            elif key in EXPECTED_KIND and kinds[val] != EXPECTED_KIND[key]:
+                errors.append(f"[{label}] line {line}: param {key}={val} expects a "
+                              f"{EXPECTED_KIND[key]}, but '{val}' is declared a {kinds[val]}")
 
 
 def check_intent_targets(tokens, registry, label):
@@ -254,8 +284,9 @@ def validate(src, label=""):
     check_sidecar_labels(toks, label)
     check_rule_structure(toks, label)
     check_epistemic_balance(toks, label)
-    registry = build_declaration_registry(toks)
-    check_intent_targets(toks, registry, label)
+    kinds = build_kind_registry(toks)
+    check_intent_targets(toks, set(kinds.keys()), label)
+    check_references(toks, kinds, label)
     return toks
 
 

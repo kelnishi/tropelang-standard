@@ -158,6 +158,30 @@ def apply_blocks(toks):
     return out
 
 
+_SCOPE_KW = {"scene", "act", "beat", "arc"}
+
+
+def scope_blocks(toks):
+    """Temporal scope blocks (scene/act/beat/arc with a `{ … }` body) and their spans.
+    Nested beats are captured too, so a dialog's innermost enclosing moment can be found."""
+    out, i = [], 0
+    while i < len(toks):
+        if toks[i][0] == "ID" and toks[i][1] in _SCOPE_KW:
+            j = i + 1
+            name = None
+            if j < len(toks) and toks[j][0] in ("ID", "VAR", "NUM", "STR"):
+                name = toks[j][1]; j += 1
+            if j < len(toks) and toks[j][1] == "{":
+                end = find_match(toks, j, "{", "}")
+                out.append({"kind": toks[i][1], "name": name,
+                            "open_idx": j, "close_idx": end,
+                            "open_line": toks[j][2], "close_line": toks[end][2]})
+                i = j + 1  # descend into the body to catch nested beats
+                continue
+        i += 1
+    return out
+
+
 def intent_lines(toks, var):
     """Source lines where `var` carries an intent tag `[~...]` (its motivations)."""
     out = []
@@ -238,7 +262,7 @@ def slice_lines(src_lines, a, b, exclude=None):
             continue
         line = src_lines[n - 1].rstrip()
         bare = line.strip()
-        if bare in ("when:", "then:", "{", "}"):
+        if bare in ("when:", "then:", "{", "}") or bare.startswith("//") or not bare:
             continue
         if bare.replace(" ", "") in ("apply={", "timeout_apply={"):
             continue
@@ -252,6 +276,7 @@ def interrogate(path, prose_dir):
     toks = lex(src, os.path.basename(path))
     rules = rule_blocks(toks)
     applies = apply_blocks(toks)
+    scopes = scope_blocks(toks)
 
     items = []
     for i, t in enumerate(toks):
@@ -277,14 +302,33 @@ def interrogate(path, prose_dir):
                     motiv_lines += intent_lines(toks, v)
             motiv_lines = sorted(set(motiv_lines))
 
-            # Postconditions: the branch's own apply block when inside a fork, else the
-            # rule's then block; the dialog's own annotation lines are excluded either way.
+            # Enclosing temporal scope (when the dialog lives in a scene, not a rule).
+            scope_blk = None
+            if not rule:
+                encl = [s for s in scopes if s["open_idx"] < i < s["close_idx"]]
+                scope_blk = max(encl, key=lambda s: s["open_idx"]) if encl else None
+            scope_name = f"{scope_blk['kind']} {scope_blk['name'] or ''}".strip() if scope_blk else None
+
+            # Preconditions: rule `when`, else the co-present facts earlier in the beat.
+            if rule:
+                pre = slice_lines(src_lines, rule["when"], rule["then"] - 1)
+                pre_label = f"rule {rule['name']} when"
+            elif scope_blk:
+                pre = slice_lines(src_lines, scope_blk["open_line"] + 1, span[0] - 1)
+                pre_label = f"{scope_name} (earlier in beat)"
+            else:
+                pre, pre_label = [], None
+
+            # Postconditions: fork branch apply, else rule `then`, else later facts in the beat.
             if apply_blk:
                 post = slice_lines(src_lines, apply_blk[2], apply_blk[3], exclude=span)
                 post_label = "branch apply" if evt_name is None else None
             elif rule:
                 post = slice_lines(src_lines, rule["then"], rule["end"] - 1, exclude=span)
                 post_label = f"rule {rule['name']} then"
+            elif scope_blk:
+                post = slice_lines(src_lines, span[1] + 1, scope_blk["close_line"] - 1)
+                post_label = f"{scope_name} (later in beat)"
             else:
                 post, post_label = [], None
 
@@ -295,8 +339,8 @@ def interrogate(path, prose_dir):
                                 else "inline YAML" if f["inline"]
                                 else f"inline text {f['text']}"),
                 "inject": f["inject"], "context": f["context"],
-                "rule": rule["name"] if rule else None,
-                "preconditions": slice_lines(src_lines, rule["when"], rule["then"] - 1) if rule else [],
+                "rule": rule["name"] if rule else scope_name,
+                "preconditions": pre, "pre_label": pre_label,
                 "postconditions": post, "post_label": post_label,
                 "motivation_lines": [src_lines[n - 1].strip() for n in motiv_lines],
                 "yaml_motivation": fill(motivation, inject) if motivation else None,
@@ -328,7 +372,7 @@ def render(items, path):
         if d["context"]:
             print("  context: " + ", ".join(d["context"]))
 
-        print("  ── preconditions" + (f" (rule {d['rule']} when):" if d["rule"] else " (standalone — evt tags):"))
+        print("  ── preconditions" + (f" ({d['pre_label']}):" if d["pre_label"] else " (standalone):"))
         for line in d["preconditions"] or ["     (none)"]:
             print(f"     {line.strip()}")
         print("  ── motivations:")
