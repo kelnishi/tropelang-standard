@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-drams — the trope-coverage metric, reported as `density over coverage` (e.g. 185 / 90).
+drams — the trope-coverage metric, reported as `density over coverage` (e.g. 1.85 over 90).
 
+  density  D — trope-touches per fact, shown as a MULTIPLE (depth; unbounded — a rich
+               database reads each beat through several tropes, so it climbs past 1.0)
   coverage C — % of a story's facts explained by >=1 database trope (breadth; <= 100%)
-  density  D — trope-touches per fact (depth; UNBOUNDED — a rich database reads each beat
-               through several tropes at once, so a healthy story scores over 100%)
 
 A story is a set of facts (here: tag-applications) in its .trl encoding — the story
 described in isolation. Each database trope that matches explains the facts it binds — the
@@ -97,7 +97,7 @@ def main():
               "(run from within the repo so the corpus is discoverable).")
         return
     print(f"drams — {r['file']}")
-    print(f"  {round(r['density']*100)} / {round(r['coverage']*100)}   (density over coverage)")
+    print(f"  {r['density']:.2f} over {round(r['coverage']*100)}   (density ×, coverage %)")
     print(f"  {r['facts']} facts | {r['covered']} covered | database: {r['db_tropes']} tropes")
     if r["gap"]:
         top = list(r["gap"].items())[:18]
