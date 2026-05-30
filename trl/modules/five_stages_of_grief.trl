@@ -1,0 +1,128 @@
+// === PREAMBLE ===
+// @title    Five Stages of Grief — the Kübler-Ross grief thread
+// @category Psychological Systems
+// @source   https://allthetropes.org/wiki/Five_Stages_of_Grief
+// @version  0.1
+// @note     Elaborates emotion_dynamics' single grief -> acceptance transition into the staged
+//           Kübler-Ross THREAD: denial -> anger -> bargaining -> depression -> acceptance. Each
+//           stage is a transition the engine can run as the story progresses. The model is
+//           non-linear in life (stages recur, skip, revisit) — so the chain below is the set of
+//           canonical edges, not a forced march. A character who cannot work *through*
+//           depression collapses instead toward despair (see assoc + Despair Event Horizon).
+//
+// Import: import "trl/modules/five_stages_of_grief.trl"
+
+import "trl/concepts/index.trl"            // grief, acceptance, despair
+import "trl/modules/emotion_dynamics.trl"  // [#Grieving] opens this thread (Appraise_Loss)
+
+concept five_stages_of_grief [+System] [%Psychological]
+
+
+// === THE FIVE STAGES ===
+// grief + acceptance are reused from concepts/emotional.trl; acceptance is the shared terminus
+// with emotion_dynamics' Thread_Grief_To_Acceptance. Only the intermediate stages are new.
+concept denial      [%Psychological] [#Painful]
+concept anger       [%Psychological] [#Painful]
+concept bargaining  [%Psychological]
+concept depression  [%Psychological] [#Painful]
+
+// The canonical sequence (edges, not a forced order — stages recur and skip in life).
+five_stages_of_grief -> [denial, anger, bargaining, depression, acceptance]
+denial -> anger -> bargaining -> depression -> acceptance
+
+
+// === THE THREAD — each rule advances a grieving character one stage ===
+
+// (loss) -> DENIAL. Loss opens the thread; the mind first refuses the fact.
+rule Grief_Denial {
+  when:
+    char $c [#Grieving]
+    not ( $c [+GriefThreadOpen] )
+  then:
+    $c [#InDenial] [+GriefThreadOpen]
+    $c -- denial
+}
+
+// DENIAL -> ANGER. Reality intrudes and cannot be refused; the loss demands a culprit.
+rule Grief_Anger {
+  when:
+    char $c [#InDenial]
+    evt  $jolt [&Confronts(target=$c)]
+  then:
+    $c [-InDenial]
+    $c [#Angry]
+    $c -- anger
+}
+
+// ANGER -> BARGAINING. The fury spends itself into a deal to undo the loss.
+rule Grief_Bargaining {
+  when:
+    char $c [#Angry]
+    evt  $plea [&Pleads(agent=$c)]
+  then:
+    $c [-Angry]
+    $c [#Bargaining]
+    $c -- bargaining
+}
+
+// BARGAINING -> DEPRESSION. No deal can be struck; the unchangeable settles its full weight.
+rule Grief_Depression {
+  when:
+    char $c [#Bargaining]
+    evt  $futility [&Fails(agent=$c)]
+  then:
+    $c [-Bargaining]
+    $c [#Depressed]
+    $c -- depression
+}
+
+// DEPRESSION -> ACCEPTANCE. Worked *through* (not escaped), the weight becomes bearable.
+rule Grief_Acceptance {
+  when:
+    char $c [#Depressed]
+    evt  $work [&Grieves(agent=$c)]
+  then:
+    $c [-Depressed]
+    $c [#AtPeace]
+    $c -- acceptance
+}
+
+
+// === ASSOCIATIONS ===
+assoc five_stages_of_grief -> [
+  grief            : "the staged path through",
+  acceptance       : "resolves toward",
+  despair          : "depression can collapse into instead",
+  emotion_dynamics : "elaborates the grief thread of"
+]
+
+
+// === CONCRETE VIGNETTE: The Year of Magical Thinking — Joan Didion (memoir) ===
+
+// JOAN — the grieving narrator
+char joan [+Protagonist] [#Grieving(source=john)]
+
+// JOHN — her husband, lost suddenly at the dinner table
+char john [+LoveInterest]
+
+scene the_year {
+  beat 1 {
+    // "Magical thinking": she keeps his shoes — he will need them when he returns.
+    joan [#InDenial]
+         dialog(inject=[speaker=joan], inline="""
+                speaker: "{speaker}"
+                cue: "standing at the closet, unable to give the shoes away"
+                tone: lucid, haunted
+                text: "I could not give away the rest of his shoes. He would need shoes if he was to return."
+                """)
+    joan -- denial
+  }
+  beat 2 {
+    evt the_facts [&Confronts(target=joan)]   // the autopsy, the records she cannot refuse
+    // Grief_Anger -> [#Angry]
+  }
+  beat 3 {
+    evt the_plea  [&Pleads(agent=joan)]        // if she reconstructs the night exactly, she can undo it
+    // Grief_Bargaining -> [#Bargaining]
+  }
+}

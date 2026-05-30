@@ -65,8 +65,8 @@ motivation, and state transitions — general enough to compose arbitrary emotio
 - [x] Emotion Dynamics             (system — `emotion_dynamics.trl`: appraisal → emotion → motivation → threads)
 - [x] Revenge                      (trope — rides the vengeance thread)
 - [x] Despair Event Horizon        (trope — irreversible hope → despair crossing; dark mirror of Hope Spot)
-- [ ] Five Stages of Grief         (grief thread: denial → … → acceptance)   ← **up next**
-- [ ] Heel Face Turn / Face Heel Turn   (moral-emotional reversal)
+- [x] Five Stages of Grief         (system — `five_stages_of_grief.trl`: staged denial → … → acceptance thread)
+- [ ] Heel Face Turn / Face Heel Turn   (moral-emotional reversal)   ← **up next**
 - [ ] Survivor's Guilt / Trauma    (ties to S8 Memory System)
 - [ ] Motivation / goals system    (desire → pursuit → satisfaction/frustration)
 

@@ -15,4 +15,5 @@ import "trl/modules/theory_of_mind.trl"
 import "trl/modules/cognitive_biases.trl"
 import "trl/modules/heros_journey.trl"     // storytelling system (Campbell's monomyth)
 import "trl/modules/freytags_pyramid.trl"  // storytelling system (the five-act dramatic arc)
-import "trl/modules/emotion_dynamics.trl"  // psychological system (appraisal -> emotion -> motivation -> threads)
+import "trl/modules/emotion_dynamics.trl"     // psychological system (appraisal -> emotion -> motivation -> threads)
+import "trl/modules/five_stages_of_grief.trl" // psychological system (the staged Kübler-Ross grief thread)
