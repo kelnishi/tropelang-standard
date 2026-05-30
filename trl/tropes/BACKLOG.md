@@ -75,7 +75,7 @@ Higher-level structures that *organize* tropes — name + sequence the stages, l
 - [x] The Hero's Journey / Monomyth   (Campbell — `heros_journey.trl`)
 - [x] Freytag's Pyramid               (Freytag — `freytags_pyramid.trl`; defines `climax` et al.)
 - [x] Dan Harmon's Story Circle       (system — `story_circle.trl`: the 8-step closed loop; order/chaos halves, two threshold crossings)
-- [ ] Save the Cat beat sheet         (Blake Snyder, 15 beats)   ← **up next**
+- [x] Save the Cat beat sheet         (system — `save_the_cat.trl`: the 15 beats with page-target params, on the three-act spine)
 - [ ] The Seven Basic Plots           (Booker)
 - [ ] Propp's Morphology              (31 narrative functions)
 - [ ] Kishōtenketsu                   (4-act, no central conflict — East Asian)

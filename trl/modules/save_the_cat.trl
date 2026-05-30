@@ -1,0 +1,86 @@
+// @title    Save the Cat! Beat Sheet (the BS2)
+// @author   Blake Snyder — "Save the Cat!" (2005)
+// @category Storytelling Systems
+// @version  0.1
+// @note     The most granular of the structural frameworks: FIFTEEN beats pinned to specific
+//           pages of a ~110-page screenplay. Each beat below carries its canonical `page` as a
+//           parameter — the errata that makes Snyder's sheet a sheet. (The titular "save the
+//           cat" is a moment inside the Set-Up where the hero does something likeable so the
+//           audience roots for them.) The beats sit on the three-act spine: the Catalyst opens
+//           the story, Break Into Two crosses into Act 2, Midpoint pivots it, Break Into Three
+//           crosses into Act 3.
+//
+// Import: import "trl/modules/save_the_cat.trl"
+
+
+// === DEPENDENCIES ===
+import "trl/concepts/index.trl"                  // transformation, despair, …
+import "trl/tropes/three_act_structure.trl"      // the spine these beats sit on
+import "trl/modules/story_circle.trl"            // a coarser parallel structure
+
+
+// === THE SYSTEM ===
+
+concept save_the_cat [+BeatSheet] [%Narrative]
+imply BeatSheet -> [Structure, Granular, Narrative]
+
+
+// === THE FIFTEEN BEATS (canonical page targets as params) ===
+
+// — ACT 1 · thesis (the world as it is) —
+concept opening_image          [+StoryBeat(page=1)]       // a "before" snapshot; the hero's world
+concept theme_stated           [+StoryBeat(page=5)]       // what the story is really about, said aloud
+concept set_up                 [+StoryBeat(page=10)]      // hero, stakes, world — and the save-the-cat moment
+concept catalyst               [+StoryBeat(page=12)]      // the inciting incident; life changes
+concept debate                 [+StoryBeat(page=18)]      // the hero hesitates — should I go?
+concept break_into_two         [+StoryBeat(page=25)] [+Threshold]  // the hero chooses; into Act 2
+
+// — ACT 2 · antithesis (the upside-down world) —
+concept b_story                [+StoryBeat(page=30)]      // the secondary story; carries the theme
+concept fun_and_games          [+StoryBeat(page=45)]      // the promise of the premise; the trailer moments
+concept midpoint               [+StoryBeat(page=55)] [+Pivot]      // false peak or false collapse; stakes raised
+concept bad_guys_close_in      [+StoryBeat(page=65)]      // pressure mounts, outside and within
+concept all_is_lost            [+StoryBeat(page=75)]      // the lowest point; a whiff of death
+concept dark_night_of_the_soul [+StoryBeat(page=80)]      // despair before the answer arrives
+concept break_into_three       [+StoryBeat(page=85)] [+Threshold]  // revelation; A and B converge; into Act 3
+
+// — ACT 3 · synthesis (the world made new) —
+concept finale                 [+StoryBeat(page=100)]     // the hero applies the lesson; resolution
+concept final_image            [+StoryBeat(page=110)]     // the mirror of the opening — proof of change
+
+
+// === THE SEQUENCE ===
+opening_image -> theme_stated -> set_up -> catalyst -> debate -> break_into_two
+break_into_two -> b_story -> fun_and_games -> midpoint -> bad_guys_close_in -> all_is_lost -> dark_night_of_the_soul -> break_into_three
+break_into_three -> finale -> final_image
+
+
+// === ASSOCIATIONS ===
+assoc save_the_cat -> [
+  three_act_structure : "fifteen beats sit on",
+  story_circle        : "a granular parallel of",
+  catalyst            : "the inciting beat is",
+  transformation      : "final_image proves",
+  despair             : "all_is_lost reaches"
+]
+
+
+// === CONCRETE VIGNETTE: Legally Blonde — Elle Woods (film) ===
+
+char elle [+Protagonist]
+
+arc elles_sheet [+BeatSheet]
+
+act act_one {
+  beat 1 { elle -- opening_image  : "Sorority President, Awaiting A Proposal" }
+  beat 2 { elle -- catalyst       : "Warner Dumps Her — 'Not Serious Enough'" }
+  beat 3 { elle -- break_into_two : "Gets Into Harvard Law To Win Him Back" }
+}
+act act_two {
+  beat 1 { elle -- midpoint    : "Earns The Coveted Internship On Merit" }
+  beat 2 { elle -- all_is_lost : "Callahan's Harassment — She Nearly Quits Law" }
+}
+act act_three {
+  beat 1 { elle -- finale      : "Wins The Case With Her Own Expertise" }
+  beat 2 { elle -- final_image : "Valedictorian — Taken Seriously, On Her Terms" }
+}
