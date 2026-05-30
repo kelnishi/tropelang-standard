@@ -21,6 +21,7 @@ import "trl/tropes/the_antagonist.trl"
 import "trl/tropes/the_deuteragonist.trl"
 import "trl/tropes/conflict.trl"
 import "trl/tropes/the_hero.trl"
+import "trl/tropes/the_mentor.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -50,3 +51,7 @@ conflict [+Trope(category="Omnipresent", source="allthetropes.org/wiki/Conflict"
 // THE HERO — the courageous protagonist who sacrifices for others. New entry; built on
 // the prelude [+Protagonist]/[+Courageous] and the `sacrifice` concept.
 concept hero [+Trope(category="Universal", source="allthetropes.org/wiki/The_Hero")] [%Narrative]
+
+// THE MENTOR — the wise guide of the protagonist. New entry; built on the prelude
+// Mentor_Of / Student_Of relations and the Wise / Ally roles.
+concept mentor [+Trope(category="Universal", source="allthetropes.org/wiki/Mentors")] [%Narrative]

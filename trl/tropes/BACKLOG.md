@@ -13,7 +13,7 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 - [x] The Antagonist             (Universal)
 - [x] The Deuteragonist          (Universal)
 - [x] The Hero                   (Universal)
-- [ ] The Mentor                 (cf. skill example `MentorDeath`)   ← **up next**
+- [x] The Mentor                 (Universal)
 - [ ] The Sidekick
 - [ ] The Love Interest
 - [ ] The Foil
@@ -61,7 +61,7 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 
 ## Recommended order (simple building blocks first)
 1. ~~Conflict~~ ✓ — the engine that Protagonist + Antagonist create.
-2. ~~The Hero~~ ✓ / **The Mentor** — finish the core cast.   ← **up next**
-3. **Call to Adventure / Three-Act Structure** — the spine of plot.
+2. ~~The Hero~~ ✓ / ~~The Mentor~~ ✓ — core cast well underway.
+3. **Call to Adventure / Three-Act Structure** — the spine of plot.   ← **up next**
 4. **Chekhov's Gun / Red Herring** — promote from `foreshadowing.trl`'s imply to full tropes.
 Then converge with the drams gap on the eval stories.

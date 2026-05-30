@@ -1,0 +1,48 @@
+// === PREAMBLE ===
+// @trope    The Mentor
+// @category Universal Tropes
+// @source   https://allthetropes.org/wiki/Mentors
+// @version  1.3
+//
+// Laconic: the wise, experienced figure who guides and trains a less-experienced
+// protagonist — teacher, advisor, and often an authority figure. (Frequently killed off to
+// force the hero's independence — see the skill's MentorDeath example.) Builds on the
+// prelude Mentor_Of / Student_Of relations and the Wise / Ally / Authority roles.
+
+
+// === ONTOLOGY ===
+
+imply Mentor -> [Ally, Authority, Wise]
+
+
+// === ABSTRACT RULE ===
+// A wise ally bound to a less-experienced protagonist by the mentor/student relation is
+// The Mentor; the bond is made reciprocal. (Reuses the prelude Mentor_Of / Student_Of rels.)
+rule TheMentor {
+  when:
+    char $mentor [+Wise]
+    char $student [+Protagonist]
+    $mentor [@Mentor_Of(student=$student)]
+  then:
+    $mentor  [+Mentor]
+    $student [@Student_Of(mentor=$mentor)]
+}
+
+
+// === CONCRETE VIGNETTE: The Karate Kid — Mr. Miyagi and Daniel (film) ===
+
+// DANIEL LARUSSO
+char daniel [+Protagonist] [+Untrained]
+
+// MR. MIYAGI
+char miyagi [+Wise] [+Elder]
+miyagi [@Mentor_Of(student=daniel)]
+
+scene the_lessons {
+  beat 1 {
+    evt discipline -> miyagi > daniel : "Wax On, Wax Off"
+    evt reveal     -> daniel @ miyagi : "The Chores Were The Training"
+    miyagi [+Mentor]
+    daniel [@Student_Of(mentor=miyagi)]
+  }
+}
