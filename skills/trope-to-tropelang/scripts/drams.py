@@ -1,0 +1,110 @@
+#!/usr/bin/env python3
+"""
+drams — the trope-coverage metric, reported as `density over coverage` (e.g. 185 / 90).
+
+  coverage C — % of a story's facts explained by >=1 database trope (breadth; <= 100%)
+  density  D — trope-touches per fact (depth; UNBOUNDED — a rich database reads each beat
+               through several tropes at once, so a healthy story scores over 100%)
+
+A story is a set of facts (here: tag-applications) in its .trl encoding — the story
+described in isolation. Each database trope that matches explains the facts it binds — the
+overlay. This tool computes the cheap PROXY (the exact metric runs the S3 evaluation
+engine): a fact is "touched" by a trope when the trope's source references that fact's tag.
+The uncovered facts are the GAP — the prioritized worklist of tropes still to convert.
+
+The database is the imply-defined tropes in trl/modules + trl/tropes (the overlay), NOT the
+prelude/concepts (the base vocabulary a story is written in).
+
+Usage:
+  python3 drams.py <story.trl>            # density over coverage + the gap
+  python3 drams.py <story.trl> --json
+See specs/00_Architecture_Overview.md §6.7.
+"""
+
+import sys, os, json, glob
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from validate_tropelang import lex, tag_usages, imply_decls
+
+
+def corpus_root(start):
+    """Locate the trl/ corpus root from a story that may live outside it (e.g. examples/)."""
+    d = os.path.dirname(os.path.abspath(start))
+    while d != os.path.dirname(d):
+        if os.path.exists(os.path.join(d, 'prelude.trl')):
+            return d
+        if os.path.isdir(os.path.join(d, 'trl', 'tropes')):
+            return os.path.join(d, 'trl')
+        d = os.path.dirname(d)
+    return None
+
+
+def trope_db(root, exclude_abs):
+    """tag -> set of trope titles whose source references it (the overlay vocabulary)."""
+    tag_to_tropes = {}
+    for sub in ('modules', 'tropes'):
+        for f in sorted(glob.glob(os.path.join(root, sub, '*.trl'))):
+            if os.path.abspath(f) == exclude_abs or os.path.basename(f) == 'index.trl':
+                continue
+            toks = lex(open(f).read(), f)
+            titles = [lhs for lhs, _, _ in imply_decls(toks)]
+            if not titles:
+                continue
+            for tag in tag_usages(toks):
+                tag_to_tropes.setdefault(tag, set()).update(titles)
+    return tag_to_tropes
+
+
+def measure(path):
+    toks = lex(open(path).read(), path)
+    root = corpus_root(path)
+    db = trope_db(root, os.path.abspath(path)) if root else {}
+    all_titles = {t for s in db.values() for t in s}
+
+    facts = covered = touches = 0
+    gap = {}
+    for tag, info in tag_usages(toks).items():
+        n = len(info['lines'])              # ~ applications of this tag
+        t = len(db.get(tag, ()))            # database tropes that reference it
+        facts += n
+        touches += t * n
+        if t:
+            covered += n
+        else:
+            gap[tag] = n
+    C = covered / facts if facts else 0.0
+    D = touches / facts if facts else 0.0
+    return {
+        "file": path, "facts": facts, "covered": covered,
+        "coverage": C, "density": D, "db_tropes": len(all_titles),
+        "gap": dict(sorted(gap.items(), key=lambda kv: -kv[1])),
+    }
+
+
+def main():
+    argv = sys.argv[1:]
+    as_json = "--json" in argv
+    files = [a for a in argv if not a.startswith("-")]
+    if not files:
+        print("usage: drams.py <story.trl> [--json]")
+        sys.exit(2)
+    r = measure(files[0])
+    if as_json:
+        print(json.dumps(r, indent=2))
+        return
+    if r["db_tropes"] == 0:
+        print(f"drams — {r['file']}: no trope database found "
+              "(run from within the repo so the corpus is discoverable).")
+        return
+    print(f"drams — {r['file']}")
+    print(f"  {round(r['density']*100)} / {round(r['coverage']*100)}   (density over coverage)")
+    print(f"  {r['facts']} facts | {r['covered']} covered | database: {r['db_tropes']} tropes")
+    if r["gap"]:
+        top = list(r["gap"].items())[:18]
+        shown = ", ".join(f"{t}({n})" for t, n in top)
+        more = "" if len(r["gap"]) <= 18 else f"  (+{len(r['gap'])-18} more)"
+        print(f"  gap — uncovered facts (conversion worklist): {shown}{more}")
+
+
+if __name__ == "__main__":
+    main()
