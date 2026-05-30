@@ -98,9 +98,10 @@ def lex(src, label=""):
         if c == '.' and src[i:i+3] == '...':
             tokens.append(('ELLIPSIS', '...', line)); i += 3; continue
 
-        # Multi-char operators (current grammar, longest match first)
+        # Multi-char operators (current grammar, longest match first).
+        # `<<` / `>>` are the S14 diegetic level-tag delimiters.
         matched = False
-        for op in ["!--", "->", "!>", "!@", "!=", ">=", "<=", "==", "--", "><"]:
+        for op in ["!--", "->", "!>", "!@", "!=", ">=", "<=", "==", "--", "><", "<<", ">>"]:
             if src[i:i+len(op)] == op:
                 tokens.append(('OP', op, line)); i += len(op); matched = True; break
         if matched: continue
