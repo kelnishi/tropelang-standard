@@ -1,0 +1,62 @@
+// === PREAMBLE ===
+// @trope    Revenge (Roaring Rampage of Revenge)
+// @category Death Tropes
+// @source   https://allthetropes.org/wiki/Revenge
+// @version  1.3
+//
+// Laconic: a wrong suffered drives a character to hunt down and destroy the wrongdoer. The
+// named narrative pattern that rides on the emotion-dynamics vengeance THREAD (grief +
+// blame -> vengeful -> the hollow aftermath); see trl/modules/emotion_dynamics.trl.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"               // grief, betrayal, justice, cost, forgiveness
+import "trl/modules/emotion_dynamics.trl"     // the appraisal -> vengeance thread it rides on
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc revenge -> [
+  grief       : "born of",
+  betrayal    : "answers",
+  justice     : "mistaken for",
+  cost        : "exacts",
+  forgiveness : "the road not taken"
+]
+
+
+// === ONTOLOGY ===
+
+imply Revenge -> [Retribution, Cyclical, Narrative]
+
+
+// === ABSTRACT RULE ===
+// A vengeful character striking down the wrongdoer enacts Revenge. (The emotional aftermath
+// — [#Empty], -- cost — is the module's Thread_Vengeance_Hollow; this names the pattern.)
+rule Revenge_Enacted {
+  when:
+    char $avenger [#Vengeful(toward=$wrongdoer)]
+    evt  $reckoning [&Slays(agent=$avenger, target=$wrongdoer)]
+  then:
+    $reckoning [+Revenge]
+}
+
+
+// === CONCRETE VIGNETTE: The Princess Bride — Inigo Montoya (film) ===
+
+// INIGO MONTOYA
+char inigo [+Protagonist] [#Vengeful(toward=rugen)]
+
+// COUNT RUGEN — the six-fingered man who killed his father
+char rugen [+Antagonist]
+
+scene the_duel {
+  beat 1 {
+    evt strike [&Slays(agent=inigo, target=rugen)]
+        dialog(inject=[speaker=inigo], inline="""
+               speaker: "{speaker}"
+               cue: "advancing, the words repeated like a vow kept twenty years"
+               tone: implacable
+               text: "Hello. My name is Inigo Montoya. You killed my father. Prepare to die."
+               """)
+    strike [+Revenge]
+  }
+}

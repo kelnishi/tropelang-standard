@@ -27,6 +27,7 @@ import "trl/tropes/three_act_structure.trl"
 import "trl/tropes/chekhovs_gun.trl"
 import "trl/tropes/red_herring.trl"
 import "trl/tropes/refusal_of_the_call.trl"
+import "trl/tropes/revenge.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -48,6 +49,10 @@ concept chekhovs_gun [+Trope(category="Omnipresent", source="allthetropes.org/wi
 
 // RED HERRING — a clue deliberately planted to mislead. A false species of Foreshadowing.
 concept red_herring [+Trope(category="Omnipresent", source="allthetropes.org/wiki/Red_Herring")] [%Narrative]
+
+// REVENGE — a wrong drives the hunt for the wrongdoer. Reuses concept `revenge`
+// (narrative.trl); rides the emotion-dynamics vengeance thread.
+revenge [+Trope(category="Death Tropes", source="allthetropes.org/wiki/Revenge")]
 
 // CHARACTER-ROLE BUILDING BLOCKS (Universal Tropes) — the cast structure. The applied
 // forms are the prelude roles [+Protagonist] / [+Antagonist]; these are the canonical

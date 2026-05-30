@@ -59,6 +59,17 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 - [ ] Star-Crossed Lovers
 - [ ] Mentor and Student
 
+## Psychological systems & emotion threads (`trl/modules/` + tropes)
+Code that *simulates/estimates* emotional response as threads progress — appraisal,
+motivation, and state transitions — general enough to compose arbitrary emotional arcs.
+- [x] Emotion Dynamics             (system — `emotion_dynamics.trl`: appraisal → emotion → motivation → threads)
+- [x] Revenge                      (trope — rides the vengeance thread)
+- [ ] Despair Event Horizon        (hope → despair collapse; ties to Hope Spot)   ← **up next**
+- [ ] Five Stages of Grief         (grief thread: denial → … → acceptance)
+- [ ] Heel Face Turn / Face Heel Turn   (moral-emotional reversal)
+- [ ] Survivor's Guilt / Trauma    (ties to S8 Memory System)
+- [ ] Motivation / goals system    (desire → pursuit → satisfaction/frustration)
+
 ## Storytelling systems & frameworks (`trl/modules/`)
 Higher-level structures that *organize* tropes — name + sequence the stages, link the beats.
 - [x] The Hero's Journey / Monomyth   (Campbell — `heros_journey.trl`)

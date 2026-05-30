@@ -1,0 +1,165 @@
+// @title    Emotion Dynamics — appraisal, motivation, and emotional threads
+// @category Psychological Systems
+// @version  0.1
+// @note     Lifts the flat emotion concepts (concepts/emotional.trl) into a DYNAMIC system
+//           the engine can run: how events are APPRAISED into emotional states, how those
+//           states drive MOTIVATION, and how emotional THREADS progress (catharsis, hardening,
+//           collapse) as a story unfolds. The rules are deliberately GENERAL and compositional
+//           — they estimate emotional response for arbitrary events, not a fixed catalogue —
+//           so the system has the fidelity to describe arbitrary emotional arcs.
+//
+// Import: import "trl/modules/emotion_dynamics.trl"
+
+
+import "trl/concepts/index.trl"    // grief, fear, betrayal, revenge, acceptance, despair, …
+
+concept emotion_dynamics [+System] [%Psychological]
+
+
+// === APPRAISAL — an event is weighed against a character's wellbeing/attachments -> emotion ===
+
+// LOSS of an attachment -> grief.
+rule Appraise_Loss {
+  when:
+    char $c [~Attached_To(target=$lost)]
+    evt  $e [&Died(subject=$lost)]
+  then:
+    $c [#Grieving(source=$lost)]
+    $c [~Mourns(target=$lost)]
+    $c -- grief
+}
+
+// BETRAYAL -> heartbreak, resentment, and blame aimed at the betrayer.
+rule Appraise_Betrayal {
+  when:
+    char $c
+    evt  $e [&Betrayed(agent=$betrayer, target=$c)]
+  then:
+    $c [#Heartbroken]
+    $c [#Resentful]
+    $c [~Blames(target=$betrayer)]
+    $c -- betrayal
+}
+
+// THREAT (anticipated harm) -> fear.
+rule Appraise_Threat {
+  when:
+    char $c
+    evt  $e [&Threatens(agent=$source, target=$c)]
+  then:
+    $c [#Afraid(source=$source)]
+    $c -- fear
+}
+
+// A DESIRE fulfilled -> joy.
+rule Appraise_Fulfillment {
+  when:
+    char $c [~Desires(target=$goal)]
+    evt  $e [&Attains(agent=$c, object=$goal)]
+  then:
+    $c [#Joyful]
+    $c -- joy
+}
+
+
+// === MOTIVATION — an emotional state biases what the character will try next ===
+
+// FEAR motivates avoidance — unless courage overrides it.
+rule Motivate_Avoidance {
+  when:
+    char $c [#Afraid(source=$threat)]
+    not ( $c [+Courageous] )
+  then:
+    $c [~Avoids(target=$threat)]
+}
+
+// GRIEF + BLAME hardens into the vengeance thread.
+rule Motivate_Vengeance {
+  when:
+    char $c [#Grieving]
+    $c [~Blames(target=$culprit)]
+  then:
+    $c [#Vengeful(toward=$culprit)]
+    $c [~Seeks(target=$culprit)]
+    $c -- revenge
+}
+
+// DESPAIR motivates withdrawal.
+rule Motivate_Withdrawal {
+  when:
+    char $c [#Despairing]
+  then:
+    $c [#Withdrawn]
+    $c -- isolation
+}
+
+
+// === THREADS — how an emotional state transitions as the story progresses ===
+
+// GRIEF, processed through mourning, moves toward acceptance (catharsis).
+rule Thread_Grief_To_Acceptance {
+  when:
+    char $c [#Grieving]
+    evt  $catharsis [&Grieves(agent=$c)]
+  then:
+    $c [-Grieving]
+    $c [#AtPeace]
+    $c -- acceptance
+}
+
+// HOPE, crushed again and again, collapses across the despair horizon (made ABSOLUTE).
+rule Thread_Hope_To_Despair {
+  when:
+    char $c [#Hopeful]
+    count( evt $blow [&Crushes(target=$c)] ) >= 3
+  then:
+    $c [-Hopeful]
+    !$c [#Despairing]!
+    $c -- despair
+}
+
+// VENGEANCE, once exacted, rarely brings the peace it promised — the hollow aftermath.
+rule Thread_Vengeance_Hollow {
+  when:
+    char $c [#Vengeful(toward=$culprit)]
+    evt  $act [&Slays(agent=$c, target=$culprit)]
+  then:
+    $c [-Vengeful]
+    $c [#Empty]
+    $c -- cost
+}
+
+
+// === ASSOCIATIONS ===
+assoc emotion_dynamics -> [
+  grief      : "appraises loss as",
+  fear       : "appraises threat as",
+  revenge    : "grief + blame motivates",
+  acceptance : "catharsis reaches",
+  despair    : "repeated blows reach",
+  cost       : "vengeance exacts"
+]
+
+
+// === CONCRETE VIGNETTE: The Count of Monte Cristo — a grief-to-vengeance thread (novel) ===
+
+// EDMOND DANTÈS
+char dantes [+Protagonist] [~Attached_To(target=mercedes)]
+
+// MERCÉDÈS — what he loses
+char mercedes [+LoveInterest]
+
+// FERNAND — the betrayer
+char fernand [+Antagonist]
+
+scene the_thread {
+  beat 1 {
+    evt betrayal [&Betrayed(agent=fernand, target=dantes)]
+    // Appraise_Betrayal -> [#Heartbroken] [#Resentful] [~Blames(fernand)]
+  }
+  beat 2 {
+    dantes [#Grieving]
+    dantes [~Blames(target=fernand)]
+    // Motivate_Vengeance -> [#Vengeful(fernand)] [~Seeks(fernand)] -- revenge
+  }
+}
