@@ -1,0 +1,73 @@
+// === PREAMBLE ===
+// @trope    Despair Event Horizon
+// @category Darkness-Induced Audience Apathy / Despair
+// @source   https://allthetropes.org/wiki/Despair_Event_Horizon
+// @version  1.3
+//
+// Laconic: the point past which a character abandons all hope — an emotional point of no
+// return into total, irreversible despair, often collapsing the will to act. The dark
+// mirror of the Hope Spot, and the terminus of the emotion-dynamics hope -> despair thread.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"               // despair, hope, point_of_no_return, redemption
+import "trl/modules/emotion_dynamics.trl"     // the hope -> despair thread this names
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc despair_event_horizon -> [
+  despair            : "total and irreversible",
+  point_of_no_return : "an emotional",
+  hope               : "abandons",
+  hope_spot          : "the dark mirror of",
+  redemption         : "forecloses"
+]
+
+
+// === ONTOLOGY ===
+
+imply DespairEventHorizon -> [Despair, Irreversible, Narrative]
+
+
+// === ABSTRACT RULE ===
+// A despairing character dealt a final blow crosses the horizon: despair becomes ABSOLUTE
+// (it cannot be un-crossed) and hope is foreclosed.
+rule DespairEventHorizon {
+  when:
+    char $c [#Despairing]
+    evt  $blow [&Crushes(target=$c)]
+    not ( $c [+CrossedTheHorizon] )
+  then:
+    !$c [#Despairing]!
+    $c [+CrossedTheHorizon] [+Hopeless]
+    $c -- point_of_no_return
+    $c -- despair
+}
+
+
+// === CONCRETE VIGNETTE: Nineteen Eighty-Four — Room 101 (novel) ===
+
+// WINSTON SMITH
+char winston [+Protagonist] [#Hopeful]
+
+// JULIA — the last thing he held onto
+char julia [+LoveInterest]
+
+// INT. ROOM 101
+set room_101 [+Interior] [+Nightmare]
+
+scene the_breaking {
+  beat 1 {
+    winston @ room_101
+    evt torture [&Crushes(target=winston)]
+        dialog(inject=[speaker=winston], inline="""
+               speaker: "{speaker}"
+               cue: "the cage of rats at his face — the last betrayal"
+               tone: shattered
+               text: "Do it to Julia! Not me! Julia!"
+               """)
+    winston [-Hopeful]
+    !winston [#Despairing]!
+    winston [+CrossedTheHorizon] [+Hopeless]
+    winston -- point_of_no_return
+  }
+}

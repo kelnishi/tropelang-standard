@@ -28,6 +28,7 @@ import "trl/tropes/chekhovs_gun.trl"
 import "trl/tropes/red_herring.trl"
 import "trl/tropes/refusal_of_the_call.trl"
 import "trl/tropes/revenge.trl"
+import "trl/tropes/despair_event_horizon.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -53,6 +54,10 @@ concept red_herring [+Trope(category="Omnipresent", source="allthetropes.org/wik
 // REVENGE — a wrong drives the hunt for the wrongdoer. Reuses concept `revenge`
 // (narrative.trl); rides the emotion-dynamics vengeance thread.
 revenge [+Trope(category="Death Tropes", source="allthetropes.org/wiki/Revenge")]
+
+// DESPAIR EVENT HORIZON — the irreversible crossing into total despair. Rides the
+// emotion-dynamics hope -> despair thread; the dark mirror of Hope Spot.
+concept despair_event_horizon [+Trope(category="Despair", source="allthetropes.org/wiki/Despair_Event_Horizon")] [%Narrative]
 
 // CHARACTER-ROLE BUILDING BLOCKS (Universal Tropes) — the cast structure. The applied
 // forms are the prelude roles [+Protagonist] / [+Antagonist]; these are the canonical

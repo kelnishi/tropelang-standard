@@ -64,8 +64,8 @@ Code that *simulates/estimates* emotional response as threads progress — appra
 motivation, and state transitions — general enough to compose arbitrary emotional arcs.
 - [x] Emotion Dynamics             (system — `emotion_dynamics.trl`: appraisal → emotion → motivation → threads)
 - [x] Revenge                      (trope — rides the vengeance thread)
-- [ ] Despair Event Horizon        (hope → despair collapse; ties to Hope Spot)   ← **up next**
-- [ ] Five Stages of Grief         (grief thread: denial → … → acceptance)
+- [x] Despair Event Horizon        (trope — irreversible hope → despair crossing; dark mirror of Hope Spot)
+- [ ] Five Stages of Grief         (grief thread: denial → … → acceptance)   ← **up next**
 - [ ] Heel Face Turn / Face Heel Turn   (moral-emotional reversal)
 - [ ] Survivor's Guilt / Trauma    (ties to S8 Memory System)
 - [ ] Motivation / goals system    (desire → pursuit → satisfaction/frustration)
