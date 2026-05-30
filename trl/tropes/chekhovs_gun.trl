@@ -1,0 +1,86 @@
+// === PREAMBLE ===
+// @trope    Chekhov's Gun
+// @category Omnipresent Tropes
+// @source   https://allthetropes.org/wiki/Chekhovs_Gun
+// @version  1.3
+//
+// Laconic: an object conspicuously introduced early must be used meaningfully later — and
+// if it will not be used, it should not be introduced. A specific, honest species of
+// Foreshadowing (contrast the deliberately misleading Red Herring). Promoted from
+// foreshadowing.trl's `imply ChekhovsGun` to a full trope.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/narrative.trl"    // foreshadowing, revelation, consequence
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc chekhovs_gun -> [
+  foreshadowing : "an honest kind of",
+  revelation    : "can deliver",
+  consequence   : "pays off in",
+  red_herring   : "contrasts with"
+]
+
+
+// === ONTOLOGY ===
+
+imply ChekhovsGun -> [Foreshadowing, Object, Planted]
+
+
+// === ABSTRACT RULES ===
+
+// SETUP — a conspicuous object is introduced but not yet used; a payoff is now owed.
+rule ChekhovsGun_Setup {
+  when:
+    obj $item [+Conspicuous]
+    evt $intro [&Introduces(object=$item)]
+    not ( $item [+Fired] )
+  then:
+    $item [+ChekhovsGun]
+    $item [+PendingPayoff]
+}
+
+// FIRED — the planted object is finally used at a decisive moment; the debt is paid and
+// the firing becomes ABSOLUTE (it cannot be un-fired).
+rule ChekhovsGun_Fired {
+  when:
+    obj $item [+PendingPayoff]
+    evt $use [&Uses(object=$item, agent=$user)]
+  then:
+    $item [-PendingPayoff]
+    !$item [+Fired]!
+    $use [+Payoff(item=$item)]
+    $item -- consequence
+}
+
+
+// === CONCRETE VIGNETTE: The Hunger Games — the nightlock berries (novel) ===
+
+// KATNISS EVERDEEN
+char katniss [+Protagonist]
+
+// THE NIGHTLOCK BERRIES
+obj nightlock [+Conspicuous] [+Lethal]
+
+scene the_woods {
+  beat 1 {
+    evt learn -> katniss > nightlock : "Learns The Berries Are Deadly"
+    nightlock [+ChekhovsGun]
+    nightlock [+PendingPayoff]
+  }
+}
+
+scene the_final_gambit {
+  beat 1 {
+    evt gambit [&Uses(object=nightlock, agent=katniss)]
+        dialog(inject=[speaker=katniss], inline="""
+               speaker: "{speaker}"
+               cue: "two pairs of hands, berries raised together"
+               tone: defiant
+               text: "On the count of three."
+               """)
+    nightlock [-PendingPayoff]
+    !nightlock [+Fired]!
+    gambit [+Payoff(item=nightlock)]
+  }
+}

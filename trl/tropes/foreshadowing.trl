@@ -27,8 +27,8 @@ assoc foreshadowing -> [
 
 imply Foreshadowing -> [Anticipatory, Planted, Narrative]
 imply Prophecy      -> [Foreshadowing, Explicit, Binding]
-imply ChekhovsGun   -> [Foreshadowing, Object]
 imply RedHerring    -> [Foreshadowing, Misdirection, Deceptive]
+// ChekhovsGun promoted to its own trope — see trl/tropes/chekhovs_gun.trl
 
 
 // === ABSTRACT RULES ===

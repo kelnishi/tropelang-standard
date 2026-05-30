@@ -24,6 +24,7 @@ import "trl/tropes/the_hero.trl"
 import "trl/tropes/the_mentor.trl"
 import "trl/tropes/call_to_adventure.trl"
 import "trl/tropes/three_act_structure.trl"
+import "trl/tropes/chekhovs_gun.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -39,6 +40,9 @@ concept hope_spot [+Trope(category="Omnipresent", source="allthetropes.org/wiki/
 // THE REVEAL — a concealed truth disclosed. Reuses concept `revelation` (narrative.trl);
 // the cover/payoff is an epistemic collapse (perception -> knowledge).
 revelation [+Trope(category="Omnipresent", source="allthetropes.org/wiki/The_Reveal")]
+
+// CHEKHOV'S GUN — a planted object that must pay off. An honest species of Foreshadowing.
+concept chekhovs_gun [+Trope(category="Omnipresent", source="allthetropes.org/wiki/Chekhovs_Gun")] [%Narrative]
 
 // CHARACTER-ROLE BUILDING BLOCKS (Universal Tropes) — the cast structure. The applied
 // forms are the prelude roles [+Protagonist] / [+Antagonist]; these are the canonical
