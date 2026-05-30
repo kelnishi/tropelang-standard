@@ -11,6 +11,18 @@
 // [+Protagonist] and [+Courageous].
 
 
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc hero -> [
+  courage     : "embodies",
+  sacrifice   : "makes",
+  mentor      : "guided by",
+  protagonist : "is a kind of"
+]
+
+
 // === ONTOLOGY ===
 
 imply Hero -> [Protagonist, Courageous, Aspirational]

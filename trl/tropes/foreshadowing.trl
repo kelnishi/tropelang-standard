@@ -9,6 +9,18 @@
 // its deliberate false form is the Red Herring.
 
 
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc foreshadowing -> [
+  revelation : "pays off as",
+  secret     : "hints at",
+  the_future : "points toward",
+  dread      : "can seed"
+]
+
+
 // === ONTOLOGY ===
 // The trope taxonomy: a Chekhov's Gun and a Red Herring are both species of
 // Foreshadowing — one honest about an object, one a deliberate misdirection.

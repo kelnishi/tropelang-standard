@@ -10,6 +10,17 @@
 // Builds on the `conflict` concept and the >< (mutual conflict) operator.
 
 
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc conflict -> [
+  dilemma     : "can crystallize as",
+  consequence : "produces",
+  change      : "forces"
+]
+
+
 // === ONTOLOGY ===
 
 imply Conflict           -> [Opposition, Generative, Narrative]

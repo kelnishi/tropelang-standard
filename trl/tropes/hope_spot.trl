@@ -13,6 +13,17 @@
 //        prelude's. The glimmer promises hope; the crush is a fall into despair.
 
 
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc hope_spot -> [
+  hope      : "raises then dashes",
+  despair   : "crashes into",
+  suffering : "sharpens"
+]
+
+
 // === ONTOLOGY ===
 // The crush and its inverse are both reversals of an imperiled situation; a Hope Spot's
 // glimmer is, secretly, FalseHope.

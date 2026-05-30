@@ -10,6 +10,17 @@
 // Subverted as The Un-Reveal (set up, then withheld).
 
 
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc revelation -> [
+  secret        : "breaks",
+  foreshadowing : "often pays off",
+  identity      : "often concerns"
+]
+
+
 // === ONTOLOGY ===
 
 imply TheReveal      -> [Disclosure, Concealment_Broken, Narrative]

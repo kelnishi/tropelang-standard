@@ -9,6 +9,17 @@
 // whole definition. Builds on the prelude [+Antagonist] role and the [~Opposes] verb.
 
 
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc antagonist -> [
+  protagonist : "opposes",
+  conflict    : "embodies",
+  corruption  : "often carries"
+]
+
+
 // === ONTOLOGY ===
 
 imply Antagonist -> [Opposition, Obstacle]

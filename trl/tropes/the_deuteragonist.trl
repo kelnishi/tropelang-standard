@@ -9,6 +9,17 @@
 // the Sidekick (who merely follows) and not the antagonist.
 
 
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc deuteragonist -> [
+  protagonist : "shadows",
+  loyalty     : "often embodies",
+  sacrifice   : "may make"
+]
+
+
 // === ONTOLOGY ===
 
 imply Deuteragonist -> [Secondary_Focus, Central]

@@ -10,6 +10,17 @@
 // choices drive its turning points. Builds on the prelude [+Protagonist] role.
 
 
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc protagonist -> [
+  conflict       : "drives",
+  antagonist     : "opposed by",
+  transformation : "often undergoes"
+]
+
+
 // === ONTOLOGY ===
 
 imply Protagonist -> [Central, Sympathetic_Focus, Agent]
