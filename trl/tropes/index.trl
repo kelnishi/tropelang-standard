@@ -19,6 +19,7 @@ import "trl/tropes/the_reveal.trl"
 import "trl/tropes/the_protagonist.trl"
 import "trl/tropes/the_antagonist.trl"
 import "trl/tropes/the_deuteragonist.trl"
+import "trl/tropes/conflict.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -41,3 +42,6 @@ revelation [+Trope(category="Omnipresent", source="allthetropes.org/wiki/The_Rev
 concept protagonist   [+Trope(category="Universal", source="allthetropes.org/wiki/The_Protagonist")] [%Narrative]
 concept antagonist    [+Trope(category="Universal", source="allthetropes.org/wiki/The_Antagonist")] [%Narrative]
 concept deuteragonist [+Trope(category="Universal", source="allthetropes.org/wiki/Deuteragonist")] [%Narrative]
+
+// CONFLICT — the engine of narrative. Reuses concept `conflict` (narrative.trl).
+conflict [+Trope(category="Omnipresent", source="allthetropes.org/wiki/Conflict")]

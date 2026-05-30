@@ -1,0 +1,59 @@
+// === PREAMBLE ===
+// @trope    Conflict
+// @category Omnipresent Tropes
+// @source   https://allthetropes.org/wiki/Conflict
+// @version  1.3
+// @uses     trl/concepts/narrative.trl — the `conflict` concept
+//
+// Laconic: the opposition of forces that drives a story; without it, narrative collapses
+// into description. The classic axes are vs Man, vs Self, vs Nature, vs Society, vs Fate.
+// Builds on the `conflict` concept and the >< (mutual conflict) operator.
+
+
+// === ONTOLOGY ===
+
+imply Conflict           -> [Opposition, Generative, Narrative]
+imply Conflict_vs_Man     -> [Conflict, Interpersonal]
+imply Conflict_vs_Self    -> [Conflict, Internal]
+imply Conflict_vs_Nature  -> [Conflict, Environmental]
+imply Conflict_vs_Society -> [Conflict, Institutional]
+imply Conflict_vs_Fate    -> [Conflict, Cosmic]
+
+
+// === ABSTRACT RULE ===
+// A conflict exists wherever two forces stand opposed. The >< edge is the canonical form;
+// the protagonist–antagonist opposition is its interpersonal case. Reuses `conflict`.
+rule Conflict_Exists {
+  when:
+    char $a
+    $a >< $b
+    $a != $b
+  then:
+    $a -- conflict
+    $b -- conflict
+    $a [+InConflict(with=$b)]
+}
+
+
+// === CONCRETE VIGNETTE: The Old Man and the Sea — Santiago vs the marlin (novella; Man vs Nature) ===
+
+// SANTIAGO
+char santiago [+Protagonist] [+Fisherman]
+
+// THE GREAT MARLIN
+char marlin [+Quarry] [+Magnificent]
+
+// THE GULF STREAM
+set sea [+Exterior] [+Vast] [+Indifferent]
+
+scene the_struggle {
+  beat 1 {
+    santiago @ sea
+    evt hook -> santiago > marlin : "Hooks The Great Fish"
+    santiago >< marlin
+    // Not enmity but elemental struggle — the marlin is nature's adversary, admired.
+    santiago [+Conflict_vs_Nature]
+    santiago -- conflict
+    marlin   -- conflict
+  }
+}
