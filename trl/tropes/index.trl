@@ -26,6 +26,7 @@ import "trl/tropes/call_to_adventure.trl"
 import "trl/tropes/three_act_structure.trl"
 import "trl/tropes/chekhovs_gun.trl"
 import "trl/tropes/red_herring.trl"
+import "trl/tropes/refusal_of_the_call.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -73,3 +74,6 @@ concept call_to_adventure [+Trope(category="Universal", source="allthetropes.org
 // THREE-ACT STRUCTURE — the dramatic spine (setup / confrontation / resolution). Maps onto
 // the built-in `act` temporal scopes.
 concept three_act_structure [+Trope(category="Universal", source="allthetropes.org/wiki/Three_Act_Structure")] [%Narrative]
+
+// REFUSAL OF THE CALL — the hero first declines the summons (Hero's Journey beat 2).
+concept refusal_of_the_call [+Trope(category="Universal", source="allthetropes.org/wiki/Refusal_of_the_Call")] [%Narrative]

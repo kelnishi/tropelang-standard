@@ -1,0 +1,64 @@
+// === PREAMBLE ===
+// @trope    Refusal of the Call
+// @category Universal Tropes
+// @source   https://allthetropes.org/wiki/Refusal_of_the_Call
+// @version  1.3
+//
+// Laconic: the hero, summoned to adventure, first declines — out of fear, duty, or
+// attachment to the ordinary world — before (usually) accepting. The second beat of the
+// Hero's Journey, the mirror of Call to Adventure.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/emotional.trl"    // fear, comfort
+import "trl/concepts/narrative.trl"    // calling, duty
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc refusal_of_the_call -> [
+  call_to_adventure : "declines",
+  fear              : "driven by",
+  duty              : "shirks",
+  comfort           : "clings to"
+]
+
+
+// === ONTOLOGY ===
+
+imply RefusalOfTheCall -> [Reluctance, Threshold, Narrative]
+
+
+// === ABSTRACT RULE ===
+// A summoned hero who turns away from the call refuses it; the reluctance is bound to fear.
+rule RefusalOfTheCall {
+  when:
+    char $hero [+Called]
+    evt  $refusal [&Refuses(agent=$hero)]
+  then:
+    $hero [+Refused]
+    $hero -- fear
+    $refusal [+RefusalOfTheCall]
+}
+
+
+// === CONCRETE VIGNETTE: The Book of Jonah — fleeing to Tarshish (myth) ===
+
+// JONAH
+char jonah [+Protagonist] [+Called] [+Reluctant]
+
+// NINEVEH — where he is sent, and will not go
+set nineveh [+City] [+Distant]
+
+scene the_flight {
+  beat 1 {
+    evt flight [&Refuses(agent=jonah)]
+        dialog(kind=narration, inline="""
+               cue: "he rises and goes down to the harbor — the wrong way"
+               tone: evasive
+               text: "Jonah rose to flee to Tarshish, away from the call."
+               """)
+    jonah !@ nineveh : "Sails The Other Way"
+    jonah [+Refused]
+    jonah -- fear : "Driven By"
+    flight [+RefusalOfTheCall]
+  }
+}

@@ -31,7 +31,7 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 - [x] Three-Act Structure        (Universal)
 - [ ] The Hero's Journey                                             ← **up next**
 - [x] Call to Adventure          (Universal)
-- [ ] Refusal of the Call        (cf. `call_to_adventure.trl` assoc `refusal`)
+- [x] Refusal of the Call        (Universal)
 - [ ] In Medias Res
 - [ ] The Climax
 - [ ] Frame Story
@@ -64,4 +64,4 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 2. ~~The Hero~~ ✓ / ~~The Mentor~~ ✓ — core cast well underway.
 3. ~~Call to Adventure~~ ✓ / ~~Three-Act Structure~~ ✓ — the spine of plot.
 4. ~~Chekhov's Gun~~ ✓ / ~~Red Herring~~ ✓ — promoted from `foreshadowing.trl`'s imply to full tropes.
-5. **Next:** finish the cast (Sidekick, Foil, Love Interest, Narrator…) or the journey beats (Refusal of the Call, Climax), then converge with the drams gap on the eval stories.
+5. **Next:** finish the cast (Sidekick, Foil, Love Interest, Narrator…) or the remaining journey beats (The Climax, The Hero's Journey), then converge with the drams gap on the eval stories.

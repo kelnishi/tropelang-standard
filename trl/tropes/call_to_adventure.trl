@@ -19,7 +19,7 @@ assoc call_to_adventure -> [
   change  : "forces",
   duty    : "may impose",
   hero    : "launches",
-  refusal : "may be refused as"
+  refusal_of_the_call : "may be refused as"
 ]
 
 
