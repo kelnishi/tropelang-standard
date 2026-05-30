@@ -14,10 +14,12 @@ import "trl/concepts/index.trl"
 
 // Lateral thematic links (optional, machine-followable — for discovery / embeddings).
 assoc foreshadowing -> [
-  revelation : "pays off as",
-  secret     : "hints at",
-  the_future : "points toward",
-  dread      : "can seed"
+  revelation   : "pays off as",
+  secret       : "hints at",
+  the_future   : "points toward",
+  dread        : "can seed",
+  chekhovs_gun : "honest species",
+  red_herring  : "false species"
 ]
 
 
@@ -27,8 +29,7 @@ assoc foreshadowing -> [
 
 imply Foreshadowing -> [Anticipatory, Planted, Narrative]
 imply Prophecy      -> [Foreshadowing, Explicit, Binding]
-imply RedHerring    -> [Foreshadowing, Misdirection, Deceptive]
-// ChekhovsGun promoted to its own trope — see trl/tropes/chekhovs_gun.trl
+// ChekhovsGun and RedHerring promoted to their own tropes — see trl/tropes/{chekhovs_gun,red_herring}.trl
 
 
 // === ABSTRACT RULES ===

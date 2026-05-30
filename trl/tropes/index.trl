@@ -25,6 +25,7 @@ import "trl/tropes/the_mentor.trl"
 import "trl/tropes/call_to_adventure.trl"
 import "trl/tropes/three_act_structure.trl"
 import "trl/tropes/chekhovs_gun.trl"
+import "trl/tropes/red_herring.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -43,6 +44,9 @@ revelation [+Trope(category="Omnipresent", source="allthetropes.org/wiki/The_Rev
 
 // CHEKHOV'S GUN — a planted object that must pay off. An honest species of Foreshadowing.
 concept chekhovs_gun [+Trope(category="Omnipresent", source="allthetropes.org/wiki/Chekhovs_Gun")] [%Narrative]
+
+// RED HERRING — a clue deliberately planted to mislead. A false species of Foreshadowing.
+concept red_herring [+Trope(category="Omnipresent", source="allthetropes.org/wiki/Red_Herring")] [%Narrative]
 
 // CHARACTER-ROLE BUILDING BLOCKS (Universal Tropes) — the cast structure. The applied
 // forms are the prelude roles [+Protagonist] / [+Antagonist]; these are the canonical

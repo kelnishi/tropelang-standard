@@ -1,0 +1,78 @@
+// === PREAMBLE ===
+// @trope    Red Herring
+// @category Omnipresent Tropes
+// @source   https://allthetropes.org/wiki/Red_Herring
+// @version  1.3
+//
+// Laconic: a clue deliberately planted to mislead — it looks important but pays off to
+// nothing, steering the audience toward a false conclusion. False foreshadowing (contrast
+// the honest Chekhov's Gun); the author knows it will not deliver. Promoted from
+// foreshadowing.trl's `imply RedHerring`.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"        // foreshadowing, deception, secret, revelation
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc red_herring -> [
+  foreshadowing : "a false species of",
+  deception     : "a kind of",
+  secret        : "obscures",
+  revelation    : "delays",
+  chekhovs_gun  : "contrasts with"
+]
+
+
+// === ONTOLOGY ===
+
+imply RedHerring -> [Foreshadowing, Misdirection, Deceptive]
+
+
+// === ABSTRACT RULES ===
+
+// PLANTED — a clue is conspicuously laid to implicate a false target.
+rule RedHerring_Planted {
+  when:
+    evt $clue [&Implicates(target=$suspect)]
+    not ( $clue [+Debunked] )
+  then:
+    $clue [+RedHerring]
+}
+
+// DEBUNKED — the trail is exposed as false; the real answer lay elsewhere all along.
+rule RedHerring_Debunked {
+  when:
+    evt $clue [+RedHerring]
+    evt $reveal [&Exonerates(target=$suspect)]
+  then:
+    $clue [+Debunked]
+    $clue [+FalseTrail]
+    !$suspect [+Innocent]!
+}
+
+
+// === CONCRETE VIGNETTE: Ace Attorney — the planted testimony (video game) ===
+
+// THE DEFENDANT
+char defendant [+Accused]
+
+// PHOENIX WRIGHT
+char phoenix [+Protagonist] [+Defender]
+
+scene the_cross_examination {
+  beat 1 {
+    evt testimony [&Implicates(target=defendant)]
+    testimony [+RedHerring]
+  }
+  beat 2 {
+    evt objection [&Exonerates(target=defendant)]
+        dialog(inject=[speaker=phoenix], inline="""
+               speaker: "{speaker}"
+               cue: "finger thrust across the courtroom"
+               tone: triumphant
+               text: "Objection! That testimony contradicts the evidence."
+               """)
+    testimony [+Debunked] [+FalseTrail]
+    !defendant [+Innocent]!
+  }
+}

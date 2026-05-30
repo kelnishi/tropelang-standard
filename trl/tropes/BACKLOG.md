@@ -42,7 +42,7 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 - [x] The Reveal                  (Omnipresent)
 - [x] Hope Spot                   (Omnipresent)
 - [x] Chekhov's Gun               (Omnipresent — promoted from foreshadowing's imply)
-- [ ] Red Herring                 (cf. `foreshadowing.trl` imply `RedHerring`)   ← **up next**
+- [x] Red Herring                 (Omnipresent — promoted from foreshadowing's imply)
 - [ ] Plot Twist
 - [ ] MacGuffin                   (cf. skill example `MacGuffinDelivery`)
 - [~] Dramatic Irony              (`theory_of_mind.trl`)
@@ -63,5 +63,5 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 1. ~~Conflict~~ ✓ — the engine that Protagonist + Antagonist create.
 2. ~~The Hero~~ ✓ / ~~The Mentor~~ ✓ — core cast well underway.
 3. ~~Call to Adventure~~ ✓ / ~~Three-Act Structure~~ ✓ — the spine of plot.
-4. ~~Chekhov's Gun~~ ✓ / **Red Herring** — promote from `foreshadowing.trl`'s imply to full tropes.   ← **up next**
-Then converge with the drams gap on the eval stories.
+4. ~~Chekhov's Gun~~ ✓ / ~~Red Herring~~ ✓ — promoted from `foreshadowing.trl`'s imply to full tropes.
+5. **Next:** finish the cast (Sidekick, Foil, Love Interest, Narrator…) or the journey beats (Refusal of the Call, Climax), then converge with the drams gap on the eval stories.
