@@ -140,6 +140,14 @@ If the trope has a meaningful subversion, add `rule TropeName_Subverted` or use 
 
 **Vary the source story and format.** Across conversions, draw vignettes from a *variety* of stories, media, and eras — film, TV, novel, play, myth, game, comic — and do not lean on one franchise (e.g. several LotR examples in a row). Prefer an example that also sharpens the trope's nuance (a villain-protagonist for The Protagonist, a *non-villain* antagonist for The Antagonist). A monoculture of examples narrows the corpus and skews the drams eval set.
 
+**Capture the connective detail in code, not the laconic.** As much of the trope's errata as the source gives — what it imparts, risks, catalyzes, pairs with — should be *code*, so evaluators and embeddings can follow real connections (the laconic is for human readers only). Use the right construct:
+- **`imply`** for hierarchy (the tag's broader components — normative, matched).
+- **edges** (`--` `->` `@` `><`) for concrete story-graph relationships (normative, matched).
+- **`assoc Subject -> [target : "relation", …]`** for lateral thematic links (optional, redundancy-allowed metadata; *not* matched — for discovery/embeddings). e.g. `assoc mentor -> [wisdom : "imparts", death : "occupational hazard"]`.
+- **`import "file"`** to make a dependency on another file's nodes explicit in code, not a `@uses` comment.
+
+TropeLang is not strictly hierarchical — bidirectional/lateral links are encouraged. See `the_mentor.trl` as the worked example.
+
 ### 5. Format the output
 
 Return a `.trl` fenced code block with a brief annotation:

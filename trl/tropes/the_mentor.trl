@@ -5,19 +5,34 @@
 // @version  1.3
 //
 // Laconic: the wise, experienced figure who guides and trains a less-experienced
-// protagonist — teacher, advisor, and often an authority figure. (Frequently killed off to
-// force the hero's independence — see the skill's MentorDeath example.) Builds on the
-// prelude Mentor_Of / Student_Of relations and the Wise / Ally / Authority roles.
+// protagonist. The connective detail is encoded below in CODE — `import` for the nodes it
+// depends on, `assoc` for lateral thematic links, `imply` for hierarchy — not left in this
+// note, so evaluators and embeddings can follow the actual connections.
 
 
-// === ONTOLOGY ===
+// === IMPORTS — explicit dependencies on other nodes ===
+import "trl/concepts/virtues.trl"      // wisdom
+import "trl/concepts/universal.trl"    // legacy
+import "trl/concepts/existential.trl"  // becoming, death
 
+
+// === ASSOCIATIONS — lateral, optional, machine-followable (was buried in the laconic) ===
+assoc mentor -> [
+  wisdom   : "imparts",
+  legacy   : "leaves behind",
+  becoming : "catalyzes in the student",
+  death    : "occupational hazard",
+  hero     : "guides"
+]
+
+
+// === ONTOLOGY — hierarchy ===
 imply Mentor -> [Ally, Authority, Wise]
 
 
 // === ABSTRACT RULE ===
-// A wise ally bound to a less-experienced protagonist by the mentor/student relation is
-// The Mentor; the bond is made reciprocal. (Reuses the prelude Mentor_Of / Student_Of rels.)
+// A wise ally bound to a protagonist by the mentor/student relation is The Mentor; the
+// bond is made reciprocal. (Reuses the prelude Mentor_Of / Student_Of rels.)
 rule TheMentor {
   when:
     char $mentor [+Wise]

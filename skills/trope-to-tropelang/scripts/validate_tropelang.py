@@ -28,7 +28,7 @@ import sys, os, glob, re as _re
 ENTITY_TYPES = {"char", "set", "obj", "evt", "arc", "concept"}  # v1.3: concept added
 SCOPE_TYPES  = {"scene", "act", "beat"}
 DECL_TYPES   = {"attr", "prop", "state", "verb", "rel"}   # v1.2 attribute declarations
-PLANNED_KW   = {"resolve", "retcon", "narrow", "as", "import", "ref"}
+PLANNED_KW   = {"resolve", "retcon", "narrow", "as", "import", "ref", "assoc"}
 # Tag sigils (v1.3):
 #   = Body  # Mind  % Essence  ~ Intent  @ Rel  & Verb  + generic Prop
 #   - remove  ? query  ! assert-absent
