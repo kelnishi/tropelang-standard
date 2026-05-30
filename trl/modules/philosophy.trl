@@ -1,0 +1,186 @@
+// @title   TropeLang Module — Philosophy
+// @version 0.1
+// @depends trl/concepts/index.trl  (references existential + emotional concepts)
+// @note    Higher-level than the concept library: named philosophical positions,
+//          their oppositions, and the thought-experiments that test them. These
+//          are structured tropes — each doctrine is a concept node wired into the
+//          others by edges, with `imply` expansions for the character-level tags a
+//          story applies (e.g. a [+Stoic] hero, an [+Existential_Crisis] arc).
+//
+// Import: import "trl/modules/philosophy.trl"
+
+
+// =============================================================================
+// VOCABULARY — extend the type system for the philosophical domain
+// =============================================================================
+
+attr Doctrine          [+Epistemic]   // a structured, named philosophical position
+attr ThoughtExperiment [+Epistemic]   // a scenario constructed to test a doctrine
+
+prop Contested         [+Epistemic]   // no settled consensus; live disagreement
+prop Foundational      [+Epistemic]   // load-bearing for an entire worldview
+prop SelfRefuting      [+Epistemic]   // collapses when applied to itself
+
+verb Posits(claim)                    // a doctrine asserts a claim about the world
+verb Refutes(target)                  // a position or experiment defeats another
+verb Reconciles(target)               // a position dissolves an apparent antinomy
+verb Shattered(subject, object)       // an event collapses a subject's held meaning/creed
+
+
+// =============================================================================
+// METAPHYSICS — what is fundamentally real
+// =============================================================================
+
+// The view that mind and matter are two distinct kinds of substance.
+// Dualism makes the mind-body problem acute: how can two substances interact?
+concept dualism        [%Timeless] [+Abstract] [+Doctrine] [+Contested]
+
+// The view that only physical matter is fundamental; mind is what matter does.
+// Materialism dissolves the soul but inherits the "hard problem" of experience.
+concept materialism    [%Timeless] [+Abstract] [+Doctrine] [+Contested]
+
+// The view that mind, idea, or consciousness is the fundamental reality.
+// Idealism explains experience cheaply but struggles with the shared, stubborn world.
+concept idealism       [%Timeless] [+Abstract] [+Doctrine] [+Contested]
+
+// The view that reality is, at bottom, a single kind of substance.
+// Monism is the impulse to unify what dualism splits — material, ideal, or neutral.
+concept monism         [%Timeless] [+Abstract] [+Doctrine] [+Foundational]
+
+
+// =============================================================================
+// AGENCY — freedom, cause, and the will
+// =============================================================================
+
+// The view that every event, including choice, is fixed by prior causes.
+// Determinism threatens responsibility; narrative needs the threat to feel real.
+concept determinism    [%Timeless] [+Abstract] [+Doctrine] [+Foundational]
+
+// The view that free will and determinism are compatible, properly understood.
+// Compatibilism redefines freedom as acting from one's own desires, not from nothing.
+concept compatibilism  [%Timeless] [+Abstract] [+Doctrine] [+Paradoxical]
+
+
+// =============================================================================
+// MEANING — the stance toward an indifferent world
+// =============================================================================
+
+// The view that existence precedes essence; one becomes what one chooses.
+// Existentialism makes freedom a burden — there is no given nature to fall back on.
+concept existentialism [%Timeless] [+Abstract] [+Doctrine] [+Foundational]
+
+// The recognition of the gap between the human demand for meaning and a silent world.
+// Absurdism counsels neither suicide nor false hope but revolt — living in the gap.
+concept absurdism      [%Timeless] [+Abstract] [+Doctrine] [+Paradoxical]
+
+// The view that life has no inherent meaning, value, or purpose.
+// Nihilism is a destination existentialism tries to pass through without staying.
+concept nihilism       [%Timeless] [+Abstract] [+Doctrine] [+Corrupting]
+
+// The view that virtue and reason yield tranquility by accepting what cannot be changed.
+// Stoicism accepts determinism and locates freedom in the judgment one brings to fate.
+concept stoicism       [%Timeless] [+Abstract] [+Doctrine] [+Aspirational]
+
+
+// =============================================================================
+// ETHICS — how one ought to act
+// =============================================================================
+
+// The view that the right act is the one producing the greatest good for the greatest number.
+// Utilitarianism is ruthless arithmetic: it can license sacrificing the one for the many.
+concept utilitarianism [%Timeless] [+Abstract] [+Doctrine] [+Contested]
+
+// The view that acts are right or wrong by duty and rule, regardless of outcome.
+// Deontology forbids using a person merely as a means — even to a greater good.
+concept deontology     [%Timeless] [+Abstract] [+Doctrine] [+Binding]
+
+// The view that ethics is about character — being a person of virtue, not following rules.
+// Virtue ethics asks "what would a good person do?" rather than "what is the rule?"
+concept virtue_ethics  [%Timeless] [+Abstract] [+Doctrine] [+Aspirational]
+
+
+// =============================================================================
+// THOUGHT EXPERIMENTS — the wiki-convertible tropes
+// Each is a scenario; its edges point at the doctrine it tests or breaks.
+// =============================================================================
+
+// A ship whose planks are replaced one by one until none of the original remains.
+// The Ship of Theseus interrogates identity: is the restored ship the same ship?
+concept ship_of_theseus   [%Timeless] [+Abstract] [+ThoughtExperiment]
+
+// A runaway trolley; divert it to kill one instead of five, or do nothing.
+// The Trolley Problem pits the utilitarian sum against the deontological prohibition.
+concept trolley_problem   [%Timeless] [+Abstract] [+ThoughtExperiment] [+Paradoxical]
+
+// Choosing the rules of society from behind a screen hiding your place in it.
+// The Veil of Ignorance derives fairness from self-interested impartiality.
+concept veil_of_ignorance [%Timeless] [+Abstract] [+ThoughtExperiment]
+
+// A brain in a vat fed signals indistinguishable from a real world.
+// The Brain in a Vat motivates radical skepticism: how could you ever know?
+concept brain_in_a_vat    [%Timeless] [+Abstract] [+ThoughtExperiment] [+SelfRefuting]
+
+
+// =============================================================================
+// ONTOLOGY — character/arc tags these doctrines license, with their expansions
+// A story tags a hero [+Stoic]; the engine asserts the broader components.
+// =============================================================================
+
+imply Stoic             -> [Disciplined, Accepting, Rational]
+imply Nihilist          -> [Disillusioned, Detached, Corrupting]
+imply Existential_Crisis -> [Conflicted, Searching, Unmoored]
+imply Moral_Dilemma     -> [Conflicted, Binding, Generative]
+
+
+// =============================================================================
+// STRUCTURE — how the doctrines stand to one another
+// `><` is a standing antinomy; `->` a directed dependence or risk.
+// =============================================================================
+
+dualism      >< materialism   : "The Mind-Body Problem"
+idealism     >< materialism   : "What Is Fundamental"
+determinism  >< free_will     : "The Central Antinomy"
+compatibilism -- determinism  : "Reconciles"
+compatibilism -- free_will    : "Reconciles"
+existentialism -> absurdism   : "Confronts"
+existentialism -> nihilism    : "Risks Collapse Into"
+stoicism     -> determinism   : "Accepts"
+utilitarianism >< deontology  : "Ends Versus Means"
+
+trolley_problem   -- utilitarianism : "Tests"
+trolley_problem   -- deontology     : "Tests"
+veil_of_ignorance -> deontology     : "Derives Fairness For"
+ship_of_theseus   -- identity       : "Interrogates"
+brain_in_a_vat    -> nihilism       : "Threatens Knowledge Toward"
+
+
+// =============================================================================
+// RECOGNITION — rules that detect a philosophical trope in a story graph
+// =============================================================================
+
+// Existential crisis: a despairing character whose held meaning has been shattered
+// and who holds no hope. The discrepancy is structural — a Shattered event over a
+// bound creed, plus the absence of the Hopeful state — not a prose description.
+rule ExistentialCrisis {
+  when:
+    char $c [#Despairing]
+    evt  $loss [&Shattered(subject=$c, object=$creed)]
+    not ( $c [#Hopeful] )
+  then:
+    $c [+Existential_Crisis(over=$creed)]
+}
+
+// Moral dilemma: a character committed to two distinct ends that stand in mutual
+// conflict. The `><` operator carries the "mutually exclusive" semantics directly;
+// the join is the two bound duty variables, so the engine can actually match it.
+rule MoralDilemma {
+  unique: true
+  when:
+    char $c
+    $c [~Committed_To(target=$duty_a)]
+    $c [~Committed_To(target=$duty_b)]
+    $duty_a != $duty_b
+    $duty_a >< $duty_b
+  then:
+    $c [+Moral_Dilemma(between=$duty_a)]
+}

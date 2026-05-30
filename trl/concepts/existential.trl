@@ -1,0 +1,97 @@
+// @title   TropeLang Concept Library — Existential
+// @version 1.3
+// @note    Fundamental conditions of conscious existence. These are the deep
+//          questions all narrative traditions address regardless of culture.
+//
+// Import: import "trl/concepts/existential.trl"
+
+
+// =============================================================================
+// MORTALITY AND TIME
+// =============================================================================
+
+// The condition of being subject to death; all living things that can die are mortal.
+// Mortality is not the same as being near death — it is the permanent structural possibility of death.
+concept mortality      [%Timeless] [+Inevitable] [+Abstract]
+
+// The condition of being not subject to death; exemption from natural ending.
+// Immortality carries its own costs — it outlasts all bonds and contexts.
+concept immortality    [%Timeless] [+Abstract] [+Paradoxical]
+
+// The total span of a being's existence — the arc from beginning to ending.
+// A life is both lived and narrated; the story of a life may differ from its experience.
+concept life           [%Timeless] [+Abstract]
+
+// The permanent cessation of a being's existence; the end of a life.
+// Death is irreversible. Its meaning — punishment, release, tragedy, honor — varies by context.
+concept death          [%Timeless] [+Inevitable] [+Irreversible] [+Abstract]
+
+// The dimension in which events occur and change is possible; the medium of experience.
+// Time is both measurable (duration) and subjective (how it feels).
+concept time           [%Timeless] [+Abstract] [+Inevitable]
+
+// The continued existence of effects, memories, or patterns beyond their origin.
+// Continuity connects the past to the present to the future.
+concept continuity     [%Timeless] [+Abstract]
+
+// The condition of being temporary; all things that exist in time will end.
+// Impermanence is not a flaw but a structural property of existence.
+concept impermanence   [%Timeless] [+Inevitable] [+Abstract]
+
+
+// =============================================================================
+// IDENTITY AND SELF
+// =============================================================================
+
+// The continuous or coherent sense of being a particular, distinct entity.
+// Identity may be given (birth, body, lineage) or constructed (choice, role, story).
+concept identity       [%Timeless] [+Abstract] [+Fragile]
+
+// The boundary between one entity and all others; the membrane of self.
+// The self is experienced from within; it is constructed partly by others.
+concept self           [%Timeless] [+Abstract]
+
+// The entity or existence that is not-self; the world beyond one's own boundary.
+// Other is necessary for self — without difference, identity dissolves.
+concept other          [%Timeless] [+Abstract]
+
+// The movement from one state of being to another at a fundamental level.
+// Transformation is deeper than change — it alters the nature of the thing, not just its condition.
+concept transformation [%Timeless] [+Abstract] [+Irreversible]
+
+// The process of being shaped, formed, or developed — becoming what one will be.
+// Becoming implies incompleteness; the subject is not yet what it is moving toward.
+concept becoming       [%Timeless] [+Abstract]
+
+// The question of whether one's actions are the product of one's own agency or prior causes.
+// Free will is both a philosophical problem and a practical narrative necessity.
+concept free_will      [%Timeless] [+Abstract] [+Paradoxical]
+
+
+// =============================================================================
+// SUFFERING AND TRANSCENDENCE
+// =============================================================================
+
+// The experience of pain, difficulty, or distress — physical, psychological, or existential.
+// Suffering is not always visible from outside the sufferer.
+concept suffering      [%Timeless] [+Abstract] [#Painful]
+
+// The movement beyond ordinary limits — of self, pain, circumstance, or understanding.
+// Transcendence may be spiritual, philosophical, artistic, or interpersonal.
+concept transcendence  [%Timeless] [+Abstract] [+Aspirational]
+
+// The state of coming to terms with what is — accepting conditions without denial.
+// Acceptance is not the same as approval or resignation.
+concept acceptance     [%Timeless] [+Abstract]
+
+// The absence of apparent order, reason, or justice in events.
+// Absurdity arises when expectations of meaning meet an indifferent reality.
+concept absurdity      [%Timeless] [+Abstract] [+Paradoxical]
+
+// The condition in which existence offers no apparent ground, center, or meaning.
+// Void may be terrifying, liberating, or simply empty.
+concept void           [%Timeless] [+Abstract]
+
+// The question of why something exists rather than nothing; the ground of existence.
+// Being underlies all other concepts; without it, nothing else applies.
+concept being          [%Timeless] [+Primordial] [+Abstract]

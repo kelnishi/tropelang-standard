@@ -1,0 +1,118 @@
+// @title   TropeLang Concept Library — Emotional
+// @version 1.3
+// @note    Emotions as concept nodes — distinct from emotional states ([#Mind]).
+//          A character IN a state of grief uses [#Grieving].
+//          A character who FEARS grief, SEEKS joy, or is DEVOTED to love
+//          uses a concept node as the target of a [~Intent] relationship.
+//          These concepts also appear in edges: grief -- loss : "Caused By".
+//
+// Import: import "trl/concepts/emotional.trl"
+
+
+// =============================================================================
+// PRIMARY EMOTIONS AS CONCEPTS
+// These name the emotion as a thing in the world, not just an internal state.
+// =============================================================================
+
+// The experience of intense positive feeling; a heightened sense of aliveness and well-being.
+// Joy as concept: something a character may seek, fear losing, or be devoted to.
+concept joy            [%Timeless] [+Abstract]
+
+// The experience of intense negative feeling arising from significant loss or harm.
+// Grief as concept: something a character may avoid, fear, or carry as a burden.
+concept grief          [%Timeless] [#Painful] [+Abstract]
+
+// The sense of threat or anticipated harm; the response to perceived danger.
+// Fear as concept: something a character may seek to master, flee from, or weaponize.
+concept fear           [%Timeless] [#Painful] [+Abstract]
+
+// The desire or expectation of a positive outcome; forward-directed positive feeling.
+// Hope as concept: something that can be lost, given, destroyed, or sustained.
+concept hope           [%Timeless] [+Aspirational] [+Abstract] [+Fragile]
+
+// The condition in which no positive outcome appears possible; the absence of hope.
+// Despair as concept: something a character may fall into, resist, or transmit to others.
+concept despair        [%Timeless] [#Painful] [+Abstract] [+Corrupting]
+
+// The directed desire toward another being or thing; an orientation of wanting and care.
+// Love as concept: distinct from love as a state — here it is something pursued, lost, or built.
+concept love           [%Timeless] [+Abstract] [+Generative] [+Fragile]
+
+// The sustained negative orientation toward another; a desire for their harm or absence.
+// Hate as concept: something a character may nurture, overcome, or be consumed by.
+concept hate           [%Timeless] [+Corrupting] [+Abstract]
+
+// The desire for what another has; resentment of their advantage or possession.
+// Envy as concept: something a character acts from, denies, or is destroyed by.
+concept envy           [%Timeless] [+Corrupting] [#Painful] [+Abstract]
+
+// The desire or expectation of a negative outcome; backward-looking negative feeling about future.
+// Dread as concept: something a character lives under, fights, or is paralyzed by.
+concept dread          [%Timeless] [#Painful] [+Abstract]
+
+
+// =============================================================================
+// COMPLEX EMOTIONAL STATES AS CONCEPTS
+// =============================================================================
+
+// The persistent ache for something absent — a person, place, time, or state.
+// Longing differs from desire in its orientation toward what cannot currently be had.
+concept longing        [%Timeless] [#Painful] [+Abstract]
+
+// A form of longing directed toward the past — desire to return to a prior time or place.
+// Nostalgia idealizes what is remembered; the past it reaches for may not have existed as recalled.
+concept nostalgia      [%Timeless] [#Painful] [+Abstract] [+Paradoxical]
+
+// The inner conflict arising when one's actions contradict one's values.
+// Shame as concept: something a character conceals, is driven by, or learns to release.
+concept shame          [%Timeless] [#Painful] [+Abstract]
+
+// The inner conflict arising from having caused harm to another.
+// Guilt differs from shame: shame is about who one is; guilt is about what one has done.
+concept guilt          [%Timeless] [#Painful] [+Abstract]
+
+// The quality of treating others as they wish to be treated; imaginative self-placement in another's experience.
+// Empathy as concept: something a character may practice, lose, or be denied.
+concept empathy        [%Timeless] [+Aspirational] [+Abstract]
+
+// The condition of holding contradictory feelings or orientations simultaneously.
+// Ambivalence as concept: something a character lives with, resolves, or is paralyzed by.
+concept ambivalence    [%Timeless] [+Abstract] [+Paradoxical]
+
+// The heightened state of positive feeling when one reflects on one's own actions or attributes.
+// Pride as concept (healthy): something a character earns, maintains, or loses. See virtues.trl for pride_excess.
+concept pride          [%Timeless] [+Abstract]
+
+// The experience of being known and accepted despite one's flaws or past.
+// Being forgiven is passive — the concept names what is received, not given.
+concept being_forgiven [%Timeless] [+Abstract]
+
+// The state of having one's experience witnessed and validated by another.
+// Being seen requires both a witness and an accurate perception; it cannot be self-conferred.
+concept being_seen     [%Timeless] [+Aspirational] [+Abstract]
+
+
+// =============================================================================
+// EMOTIONAL CONDITIONS THAT CHARACTERS DIRECT THEMSELVES TOWARD
+// Common targets of [~Intent] relationships
+// =============================================================================
+
+// The condition of being at peace with present circumstances; wanting no other state.
+// Contentment is often invisible — it leaves no trace in narrative until it is threatened.
+concept contentment    [%Timeless] [+Aspirational] [+Abstract] [+Fragile]
+
+// The experience of being cared for, nurtured, or kept safe by another.
+// To be comforted is to have suffering witnessed and met with care.
+concept comfort        [%Timeless] [+Abstract]
+
+// The state of existing within a bounded, protected space — free from threat.
+// Security is both material (safety from harm) and existential (certainty of place).
+concept security       [%Timeless] [+Aspirational] [+Abstract] [+Fragile]
+
+// The condition of being without constraint or obligation — able to move, choose, and act.
+// Freedom-as-feeling differs from freedom-as-condition; the first can exist without the second.
+concept liberation     [%Timeless] [+Aspirational] [+Abstract]
+
+// The experience of pleasure, delight, or amusement; levity in the face of existence.
+// Joy is intense and exceptional; happiness is quieter and sustained.
+concept happiness      [%Timeless] [+Aspirational] [+Abstract]

@@ -1,0 +1,521 @@
+// @title   TropeLang Prelude — Standard Library
+// @version 1.3
+//
+// Automatically in scope for every .trl file.
+// Do not import manually. Override with // @no-prelude for a clean slate.
+//
+// ─────────────────────────────────────────────────────────────────────────────
+// DECLARATION FORMS
+//   attr  Name [+Parent]          meta-hierarchy node — the type system itself
+//   prop  Name [+Group]           stable entity attribute (adjective / noun)
+//   state Name [+Group]           mutable condition — can be added and removed
+//   verb  Name(params) [+Group]   action descriptor — what an event does
+//   rel   Name(params) [+Group]   relationship type — how entities connect
+//
+// TAG SIGILS — the leading char selects the facet a tag applies to
+//   [+Name]   prop    — generic stable property or category
+//   [=Name]   body    — physical form, embodiment, material condition
+//   [#Name]   mind    — cognition, emotion, psychological state
+//   [%Name]   essence — fundamental nature; ontological / timeless quality
+//   [@Name]   rel     — relationship, bond, or structural connection
+//   [&Name]   verb    — action; primarily on evt nodes
+//   [~Name]   intent  — directed psychological orientation toward a target
+//
+// MUTATION OPERATORS (type inferred from declaration)
+//   [-Name]   remove any tag
+//   [?Name]   query / test presence
+//   [!Name]   assert absent
+// ─────────────────────────────────────────────────────────────────────────────
+
+
+// =============================================================================
+// TIER 0 — META-HIERARCHY
+// The type system for the type system.
+// All other prelude entries inherit from one of these.
+// =============================================================================
+
+attr Kind                        // root — all type-system nodes are [+Kind]
+
+// POS categories — what role a declared attribute plays
+attr Prop          [+Kind]       // stable entity attribute
+attr State         [+Kind]       // mutable condition
+attr Verb          [+Kind]       // action/event descriptor
+attr Rel           [+Kind]       // relationship/bond type
+attr Intentional   [+Kind]       // directed psychological orientation toward a target
+
+// Semantic groupings — organise attrs into domains
+attr Ontological   [+Kind]       // fundamental nature
+attr Vital         [+Kind]       // life and embodiment
+attr Psychological [+Kind]       // inner life, emotion, cognition
+attr Social        [+Kind]       // community, hierarchy, role
+attr Kinship       [+Kind]       // family and lineage
+attr Interpersonal [+Kind]       // acts between individuals
+attr Narrative     [+Kind]       // story structure and function
+attr Spatial       [+Kind]       // place and environment
+attr Temporal      [+Kind]       // time and duration
+attr Political     [+Kind]       // power, institution, governance
+attr Mythological  [+Kind]       // divine, cosmic, transcendent
+attr Epistemic     [+Kind]       // knowledge, belief, perception
+
+
+// =============================================================================
+// TIER 1 — ONTOLOGICAL
+// What something fundamentally is. Props: do not change without a major rule.
+// =============================================================================
+
+prop Mortal        [+Ontological]
+prop Immortal      [+Ontological]
+prop Sentient      [+Ontological]
+prop Animate       [+Ontological]
+prop Inanimate     [+Ontological]
+prop Singular      [+Ontological]    // unique — only one can exist
+prop Collective    [+Ontological]    // a group, institution, or people
+prop Primordial    [+Ontological]    // existed before the current order
+prop Liminal       [+Ontological]    // threshold — between states, worlds, identities
+
+// Props for describing concept nodes
+prop Abstract      [+Ontological]    // is not a physical, social, or embodied entity
+prop Universal     [+Ontological]    // applies across cultures, histories, and species
+prop Inevitable    [+Ontological]    // cannot ultimately be avoided or escaped
+prop Aspirational  [+Ontological]    // something to strive toward; often unreachable
+prop Paradoxical   [+Ontological]    // contains internal contradiction or tension
+prop Binding       [+Ontological]    // constrains the holder; creates obligation
+prop Irreversible  [+Ontological]    // once it occurs or applies, cannot be undone
+prop Generative    [+Ontological]    // produces growth or change when engaged
+prop Annihilating  [+Ontological]    // destroys or dissolves what it touches unchecked
+
+
+// =============================================================================
+// TIER 2 — VITAL CONDITIONS
+// Life, embodiment, presence. States: change by event.
+// =============================================================================
+
+state Alive        [+Vital]
+state Dead         [+Vital]
+state Wounded      [+Vital]
+state Ill          [+Vital]
+state Dying        [+Vital]
+state Unconscious  [+Vital]
+state Recovering   [+Vital]
+
+state Present      [+Vital]
+state Absent       [+Vital]
+state Hidden       [+Vital]
+state Revealed     [+Vital]
+
+
+// =============================================================================
+// TIER 3 — PSYCHOLOGICAL
+// Inner life, emotion, cognition. All states — they change through experience.
+// Genre-neutral: applies to tragedy, comedy, romance, and myth equally.
+// =============================================================================
+
+// Core emotions
+state Joyful       [+Psychological]
+state Grieving     [+Psychological]
+state Longing      [+Psychological]
+state Content      [+Psychological]
+state Restless     [+Psychological]
+state Afraid       [+Psychological]
+state Hopeful      [+Psychological]
+state Despairing   [+Psychological]
+state Ashamed      [+Psychological]
+state Proud        [+Psychological]
+state Guilty       [+Psychological]
+state Conflicted   [+Psychological]
+state Certain      [+Psychological]
+
+// Relational feelings
+state Devoted      [+Psychological]
+state Estranged    [+Psychological]
+state Infatuated   [+Psychological]
+state Heartbroken  [+Psychological]
+state Jealous      [+Psychological]
+state Trusting     [+Psychological]
+state Suspicious   [+Psychological]
+state Forgiven     [+Psychological]
+state Grateful     [+Psychological]
+state Resentful    [+Psychological]
+
+// Cognitive states
+state Aware        [+Psychological]
+state Ignorant     [+Psychological]    // does not know a relevant fact
+state Deceived     [+Psychological]
+state Enlightened  [+Psychological]
+state Transformed  [+Psychological]   // emerged from an experience changed
+state Disillusioned [+Psychological]
+state Determined   [+Psychological]
+
+
+// =============================================================================
+// TIER 4 — STABLE TRAITS
+// Props: do not change except under extraordinary narrative pressure.
+// =============================================================================
+
+prop Trustworthy   [+Ontological]
+prop Deceptive     [+Ontological]
+prop Loyal         [+Ontological]
+prop Courageous    [+Ontological]
+prop Cowardly      [+Ontological]
+prop Cunning       [+Ontological]
+prop Wise          [+Ontological]
+prop Naive         [+Ontological]
+prop Resilient     [+Ontological]
+prop Volatile      [+Ontological]
+
+// Object traits
+prop Lethal        [+Ontological]
+prop Corrupting    [+Ontological]
+prop Healing       [+Ontological]
+prop Symbolic      [+Ontological]
+prop Fragile       [+Ontological]
+prop Durable       [+Ontological]
+prop Sentient      [+Ontological]    // intentionally duplicated — object or entity
+
+
+// =============================================================================
+// TIER 5 — SOCIAL STANDING
+// Roles and positions in community. Mix of props (stable role) and states
+// (current position, which can change).
+// =============================================================================
+
+// Stable social props — what someone IS in a community
+prop Elder         [+Social]
+prop Heir          [+Social]
+prop Outcast       [+Social]
+prop Stranger      [+Social]
+prop Native        [+Social]
+prop Chosen        [+Social]         // selected by external force
+prop Peer          [+Social]
+
+// Institutional props
+prop Authority     [+Social]
+prop Subject       [+Social]
+prop Faction       [+Social]         // a group with shared interests
+prop Institution   [+Social]         // persistent structure: law, guild, church
+
+// Mutable position states
+state In_Power     [+Social]
+state Deposed      [+Social]
+state Exiled       [+Social]
+state Liberated    [+Social]
+state Indebted     [+Social]
+state Obligated    [+Social]
+state Compromised  [+Social]
+state Aligned      [+Social]
+state Opposed      [+Social]
+state Negotiating  [+Social]
+state Active       [+Social]
+state Dormant      [+Social]
+state Resolved     [+Social]
+state Pending      [+Social]
+
+
+// =============================================================================
+// TIER 6 — KINSHIP
+// Family structure and lineage. Relationships: structural, long-lived bonds.
+// =============================================================================
+
+rel Parent_Of(child)       [+Kinship]
+rel Child_Of(parent)       [+Kinship]
+rel Sibling_Of(other)      [+Kinship]
+rel Spouse_Of(other)       [+Kinship]
+rel Ancestor_Of(desc)      [+Kinship]
+rel Descendant_Of(anc)     [+Kinship]
+rel Guardian_Of(ward)      [+Kinship]
+rel Ward_Of(guardian)      [+Kinship]
+rel Kin_Of(other)          [+Kinship]    // family — lineage unspecified
+
+
+// =============================================================================
+// TIER 7 — SOCIAL BONDS
+// Non-familial relationships between individuals or groups.
+// =============================================================================
+
+rel Ally_Of(other)         [+Social]
+rel Rival_Of(other)        [+Social]
+rel Adversary_Of(other)    [+Social]
+rel Patron_Of(client)      [+Social]
+rel Client_Of(patron)      [+Social]
+rel Mentor_Of(student)     [+Social]
+rel Student_Of(mentor)     [+Social]
+rel Confidant_Of(other)    [+Social]
+rel Beloved_Of(other)      [+Social]
+rel Witness_To(event)      [+Social]
+rel Bound_To(force)        [+Social]
+rel Indebted_To(other)     [+Social]
+
+
+// =============================================================================
+// TIER 8 — LIFE EVENTS
+// Universal punctuation marks of a life. Verbs: appear on evt nodes.
+// =============================================================================
+
+verb Born                  [+Vital]
+verb Died                  [+Vital]
+verb Wounded(by)           [+Vital]
+verb Healed(by)            [+Vital]
+
+verb Married(partner)      [+Interpersonal]
+verb Separated(from)       [+Interpersonal]
+verb Divorced(from)        [+Interpersonal]
+verb Departed(from)        [+Interpersonal]
+verb Returned(to)          [+Interpersonal]
+verb Initiated(into)       [+Interpersonal]    // rite of passage, induction
+verb Reconciled(with)      [+Interpersonal]
+verb Estranged(from)       [+Interpersonal]
+verb Adopted(child)        [+Interpersonal]
+verb Chosen(by)            [+Interpersonal]
+verb Exiled(by)            [+Interpersonal]
+verb Liberated(by)         [+Interpersonal]
+verb Crowned(by)           [+Political]
+verb Deposed(by)           [+Political]
+verb Abdicated(to)         [+Political]
+
+
+// =============================================================================
+// TIER 9 — INTERPERSONAL ACTS
+// What characters do to each other. Verbs on evt nodes.
+// =============================================================================
+
+verb Confessed(to)         [+Interpersonal]
+verb Forgave(other)        [+Interpersonal]
+verb Betrayed(other)       [+Interpersonal]
+verb Sacrificed_For(other) [+Interpersonal]
+verb Protected(other)      [+Interpersonal]
+verb Abandoned(other)      [+Interpersonal]
+verb Pursued(other)        [+Interpersonal]
+verb Rejected(other)       [+Interpersonal]
+verb Deceived(other)       [+Interpersonal]
+verb Revealed(fact, to)    [+Interpersonal]
+verb Witnessed(event)      [+Interpersonal]
+verb Challenged(other)     [+Interpersonal]
+verb Surrendered(to)       [+Interpersonal]
+verb Aided(other)          [+Interpersonal]
+verb Mourned(other)        [+Interpersonal]
+verb Celebrated(with)      [+Interpersonal]
+verb Confronted(other)     [+Interpersonal]
+verb Consoled(other)       [+Interpersonal]
+verb Silenced(other)       [+Interpersonal]
+
+
+// =============================================================================
+// TIER 10 — TRANSMISSION
+// How things pass between entities: knowledge, legacy, burden, influence.
+// =============================================================================
+
+verb Transmitted(to)       [+Interpersonal]
+verb Taught(to)            [+Interpersonal]
+verb Learned_From(src)     [+Interpersonal]
+verb Passed_On(to)         [+Interpersonal]    // deliberate — often at end of life
+verb Carried(burden)       [+Interpersonal]    // bears what was not originally theirs
+verb Inherited_From(src)   [+Kinship]
+verb Entrusted(to, item)   [+Interpersonal]
+
+
+// =============================================================================
+// TIER 11 — NARRATIVE ROLES & ARCHETYPES
+// What function an entity serves in the story structure.
+// Props: a character's narrative role is typically stable within a text.
+// =============================================================================
+
+// Functional roles — what job the entity does
+prop Protagonist   [+Narrative]
+prop Antagonist    [+Narrative]
+prop Ally          [+Narrative]
+prop Neutral       [+Narrative]
+prop Bystander     [+Narrative]
+prop Observer      [+Narrative]
+prop Victim        [+Narrative]
+prop Instigator    [+Narrative]
+prop Catalyst      [+Narrative]    // causes change; does not change itself
+prop Vessel        [+Narrative]    // carries something beyond itself
+
+// Deep archetypes (Campbell / Vogler / Propp)
+prop TheHero       [+Narrative]
+prop Villain       [+Narrative]
+prop Mentor        [+Narrative]
+prop Herald        [+Narrative]    // announces change; delivers the call
+prop Trickster     [+Narrative]    // disrupts; reveals through chaos
+prop Guardian      [+Narrative]    // threshold guardian — tests the hero
+prop Shapeshifter  [+Narrative]    // allegiance or nature is unclear
+prop Shadow        [+Narrative]    // dark mirror of the protagonist
+prop LoveInterest  [+Narrative]
+
+
+// =============================================================================
+// TIER 12 — NARRATIVE PATHS
+// The direction an entity is moving. Props, but more mutable than archetypes —
+// a character's path can change under a major rule.
+// =============================================================================
+
+prop Path_Heroic      [+Narrative]
+prop Path_Corruption  [+Narrative]
+prop Path_Redemption  [+Narrative]
+prop Path_Sacrifice   [+Narrative]
+prop Path_Ambiguous   [+Narrative]
+prop Path_Hidden      [+Narrative]    // true path not yet visible
+
+
+// =============================================================================
+// TIER 13 — NARRATIVE FUNCTIONS
+// What a node does in the story structure.
+// =============================================================================
+
+prop MacGuffin        [+Narrative]    // desired object; its nature is irrelevant
+prop Threshold        [+Narrative]    // crossing this changes everything
+prop Remnant          [+Narrative]    // what survives — relic, scar, memory
+prop PendingPayoff    [+Narrative]    // Chekhov tracker — parameterize with item=
+
+// Story-level verbs — what events do at the narrative level
+verb Foreshadows(event)    [+Narrative]
+verb Resolves(tension)     [+Narrative]
+verb Reverses(state)       [+Narrative]    // peripeteia — fortune inverts
+verb Reveals(truth)        [+Narrative]    // anagnorisis — recognition
+verb Crosses(threshold)    [+Narrative]
+verb Transforms(entity)    [+Narrative]
+verb Initiates(arc)        [+Narrative]
+verb Concludes(arc)        [+Narrative]
+verb Catalyzes(change)     [+Narrative]
+
+
+// =============================================================================
+// TIER 14 — SPATIAL
+// Properties of locations and environments.
+// =============================================================================
+
+prop Interior      [+Spatial]
+prop Exterior      [+Spatial]
+prop Domestic      [+Spatial]     // home, hearth — quotidian space
+prop Sacred        [+Spatial]
+prop Profane       [+Spatial]
+prop Contested     [+Spatial]
+prop Liminal       [+Spatial]     // threshold space: borders, crossroads, doorways
+
+state Safe         [+Spatial]
+state Dangerous    [+Spatial]
+state Familiar     [+Spatial]
+state Unknown      [+Spatial]
+state Accessible   [+Spatial]
+state Sealed       [+Spatial]
+
+// Time of day — on set entities
+state Day          [+Temporal]
+state Night        [+Temporal]
+state Dawn         [+Temporal]
+state Dusk         [+Temporal]
+
+
+// =============================================================================
+// TIER 15 — TEMPORAL
+// Time-related properties on any entity.
+// =============================================================================
+
+prop Ancient       [+Temporal]
+prop Ephemeral     [+Temporal]
+prop Cyclical      [+Temporal]
+prop Timeless      [+Temporal]
+prop Eternal       [+Temporal]
+prop Fleeting      [+Temporal]
+
+state Past         [+Temporal]    // exists in memory or record — not current
+state Future       [+Temporal]    // anticipated — not yet manifest
+
+
+// =============================================================================
+// TIER 16 — POLITICAL & INSTITUTIONAL
+// Power, governance, faction. Covers historical, political, and social drama.
+// =============================================================================
+
+verb Commands(other)           [+Political]
+verb Represents(group)         [+Political]
+verb Opposes(other)            [+Political]
+verb Legislates(domain)        [+Political]
+verb Dissolves(institution)    [+Political]
+verb Negotiates(with)          [+Political]
+verb Allies_With(other)        [+Political]
+verb Prosecutes(other)         [+Political]
+verb Pardons(other)            [+Political]
+
+rel Vassal_Of(liege)           [+Political]
+rel Liege_Of(vassal)           [+Political]
+rel Successor_Of(predecessor)  [+Political]
+rel Contemporary_Of(other)     [+Political]
+rel Member_Of(group)           [+Political]
+
+
+// =============================================================================
+// TIER 17 — MYTHOLOGICAL & COSMIC
+// Stories operating at the level of gods, creation, fate, or deep time.
+// =============================================================================
+
+prop Divine        [+Mythological]
+prop Mortal_Born   [+Mythological]    // of divine parentage but mortal
+prop Fallen        [+Mythological]    // once elevated, now diminished
+prop Transcendent  [+Mythological]    // beyond ordinary categories
+prop Cursed        [+Mythological]
+prop Blessed       [+Mythological]
+prop Prophesied    [+Mythological]
+prop Primordial    [+Mythological]    // also Ontological — dual membership valid
+
+verb Descended(into)          [+Mythological]    // katabasis
+verb Ascended(from)           [+Mythological]    // anabasis
+verb Transformed_Into(form)   [+Mythological]    // metamorphosis
+verb Ordained(by)             [+Mythological]    // appointed by higher force
+verb Sacrificed(for)          [+Mythological]
+verb Created(entity)          [+Mythological]
+verb Destroyed(entity)        [+Mythological]
+
+rel Worships(deity)           [+Mythological]
+rel Emanation_Of(source)      [+Mythological]
+rel Prophet_Of(deity)         [+Mythological]
+rel Cursed_By(agent)          [+Mythological]
+rel Blessed_By(agent)         [+Mythological]
+rel Created_By(creator)       [+Mythological]
+
+
+// =============================================================================
+// TIER 18 — EPISTEMIC
+// The gap between what is true and what is known.
+// Applies universally — mystery, drama, tragedy, comedy equally.
+// =============================================================================
+
+prop Alias(name)               [+Epistemic]
+prop Perceives(target, as)     [+Epistemic]
+prop Knows(target)             [+Epistemic]
+prop Suspects(target)          [+Epistemic]
+prop Believes(fact)            [+Epistemic]
+prop Remembers(event)          [+Epistemic]
+prop Forgot(event)             [+Epistemic]
+prop MotivatedBy(reason)       [+Epistemic]
+prop Trusts(target)            [+Epistemic]
+prop Lineage(id)               [+Epistemic]
+prop PendingPayoff(item)       [+Epistemic]    // Chekhov tracker
+
+
+// =============================================================================
+// TIER 19 — INTENTIONAL (DIRECTED)
+// Psychological orientations directed toward a target.
+// Sigil in usage: [~Name(target=x)]
+// Target must be a declared graph node — char, obj, evt, set, arc, or concept.
+// =============================================================================
+
+verb Desires(target)           [+Intentional]
+verb Fears(target)             [+Intentional]
+verb Longs_For(target)         [+Intentional]
+verb Loves(target)             [+Intentional]    // love directed at concept/thing
+verb Hates(target)             [+Intentional]
+verb Obsessed_With(target)     [+Intentional]
+verb Devoted_To(target)        [+Intentional]
+verb Distrusts(target)         [+Intentional]
+verb Mourns(target)            [+Intentional]    // target may be concept or entity
+verb Envies(target)            [+Intentional]
+verb Reveres(target)           [+Intentional]
+verb Attached_To(target)       [+Intentional]
+verb Repelled_By(target)       [+Intentional]
+verb Seeks(target)             [+Intentional]
+verb Avoids(target)            [+Intentional]
+verb Blames(target)            [+Intentional]
+verb Forgives(target)          [+Intentional]
+verb Yearns_For(target)        [+Intentional]
+verb Committed_To(target)      [+Intentional]

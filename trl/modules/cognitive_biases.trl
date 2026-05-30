@@ -1,0 +1,159 @@
+// @title   TropeLang Module — Cognitive Biases
+// @version 0.1
+// @depends trl/concepts/index.trl  (references emotional concepts)
+// @note    Systematic departures from rationality, modeled as named tropes — the
+//          most directly wiki-convertible of the modules. Each bias is a concept
+//          node with an `imply` expansion (the broader failure modes it belongs
+//          to) and edges to the biases it stems from or mirrors. Stories apply
+//          the [#Bias] tags to characters; rules below recognize the behavior.
+//
+// Import: import "trl/modules/cognitive_biases.trl"
+
+
+// =============================================================================
+// VOCABULARY — the cognitive-distortion domain
+// =============================================================================
+
+attr Cognitive_Bias [+Epistemic]   // a systematic, predictable error of reasoning
+attr Heuristic      [+Epistemic]   // a fast rule of thumb that misfires as a bias
+
+prop Systematic     [+Epistemic]   // errs in a consistent, predictable direction
+prop Invisible      [+Epistemic]   // operates below the reasoner's awareness
+
+verb Rationalizes(target)          // constructs a post-hoc justification
+verb Discounts(target)             // unduly dismisses evidence or risk
+verb Escalates(target)             // commits further to a failing course
+verb Invested(agent, into)         // an agent sank resources into a venture
+verb Refutes(claim)                // an event constitutes evidence against a claim
+
+state Biased                       // currently reasoning under a distortion
+state Failing                      // a venture trending toward loss
+state Believes(claim)              // a held belief, joined to evidence by claim
+
+
+// =============================================================================
+// THE UNDERLYING DRIVERS — what the biases are made of
+// =============================================================================
+
+// The tendency to seek, weigh, and recall what already fits one's conclusion.
+// Motivated reasoning is the engine under most biases: the goal shapes the proof.
+concept motivated_reasoning [%Timeless] [#Mind] [+Abstract] [+Corrupting]
+
+// The disproportionate weight of a loss relative to an equivalent gain.
+// Loss aversion warps risk, anchors the endowment effect, and traps sunk costs.
+concept loss_aversion       [%Timeless] [#Mind] [+Abstract] [+Systematic]
+
+// The settled, often unwarranted confidence in one's own judgment.
+// Overconfidence is the soil the Dunning-Kruger effect grows in.
+concept overconfidence      [%Timeless] [#Mind] [+Abstract] [+Systematic]
+
+
+// =============================================================================
+// BELIEF BIASES — distortions of what we conclude
+// =============================================================================
+
+// Favoring information that confirms a held belief and discounting what contradicts it.
+// Confirmation bias makes belief self-sealing: evidence against it is filtered out.
+concept confirmation_bias   [%Timeless] [#Mind] [+Abstract] [+Systematic] [+Invisible]
+
+// Judging a past decision by its outcome rather than the reasoning available at the time.
+// Hindsight bias makes the past look inevitable; outcome bias punishes good bets that lost.
+concept hindsight_bias      [%Timeless] [#Mind] [+Abstract] [+Systematic]
+
+// Drawing conclusions only from the survivors, ignoring the silent failures.
+// Survivorship bias reads success stories as recipes, missing the graveyard beneath them.
+concept survivorship_bias   [%Timeless] [#Mind] [+Abstract] [+Systematic] [+Invisible]
+
+
+// =============================================================================
+// DECISION BIASES — distortions of what we choose
+// =============================================================================
+
+// Continuing a failing course to honor what has already been spent.
+// The sunk cost fallacy lets an unrecoverable past dictate the future.
+concept sunk_cost_fallacy   [%Timeless] [#Mind] [+Abstract] [+Systematic]
+
+// Over-relying on the first piece of information offered when estimating.
+// Anchoring drags every later judgment toward an arbitrary starting point.
+concept anchoring           [%Timeless] [#Mind] [+Abstract] [+Systematic]
+
+// Estimating likelihood by how easily examples come to mind.
+// The availability heuristic inflates vivid, recent, or frightening risks.
+concept availability_heuristic [%Timeless] [#Mind] [+Abstract] [+Heuristic]
+
+// The unskilled overrate themselves; the skilled, aware of more, doubt themselves.
+// Dunning-Kruger is overconfidence indexed to incompetence — you don't know what you lack.
+concept dunning_kruger      [%Timeless] [#Mind] [+Abstract] [+Systematic] [+Paradoxical]
+
+
+// =============================================================================
+// SOCIAL BIASES — distortions of how we read others
+// =============================================================================
+
+// Attributing others' behavior to character while excusing one's own by circumstance.
+// The fundamental attribution error reads a stumble as clumsiness in them, bad luck in us.
+concept fundamental_attribution_error [%Timeless] [#Mind] [+Abstract] [+Systematic]
+
+// Letting one positive trait color the whole judgment of a person.
+// The halo effect makes the attractive seem kind, the confident seem competent.
+concept halo_effect         [%Timeless] [#Mind] [+Abstract] [+Systematic]
+
+// Favoring one's own group and homogenizing the outsiders.
+// In-group bias turns "us and them" into a perceptual default, not a considered view.
+concept in_group_bias       [%Timeless] [#Mind] [+Abstract] [+Systematic] [+Corrupting]
+
+
+// =============================================================================
+// ONTOLOGY — character tags and the failure modes they expand into
+// =============================================================================
+
+imply Confirmation_Bias             -> [Motivated_Reasoning, Selective_Exposure, Biased]
+imply Sunk_Cost_Fallacy             -> [Loss_Averse, Commitment_Escalation, Biased]
+imply Dunning_Kruger                -> [Overconfident, Unaware, Biased]
+imply Fundamental_Attribution_Error -> [Dispositional_Blame, Self_Serving, Biased]
+imply Halo_Effect                   -> [Overgeneralization, Biased]
+
+
+// =============================================================================
+// STRUCTURE — how the biases descend from and mirror one another
+// =============================================================================
+
+sunk_cost_fallacy    -> loss_aversion        : "Driven By"
+confirmation_bias    -> motivated_reasoning  : "Instance Of"
+dunning_kruger       -> overconfidence       : "Special Case Of"
+hindsight_bias       -> survivorship_bias    : "Kin Of"
+halo_effect          -> fundamental_attribution_error : "Generalizes To"
+availability_heuristic -> fear               : "Inflates"
+in_group_bias        >< fundamental_attribution_error : "Self Versus Other Framing"
+
+
+// =============================================================================
+// RECOGNITION — rules that detect a bias playing out in a story graph
+// =============================================================================
+
+// Sunk cost: a prior Invested event ties the character to a venture now in the
+// Failing state, and the character stays committed. The "escalation" is a concrete
+// mutation — re-asserting commitment with escalated=true — not a narrated edge.
+rule SunkCostEscalation {
+  when:
+    char $c
+    arc  $venture [#Failing]
+    evt  $past [&Invested(agent=$c, into=$venture)]
+    $c [~Committed_To(target=$venture)]
+  then:
+    $c [#Sunk_Cost_Fallacy(venture=$venture)]
+    $c [~Committed_To(target=$venture, escalated=true)]
+}
+
+// Confirmation bias: the character believes a claim $p, an event Refutes that same
+// $p, and the character never witnessed it (didn't seek it out). The join on $p is
+// what makes "contradicting evidence" a thing the engine can recognize.
+rule ConfirmationBias {
+  when:
+    char $c [#Believes(claim=$p)]
+    evt  $evidence [&Refutes(claim=$p)]
+    not ( $c [@Witness_To(event=$evidence)] )
+  then:
+    $c [#Confirmation_Bias(claim=$p)]
+    $evidence [+Disregarded(by=$c)]
+}

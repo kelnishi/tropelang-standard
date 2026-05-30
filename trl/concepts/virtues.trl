@@ -1,0 +1,95 @@
+// @title   TropeLang Concept Library — Virtues and Vices
+// @version 1.3
+// @note    Moral qualities that narrative traditions invoke across all cultures.
+//          These are ideals and their opposites — not behavioral facts but
+//          evaluative orientations. They appear as targets of directed states
+//          ([~Devoted_To(target=courage)]) and as tags on characters
+//          ([+Courageous]).
+//
+// Import: import "trl/concepts/virtues.trl"
+
+
+// =============================================================================
+// VIRTUES — qualities held as good, worth cultivating or embodying
+// =============================================================================
+
+// The capacity to act despite fear or danger; action in the presence of risk.
+// Courage is not the absence of fear but the willingness to proceed despite it.
+concept courage        [%Timeless] [+Aspirational] [+Abstract]
+
+// The integration of self — acting consistently with one's stated values.
+// Integrity is tested precisely when deviation would be advantageous.
+concept integrity      [%Timeless] [+Aspirational] [+Abstract] [+Fragile]
+
+// The quality of acting rightly toward others; giving each their due.
+// Justice as virtue is the disposition; justice as concept is the system.
+concept justice_virtue [%Timeless] [+Aspirational] [+Abstract]
+
+// The ability to understand deeply and judge well across circumstances.
+// Wisdom is experiential — it cannot be transmitted without being earned.
+concept wisdom         [%Timeless] [+Aspirational] [+Abstract]
+
+// The disposition to feel and respond to the suffering of others.
+// Compassion bridges self and other; it motivates without erasing difference.
+concept compassion     [%Timeless] [+Aspirational] [+Abstract]
+
+// The quality of giving more than required; sharing resources or care beyond obligation.
+// Generosity transforms relationships from transactional to relational.
+concept generosity     [%Timeless] [+Aspirational] [+Abstract]
+
+// The accurate assessment of one's own place and limitations.
+// Humility is not self-deprecation; it is clear-eyed non-inflation of self.
+concept humility       [%Timeless] [+Aspirational] [+Abstract] [+Fragile]
+
+// The condition of reliable, principled faithfulness to a person, cause, or covenant.
+// Loyalty is bidirectional in expectation but unilateral in practice.
+concept loyalty        [%Timeless] [+Aspirational] [+Binding] [+Abstract]
+
+// The capacity to bear difficulty without breaking; persistence through adversity.
+// Endurance is not passivity — it is active maintenance of self under pressure.
+concept endurance      [%Timeless] [+Aspirational] [+Abstract]
+
+// The quality of treating others fairly and without prejudice.
+// Fairness operates at the procedural level; justice operates at the outcome level.
+concept fairness       [%Timeless] [+Aspirational] [+Abstract]
+
+
+// =============================================================================
+// VICES — qualities held as harmful, corrupting, or destructive
+// =============================================================================
+
+// The excessive desire for more than one's due — material or immaterial.
+// Greed distorts the relation between self and world; it is never satisfied.
+concept greed          [%Timeless] [+Corrupting] [+Abstract]
+
+// The excessive regard for one's own importance; inflation of self beyond reality.
+// Pride in this sense differs from earned confidence; it refuses correction.
+concept pride_excess   [%Timeless] [+Corrupting] [+Abstract]
+
+// The desire for what another has, combined with resentment of their possession.
+// Envy is relational — it cannot exist without comparison to another.
+concept envy           [%Timeless] [+Corrupting] [+Abstract] [#Painful]
+
+// The state of avoiding necessary effort or action; inertia in the face of obligation.
+// Sloth may be physical, moral, or intellectual.
+concept sloth          [%Timeless] [+Corrupting] [+Abstract]
+
+// The disproportionate response to injury or insult; rage that exceeds its cause.
+// Wrath is force beyond what the situation warrants; it harms the holder as well as the target.
+concept wrath          [%Timeless] [+Corrupting] [+Abstract]
+
+// Dishonesty maintained over time; the sustained misrepresentation of truth.
+// Deceit erodes the trust that makes all other bonds possible.
+concept deceit         [%Timeless] [+Corrupting] [+Abstract]
+
+// The systematic disregard for the rights, pain, or dignity of others.
+// Cruelty may be deliberate or structural; both cause harm.
+concept cruelty        [%Timeless] [+Corrupting] [+Abstract]
+
+// The state of having been corrupted by power, gain, or temptation.
+// Corruption is a process as much as a state — it occurs gradually.
+concept corruption     [%Timeless] [+Corrupting] [+Inevitable] [+Abstract]
+
+// The failure to act against wrong when action was possible.
+// Complicity may be silent, indirect, or rationalized; it enables harm.
+concept complicity     [%Timeless] [+Corrupting] [+Abstract]

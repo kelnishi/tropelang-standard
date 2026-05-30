@@ -1,0 +1,186 @@
+
+// @title   TropeLang Module — Theory of Mind
+// @version 0.1
+// @depends trl/concepts/index.trl  (references emotional + narrative concepts)
+// @note    The capacity to attribute mental states to others — and the nested,
+//          recursive belief structures that drive deception, dramatic irony, and
+//          the unreliable narrator. This module is deliberately relational: its
+//          value is in the edges (who models whom) and the [@Believes_About] /
+//          [@Models] attributions, not in the flat concept list alone.
+//
+// Import: import "trl/modules/theory_of_mind.trl"
+
+
+// =============================================================================
+// VOCABULARY — mental-state attribution as first-class structure
+// =============================================================================
+
+attr Mentalizing       [+Epistemic]   // capacity to attribute mental states
+attr Attribution       [+Epistemic]   // a held belief about another mind
+
+// Epistemic content — what an agent takes to be true. Mind-facet states ([#…]),
+// parameterized so the engine joins on the bound subject / site / claim, never on
+// prose. `site` is the reserved spatial-anchor key (grammar §5.3).
+state Believes(subject, site, claim)  // a held belief; params carry what it is about
+state Knows(target)                   // true, justified access — not merely believed
+state Mistaken(subject)               // a belief that diverges from the world
+state Mindblind                       // fails to attribute mind to others at all
+
+// Agent-to-agent structure — genuine relations between minds ([@…]).
+rel  Models(other)                    // A maintains a running model of B's mind
+// (Witness_To(event) is provided by the prelude and reused below.)
+
+verb Relocated(subject, from, to)     // an object is moved between two sites
+verb Reveals(fact)                    // an event establishes a fact in the world
+verb Asserts(agent, to, claim)        // an agent states a claim to another
+
+
+// =============================================================================
+// THE PRIMITIVES — the mental states a mind can hold or impute
+// =============================================================================
+
+// A held representation of how the world is, which may be true or false.
+// Belief is the unit Theory of Mind traffics in — and the unit that can mislead.
+concept belief             [%Timeless] [#Mind] [+Abstract]
+
+// A held orientation toward how the world should be; what a mind wants.
+// Desire plus belief predicts action — the folk-psychological engine of plot.
+concept desire             [%Timeless] [#Mind] [+Abstract]
+
+// A committed plan to bring about an end; belief and desire fused into resolve.
+// Reading intention is the deepest mentalizing — and the most easily faked.
+concept intention          [%Timeless] [#Mind] [+Abstract]
+
+// A belief that diverges from the actual state of the world.
+// The false belief is the load-bearing primitive: it is what Theory of Mind is FOR.
+concept false_belief       [%Timeless] [#Mind] [+Abstract] [+Generative]
+
+// A belief that matches the world; access to the way things actually are.
+// True belief is unremarkable until it becomes asymmetric — one knows, another doesn't.
+concept true_belief        [%Timeless] [#Mind] [+Abstract]
+
+
+// =============================================================================
+// THE RECURSION — beliefs about beliefs
+// =============================================================================
+
+// A belief directly about the world: "the box is empty."
+// First-order attribution is the floor of Theory of Mind; most animals stop here.
+concept first_order_belief  [%Timeless] [#Mind] [+Abstract]
+
+// A belief about another's belief: "she thinks the box is full."
+// Second-order attribution unlocks deception, surprise, and irony.
+concept second_order_belief [%Timeless] [#Mind] [+Abstract] [+Generative]
+
+// The unbounded tower: "he knows that she thinks that they believe..."
+// Recursive belief is where bluffs, double-bluffs, and conspiracies live.
+concept recursive_belief    [%Timeless] [#Mind] [+Abstract] [+Paradoxical]
+
+
+// =============================================================================
+// THE USES — what mentalizing makes possible
+// =============================================================================
+
+// The deliberate induction of a false belief in another mind.
+// Deception requires modeling the target well enough to choose what they'll swallow.
+concept deception           [%Timeless] [#Mind] [+Abstract] [+Corrupting]
+
+// Deception turned on oneself; holding a belief one has reason to know is false.
+// Self-deception is recursive belief folded inward — the deceiver is the deceived.
+concept self_deception      [%Timeless] [#Mind] [+Abstract] [+Paradoxical] [+Corrupting]
+
+// The imaginative occupation of another's viewpoint; seeing from where they stand.
+// Perspective-taking is the cognitive root of empathy and the antidote to mindblindness.
+concept perspective_taking  [%Timeless] [#Mind] [+Aspirational] [+Abstract]
+
+// The mutual, known-to-be-shared background two minds reason from.
+// Common ground is built by joint attention; it is what makes hinting possible.
+concept common_ground       [%Timeless] [#Mind] [+Abstract] [+Fragile]
+
+
+// =============================================================================
+// THE TROPES — wiki-convertible narrative devices built on asymmetric minds
+// =============================================================================
+
+// The audience knows what a character does not; meaning runs underneath the scene.
+// Dramatic irony is a false belief the audience is invited to see through.
+concept dramatic_irony      [%Timeless] [+Abstract] [+Narrative] [+Generative]
+
+// A narrator whose account the audience comes to distrust.
+// The unreliable narrator weaponizes the gap between told-world and real-world.
+concept unreliable_narrator [%Timeless] [+Abstract] [+Narrative] [+Paradoxical]
+
+
+// =============================================================================
+// ONTOLOGY — trope tags and their expansions
+// =============================================================================
+
+imply False_Belief      -> [Mistaken, Generative]
+imply Dramatic_Irony    -> [Asymmetric_Knowledge, Audience_Aware]
+imply Unreliable        -> [Deceptive, Subjective]
+imply Double_Bluff      -> [Deceptive, Recursive]
+
+
+// =============================================================================
+// STRUCTURE — how the constructs nest and feed one another
+// =============================================================================
+
+second_order_belief -> first_order_belief  : "Nests Over"
+recursive_belief    -> second_order_belief : "Generalizes"
+false_belief        >< true_belief         : "Diverges From Reality"
+deception           -> false_belief        : "Induces"
+self_deception      -> deception           : "Reflexive Form Of"
+dramatic_irony      -> false_belief        : "Audience Sees Through"
+unreliable_narrator -> false_belief        : "Sustains In Audience"
+perspective_taking  -> empathy             : "Enables"
+common_ground       -- perspective_taking  : "Built From"
+
+
+// =============================================================================
+// RECOGNITION — rules that detect a Theory-of-Mind trope in a story graph
+// =============================================================================
+
+// Sally-Anne: the false belief IS the discrepancy between what the observer believes
+// (item at $origin) and where a Relocated event actually put it ($dest), given the
+// observer never witnessed the move. Every clause is a join the matcher can evaluate.
+rule FalseBeliefTask {
+  when:
+    obj  $item
+    set  $origin
+    set  $dest
+    evt  $move [&Relocated(subject=$item, from=$origin, to=$dest)]
+    char $observer [#Believes(subject=$item, site=$origin)]
+    not ( $observer [@Witness_To(event=$move)] )
+    $origin != $dest
+  then:
+    $observer [#Mistaken(subject=$item)]
+}
+
+// Dramatic irony: a fact $p is established in-world, the character holds the contrary
+// proposition $not_p (the two conflict via `><`), and never witnessed the revelation.
+// `hidden=true` marks the asymmetry latent — the audience sees $p, the character ¬$p.
+rule DramaticIrony {
+  when:
+    evt  $truth [&Reveals(fact=$p)]
+    char $c [#Believes(claim=$not_p)]
+    $not_p >< $p
+    not ( $c [@Witness_To(event=$truth)] )
+  then:
+    $c [+Dramatic_Irony(over=$p, hidden=true)]
+}
+
+// Double bluff: the deceiver models the target, the target is oriented to distrust the
+// deceiver, and the deceiver Asserts a TRUE claim (truthful=true) — which the distrust
+// causes the target to reject. The recursion lives in the typed params, not in prose.
+rule DoubleBluff {
+  unique: true
+  when:
+    char $deceiver
+    char $target
+    $deceiver [@Models(other=$target)]
+    $target  [~Distrusts(target=$deceiver)]
+    evt $stmt [&Asserts(agent=$deceiver, to=$target, claim=$p, truthful=true)]
+  then:
+    $target [#Mistaken(subject=$p)]
+    $deceiver [+Double_Bluff(claim=$p)]
+}

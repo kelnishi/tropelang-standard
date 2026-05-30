@@ -1,0 +1,164 @@
+// @title   TropeLang Concept Library — Universal
+// @version 1.3
+// @note    Cross-cultural abstractions present in all narrative traditions.
+//          Each concept includes a natural-language definition as its annotation.
+//          Culturally-specific concepts belong in world or genre libraries.
+//
+// Import: import "trl/concepts/universal.trl"
+
+
+// =============================================================================
+// CONDITIONS OF EXISTENCE
+// Fundamental states that all beings, stories, and things move through.
+// =============================================================================
+
+// The state of not achieving an intended goal; a gap between effort and outcome.
+// May be temporary (recoverable) or permanent. Often precedes growth or collapse.
+concept failure        [%Timeless] [+Inevitable] [+Abstract]
+
+// The state of achieving an intended goal; alignment between effort and outcome.
+// Temporary — circumstances change. What counts as success varies by perspective.
+concept success        [%Timeless] [+Abstract]
+
+// The permanent absence of something that was once present and valued.
+// Distinct from failure: loss is not about effort but about irreversible removal.
+concept loss           [%Timeless] [+Irreversible] [#Painful] [+Abstract]
+
+// The acquisition of something new — material, relational, or experiential.
+// Gain may be welcome or unwelcome depending on what is gained and at what cost.
+concept gain           [%Timeless] [+Abstract]
+
+// The movement from one state to another; nothing remains permanently the same.
+// May be welcomed, feared, resisted, or caused deliberately.
+concept change         [%Timeless] [+Inevitable] [+Abstract]
+
+// The absence of change; a condition of ongoing sameness.
+// May be experienced as stability or as stagnation depending on perspective.
+concept stasis         [%Timeless] [+Abstract]
+
+// The cessation or conclusion of something; the moment beyond which continuation is impossible.
+concept ending         [%Timeless] [+Irreversible] [+Abstract]
+
+// The inception of something new; a moment before which the thing did not exist.
+concept beginning      [%Timeless] [+Abstract]
+
+// The condition of not being seen, known, or acknowledged by others.
+// May be self-imposed, imposed by others, or structural.
+concept invisibility   [%Timeless] [+Abstract]
+
+// The state of being recognized — truly seen, known, or acknowledged as one is.
+// Distinct from fame or status; recognition is accurate, intimate knowledge.
+concept recognition    [%Timeless] [+Abstract]
+
+
+// =============================================================================
+// RELATIONAL CONDITIONS
+// States that arise between beings, or between a being and an absence.
+// =============================================================================
+
+// The condition of having been left without support, connection, or witness.
+// Abandonment implies prior presence — someone or something was there and is gone.
+concept abandonment    [%Timeless] [#Painful] [+Abstract]
+
+// The condition of being part of something larger — a group, place, or purpose.
+// Belonging is felt; it cannot be assigned from outside.
+concept belonging      [%Timeless] [+Abstract]
+
+// The condition of separation from others; physical or social aloneness.
+// Distinct from solitude: isolation implies the absence of desired connection.
+concept isolation      [%Timeless] [+Abstract]
+
+// The state of being joined or known to another; a shared link between entities.
+concept connection     [%Timeless] [+Abstract]
+
+// The violation of trust by one who was entrusted; a rupture of expected loyalty.
+// Betrayal requires a prior bond — it cannot occur between strangers.
+concept betrayal       [%Timeless] [+Irreversible] [#Painful] [+Abstract]
+
+// The act of releasing resentment toward one who caused harm.
+// Forgiveness does not require reconciliation; it is an internal act.
+concept forgiveness    [%Timeless] [+Abstract]
+
+// The restoration of a broken bond or a return to a prior positive state.
+// Reconciliation requires both parties; forgiveness does not.
+concept reconciliation [%Timeless] [+Abstract]
+
+
+// =============================================================================
+// ABSTRACT FORCES
+// Conditions that exert pressure on entities without having physical form.
+// =============================================================================
+
+// The capacity to impose will — on others, on circumstances, or on oneself.
+// Power is relational: it exists only in relation to something it acts upon.
+concept power          [%Timeless] [+Corrupting] [+Abstract]
+
+// The condition of being ungoverned by external constraint.
+// Freedom is paradoxical: absolute freedom dissolves all structure, including identity.
+concept freedom        [%Timeless] [+Paradoxical] [+Abstract]
+
+// An obligation arising from role, covenant, or circumstance.
+// Duty may conflict with desire, survival, or other duties.
+concept duty           [%Timeless] [+Binding] [+Abstract]
+
+// The sum of all prior causes determining future events; the sense that outcomes are fixed.
+// Whether fate is real or believed, its narrative effect is the same.
+concept fate           [%Timeless] [+Inevitable] [+Abstract]
+
+// The principle that actions have commensurate consequences.
+// Justice is both descriptive (how things are) and aspirational (how they should be).
+concept justice        [%Timeless] [+Aspirational] [+Paradoxical] [+Abstract]
+
+// A statement or representation that accurately corresponds to reality.
+// Truth may be partial, perspectival, or unwelcome.
+concept truth          [%Timeless] [+Abstract]
+
+// The mental retention of past experience; the subjective record of what has occurred.
+// Memory is selective, mutable, and may conflict between individuals.
+concept memory         [%Timeless] [+Abstract]
+
+// The absence or loss of retained experience; the dissolution of what was known.
+// Forgetting may be involuntary, protective, or a form of erasure.
+concept forgetting     [%Timeless] [+Abstract]
+
+// The force of established patterns, practices, and inherited forms.
+// Tradition provides continuity; it may also resist necessary change.
+concept tradition      [%Timeless] [+Binding] [+Abstract]
+
+// The state of movement toward something not yet achieved; orientation forward.
+// Progress may be real, illusory, or contested.
+concept progress       [%Timeless] [+Abstract]
+
+
+// =============================================================================
+// ASPIRATIONAL ABSTRACTIONS
+// Things that are sought, striven toward, or held as ideals.
+// =============================================================================
+
+// A code governing conduct that is held above personal interest.
+// Honor is internally maintained but socially recognized; its content varies by culture.
+concept honor          [%Timeless] [+Aspirational] [+Fragile] [+Abstract]
+
+// The sense that one's existence or actions matter or connect to something larger.
+// Meaning cannot be assigned from outside; it must be found or made by the individual.
+concept meaning        [%Timeless] [+Aspirational] [+Abstract]
+
+// A direction or intention that organizes action over time.
+// Purpose may be self-chosen, assigned, or discovered.
+concept purpose        [%Timeless] [+Aspirational] [+Abstract]
+
+// What an entity leaves behind after it ends — the ongoing effects of its existence.
+// Legacy outlasts the entity and is shaped by those who remain.
+concept legacy         [%Timeless] [+Abstract]
+
+// The voluntary acceptance of cost or loss for the benefit of another or a larger good.
+// Sacrifice is defined by what is given up, not only by what is gained.
+concept sacrifice      [%Timeless] [+Abstract]
+
+// The transformation from a negative or degraded state to a positive or restored one.
+// Redemption requires acknowledgment of a prior falling; it cannot begin in innocence.
+concept redemption     [%Timeless] [+Aspirational] [+Abstract]
+
+// The condition of standing as an equal among others; to be given equal weight and voice.
+// Dignity may be inherent or earned; its violation is a form of harm.
+concept dignity        [%Timeless] [+Aspirational] [+Abstract]

@@ -1,0 +1,128 @@
+// @title   TropeLang Concept Library — Narrative
+// @version 1.3
+// @note    Concepts that operate at the level of story structure — what stories
+//          are made of, what drives them, and what they resolve.
+//          These are the building blocks of plot and theme across all genres.
+//
+// Import: import "trl/concepts/narrative.trl"
+
+
+// =============================================================================
+// OBLIGATION AND CALLING
+// =============================================================================
+
+// An obligation arising from one's role, covenant, or circumstance.
+// Duty may conflict with desire, survival, or other duties; the conflict is generative.
+concept duty           [%Timeless] [+Binding] [+Abstract]
+
+// A strong sense of being summoned toward a particular purpose or action.
+// Calling is experienced as external to self, even when it originates within.
+concept calling        [%Timeless] [+Abstract]
+
+// An obligation arising from a completed act of giving or help received.
+// A favor creates an implicit debt; its repayment closes the loop.
+concept favor          [%Timeless] [+Binding] [+Abstract]
+
+// The state of being answerable; the willingness to bear the weight of one's choices.
+// Responsibility is both a burden and a mark of agency.
+concept responsibility [%Timeless] [+Binding] [+Abstract]
+
+
+// =============================================================================
+// CONFLICT AND OPPOSITION
+// =============================================================================
+
+// The state in which two or more forces, desires, or parties are in opposition.
+// Conflict is the engine of narrative; without it, story collapses into description.
+concept conflict       [%Timeless] [+Generative] [+Abstract]
+
+// A condition in which two legitimate goods or duties are mutually exclusive.
+// Dilemmas cannot be resolved without cost; they reveal character.
+concept dilemma        [%Timeless] [+Abstract] [+Paradoxical]
+
+// The desire to inflict suffering on one who has caused harm; retributive justice felt personally.
+// Revenge differs from justice in that it is personal, emotional, and often cyclical.
+concept revenge        [%Timeless] [+Corrupting] [+Abstract]
+
+// The forgiveness extended to one who has harmed; the release of a grievance.
+// Mercy toward an offender — distinct from general mercy in its specificity.
+concept pardon         [%Timeless] [+Aspirational] [+Abstract]
+
+
+// =============================================================================
+// TRANSFORMATION AND ARC
+// =============================================================================
+
+// The movement from a negative or degraded condition toward restoration or improvement.
+// Redemption requires acknowledgment of prior falling; it cannot begin in innocence.
+concept redemption     [%Timeless] [+Aspirational] [+Abstract]
+
+// The movement from a positive or neutral condition toward moral or practical degradation.
+// Corruption is gradual; rarely does an entity fall all at once.
+concept corruption     [%Timeless] [+Corrupting] [+Abstract]
+
+// The voluntary acceptance of cost or loss for the benefit of another or a larger whole.
+// The value of sacrifice is partly constituted by what is given up.
+concept sacrifice      [%Timeless] [+Abstract]
+
+// The condition of giving in — accepting defeat, abandoning resistance, or yielding.
+// Surrender may be pragmatic, dignified, humiliating, or liberating.
+concept surrender      [%Timeless] [+Abstract]
+
+// The state of having been fundamentally altered by experience.
+// To be changed is not the same as to be transformed — transformation is irreversible.
+concept transformation [%Timeless] [+Irreversible] [+Abstract]
+
+// The return to a prior state or position after a departure.
+// Return is never truly a return to the same — both the entity and the context have changed.
+concept return         [%Timeless] [+Abstract] [+Paradoxical]
+
+
+// =============================================================================
+// KNOWLEDGE AND REVELATION
+// =============================================================================
+
+// The sudden or gradual disclosure of what was concealed.
+// Revelation reorganizes the meaning of prior events retroactively.
+concept revelation     [%Timeless] [+Irreversible] [+Abstract]
+
+// The concealment of relevant information from those who have a stake in it.
+// Secrets create asymmetry of knowledge; their revelation reorganizes power.
+concept secret         [%Timeless] [+Abstract]
+
+// A prior event or sign that anticipates a later one without specifying it.
+// Foreshadowing creates expectation; its fulfillment or subversion produces meaning.
+concept foreshadowing  [%Timeless] [+Abstract]
+
+// What an entity leaves behind after it ends; the ongoing effects of its existence.
+// Legacy outlasts the entity and is shaped by those who remain and remember.
+concept legacy         [%Timeless] [+Abstract]
+
+// The record of what has occurred — distinct from memory (personal) and history (collective).
+// The past is fixed; its interpretation is not.
+concept the_past       [%Timeless] [+Irreversible] [+Abstract]
+
+// The domain of what has not yet occurred; possibility not yet actualized.
+// The future is open; its apparent closure is always provisional.
+concept the_future     [%Timeless] [+Abstract]
+
+
+// =============================================================================
+// COST AND CONSEQUENCE
+// =============================================================================
+
+// The principle that actions produce effects that fall on the actor or others.
+// Consequence may be immediate, delayed, proportional, or disproportionate.
+concept consequence    [%Timeless] [+Inevitable] [+Abstract]
+
+// The toll that achievement, survival, or growth extracts from the entity.
+// Cost may be accepted, hidden, or discovered only in retrospect.
+concept cost           [%Timeless] [+Inevitable] [+Abstract]
+
+// The condition of being unable to proceed without paying what is owed.
+// A price is the cost attached to a specific good or action.
+concept price          [%Timeless] [+Binding] [+Abstract]
+
+// An event or action that cannot be taken back; one whose effects are permanent.
+// The point of no return is the moment before which reversal was possible.
+concept point_of_no_return [%Timeless] [+Irreversible] [+Abstract]

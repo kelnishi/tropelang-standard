@@ -1,0 +1,119 @@
+// @title   TropeLang Concept Library — Social and Political
+// @version 1.3
+// @note    Concepts governing how beings organize, govern, and relate collectively.
+//          Covers political drama, historical narrative, institutional conflict,
+//          and community stories.
+//
+// Import: import "trl/concepts/social.trl"
+
+
+// =============================================================================
+// POWER AND GOVERNANCE
+// =============================================================================
+
+// The capacity to determine outcomes for others; the ability to shape collective reality.
+// Power is relational — it requires something or someone upon which it acts.
+concept power          [%Timeless] [+Corrupting] [+Abstract]
+
+// Power that is recognized as legitimate by those subject to it.
+// Authority differs from raw power in that it is granted, not only seized.
+concept authority      [%Timeless] [+Binding] [+Abstract]
+
+// The supreme legitimate power to govern within a defined territory or domain.
+// Sovereignty is both claimed and recognized; it can be contested.
+concept sovereignty    [%Timeless] [+Binding] [+Abstract]
+
+// The organized system of decisions and rules that govern collective life.
+// Governance may be just or unjust, stable or fragile.
+concept governance     [%Timeless] [+Abstract]
+
+// A formal system of rules applied equally across a community.
+// Law may or may not align with justice; its authority comes from enforcement.
+concept law            [%Timeless] [+Binding] [+Abstract]
+
+// The condition in which rules, patterns, and expectations hold and are predictable.
+// Order may be just or unjust; its opposite is chaos.
+concept order          [%Timeless] [+Abstract]
+
+// The condition in which established patterns break down; unpredictability prevails.
+// Chaos may be destructive, liberating, or creative depending on context.
+concept chaos          [%Timeless] [+Abstract] [+Paradoxical]
+
+// The fundamental alteration of the governing order; change at the systemic level.
+// Revolution may be violent or nonviolent; it replaces one order with another.
+concept revolution     [%Timeless] [+Irreversible] [+Abstract]
+
+
+// =============================================================================
+// JUSTICE AND FAIRNESS
+// =============================================================================
+
+// The condition in which people receive what they are due; the alignment of treatment with desert.
+// Justice is both a process (how decisions are made) and an outcome (what results).
+concept justice        [%Timeless] [+Aspirational] [+Paradoxical] [+Abstract]
+
+// The absence of justice; treatment that fails to give people what they are due.
+// Injustice may be deliberate, systemic, or structural.
+concept injustice      [%Timeless] [#Painful] [+Abstract]
+
+// The restraint of deserved punishment; treating another better than they deserve.
+// Mercy is a choice; it is distinct from justice but may coexist with it.
+concept mercy          [%Timeless] [+Aspirational] [+Abstract]
+
+// The application of consequences to actions; the matching of cost to cause.
+// Punishment may be just, excessive, or insufficient.
+concept punishment     [%Timeless] [+Abstract]
+
+// Responsibility for harm caused — the state of being answerable for one's actions.
+// Accountability requires both acknowledgment and consequence.
+concept accountability [%Timeless] [+Abstract] [+Binding]
+
+
+// =============================================================================
+// COMMUNITY AND BELONGING
+// =============================================================================
+
+// A group of beings united by shared place, purpose, identity, or covenant.
+// Community provides belonging and may impose obligation.
+concept community      [%Timeless] [+Abstract]
+
+// The alignment of effort or interest between parties toward a shared end.
+// Solidarity may be chosen or structural; it is stronger under pressure.
+concept solidarity     [%Timeless] [+Abstract]
+
+// The condition of being outside a community — removed, marginalized, or unwelcome.
+// Exclusion may be enforced by others or self-imposed.
+concept exclusion      [%Timeless] [#Painful] [+Abstract]
+
+// The quality of mutual benefit in relationships — each party gains from the other.
+// Reciprocity underlies most social bonds; its violation produces debt or grievance.
+concept reciprocity    [%Timeless] [+Abstract]
+
+// The mutual obligation between parties arising from social position or covenant.
+// Debt is not only financial — it is any unpaid obligation between beings.
+concept debt           [%Timeless] [+Binding] [+Abstract]
+
+// The transfer of one's position, rights, or obligations to another.
+// Inheritance is not only material — it includes roles, traumas, and duties.
+concept inheritance    [%Timeless] [+Binding] [+Abstract]
+
+
+// =============================================================================
+// TRUTH AND COMMUNICATION
+// =============================================================================
+
+// The deliberate creation of false beliefs in another's mind.
+// Deception may be through words, omission, action, or context.
+concept deception      [%Timeless] [+Corrupting] [+Abstract]
+
+// The condition of being known accurately to others; transparency of self.
+// Openness is vulnerable — it creates the possibility of both connection and exploitation.
+concept openness       [%Timeless] [+Abstract] [+Fragile]
+
+// The maintenance of information from those who have a stake in it.
+// Secrecy may protect or harm depending on what is concealed and why.
+concept secrecy        [%Timeless] [+Abstract]
+
+// The withholding of something known; silence in the presence of relevant truth.
+// Silence may be protective, complicit, or coerced.
+concept silence        [%Timeless] [+Abstract] [+Binding]

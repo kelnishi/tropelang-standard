@@ -1,0 +1,15 @@
+// @title   TropeLang Module Library — Index
+// @version 0.1
+// @note    Higher-level modules built on top of the concept library. Each module
+//          adds structured, graph-shaped tropes (concepts wired by edges, `imply`
+//          expansions, and recognition rules) for more sophisticated storytelling.
+//          Importing this file brings the base concepts AND all modules into scope.
+//
+// Usage: import "trl/modules/index.trl"
+//        (to import selectively, import individual module files instead)
+
+import "trl/concepts/index.trl"
+
+import "trl/modules/philosophy.trl"
+import "trl/modules/theory_of_mind.trl"
+import "trl/modules/cognitive_biases.trl"
