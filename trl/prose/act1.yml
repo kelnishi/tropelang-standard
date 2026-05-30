@@ -1,0 +1,47 @@
+# TropeLang prose file — Act 1.
+# Addressed from .trl via  dialog(src="act1.yml#<dotted.path>").
+# {symbol} placeholders are filled by the annotation's inject=[...] bindings;
+# unbound symbols are left as generation slots.
+
+tavern:
+  confront:
+    kind: dialog
+    symbols: [speaker, target]
+    # Non-text synthesis context — who speaks, to whom, and how it's delivered.
+    speaker: "{speaker}"
+    addressee: "{target}"
+    cue: "low and even, one hand never leaving the bar"
+    tone: menacing
+    text:
+      - "{speaker} squares up to {target}. \"You shouldn't have come here.\""
+      - "{speaker}'s hand finds the hilt of a blade. \"Leave. Now.\""
+    motivation: "{speaker} wants to drive {target} off without a fight."
+    responses:
+      backs_down:
+        kind: narration
+        text: "{target} raises both hands and steps back into the dark."
+      escalates:
+        kind: dialog
+        text: "{target} spits on the floorboards. \"Make me, old man.\""
+
+  # Outcome lines for the stranger fork (lazy: only the taken branch resolves).
+  stranger:
+    aggro:
+      kind: dialog
+      text: "{player} levels a finger. \"I know what you are.\""
+    probe:
+      kind: monologue
+      symbols: [player]
+      text: "{player} keeps to the shadow of the doorway, watching the figure's hands."
+    hesitate:
+      kind: narration
+      text: "The moment stretches, then passes. The figure never looks up."
+
+# A pool of one-liners used as random barks (text is a variant list).
+barks:
+  watchman:
+    kind: aside
+    text:
+      - "Halt! Who goes there?"
+      - "State your business."
+      - "Move along, stranger."

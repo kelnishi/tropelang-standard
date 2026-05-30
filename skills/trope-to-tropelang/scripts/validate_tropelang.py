@@ -51,6 +51,18 @@ def lex(src, label=""):
             while i < len(src) and src[i] != '\n': i += 1
             continue
 
+        # Triple-quoted block string (inline YAML for dialog)
+        if c == '"' and src[i:i+3] == '"""':
+            end = src.find('"""', i + 3)
+            if end == -1:
+                errors.append(f"[{label}] line {line}: unterminated block string")
+                return tokens
+            block = src[i+3:end]
+            tokens.append(('BLOCK', block, line))
+            line += block.count('\n')
+            i = end + 3
+            continue
+
         # String literal
         if c == '"':
             j = i + 1
