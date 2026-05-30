@@ -1,0 +1,62 @@
+// @title    Freytag's Pyramid
+// @author   Gustav Freytag — "Die Technik des Dramas" (1863)
+// @category Storytelling Systems
+// @version  0.1
+// @note     The five-part dramatic arc — exposition, rising action, climax, falling action,
+//           dénouement — that rises to the climax and falls to resolution (the "pyramid"
+//           shape). Classically the structure of the five-act tragedy. Like the Hero's
+//           Journey module, this names the parts as concept nodes and sequences them.
+//
+// Import: import "trl/modules/freytags_pyramid.trl"
+
+
+// === DEPENDENCIES ===
+import "trl/concepts/index.trl"               // conflict, consequence, point_of_no_return
+import "trl/tropes/conflict.trl"              // what rises across the arc
+import "trl/tropes/three_act_structure.trl"  // the related three-part model
+
+
+// === THE SYSTEM ===
+
+concept freytags_pyramid [+DramaticArc] [%Narrative]
+imply DramaticArc -> [Structure, Pyramidal, Narrative]
+
+
+// === THE FIVE PARTS (vocabulary) ===
+concept exposition     [+DramaticBeat]   // establishes characters, setting, and the status quo
+concept rising_action  [+DramaticBeat]   // complications mount; the conflict intensifies
+concept climax         [+DramaticBeat]   // the turning point; tension at its peak
+concept falling_action [+DramaticBeat]   // the consequences of the climax unfold
+concept denouement     [+DramaticBeat]   // threads resolve — or, in tragedy, the catastrophe
+
+
+// === THE ARC (rises to the climax, falls to the dénouement) ===
+exposition -> rising_action -> climax -> falling_action -> denouement
+
+
+// === ASSOCIATIONS ===
+assoc freytags_pyramid -> [
+  conflict            : "rises through to the climax",
+  climax              : "peaks at",
+  consequence         : "falling action delivers",
+  point_of_no_return  : "the climax is often",
+  three_act_structure : "a five-part kin of",
+  heros_journey       : "another arc model"
+]
+
+
+// === CONCRETE VIGNETTE: Romeo and Juliet — the five acts (play) ===
+
+// ROMEO
+char romeo [+Protagonist]
+
+// JULIET
+char juliet [+Protagonist] [+LoveInterest]
+
+arc the_tragedy [+FreytagsPyramid]
+
+act act1 { beat 1 { romeo  -- exposition     : "Two Houses, Both Alike In Dignity" } }
+act act2 { beat 1 { romeo  -- rising_action  : "Secret Marriage; Tybalt Slain" } }
+act act3 { beat 1 { romeo  -- climax         : "Romeo Banished — The Turning Point" } }
+act act4 { beat 1 { juliet -- falling_action : "The Sleeping Potion; The Letter Goes Astray" } }
+act act5 { beat 1 { romeo  -- denouement     : "The Lovers Die; The Feud Ends" } }

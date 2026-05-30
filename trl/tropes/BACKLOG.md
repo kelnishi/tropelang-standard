@@ -33,7 +33,7 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 - [x] Call to Adventure          (Universal)
 - [x] Refusal of the Call        (Universal)
 - [ ] In Medias Res
-- [ ] The Climax
+- [~] The Climax                 (concept `climax` defined in `freytags_pyramid.trl`)
 - [ ] Frame Story
 - [ ] Cliffhanger
 
@@ -62,8 +62,8 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 ## Storytelling systems & frameworks (`trl/modules/`)
 Higher-level structures that *organize* tropes — name + sequence the stages, link the beats.
 - [x] The Hero's Journey / Monomyth   (Campbell — `heros_journey.trl`)
-- [ ] Freytag's Pyramid               (exposition / rising / climax / falling / dénouement)   ← **up next**
-- [ ] Dan Harmon's Story Circle       (the 8-step you/need/go/search/find/take/return/change)
+- [x] Freytag's Pyramid               (Freytag — `freytags_pyramid.trl`; defines `climax` et al.)
+- [ ] Dan Harmon's Story Circle       (the 8-step you/need/go/search/find/take/return/change)   ← **up next**
 - [ ] Save the Cat beat sheet         (Blake Snyder, 15 beats)
 - [ ] The Seven Basic Plots           (Booker)
 - [ ] Propp's Morphology              (31 narrative functions)
