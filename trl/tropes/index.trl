@@ -1,0 +1,28 @@
+// @title   TropeLang Trope Registry
+// @version 0.1
+// @note    One canonical entry per converted trope title, so a reference to a trope can be
+//          REHYDRATED — resolved back to its definition (the `imply` + rules in the imported
+//          file) and provenance (category + wiki source). A title that already exists as a
+//          concept is REUSED (DRY), not redeclared.
+//
+//          Convention: the applied form is a [+PascalCase] tag (its `imply` lives in the
+//          trope file); the canonical entry is the snake_case node below, marked [+Trope]
+//          (the prelude meta-category) and carrying `category` + `source`.
+//
+// Importing this file brings the base concepts AND every converted trope into scope.
+
+import "trl/concepts/index.trl"
+
+import "trl/tropes/foreshadowing.trl"
+import "trl/tropes/hope_spot.trl"
+
+
+// === TROPE TITLE ENTRIES ===
+
+// FORESHADOWING — a planted sign that pays off later. Reuses the existing concept
+// `foreshadowing` (trl/concepts/narrative.trl); its [+Foreshadowing] tag is defined there.
+foreshadowing [+Trope(category="Omnipresent", source="allthetropes.org/wiki/Foreshadowing")]
+
+// HOPE SPOT — a glimmer of escape, snatched away (sibling: Eucatastrophe). New entry; built
+// on the existing `hope` / `despair` concepts (trl/concepts/emotional.trl).
+concept hope_spot [+Trope(category="Omnipresent", source="allthetropes.org/wiki/Hope_Spot")] [%Narrative]

@@ -1,5 +1,5 @@
 // @title   TropeLang Prelude — Standard Library
-// @version 1.3
+// @version 1.4
 //
 // Automatically in scope for every .trl file.
 // Do not import manually. Override with // @no-prelude for a clean slate.
@@ -56,6 +56,10 @@ attr Temporal      [+Kind]       // time and duration
 attr Political     [+Kind]       // power, institution, governance
 attr Mythological  [+Kind]       // divine, cosmic, transcendent
 attr Epistemic     [+Kind]       // knowledge, belief, perception
+
+// Trope — a named narrative pattern. Promoted to core: every converted trope title
+// is a [+Trope], so references to it rehydrate against one shared category (see trl/tropes/).
+attr Trope         [+Narrative]
 
 
 // =============================================================================

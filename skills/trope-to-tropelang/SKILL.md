@@ -192,6 +192,22 @@ Hand the `--json` task to an agent for meaning-level matches.
 Inlining an existing element is not illegal, but consolidate it when it's absolutely the
 same. Reuse is the default; invention is for what the corpus genuinely lacks.
 
+### Promotion to the core library
+
+Consolidation is *local* (reuse what already exists). Promotion is *global* — moving an
+element INTO the shared corpus so every future trope reuses it. As tropes accumulate, take
+the time to review what has earned promotion:
+
+- A **tag or concept that recurs across multiple tropes**, or is a fundamental primitive,
+  → promote to `trl/prelude.trl` (the core). Bump the prelude's `@version` — it's a core
+  capability change. (e.g. `attr Trope` was promoted once a trope category existed.)
+- A **trope title** → give it a canonical entry in `trl/tropes/index.trl` (reusing an
+  existing concept if one matches its meaning), so references **rehydrate** to its
+  definition + provenance. Source proper-nouns (works, characters) can get the same
+  treatment when they need to be referenced across tropes.
+- Don't promote on thin evidence (a single use). Promote when the reuse is real and the
+  element is genuinely shared vocabulary — otherwise leave it local.
+
 ## Naming conventions
 
 - **Identifiers**: short, lowercase, `snake_case` — `jimmy`, `golden_palace`, `the_briefcase`. These are the Tamarian proper nouns; keep them lean.
