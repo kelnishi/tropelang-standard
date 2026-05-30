@@ -16,6 +16,9 @@ import "trl/concepts/index.trl"
 import "trl/tropes/foreshadowing.trl"
 import "trl/tropes/hope_spot.trl"
 import "trl/tropes/the_reveal.trl"
+import "trl/tropes/the_protagonist.trl"
+import "trl/tropes/the_antagonist.trl"
+import "trl/tropes/the_deuteragonist.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -31,3 +34,10 @@ concept hope_spot [+Trope(category="Omnipresent", source="allthetropes.org/wiki/
 // THE REVEAL — a concealed truth disclosed. Reuses concept `revelation` (narrative.trl);
 // the cover/payoff is an epistemic collapse (perception -> knowledge).
 revelation [+Trope(category="Omnipresent", source="allthetropes.org/wiki/The_Reveal")]
+
+// CHARACTER-ROLE BUILDING BLOCKS (Universal Tropes) — the cast structure. The applied
+// forms are the prelude roles [+Protagonist] / [+Antagonist]; these are the canonical
+// title nodes. The deuteragonist is the secondary main character.
+concept protagonist   [+Trope(category="Universal", source="allthetropes.org/wiki/The_Protagonist")] [%Narrative]
+concept antagonist    [+Trope(category="Universal", source="allthetropes.org/wiki/The_Antagonist")] [%Narrative]
+concept deuteragonist [+Trope(category="Universal", source="allthetropes.org/wiki/Deuteragonist")] [%Narrative]

@@ -1,0 +1,53 @@
+// === PREAMBLE ===
+// @trope    The Protagonist
+// @category Universal Tropes
+// @source   https://allthetropes.org/wiki/The_Protagonist
+// @version  1.3
+// @uses     trl/concepts/narrative.trl — the `conflict` concept
+//
+// Laconic: the principal character — the story is about them, be they Hero, Villain
+// Protagonist, or innocent bystander. The character the central arc centers on and whose
+// choices drive its turning points. Builds on the prelude [+Protagonist] role.
+
+
+// === ONTOLOGY ===
+
+imply Protagonist -> [Central, Sympathetic_Focus, Agent]
+
+
+// === ABSTRACT RULE ===
+// Heuristic recognition: the character at the centre of the most turning points of the
+// central arc is its protagonist. (Centrality is ultimately authorial; agency is the
+// structural signal we can see.)
+rule TheProtagonist {
+  when:
+    arc  $story
+    char $c
+    count( evt $turn -> $c ) >= 3
+  then:
+    $c [+Protagonist]
+    $c -- $story
+    $c -- conflict
+}
+
+
+// === CONCRETE VIGNETTE: The Lord of the Rings — Frodo ===
+
+// FRODO BAGGINS
+char frodo [+Hobbit]
+
+// THE QUEST TO DESTROY THE RING
+arc the_quest
+
+// THE ONE RING
+obj the_ring [+MacGuffin]
+
+scene the_burden {
+  beat 1 {
+    frodo -- the_quest
+    evt accept -> frodo > the_ring : "Takes The Ring"
+    evt depart -> frodo @ the_quest : "Sets Out"
+    evt endure -> frodo @ the_quest : "Bears The Weight"
+    frodo [+Protagonist]
+  }
+}

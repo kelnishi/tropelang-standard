@@ -1,0 +1,46 @@
+// === PREAMBLE ===
+// @trope    The Antagonist
+// @category Universal Tropes
+// @source   https://allthetropes.org/wiki/The_Antagonist
+// @version  1.3
+//
+// Laconic: the character whose role is to OPPOSE the protagonist — and who exists for that
+// purpose. Need not be a villain, a Big Bad, or morally objectionable; opposition is the
+// whole definition. Builds on the prelude [+Antagonist] role and the [~Opposes] verb.
+
+
+// === ONTOLOGY ===
+
+imply Antagonist -> [Opposition, Obstacle]
+
+
+// === ABSTRACT RULE ===
+// The antagonist is defined RELATIONALLY: whoever opposes the protagonist. (Reuses the
+// prelude Opposes verb; the central conflict is the mutual-conflict edge between them.)
+rule TheAntagonist {
+  when:
+    char $protagonist [+Protagonist]
+    char $c
+    $c != $protagonist
+    $c [~Opposes(target=$protagonist)]
+  then:
+    $c [+Antagonist]
+    $c >< $protagonist
+}
+
+
+// === CONCRETE VIGNETTE: The Lord of the Rings — Sauron opposes Frodo ===
+
+// FRODO BAGGINS
+char frodo [+Protagonist]
+
+// SAURON, THE DARK LORD
+char sauron [+DarkLord]
+
+scene the_opposition {
+  beat 1 {
+    sauron [~Opposes(target=frodo)]
+    sauron >< frodo
+    sauron [+Antagonist]
+  }
+}

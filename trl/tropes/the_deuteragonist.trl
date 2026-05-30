@@ -1,0 +1,49 @@
+// === PREAMBLE ===
+// @trope    The Deuteragonist
+// @category Universal Tropes
+// @source   https://allthetropes.org/wiki/Deuteragonist
+// @version  1.3
+//
+// Laconic: the second character the story is about — a secondary main character, with or
+// against the protagonist, more present than the supporting cast but not the centre. Not
+// the Sidekick (who merely follows) and not the antagonist.
+
+
+// === ONTOLOGY ===
+
+imply Deuteragonist -> [Secondary_Focus, Central]
+
+
+// === ABSTRACT RULE ===
+// The most-present character after the protagonist, tied to them (ally or foil), who is
+// neither the protagonist nor the antagonist.
+rule TheDeuteragonist {
+  when:
+    char $protagonist [+Protagonist]
+    char $c
+    $c != $protagonist
+    not ( $c [+Protagonist] )
+    not ( $c [+Antagonist] )
+    count( evt $e -> $c ) >= 2
+    $c -- $protagonist
+  then:
+    $c [+Deuteragonist]
+}
+
+
+// === CONCRETE VIGNETTE: The Lord of the Rings — Samwise beside Frodo ===
+
+// FRODO BAGGINS
+char frodo [+Protagonist]
+
+// SAMWISE GAMGEE
+char sam [+Ally] [+Loyal]
+
+scene the_companion {
+  beat 1 {
+    sam -- frodo : "Serves"
+    evt follow -> sam @ frodo  : "Will Not Leave Him"
+    evt carry  -> sam > frodo  : "Carries Him Up The Mountain"
+    sam [+Deuteragonist]
+  }
+}
