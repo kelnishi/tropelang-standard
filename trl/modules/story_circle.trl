@@ -1,0 +1,82 @@
+// @title    The Story Circle (the embryo)
+// @author   Dan Harmon — distilled from Campbell's monomyth (Channel 101, "Story Structure")
+// @category Storytelling Systems
+// @version  0.1
+// @note     Campbell's seventeen stages boiled down to a memorable EIGHT, arranged as a circle.
+//           A horizontal line splits the circle into an upper half (ORDER — the familiar,
+//           conscious world) and a lower half (CHAOS — the unfamiliar, unconscious world); the
+//           story descends across that line at step 3 and climbs back at step 7. The eight steps
+//           are usually labelled You / Need / Go / Search / Find / Take / Return / Change. This
+//           module names them as concept nodes, sequences them as a closed loop, and links the
+//           monomyth it distills.
+//
+// Import: import "trl/modules/story_circle.trl"
+
+
+// === DEPENDENCIES ===
+import "trl/concepts/index.trl"            // transformation, return, purpose, …
+import "trl/modules/heros_journey.trl"     // the monomyth this eight-step embryo distills
+
+
+// === THE SYSTEM ===
+
+concept story_circle [+StoryCircle] [%Narrative]
+imply StoryCircle -> [Structure, Cyclical, Narrative]
+
+
+// === THE EIGHT STEPS (canonical label in the comment) ===
+
+// — UPPER HALF · ORDER (the familiar world) —
+concept comfort_zone   [+CircleStep]                 // 1 · You — a character in their element
+concept the_need       [+CircleStep]                 // 2 · Need — but they want something
+
+// — crossing DOWN, into chaos —
+concept descent        [+CircleStep] [+Threshold]    // 3 · Go — they enter an unfamiliar situation
+
+// — LOWER HALF · CHAOS (the unfamiliar world) —
+concept adaptation     [+CircleStep]                 // 4 · Search — they adapt to it
+concept the_find       [+CircleStep]                 // 5 · Find — they get what they wanted
+concept the_price      [+CircleStep]                 // 6 · Take — and pay a heavy price for it
+
+// — crossing UP, back into order —
+concept the_road_back  [+CircleStep] [+Threshold]    // 7 · Return — they go back to where they started
+
+// — UPPER HALF · ORDER (the familiar world, now altered) —
+concept the_change     [+CircleStep]                 // 8 · Change — they are capable of change now
+
+
+// === THE SEQUENCE (a closed loop — the circle returns, transformed) ===
+comfort_zone -> the_need -> descent -> adaptation -> the_find -> the_price -> the_road_back -> the_change
+the_change -> comfort_zone : "the circle closes — same world, changed self"
+
+
+// === ASSOCIATIONS ===
+assoc story_circle -> [
+  heros_journey  : "distills",
+  transformation : "the lower half effects",
+  return         : "step seven is",
+  purpose        : "the need gives the hero"
+]
+
+
+// === CONCRETE VIGNETTE: Groundhog Day — Phil Connors (film) ===
+// A story whose literal time-loop mirrors the circle; Phil's selfish->selfless arc is step 8.
+
+char phil [+Protagonist]
+
+arc phils_circle [+StoryCircle]
+
+act order_before {
+  beat 1 { phil -- comfort_zone : "Cynical Weatherman, Set In His Routine" }
+  beat 2 { phil -- the_need     : "Wants Out Of Punxsutawney — And Wants Rita" }
+}
+act chaos {
+  beat 1 { phil -- descent      : "Trapped In The Repeating Day" }
+  beat 2 { phil -- adaptation   : "Experiments — Hedonism, Manipulation, Despair" }
+  beat 3 { phil -- the_find     : "Masters The Day; Betters Himself" }
+  beat 4 { phil -- the_price    : "Ego Death — Must Genuinely Change To Escape" }
+}
+act order_after {
+  beat 1 { phil -- the_road_back : "The Loop Breaks; Time Moves Again" }
+  beat 2 { phil -- the_change    : "A Selfless, Beloved Man" }
+}

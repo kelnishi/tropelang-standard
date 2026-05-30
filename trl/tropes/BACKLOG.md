@@ -74,8 +74,8 @@ motivation, and state transitions — general enough to compose arbitrary emotio
 Higher-level structures that *organize* tropes — name + sequence the stages, link the beats.
 - [x] The Hero's Journey / Monomyth   (Campbell — `heros_journey.trl`)
 - [x] Freytag's Pyramid               (Freytag — `freytags_pyramid.trl`; defines `climax` et al.)
-- [ ] Dan Harmon's Story Circle       (the 8-step you/need/go/search/find/take/return/change)   ← **up next**
-- [ ] Save the Cat beat sheet         (Blake Snyder, 15 beats)
+- [x] Dan Harmon's Story Circle       (system — `story_circle.trl`: the 8-step closed loop; order/chaos halves, two threshold crossings)
+- [ ] Save the Cat beat sheet         (Blake Snyder, 15 beats)   ← **up next**
 - [ ] The Seven Basic Plots           (Booker)
 - [ ] Propp's Morphology              (31 narrative functions)
 - [ ] Kishōtenketsu                   (4-act, no central conflict — East Asian)
