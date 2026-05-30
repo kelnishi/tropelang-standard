@@ -29,18 +29,19 @@ rule TheAntagonist {
 }
 
 
-// === CONCRETE VIGNETTE: The Lord of the Rings — Sauron opposes Frodo ===
+// === CONCRETE VIGNETTE: Les Misérables — Javert opposes Valjean (novel; antagonist, no villain) ===
 
-// FRODO BAGGINS
-char frodo [+Protagonist]
+// JEAN VALJEAN
+char valjean [+Protagonist]
 
-// SAURON, THE DARK LORD
-char sauron [+DarkLord]
+// INSPECTOR JAVERT
+char javert [+Lawman] [+Righteous]
 
-scene the_opposition {
+scene the_pursuit {
   beat 1 {
-    sauron [~Opposes(target=frodo)]
-    sauron >< frodo
-    sauron [+Antagonist]
+    javert [~Opposes(target=valjean)]
+    javert >< valjean
+    javert [+Antagonist]
+    // His opposition is lawful conviction, not malice — an antagonist who is no villain.
   }
 }

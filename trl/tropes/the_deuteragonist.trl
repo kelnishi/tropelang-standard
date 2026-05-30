@@ -31,19 +31,19 @@ rule TheDeuteragonist {
 }
 
 
-// === CONCRETE VIGNETTE: The Lord of the Rings — Samwise beside Frodo ===
+// === CONCRETE VIGNETTE: Sherlock Holmes — Dr. Watson beside Holmes (short stories) ===
 
-// FRODO BAGGINS
-char frodo [+Protagonist]
+// SHERLOCK HOLMES
+char holmes [+Protagonist]
 
-// SAMWISE GAMGEE
-char sam [+Ally] [+Loyal]
+// DR. JOHN WATSON
+char watson [+Ally] [+Chronicler]
 
-scene the_companion {
+scene the_partnership {
   beat 1 {
-    sam -- frodo : "Serves"
-    evt follow -> sam @ frodo  : "Will Not Leave Him"
-    evt carry  -> sam > frodo  : "Carries Him Up The Mountain"
-    sam [+Deuteragonist]
+    watson -- holmes : "Partners With"
+    evt accompany -> watson @ holmes : "Joins The Investigation"
+    evt narrate   -> watson > holmes : "Chronicles His Cases"
+    watson [+Deuteragonist]
   }
 }

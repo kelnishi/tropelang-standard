@@ -138,6 +138,8 @@ scene scene_name {
 
 If the trope has a meaningful subversion, add `rule TropeName_Subverted` or use `fork`/`prompt` to branch the outcome.
 
+**Vary the source story and format.** Across conversions, draw vignettes from a *variety* of stories, media, and eras — film, TV, novel, play, myth, game, comic — and do not lean on one franchise (e.g. several LotR examples in a row). Prefer an example that also sharpens the trope's nuance (a villain-protagonist for The Protagonist, a *non-villain* antagonist for The Antagonist). A monoculture of examples narrows the corpus and skews the drams eval set.
+
 ### 5. Format the output
 
 Return a `.trl` fenced code block with a brief annotation:

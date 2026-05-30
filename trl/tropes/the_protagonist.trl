@@ -31,23 +31,22 @@ rule TheProtagonist {
 }
 
 
-// === CONCRETE VIGNETTE: The Lord of the Rings — Frodo ===
+// === CONCRETE VIGNETTE: Breaking Bad — Walter White (TV; a villain protagonist) ===
 
-// FRODO BAGGINS
-char frodo [+Hobbit]
+// WALTER WHITE
+char walter [+ChemistryTeacher]
 
-// THE QUEST TO DESTROY THE RING
-arc the_quest
+// THE METH EMPIRE
+arc the_empire
 
-// THE ONE RING
-obj the_ring [+MacGuffin]
-
-scene the_burden {
+scene the_turn {
   beat 1 {
-    frodo -- the_quest
-    evt accept -> frodo > the_ring : "Takes The Ring"
-    evt depart -> frodo @ the_quest : "Sets Out"
-    evt endure -> frodo @ the_quest : "Bears The Weight"
-    frodo [+Protagonist]
+    walter -- the_empire
+    evt cook   -> walter > the_empire : "Builds The Operation"
+    evt expand -> walter @ the_empire : "Seizes Control"
+    evt fall   -> walter @ the_empire : "Brings It All Down"
+    walter [+Protagonist]
+    // The story centers on him even as he turns monstrous — a villain protagonist.
+    walter [+Villain_Protagonist]
   }
 }
