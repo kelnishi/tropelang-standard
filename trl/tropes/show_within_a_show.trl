@@ -1,0 +1,64 @@
+// === PREAMBLE ===
+// @trope    Show Within a Show (The Play Within a Play)
+// @category Narrative Devices / Metafiction
+// @source   https://allthetropes.org/wiki/Hamlet  (The Murder of Gonzago)
+// @version  1.3
+//
+// Laconic: a self-contained work of fiction staged INSIDE the story — a play the characters
+// watch, a show within a show. FRONTIER: unlike Frame Story (a tale merely nested) or the
+// Unreliable Narrator (a tale that lies), here the inner `non_canon` fiction MIRRORS a canon
+// truth and LOOPS BACK to expose it — a fiction that reaches into reality. Shakespeare pioneered
+// the device; the archetype is Hamlet staging "The Murder of Gonzago" to catch the conscience
+// of the King.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // revelation
+import "trl/modules/theory_of_mind.trl"    // it reads guilt off the watcher's reaction
+
+assoc show_within_a_show -> [
+  revelation     : "the staged mirror forces a",
+  theory_of_mind : "weaponizes the watcher's"
+]
+
+
+// === ONTOLOGY ===
+
+imply ShowWithinAShow -> [Nested, Metafictional, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: staging an inner fiction that mirrors a real truth IS a Show Within a Show.
+rule Show_Within_A_Show {
+  when:
+    evt $stage [&Stages(agent=$author, mirror=$truth)]
+  then:
+    $stage [+ShowWithinAShow]
+}
+
+
+// === CONCRETE VIGNETTE: Hamlet — "The Murder of Gonzago" (play) ===
+
+<<elsinore>>                                      // the Danish court — reality, where truth is absolute
+char hamlet   [+Protagonist]
+char claudius [+Antagonist]
+!claudius [+Regicide]!                            // the canon truth: he poisoned the old king
+
+<<elsinore.play : non_canon, teller=hamlet>>      // the staged play — a fiction that mints no truth
+char player_king [+Victim]
+char poisoner    [+Murderer]
+poisoner -- player_king : "pours poison in the sleeping king's ear — the crime re-enacted"
+
+<<elsinore>>                                       // the fiction loops back: the King cannot watch
+scene the_mousetrap {
+  beat 1 {
+    evt staging [&Stages(agent=hamlet, mirror=claudius)]
+        dialog(inject=[speaker=hamlet], inline="""
+               speaker: "{speaker}"
+               cue: "low, to himself, watching the King's face for the flinch"
+               tone: coiled
+               text: "The play's the thing wherein I'll catch the conscience of the King."
+               """)
+    // Show_Within_A_Show -> staging [+ShowWithinAShow]; the mirrored crime forces guilt into the open
+  }
+}

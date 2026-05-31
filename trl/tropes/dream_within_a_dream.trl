@@ -1,0 +1,54 @@
+// === PREAMBLE ===
+// @trope    Dream Within a Dream
+// @category Narrative Devices / Epistemic
+// @source   https://allthetropes.org/wiki/Dream_Within_a_Dream
+// @version  1.3
+//
+// Laconic (per the wiki): a character wakes from a dream to think they're awake — only to wake
+// from THAT dream. Inception "has too much fun" with it: a dream within a dream within a dream
+// within a dream — FOUR layers. FRONTIER: deep `non_canon` nesting. Each layer is its own dream
+// plane stacked on the last; a "kick" cascades the team back up, one plane at a time.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // memory, revelation
+
+assoc dream_within_a_dream -> [
+  memory     : "nests a recollection inside a",
+  revelation : "each kick is a small"
+]
+
+
+// === ONTOLOGY ===
+
+imply DreamWithinADream -> [Nested, Oneiric, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a "kick" that throws a dreamer up out of a nested layer IS the device (tags it).
+rule Kick {
+  when:
+    evt $k [&Kicks(agent=$c)]
+  then:
+    $k [+DreamWithinADream]
+}
+
+
+// === CONCRETE VIGNETTE: Inception — four layers down (film) ===
+
+<<reality>>                                                  // the waking world (the plane ride)
+char cobb    [+Protagonist]
+char fischer [+Mark]
+
+<<reality.dream : non_canon, teller=cobb>>                   // layer 1 — the rainy city
+<<reality.dream.deeper : non_canon, teller=cobb>>            // layer 2 — the hotel
+<<reality.dream.deeper.deepest : non_canon, teller=cobb>>    // layer 3 — the snow fortress
+<<reality.dream.deeper.deepest.limbo : non_canon>>           // layer 4 — limbo: raw, unconstructed
+
+<<reality.dream.deeper.deepest>>                             // in the fortress, the kick is timed
+scene the_kick {
+  beat 1 {
+    evt kick [&Kicks(agent=cobb)]
+    // Kick -> kick [+DreamWithinADream]; the synchronized kicks cascade the team up, layer by layer
+  }
+}

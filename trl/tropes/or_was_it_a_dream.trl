@@ -1,0 +1,61 @@
+// === PREAMBLE ===
+// @trope    Or Was It a Dream?
+// @category Narrative Devices / Epistemic
+// @source   https://allthetropes.org/wiki/All_Just_a_Dream
+// @version  1.3
+//
+// Laconic (per the wiki): a character wakes, sighs that it was "all just a dream" — then finds an
+// artifact from the dream lying beside them, leaving everyone wondering. FRONTIER: the first
+// trope to PAIR S14 levels with the §11 ambiguity syntax. Where Dream Sequence cleanly dissolves
+// its plane, this one leaves a RESIDUE that the dissolution can't explain — so the truth collapses
+// into a named ambiguity `( real | dream | … )` that is deliberately never resolved. Doubt is the
+// payload (cf. Schrödinger's Butterfly).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // ambivalence, revelation
+
+assoc or_was_it_a_dream -> [
+  ambivalence : "rests forever in",
+  revelation  : "the one it withholds"
+]
+
+
+// === ONTOLOGY ===
+
+imply OrWasItADream -> [Oneiric, Ambiguous, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a waking shadowed by a dream-residue IS this trope (the residue forbids closure).
+rule Or_Was_It_A_Dream {
+  when:
+    evt  $w [&Wakes(agent=$c)]
+    obj  $token [+FromTheDream]
+  then:
+    $w [+OrWasItADream]
+}
+
+
+// === CONCRETE VIGNETTE: Coleridge's flower — "what if you slept…" (literary thought experiment) ===
+// "And what if in your dream you went to heaven and there plucked a strange and beautiful flower,
+//  and what if when you awoke you had the flower in your hand? Ay — what then?"
+
+<<world>>                                        // waking reality
+char dreamer [+Protagonist]
+
+<<world.dream : non_canon, teller=dreamer>>      // the dream of paradise — it mints no truth
+obj flower [+FromTheDream]
+dreamer -- flower : "plucks a strange and beautiful flower in heaven"
+
+<<world>>                                        // he wakes — but the flower is the residue
+scene the_waking {
+  beat 1 {
+    evt wakes [&Wakes(agent=dreamer)]
+    // Or_Was_It_A_Dream -> wakes [+OrWasItADream]
+  }
+  beat 2 {
+    // the truth is left as a NAMED ambiguity and never collapsed — that open question is the trope
+    ( dreamer [+ItWasReal] | dreamer [+ItWasAllADream] | ... ) as was_it_real
+  }
+}

@@ -38,6 +38,9 @@ import "trl/tropes/unreliable_narrator.trl"
 import "trl/tropes/frame_story.trl"
 import "trl/tropes/dream_sequence.trl"
 import "trl/tropes/fourth_wall.trl"
+import "trl/tropes/dream_within_a_dream.trl"
+import "trl/tropes/show_within_a_show.trl"
+import "trl/tropes/or_was_it_a_dream.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -94,6 +97,13 @@ concept unreliable_narrator [+Trope(category="Narrative Devices", source="allthe
 concept frame_story    [+Trope(category="Narrative Devices", source="allthetropes.org/wiki/Framing_Device")] [%Narrative]
 concept dream_sequence [+Trope(category="Narrative Devices", source="allthetropes.org/wiki/All_Just_a_Dream")] [%Epistemic]
 concept fourth_wall    [+Trope(category="Metafiction", source="allthetropes.org/wiki/Breaking_the_Fourth_Wall")] [%Narrative]
+
+// MORE DIEGETIC-LEVEL DEVICES. Dream Within a Dream stacks non_canon planes (Inception, 4 deep);
+// Show Within a Show is an inner fiction that mirrors a canon truth and loops back (Hamlet);
+// Or Was It a Dream? pairs the dream plane with an uncollapsed `(real|dream)` ambiguity (Coleridge).
+concept dream_within_a_dream [+Trope(category="Narrative Devices", source="allthetropes.org/wiki/Dream_Within_a_Dream")] [%Epistemic]
+concept show_within_a_show   [+Trope(category="Metafiction", source="allthetropes.org/wiki/Show_Within_a_Show")] [%Narrative]
+concept or_was_it_a_dream    [+Trope(category="Narrative Devices", source="allthetropes.org/wiki/All_Just_a_Dream")] [%Epistemic]
 
 // CHARACTER-ROLE BUILDING BLOCKS (Universal Tropes) — the cast structure. The applied
 // forms are the prelude roles [+Protagonist] / [+Antagonist]; these are the canonical

@@ -53,6 +53,12 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
                                     dissolves to LATENT on waking; Link's Awakening)
 - [x] Breaking the Fourth Wall    (S14 outward crossing — `fourth_wall.trl`: a character reaches OUT
                                     to the audience plane; Ferris Bueller)
+- [x] Dream Within a Dream        (S14 deep nesting — `dream_within_a_dream.trl`: 4 stacked non_canon
+                                    planes + the kick; Inception)
+- [x] Show Within a Show          (S14 inner-fiction-loops-back — `show_within_a_show.trl`: a non_canon
+                                    play mirrors a canon crime to expose it; Hamlet's Mousetrap)
+- [x] Or Was It a Dream?          (S14 levels × §11 ambiguity — `or_was_it_a_dream.trl`: a dream-residue
+                                    leaves an uncollapsed (real|dream) ambiguity; Coleridge's flower)
 
 ## Character change & arcs
 - [ ] Coming of Age
