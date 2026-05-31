@@ -1,0 +1,121 @@
+// === PREAMBLE ===
+// @trope    Break the Cutie
+// @category Tragedy / Audience Reactions
+// @source   https://allthetropes.org/wiki/Break_the_Cutie
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a character introduced as sweet, innocent, and carefree is endeared to
+// the audience, then SLOWLY tormented — everything they love destroyed, one cruel stroke of fate
+// after another — until they are just a shell of their former cheerful self. The ACCUMULATION is
+// the trope: no single blow breaks them, the COUNT does. Distinct from Despair Event Horizon, which
+// is one final blow to anyone hopeful — Break the Cutie specifically grinds down an INNOCENT, by
+// repetition, and the payoff is a hollow husk, not merely abandoned hope. Often builds The Woobie;
+// when the cutie refuses to break they harden into a Stoic Woobie / Determinator instead (subverted).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/emotion_dynamics.trl"     // Thread_Hope_To_Despair (count of &Crushes), Motivate_Withdrawal
+import "trl/tropes/despair_event_horizon.trl" // the breaking crosses into hopelessness; this targets the innocent
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc break_the_cutie -> [
+  suffering             : "ground down by accumulated",
+  despair               : "the cheer collapses into",
+  despair_event_horizon : "the innocent-specific, by-accumulation kin of",
+  hope_spot             : "each false reprieve sharpens the next blow"
+]
+
+
+// === ONTOLOGY ===
+// The cutie's defining sweetness, and the husk left when it is crushed.
+imply BreakTheCutie -> [Suffering, Innocent, Narrative]
+imply BrokenCutie   -> [Despair, Hollow]
+
+
+// === ABSTRACT RULE ===
+// An INNOCENT, cheerful character subjected to repeated cruelty — the count is what matters, not any
+// one blow (>= 3, the same accumulation threshold emotion_dynamics' Thread_Hope_To_Despair uses) —
+// is broken: the cheer is stripped, despair becomes ABSOLUTE, and what remains is a hollow, withdrawn
+// shell. This is the by-accumulation, innocent-targeted path across the despair horizon.
+rule BreakTheCutie {
+  when:
+    char $c [+Innocent] [#Hopeful]
+    count( evt $cruelty [&Crushes(target=$c)] ) >= 3
+    not ( $c [+Broken] )
+    not ( $c [+Resolute] )           // a cutie with a core of steel takes the other branch (subverted)
+  then:
+    $c [-Hopeful]
+    !$c [#Despairing]!
+    $c [+Broken] [+Hopeless] [#Empty] [#Withdrawn]
+    $c -- suffering
+    $c -- despair
+}
+
+// SUBVERSION — the cutie refuses to break: the same accumulated cruelty hardens, rather than hollows,
+// an innocent with a core of steel (the Stoic Woobie / Determinator).
+rule BreakTheCutie_Refused {
+  when:
+    char $c [+Innocent] [#Hopeful] [+Resolute]
+    count( evt $cruelty [&Crushes(target=$c)] ) >= 3
+    not ( $c [+Broken] )
+  then:
+    $c [+Hardened] [+Determinator]
+    $c -- resolve
+}
+
+
+// === CONCRETE VIGNETTE: Puella Magi Madoka Magica — Sayaka Miki (anime, 2011) ===
+// A magical-girl deconstruction. Sayaka is the bright, selfless one: she spends her one wish healing
+// the boy she loves, then watches every good thing curdle. He never loves her back; she learns the
+// magical-girl pact is a soul-laundering scam; she fights monsters for a city that will never thank
+// her. Blow after blow lands on the kindest girl in the cast until her cheer is gone and she becomes
+// the very despair (a witch) the girls were made to fight — a shell of who she was.
+
+// SAYAKA MIKI — the selfless cutie
+char sayaka [+Innocent] [#Hopeful]
+sayaka [+Idealistic] [+SelfSacrificing]
+
+// KYOSUKE — the boy she healed, who loves another
+char kyosuke [+LoveInterest]
+
+// KYUBEY — the smiling contractor who never mentioned the cost
+char kyubey [+Betrayer]
+
+// INT. MITAKIHARA — the bright ordinary city that becomes her battlefield
+set mitakihara [+Interior] [+Liminal]
+
+scene the_grinding_down {
+  beat 1 {
+    sayaka @ mitakihara
+    evt unrequited [&Crushes(target=sayaka)]
+        dialog(inject=[speaker=sayaka], inline="""
+               speaker: "{speaker}"
+               cue: "watching Kyosuke, healed by her wish, walk off beside another girl"
+               tone: bright, brittle
+               text: "It's fine. I didn't do it for thanks. I'd make the same wish again."
+               """)
+    // blow 1 — the wish she spent on him buys her nothing
+  }
+  beat 2 {
+    evt the_pact_revealed [&Crushes(target=sayaka)]
+    sayaka -- betrayal : "Learns the Cost"
+    // blow 2 — Kyubey's contract: her soul was extracted, she is fighting for a body she no longer is
+  }
+  beat 3 {
+    evt thankless_war [&Crushes(target=sayaka)]
+    // blow 3 — she risks everything for strangers who will never know; the count crosses the threshold
+    // BreakTheCutie fires: count(&Crushes target=sayaka) >= 3
+    sayaka [-Hopeful]
+    !sayaka [#Despairing]!
+    sayaka [+Broken] [+Hopeless] [#Empty] [#Withdrawn]
+    sayaka -- suffering
+    sayaka -- despair
+        dialog(inject=[speaker=sayaka], inline="""
+               speaker: "{speaker}"
+               cue: "on the empty train, the light gone out of her, repeating it like a verdict"
+               tone: hollow
+               text: "I was so stupid. Why did I ever think any of it could be saved?"
+               """)
+  }
+}

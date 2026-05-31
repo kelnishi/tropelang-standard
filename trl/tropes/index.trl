@@ -131,6 +131,13 @@ import "trl/tropes/spectacle.trl"
 import "trl/tropes/the_climax.trl"
 import "trl/tropes/worthy_opponent.trl"
 import "trl/tropes/chekhovs_gunman.trl"
+import "trl/tropes/break_the_cutie.trl"
+import "trl/tropes/heel_realization.trl"
+import "trl/tropes/hoist_by_his_own_petard.trl"
+import "trl/tropes/i_gave_my_word.trl"
+import "trl/tropes/magnificent_bastard.trl"
+import "trl/tropes/took_a_level_in_badass.trl"
+import "trl/tropes/xanatos_gambit.trl"
 
 // === TROPE TITLE ENTRIES ===
 
@@ -361,16 +368,21 @@ concept refusal_of_the_call [+Trope(category="Universal", source="allthetropes.o
 
 concept anti_hero [+Trope(category="Cast", source="https://allthetropes.org/wiki/Anti-Hero")] [%Narrative]
 concept batman_gambit [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Batman_Gambit")] [%Epistemic]
+concept break_the_cutie [+Trope(category="Tragedy", source="https://allthetropes.org/wiki/Break_the_Cutie")] [%Narrative]
 concept chekhovs_gunman [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Gunman")] [%Narrative]
 concept curb_stomp_battle [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Curb_Stomp_Battle")] [%Interpersonal]
 concept david_versus_goliath [+Trope(category="Combat Tropes", source="https://allthetropes.org/wiki/David_Versus_Goliath")] [%Interpersonal]
 concept eucatastrophe [+Trope(category="Happy Endings", source="https://allthetropes.org/wiki/Eucatastrophe")] [%Narrative]
 concept fatal_flaw [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Fatal_Flaw")] [%Mind]
 concept flashback [+Trope(category="Flashbacks and Chronology", source="https://allthetropes.org/wiki/Flashback_(trope)")] [%Narrative]
+concept heel_realization [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Heel_Realization")] [%Mind]
 concept heroic_second_wind [+Trope(category="Heroic Spirit", source="https://allthetropes.org/wiki/Heroic_Second_Wind")] [%Narrative]
+concept hoist_by_his_own_petard [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Hoist_by_His_Own_Petard")] [%Narrative]
+concept i_gave_my_word [+Trope(category="Characterization", source="https://allthetropes.org/wiki/I_Gave_My_Word")] [%Interpersonal]
 concept in_medias_res [+Trope(category="Narrative Devices", source="https://allthetropes.org/wiki/In_Medias_Res")] [%Narrative]
 concept like_brother_and_sister [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Like_Brother_and_Sister")] [%Interpersonal]
 concept macguffin [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/MacGuffin")] [%Narrative]
+concept magnificent_bastard [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Magnificent_Bastard")] [%Narrative]
 concept mexican_standoff [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Mexican_Standoff")] [%Interpersonal]
 concept mockumentary [+Trope(category="Non-Fiction", source="https://allthetropes.org/wiki/Mockumentary")] [%Narrative]
 concept plot_twist [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Plot_Twist")] [%Narrative]
@@ -389,5 +401,7 @@ concept the_lancer [+Trope(category="Characterization", source="https://allthetr
 concept the_love_interest [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Love_Interest")] [%Interpersonal]
 concept the_trickster [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/The_Trickster")] [%Narrative]
 concept tomato_in_the_mirror [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Tomato_in_the_Mirror")] [%Mind]
+concept took_a_level_in_badass [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Took_a_Level_in_Badass")] [%Mind]
 concept wham_line [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Wham!_Line")] [%Narrative]
 concept worthy_opponent [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Worthy_Opponent")] [%Interpersonal]
+concept xanatos_gambit [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Xanatos_Gambit")] [%Epistemic]

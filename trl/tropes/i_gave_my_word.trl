@@ -1,0 +1,125 @@
+// === PREAMBLE ===
+// @trope    I Gave My Word (Honor Before Reason)
+// @category Characterization / Honor
+// @source   https://allthetropes.org/wiki/I_Gave_My_Word
+// @domain   Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): a character always keeps their word — and breaking it causes such anguish
+// that it seems to threaten their very humanity. The promise (or the code) is BINDING: once given, it
+// is honoured even when reason and advantage plainly argue against it, even at mortal cost, because
+// the word is the self. FRONTIER: this is the needs module's INVERSION read as a SOCIAL act. Where
+// All Quiet's butterfly inverts the ladder PRIVATELY (beauty over the body), here the higher need is
+// ESTEEM — honour, integrity, the kept word — held harder than safety, and the holding is PUBLIC: it
+// maintains a reputation, a standing held in common. Integrity is bought with the very thing prudence
+// said to keep. The signature is the cost: a word kept when keeping it is the unwise move.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/needs.trl"        // Inversion: esteem (rank 4) held harder than safety (rank 2)
+import "trl/modules/reputation.trl"   // the kept word maintains honour — a standing held in common
+import "trl/concepts/index.trl"       // honor, integrity, duty, loyalty
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc i_gave_my_word -> [
+  needs       : "is the esteem-over-safety Inversion of",
+  reputation  : "the kept word maintains the honour standing of",
+  integrity   : "is the lived act of",
+  honor       : "is the standing defended by",
+  the_dilemma : "is the costly horn refused when it would break"
+]
+
+
+// === ONTOLOGY ===
+// A bound character is one Committed_To a code or a given word. To honour it Before Reason is to keep
+// it when reason argues against — an Inversion of the needs ladder (esteem over safety) that, paid in
+// full, leaves the character Transcendent and the name Honored. The binding is the whole point: a
+// promise that costs nothing tests nothing.
+imply GivenWord     -> [Binding, Integrity, Narrative]
+imply HonorBeforeReason -> [GivenWord, Inversion, Costly]
+
+
+// === ABSTRACT RULE ===
+// Recognition: a character is bound — Committed_To honour (a code, an oath, a given word) — AND is
+// pursuing that esteem need (rank 4) while a deeper SAFETY lack (rank 2) grips them; prudence says
+// break the word and relieve the lack. The signature of the trope is that the esteem is held HARDER
+// than the safety ($hs > $ls), so the needs Inversion fires: the word is kept at cost. The character
+// is left Driven by esteem, Transcendent (the body's prudence overruled), and — keeping the word in
+// public view — Honored: the standing is maintained by the very choice that endangered them.
+rule I_Gave_My_Word {
+  when:
+    char $c [~Committed_To(target=honor)]
+    char $c [~Pursues(rank=$hr, salience=$hs)]
+    char $c [#Lacks(rank=$lr, salience=$ls)]
+    $lr < $hr
+    $hr == 4
+    $hs > $ls
+  then:
+    // the needs Inversion: esteem held over a deeper safety lack
+    $c [#Driven(rank=$hr)]
+    $c [+Transcendent]
+    // the word kept in public view maintains the honour standing
+    !$c [+Honored]!
+    $c -- integrity : "Upholds"
+    $c -- reputation : "Maintains"
+}
+
+
+// === CONCRETE VIGNETTE: Regulus returns to Carthage — the parole kept (Roman history, 255–250 BCE) ===
+// Captured in the First Punic War, the consul Marcus Atilius Regulus is released on parole to carry
+// Carthage's peace terms to the Senate — sworn to return if Rome refuses. He reaches Rome and argues
+// AGAINST the terms, urging the Senate to fight on: the prudent, patriotic, self-serving counsel would
+// have been to stay free. Then, his word given, he goes back to Carthage and certain torture and death,
+// because the oath binds. Esteem (the kept word, rank 4) is held harder than safety (his own life,
+// rank 2); the Inversion fires, and the name endures precisely because the body did not.
+
+// MARCUS ATILIUS REGULUS — consul, prisoner, oath-keeper
+char regulus [+Protagonist]
+regulus [~Committed_To(target=honor)]
+regulus [~Devoted_To(target=duty)]
+
+// THE ROMAN SENATE — the body he advises against his own interest
+char senate [+Collective]
+
+// THE CARTHAGINIAN COUNCIL — the captors his word returns him to
+char carthage [+Antagonist] [+Collective]
+
+// INT. THE CURIA, ROME — the consul pleads against the peace
+set the_curia [+Interior] [+Day]
+// EXT. CARTHAGE — the return to certain death
+set carthage_walls [+Exterior] [+Day]
+
+scene the_parole {
+  beat 1 {
+    regulus @ the_curia
+    senate @ the_curia
+    // sworn to return; he advises Rome to REFUSE the terms — against his own freedom
+    regulus -- carthage : "Sworn To Return"
+    evt the_counsel -> regulus > senate : "Argues Against The Peace"
+        dialog(inject=[speaker=regulus], inline="""
+               speaker: "{speaker}"
+               cue: "to the assembled Senate, knowing the words seal his own death"
+               tone: grave, unshaken
+               text: "Reject the terms. Carthage is spent. And I am bound by my oath to carry your answer back."
+               """)
+  }
+  beat 2 {
+    // prudence: break parole, stay free, live (safety, rank 2, gripping hard)
+    regulus [#Lacks(rank=2, salience=6)]
+    // the word kept (esteem, rank 4) is held harder still
+    regulus [~Pursues(rank=4, salience=10)]
+    // I_Gave_My_Word fires (2 < 4, 4==4, 10 > 6): the oath outpulls the life
+    regulus [#Driven(rank=4)]
+    regulus [+Transcendent]
+  }
+  beat 3 {
+    // he returns — the body forfeit, the name imperishable
+    regulus !@ the_curia
+    regulus @ carthage_walls
+    carthage @ carthage_walls
+    // the standing is maintained by the very choice that destroyed him
+    !regulus [+Honored]!
+    regulus -- integrity : "Upholds"
+    regulus -- reputation : "Maintains"
+  }
+}

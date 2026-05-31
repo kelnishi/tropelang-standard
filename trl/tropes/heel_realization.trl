@@ -1,0 +1,92 @@
+// === PREAMBLE ===
+// @trope    Heel Realization
+// @category Character Development / Alignment
+// @source   https://allthetropes.org/wiki/Heel_Realization
+// @domain   Mind
+// @version  1.3
+//
+// Laconic (per the wiki): the moment a villain realizes they are the bad guy — confronted with the
+// suffering they have caused, the Well-Intentioned Extremist who believed Utopia Justifies the Means
+// suddenly sees themselves in the wrong. FRONTIER: the COGNITIVE precursor that Heel/Face Turn and the
+// Redemption Arc build on. Those tropes flip the alignment and pay the debt; this is only the dawning
+// self-directed recognition that lights them — guilt about what one DID and shame about who one IS,
+// with no deed yet done. The realization is the seeing; the turn is the acting. A Knight Templar who
+// DEFIES it never sees the wrong; a true believer who SUBVERTS it sees the pain and doubles down.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/emotion_dynamics.trl"     // appraises one's own deed -> self-directed guilt/shame
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc heel_realization -> [
+  heel_face_turn : "is the cognition whose deed is",
+  redemption_arc : "lights the moral trajectory of",
+  guilt          : "appraises the deed as",
+  shame          : "appraises the self as",
+  fall_from_grace : "is the moral waking its slide never reaches"
+]
+
+
+// === ONTOLOGY ===
+// The recognition is itself a beat of self-awareness — distinct from the Reversal it may precede.
+imply HeelRealization -> [Recognition, Conscience, Narrative]
+
+
+// === ABSTRACT RULE ===
+// A wrongdoer confronted with the harm of their OWN deeds appraises the self as the wrong — guilt for
+// what they did, shame for who they are, the blame turned inward. This is the cognition ONLY: no
+// defection, no atonement, no alignment flip — those belong to Heel/Face Turn and the Redemption Arc.
+rule Heel_Realization {
+  when:
+    char $c [+Wrongdoer]
+    evt  $mirror [&Confronts(target=$c)]
+    not ( $c [+Zealous] )                   // a Knight Templar DEFIES it — never sees the wrong
+  then:
+    $c [#Guilty]                            // about what they DID
+    $c [#Ashamed]                           // about who they ARE — the self-directed cut
+    $c [~Blames(target=$c)]                 // the blame turns inward, not outward
+    $c -- shame
+}
+
+// SUBVERTED: the true believer sees the same suffering and it only hardens the conviction — the pain
+// is reframed as the price of the cause, and the realization curdles into resolve instead of remorse.
+rule Heel_Realization_Subverted {
+  when:
+    char $c [+Wrongdoer] [+Zealous]
+    evt  $mirror [&Confronts(target=$c)]
+  then:
+    $c [#Certain]
+    $c -- conviction
+}
+
+
+// === CONCRETE VIGNETTE: A Song of Ice and Fire — Jaime Lannister's bath (novel/TV, 1996/2011) ===
+// The Kingslayer, scorned for the oath he broke, finally tells the truth of it to Brienne in the
+// baths of Harrenhal: he killed Aerys to spare half a million people from wildfire. But weak with
+// fever, recounting his own life aloud, he hears what he has become — a man who pushed a child from a
+// tower, who let the world's contempt make him careless and cruel. The confession is not the turn;
+// he takes no vow, joins no side. It is the seeing — the moment the lion looks in the water and
+// flinches. The deeds (riding back for Brienne, the honest steward of the realm) come after, and
+// elsewhere.
+
+// SER JAIME LANNISTER — "the Kingslayer," guarding a reputation he half-believes he deserves
+char jaime [+Wrongdoer]
+
+// BRIENNE OF TARTH — the mirror; her plain decency is what he measures himself against
+char brienne [+Foil]
+
+// INT. HARRENHAL BATHHOUSE - NIGHT — steam, fever, and the truth no one let him tell
+set bathhouse [+Interior] [+Night]
+
+scene the_confession {
+  beat 1 {
+    jaime @ bathhouse
+    brienne @ bathhouse
+    brienne -- jaime : "judges"
+  }
+  beat 2 {
+    evt the_telling [&Confronts(target=jaime)]   // hearing his own life aloud, he sees what he is
+    // Heel_Realization -> jaime [#Guilty] [#Ashamed] [~Blames(jaime)] -- shame
+    // (NOT a turn: no [&Defects], no [+Ally]/[+Redeemed] — the deed comes later, in another scene)
+  }
+}

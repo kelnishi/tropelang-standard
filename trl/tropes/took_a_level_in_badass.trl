@@ -1,0 +1,98 @@
+// === PREAMBLE ===
+// @trope    Took a Level in Badass
+// @category Character Development / Transformation
+// @source   https://allthetropes.org/wiki/Took_a_Level_in_Badass
+// @domain   Mind
+// @version  1.3
+//
+// Laconic (per the wiki): a previously weak, timid, or ineffectual character — "a nebbishy
+// wisecracker with the constitution of a glass-jawed squirrel" — suddenly becomes a lot more
+// capable: they "level up" and take a level in badass. The boost is earned (training, an ordeal,
+// a discovered strength), not a hidden competence finally revealed (Let's Get Dangerous / Obfuscating
+// Stupidity). FRONTIER: the COMPETENCE axis of transformation — distinct from the two moral arcs
+// (redemption/fall) and from Coming of Age. Coming of Age trades innocence for MATURITY (one's own
+// judgment); this trades weakness for FORMIDABILITY (one's own capability). A character can take a
+// level in badass while staying naive, and can mature without ever becoming dangerous — the axes are
+// independent. The signature is a step-change UPWARD in capability: [+Weak]/[+Timid] -> [+Formidable].
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/needs.trl"                // the climb to the esteem rung — mastery, the respect it earns
+import "trl/modules/action_dynamics.trl"      // what "formidable" cashes out as: the deed they once couldn't do
+import "trl/tropes/coming_of_age.trl"         // the sibling transformation arc on the OTHER axis (maturity, not competence)
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc took_a_level_in_badass -> [
+  coming_of_age   : "is the competence-axis sibling of (maturity vs. capability)",
+  needs           : "climbs the esteem/mastery rung of",
+  action_dynamics : "the newfound capability lands the Finisher it once could not",
+  tier_esteem     : "the respect that mastery earns is",
+  fall_from_grace : "is the ascending capability-mirror of a decline"
+]
+
+
+// === ONTOLOGY ===
+// A capability step-change is a transformation, but on the development (not virtue) axis.
+imply TookALevelInBadass -> [Empowerment, Transformation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// A character who is legitimately weak or timid ([+Weak] / [+Timid]) and is put through a FORGING
+// event — training, a crucible, an ordeal that demands more than they had — crosses into
+// formidability. They shed the weakness, gain [+Formidable], and the esteem/mastery rung is met
+// (the needs Satisfy mechanism, rank 4). The key distinction from Coming_Of_Age: that rule keys on
+// [+Innocent] -> [+Mature] (judgment); this keys on [+Weak] -> [+Formidable] (capability). The
+// forging is what earns it — without the ordeal it would be a reveal, not a level taken.
+rule TookALevelInBadass {
+  when:
+    char $c [+Weak]
+    evt  $forge [&Forged(subject=$c, by=$crucible)]
+  then:
+    $c [-Weak]
+    $c [+Formidable]
+    $c [#Determined]
+    $c [+Met(rank=4)]
+    $c -- tier_esteem
+}
+
+
+// === CONCRETE VIGNETTE: Neville Longbottom — Harry Potter (Rowling, novel/film, 1997–2007) ===
+// Neville begins as the comic-relief weakling of his year: forgetful, clumsy, terrified of his own
+// professors, the boy who loses his toad and melts his cauldrons. Book by book the pain forges him —
+// the loss of his parents' minds to the Cromorts, Dumbledore's Army where he first holds a wand like
+// it means something, the year under the Carrows when he leads the resistance at a school turned
+// prison. By the Battle of Hogwarts the glass-jawed boy is gone: he stands alone before Voldemort's
+// massed army, refuses him to his face, and draws the sword of Gryffindor to behead the last Horcrux.
+// The timid one took a level in badass — and it was every earlier bruise that bought it.
+
+// NEVILLE LONGBOTTOM — the clumsy, forgetful boy of the first books
+char neville [+Protagonist] [+Weak]
+neville [+Timid]
+
+// DUMBLEDORE'S ARMY / THE CARROW YEAR — the crucible that forges him
+evt the_resistance [&Forged(subject=neville, by=the_carrow_year)]
+
+// LORD VOLDEMORT — the army he finally faces unflinching
+char voldemort [+Antagonist] [+Champion]
+
+// THE SWORD OF GRYFFINDOR — drawn by the one with the courage to need it
+obj gryffindor_sword [+MacGuffin]
+
+// EXT. HOGWARTS GROUNDS - NIGHT (the final battle)
+set hogwarts_grounds [+Exterior] [+Night] [+Crowded]
+
+arc nevilles_arc [+TookALevelInBadass]
+
+scene the_battle_of_hogwarts {
+  beat 1 {
+    neville @ hogwarts_grounds
+    voldemort @ hogwarts_grounds
+    // the forging across seven books resolves here: the timid boy faces the army and refuses
+    // TookALevelInBadass -> neville [-Weak] [+Formidable] [#Determined] [+Met(rank=4)] -- tier_esteem
+  }
+  beat 2 {
+    neville > gryffindor_sword
+    evt the_beheading [&Finishes(agent=neville, target=nagini)]
+    // the newfound capability cashes out: he draws the sword and ends the last Horcrux (action_dynamics)
+  }
+}

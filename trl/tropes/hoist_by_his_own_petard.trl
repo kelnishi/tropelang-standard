@@ -1,0 +1,105 @@
+// === PREAMBLE ===
+// @trope    Hoist by His Own Petard
+// @category Death Tropes / Irony
+// @source   https://allthetropes.org/wiki/Hoist_by_His_Own_Petard
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a character is injured or killed by his own action — the villain's own
+// weapon, trap, or malicious plan is the cause of his downfall. A petard is a gate-breaching bomb;
+// to be "hoist" by it is to be blown into the air by one's own charge (Shakespeare, Hamlet). Rides
+// the action-dynamics trap chain (the_trap: Bait -> Bar_Access -> Strike) but turns the spring back
+// on its maker: the device a schemer built and aimed at a victim recoils, and the Strike lands on
+// the schemer HIMSELF. The signature that separates Hoist from a plain death is the poetic reversal
+// — the agent who prepared the device and the target the device destroys are the SAME character.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // justice, consequence, cost, conflict
+import "trl/modules/action_dynamics.trl"   // Strike -> [+Hit]; the device's own &Strikes, turned back
+
+assoc hoist_by_his_own_petard -> [
+  action_dynamics : "the Strike rule of, turned back on its maker",
+  the_trap        : "the recoiling form of",
+  justice         : "looks like poetic",
+  consequence     : "the scheme's own",
+  cost            : "the schemer pays his whole"
+]
+
+
+// === ONTOLOGY ===
+
+imply HoistByHisOwnPetard -> [Reversal, Irony, Retribution, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a schemer who built and aimed a device at a victim is struck by THAT SAME device —
+// the Strike's agent and target collapse onto one character ($x set the device, $x is what it hits).
+// That self-recoiling blow IS Hoist by His Own Petard (tags the deed). The poetic reversal — agent
+// == target — is what distinguishes it from a death by another's hand or a simple accident.
+rule Hoist_By_His_Own_Petard {
+  when:
+    char $x [+Schemer(against=$victim)]
+    evt  $recoil [&Strikes(agent=$x, target=$x)]
+  then:
+    $x [+Hit]
+    $recoil [+HoistByHisOwnPetard]
+    $x -- consequence
+}
+
+
+// === CONCRETE VIGNETTE: Hamlet — the poisoned foil and cup at the fencing match (play, ~1600) ===
+// Claudius and Laertes conspire to kill Hamlet: a foil bared and venom-tipped, and a cup of poisoned
+// wine for backup. In the duel the schemes recoil. Laertes is cut by his own envenomed blade after
+// the foils are swapped; Gertrude drinks the cup Claudius laid for Hamlet; and Hamlet runs Claudius
+// through with the same poisoned sword and forces the dregs of his own cup down his throat. Each
+// plotter is destroyed by the exact device he prepared for another — "the engineer hoist with his
+// own petard," as Hamlet himself names it earlier.
+
+// LAERTES — bears the envenomed foil he meant for Hamlet
+char laertes [+Antagonist]
+laertes [+Schemer(against=hamlet)]
+// CLAUDIUS — laid the poisoned cup he meant for Hamlet
+char claudius [+Antagonist] [+Ruler]
+claudius [+Schemer(against=hamlet)]
+// PRINCE HAMLET — the intended victim who turns each device back
+char hamlet [+Protagonist]
+// THE ENVENOMED FOIL
+obj poisoned_foil [+Lethal]
+// THE POISONED CUP
+obj poisoned_cup [+Lethal]
+// INT. THE GREAT HALL OF ELSINORE - DAY
+set elsinore [+Interior] [+Day]
+
+scene the_fencing_match {
+  beat 1 {
+    laertes @ elsinore
+    claudius @ elsinore
+    hamlet @ elsinore
+    laertes > poisoned_foil
+    claudius > poisoned_cup
+    // both devices are set and aimed at Hamlet — the trap laid
+  }
+  beat 2 {
+    // the foils are swapped in the scuffle; Laertes is cut by his own venomed blade
+    evt foil_recoils [&Strikes(agent=laertes, target=laertes)]
+        dialog(inject=[speaker=laertes], inline="""
+               speaker: "{speaker}"
+               cue: "wounded by the blade he poisoned, the irony breaking over him"
+               tone: rueful, dying
+               text: "I am justly killed with mine own treachery."
+               """)
+    // Strike -> laertes [+Hit];  Hoist_By_His_Own_Petard tags the deed (his device, his death)
+  }
+  beat 3 {
+    // Hamlet forces the dregs of the poisoned cup on Claudius — the king's own draught kills him
+    evt cup_recoils [&Strikes(agent=claudius, target=claudius)]
+        dialog(inject=[speaker=hamlet], inline="""
+               speaker: "{speaker}"
+               cue: "pouring the king's own poison down his throat"
+               tone: avenging
+               text: "Here, thou incestuous, murderous, damned Dane, drink off this potion."
+               """)
+    // Strike -> claudius [+Hit];  Hoist_By_His_Own_Petard tags the deed (his cup, his death)
+  }
+}
