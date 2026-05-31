@@ -34,7 +34,7 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 - [x] Refusal of the Call        (Universal)
 - [ ] In Medias Res
 - [~] The Climax                 (concept `climax` defined in `freytags_pyramid.trl`)
-- [ ] Frame Story
+- [x] Frame Story                 (S14 levels — `frame_story.trl`: Frankenstein, 3 canon planes nested)
 - [ ] Cliffhanger
 
 ## Setup, payoff & devices
@@ -49,6 +49,10 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 - [ ] Flashback
 - [x] Unreliable Narrator         (FRONTIER — first corpus use of S14 diegetic levels: a non_canon
                                     narration plane vs the reality plane; The Usual Suspects)
+- [x] Dream Sequence              (S14 lifecycle — `dream_sequence.trl`: a non_canon dream that
+                                    dissolves to LATENT on waking; Link's Awakening)
+- [x] Breaking the Fourth Wall    (S14 outward crossing — `fourth_wall.trl`: a character reaches OUT
+                                    to the audience plane; Ferris Bueller)
 
 ## Character change & arcs
 - [ ] Coming of Age

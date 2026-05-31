@@ -1,0 +1,60 @@
+// === PREAMBLE ===
+// @trope    Breaking the Fourth Wall
+// @category Metafiction / Narrative Devices
+// @source   https://allthetropes.org/wiki/Breaking_the_Fourth_Wall
+// @version  1.3
+//
+// Laconic (per the wiki): the fourth wall is the boundary between the characters' world and the
+// observing audience; breaking it is when a character acknowledges or addresses that audience.
+// FRONTIER: the first trope to use an OUTWARD crossing to an extradiegetic plane. The audience
+// is its own `non_canon` level, one step OUT from the story; the character reaches across that
+// boundary with `<<audience|viewer>>` and a `kind=aside` line — the precise sense S14 §12 gives
+// the aside register.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // revelation
+import "trl/modules/theory_of_mind.trl"    // the audience-awareness this trope toys with
+
+assoc fourth_wall -> [
+  theory_of_mind : "presumes the character models the",
+  revelation     : "a sudden address is a"
+]
+
+
+// === ONTOLOGY ===
+
+imply FourthWall -> [Metafictional, Extradiegetic, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a character addressing the audience plane IS Breaking the Fourth Wall (tags it).
+rule Fourth_Wall {
+  when:
+    evt $a [&Addresses(agent=$x, target=$y)]
+  then:
+    $a [+FourthWall]
+}
+
+
+// === CONCRETE VIGNETTE: Ferris Bueller's Day Off — straight down the lens (film) ===
+
+<<story>>                                        // the film's world
+char ferris [+Protagonist]
+
+<<audience : non_canon>>                          // us, watching — one level OUT from the story
+char viewer [+Spectator]
+
+<<story>>                                         // Ferris turns from the scene and reaches out
+scene the_aside {
+  beat 1 {
+    evt aside [&Addresses(agent=ferris, target=<<audience|viewer>>)]
+        dialog(kind=aside, inject=[speaker=ferris], inline="""
+               speaker: "{speaker}"
+               cue: "turning from the scene to look straight down the lens"
+               tone: conspiratorial
+               text: "Life moves pretty fast. If you don't stop and look around once in a while, you could miss it."
+               """)
+    // Fourth_Wall -> aside [+FourthWall]
+  }
+}

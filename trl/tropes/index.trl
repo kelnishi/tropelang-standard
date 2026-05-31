@@ -35,6 +35,9 @@ import "trl/tropes/finishing_move.trl"
 import "trl/tropes/bar_the_door.trl"
 import "trl/tropes/improvised_weapon.trl"
 import "trl/tropes/unreliable_narrator.trl"
+import "trl/tropes/frame_story.trl"
+import "trl/tropes/dream_sequence.trl"
+import "trl/tropes/fourth_wall.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -84,6 +87,13 @@ concept improvised_weapon [+Trope(category="Tactics", source="allthetropes.org/w
 // UNRELIABLE NARRATOR — the narration's facts diverge from the truth. The first corpus trope
 // to use S14 diegetic levels: a non_canon narration plane (with a teller) vs the reality plane.
 concept unreliable_narrator [+Trope(category="Narrative Devices", source="allthetropes.org/wiki/Unreliable_Narrator")] [%Epistemic]
+
+// DIEGETIC-LEVEL DEVICES (all built on S14 levels). Frame Story nests canon tales (Frankenstein,
+// 3 deep); Dream Sequence is a non_canon dream that dissolves to latent on waking (Link's
+// Awakening); Breaking the Fourth Wall crosses OUT to the audience plane (Ferris Bueller).
+concept frame_story    [+Trope(category="Narrative Devices", source="allthetropes.org/wiki/Framing_Device")] [%Narrative]
+concept dream_sequence [+Trope(category="Narrative Devices", source="allthetropes.org/wiki/All_Just_a_Dream")] [%Epistemic]
+concept fourth_wall    [+Trope(category="Metafiction", source="allthetropes.org/wiki/Breaking_the_Fourth_Wall")] [%Narrative]
 
 // CHARACTER-ROLE BUILDING BLOCKS (Universal Tropes) — the cast structure. The applied
 // forms are the prelude roles [+Protagonist] / [+Antagonist]; these are the canonical

@@ -1,0 +1,60 @@
+// === PREAMBLE ===
+// @trope    Dream Sequence (All Just a Dream)
+// @category Narrative Devices / Epistemic
+// @source   https://allthetropes.org/wiki/All_Just_a_Dream
+// @version  1.3
+//
+// Laconic (per the wiki): a sequence revealed to be a dream — on waking, "the previous scene
+// didn't happen." FRONTIER: the first trope to exercise S14's level LIFECYCLE. The dream is a
+// `non_canon` plane (a dream mints no ground truth), with the dreamer as its teller. When the
+// dreamer wakes, that plane is UNMADE — and per S14 §6 nothing is deleted: its facts (the dream
+// people, the dream world) fall LATENT, present but surfaced to no one. Nodes are eternal; they
+// are merely re-leveled.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // memory, revelation
+
+assoc dream_sequence -> [
+  memory     : "a dream is a strange kind of",
+  revelation : "the waking is a"
+]
+
+
+// === ONTOLOGY ===
+
+imply DreamSequence -> [Oneiric, Unreal, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a waking that ends a dream plane IS a Dream Sequence (tags the waking; the engine
+// dissolves the plane and re-levels its facts to latent — see S14 §6).
+rule Dream_Sequence {
+  when:
+    evt $w [&Wakes(agent=$dreamer)]
+  then:
+    $w [+DreamSequence]
+}
+
+
+// === CONCRETE VIGNETTE: The Legend of Zelda: Link's Awakening — Koholint Island (video game) ===
+// The whole island is the Wind Fish's dream; to escape, Link must wake it — and erase the world,
+// and Marin, who exists only here.
+
+<<world>>                                        // the waking world Link must return to
+char link [+Protagonist]
+char wind_fish [+Dreamer]                         // the slumbering whale whose dream is the island
+
+<<world.dream : non_canon, teller=wind_fish>>     // Koholint Island — a dream; it mints no truth
+char marin [+LoveInterest]
+char nightmare [+Antagonist]
+link -- marin : "the girl who only exists inside the dream"
+
+<<world>>                                          // Link wakes the Wind Fish — the dream dissolves
+scene the_awakening {
+  beat 1 {
+    evt awaken [&Wakes(agent=wind_fish)]
+    // Dream_Sequence -> awaken [+DreamSequence];
+    // the world.dream plane is unmade — Marin and Koholint fall LATENT, never deleted (S14 §6)
+  }
+}

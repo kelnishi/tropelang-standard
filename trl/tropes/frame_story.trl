@@ -1,0 +1,60 @@
+// === PREAMBLE ===
+// @trope    Frame Story (Framing Device)
+// @category Narrative Devices / Structure
+// @source   https://allthetropes.org/wiki/Framing_Device
+// @version  1.3
+//
+// Laconic (per the wiki): a story surrounded — "framed" — by a secondary story, a tale within a
+// tale. Unlike the Unreliable Narrator, the framed tale is taken at face value (canon within
+// itself), not exposed as false. The wiki notes frames can nest "several layers deep" (the
+// Arabian Nights runs up to seven). This vignette runs THREE deep, each level a canon plane with
+// its own teller — exercising S14 multi-level nesting.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // revelation, memory
+
+assoc frame_story -> [
+  revelation : "a Nested Story Reveal is a",
+  memory     : "often a recollection, a"
+]
+
+
+// === ONTOLOGY ===
+
+imply FrameStory -> [Nested, Narration, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: when one teller wraps another's tale, that wrapping IS a Frame Story (tags it).
+rule Frame_Story {
+  when:
+    evt $f [&Frames(agent=$teller, tale=$inner)]
+  then:
+    $f [+FrameStory]
+}
+
+
+// === CONCRETE VIGNETTE: Frankenstein — three nested frames (novel) ===
+// Walton's arctic letters frame Victor's confession, which frames the Creature's own tale.
+
+<<voyage>>                                       // Robert Walton's expedition — the outer frame
+char walton [+Narrator]
+char victor [+Protagonist]
+walton -- victor : "finds him dying on the ice"
+
+<<voyage.victor : teller=victor>>                // Victor's confession, framed by Walton's letters
+char creature [+Tragic]
+victor -- creature : "the thing he made and fled"
+
+<<voyage.victor.creature : teller=creature>>     // the Creature's own tale, framed within Victor's
+char delacey [+Innocent]
+creature -- delacey : "the cottagers he watched and loved unseen"
+
+<<voyage>>                                        // back on the ice — Walton sets it all down
+scene the_record {
+  beat 1 {
+    evt recount [&Frames(agent=walton, tale=victor)]
+    // Frame_Story -> recount [+FrameStory]
+  }
+}
