@@ -324,3 +324,6 @@ concept three_act_structure [+Trope(category="Universal", source="allthetropes.o
 
 // REFUSAL OF THE CALL — the hero first declines the summons (Hero's Journey beat 2).
 concept refusal_of_the_call [+Trope(category="Universal", source="allthetropes.org/wiki/Refusal_of_the_Call")] [%Narrative]
+
+// === AUTO-REGISTERED TITLES (regen_index.py — do not hand-edit below) ===
+

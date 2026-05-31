@@ -4,6 +4,7 @@
 // @source   https://tvtropes.org/pmwiki/pmwiki.php/Main/Foreshadowing
 // @version  1.3
 // @domain    Narrative
+// @registry reuse   // title maps to an existing concept; no own registry entry
 //
 // Laconic: a hint planted early that, when it pays off later, the audience
 // connects back to. Broader than Chekhov's Gun (an object that must be used);
