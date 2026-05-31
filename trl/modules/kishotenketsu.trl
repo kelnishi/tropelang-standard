@@ -1,0 +1,103 @@
+// @title    Kishōtenketsu — the four-act structure built on contrast, not conflict
+// @source   https://en.wikipedia.org/wiki/Kishōtenketsu
+// @category Storytelling Systems
+// @version  0.1
+// @note     The deliberate counterpoint to every other structure in this corpus. Freytag, Campbell,
+//           Booker, and Propp all turn on CONFLICT — a rising antagonism resolved at a climax.
+//           Kishōtenketsu has none required: its engine is JUXTAPOSITION. Four acts —
+//             起 KI    introduce the subject;
+//             承 SHŌ   develop it, with no change of course and nothing at stake;
+//             転 TEN   the TURN — set beside it a new element that seems unrelated, recontextualizing
+//                      what came before. Not a complication, not an antagonist — a CONTRAST;
+//             結 KETSU reconcile the two strands, so the seeming non-sequitur clicks into meaning.
+//           The reader's pleasure is not relief from suspense (the curiosity gap) nor the discharge
+//           of a conflict, but the RECOGNITION of a hidden relation — meaning by analogy. The
+//           frontier this probes: can the corpus represent a satisfying narrative with no conflict
+//           edge, no antagonist, no villainy at all? The rules below run the experiment; the only
+//           audience thread raised is `contrast -> harmony`, and no conflict rule ever fires.
+//
+// Import: import "trl/modules/kishotenketsu.trl"
+
+import "trl/concepts/index.trl"            // contrast, recognition, harmony
+import "trl/modules/rhetoric.trl"          // the reader is worked, but by contrast, not conflict
+
+
+// === THE SYSTEM ===
+concept kishotenketsu [+Kishotenketsu] [%Narrative]
+imply Kishotenketsu -> [Structure, Contrast, Narrative]
+imply KishoStep     -> [Beat, Structure, Narrative]
+
+
+// === THE FOUR ACTS ===
+concept ki    [+KishoStep]              // 起 1 · introduce the subject
+concept sho   [+KishoStep]              // 承 2 · develop it — no change, nothing at stake
+concept ten   [+KishoStep] [+Turn]      // 転 3 · the turn — a contrasting, seemingly unrelated element
+concept ketsu [+KishoStep]              // 結 4 · reconcile the strands into meaning
+
+// === THE SEQUENCE (note: a contrast at step 3, not a climax; no rising conflict precedes it) ===
+ki -> sho -> ten -> ketsu
+
+
+// === THE VOCABULARY OF THE TURN ===
+verb Juxtaposes(new)      [+Narrative]   // the ten: set a new element beside the established one
+verb Reconciles(strands)  [+Narrative]   // the ketsu: reveal the relation that was there all along
+
+
+// === THE CONFLICT-FREE MECHANISM (the experiment) ===
+
+// THE TURN (転) — a new element appears beside the established one with no apparent link. The reader
+// feels neither suspense (no question was posed) nor threat (no conflict) — only SURPRISE: "why is
+// this here?" Contrast, set up to be resolved by recognition rather than by victory.
+rule The_Turn {
+  when:
+    evt $t [&Juxtaposes(agent=author, established=$a, new=$b)]
+  then:
+    audience [#Surprised(by=$b)]
+    audience -- contrast
+}
+
+// THE RECONCILIATION (結) — the fourth act reveals how the two strands relate, and the surprise
+// resolves into RECOGNITION. Nothing was ever at stake; the pleasure is the click of connection —
+// meaning made by analogy, the structural alternative to meaning made by conflict.
+rule The_Reconciliation {
+  when:
+    audience [#Surprised(by=$b)]
+    evt $k [&Reconciles(agent=author, established=$a, new=$b)]
+  then:
+    audience [-Surprised]
+    audience [#Delighted(by=connection)]
+    audience -- harmony
+}
+
+
+// === ASSOCIATIONS ===
+assoc kishotenketsu -> [
+  freytags_pyramid : "is the contrast-not-conflict alternative to",
+  rhetoric         : "works the reader like, but without the posed question of,",
+  story_circle     : "shares a four-beat shape with, but discards the descent-into-chaos of"
+]
+
+
+// === CONCRETE VIGNETTE: the daughters of Itoya — Sanyō Rai's teaching poem (Edo period) ===
+// The textbook example. Two flat, pleasant facts; then, from nowhere, a battlefield; then the line
+// that makes the battlefield belong — the girls' glances are deadlier than any arrow. No one fought;
+// the meaning arrived sideways.
+char daughters   [+Subject]
+char the_warriors [+Subject]
+
+arc the_itoya_poem [+Kishotenketsu]
+
+scene the_poem {
+  beat 1 { daughters -- ki  : "The daughters of Itoya, in the Honmachi of Osaka" }
+  beat 2 { daughters -- sho : "The elder daughter is sixteen, the younger fourteen" }
+  beat 3 {
+    evt the_battlefield [&Juxtaposes(agent=poet, established=daughters, new=the_warriors)]
+        : "Down the ages, warriors have felled the enemy with bow and arrow"
+    // The_Turn -> audience [#Surprised(by=the_warriors)] -- contrast
+  }
+  beat 4 {
+    evt the_glance [&Reconciles(agent=poet, established=daughters, new=the_warriors)]
+        : "The daughters of Itoya fell their men with their eyes"
+    // The_Reconciliation -> audience [#Delighted(by=connection)] -- harmony
+  }
+}

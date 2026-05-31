@@ -125,7 +125,7 @@ Done: The Host / Presenter · Putting It to the Test · Based on a True Story.
 ### Storytelling frameworks
 Done: Hero's Journey · Freytag · Story Circle · Save the Cat · Booker's Seven Plots.
 - [x] Propp's Morphology (31 functions + 7 dramatis personae) — `propp`
-- [ ] Kishōtenketsu (4-act, conflict-free — the no-conflict frontier)
+- [x] Kishōtenketsu (4-act, conflict-FREE — proven: the conflict machinery stays idle) — `kishotenketsu`
 
 ---
 

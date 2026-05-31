@@ -19,6 +19,7 @@ import "trl/modules/story_circle.trl"      // storytelling system (Harmon's eigh
 import "trl/modules/save_the_cat.trl"      // storytelling system (Snyder's fifteen-beat sheet)
 import "trl/modules/booker_seven_plots.trl" // storytelling system (Booker's plot-type taxonomy)
 import "trl/modules/propp.trl"             // storytelling system (Propp's 31 functions + 7 dramatis personae)
+import "trl/modules/kishotenketsu.trl"     // storytelling system (the four-act, conflict-FREE structure: ki-shō-ten-ketsu)
 import "trl/modules/prophecy.trl"          // epistemic system (foreknowledge: foretell -> self-fulfil / twist)
 import "trl/modules/common_knowledge.trl"  // epistemic system (mutual vs common knowledge; the public utterance)
 import "trl/modules/power_dynamics.trl"    // political system (the collective scale: coalition, legitimacy, revolution)
