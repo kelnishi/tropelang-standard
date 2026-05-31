@@ -1,0 +1,78 @@
+// === PREAMBLE ===
+// @trope    Talking Heads
+// @category Non-Fiction / Documentary
+// @source   https://allthetropes.org/wiki/Talking_Heads
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): the documentary staple — a subject or expert filmed speaking directly to
+// the lens, an interview reduced to the head that talks, whose testimonies are intercut to build the
+// account. FRONTIER: the SOURCE register of the non-fiction apparatus. Where The Host GUIDES the
+// audience through a segment and The Narrator TELLS the tale from the plane above, the Talking Head
+// neither guides nor tells — it is EVIDENCE. A witness or expert attests to the camera, and that
+// to-camera testimony is admitted into the factual account as a sourced fact, not authorial say-so.
+// The non-fiction cousin of Breaking the Fourth Wall: the same outward address to the audience
+// plane, but here the address is the documentary's load-bearing testimony, not a fictional aside.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/non_fiction.trl"        // the documentary apparatus — testimony as evidence
+import "trl/concepts/index.trl"             // truth — what the account answers to
+
+assoc talking_head -> [
+  non_fiction : "the sourced-testimony evidence of",
+  the_host    : "is the source, not the guiding voice, beside the",
+  the_narrator : "attests from within the account, unlike the teller above it, the",
+  fourth_wall : "addresses the audience plane like, but as evidence not aside, a",
+  truth       : "enters into the factual account a piece of"
+]
+
+
+// === ONTOLOGY ===
+
+imply TalkingHead -> [Testimony, Witness, Source, Evidence, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: when a witness or expert attests to-camera — addressing the audience plane with an
+// account of what they saw — that testimony IS a Talking Head, and it enters the factual record as
+// sourced evidence (not authorial fiat; reality, via the witness, supplies the fact).
+rule Talking_Head {
+  when:
+    char $w [+RealPerson]
+    evt  $attest [&Witnessed(event=$e)]
+    $w [&Addresses(target=$plane)]
+  then:
+    $attest [+TalkingHead]
+    $attest [+Testimony]
+    $e [+Evidence]
+    account -- $attest
+}
+
+
+// === CONCRETE VIGNETTE: The Civil War — Shelby Foote to the lens (TV documentary, Ken Burns, 1990) ===
+// Across eleven hours of still photographs and read letters, one face keeps returning: a Mississippi
+// novelist-historian who never raises his voice, leaning toward the camera to recount Shiloh, Forrest,
+// the surrender at Appomattox as if he had been there. He guides nothing and narrates no through-line;
+// his drawled testimony is simply admitted, again and again, as the human evidence from which Burns
+// assembles the war. The audience he addresses is on the far side of the lens — the documentary plane.
+
+// ===== the documentary's account — the assembled factual record =====
+<<doc>>
+char shelby [+RealPerson] [+Observer]
+shelby [+Witness_To(event=appomattox)]
+set  appomattox [+RealEvent]
+
+// ===== the audience he leans toward — one step OUT, the watched plane =====
+<<audience : non_canon>>
+char viewer [+Spectator]
+
+// ===== the act of testimony — leaning to the lens to attest =====
+<<doc>>
+scene the_interview {
+  beat 1 {
+    evt the_testimony [&Witnessed(event=appomattox)]
+    shelby [&Addresses(target=<<audience|viewer>>)]
+    // Talking_Head -> the_testimony [+TalkingHead] [+Testimony]; appomattox [+Evidence]; account -- the_testimony
+  }
+}

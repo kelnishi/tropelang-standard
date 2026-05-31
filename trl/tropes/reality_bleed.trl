@@ -1,0 +1,113 @@
+// === PREAMBLE ===
+// @trope    Reality Bleed
+// @category Metafiction / Narrative Devices
+// @source   https://allthetropes.org/wiki/Reality_Bleed
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): one version of reality is overwritten by another — instead of going
+// Down the Rabbit Hole into the other plane, the other plane comes to US and infringes on the real
+// world (an anachronistic lamp, the wrong face on a coin, a character who walks off the screen).
+// FRONTIER: where Frame Story merely NESTS a tale (each plane sound) and Show Within a Show makes
+// an inner fiction LOOP BACK to expose a truth, Reality Bleed is the level boundary itself FAILING
+// — the §7 leak the diegetic-levels spec exists to forbid, here dramatized. Content native to the
+// inner plane CROSSES the threshold into the framing plane where it does not belong and is taken as
+// real there. The signature is the wrong-level intrusion: a fact whose home is the tale, asserted —
+// loud, as a crossing — in the world. Every sibling crossing is sanctioned and reversible; this one
+// is a breach, and it spreads until it is stopped or it supplants the frame entirely.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // revelation — the moment the frame notices the leak
+import "trl/modules/theory_of_mind.trl"    // the witness who registers the intrusion as wrong
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc reality_bleed -> [
+  frame_story        : "is the controlled, sound version of the nesting it ruptures, the",
+  show_within_a_show : "shares the fiction-reaches-into-reality move with, but breaches where it merely mirrors, the",
+  fourth_wall        : "is the involuntary, in-world cousin of the deliberate address that is",
+  revelation         : "lands as a dawning, dreadful",
+  theory_of_mind     : "needs a watcher to read the intrusion as wrong, modeled in"
+]
+
+
+// === ONTOLOGY ===
+
+imply RealityBleed -> [Metafictional, Nested, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition: an entity whose home is the INNER tale crosses the level threshold into the FRAMING
+// world and is taken as real there — the boundary fails. The witness in the frame registers the
+// intrusion (theory_of_mind: it does not belong), and the crossing event IS the Reality Bleed. We
+// name the breaching event; the loudness of the <<frame|...>> crossing in the vignette is what
+// distinguishes a sanctioned nesting (frame_story) from a leak (this).
+rule Reality_Bleed {
+  when:
+    evt $breach [&Crosses(agent=$intruder, threshold=$frame)]
+  then:
+    $breach [+RealityBleed]
+}
+
+
+// === CONCRETE VIGNETTE: The Purple Rose of Cairo — Tom Baxter walks off the screen (film, 1985) ===
+// Cecilia, a Depression-era waitress, hides from her life in the same picture night after night.
+// Tom Baxter — the dashing explorer INSIDE that film-within-the-film, a non_canon fiction that can
+// mint no truth of its own — looks out, sees her watching, and steps DOWN off the screen into her
+// world. A fiction crosses the threshold into reality and is taken as real there: he can be touched,
+// he has no money that spends, the studio panics. The other players, stranded on the screen with the
+// plot frozen, argue with the audience across the same broken wall. The breach is the bleed.
+
+// ===== the moviehouse — Cecilia's reality, where the leaked character becomes flesh =====
+<<world>>
+
+// CECILIA
+char cecilia [+Protagonist] [+Spectator]
+
+// INT. THE JEWEL MOVIE PALACE — DAY
+set jewel [+Interior] [+Day]
+cecilia @ jewel
+
+// ===== the picture on the screen — a non_canon fiction; it can mint no truth of its own =====
+<<world.screen : non_canon, teller=the_studio>>
+
+// TOM BAXTER  (the explorer-hero of the film-within-the-film)
+char tom [+Protagonist]
+tom [+Vessel]                                    // carries a whole plane out with him when he leaves
+
+// THE STRANDED PLAYERS  (left on the screen, the plot frozen without him)
+char players [+Bystander]
+
+// ===== the wall fails — Tom steps DOWN off the screen; the inner fiction enters the world =====
+<<world.screen>>
+scene the_walk_off {
+  beat 1 {
+    // Tom, native to world.screen, breaches into world — the crossing names the destination, loud.
+    evt the_walk_off [&Crosses(agent=tom, threshold=<<world|jewel>>)]
+        dialog(inject=[speaker=tom], inline="""
+               speaker: "{speaker}"
+               cue: "stepping to the very edge of the frame, then through it, into the dark of the house"
+               tone: wonder
+               text: "You must really love this picture. I've seen you here twice already. I have to get out of here, I have to see the world."
+               """)
+    // the fiction is now flesh in the world — asserted UP a level, loud, where it does not belong:
+    <<world| tom [+Real]>>
+    // Reality_Bleed -> the_walk_off [+RealityBleed]
+  }
+  beat 2 {
+    // and the breach spreads back the other way: the stranded players lean OUT to the watching house,
+    // the plot frozen behind them — the wall is now porous in both directions.
+    players [&Addresses(target=<<world|cecilia>>)]
+  }
+}
+
+// ===== reopen the world — the frame notices the intrusion is wrong =====
+<<world>>
+scene the_reckoning {
+  beat 1 {
+    // Cecilia, the witness, registers what has crossed: a man who is not a man, taken as real.
+    cecilia [#Believes(claim=<<world.screen|tom>>)]
+    cecilia -- revelation : "Is"
+    // the studio mobilizes to push the leak back behind the wall before it supplants her world.
+  }
+}

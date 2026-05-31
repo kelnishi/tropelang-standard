@@ -1,0 +1,64 @@
+// === PREAMBLE ===
+// @trope    Tear Jerker
+// @category Rhetoric / Drama
+// @source   https://allthetropes.org/wiki/Tear_Jerker
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a moment built — the right imagery, tone, and music — for the sole
+// purpose of working those tear-ducts; no fictional death, sacrifice, or loss moves an impassive
+// viewer EXCEPT one framed to. It is the AUTHOR's prerogative, not a character's: framing a hurt
+// as EARNEST (the pain IS the point) is what wrings tears rather than laughs — the exact opposite
+// framing of Rule of Funny's comic fall. Rides rhetoric's Appraise_Earnest, and lands hardest on
+// an audience already INVESTED in the one who suffers (Build_Investment / Stakes_Land): a stranger's
+// loss is a scoreline, a loved one's is a verdict. The failed attempt is Narm.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/rhetoric.trl"          // Appraise_Earnest -> audience [#Moved]; investment makes loss land harder
+
+assoc tear_jerker -> [
+  rhetoric    : "the earnest-framing rule of",
+  audience    : "is moved to tears by the",
+  rule_of_funny : "the earnest mirror-image of"
+]
+
+
+// === ONTOLOGY ===
+
+imply TearJerker -> [Pathos, Earnest, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: framing a character's hurt/loss earnestly, FOR the tears, IS a Tear Jerker
+// (tags the framing). The audience is moved by rhetoric's Appraise_Earnest; this names the deed.
+rule Tear_Jerker {
+  when:
+    char $c [+Hurt]
+    evt  $f [&Frames(agent=author, target=$c, as=earnest)]
+  then:
+    $f [+TearJerker]
+}
+
+
+// === CONCRETE VIGNETTE: Up — the "Married Life" montage (animated film, 2009) ===
+// Four wordless minutes: Carl and Ellie meet, marry, save coins in a jar for an adventure that
+// life keeps spending, grow old, and lose the child they hoped for — then lose each other. The
+// author has spent the whole sequence ENDEARING Ellie so her empty chair lands as grief, not
+// information. No dialogue; imagery, tone, and Giacchino's waltz, framed dead earnest, for the tears.
+
+char ellie [+Hurt]                          // ELLIE — endeared, then gone
+char carl                                   // CARL — left in the silent house
+
+scene married_life {
+  beat 1 {
+    evt the_courtship [&Endears(agent=author, subject=ellie)]
+    // Build_Investment (rhetoric) -> audience [+Invested(in=ellie)] [~RootsFor(target=ellie)]
+  }
+  beat 2 {
+    ellie -- carl : "Builds a Life With"
+    evt the_empty_chair [&Frames(agent=author, target=ellie, as=earnest)]
+    // Appraise_Earnest (rhetoric) -> audience [#Moved];  Tear_Jerker tags the framing
+    // the prior investment is why it lands as a verdict, not a scoreline
+  }
+}

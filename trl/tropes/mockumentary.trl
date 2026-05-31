@@ -1,0 +1,69 @@
+// === PREAMBLE ===
+// @trope    Mockumentary
+// @category Non-Fiction / Truth-Claim
+// @source   https://allthetropes.org/wiki/Mockumentary
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a fictional drama that poses as a documentary — it borrows the whole
+// documentary apparatus (the on-screen host, the talking-head interview, the handheld realism,
+// above all the TRUTH-CLAIM) but the events are invented. It is the INVERSION of non-fiction:
+// non-fiction wears the documentary form because reality wrote the verdict; a mockumentary wears
+// the documentary form precisely so an AUTHORED verdict can pass for reality. The truth-claim is
+// a costume. FRONTIER: documentary FORM laid over fictional CONTENT — the Host apparatus of
+// non_fiction driven by the Authorial_Fiat of rhetoric, so the same trappings that normally
+// certify reality here certify a fiction.
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/non_fiction.trl"        // Hosts / the documentary form, the truth-claim
+import "trl/modules/rhetoric.trl"           // author / Imposes — the authored verdict it borrows
+
+assoc mockumentary -> [
+  non_fiction          : "wears the documentary form of, while inverting",
+  rhetoric             : "lets the author write the verdict via",
+  based_on_a_true_story : "the mirror flip of — fiction claiming fact, not fact shaped like fiction",
+  the_host             : "keeps the apparatus of, with no reality behind it"
+]
+
+// === ONTOLOGY ===
+// The signature pairing: the truth-claim and the host of non_fiction, over a fiction the author
+// imposes. NOT Reality_Bound — that is the one inherited tag the costume drops.
+imply Mockumentary -> [Truth_Claim, Dramatization, Deceptive, Narrative]
+
+// === ABSTRACT RULE ===
+// Naming rule: a host-fronted documentary address whose underlying events are AUTHORED (Imposed,
+// not empirically tested) IS a Mockumentary. The form certifies; the content is invented. The
+// truth-claim is worn as a costume — latent, because the audience is meant to hold it as real —
+// and the verdict is Canon by authorial fiat, the exact override non_fiction forbids.
+rule Mockumentary {
+  when:
+    char $h [+Host]
+    evt $address [&Hosts(agent=$h, segment=$s)]
+    evt $invented [&Imposes(agent=author, outcome=$o, for=$effect)]
+  then:
+    ?$s [+Truth_Claim]?
+    $invented [+Canon]
+    $s [+Dramatization]
+    $s [!Reality_Bound]
+    audience [#Deceived]
+    audience -- payoff
+}
+
+// === CONCRETE VIGNETTE: This Is Spinal Tap (film, 1984) ===
+// The codifier. "Filmmaker" Marty DiBergi fronts the camera — narrating, interviewing, all the
+// hushed authority of a real rock documentary — while the band, the amps that go to eleven, the
+// drummers who keep spontaneously combusting, are pure invention. So faithful to the form that
+// real rock stars took it for an actual documentary: the truth-claim worn so well it passed.
+// CONTRAST trl/modules/non_fiction.trl's Eddington vignette — there a host frames a test reality
+// settles; here a host frames events the author dreamed up.
+char marty [+Host]
+char author [%Narrative]
+
+scene the_documentary {
+  beat 1 {
+    evt the_intro [&Hosts(agent=marty, segment=spinal_tap)]
+    evt the_band  [&Imposes(agent=author, outcome=eleven, for=comedy)]
+    // Mockumentary -> ?spinal_tap [+Truth_Claim]? ; the_band [+Canon]; audience [#Deceived]
+    // documentary form (Hosts) over authored reality (Imposes) — the truth-claim is a costume
+  }
+}

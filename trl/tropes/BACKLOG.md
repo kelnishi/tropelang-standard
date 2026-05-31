@@ -68,7 +68,7 @@ Done (psychology arena): Heel/Face Turn · Revenge · Despair Event Horizon · S
 
 ### Identity / worldbuilding (drams-flagged)
 Done: Hidden Identity · Rightful King Returns · The Chosen One · Unreliable Narrator.
-- [ ] Secret Legacy / Heritage
+- [x] Secret Legacy — `secret_legacy` (Percy Jackson)
 - [ ] role archetypes: the Wanderer/Ranger, the Mage/Wizard (covers `Ranger`,`Wizard` gap facts)
 - [ ] fantastic-species framing (`Hobbit`,`Elf`,`Dunedain` — low general value; consider eval re-encode instead)
 
@@ -81,7 +81,7 @@ Chekhov's Gun · Red Herring · Cliffhanger · Frame Story.
 ### Diegetic-level devices (S14)
 Done: Frame Story · Dream Sequence · Fourth Wall · Dream Within a Dream · Show Within a Show ·
 Or Was It a Dream? · Unreliable Narrator.
-- [ ] Within a Frame Story · Reality Bleed (the boundary fails — a deliberate §7 leak)
+- [x] Reality Bleed — `reality_bleed` (the §7 leak)  ·  [ ] Within a Frame Story
 
 ### Epistemic arenas
 Done: Self-Fulfilling Prophecy · Prophecy Twist · Common Knowledge · Emperor's New Clothes ·
@@ -101,8 +101,8 @@ Guard · Decadent Court · We Have Reserves · The Duel.
 ### Rhetoric — author, audience & attention
 Done: Rule of Funny · Rule of Cool · Deus Ex Machina · Cliffhanger · Foregone Conclusion ·
 Human Interest Story (the investment capability).
-- [ ] Rule of Drama (the override's other justification)
-- [ ] The Pratfall · Tear Jerker · crafted Spectacle (the aesthetic rung in full)
+- [x] Rule of Drama — `rule_of_drama`
+- [x] The Pratfall — `pratfall` · [x] Tear Jerker — `tear_jerker`  ·  [ ] crafted Spectacle
 
 ### Oratory / persuasion (the speaker↔audience arena — opened by `persuasion`)
 Rhetoric holds attention; persuasion goes for CONVICTION. The speaker collapses author-and-figure
@@ -119,8 +119,8 @@ module unlocks a whole category of real-world forms:
 ### Non-fiction storytelling (the corpus handles it at ~71%)
 Reality narrativized with the same grammar; the gap is the non-fiction *forms*.
 Done: The Host / Presenter · Putting It to the Test · Based on a True Story.
-- [ ] Talking Head · Reenactment (documentary forms)
-- [ ] Mockumentary (the form's fiction inversion)
+- [x] Talking Head — `talking_head`  ·  [ ] Reenactment
+- [x] Mockumentary — `mockumentary` (the form's fiction inversion)
 
 ### Storytelling frameworks
 Done: Hero's Journey · Freytag · Story Circle · Save the Cat · Booker's Seven Plots.

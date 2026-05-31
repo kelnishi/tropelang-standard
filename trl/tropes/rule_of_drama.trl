@@ -1,0 +1,63 @@
+// === PREAMBLE ===
+// @trope    Rule of Drama
+// @category Drama
+// @source   https://allthetropes.org/wiki/Rule_of_Drama
+// @version  1.3
+// @domain    Narrative
+//
+// Laconic (per the wiki): an unrealistic or contrived event is excused by the audience, no matter
+// how implausible, so long as it is dramatically appropriate enough — the dramatic sister of the
+// Rule of Cool and the Rule of Funny (and of Rule of Scary / Rule of Romantic). Where cool-framing
+// buys awe and comic-framing buys a laugh, dramatic-framing buys PATHOS: the author heightens or
+// contrives events for effect beyond what in-world logic would produce, and the moment lands
+// because it is moving, not because it is plausible. Rides the rhetoric module — an event framed
+// as dramatic lands as pathos (Appraise_Earnest), and the author's fiat overrides in-world logic
+// for the duration of the heartbreak.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/rhetoric.trl"          // Appraise_Earnest -> audience [#Moved]; authorial override, for pathos
+
+assoc rule_of_drama -> [
+  rhetoric : "the dramatic-framing rule of",
+  audience : "spends plausibility to buy pathos from the"
+]
+
+
+// === ONTOLOGY ===
+
+imply RuleOfDrama -> [Drama, Override, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: framing a contrived event as dramatic, plausibility be damned, moves the audience —
+// the Rule of Drama (tags the framing; the heightening is the author's, not the characters').
+rule Rule_Of_Drama {
+  when:
+    char $c [+Hurt]
+    evt  $f [&Frames(agent=author, target=$c, as=dramatic)]
+  then:
+    audience [#Moved]
+    $f [+RuleOfDrama]
+}
+
+
+// === CONCRETE VIGNETTE: Romeo and Juliet — the tomb (stage play, Elizabethan) ===
+// Juliet wakes seconds too late — Romeo has already drunk the poison, dying beside the bride he
+// believes dead. No in-world clockwork demands that the timing miss by exactly a breath; the author
+// contrives it to that razor's edge purely for the tragedy. Plausibility steps aside; the house
+// weeps.
+
+// JULIET
+char juliet [+Hurt]
+
+// THE CAPULET TOMB
+set capulet_tomb [+Interior] [+Night]
+
+scene the_tomb {
+  beat 1 {
+    juliet @ capulet_tomb
+    evt the_missed_waking [&Frames(agent=author, target=juliet, as=dramatic)]
+    // Appraise_Earnest (rhetoric) -> audience [#Moved];  Rule_Of_Drama tags the contrived timing
+  }
+}

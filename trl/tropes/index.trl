@@ -110,6 +110,13 @@ import "trl/tropes/macguffin.trl"
 import "trl/tropes/the_dilemma.trl"
 import "trl/tropes/the_love_interest.trl"
 import "trl/tropes/tomato_in_the_mirror.trl"
+import "trl/tropes/mockumentary.trl"
+import "trl/tropes/pratfall.trl"
+import "trl/tropes/reality_bleed.trl"
+import "trl/tropes/rule_of_drama.trl"
+import "trl/tropes/secret_legacy.trl"
+import "trl/tropes/talking_head.trl"
+import "trl/tropes/tear_jerker.trl"
 
 // === TROPE TITLE ENTRIES ===
 
@@ -343,8 +350,15 @@ concept flashback [+Trope(category="Flashbacks and Chronology", source="https://
 concept in_medias_res [+Trope(category="Narrative Devices", source="https://allthetropes.org/wiki/In_Medias_Res")] [%Narrative]
 concept like_brother_and_sister [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Like_Brother_and_Sister")] [%Interpersonal]
 concept macguffin [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/MacGuffin")] [%Narrative]
+concept mockumentary [+Trope(category="Non-Fiction", source="https://allthetropes.org/wiki/Mockumentary")] [%Narrative]
 concept plot_twist [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Plot_Twist")] [%Narrative]
+concept pratfall [+Trope(category="Slapstick", source="https://allthetropes.org/wiki/The_Pratfall")] [%Narrative]
+concept reality_bleed [+Trope(category="Metafiction", source="https://allthetropes.org/wiki/Reality_Bleed")] [%Narrative]
+concept rule_of_drama [+Trope(category="Drama", source="https://allthetropes.org/wiki/Rule_of_Drama")] [%Narrative]
+concept secret_legacy [+Trope(category="Heritage", source="https://allthetropes.org/wiki/Secret_Legacy")] [%Epistemic]
 concept sibling_rivalry [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Sibling_Rivalry")] [%Interpersonal]
+concept talking_head [+Trope(category="Non-Fiction", source="https://allthetropes.org/wiki/Talking_Heads")] [%Narrative]
+concept tear_jerker [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Tear_Jerker")] [%Narrative]
 concept the_dilemma [+Trope(category="Drama", source="https://allthetropes.org/wiki/Sadistic_Choice")] [%Mind]
 concept the_love_interest [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Love_Interest")] [%Interpersonal]
 concept the_trickster [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/The_Trickster")] [%Narrative]

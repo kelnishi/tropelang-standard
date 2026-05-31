@@ -1,0 +1,60 @@
+// === PREAMBLE ===
+// @trope    The Pratfall
+// @category Slapstick / Comedy
+// @source   https://allthetropes.org/wiki/The_Pratfall
+// @version  1.3
+// @domain    Narrative
+//
+// Laconic (per the wiki): a comic physical fall — named for an archaic word for the buttocks — and
+// one of the most fundamental forms of Schadenfreude; a stock gag of the circus clown, Older Than
+// Radio, perfected on the vaudeville stage and in silent film. Rides the rhetoric module's
+// Appraise_Comic: a hurt body FRAMED comic lands as funny — the pain is not the point. The Pratfall
+// is the specifically PHYSICAL, DIGNITY-DEFLATING case of that framing — the pompous brought low by
+// gravity, the exaggerated tumble. It is the same mishap as a Tear Jerker's stumble; only the
+// author's framing differs (comic vs. earnest), which is exactly the axis rhetoric.trl turns on:
+// frame the identical fall earnest and it stings (Appraise_Earnest -> audience [#Moved]) instead.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/rhetoric.trl"          // Appraise_Comic -> audience [#Amused]
+
+assoc pratfall -> [
+  rhetoric       : "the physical comic-framing case of",
+  audience       : "buys Schadenfreude laughter from the",
+  rule_of_funny  : "is the bodily-fall sibling of"
+]
+
+
+// === ONTOLOGY ===
+// The dignity-deflation: a dignified body undone by gravity, the harm framed harmless.
+imply Pratfall -> [Slapstick, Comedy, Schadenfreude, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a fallen, dignified body whose fall the author frames comic IS the Pratfall — the
+// pompous brought low for a laugh, the pain conspicuously not the point.
+rule Pratfall {
+  when:
+    char $c [+Hurt] [+Dignified]
+    evt  $f [&Frames(agent=author, target=$c, as=comic)]
+  then:
+    $f [+Pratfall]
+}
+
+
+// === CONCRETE VIGNETTE: Buster Keaton — the great stone face takes a tumble (silent film, 1920s) ===
+// Keaton, the source's named master of the form, plays the stoic gentleman in coat and porkpie hat —
+// the picture of unshakable dignity. He hits a patch and goes down hard, deadpan to the last; the
+// exaggerated tumble (his backward-roll specialty) is rehearsed to the inch precisely so it reads as
+// funny and not as injury. The dignity is the setup; gravity is the punchline; the house roars.
+
+// BUSTER (the great stone face) — dignified gentleman, porkpie hat
+char buster [+Hurt] [+Dignified]
+
+scene the_tumble {
+  beat 1 {
+    evt the_spill [&Frames(agent=author, target=buster, as=comic)]
+    // Appraise_Comic (rhetoric) -> audience [#Amused];  Pratfall tags the framed fall
+    // (frame the identical spill as=earnest and Appraise_Earnest -> audience [#Moved] instead)
+  }
+}
