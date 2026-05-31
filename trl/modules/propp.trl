@@ -1,0 +1,136 @@
+// @title    Propp's Morphology of the Folktale
+// @author   Vladimir Propp — "Morphology of the Folktale" (1928), from a corpus of Russian wonder tales
+// @category Storytelling Systems
+// @version  0.1
+// @note     The most formal of the structural frameworks, and a different KIND of claim from the
+//           others. Propp's discovery: across a hundred tales, the FUNCTIONS (an act defined by its
+//           significance to the plot) are stable and few — thirty-one — while the characters who
+//           perform them vary endlessly; and the functions that DO appear always appear in the same
+//           ORDER. So a folktale is a selection from one long fixed sequence, performed by seven
+//           recurring roles (the dramatis personae). This module names all thirty-one functions, the
+//           single canonical sequence through them, and the seven roles — the frontier here is the
+//           LENGTH and RIGIDITY of the grammar: a whole-story function chain, not a five-beat arc.
+//           A "move" is one full pass from Villainy/Lack (8) to its resolution; long tales run two.
+//
+// Import: import "trl/modules/propp.trl"
+
+import "trl/concepts/index.trl"            // quest, lack, return, recognition, …
+import "trl/modules/heros_journey.trl"     // Campbell's monomyth is Propp's sequence, mythologized
+
+
+// === THE SYSTEM ===
+concept propp [+Propp] [%Narrative]
+imply Propp -> [Structure, Folktale, Narrative]
+imply ProppFunction -> [Function, Structure, Narrative]
+imply ProppRole     -> [Dramatis_Persona, Role, Narrative]
+
+
+// === THE SEVEN DRAMATIS PERSONAE (functions are stable; who performs them varies) ===
+concept propp_villain    [+ProppRole]   // does the villainy and fights the hero (cf. the_big_bad)
+concept propp_donor      [+ProppRole]   // the provider — tests the hero, yields the magical agent
+concept propp_helper     [+ProppRole]   // aids the hero, often the magical agent embodied (cf. the_cavalry)
+concept propp_princess   [+ProppRole]   // the sought-for person, and her father (cf. the love interest)
+concept propp_dispatcher [+ProppRole]   // sends the hero off on the quest
+concept propp_hero       [+ProppRole]   // seeker or victim; reacts to the donor, weds at the close
+concept propp_false_hero [+ProppRole]   // claims the hero's deeds as his own, and is unmasked
+
+
+// === THE THIRTY-ONE FUNCTIONS (canonical label in the comment; α is the initial situation) ===
+
+// — PREPARATION (1–7): the world, and the villain's opening —
+concept absentation       [+ProppFunction]   //  1 · a family member absents himself
+concept interdiction      [+ProppFunction]   //  2 · a prohibition is laid on the hero
+concept violation         [+ProppFunction]   //  3 · the prohibition is broken
+concept reconnaissance    [+ProppFunction]   //  4 · the villain makes a reconnaissance
+concept delivery          [+ProppFunction]   //  5 · the villain gains knowledge of his victim
+concept trickery          [+ProppFunction]   //  6 · the villain attempts to deceive
+concept complicity        [+ProppFunction]   //  7 · the victim is taken in and unwittingly helps
+
+// — COMPLICATION (8–11): the pivot — the move begins —
+concept villainy_or_lack  [+ProppFunction] [+Pivot]   //  8 · the villain harms, OR a lack is felt (THE engine)
+concept mediation         [+ProppFunction]   //  9 · the misfortune is made known; the hero is dispatched
+concept counteraction     [+ProppFunction]   // 10 · the hero agrees to act
+concept departure         [+ProppFunction] [+Threshold]   // 11 · the hero leaves home
+
+// — THE DONOR (12–14): the test that arms the hero —
+concept donor_test        [+ProppFunction]   // 12 · the donor tests the hero
+concept hero_reaction     [+ProppFunction]   // 13 · the hero responds (well or ill)
+concept magical_agent     [+ProppFunction]   // 14 · the hero acquires a magical agent or helper
+
+// — THE STRUGGLE (15–19): the core, and the lack undone —
+concept guidance          [+ProppFunction]   // 15 · the hero is led to the object of the search
+concept struggle          [+ProppFunction]   // 16 · hero and villain join in direct combat
+concept branding          [+ProppFunction]   // 17 · the hero is marked (a wound, a token)
+concept victory           [+ProppFunction]   // 18 · the villain is defeated
+concept liquidation       [+ProppFunction]   // 19 · the initial misfortune or lack is resolved
+
+// — THE RETURN (20–22) —
+concept the_return        [+ProppFunction] [+Threshold]   // 20 · the hero returns
+concept pursuit           [+ProppFunction]   // 21 · the hero is pursued
+concept rescue            [+ProppFunction]   // 22 · the hero is rescued from pursuit
+
+// — RECOGNITION (23–31): the false hero, the test, the unmasking, the crown —
+concept unrecognized_arrival [+ProppFunction]   // 23 · the hero arrives home or abroad, unrecognized
+concept unfounded_claims     [+ProppFunction]   // 24 · a false hero presents unfounded claims
+concept difficult_task       [+ProppFunction]   // 25 · a difficult task is set
+concept solution             [+ProppFunction]   // 26 · the task is accomplished
+concept recognition          [+ProppFunction]   // 27 · the hero is recognized (by mark or token)
+concept exposure             [+ProppFunction]   // 28 · the false hero or villain is exposed
+concept transfiguration      [+ProppFunction]   // 29 · the hero is given a new appearance
+concept punishment           [+ProppFunction]   // 30 · the villain is punished
+concept wedding              [+ProppFunction]   // 31 · the hero marries and ascends the throne
+
+
+// === THE ONE FIXED SEQUENCE (a tale selects a subsequence; the order never inverts) ===
+absentation -> interdiction -> violation -> reconnaissance -> delivery -> trickery -> complicity
+complicity -> villainy_or_lack -> mediation -> counteraction -> departure
+departure -> donor_test -> hero_reaction -> magical_agent -> guidance
+guidance -> struggle -> branding -> victory -> liquidation
+liquidation -> the_return -> pursuit -> rescue
+rescue -> unrecognized_arrival -> unfounded_claims -> difficult_task -> solution
+solution -> recognition -> exposure -> transfiguration -> punishment -> wedding
+
+
+// === ASSOCIATIONS ===
+assoc propp -> [
+  heros_journey  : "is the bare-bones grammar mythologized by",
+  the_big_bad    : "casts as villain the role filled by",
+  the_cavalry    : "casts as helper the rescuer of",
+  recognition    : "function 27 is the folktale's"
+]
+
+
+// === CONCRETE VIGNETTE: Tsarevich Ivan, the Firebird, and the Gray Wolf ===
+// Afanasyev's collection — a tale from Propp's own source. It runs the full arc, false hero and all:
+// the firebird steals the Tsar's golden apples; Ivan rides out, loses his horse to the Gray Wolf,
+// who then becomes his helper through every theft and test; Ivan wins firebird, horse, and the
+// princess Yelena — and on the way home his envious brothers murder him and claim the spoils, until
+// the Wolf revives him, he arrives unknown, and the truth comes out.
+
+char ivan        [+Protagonist] [+ProppHero]
+char gray_wolf   [+ProppDonor] [+ProppHelper]
+char the_brothers [+ProppFalseHero]
+char yelena      [+ProppPrincess]
+
+arc the_firebird [+Propp]
+
+act the_lack {
+  beat 1 { ivan -- interdiction      : "Guard The Garden — But Do Not Lose The Firebird" }
+  beat 2 { ivan -- violation         : "The Firebird Steals A Golden Apple And Is Gone" }
+  beat 3 { ivan -- villainy_or_lack  : "The Tsar Lacks The Firebird; His Sons Must Find It" }
+  beat 4 { ivan -- departure         : "Ivan Rides Out Past The Stone That Warns Of Loss" }
+}
+act the_helper {
+  beat 1 { gray_wolf -- donor_test    : "The Wolf Eats Ivan's Horse — Then Offers To Carry Him" }
+  beat 2 { ivan -- hero_reaction      : "Ivan Accepts; The Wolf Becomes His Guide" }
+  beat 3 { ivan -- magical_agent      : "The Wolf Is The Agent — Swift, Shape-Shifting, Wise" }
+  beat 4 { ivan -- liquidation        : "Firebird, Golden-Maned Horse, And Yelena The Fair, All Won" }
+}
+act the_false_heroes {
+  beat 1 { the_brothers -- villainy_or_lack   : "The Envious Brothers Kill The Sleeping Ivan (a second move)" }
+  beat 2 { the_brothers -- unfounded_claims   : "They Carry The Spoils Home And Claim The Glory" }
+  beat 3 { ivan -- rescue                      : "The Gray Wolf Revives Him With The Waters Of Death And Life" }
+  beat 4 { ivan -- recognition                 : "Yelena Names The True Bridegroom; The Lie Cannot Hold" }
+  beat 5 { the_brothers -- exposure            : "The Brothers Are Unmasked" }
+  beat 6 { ivan -- wedding                     : "Ivan Weds Yelena And Takes The Throne" }
+}
