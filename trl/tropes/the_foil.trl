@@ -1,0 +1,58 @@
+// === PREAMBLE ===
+// @trope    The Foil
+// @category Characterization / Relationships
+// @source   https://allthetropes.org/wiki/Foil
+// @version  1.3
+//
+// Laconic (per the wiki): a character who highlights another's trait, usually by CONTRAST — the
+// name is from the jeweller's foil set under a gem to make it shine brighter. A foil "shows by
+// example what the main character is NOT." FRONTIER: contrastive characterization — a character
+// defined not by their own tags but by the GAP between theirs and another's on a shared axis. The
+// corpus has modelled individuals and crowds richly; this is the dyad, where meaning lives in the
+// difference rather than in either node.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // identity, contrast
+
+assoc the_foil -> [
+  identity : "sharpens, by contrast, a character's",
+  conflict : "need not be a"
+]
+
+
+// === ONTOLOGY ===
+
+imply Foil -> [Contrast, Characterization, Narrative]
+
+
+// === ABSTRACT RULE ===
+// The capability: two characters set on a shared AXIS with opposite VALUES throw each other into
+// relief. The contrast itself is the characterization — neither trait reads as sharply alone.
+rule Foil {
+  when:
+    char $a [@Foils(other=$b)]
+    char $a [+Trait(axis=$d, value=$va)]
+    char $b [+Trait(axis=$d, value=$vb)]
+    $va != $vb
+  then:
+    $a [+Illuminated(by=$b)]
+    $b [+Illuminated(by=$a)]
+    $a -- contrast
+}
+
+
+// === CONCRETE VIGNETTE: Don Quixote — the knight and his squire (novel, 1605) ===
+// On the same axis — how to read the world — the master is all idealism and the squire all
+// pragmatism. At the windmills, one sees giants and the other sees windmills, and each makes the
+// other vivid: Quixote's madness is sharper beside Sancho's sense, and vice versa.
+
+char quixote [+Protagonist]   [@Foils(other=sancho)] [+Trait(axis=worldview, value=idealism)]
+char sancho  [+Deuteragonist] [+Trait(axis=worldview, value=pragmatism)]
+
+scene the_windmills {
+  beat 1 {
+    quixote -- sancho : "giants, says the knight; windmills, says the squire"
+    // Foil -> quixote [+Illuminated(by=sancho)], sancho [+Illuminated(by=quixote)]
+  }
+}

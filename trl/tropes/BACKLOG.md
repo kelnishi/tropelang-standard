@@ -16,7 +16,7 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 - [x] The Mentor                 (Universal)
 - [ ] The Sidekick
 - [ ] The Love Interest
-- [ ] The Foil
+- [x] The Foil                   (`the_foil.trl` — contrastive characterization; Quixote & Sancho)
 - [ ] The Narrator
 - [ ] Anti-Hero
 - [ ] The Trickster
@@ -68,7 +68,7 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 
 ## Relationships
 - [ ] Found Family
-- [ ] Star-Crossed Lovers
+- [x] Star-Crossed Lovers        (`star_crossed_lovers.trl` — love across an unbridgeable obstacle; Pyramus & Thisbe)
 - [ ] Mentor and Student
 
 ## Psychological systems & emotion threads (`trl/modules/` + tropes)
@@ -119,7 +119,8 @@ capabilities not tautologies. Rides `rhetoric.trl`.
 - [x] Rule of Funny               (comic framing → the audience laughs, logic be damned; Zoolander)
 - [x] Deus Ex Machina             (authorial override imposes an unearned resolution — a diegetic crossing; Euripides)
 - [x] Cliffhanger                 (the curiosity gap held open to leash attention; "Who shot J.R.?")
-- [ ] Rule of Cool / Rule of Drama (the override's other justifications)   ← **up next**
+- [x] Rule of Cool                (`rule_of_cool.trl` — logic forgiven for awe; Furious 7)
+- [ ] Rule of Drama              (the override's other justification)   ← **up next**
 - [ ] The Pratfall / Amusing Injuries (slapstick specifics)
 - [ ] Tear Jerker / Nightmare Fuel (audience-emotion-targeted devices)
 - [ ] Spectacle / Sensory Overload (the aesthetic rung, crafted)

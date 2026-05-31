@@ -1,0 +1,56 @@
+// === PREAMBLE ===
+// @trope    Star-Crossed Lovers
+// @category Relationships / Romance
+// @source   https://allthetropes.org/wiki/Star-Crossed_Lovers
+// @version  1.3
+//
+// Laconic (per the wiki): two lovers destined to be kept apart no matter how they struggle — by
+// fate, by feuding families, by some obstacle that will always stand between them; often they can
+// only be together in death. "Star-crossed" means the heavens themselves have ruled against them.
+// A dyadic trope that COMPOSES the layers: the love is a belonging need (needs.trl), the obstacle
+// is a conflict, and the doom is the gap between the two that neither can close.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // love, fate, conflict
+
+assoc star_crossed_lovers -> [
+  love     : "a belonging need thwarted —",
+  fate     : "the heavens have ruled against the",
+  conflict : "the obstacle between them is a"
+]
+
+
+// === ONTOLOGY ===
+
+imply StarCrossedLovers -> [Romance, Fate, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: mutual love across an unbridgeable sundering IS the star-crossed pattern (tags both).
+rule Star_Crossed_Lovers {
+  when:
+    char $a [~Loves(target=$b)]
+    char $b [~Loves(target=$a)]
+    char $a [@Sundered_From(other=$b)]
+  then:
+    $a [+StarCrossed]
+    $b [+StarCrossed]
+    $a -- doomed_love
+}
+
+
+// === CONCRETE VIGNETTE: Pyramus and Thisbe — the wall and the lion (Ovid, ~8 CE) ===
+// The ur-text behind Romeo and Juliet: neighbours forbidden by their families to marry, who
+// whisper through a crack in the shared wall, agree to meet by the mulberry tree, and die there
+// by a chain of mischance — each believing the other already dead.
+
+char pyramus [+Protagonist]   [~Loves(target=thisbe)] [@Sundered_From(other=thisbe)]
+char thisbe  [+LoveInterest]  [~Loves(target=pyramus)]
+
+scene the_wall {
+  beat 1 {
+    pyramus -- thisbe : "love whispered through a crack their families built"
+    // Star_Crossed_Lovers -> pyramus [+StarCrossed], thisbe [+StarCrossed] -- doomed_love
+  }
+}

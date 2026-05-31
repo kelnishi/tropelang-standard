@@ -1,0 +1,51 @@
+// === PREAMBLE ===
+// @trope    Rule of Cool
+// @category Rhetoric / Spectacle
+// @source   https://allthetropes.org/wiki/Rule_of_Cool
+// @version  1.3
+//
+// Laconic (per the wiki): the audience will forgive any liberty with reality as long as the result
+// is awesome enough — a momentary, willing suspension of disbelief in the name of cool. The action
+// sibling of the Rule of Funny: where that framing buys a laugh, this one buys awe. Rides the
+// rhetoric module — an event framed as cool lands as spectacle, and logic is permitted to step
+// aside for the duration of the jaw-drop.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/rhetoric.trl"          // Appraise_Spectacle / authorial override, for awe
+
+assoc rule_of_cool -> [
+  rhetoric : "the cool-framing rule of",
+  audience : "spends plausibility to buy awe from the"
+]
+
+
+// === ONTOLOGY ===
+
+imply RuleOfCool -> [Spectacle, Override, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: framing a feat as cool, physics be damned, thrills the audience — the Rule of Cool.
+rule Rule_Of_Cool {
+  when:
+    evt $f [&Frames(agent=author, target=$feat, as=cool)]
+  then:
+    audience [#Thrilled]
+    $f [+RuleOfCool]
+}
+
+
+// === CONCRETE VIGNETTE: Furious 7 — the skyscraper jump (film, 2015) ===
+// A car is launched out of one Abu Dhabi tower, sails through the air, and crashes into a second —
+// and then a third. No engineer would sign off on it; no audience cares. It rules, so it stands.
+
+char dom [+Protagonist]
+obj  the_car [+Vehicle]
+
+scene the_towers {
+  beat 1 {
+    evt the_leap [&Frames(agent=author, target=the_car, as=cool)]
+    // Rule_Of_Cool -> audience [#Thrilled];  disbelief willingly suspended for the awesome
+  }
+}

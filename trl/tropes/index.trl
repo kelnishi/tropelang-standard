@@ -66,6 +66,9 @@ import "trl/tropes/the_duel.trl"
 import "trl/tropes/rule_of_funny.trl"
 import "trl/tropes/deus_ex_machina.trl"
 import "trl/tropes/cliffhanger.trl"
+import "trl/tropes/rule_of_cool.trl"
+import "trl/tropes/the_foil.trl"
+import "trl/tropes/star_crossed_lovers.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -172,6 +175,13 @@ concept the_duel               [+Trope(category="Honor", source="allthetropes.or
 concept rule_of_funny    [+Trope(category="Comedy", source="allthetropes.org/wiki/Rule_of_Funny")] [%Narrative]
 concept deus_ex_machina  [+Trope(category="Resolution", source="allthetropes.org/wiki/Deus_Ex_Machina")] [%Narrative]
 concept cliffhanger      [+Trope(category="Suspense", source="allthetropes.org/wiki/Cliff_Hanger")] [%Narrative]
+concept rule_of_cool     [+Trope(category="Spectacle", source="allthetropes.org/wiki/Rule_of_Cool")] [%Narrative]
+
+// CHARACTER RELATIONSHIPS (the dyad — long a gap). The Foil (contrastive characterization — a
+// character defined by the GAP with another; Quixote & Sancho) and Star-Crossed Lovers (mutual
+// love across an unbridgeable obstacle; Pyramus & Thisbe).
+concept the_foil             [+Trope(category="Characterization", source="allthetropes.org/wiki/Foil")] [%Narrative]
+concept star_crossed_lovers  [+Trope(category="Romance", source="allthetropes.org/wiki/Star-Crossed_Lovers")] [%Interpersonal]
 
 // UNRELIABLE NARRATOR — the narration's facts diverge from the truth. The first corpus trope
 // to use S14 diegetic levels: a non_canon narration plane (with a teller) vs the reality plane.
