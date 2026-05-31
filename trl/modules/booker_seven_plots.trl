@@ -1,0 +1,87 @@
+// @title    The Seven Basic Plots
+// @author   Christopher Booker — "The Seven Basic Plots: Why We Tell Stories" (2004)
+// @category Storytelling Systems
+// @version  0.1
+// @note     A taxonomy of plot TYPE, orthogonal to the structural frameworks (Freytag, the
+//           monomyth, the Story Circle, Save the Cat) which describe a story's SHAPE. Booker
+//           argues nearly all stories are one of seven archetypal plots. This module names the
+//           seven as concept nodes and WIRES each to the mechanism in our corpus it runs on —
+//           so an evaluator can follow "this is a Tragedy" to the despair/face-heel machinery,
+//           or "this is a Quest" to the monomyth. A gallery maps one canonical story per plot.
+//
+// Import: import "trl/modules/booker_seven_plots.trl"
+
+
+// === DEPENDENCIES ===
+import "trl/concepts/index.trl"            // conflict, redemption, transformation, return, despair
+import "trl/modules/heros_journey.trl"     // the Quest runs on the monomyth
+
+
+// === THE SYSTEM ===
+
+concept booker_seven_plots [+PlotTaxonomy] [%Narrative]
+imply PlotTaxonomy -> [Structure, Archetypal, Narrative]
+
+
+// === THE SEVEN PLOTS (each wired to the mechanism it runs on) ===
+
+// 1 · OVERCOMING THE MONSTER — the hero confronts and defeats a great threat.
+concept overcoming_the_monster [+BasicPlot]
+overcoming_the_monster -> conflict
+
+// 2 · RAGS TO RICHES — a humble figure rises, loses it, and rises again, grown.
+concept rags_to_riches [+BasicPlot]
+rags_to_riches -> transformation
+
+// 3 · THE QUEST — a journey toward a distant goal, with companions and trials.
+concept the_quest [+BasicPlot]
+the_quest -> heros_journey
+
+// 4 · VOYAGE AND RETURN — into a strange world and back home, changed.
+concept voyage_and_return [+BasicPlot]
+voyage_and_return -> return
+
+// 5 · COMEDY — confusion and misunderstanding, resolved into union and light.
+concept comedy [+BasicPlot]
+
+// 6 · TRAGEDY — a flaw drives the protagonist down into ruin.
+concept tragedy [+BasicPlot]
+tragedy -> despair
+
+// 7 · REBIRTH — a fallen figure is redeemed and made new.
+concept rebirth [+BasicPlot]
+rebirth -> redemption
+
+
+// === ASSOCIATIONS ===
+assoc booker_seven_plots -> [
+  heros_journey  : "the Quest is a",
+  conflict       : "Overcoming the Monster runs on",
+  redemption     : "Rebirth arrives at",
+  transformation : "Rags to Riches effects",
+  return         : "Voyage and Return completes with"
+]
+
+
+// === GALLERY: one canonical story per plot (varied media & eras) ===
+
+char brody [+Protagonist]
+brody -- overcoming_the_monster : "Jaws — Brody vs. the shark (film, 1975)"
+
+char pip [+Protagonist]
+pip -- rags_to_riches : "Great Expectations — Pip's rise and reckoning (novel, 1861)"
+
+char odysseus [+Protagonist]
+odysseus -- the_quest : "The Odyssey — the long way home (epic poem, ~8c BCE)"
+
+char dorothy [+Protagonist]
+dorothy -- voyage_and_return : "The Wizard of Oz — Kansas → Oz → Kansas (novel/film)"
+
+char elizabeth [+Protagonist]
+elizabeth -- comedy : "Pride and Prejudice — pride and prejudice undone (novel, 1813)"
+
+char oedipus [+Protagonist]
+oedipus -- tragedy : "Oedipus Rex — the flaw that fulfills the prophecy (play, ~429 BCE)"
+
+char scrooge [+Protagonist]
+scrooge -- rebirth : "A Christmas Carol — Scrooge remade in a night (novella, 1843)"

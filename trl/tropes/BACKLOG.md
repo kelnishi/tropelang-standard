@@ -76,7 +76,7 @@ Higher-level structures that *organize* tropes — name + sequence the stages, l
 - [x] Freytag's Pyramid               (Freytag — `freytags_pyramid.trl`; defines `climax` et al.)
 - [x] Dan Harmon's Story Circle       (system — `story_circle.trl`: the 8-step closed loop; order/chaos halves, two threshold crossings)
 - [x] Save the Cat beat sheet         (system — `save_the_cat.trl`: the 15 beats with page-target params, on the three-act spine)
-- [ ] The Seven Basic Plots           (Booker)
+- [x] The Seven Basic Plots           (system — `booker_seven_plots.trl`: plot-TYPE taxonomy wired to corpus mechanisms; 7-story gallery)
 - [ ] Propp's Morphology              (31 narrative functions)
 - [ ] Kishōtenketsu                   (4-act, no central conflict — East Asian)
 
