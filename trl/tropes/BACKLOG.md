@@ -33,7 +33,10 @@ Each is a forward-chaining dynamic that tropes ride on.
 - **Social / political** — `power_dynamics` (coalition·legitimacy·revolution) · `reputation` (status
   as common belief)
 - **Rhetoric** — `rhetoric` (the author↔audience layer: framing-dependent appraisal · curiosity gap ·
-  authorial override). Non-fiction = this **minus** override-of-outcome.
+  **audience investment** · authorial override). Non-fiction = this **minus** override-of-outcome.
+- **Oratory / persuasion** — `persuasion` (the speaker↔audience layer: **ethos / logos / pathos** →
+  belief-change → call-to-action). Rhetoric cultivates ATTENTION and EMOTION; persuasion goes for
+  CONVICTION — moving the room from belief A to belief B, then to action.
 - **Storytelling frameworks** — `heros_journey` · `freytags_pyramid` · `story_circle` · `save_the_cat`
   · `booker_seven_plots` · `philosophy`
 - **Language feature** — S14 diegetic levels (`specs/14`), implemented in the reference parser.
@@ -96,16 +99,27 @@ Guard · Decadent Court · We Have Reserves · The Duel.
 - [ ] Smear Campaign / Trial by Media (reputation × common_knowledge × power)
 
 ### Rhetoric — author, audience & attention
-Done: Rule of Funny · Rule of Cool · Deus Ex Machina · Cliffhanger.
+Done: Rule of Funny · Rule of Cool · Deus Ex Machina · Cliffhanger · Foregone Conclusion ·
+Human Interest Story (the investment capability).
 - [ ] Rule of Drama (the override's other justification)
 - [ ] The Pratfall · Tear Jerker · crafted Spectacle (the aesthetic rung in full)
 
-### Non-fiction storytelling (the corpus handles it at ~57%)
+### Oratory / persuasion (the speaker↔audience arena — opened by `persuasion`)
+Rhetoric holds attention; persuasion goes for CONVICTION. The speaker collapses author-and-figure
+(direct address — the Host, persuading), and the goal is belief-change + a call to action. One
+module unlocks a whole category of real-world forms:
+- [x] the Persuasive Speech / TED Talk (the ethos/logos/pathos spine + call to action) — `persuasion`
+- [ ] the Courtroom Summation (logos + pathos before a jury; the burden of proof)
+- [ ] the Sermon / the Rousing Speech (the St. Crispin's Day / pre-battle exhortation)
+- [ ] the Stump Speech · the Sales Pitch (persuasion for a vote / a sale)
+- [ ] the Debate (duelling persuasions; rebuttal)
+- [ ] Propaganda · the Big Lie (persuasion's dark twin — ethos & pathos weaponized against logos)
+
+### Non-fiction storytelling (the corpus handles it at ~71%)
 Reality narrativized with the same grammar; the gap is the non-fiction *forms*.
-- [ ] The Host / Presenter (closes the `Host` gap)
-- [ ] Putting It to the Test (the experiment as a narrative beat; the empirical verdict)
+Done: The Host / Presenter · Putting It to the Test · Based on a True Story.
 - [ ] Talking Head · Reenactment (documentary forms)
-- [ ] Based on a True Story (the truth-claim — reality constrains the author)
+- [ ] Mockumentary (the form's fiction inversion)
 
 ### Storytelling frameworks
 Done: Hero's Journey · Freytag · Story Circle · Save the Cat · Booker's Seven Plots.

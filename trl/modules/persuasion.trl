@@ -1,0 +1,117 @@
+// === PREAMBLE ===
+// @title    Persuasion — the speaker, the audience, and the changing of minds
+// @category Narrative Systems
+// @version  0.1
+// @note     Rhetoric (rhetoric.trl) cultivates ATTENTION and EMOTION — it makes the audience watch
+//           and feel. Persuasion goes one further, for CONVICTION: it moves the room from belief A
+//           to belief B, and then to ACTION. The agent is no longer the hidden author but a SPEAKER
+//           who collapses author-and-figure — they stand before you and address you directly (the
+//           Host, persuading; structurally a permanent fourth-wall crossing). Aristotle's three
+//           appeals are the three levers, and the corpus already holds two of them:
+//             ETHOS  — the speaker's standing; we believe the claim partly because we credit the
+//                      speaker. (Rides on reputation.trl — credibility is status as common belief.)
+//             PATHOS — the emotional appeal; a moved, invested audience is an open one.
+//                      (Rides on rhetoric.trl §3 investment — caring precedes believing.)
+//             LOGOS  — the argument: a thesis backed by evidence. (New here.)
+//           The payoff is distinct from rhetoric's: not relief (curiosity's) or catharsis
+//           (investment's) but COMMITMENT — a persuaded audience, exhorted, resolves to act. This is
+//           the engine of the TED talk, the courtroom summation, the sermon, the stump speech, the
+//           sales pitch — and, with logos starved while ethos and pathos are fed, of propaganda.
+//
+// Import: import "trl/modules/persuasion.trl"
+
+import "trl/modules/rhetoric.trl"           // the audience agent; pathos = its investment
+import "trl/modules/reputation.trl"         // ethos = credibility, status as common belief
+import "trl/modules/common_knowledge.trl"   // belief-change is what persuasion edits
+
+concept persuasion [+System] [%Narrative]
+imply Persuasion -> [Conviction, Audience, Narrative]
+
+// the speaker — author and on-stage figure in one, addressing the audience directly
+concept speaker [%Narrative]
+
+
+// === THE PERSUASIVE VOCABULARY ===
+verb Argues(thesis)   [+Narrative]   // assert a claim and reason toward it (logos)
+verb Cites(support)   [+Narrative]   // adduce evidence for the claim (logos)
+verb Exhorts(action)  [+Narrative]   // call the persuaded audience to act
+imply Persuaded -> [Conviction, Belief, Narrative]   // the audience now holds the claim
+imply Committed -> [Resolve, Action, Narrative]      // ... and resolves to act on it
+
+
+// === (1) ETHOS — credibility is the ground persuasion stands on ===
+// A speaker the audience credits is granted standing; the same words from a discredited mouth
+// bounce off (cf. Cassandra Truth — true, evidenced, and disbelieved for want of ethos).
+rule Establish_Ethos {
+  when:
+    char $s [+Speaker] [+Credible]
+  then:
+    $s [+Authoritative]
+}
+
+// === (2) LOGOS — a thesis, backed by evidence, from a speaker with standing, shifts belief ===
+rule Persuade_By_Logos {
+  when:
+    char $s [+Authoritative]
+    evt  $a [&Argues(agent=$s, thesis=$t)]
+    evt  $e [&Cites(agent=$s, support=$x)]
+  then:
+    audience [+Persuaded(of=$t)]
+    audience -- conviction
+}
+
+// === (3) PATHOS — an invested audience is an open one; caring greases believing ===
+// This LINKS to rhetoric §3: the personal story that earns investment is the same move that lowers
+// the guard logos must pass. Pathos alone can persuade without a single citation — which is its
+// power, and (see propaganda) its danger.
+rule Persuade_By_Pathos {
+  when:
+    audience [+Invested(in=$s)]
+    evt  $a [&Argues(agent=$s, thesis=$t)]
+  then:
+    audience [+Persuaded(of=$t)]
+    audience -- conviction
+}
+
+// === (4) THE CALL TO ACTION — persuasion's payoff is COMMITMENT, not mere assent ===
+rule Call_To_Action {
+  when:
+    audience [+Persuaded(of=$t)]
+    evt  $x [&Exhorts(agent=$s, action=$act)]
+  then:
+    audience [+Committed(to=$act)]
+    audience -- commitment
+}
+
+
+// === ASSOCIATIONS ===
+assoc persuasion -> [
+  rhetoric         : "goes past the attention and emotion of",
+  reputation       : "draws its ethos from the standing tracked by",
+  common_knowledge : "edits the shared belief modelled in",
+  cassandra_truth  : "is what fails when ethos is absent —"
+]
+
+
+// === CONCRETE VIGNETTE: Sir Ken Robinson, "Do Schools Kill Creativity?" (TED, 2006) ===
+// The most-viewed TED talk. All three appeals in eighteen minutes: ETHOS (a knighted education
+// scholar), PATHOS (the story of Gillian Lynne, the "fidgety" girl who was not sick but a dancer),
+// LOGOS (the thesis that schooling drills creativity OUT of children, evidenced), and a clear CALL
+// — that we rethink what education is for. The room laughs, then believes, then resolves.
+char robinson [+Speaker] [+Credible]
+
+scene the_talk {
+  beat 1 {
+    evt the_story [&Endears(agent=robinson, subject=gillian_lynne)]   // rhetoric: investment (pathos)
+    // Build_Investment -> audience [+Invested(in=robinson)]
+  }
+  beat 2 {
+    evt the_claim    [&Argues(agent=robinson, thesis=schools_kill_creativity)]
+    evt the_evidence [&Cites(agent=robinson, support=children_unlearn_daring)]
+    // Establish_Ethos -> robinson [+Authoritative]; Persuade_By_Logos/Pathos -> audience [+Persuaded]
+  }
+  beat 3 {
+    evt the_call [&Exhorts(agent=robinson, action=rethink_education)]
+    // Call_To_Action -> audience [+Committed(to=rethink_education)] -- commitment
+  }
+}
