@@ -75,6 +75,11 @@ import "trl/tropes/unrequited_love.trl"
 import "trl/tropes/found_family.trl"
 import "trl/tropes/enemies_to_lovers.trl"
 import "trl/tropes/love_triangle.trl"
+import "trl/tropes/the_big_bad.trl"
+import "trl/tropes/mentor_and_student.trl"
+import "trl/tropes/hidden_identity.trl"
+import "trl/tropes/rightful_king_returns.trl"
+import "trl/tropes/the_chosen_one.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -198,6 +203,16 @@ concept unrequited_love   [+Trope(category="Romance", source="allthetropes.org/w
 concept found_family      [+Trope(category="Bonds", source="allthetropes.org/wiki/Chosen_Family")] [%Interpersonal]
 concept enemies_to_lovers [+Trope(category="Romance", source="allthetropes.org/wiki/Foe_Yay")] [%Interpersonal]
 concept love_triangle     [+Trope(category="Romance", source="allthetropes.org/wiki/Love_Triangle")] [%Interpersonal]
+
+// MORE RELATIONSHIPS: The Big Bad (the nemesis dyad) and Mentor & Student (the teaching bond).
+concept the_big_bad        [+Trope(category="Cast", source="allthetropes.org/wiki/Big_Bad")] [%Interpersonal]
+concept mentor_and_student [+Trope(category="Bonds", source="allthetropes.org/wiki/Mentors")] [%Interpersonal]
+
+// IDENTITY / WORLDBUILDING (the drams-flagged gap — archetype tags that subsume world-specific
+// lineage/disguise/destiny facts). Hidden Identity, Rightful King Returns, The Chosen One.
+concept hidden_identity       [+Trope(category="Identity", source="allthetropes.org/wiki/Secret_Identity")] [%Epistemic]
+concept rightful_king_returns [+Trope(category="Identity", source="allthetropes.org/wiki/Rightful_King_Returns")] [%Political]
+concept the_chosen_one        [+Trope(category="Fate", source="allthetropes.org/wiki/The_Chosen_One")] [%Narrative]
 
 // UNRELIABLE NARRATOR — the narration's facts diverge from the truth. The first corpus trope
 // to use S14 diegetic levels: a non_canon narration plane (with a teller) vs the reality plane.

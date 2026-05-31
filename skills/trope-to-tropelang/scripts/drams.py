@@ -9,7 +9,9 @@ drams — the trope-coverage metric, reported as `density over coverage` (e.g. 1
 A story is a set of facts (here: tag-applications) in its .trl encoding — the story
 described in isolation. Each database trope that matches explains the facts it binds — the
 overlay. This tool computes the cheap PROXY (the exact metric runs the S3 evaluation engine): a fact
-is "touched" by a trope when the trope's PATTERN — its `imply` expansion + abstract rule,
+is "touched" by a trope when the trope's PATTERN — its `imply` expansion + abstract rule —
+  references any concept in the fact's IMPLY CLOSURE (so a [+Heir_of_Isildur] fact is covered by
+  a trope about Royalty, not only by exact-tag echoes),
 NOT its concrete vignette — references that fact's tag. (Excluding the vignette stops a
 same-world example from inflating coverage by coincidence.) The uncovered facts are the
 GAP — the prioritized worklist of tropes still to convert.
@@ -95,17 +97,58 @@ def trope_db(root, exclude_abs):
     return tag_to_tropes
 
 
+# Generic structural tags that should NOT, on their own, grant coverage — almost every trope's
+# `imply` ends in one, so crediting them would make everything trivially "covered".
+GENERIC = {"Narrative", "Structure", "Abstract", "Kind"}
+
+
+def imply_map(root, story_toks):
+    """tag -> the tags it implies (its components), pooled from every `imply` in the corpus AND
+    the story. Lets a story fact be expanded along its archetype chain so coverage credits
+    CONCEPTUAL explanation — a `[+Heir_of_Isildur]` fact, which implies `[Royalty, Destined]`, is
+    explained by a trope about Royalty — not only exact-tag echoes."""
+    imap = {}
+    def add(toks):
+        for lhs, _, comps in imply_decls(toks):
+            imap.setdefault(lhs, set()).update(comps)
+    if root:
+        for sub in ('modules', 'tropes'):
+            for f in sorted(glob.glob(os.path.join(root, sub, '*.trl'))):
+                if os.path.basename(f) == 'index.trl':
+                    continue
+                add(lex(open(f).read(), f))
+    add(story_toks)
+    return imap
+
+
+def closure(tag, imap):
+    seen, stack = set(), [tag]
+    while stack:
+        t = stack.pop()
+        if t in seen:
+            continue
+        seen.add(t)
+        stack.extend(imap.get(t, ()))
+    return seen
+
+
 def measure(path):
     toks = lex(open(path).read(), path)
     root = corpus_root(path)
     db = trope_db(root, os.path.abspath(path)) if root else {}
     all_titles = {t for s in db.values() for t in s}
+    imap = imply_map(root, toks)            # for conceptual (imply-closure) coverage
 
     facts = covered = touches = 0
     gap = {}
     for tag, info in tag_usages(toks).items():
         n = len(info['lines'])              # ~ applications of this tag
-        t = len(db.get(tag, ()))            # database tropes that reference it
+        # a fact is explained if ANY concept in its imply-closure is referenced by a trope
+        touching = set()
+        for ct in closure(tag, imap):
+            if ct not in GENERIC:
+                touching |= db.get(ct, set())
+        t = len(touching)                   # distinct database tropes that explain it
         facts += n
         touches += t * n
         if t:

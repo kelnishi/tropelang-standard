@@ -1,0 +1,45 @@
+// === PREAMBLE ===
+// @trope    Rightful King Returns
+// @category Identity / Power
+// @source   https://allthetropes.org/wiki/Rightful_King_Returns
+// @version  1.3
+//
+// Laconic (per the wiki): the true heir, long absent or in disguise, returns to reclaim the throne
+// a usurper or an interregnum has left empty, and the land itself is healed by the rightful crown.
+// An identity-and-power trope: it composes the lineage of Hidden Identity with the legitimacy of
+// power_dynamics — the king is recognised, and the recognition IS the restoration.
+
+import "trl/concepts/index.trl"            // sovereignty, restoration adjacency
+import "trl/modules/power_dynamics.trl"    // legitimacy = the right to rule made common
+
+assoc rightful_king_returns -> [
+  hidden_identity : "the disguised heir of a",
+  power_dynamics  : "restores legitimate"
+]
+
+// Archetype tags overlap world-specific kingship facts (a returning heir is Royalty + Exiled +
+// Destined + bears a Crown) so the device covers stories' rightful-king vocabulary.
+imply RightfulKingReturns -> [Royalty, Exiled, Crown, Destined, Heroic, Restoration, Narrative]
+
+// Naming rule: a royal heir, long exiled, claiming the empty throne IS the Rightful King Returns.
+rule Rightful_King_Returns {
+  when:
+    char $k [+Royalty] [+Exiled]
+    evt  $claim [&Claims(agent=$k, object=throne)]
+  then:
+    $k [+RightfulKing]
+    $k -- restoration
+}
+
+// === CONCRETE VIGNETTE: The Odyssey — Odysseus reclaims Ithaca (epic, ~8c BCE) ===
+// Twenty years gone, given up for dead, the king walks into his own hall disguised as a beggar,
+// endures the suitors devouring his house, then strings the great bow no other man can bend and
+// takes back throne and queen in a single afternoon.
+char odysseus [+Protagonist] [+Royalty] [+Exiled]
+
+scene the_great_hall {
+  beat 1 {
+    evt the_bow [&Claims(agent=odysseus, object=throne)]   // the bow no suitor could string
+    // Rightful_King_Returns -> odysseus [+RightfulKing]
+  }
+}

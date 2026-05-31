@@ -1,0 +1,44 @@
+// === PREAMBLE ===
+// @trope    Hidden Identity (Secret Identity)
+// @category Identity / Epistemic
+// @source   https://allthetropes.org/wiki/Secret_Identity
+// @version  1.3
+//
+// Laconic: a character whose true self — their lineage, their power, their royalty — is concealed
+// behind a humbler face, known to the audience or to no one, awaiting a reveal. An identity trope:
+// the GAP between what a character IS and what they are taken to be. The archetype-level cousin of
+// the corpus's Unreliable Narrator and Dramatic Irony, but about a person rather than a narration.
+
+import "trl/concepts/index.trl"            // identity, revelation
+
+assoc hidden_identity -> [
+  identity   : "the concealed true",
+  revelation : "is built toward its eventual"
+]
+
+// Archetype tags chosen to subsume world-specific identity facts (a disguised heir is Royalty +
+// Destined + Concealed) — so the device covers real stories' lineage/disguise tags.
+imply HiddenIdentity -> [Concealed, Disguise, TrueSelf, Royalty, Destined, Reveal_Pending, Narrative]
+
+// Naming rule: a true self carried under a humbler guise IS a Hidden Identity (tags the bearer).
+rule Hidden_Identity {
+  when:
+    char $c [+TrueSelf(is=$truth)]
+    not ( $c [+Unmasked] )
+  then:
+    $c [+HiddenIdentity]
+    $c -- concealment
+}
+
+// === CONCRETE VIGNETTE: Superman — Clark Kent (comics, 1938) ===
+// The most powerful being on Earth files copy at a metropolitan daily in a rumpled suit and
+// glasses, the cape an arm's length away — the godlike true self carried, deliberately, under the
+// most ordinary guise imaginable.
+char clark [+Protagonist] [+TrueSelf(is=superman)]
+
+scene the_daily_planet {
+  beat 1 {
+    clark -- superman : "mild-mannered, an arm's length from the cape"
+    // Hidden_Identity -> clark [+HiddenIdentity]
+  }
+}

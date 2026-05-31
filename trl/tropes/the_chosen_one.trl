@@ -1,0 +1,44 @@
+// === PREAMBLE ===
+// @trope    The Chosen One
+// @category Identity / Fate
+// @source   https://allthetropes.org/wiki/The_Chosen_One
+// @version  1.3
+//
+// Laconic (per the wiki): the one foretold by prophecy, marked out from all others, with secret
+// power and a destiny the world will turn on — and a Big Bad already hunting them for it. An
+// identity-and-fate trope: it rides the prophecy module (the foretelling) and is the thing the
+// Big Bad opposes.
+
+import "trl/concepts/index.trl"            // fate
+import "trl/modules/prophecy.trl"          // the foretelling that marks the one
+
+assoc the_chosen_one -> [
+  prophecy   : "is the subject of a",
+  the_big_bad : "is hunted by a"
+]
+
+// Archetype tags overlap the destiny vocabulary of real stories (a chosen hero is Destined +
+// Marked + Heroic) so the device covers their chosen/destined facts.
+imply ChosenOne -> [Destined, Marked, Singular, Fated, Heroic, Prophesied, Narrative]
+
+// Naming rule: one marked out by prophecy for a singular destiny IS the Chosen One (tags them).
+rule The_Chosen_One {
+  when:
+    char $c [+Destined]
+    evt  $foretelling [&Marks(agent=$oracle, target=$c)]
+  then:
+    $c [+ChosenOne]
+    $c -- destiny
+}
+
+// === CONCRETE VIGNETTE: Harry Potter — "the one with the power" (novel, 1997) ===
+// A prophecy spoken before his birth marks an infant as the only one who can end the Dark Lord —
+// and by acting on it, the Dark Lord makes it true, hunting the boy he himself has chosen.
+char harry [+Protagonist] [+Destined]
+
+scene the_prophecy {
+  beat 1 {
+    evt the_marking [&Marks(agent=trelawney, target=harry)]   // "neither can live while the other survives"
+    // The_Chosen_One -> harry [+ChosenOne]
+  }
+}

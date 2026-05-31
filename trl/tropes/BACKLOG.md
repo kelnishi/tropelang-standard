@@ -20,7 +20,7 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 - [ ] The Narrator
 - [ ] Anti-Hero
 - [ ] The Trickster
-- [ ] The Big Bad
+- [x] The Big Bad                (`the_big_bad.trl` — the nemesis dyad; Moriarty)
 
 ## Conflict
 - [x] Conflict — the engine (vs Man / Self / Nature / Society / Fate)   (Omnipresent)
@@ -69,7 +69,7 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 ## Relationships
 - [ ] Found Family
 - [x] Star-Crossed Lovers        (`star_crossed_lovers.trl` — love across an unbridgeable obstacle; Pyramus & Thisbe)
-- [ ] Mentor and Student         (the teaching bond + its arc)
+- [x] Mentor and Student         (`mentor_and_student.trl` — the teaching bond; Whiplash)         (the teaching bond + its arc)
 
 ## Psychological systems & emotion threads (`trl/modules/` + tropes)
 Code that *simulates/estimates* emotional response as threads progress — appraisal,
