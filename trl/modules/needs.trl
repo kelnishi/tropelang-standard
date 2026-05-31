@@ -1,0 +1,119 @@
+// === PREAMBLE ===
+// @title    Needs — Maslow's hierarchy, made prepotent and scale-invariant
+// @category Psychological Systems
+// @source   A. Maslow, "A Theory of Human Motivation" (1943)
+// @version  0.1
+// @note     motivation_dynamics models the STRUCTURE of pursuing a goal; this module supplies the
+//           missing CONTENT and ORDER — which need a goal serves, and which need wins when several
+//           compete. Maslow's five rungs, ranked 1 (most basic) to 5, plus the rule that makes a
+//           hierarchy a hierarchy: PREPOTENCY — an unmet lower need overrides a higher pursuit
+//           (the starving artist puts down the brush). The ladder is deliberately SCALE-INVARIANT:
+//           a need's urgency is set by the character's own frame, not the world's sense of
+//           importance. A toy's bedroom, a chessboard, and a sundered nation are equally valid
+//           stages for the very same five needs — Buzz Lightyear, Bobby Fischer, and Abraham
+//           Lincoln are one machine at different scales. (Prepotency works on relative RANK, never
+//           absolute magnitude, which is precisely what keeps it scale-invariant.)
+//
+// Import: import "trl/modules/needs.trl"
+
+import "trl/concepts/index.trl"               // the ~200 concepts this ladder organizes
+import "trl/modules/motivation_dynamics.trl"  // this RANKS and arbitrates what that system pursues
+
+concept needs [+System] [%Psychological]
+imply Needs -> [Motivation, Hierarchy, Psychological]
+
+
+// === THE PHYSIOLOGICAL BASE (the gap — the body's own drives, not just its failures) ===
+state Hungry     [+Vital]
+state Thirsty    [+Vital]
+state Exhausted  [+Vital]
+state Endangered [+Vital]    // the body under threat — safety, felt in the flesh
+state Sated      [+Vital]
+state Rested     [+Vital]
+state Secure     [+Vital]
+
+
+// === MASLOW'S LADDER (rank 1 = most prepotent) ===
+concept tier_body     [%Need]   // 1 · physiological — food, water, rest, warmth
+concept tier_safety   [%Need]   // 2 · security, stability, freedom from fear
+concept tier_bonds    [%Need]   // 3 · love, belonging, acceptance
+concept tier_esteem   [%Need]   // 4 · respect, recognition, mastery
+concept tier_becoming [%Need]   // 5 · self-actualization — purpose, meaning, growth
+
+// the order of prepotency:
+tier_body -> tier_safety -> tier_bonds -> tier_esteem -> tier_becoming
+
+// organize the existing corpus onto the spine — note how much of it lands HIGH (tiers 3-5), and
+// how bare the base is: the proof, in edges, that the library was top-heavy before this module.
+security      -> tier_safety
+love          -> tier_bonds
+belonging     -> tier_bonds
+connection    -> tier_bonds
+honor         -> tier_esteem
+pride         -> tier_esteem
+dignity       -> tier_esteem
+recognition   -> tier_esteem
+purpose       -> tier_becoming
+meaning       -> tier_becoming
+transcendence -> tier_becoming
+
+
+// === THE RULE THAT MAKES IT A HIERARCHY ===
+
+// PREPOTENCY: an unmet lower need overrides a higher pursuit — attention falls to the basic need.
+rule Prepotency {
+  when:
+    char $c [~Pursues(rank=$high)]
+    char $c [#Lacks(rank=$low)]
+    $low < $high
+  then:
+    $c [-Pursues]
+    $c [#Driven(rank=$low)]
+    $c -- prepotency
+}
+
+// Met, the lower need releases its grip — and the higher pursuit is free to resume (the ascent).
+rule Satisfy {
+  when:
+    char $c [#Lacks(rank=$r)]
+    evt  $e [&Provides(target=$c, rank=$r)]
+  then:
+    $c [-Lacks]
+    $c [+Met(rank=$r)]
+    $c -- satisfaction
+}
+
+
+// === ASSOCIATIONS ===
+assoc needs -> [
+  motivation_dynamics : "ranks and arbitrates the goals of",
+  purpose             : "the summit of the ladder is",
+  security            : "the second rung is"
+]
+
+
+// === PREPOTENCY VIGNETTE: Buzz Lightyear — a cosmos that is one boy's bedroom (animated film) ===
+// Toy stakes, the full Maslow dynamic: a grand self-image (rank 5) yields the instant a basic
+// bond is threatened (rank 3) — the galaxy can wait; getting back to Andy cannot.
+
+char buzz [+Protagonist]
+
+scene the_bedroom_cosmos {
+  beat 1 {
+    buzz [~Pursues(rank=5)]            // "I am a Space Ranger — I will save the galaxy"
+  }
+  beat 2 {
+    buzz [#Lacks(rank=3)]             // lost, far from his boy
+    // Prepotency (3 < 5) -> the mission is set aside; belonging drives now
+  }
+}
+
+
+// === GALLERY: the same five rungs, at wildly different stakes ===
+char fischer [+Protagonist]
+fischer -- tier_esteem : "Bobby Fischer — mastery over sixty-four squares, pursued like survival"
+
+char lincoln [+Protagonist]
+lincoln -- tier_becoming : "Abraham Lincoln — the same five needs, at the scale of a sundered nation"
+
+buzz -- tier_bonds : "Buzz Lightyear — a whole cosmos that is really one child's love"
