@@ -1,0 +1,43 @@
+// === PREAMBLE ===
+// @trope    Enemies to Lovers (Foe Yay / Belligerent Sexual Tension)
+// @category Relationships / Romance
+// @source   https://allthetropes.org/wiki/Foe_Yay
+// @version  1.3
+//
+// Laconic (per the wiki): a relationship that is textually hostility and subtextually something
+// warmer — antagonists who are more than mortal enemies, whose belligerence is the form their
+// attraction takes until it finally turns from subtext to text. The reversal dyad: the very heat
+// of the conflict was the romance all along.
+
+import "trl/concepts/index.trl"            // love, conflict
+
+assoc enemies_to_lovers -> [
+  conflict : "was the disguised form of a romance in a",
+  the_rival : "is the most fertile ground for"
+]
+
+imply EnemiesToLovers -> [Romance, Reversal, Narrative]
+
+// Naming rule: a rival who admits the feeling under the belligerence flips enemy into lover.
+rule Enemies_To_Lovers {
+  when:
+    char $a [@Rival_Of(other=$b)]
+    evt  $thaw [&Admits(agent=$a, feeling=love, target=$b)]
+  then:
+    $a [~Loves(target=$b)]
+    $thaw [+EnemiesToLovers]
+    $a -- thaw
+}
+
+// === CONCRETE VIGNETTE: Much Ado About Nothing — Beatrice and Benedick (play, ~1599) ===
+// The "merry war" of wit between two who swear off love — until, each tricked into believing the
+// other pines, the bickering at last gives way to the truth beneath it.
+char beatrice [+Protagonist]   [@Rival_Of(other=benedick)]
+char benedick [+Deuteragonist] [@Rival_Of(other=beatrice)]
+
+scene the_merry_war {
+  beat 1 {
+    evt the_admission [&Admits(agent=benedick, feeling=love, target=beatrice)]
+    // Enemies_To_Lovers -> benedick [~Loves(target=beatrice)]
+  }
+}

@@ -69,6 +69,12 @@ import "trl/tropes/cliffhanger.trl"
 import "trl/tropes/rule_of_cool.trl"
 import "trl/tropes/the_foil.trl"
 import "trl/tropes/star_crossed_lovers.trl"
+import "trl/tropes/the_sidekick.trl"
+import "trl/tropes/the_rival.trl"
+import "trl/tropes/unrequited_love.trl"
+import "trl/tropes/found_family.trl"
+import "trl/tropes/enemies_to_lovers.trl"
+import "trl/tropes/love_triangle.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -182,6 +188,16 @@ concept rule_of_cool     [+Trope(category="Spectacle", source="allthetropes.org/
 // love across an unbridgeable obstacle; Pyramus & Thisbe).
 concept the_foil             [+Trope(category="Characterization", source="allthetropes.org/wiki/Foil")] [%Narrative]
 concept star_crossed_lovers  [+Trope(category="Romance", source="allthetropes.org/wiki/Star-Crossed_Lovers")] [%Interpersonal]
+
+// CHARACTER RELATIONSHIPS — the dyad/triad domain. Sidekick (loyal support), The Rival
+// (generative competition), Unrequited Love (the asymmetric dyad), Found Family (a family
+// assembled), Enemies to Lovers (the reversal), Love Triangle (the first non-dyad structure).
+concept the_sidekick      [+Trope(category="Cast", source="allthetropes.org/wiki/Sidekick")] [%Interpersonal]
+concept the_rival         [+Trope(category="Cast", source="allthetropes.org/wiki/The_Rival")] [%Interpersonal]
+concept unrequited_love   [+Trope(category="Romance", source="allthetropes.org/wiki/Unrequited_Love_Lasts_Forever")] [%Interpersonal]
+concept found_family      [+Trope(category="Bonds", source="allthetropes.org/wiki/Chosen_Family")] [%Interpersonal]
+concept enemies_to_lovers [+Trope(category="Romance", source="allthetropes.org/wiki/Foe_Yay")] [%Interpersonal]
+concept love_triangle     [+Trope(category="Romance", source="allthetropes.org/wiki/Love_Triangle")] [%Interpersonal]
 
 // UNRELIABLE NARRATOR — the narration's facts diverge from the truth. The first corpus trope
 // to use S14 diegetic levels: a non_canon narration plane (with a teller) vs the reality plane.

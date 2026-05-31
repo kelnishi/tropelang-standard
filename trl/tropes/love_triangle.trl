@@ -1,0 +1,44 @@
+// === PREAMBLE ===
+// @trope    Love Triangle
+// @category Relationships / Romance
+// @source   https://allthetropes.org/wiki/Love_Triangle
+// @version  1.3
+//
+// Laconic: three people bound in a tangle of desire — most classically, two who love the same
+// third, made rivals by that love. The first relationship STRUCTURE in the corpus that is not a
+// dyad: the drama is in the geometry, three edges that cannot all be satisfied.
+
+import "trl/concepts/index.trl"            // love, conflict
+
+assoc love_triangle -> [
+  conflict  : "a geometry that forces a",
+  the_rival : "makes rivals of two suitors —"
+]
+
+imply LoveTriangle -> [Romance, Conflict, Narrative]
+
+// Naming rule: two who love the same third are made rivals by it — the love triangle's tension.
+rule Love_Triangle {
+  when:
+    char $a [~Loves(target=$c)]
+    char $b [~Loves(target=$c)]
+    $a != $b
+  then:
+    $a [@Rival_Of(other=$b)]
+    $c [+Sought(by=$a)]
+    $a -- triangle
+}
+
+// === CONCRETE VIGNETTE: the Matter of Britain — Arthur, Guinevere, Lancelot (legend) ===
+// The king and his greatest knight both love the queen, and she loves the knight; the bond of
+// devotion and the bond of love cannot both hold, and the triangle brings down Camelot itself.
+char arthur    [+Protagonist]   [~Loves(target=guinevere)]
+char lancelot  [+Deuteragonist] [~Loves(target=guinevere)]
+char guinevere [+LoveInterest]  [~Loves(target=lancelot)]
+
+scene camelot {
+  beat 1 {
+    guinevere -- lancelot : "the love that undoes the round table"
+    // Love_Triangle -> arthur [@Rival_Of(other=lancelot)], guinevere [+Sought(by=arthur)]
+  }
+}

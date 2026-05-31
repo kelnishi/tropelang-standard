@@ -1,0 +1,43 @@
+// === PREAMBLE ===
+// @trope    The Sidekick
+// @category Relationships / Cast
+// @source   https://allthetropes.org/wiki/Sidekick
+// @version  1.3
+//
+// Laconic (per the wiki): the hero's loyal helper — a secondary character whose loyalty is an
+// unselfish willingness to support the lead, gives the hero someone to explain the plot to, and
+// often gets into trouble so the hero can rescue them. The support half of the central dyad
+// (frequently also a Foil — pragmatic where the hero is hot-headed).
+
+import "trl/concepts/index.trl"            // loyalty
+
+assoc the_sidekick -> [
+  loyalty : "the central virtue of",
+  the_foil : "is very often also a"
+]
+
+imply Sidekick -> [Loyalty, Support, Narrative]
+
+// Naming rule: one who loyally supports the protagonist IS a Sidekick (tags the bond).
+rule The_Sidekick {
+  when:
+    char $h [+Protagonist]
+    char $s [@Supports(hero=$h)]
+  then:
+    $h [+Accompanied(by=$s)]
+    $s [+Sidekick]
+    $s -- loyalty
+}
+
+// === CONCRETE VIGNETTE: Shrek — Donkey (animated film, 2001) ===
+// The ogre wants only to be left alone; the donkey will not be left, and his relentless, loyal,
+// motor-mouthed company is what drags Shrek into the world — and into being a hero at all.
+char shrek  [+Protagonist]
+char donkey [+Deuteragonist] [@Supports(hero=shrek)]
+
+scene the_swamp_road {
+  beat 1 {
+    donkey -- shrek : "you've got a friend, whether you want one or not"
+    // The_Sidekick -> shrek [+Accompanied(by=donkey)], donkey [+Sidekick]
+  }
+}

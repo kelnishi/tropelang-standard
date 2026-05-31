@@ -1,0 +1,42 @@
+// === PREAMBLE ===
+// @trope    Found Family (Chosen Family)
+// @category Relationships / Bonds
+// @source   https://allthetropes.org/wiki/Chosen_Family
+// @version  1.3
+//
+// Laconic (per the wiki): strangers — often each missing or estranged from a family of their own —
+// who, through shared adventure or adversity, grow bonds that are family in all but blood, and
+// cannot easily be broken. The relationship trope at small-group scale: a family assembled rather
+// than inherited.
+
+import "trl/concepts/index.trl"            // belonging, solidarity
+
+assoc found_family -> [
+  belonging  : "answers a missing",
+  solidarity : "forged of shared adversity into"
+]
+
+imply FoundFamily -> [Bond, Belonging, Narrative]
+
+// Naming rule: two adrift souls bonded by shared trial become family — the Found Family.
+rule Found_Family {
+  when:
+    char $a [+Misfit] [@Bonded_To(other=$b)]
+    char $b [+Misfit]
+  then:
+    $a [+Family(with=$b)]
+    $a -- belonging
+}
+
+// === CONCRETE VIGNETTE: Guardians of the Galaxy — a band of a-holes (film, 2014) ===
+// An orphaned thief, an assassin without a people, a literal-minded brawler, a bounty-hunting
+// raccoon and a walking tree — each alone and broken — become, against every odd, a family.
+char quill  [+Protagonist]  [+Misfit] [@Bonded_To(other=gamora)]
+char gamora [+LoveInterest] [+Misfit]
+
+scene the_misfits {
+  beat 1 {
+    quill -- gamora : "we are the freakin' Guardians of the Galaxy"
+    // Found_Family -> quill [+Family(with=gamora)]
+  }
+}

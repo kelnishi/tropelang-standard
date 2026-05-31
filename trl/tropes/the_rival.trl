@@ -1,0 +1,42 @@
+// === PREAMBLE ===
+// @trope    The Rival
+// @category Relationships / Cast
+// @source   https://allthetropes.org/wiki/The_Rival
+// @version  1.3
+//
+// Laconic (per the wiki): a competitor driven to one-up the hero, each developing their talents
+// against the other — not always bitter; some rivalries are warm. The engine is escalation: every
+// time one outdoes the other, the other is spurred higher. A relationship that makes both greater
+// than either would be alone.
+
+import "trl/concepts/index.trl"            // conflict
+
+assoc the_rival -> [
+  conflict : "a sustained, generative",
+  the_foil : "is, on the hero's own side of the line, a"
+]
+
+imply TheRival -> [Competition, Escalation, Narrative]
+
+// Naming rule + dynamic: one rival outdoing the other SPURS the other higher — the rivalry's engine.
+rule The_Rival {
+  when:
+    char $a [@Rival_Of(other=$b)]
+    evt  $contest [&Outdoes(agent=$b, target=$a)]
+  then:
+    $a [+Spurred]
+    $contest [+TheRival]
+}
+
+// === CONCRETE VIGNETTE: Ali and Frazier — the Thrilla (boxing, 1971-1975) ===
+// Two of the greatest who ever fought, who needed each other to become so: each defeat, each
+// taunt, drove the other to a higher pitch across three bouts and a lifetime of rivalry.
+char ali     [+Protagonist] [@Rival_Of(other=frazier)]
+char frazier [+Antagonist]  [@Rival_Of(other=ali)]
+
+scene the_first_fight {
+  beat 1 {
+    evt frazier_wins [&Outdoes(agent=frazier, target=ali)]   // Frazier takes the first bout
+    // The_Rival -> ali [+Spurred]; the loss forges the legend of the rematches
+  }
+}

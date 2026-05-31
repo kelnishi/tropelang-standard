@@ -14,7 +14,7 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 - [x] The Deuteragonist          (Universal)
 - [x] The Hero                   (Universal)
 - [x] The Mentor                 (Universal)
-- [ ] The Sidekick
+- [x] The Sidekick               (`the_sidekick.trl` — loyal support; Donkey/Shrek)
 - [ ] The Love Interest
 - [x] The Foil                   (`the_foil.trl` — contrastive characterization; Quixote & Sancho)
 - [ ] The Narrator
@@ -69,7 +69,7 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 ## Relationships
 - [ ] Found Family
 - [x] Star-Crossed Lovers        (`star_crossed_lovers.trl` — love across an unbridgeable obstacle; Pyramus & Thisbe)
-- [ ] Mentor and Student
+- [ ] Mentor and Student         (the teaching bond + its arc)
 
 ## Psychological systems & emotion threads (`trl/modules/` + tropes)
 Code that *simulates/estimates* emotional response as threads progress — appraisal,
