@@ -85,6 +85,7 @@ import "trl/tropes/the_everyman.trl"
 import "trl/tropes/the_host.trl"
 import "trl/tropes/putting_it_to_the_test.trl"
 import "trl/tropes/based_on_a_true_story.trl"
+import "trl/tropes/foregone_conclusion.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -230,6 +231,10 @@ concept the_everyman      [+Trope(category="Cast", source="allthetropes.org/wiki
 concept the_host                [+Trope(category="Non-Fiction", source="allthetropes.org/wiki/The_Host")] [%Narrative]
 concept putting_it_to_the_test  [+Trope(category="Non-Fiction", source="allthetropes.org/wiki/MythBusters")] [%Narrative]
 concept based_on_a_true_story   [+Trope(category="Non-Fiction", source="allthetropes.org/wiki/Based_on_a_True_Story")] [%Narrative]
+
+// FOREGONE CONCLUSION — the assumption-fix the Olympic biopic surfaced: the curiosity gap has a
+// PROCESS mode (known outcome, suspense in the how/why), not only the Cliffhanger's outcome mode.
+concept foregone_conclusion    [+Trope(category="Suspense", source="allthetropes.org/wiki/Foregone_Conclusion")] [%Narrative]
 
 // UNRELIABLE NARRATOR — the narration's facts diverge from the truth. The first corpus trope
 // to use S14 diegetic levels: a non_canon narration plane (with a teller) vs the reality plane.

@@ -1,0 +1,49 @@
+// === PREAMBLE ===
+// @trope    Foregone Conclusion
+// @category Rhetoric / Suspense
+// @source   https://allthetropes.org/wiki/Foregone_Conclusion
+// @version  1.3
+//
+// Laconic (per the wiki): tension wrung from a story whose ending you already know — the focus
+// shifts from WHAT will happen to HOW and WHY. FRONTIER / ASSUMPTION-FIX: our Cliffhanger and the
+// curiosity gap assumed the OUTCOME was the unknown. The Olympic biopic broke that — everyone
+// knows the athlete wins, yet the final jump still grips. The fix: the curiosity gap has TWO
+// modes — outcome-curiosity (Cliffhanger, unknown end) and PROCESS-curiosity (this, known end).
+// Structurally it is the audience-facing cousin of Dramatic Irony: the audience knows more than
+// the story's present, and watches it arrive. The engine of every biopic, prequel, and
+// flash-forward.
+
+import "trl/modules/rhetoric.trl"          // the curiosity gap it redirects
+import "trl/modules/theory_of_mind.trl"    // a structural cousin of dramatic irony
+
+assoc foregone_conclusion -> [
+  cliffhanger    : "the known-outcome counterpart of",
+  dramatic_irony : "is, structurally, an audience-wide",
+  rhetoric       : "redirects the curiosity gap of"
+]
+
+imply ForegoneConclusion -> [Known, Inevitable, Suspense, Dramatic_Irony, Narrative]
+
+// Naming rule: an outcome the audience already knows still posing a question redirects their
+// curiosity from WHAT to HOW — that is the Foregone Conclusion.
+rule Foregone_Conclusion {
+  when:
+    char $c [+ForegoneConclusion]
+    evt  $beat [&Poses(agent=$author, question=$q)]
+  then:
+    audience [#Curious(about=how)]
+    $beat [+ForegoneConclusion]
+}
+
+// === CONCRETE VIGNETTE: Titanic — the ship that everyone knows sinks (film, 1997) ===
+// Framed from the start by a modern salvage crew raising the wreck, so there is never any doubt of
+// the ending — the liner goes down, eighteen hundred drown. And yet the three hours grip, because
+// the question was never WHETHER but WHO, and HOW, and at what cost.
+char the_ship [+ForegoneConclusion]
+
+scene the_voyage {
+  beat 1 {
+    evt the_question [&Poses(agent=cameron, question=who_will_live)]
+    // Foregone_Conclusion -> audience [#Curious(about=how)]; the WHAT is known, the HOW is not
+  }
+}
