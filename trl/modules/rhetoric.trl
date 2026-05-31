@@ -3,10 +3,12 @@
 // @category Narrative Systems
 // @version  0.1
 // @note     Every other system here simulates the STORY; this one simulates the TRANSACTION the
-//           story exists for — an AUTHOR cultivating an AUDIENCE's attention. It supplies the
-//           capabilities the "thin rungs" actually wanted: the cognitive need (CURIOSITY) and the
-//           aesthetic need (BEAUTY / SPECTACLE) are not character motivations at all — they are
-//           AUDIENCE needs the author serves. Three capabilities, none of them tautological:
+//           story exists for — an AUTHOR cultivating an AUDIENCE's attention. It supplies one half
+//           of what the "thin rungs" wanted: the cognitive need (CURIOSITY) and the aesthetic need
+//           (BEAUTY / SPECTACLE) are AUDIENCE needs the author serves HERE — but they are equally
+//           CHARACTER drives (a Borden, an Angier), and live on the character ladder in needs.trl
+//           (tier_mind, tier_beauty). Same two rungs, two sides; depicting a curious character is
+//           one way to make the audience curious. Three capabilities here, none tautological:
 //           (1) AUDIENCE APPRAISAL — the same event reads differently to the audience by the
 //               author's FRAMING (a fall framed comic is funny; framed earnest, it stings);
 //           (2) the CURIOSITY GAP — a posed question pulls attention forward, a cliffhanger holds

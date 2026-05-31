@@ -33,18 +33,26 @@ state Rested     [+Vital]
 state Secure     [+Vital]
 
 
-// === MASLOW'S LADDER (rank 1 = most prepotent) ===
+// === THE FULL LADDER (Maslow's extended eight; rank 1 = most prepotent) ===
+// These rungs are not only the AUDIENCE's (see rhetoric.trl) — they are CHARACTER drives too. The
+// cognitive (curiosity) and aesthetic (the sublime) rungs are exactly what move a Borden or an
+// Angier, a scientist, an artist. Same ladder, two sides: a character driven by curiosity is one
+// way an author stirs the audience's. So tier_mind and tier_beauty belong here as motivations in
+// their own right — they were never only the author's to wield.
 concept tier_body     [%Need]   // 1 · physiological — food, water, rest, warmth
 concept tier_safety   [%Need]   // 2 · security, stability, freedom from fear
 concept tier_bonds    [%Need]   // 3 · love, belonging, acceptance
 concept tier_esteem   [%Need]   // 4 · respect, recognition, mastery
-concept tier_becoming [%Need]   // 5 · self-actualization — purpose, meaning, growth
+concept tier_mind     [%Need]   // 5 · cognitive — to know, to understand, CURIOSITY
+concept tier_beauty   [%Need]   // 6 · aesthetic — beauty, form, the SUBLIME, to astonish
+concept tier_becoming [%Need]   // 7 · self-actualization — purpose, meaning, growth
+concept tier_beyond   [%Need]   // 8 · transcendence — beyond the self
 
 // the order of prepotency:
-tier_body -> tier_safety -> tier_bonds -> tier_esteem -> tier_becoming
+tier_body -> tier_safety -> tier_bonds -> tier_esteem -> tier_mind -> tier_beauty -> tier_becoming -> tier_beyond
 
-// organize the existing corpus onto the spine — note how much of it lands HIGH (tiers 3-5), and
-// how bare the base is: the proof, in edges, that the library was top-heavy before this module.
+// organize the existing corpus onto the spine — note how much of it lands HIGH, and how bare the
+// base and the cognitive/aesthetic rungs are: the proof, in edges, of where the library was thin.
 security      -> tier_safety
 love          -> tier_bonds
 belonging     -> tier_bonds
@@ -53,9 +61,11 @@ honor         -> tier_esteem
 pride         -> tier_esteem
 dignity       -> tier_esteem
 recognition   -> tier_esteem
+wisdom        -> tier_mind
+truth         -> tier_mind
 purpose       -> tier_becoming
 meaning       -> tier_becoming
-transcendence -> tier_becoming
+transcendence -> tier_beyond
 
 
 // === PREPOTENCY AND ITS INVERSION (the rankings are NOT absolute) ===
@@ -123,11 +133,11 @@ char buzz [+Protagonist]
 
 scene the_bedroom_cosmos {
   beat 1 {
-    buzz [~Pursues(rank=5, salience=3)]    // "I am a Space Ranger — I will save the galaxy"
+    buzz [~Pursues(rank=7, salience=3)]    // "I am a Space Ranger — I will save the galaxy" (actualization)
   }
   beat 2 {
     buzz [#Lacks(rank=3, salience=8)]      // lost, far from his boy — and that pulls harder
-    // Prepotency (3 < 5, 8 >= 3) -> the mission is set aside; belonging drives now
+    // Prepotency (3 < 7, 8 >= 3) -> the mission is set aside; belonging drives now
   }
 }
 
@@ -143,8 +153,32 @@ char paul [+Protagonist]
 scene the_butterfly {
   beat 1 {
     paul [#Lacks(rank=2, salience=5)]      // safety — the sniper's line, the prudence of cover
-    paul [~Pursues(rank=5, salience=9)]    // beauty / the human spirit — held past all prudence
-    // Inversion (2 < 5, 9 > 5) -> paul [#Driven(rank=5)] [+Transcendent] -- inversion
+    paul [~Pursues(rank=6, salience=9)]    // beauty (the aesthetic rung) — held past all prudence
+    // Inversion (2 < 6, 9 > 5) -> paul [#Driven(rank=6)] [+Transcendent] -- inversion
+  }
+}
+
+
+// === INVERSION VIGNETTE: The Prestige — curiosity and the sublime, as CHARACTER drives (film) ===
+// The rebuttal to over-reframing the thin rungs: cognitive and aesthetic are not only the
+// audience's needs but the magicians' own. Borden is consumed by the COGNITIVE need — to know
+// the secret, to guard his own — and Angier by the AESTHETIC — to author the one perfect wonder.
+// Both hold these higher needs harder than their own safety and lives, and both are devoured: the
+// inversion is the whole tragedy.
+
+char borden [+Protagonist]
+char angier [+Antagonist]
+
+scene the_obsession {
+  beat 1 {
+    borden [#Lacks(rank=2, salience=4)]      // safety — the secret will cost him his family, his hand, his neck
+    borden [~Pursues(rank=5, salience=10)]   // to KNOW (cognitive) — held harder than survival
+    // Inversion (2 < 5, 10 > 4) -> borden [#Driven(rank=5)] [+Transcendent]
+  }
+  beat 2 {
+    angier [#Lacks(rank=1, salience=5)]      // life itself — he drowns a copy of himself every night
+    angier [~Pursues(rank=6, salience=10)]   // the SUBLIME (aesthetic) — the one wonder, the look on their faces
+    // Inversion (1 < 6, 10 > 5) -> angier [#Driven(rank=6)] [+Transcendent]
   }
 }
 
