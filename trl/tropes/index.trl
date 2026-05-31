@@ -34,6 +34,7 @@ import "trl/tropes/survivors_guilt.trl"
 import "trl/tropes/finishing_move.trl"
 import "trl/tropes/bar_the_door.trl"
 import "trl/tropes/improvised_weapon.trl"
+import "trl/tropes/unreliable_narrator.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -79,6 +80,10 @@ concept survivors_guilt [+Trope(category="Trauma", source="allthetropes.org/wiki
 concept finishing_move   [+Trope(category="Combat", source="allthetropes.org/wiki/Finishing_Move")] [%Interpersonal]
 concept bar_the_door     [+Trope(category="Tactics", source="allthetropes.org/wiki/Hold_The_Line")] [%Interpersonal]
 concept improvised_weapon [+Trope(category="Tactics", source="allthetropes.org/wiki/Improvised_Weapon")] [%Interpersonal]
+
+// UNRELIABLE NARRATOR — the narration's facts diverge from the truth. The first corpus trope
+// to use S14 diegetic levels: a non_canon narration plane (with a teller) vs the reality plane.
+concept unreliable_narrator [+Trope(category="Narrative Devices", source="allthetropes.org/wiki/Unreliable_Narrator")] [%Epistemic]
 
 // CHARACTER-ROLE BUILDING BLOCKS (Universal Tropes) — the cast structure. The applied
 // forms are the prelude roles [+Protagonist] / [+Antagonist]; these are the canonical

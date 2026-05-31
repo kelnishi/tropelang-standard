@@ -47,6 +47,8 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 - [ ] MacGuffin                   (cf. skill example `MacGuffinDelivery`)
 - [~] Dramatic Irony              (`theory_of_mind.trl`)
 - [ ] Flashback
+- [x] Unreliable Narrator         (FRONTIER — first corpus use of S14 diegetic levels: a non_canon
+                                    narration plane vs the reality plane; The Usual Suspects)
 
 ## Character change & arcs
 - [ ] Coming of Age
