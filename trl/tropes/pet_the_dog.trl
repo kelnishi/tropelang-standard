@@ -1,0 +1,94 @@
+// === PREAMBLE ===
+// @trope    Pet the Dog
+// @category Characterization / Sympathy
+// @source   https://allthetropes.org/wiki/Pet_the_Dog
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a small act of kindness or decency by an otherwise hard or villainous
+// character — a moment that humanizes them and earns the audience's sympathy. The single gesture
+// recontextualizes the whole figure: we glimpse a hidden depth, and a neutral or hostile onlooker
+// warms into a partisan. FRONTIER: this is rhetoric's INVESTMENT capability turned on a VILLAIN.
+// Where the Human Interest Story endears a striving innocent, Pet the Dog endears a hard man — the
+// author FRAMES one kind act earnestly (Appraise_Earnest -> [#Moved]) so it ENDEARS the antagonist
+// (Build_Investment -> the audience RootsFor / is Invested in someone they had written off). It is
+// the BRIGHT PAIR of Kick the Dog (the gratuitous cruelty that confirms a character is irredeemable):
+// same lever, opposite sign — one act of mercy buys sympathy, one act of cruelty spends it.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/rhetoric.trl"          // Endears -> Build_Investment (audience warms); Frames(as=earnest) -> Appraise_Earnest
+import "trl/modules/reputation.trl"        // the deed shifts a STANDING the audience holds about the character
+import "trl/concepts/index.trl"            // mercy, compassion — the substance of the kind act
+
+assoc pet_the_dog -> [
+  rhetoric           : "turns the audience-investment lever of, onto a villain",
+  reputation         : "a single deed shifts the standing held about a character, per",
+  compassion         : "the act is a flash of",
+  mercy              : "often takes the form of",
+  kick_the_dog       : "the bright pair / opposite sign of",
+  human_interest_story : "the same investment device, aimed at a hard character instead of an innocent",
+  heel_face_turn     : "a sympathy beat that may foreshadow a"
+]
+
+
+// === ONTOLOGY ===
+// The signature cluster: a moment of sympathy manufactured FOR a hard character — kindness as the
+// instrument, audience-warming as the payoff. (Sympathy is the rhetoric/investment register; the
+// act itself draws on the compassion/mercy concepts.)
+imply PetTheDog -> [Sympathy, Compassion, Investment, Audience, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition: a hard character ([+Antagonist]) commits one kind act, and the author FRAMES that act
+// earnestly (rhetoric's Appraise_Earnest registers it as sincere, not a ruse) so it ENDEARS them
+// (rhetoric's Build_Investment converts the audience). The co-presence is the signature: an antagonist
+// + an earnestly-framed kindness that endears. The payoff is the audience WARMING — [~RootsFor] /
+// [+Invested] toward a figure they had written off — and the deed tags itself [+PetTheDog]. (Contrast
+// Kick the Dog: an antagonist + a gratuitous cruelty, which spends sympathy instead of buying it.)
+rule Pet_The_Dog {
+  when:
+    char $v [+Antagonist]
+    evt  $kindness [&Endears(agent=author, subject=$v)]
+    evt  $framing  [&Frames(agent=author, target=$v, as=earnest)]
+  then:
+    $kindness [+PetTheDog]
+    $v [+Sympathetic]
+    audience [~RootsFor(target=$v)]
+    audience [+Invested(in=$v)]
+    audience -- investment
+}
+
+
+// === CONCRETE VIGNETTE: The Sopranos — Tony and the ducks (television, 1999) ===
+// A New Jersey mob boss who orders killings without a flicker spends the pilot transfixed by a family
+// of wild ducks that have landed in his backyard pool. He wades in to feed them, builds them a ramp,
+// frets over their ducklings, and weeps when they finally fly off — a grief so disproportionate it
+// sends him to a psychiatrist. The show frames the ducks dead earnest, with no irony: this killer's
+// tenderness toward something small and defenceless is the hook that makes us watch a monster for six
+// seasons. One soft gesture, and the audience is invested in a man it should despise.
+
+// TONY SOPRANO — the boss whose cruelty is a given; the ducks are the crack in it
+char tony [+Antagonist]
+tony [+Authority] [+Ruthless]
+
+// THE WILD DUCKS — the small, defenceless thing he is gentle with
+char the_ducks [+Innocent]
+
+// INT./EXT. THE SOPRANO BACKYARD POOL — DAY
+set backyard_pool [+Exterior] [+Domestic] [+Day]
+
+scene the_ducks_leave {
+  beat 1 {
+    tony @ backyard_pool
+    evt feeds_the_ducks [&Endears(agent=author, subject=tony)]
+    tony -> the_ducks : "wades in, builds a ramp, frets over the ducklings"
+    // Build_Investment (rhetoric) -> audience [~RootsFor(target=tony)] [+Invested(in=tony)]
+  }
+  beat 2 {
+    evt they_fly_off [&Frames(agent=author, target=tony, as=earnest)]
+    tony [#Grieving]
+    // Appraise_Earnest (rhetoric) -> audience [#Moved] — the killer's grief is played straight
+    // Pet_The_Dog -> feeds_the_ducks [+PetTheDog]; tony [+Sympathetic]; the audience is hooked on a monster
+  }
+}

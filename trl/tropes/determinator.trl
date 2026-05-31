@@ -1,0 +1,97 @@
+// === PREAMBLE ===
+// @trope    Determinator
+// @category Heroic Spirit / Willpower
+// @source   https://allthetropes.org/wiki/Determinator
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a character — good or bad, young or old — who NEVER gives up. Ever. No
+// matter what. No injury, no exhaustion, no impossible odds will make them stop; no price is too
+// great, up to and including their own life. For them there is no line between perseverance and
+// insanity. The SUSTAINED-trait form of Heroic Second Wind (its single in-combat cousin is one
+// rally; this is the standing trait, blow after blow) — the structural opposite of the Despair
+// Event Horizon, where the same accumulating blows extinguish the will instead of failing to.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"               // resolve, despair, purpose
+import "trl/modules/needs.trl"                // the Inversion idiom: a drive held harder than the body's lack
+import "trl/modules/emotion_dynamics.trl"     // the despair the will refuses to cross into
+import "trl/modules/action_dynamics.trl"      // the blows: &Strikes / [+Hit], counted as the ones that DON'T stop them
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc determinator -> [
+  needs                 : "a higher drive held past the body — the Inversion, sustained",
+  heroic_second_wind    : "the standing-trait form of",
+  despair_event_horizon : "the structural opposite of — blows that fail to cross the horizon",
+  action_dynamics       : "absorbs counted blows ([+Hit]) without stopping",
+  resolve               : "is made of",
+  despair               : "refuses"
+]
+
+
+// === ONTOLOGY ===
+
+imply Determinator -> [Resolve, Relentless, Narrative]
+
+
+// === ABSTRACT RULE ===
+// The signature: blow after blow lands ([+Hit] from action_dynamics) — three or more that would
+// each be enough to stop an ordinary pursuer — and the pursuit STILL continues. The mechanism is
+// the needs Inversion sustained: a higher drive ($hr — esteem/becoming) held HARDER than the body's
+// mounting lack ($br — life and limb) outpulls it every time, so the will overrides the flesh
+// rather than the flesh ending the will. Unlike Heroic Second Wind (one rally), this fires on the
+// COUNT of damage that fails to stop them: the relentlessness is the count itself. The pursuit is
+// NOT cleared — that is the whole point; they are still coming.
+rule Determinator {
+  when:
+    char $c [~Pursues(rank=$hr, salience=$hs)]
+    char $c [#Lacks(rank=$br, salience=$bs)]
+    count( evt $blow [&Strikes(target=$c)] ) >= 3
+    $br < $hr
+    $hs > $bs
+    not ( $c [+Determinator] )
+  then:
+    $c [#Driven(rank=$hr)]
+    $c [+Determinator]
+    $c [+Relentless]
+    $c [+Transcendent]
+    $c -- resolve
+}
+
+
+// === CONCRETE VIGNETTE: Monty Python and the Holy Grail — the Black Knight (film, 1975) ===
+// "None shall pass." Arthur hacks off one arm — "'Tis but a scratch." The other — "Just a flesh
+// wound." A leg, then the last leg, and the limbless torso still bellows "Come back here and take
+// what's for ye! I'll bite your legs off!" Three, four blows that would fell anyone, and the
+// pursuit of the duel never stops: his honor (esteem, rank 4) is held past the body's total ruin
+// (rank 1, life and limb) — the Inversion run again and again. Comedy by sheer relentlessness.
+
+// THE BLACK KNIGHT
+char black_knight [+Antagonist] [+Resilient]
+
+// KING ARTHUR — only trying to pass
+char arthur [+Protagonist]
+
+// EXT. FOREST BRIDGE - DAY
+set the_bridge [+Exterior] [+Day]
+
+scene none_shall_pass {
+  beat 1 {
+    black_knight @ the_bridge
+    arthur @ the_bridge
+    black_knight [~Pursues(rank=4, salience=10)]   // honor — "None shall pass"; the duel held past all reason
+  }
+  beat 2 {
+    evt arm   [&Strikes(agent=arthur, target=black_knight)]   // "'Tis but a scratch."
+    evt arm2  [&Strikes(agent=arthur, target=black_knight)]   // "Just a flesh wound."
+    evt leg   [&Strikes(agent=arthur, target=black_knight)]   // "I've had worse."
+    black_knight [+Wounded]
+    black_knight [#Lacks(rank=1, salience=6)]      // the body — limb by limb, screaming to stop
+    // Determinator (3 blows, 1 < 4, 10 > 6) -> [#Driven(rank=4)] [+Determinator] [+Relentless] [+Transcendent] -- resolve
+  }
+  beat 3 {
+    black_knight -- arthur : "Come back! I'll bite your legs off!"
+    // limbless and still pursuing the fight — the pursuit never cleared
+  }
+}

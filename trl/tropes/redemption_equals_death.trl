@@ -1,0 +1,82 @@
+// === PREAMBLE ===
+// @trope    Redemption Equals Death
+// @category Death Tropes
+// @source   https://allthetropes.org/wiki/Redemption_Equals_Death
+// @version  1.3
+// @domain    Narrative
+//
+// Laconic (per the wiki): a character who did something terrible realizes their mistake and
+// sacrifices their own life to redeem themselves — the death is the proof and the price of the
+// atonement; characters redeemed this way do not come back. FRONTIER: this is the death-sealed
+// LIMIT of the Redemption Arc (redemption_arc already names it) — the exact CONJUNCTION of two
+// dynamics the corpus already simulates: the Atonement of a guilty wrongdoer AND the Heroic
+// Sacrifice that spends their own life to make it. Where Redemption Arc pays the debt down by
+// degrees and Heroic Sacrifice merely spends a position, here the amends IS the death.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/tropes/redemption_arc.trl"     // the costly atonement — this is its death-sealed limit
+import "trl/tropes/heroic_sacrifice.trl"   // the Sacrifice that makes the wrongdoer [+Fallen]
+
+assoc redemption_equals_death -> [
+  redemption_arc  : "is the death-sealed limit of",
+  heroic_sacrifice : "seals the atonement with a",
+  atonement       : "paid in full by",
+  redemption      : "arrives at, but only in death",
+  sacrifice       : "the amends IS the"
+]
+
+
+// === ONTOLOGY ===
+// The conjunction: it is at once an Atonement, a Sacrifice, and a Death.
+imply RedemptionEqualsDeath -> [Atonement, Sacrifice, Narrative]
+
+
+// === ABSTRACT RULE ===
+// A guilty wrongdoer atones via a fatal sacrifice -> redeemed in death. The recognition is the
+// CONJUNCTION: the same character must be (a) a guilty wrongdoer, (b) the agent of a Sacrifice,
+// and (c) [+Fallen] by it (the death that action_dynamics' Sacrifice rule produces). Atonement
+// without the death is a plain Redemption Arc; a Sacrifice by an unindebted hero is plain Heroic
+// Sacrifice. Only when both hold at once does the death SEAL the redemption.
+rule Redemption_Equals_Death {
+  when:
+    char $c [+Wrongdoer] [#Guilty]
+    evt  $deed [&Sacrifices(agent=$c, ally=$b)]
+    $c [+Fallen]
+  then:
+    $c [-Guilty]
+    $c [+Redeemed]
+    $c -- atonement
+    $c -- redemption
+}
+
+
+// === CONCRETE VIGNETTE: Return of the Jedi — Anakin Skywalker / Darth Vader (film, 1983) ===
+// Two decades a willing instrument of the Empire, Vader watches the Emperor torture his son with
+// Force lightning. The guilt of a buried father breaks through: he seizes the Emperor and hurls
+// him down the reactor shaft, taking the lightning himself to do it. The act saves Luke and ends
+// Palpatine — and the wounds, and the failing suit, kill him. He dies Anakin again, redeemed by
+// the single act that cost him his life.
+char vader  [+Wrongdoer]                   // Anakin Skywalker, lost to the Empire
+char luke   [+Ally]                         // his son, the one he saves
+char emperor [+Antagonist]                  // Palpatine, the master he finally turns on
+
+arc anakins_end [+RedemptionEqualsDeath]
+
+scene the_throne_room {
+  beat 1 {
+    emperor -> luke : "Force lightning"
+    vader [#Guilty]                          // the buried father, watching his son die
+  }
+  beat 2 {
+    evt the_throw [&Sacrifices(agent=vader, ally=luke)]
+        dialog(inject=[speaker=luke], inline="""
+               speaker: "{speaker}"
+               cue: "cradling the dying man whose mask he has just removed"
+               tone: grieving, freed
+               text: "I've got to save you."
+               """)
+    // Sacrifice -> luke [+Saved];  vader [+Fallen]
+    // Redemption_Equals_Death -> vader [-Guilty] [+Redeemed] -- atonement -- redemption
+  }
+}

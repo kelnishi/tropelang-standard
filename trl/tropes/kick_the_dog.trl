@@ -1,0 +1,95 @@
+// === PREAMBLE ===
+// @trope    Kick the Dog
+// @category Characterization / Audience Reactions
+// @source   https://allthetropes.org/wiki/Kick_the_Dog
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a single GRATUITOUS act of cruelty — pointless to the plot, aimed at the
+// helpless — whose ONLY job is to tell the audience, fast and unmistakably, that this character is
+// evil and not to be sympathized with. The cruelty advances no scheme; it is pure authorial
+// signage. Rides rhetoric's audience appraisal (the deed is FRAMED earnest — the pain IS the point,
+// so the house recoils rather than laughs) and reputation's Disgrace (the standing the audience
+// holds about the character collapses): the author Endears no one here, he REVOKES rooting interest,
+// turning neutral onlookers into partisans AGAINST the kicker, who is branded [+Villain]. It is the
+// exact dark pair of Pet the Dog (a kindness that buys sympathy). Distinct from a plot-driven evil
+// act, whose cruelty serves the scheme; Kick the Dog's cruelty serves only the AUDIENCE'S verdict.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/rhetoric.trl"          // Frames(as=earnest) -> audience appraisal across the fourth wall
+import "trl/modules/reputation.trl"        // Disgrace -> [+Disgraced]; the standing the audience holds collapses
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc kick_the_dog -> [
+  rhetoric    : "the audience-appraisal engine it rides, per",
+  reputation  : "brands the character via the disgrace path of",
+  cruelty     : "a gratuitous act of",
+  audience    : "turns the rooting interest of the",
+  the_big_bad : "fast-establishes the menace of a"
+]
+
+
+// === ONTOLOGY ===
+// The deed (gratuitous cruelty as authorial signage) and the verdict it manufactures.
+imply KickTheDog -> [Cruelty, Villain, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition: a character commits a cruelty on the helpless (emotion_dynamics' &Crushes) that is
+// GRATUITOUS — it serves no scheme of theirs (not any &Schemes by the same agent) — and the author
+// frames it EARNEST (rhetoric's register where the pain IS the point, so the audience recoils rather
+// than laughs at a comic kick). The result is pure signage: the audience's appraisal turns AGAINST
+// the kicker (the dark mirror of Build_Investment's [~RootsFor] — here rooting interest is revoked
+// and curdles to [#Resentful]), and the deed disgraces the character in the house's eyes, branding
+// them [+Villain]. The gratuity is the trope: cruelty in service of a plot is just antagonism;
+// cruelty in service of the audience's verdict is Kicking the Dog.
+rule Kick_The_Dog {
+  when:
+    char $v
+    evt  $deed  [&Crushes(target=$v)]
+    evt  $f     [&Frames(agent=author, target=$deed, as=earnest)]
+    not ( evt $scheme [&Schemes(agent=$kicker, target=$v)] )   // GRATUITOUS — the cruelty buys no plot
+  then:
+    $deed [+KickTheDog]
+    audience [#Resentful]                  // rooting interest revoked — the dark mirror of [~RootsFor]
+    audience -- cruelty
+    $kicker [+Villain] [+Disgraced]        // the verdict: branded evil in the audience's standing
+    $kicker -- shame
+}
+
+
+// === CONCRETE VIGNETTE: Gladiator — Commodus and the strangled father (film, 2000) ===
+// Newly proclaimed Emperor, Commodus finds his father Marcus Aurelius means to restore the Republic
+// rather than crown him. He does not argue, scheme, or wait — he simply embraces the old man and
+// smothers him in his arms, weeping all the while. The murder wins him the throne he'd have inherited
+// anyway; it advances nothing he could not have had by patience. Ridley Scott frames it dead earnest,
+// in close, with no comic distance — and in that single quiet act the audience is told, before a
+// sword is drawn, exactly what kind of man now rules Rome. Sympathy is gone; we want him to fall.
+
+// COMMODUS — the heir who would not wait
+char commodus [+Antagonist]
+
+// MARCUS AURELIUS — the father, the philosopher-emperor, helpless in his son's arms
+char aurelius [+Victim]
+
+// INT. THE IMPERIAL TENT — NIGHT (the German frontier)
+set imperial_tent [+Interior] [+Night]
+
+scene the_smothering {
+  beat 1 {
+    commodus @ imperial_tent
+    aurelius @ imperial_tent
+    evt the_embrace [&Crushes(target=aurelius)]   // a son smothers his father in an embrace
+        dialog(inject=[speaker=commodus], inline="""
+               speaker: "{speaker}"
+               cue: "weeping, his arms tightening, the words a child's plea over a murder"
+               tone: tender, monstrous
+               text: "Father... I would have butchered the whole world if you would only love me!"
+               """)
+    evt played_earnest [&Frames(agent=author, target=the_embrace, as=earnest)]
+    // Kick_The_Dog fires: a gratuitous cruelty (no scheme it serves), framed earnest ->
+    //   the_embrace [+KickTheDog]; audience [#Resentful]; commodus [+Villain] [+Disgraced]
+    // the throne was already his — the murder is signage, not strategy
+  }
+}

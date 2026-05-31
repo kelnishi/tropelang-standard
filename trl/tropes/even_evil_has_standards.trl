@@ -1,0 +1,123 @@
+// === PREAMBLE ===
+// @trope    Even Evil Has Standards
+// @category Characterization / Villains
+// @source   https://allthetropes.org/wiki/Even_Evil_Has_Standards
+// @domain   Psychological
+// @version  1.3
+//
+// Laconic (per the wiki): a bad guy has lines even he won't cross, and detests those who do — an act
+// so abhorrent that even a villain refuses it, marking the limit of his villainy and keeping him on
+// the "still sympathetic" side of the Moral Event Horizon. FRONTIER: where I Gave My Word reads the
+// needs Inversion as a costly KEPT word, this reads the moral layer's MoralDilemma vocabulary the
+// other way — a villain Committed_To a code is Repelled_By an act that violates it, and the refusal
+// reveals the code by what it FORBIDS. Distinct from Pet the Dog (a villain's KINDNESS, a warm act):
+// this is a moral LIMIT, a recoil, often a condemnation of a WORSE villain — the writer's device for
+// showing a new villain is truly monstrous when even another villain finds him disgusting. The line a
+// villain will not cross earns the grudging respect even an enemy must concede (reputation's esteem,
+// across the fourth wall via rhetoric's appraisal) — honor conferred not for an act of good but for a
+// refusal of evil.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/philosophy.trl"        // MoralDilemma's Committed_To / >< — the code and what it forbids
+import "trl/modules/reputation.trl"        // Honors / [+Honored] / Disgraced — esteem and its collapse
+import "trl/modules/rhetoric.trl"          // Frames(as=earnest) -> audience [#Moved] — the line lands across the fourth wall
+import "trl/concepts/virtues.trl"          // cruelty — the vice the act embodies; integrity — what the line preserves
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc even_evil_has_standards -> [
+  pet_the_dog : "is the moral-LIMIT twin of the warm-act",
+  the_big_bad : "softens, or condemns a worse, by limiting the villainy of a",
+  reputation  : "the line earns grudging esteem even from a foe, per",
+  cruelty     : "the refused act embodies the vice of",
+  integrity   : "the kept line preserves a shred of",
+  honor       : "a code held even by a villain is a private"
+]
+
+
+// === ONTOLOGY ===
+// A villain's code is defined by what it FORBIDS: an act Beyond The Pale is the abhorrent thing even
+// a villain refuses. To refuse it is to reveal a Standard — a Binding limit that, by condemning a
+// worse act, confers a grudging Honored standing the villain did nothing kind to earn.
+imply BeyondThePale -> [Cruelty, Abhorrent, Narrative]
+imply EvenEvilHasStandards -> [Antagonist, Binding, Integrity, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition: a villain ($v [+Antagonist]) is Committed_To a code, and a WORSE villain ($w) commits
+// an act so abhorrent it stands opposed (><) to that code — Beyond The Pale. The signature fires when
+// $v is REPELLED by the act ([~Repelled_By]) and condemns its author: the refusal reveals the code by
+// what it forbids (NOT a kind act — that is Pet the Dog), and the author framing it earnest lands the
+// limit on the audience. The condemnation disgraces the worse villain (reputation's collapse), while
+// the line earns $v a grudging [+Honored] standing and tags him [+EvenEvilHasStandards] — esteem for
+// a refusal of evil, not an act of good. ($v != $w, and the code >< the act, so the engine matches the
+// real opposition, not prose.)
+rule Even_Evil_Has_Standards {
+  when:
+    char $v [+Antagonist] [~Committed_To(target=$code)]
+    char $w [+Antagonist]
+    $v != $w
+    evt  $act [&Destroyed(agent=$w, entity=$victim)] [+BeyondThePale]
+    $act >< $code
+    $v [~Repelled_By(target=$act)]
+    evt  $frame [&Frames(agent=author, target=$act, as=earnest)]
+  then:
+    // the refusal reveals the code by what it forbids — a limit, not a kindness
+    $v [+EvenEvilHasStandards]
+    $v -- integrity : "Preserves A Shred Of"
+    // condemning the worse villain disgraces him — the writer's "even HE is disgusted" device
+    $w [+Disgraced]
+    $w -- shame
+    // the line earns grudging esteem even an enemy must concede
+    !$v [+Honored]!
+    // and the limit, framed earnest, lands on the house
+    audience [#Moved]
+    audience -- pathos
+}
+
+
+// === CONCRETE VIGNETTE: The Godfather — Don Vito refuses the narcotics trade (film, 1972) ===
+// At the meeting of the Five Families, Don Vito Corleone — a man who has built an empire on extortion,
+// bootlegging, gambling, and murder — draws his line at narcotics. He will run any racket but the drug
+// trade, because drugs are "a dirty business" that would poison the young; he condemns the Tattaglias
+// and Sollozzo, who deal them, as having crossed into something he finds beneath him. The refusal does
+// not make him good — he is the Don — but it reveals a code, and the men across the table must concede
+// the old man keeps a line they have abandoned.
+
+// DON VITO CORLEONE — the boss whose empire still draws a line at the drug trade
+char vito [+Antagonist]
+vito [~Committed_To(target=integrity)]
+vito [+Authority]
+
+// VIRGIL "THE TURK" SOLLOZZO — the trafficker who deals the thing Vito refuses
+char sollozzo [+Antagonist]
+
+// THE NARCOTICS TRADE — "a dirty business" that poisons the young
+char the_young [+Victim]
+
+// INT. CONFERENCE ROOM, THE COMMISSION — DAY — the meeting of the Five Families
+set the_commission [+Interior] [+Day]
+
+scene the_five_families {
+  beat 1 {
+    vito @ the_commission
+    sollozzo @ the_commission
+    // the abhorrent act: the drug trade that would poison the young — Beyond The Pale, and opposed to Vito's line
+    evt the_drug_trade [&Destroyed(agent=sollozzo, entity=the_young)] [+BeyondThePale]
+    the_drug_trade >< integrity
+  }
+  beat 2 {
+    // Vito recoils and condemns the trade — the code revealed by what it forbids (a LIMIT, not a kindness)
+    vito [~Repelled_By(target=the_drug_trade)]
+    evt vitos_line -> vito > sollozzo : "Draws The Line"
+        dialog(inject=[speaker=vito], inline="""
+               speaker: "{speaker}"
+               cue: "to the assembled Dons, refusing the narcotics deal"
+               tone: grave, final
+               text: "Drugs is a dirty business. It's not like gambling or liquor — it ruins the young. I want no part of it."
+               """)
+    // the author frames the refusal earnest — the line is meant to land, not amuse
+    evt staged [&Frames(agent=author, target=the_drug_trade, as=earnest)]
+    // Even_Evil_Has_Standards -> vito [+EvenEvilHasStandards] [+Honored]; sollozzo [+Disgraced]; audience [#Moved]
+  }
+}
