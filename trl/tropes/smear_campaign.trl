@@ -1,0 +1,82 @@
+// === PREAMBLE ===
+// @trope    Smear Campaign (Malicious Slander)
+// @category Social / Reputation
+// @source   https://allthetropes.org/wiki/Malicious_Slander
+// @domain   Rel
+// @version  1.3
+//
+// Laconic (per the wiki): lies and rumours spread to discredit someone — an unbounded source of
+// problems for the target, who must wrestle with and suffer under a cloud of nastiness. The
+// distinguishing tactic is REPETITION: the same damaging claim (true, exaggerated, or false) is
+// asserted again and again, with chessmaster precision, knowing that gossip will turn hints into
+// full-blown belief. FRONTIER: where Propaganda installs a LIE as mass belief, a Smear Campaign
+// drives ONE PERSON'S STANDING down. It is the reputation module's Disgrace rule weaponised and
+// SERIALISED — not a single slander but a sustained one, riding common_knowledge so that the
+// damaging claim is BRANDED into what the public holds in common, regardless of its truth.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/reputation.trl"        // Slanders -> Disgrace; a standing held in common
+import "trl/modules/common_knowledge.trl"  // repetition brands the claim into [+CommonKnowledge]
+
+assoc smear_campaign -> [
+  reputation       : "weaponises the Disgrace of",
+  common_knowledge : "brands the damaging claim into the public belief of",
+  propaganda       : "is the one-target cousin of (there a mass lie; here a single name)"
+]
+
+
+// === ONTOLOGY ===
+
+imply SmearCampaign -> [Disgrace, Slander, Coordinated, Repeated, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a claim against one target, slandered NOT once but REPEATEDLY (count >= 2) by an
+// attacker, is a Smear Campaign — the repetition is the signature. The serialised slander brands the
+// claim into common belief (it doesn't matter whether it is true) and the target's standing falls.
+rule SmearCampaign {
+  when:
+    char $target [+Disgraced]
+    evt  $s [&Slanders(agent=$attacker, target=$target)]
+    count( evt $smear [&Slanders(agent=$attacker, target=$target)] ) >= 2
+  then:
+    !$target [+Branded]!                     // the cloud of nastiness sticks; hard to dispel
+    $s [+SmearCampaign]
+    $target -- common_knowledge              // the claim is now what the public holds about the name
+}
+
+
+// === CONCRETE VIGNETTE: Othello — Iago's poison, drip by drip (play, c. 1603) ===
+// Not a mass lie but a campaign against one standing. Iago never accuses outright; he repeats the
+// insinuation that Desdemona is unfaithful — a handkerchief, a half-overheard word, a planted doubt —
+// again and again, with chessmaster precision, until in Othello's mind it is simply known. The claim
+// is false; the repetition makes it common belief inside the household, and her name is branded.
+
+// IAGO
+char iago [+Antagonist]
+iago [+MotivatedBy(reason="Resentment")]
+
+// DESDEMONA
+char desdemona [+Protagonist]
+
+// THE HANDKERCHIEF
+obj the_handkerchief [+MacGuffin]
+
+scene the_poison {
+  beat 1 {
+    evt the_first_hint [&Slanders(agent=iago, target=desdemona)]   // "I like not that..."
+    // Disgrace (reputation) -> desdemona [+Disgraced]
+  }
+  beat 2 {
+    iago > the_handkerchief                                        // the "ocular proof" is planted
+    evt the_repetition [&Slanders(agent=iago, target=desdemona)]   // the insinuation, said again
+        dialog(inject=[speaker=iago], inline="""
+               speaker: "{speaker}"
+               cue: "leaning close, all reluctance and false friendship"
+               tone: insinuating
+               text: "O, beware, my lord, of jealousy..."
+               """)
+    // SmearCampaign -> desdemona [+Branded]; the_repetition [+SmearCampaign]; her name made common
+  }
+}

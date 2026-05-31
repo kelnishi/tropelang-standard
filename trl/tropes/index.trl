@@ -98,6 +98,7 @@ import "trl/tropes/pyrrhic_victory.trl"
 import "trl/tropes/pincer_maneuver.trl"
 import "trl/tropes/the_narrator.trl"
 import "trl/tropes/the_trap.trl"
+import "trl/tropes/smear_campaign.trl"
 
 // === TROPE TITLE ENTRIES ===
 

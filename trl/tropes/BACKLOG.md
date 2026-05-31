@@ -50,7 +50,7 @@ Done tropes are summarized; **todo** is the actionable list.
 Done: Protagonist · Antagonist · Deuteragonist · Hero · Mentor · Sidekick · Foil · Big Bad ·
 Paragon · Everyman.
 - [ ] The Love Interest
-- [ ] The Narrator
+- [x] The Narrator — `the_narrator` (S14, agent-converted)
 - [ ] Anti-Hero
 - [ ] The Trickster
 
@@ -91,12 +91,12 @@ Open Secret · Cassandra Truth · The Gambit · Tomato Surprise · Dramatic Iron
 ### Specific actions (tactics)
 Done: Finishing Move · Bar the Door · Improvised Weapon · Feint · Ambush · Heroic Sacrifice ·
 Last Stand · The Cavalry · Counter.
-- [ ] Trap · Pincer  ·  [x] Pyrrhic Victory — `pyrrhic_victory` (agent-piloted)
+- [x] Trap — `the_trap` · [x] Pincer — `pincer_maneuver` · [x] Pyrrhic Victory — `pyrrhic_victory`  (agent-converted)
 
 ### Collective / political
 Done: Klingon Promotion · Full-Circle Revolution · Divide and Conquer · The Coup · Praetorian
 Guard · Decadent Court · We Have Reserves · The Duel.
-- [ ] Smear Campaign / Trial by Media (reputation × common_knowledge × power)
+- [x] Smear Campaign (serialised slander → common belief) — `smear_campaign`
 
 ### Rhetoric — author, audience & attention
 Done: Rule of Funny · Rule of Cool · Deus Ex Machina · Cliffhanger · Foregone Conclusion ·
