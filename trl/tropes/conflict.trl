@@ -3,6 +3,7 @@
 // @category Omnipresent Tropes
 // @source   https://allthetropes.org/wiki/Conflict
 // @version  1.3
+// @domain    Narrative
 // @uses     trl/concepts/narrative.trl — the `conflict` concept
 //
 // Laconic: the opposition of forces that drives a story; without it, narrative collapses

@@ -3,6 +3,7 @@
 // @category Omnipresent Tropes
 // @source   https://allthetropes.org/wiki/The_Reveal
 // @version  1.3
+// @domain    Narrative
 // @uses     trl/concepts/narrative.trl — the `secret` and `revelation` concept nodes
 //
 // Laconic: a pivot where information withheld to build suspense is disclosed. A concealed

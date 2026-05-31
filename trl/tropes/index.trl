@@ -95,7 +95,6 @@ import "trl/tropes/rousing_speech.trl"
 import "trl/tropes/rogue_juror.trl"
 import "trl/tropes/the_debate.trl"
 
-
 // === TROPE TITLE ENTRIES ===
 
 // FORESHADOWING — a planted sign that pays off later. Reuses the existing concept

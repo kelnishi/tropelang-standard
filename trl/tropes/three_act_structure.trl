@@ -3,6 +3,7 @@
 // @category Universal Tropes
 // @source   https://allthetropes.org/wiki/Three_Act_Structure
 // @version  1.3
+// @domain    Narrative
 //
 // Laconic: the dramatic spine — Setup (Act I), Confrontation (Act II), Resolution (Act III).
 // Maps directly onto TropeLang's built-in `act` temporal scopes; the arc passes through all

@@ -1,6 +1,6 @@
 ---
 name: trope-to-tropelang
-description: Converts narrative tropes from allthetropes.org, tvtropes.org, or plain-text descriptions into valid TropeLang v1.1 structured text for LLM training data generation. Use this skill whenever the user asks to ingest, scrape, convert, or encode a trope into TropeLang format, or wants to generate TropeLang training examples from narrative descriptions. Also use it when the user gives a trope name and asks for a structured or code representation of it.
+description: Converts narrative tropes from allthetropes.org, tvtropes.org, or plain-text descriptions into valid TropeLang structured text (current grammar; prelude v1.5) for LLM training data generation. Use this skill whenever the user asks to ingest, scrape, convert, or encode a trope into TropeLang format, or wants to generate TropeLang training examples from narrative descriptions. Also use it when the user gives a trope name and asks for a structured or code representation of it.
 ---
 
 # Trope → TropeLang Converter
@@ -13,25 +13,74 @@ Read `references/grammar.md` for full syntax. Read `references/examples.md` for 
 
 ---
 
+## Architecture & hardened agent rules (READ FIRST)
+
+The corpus is a two-layer model; a converting agent must respect both.
+
+- **Systems = modules** (`trl/modules/*.trl`) — each SIMULATES a dynamic via forward-chaining `rule`
+  blocks (emotion, needs, persuasion, action_dynamics, the storytelling frameworks). Modules DECLARE
+  vocabulary (`concept` / `verb` / `state`).
+- **Tropes = riders** (`trl/tropes/*.trl`) — each RECOGNIZES an instance: an `imply Title -> [...]`,
+  a recognition `rule`, and a concrete VIGNETTE. A trope IMPORTS the module(s) it rides and USES
+  their vocabulary; it does NOT declare new `concept`/`verb`/`state`.
+
+**Two registers** (why a "round-trip" can legitimately differ):
+- **Log register** — entities, edges, tags, scenes, `imply`, `rule`, `assoc`. Round-trips
+  byte-for-byte in the Rust reference. **Tropes live here and MUST round-trip.**
+- **Library register** — `concept`/`verb`/`state`/`attr` declarations. Validator-only; does NOT
+  round-trip in Rust by design. **Modules live here.** If a *trope* lands in library register, that's
+  a smell: move the declared vocabulary into a module and `import` it.
+
+**The acceptance gate — every file must pass before you return it:**
+```bash
+bash skills/trope-to-tropelang/scripts/gate.sh <file.trl>     # must print "── GATE PASS ──"
+```
+Checks preamble completeness (`@trope/@category/@source/@domain`), validator (no errors), round-trip
+(`cargo run --quiet --example fidelity -- <file>` → `ok` for tropes), DRY, drams.
+
+**Sim-test any recognition rule.** Forward-chain it on a concrete scenario and confirm it fires as
+the prose claims — the sim has caught real logic bugs (self-vengeance; a coup deposing itself; a
+two-phase arc collapsing into one). Add a scenario to `tools/sim.py` and run `python3 tools/sim.py <key>`.
+
+**Never edit the registry.** `trl/tropes/index.trl` is rebuilt deterministically. Write ONE
+self-contained trope file; do NOT touch `index.trl` (parallel agents collide on it). The coordinator
+runs `python3 tools/regen_index.py` to regenerate imports and mint the concept entry — so carry full
+preamble metadata, including `@domain` (one of: `Narrative Mind Body Essence Rel Verb`).
+
+**Sourcing.** `https://allthetropes.org/wiki/<Trope>` via **WebSearch** — direct WebFetch 403s here,
+so rely on the search cache. **Never tvtropes.org** (bot-blocked; respect it). Record the wiki URL in
+`@source`.
+
+**drams is a TROPE-overlay metric; frameworks are SCAFFOLDS.** A structural framework (a sequence of
+steps/functions) gets only PRIVATE base implies — never imply its steps onto popular archetypes
+(Mentor, Conflict, Reveal) to chase coverage; that pollutes the density of EVERY story using those
+archetypes. After a module change, re-run drams on an UNRELATED eval (`examples/olympic_biopic.trl`)
+and confirm it did not move. (Memory: `drams-framework-scaffold-rule`.)
+
+**Stop and surface to the coordinator** when: changing category or register; the trope's
+semantics/metaphor break down in the grammar; or the conversion would need a NEW module (a new
+simulated dynamic) — module design is a judgment call, not autonomous.
+
+**Variety.** Vary story / medium / era AND scale of stakes across vignettes; never stack one
+franchise (a toy's bedroom and a sundered nation are equally valid). Memory: `trope-example-variety`.
+
+---
+
 ## Workflow
 
 ### 1. Acquire the trope
 
-Fetch raw wikitext — cleaner than JS-rendered HTML:
-
-| Source | URL pattern |
-|---|---|
-| allthetropes.org | `https://allthetropes.org/wiki/<TropeName>?action=raw` |
-| tvtropes.org | `https://tvtropes.org/pmwiki/pmwiki.php/Main/<TropeName>` |
-
-`?action=raw` returns plain MediaWiki markup with no JS dependency. Extract:
+Source from **allthetropes.org** via **WebSearch** (`<Trope> trope <facets> allthetropes`, optionally
+`allowed_domains:["allthetropes.org"]`). Direct WebFetch 403s from this environment, so the search
+result snippets / cache are the reliable channel. **Never tvtropes.org** — it is bot-blocked and we
+respect that. Record the wiki URL in `@source`. Extract:
 - **Laconic definition** — one-line summary at the top or in a "Laconic" subpage
-- **Setup** — preconditions; what must already be true
-- **Payoff** — what the trope produces when it fires
+- **Setup** — preconditions; what must already be true (→ the `when:`)
+- **Payoff** — what the trope produces when it fires (→ the `then:`)
 - **Participants** — character roles, objects, locations, events in the pattern
 - **Subversions/inversions** — alternate resolutions (feeds `fork`/`prompt` branches)
 
-If the domain is unreachable, fall back to general narrative knowledge.
+If search is unreachable, fall back to general narrative knowledge, but say so.
 
 ### 2. Map trope mechanics to TropeLang primitives
 
@@ -57,18 +106,25 @@ A `.trl` file has four sections in order:
 
 ```
 // === PREAMBLE ===
-// @trope   TropeName
-// @source  https://...
-// @version 1.1
+// @trope    TropeName
+// @category <Category, from the wiki>
+// @source   https://allthetropes.org/wiki/TropeName
+// @domain   Narrative          // Narrative | Mind | Body | Essence | Rel | Verb (drives the registry)
+// @version  1.3
+//
+// Laconic (per the wiki): <one-line definition>. FRONTIER: <what new capability it adds, if any>.
 
-// === CAST & LOCATIONS ===
-// (top-level entity declarations with // annotations)
+// === IMPORTS & ASSOCIATIONS ===
+// import the module(s) this trope rides; assoc for lateral links
 
 // === ONTOLOGY ===
-// (imply statements)
+// (imply Title -> [...]  — private/archetype components)
 
-// === RULES & SCENES ===
-// (rule blocks, then scene/beat vignettes)
+// === ABSTRACT RULE ===
+// (the recognition rule — sim-test it)
+
+// === CONCRETE VIGNETTE: <Story Title> (medium, era) ===
+// (entity declarations + scene/beat instantiation; vary story/medium/era/stakes)
 ```
 
 **The cast & locations section is a symbol table.** Each entity gets a `//` annotation on the line above it carrying its screenplay display form. Identifiers are short and symbolic; the annotation is what a renderer uses for human output:
@@ -260,11 +316,13 @@ Both are pending grammar updates to lib.rs.
 
 ## Self-validation
 
-After generating output, save it and run:
+After generating output, save it and run the acceptance gate — it bundles the checks below and must
+print `── GATE PASS ──`:
 
 ```bash
-python3 scripts/validate_tropelang.py output.trl            # validate
-python3 scripts/validate_tropelang.py output.trl --report   # tag origins (reuse vs inline)
+bash skills/trope-to-tropelang/scripts/gate.sh output.trl   # the gate (preamble/validate/round-trip/DRY/drams)
+python3 scripts/validate_tropelang.py output.trl --report   # tag origins (reuse vs inline) — DRY worklist
+cargo run --quiet --example fidelity -- output.trl          # round-trip alone (ok | library-register | FAIL)
 ```
 
 Checks: balanced braces, tag syntax, no fractional identifiers, `when:`/`then:` in every
