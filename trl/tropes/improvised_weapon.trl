@@ -1,0 +1,58 @@
+// === PREAMBLE ===
+// @trope    Improvised Weapon (Indirect Attack)
+// @category Conflict / Tactics
+// @source   https://allthetropes.org/wiki/Improvised_Weapon
+// @version  1.3
+//
+// Laconic: turn a mundane object — and the environment itself — into a weapon by INDIRECT
+// means. The tool never touches the target; it drives a medium that does the damage. Rides the
+// action-dynamics Improvise_Indirect rule (agent -> tool -> medium -> target).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/action_dynamics.trl"   // Improvise_Indirect -> [+Hit]
+
+assoc improvised_weapon -> [
+  action_dynamics : "the Improvise_Indirect rule of",
+  conflict        : "wins a"
+]
+
+
+// === ONTOLOGY ===
+
+imply ImprovisedWeapon -> [Improvisation, Indirect, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: an indirect strike through a non-weapon tool IS an Improvised Weapon (tags it).
+rule Improvised_Weapon {
+  when:
+    evt $a [&Improvises(agent=$x, tool=$o, medium=$m, target=$y)]
+  then:
+    $a [+ImprovisedWeapon]
+}
+
+
+// === CONCRETE VIGNETTE: Indiana Jones and the Last Crusade — the umbrella & the gulls (film) ===
+// No gun, a fighter plane bearing down — so Henry Sr. raises his umbrella and shoos a flock of
+// seabirds up into the plane's path. The birds, not the umbrella, bring it down.
+
+char henry [+Mentor]                    // Henry Jones Sr.
+obj  umbrella [+Mundane]                // the tool — never touches the plane
+set  gulls [+Flock]                     // the medium — the actual weapon
+char pilot [+Antagonist]
+obj  plane [+Vehicle]
+
+scene the_beach {
+  beat 1 {
+    evt flush [&Improvises(agent=henry, tool=umbrella, medium=gulls, target=plane)]
+        dialog(inject=[speaker=henry], inline="""
+               speaker: "{speaker}"
+               cue: "lowering the umbrella, watching the flock rise into the propellers"
+               tone: donnish, serene
+               text: "I suddenly remembered my Charlemagne: Let my armies be the rocks and the trees, and the birds in the sky."
+               """)
+    // Improvise_Indirect -> plane [+Hit]
+  }
+}

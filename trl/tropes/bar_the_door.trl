@@ -1,0 +1,57 @@
+// === PREAMBLE ===
+// @trope    Bar the Door (Deny Access · Buy Time)
+// @category Conflict / Tactics
+// @source   https://allthetropes.org/wiki/Hold_The_Line
+// @version  1.3
+//
+// Laconic: put a barrier between yourself and an adversary — not to defeat them, but to DENY
+// access and BUY TIME, protecting whatever is behind the door. A defensive, non-violent move
+// that wins by delay. Rides the action-dynamics Bar_Access rule.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/action_dynamics.trl"   // Bar_Access -> [+Blocked] / [+BoughtTime]
+
+assoc bar_the_door -> [
+  action_dynamics : "the Bar_Access rule of",
+  conflict        : "stalls a"
+]
+
+
+// === ONTOLOGY ===
+
+imply BarTheDoor -> [Denial, Defensive, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: barring an adversary at a threshold IS Bar the Door (tags the deed).
+rule Bar_The_Door {
+  when:
+    evt $h [&Bars(agent=$x, against=$y)]
+  then:
+    $h [+BarTheDoor]
+}
+
+
+// === CONCRETE VIGNETTE: Breaking Bad — Jesse locks the RV against Hank (TV) ===
+// Hank is one knock from the cook lab inside the RV. Jesse can't fight a DEA agent — so he
+// throws the lock and refuses to open up, buying the minutes that keep the secret.
+
+char jesse [+Protagonist]
+char hank  [+Antagonist]    // the pursuer at the door (a DEA agent)
+set  rv    [+Interior] [+Vehicle]
+
+scene the_standoff {
+  beat 1 {
+    jesse @ rv
+    evt lock [&Bars(agent=jesse, against=hank)]
+        dialog(inject=[speaker=jesse], inline="""
+               speaker: "{speaker}"
+               cue: "back against the door, voice flat through the metal"
+               tone: stonewalling
+               text: "I got rights. You can't come in here without a warrant. This is my domicile."
+               """)
+    // Bar_Access -> hank [+Blocked];  jesse [+BoughtTime]
+  }
+}

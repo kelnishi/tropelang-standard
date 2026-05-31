@@ -70,6 +70,20 @@ motivation, and state transitions — general enough to compose arbitrary emotio
 - [x] Survivor's Guilt / Trauma    (trope — `survivors_guilt.trl`: S8 imprint → trigger → catharsis/repression; self-directed blame)
 - [x] Motivation / goals system    (system — `motivation_dynamics.trl`: desire → pursuit → attainment/obsession/abandonment; determination is the hinge)
 
+## Specific actions — conflict & cooperation (`trl/modules/` + tropes)
+Event-level tactics: what a character actually DOES in a contested moment — the layer a game
+mechanic maps onto. Rides `action_dynamics.trl` (strike/guard/exploit/finisher · pin/cover/
+improvise/bar). All sim-runnable (`tools/sim.py finisher_combo | bar_door | improvised`).
+- [x] Action Dynamics system        (`action_dynamics.trl`: the verbs of conflict & cooperation)
+- [x] Finishing Move                (trope — combination finisher; Naruto + Shikamaru vs Hidan)
+- [x] Bar the Door                  (trope — deny access / buy time; Jesse's RV vs Hank)
+- [x] Improvised Weapon             (trope — indirect attack; Henry Jones' umbrella → gulls → plane)
+- [ ] Feint / Misdirection          (bait an action, punish the commitment)   ← **up next**
+- [ ] Ambush / Surprise Attack      (strike from concealment → auto-expose)
+- [ ] Last Stand / Hold the Line    (outnumbered defense that buys time at a cost)
+- [ ] Sacrifice Play                (trade your position to save/enable an ally)
+- [ ] Disarm / Counter              (turn an attacker's commitment against them)
+
 ## Storytelling systems & frameworks (`trl/modules/`)
 Higher-level structures that *organize* tropes — name + sequence the stages, link the beats.
 - [x] The Hero's Journey / Monomyth   (Campbell — `heros_journey.trl`)

@@ -31,6 +31,9 @@ import "trl/tropes/revenge.trl"
 import "trl/tropes/despair_event_horizon.trl"
 import "trl/tropes/heel_face_turn.trl"
 import "trl/tropes/survivors_guilt.trl"
+import "trl/tropes/finishing_move.trl"
+import "trl/tropes/bar_the_door.trl"
+import "trl/tropes/improvised_weapon.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -69,6 +72,13 @@ concept face_heel_turn [+Trope(category="Character Development", source="allthet
 // SURVIVOR'S GUILT — the guilt of having lived when others died. A self-directed trauma
 // that composes with S8 (Memory): imprint -> trigger -> catharsis / repression.
 concept survivors_guilt [+Trope(category="Trauma", source="allthetropes.org/wiki/Survivor_Guilt")] [%Psychological]
+
+// SPECIFIC ACTIONS — conflict & cooperation at the event level (ride action_dynamics).
+// The Finishing Move (a decisive signature blow, often set up by an ally), Bar the Door (deny
+// access / buy time), and the Improvised Weapon (an indirect, environmental attack).
+concept finishing_move   [+Trope(category="Combat", source="allthetropes.org/wiki/Finishing_Move")] [%Interpersonal]
+concept bar_the_door     [+Trope(category="Tactics", source="allthetropes.org/wiki/Hold_The_Line")] [%Interpersonal]
+concept improvised_weapon [+Trope(category="Tactics", source="allthetropes.org/wiki/Improvised_Weapon")] [%Interpersonal]
 
 // CHARACTER-ROLE BUILDING BLOCKS (Universal Tropes) — the cast structure. The applied
 // forms are the prelude roles [+Protagonist] / [+Antagonist]; these are the canonical

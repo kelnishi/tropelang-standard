@@ -1,0 +1,55 @@
+// === PREAMBLE ===
+// @trope    Finishing Move (Combination Finisher)
+// @category Combat / Action
+// @source   https://allthetropes.org/wiki/Finishing_Move
+// @version  1.3
+//
+// Laconic: a character's signature, decisive technique — deployed to END a fight, and often
+// SET UP by an ally who first pins or exposes the target (a combination attack). Rides the
+// action-dynamics Assist_Pin → Finisher chain: cooperation opens the foe, the finisher closes.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/action_dynamics.trl"   // Assist_Pin -> [+Exposed] -> Finisher
+
+assoc finishing_move -> [
+  action_dynamics : "the Finisher rule of",
+  conflict        : "ends a"
+]
+
+
+// === ONTOLOGY ===
+
+imply FinishingMove -> [Decisive, Technique, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a finisher landed on an exposed foe IS a Finishing Move (tags the deed).
+rule Finishing_Move {
+  when:
+    char $y [+Exposed]
+    evt  $f [&Finishes(agent=$x, target=$y)]
+  then:
+    $f [+FinishingMove]
+}
+
+
+// === CONCRETE VIGNETTE: Naruto — Rasenshuriken vs. Hidan (anime / manga) ===
+// A two-man combination: Shikamaru's Shadow Possession holds the immortal Hidan in place
+// (the setup), so Naruto's Wind-Style finisher can land (the close).
+
+char naruto    [+Protagonist]
+char shikamaru [+Ally]
+char hidan     [+Antagonist] [+Immortal]   // can't be killed by ordinary means — needs the combo
+
+scene the_combination {
+  beat 1 {
+    evt shadow_bind [&Pins(agent=shikamaru, target=hidan)]
+    // Assist_Pin -> hidan [+Exposed]   (cooperation: the setup)
+  }
+  beat 2 {
+    evt rasenshuriken [&Finishes(agent=naruto, target=hidan)]
+    // Finisher -> hidan [+Defeated];  Finishing_Move tags the technique
+  }
+}

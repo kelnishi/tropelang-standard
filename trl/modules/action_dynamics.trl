@@ -1,0 +1,128 @@
+// === PREAMBLE ===
+// @title    Action Dynamics — the verbs of conflict and cooperation
+// @category Tactical Systems
+// @version  0.1
+// @note     The event-level layer beneath all the structure: what characters actually DO to and
+//           for each other in a contested moment. Where emotion_dynamics appraises events into
+//           feelings, this resolves tactical ACTIONS into outcomes — strike vs. guard, exploit a
+//           weakness, land a finisher, pin/cover an ally, deny a doorway, improvise a weapon. It
+//           is deliberately the layer a GAME MECHANIC maps onto: a mechanic emits one of these
+//           verb-events, and these rules say what it means narratively. Conflict and cooperation
+//           share the vocabulary — a Pin sets up an ally's Finisher; a Shield guards them.
+//
+// Import: import "trl/modules/action_dynamics.trl"
+
+import "trl/concepts/index.trl"            // conflict, …
+
+concept action_dynamics [+System] [%Interpersonal]
+
+
+// === THE ACTION VOCABULARY (the verbs a game mechanic maps onto) ===
+verb Strikes(target)     [+Interpersonal]   // a direct attack
+verb Guards(target)      [+Interpersonal]   // raise a defence
+verb Pins(target)        [+Interpersonal]   // immobilize / expose a foe (assist)
+verb Finishes(target)    [+Interpersonal]   // a decisive, signature blow
+verb Shields(ally)       [+Interpersonal]   // cover an ally
+verb Bars(against)       [+Interpersonal]   // deny access with a barrier
+verb Improvises(target)  [+Interpersonal]   // attack via a non-weapon tool and a medium
+
+
+// === CONFLICT ===
+
+// A direct strike on an unguarded target lands.
+rule Strike {
+  when:
+    evt $a [&Strikes(agent=$x, target=$y)]
+    not ( $y [+Guarded] )
+  then:
+    $y [+Hit]
+    $x -- aggression
+}
+
+// A defensive action raises a guard that denies the next strike.
+rule Guard {
+  when:
+    evt $d [&Guards(agent=$y)]
+  then:
+    $y [+Guarded]
+    $y -- defense
+}
+
+// An attack aimed at the target's specific vulnerability gets through any guard and opens them up.
+rule Exploit_Weakness {
+  when:
+    char $y [+Vulnerable(to=$k)]
+    evt  $a [&Strikes(agent=$x, target=$y, kind=$k)]
+  then:
+    $y [+Exposed]
+    $x -- exploitation
+}
+
+// A finisher on an exposed target ends the contest.
+rule Finisher {
+  when:
+    char $y [+Exposed]
+    evt  $f [&Finishes(agent=$x, target=$y)]
+  then:
+    $y [+Defeated]
+    $x -- finishing_move
+}
+
+
+// === COOPERATION ===
+
+// An ally pins a foe, exposing it for someone else's finisher (the setup half of a combo).
+rule Assist_Pin {
+  when:
+    evt $s [&Pins(agent=$a, target=$y)]
+  then:
+    $y [+Exposed]
+    $a -- setup
+}
+
+// An ally shields another, raising a guard on them.
+rule Cover_Ally {
+  when:
+    evt $c [&Shields(agent=$a, ally=$b)]
+  then:
+    $b [+Guarded]
+    $a -- protection
+}
+
+// A non-weapon tool drives a medium into the target — an indirect, improvised hit.
+rule Improvise_Indirect {
+  when:
+    evt $a [&Improvises(agent=$x, tool=$o, medium=$m, target=$y)]
+  then:
+    $y [+Hit]
+    $x -- improvisation
+}
+
+// A barrier denies an adversary's approach — not to defeat them, but to buy time.
+rule Bar_Access {
+  when:
+    evt $h [&Bars(agent=$x, against=$y)]
+  then:
+    $y [+Blocked]
+    $x [+BoughtTime]
+    $x -- denial
+}
+
+
+// === CONCRETE VIGNETTE: a lion pride's cooperative hunt (nature) ===
+// Pure setup → finish: one drives the prey into the trap, another brings it down.
+
+char flanker  [+Predator]   // the lioness who drives the prey
+char ambusher [+Predator]   // the lioness waiting in the grass
+char gazelle  [+Prey]
+
+scene the_hunt {
+  beat 1 {
+    evt drive [&Pins(agent=flanker, target=gazelle)]      // flush it toward the ambush
+    // Assist_Pin -> gazelle [+Exposed]
+  }
+  beat 2 {
+    evt pounce [&Finishes(agent=ambusher, target=gazelle)]
+    // Finisher -> gazelle [+Defeated]
+  }
+}

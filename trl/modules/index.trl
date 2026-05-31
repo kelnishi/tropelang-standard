@@ -21,3 +21,4 @@ import "trl/modules/booker_seven_plots.trl" // storytelling system (Booker's plo
 import "trl/modules/emotion_dynamics.trl"     // psychological system (appraisal -> emotion -> motivation -> threads)
 import "trl/modules/five_stages_of_grief.trl" // psychological system (the staged Kübler-Ross grief thread)
 import "trl/modules/motivation_dynamics.trl"  // psychological system (desire -> pursuit -> attainment/obsession/abandonment)
+import "trl/modules/action_dynamics.trl"      // tactical system (the verbs of conflict & cooperation)
