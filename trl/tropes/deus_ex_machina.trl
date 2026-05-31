@@ -1,0 +1,55 @@
+// === PREAMBLE ===
+// @trope    Deus Ex Machina
+// @category Rhetoric / Resolution
+// @source   https://allthetropes.org/wiki/Deus_Ex_Machina
+// @version  1.3
+//
+// Laconic (per the wiki): something not previously established suddenly appears to resolve the
+// plot — a contrived ending no character could have reached. The purest authorial override, and
+// the one that names itself: "god from the machine," after the crane (mēchanē) that lowered a god
+// onto the Greek stage to end the play. Rides the rhetoric module's Authorial_Fiat — and is
+// literally a DIEGETIC-LEVEL crossing (S14): the author reaches DOWN from his plane into the story
+// and writes an outcome by fiat.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/rhetoric.trl"          // Authorial_Fiat -> !Canon!
+
+assoc deus_ex_machina -> [
+  rhetoric : "the Authorial_Fiat rule of",
+  audience : "buys a resolution the plot never earned for the"
+]
+
+
+// === ONTOLOGY ===
+
+imply DeusExMachina -> [Resolution, Override, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: an imposed resolution no character could reach IS a Deus Ex Machina (tags it).
+rule Deus_Ex_Machina {
+  when:
+    evt $i [&Imposes(agent=author, outcome=$o, for=resolution)]
+  then:
+    $i [+DeusExMachina]
+}
+
+
+// === CONCRETE VIGNETTE: Euripides' Medea — the dragon chariot (play, 431 BCE) ===
+// Trapped by her own crimes with no human way out, Medea is lifted clear in a chariot sent by the
+// sun-god Helios — winched in on the stage crane. The playwright reaches down from his plane and
+// imposes the ending the story could never have produced on its own.
+
+<<story>>
+char medea [+Protagonist]
+char jason [+Antagonist]
+
+<<author>>
+scene the_finale {
+  beat 1 {
+    evt the_crane [&Imposes(agent=author, outcome=escape, for=resolution)]
+    <<story | medea [+Escapes(by=dragon_chariot)]>>   // the author writes it into the story by fiat
+    // Authorial_Fiat (rhetoric) -> !the_crane [+Canon]!;  Deus_Ex_Machina tags the imposition
+  }
+}

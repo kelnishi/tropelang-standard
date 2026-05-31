@@ -1,0 +1,130 @@
+// === PREAMBLE ===
+// @title    Rhetoric — the author, the audience, and the cultivation of attention
+// @category Narrative Systems
+// @version  0.1
+// @note     Every other system here simulates the STORY; this one simulates the TRANSACTION the
+//           story exists for — an AUTHOR cultivating an AUDIENCE's attention. It supplies the
+//           capabilities the "thin rungs" actually wanted: the cognitive need (CURIOSITY) and the
+//           aesthetic need (BEAUTY / SPECTACLE) are not character motivations at all — they are
+//           AUDIENCE needs the author serves. Three capabilities, none of them tautological:
+//           (1) AUDIENCE APPRAISAL — the same event reads differently to the audience by the
+//               author's FRAMING (a fall framed comic is funny; framed earnest, it stings);
+//           (2) the CURIOSITY GAP — a posed question pulls attention forward, a cliffhanger holds
+//               it open, a payoff closes it;
+//           (3) AUTHORIAL OVERRIDE — character motivation is NOT an ironclad determinant; the
+//               author can play god and impose an outcome the characters would never reach,
+//               justified only by its effect. Motivation predicts; the author disposes.
+//
+// Import: import "trl/modules/rhetoric.trl"
+
+import "trl/concepts/index.trl"               // revelation
+import "trl/modules/emotion_dynamics.trl"     // audience appraisal is its mirror, one plane up
+
+concept rhetoric [+System] [%Narrative]
+imply Rhetoric -> [Audience, Effect, Narrative]
+
+// the two agents of the transaction — above the story, not in it
+concept author   [%Narrative]   // the one playing god
+concept audience [%Narrative]   // the one whose attention is the whole point
+
+
+// === THE RHETORICAL VOCABULARY ===
+verb Frames(target)    [+Narrative]   // set the register an event reads in
+verb Poses(question)   [+Narrative]   // open a question the audience cannot yet answer
+verb Answers(question) [+Narrative]   // ... and, eventually, close it
+verb Imposes(outcome)  [+Narrative]   // override in-world logic for effect
+
+
+// === (1) AUDIENCE APPRAISAL — the SAME event, framed two ways, lands two ways ===
+
+// A character's misfortune FRAMED comic lands as funny — the pain is not the point (slapstick).
+rule Appraise_Comic {
+  when:
+    char $c [+Hurt]
+    evt  $f [&Frames(agent=author, target=$c, as=comic)]
+  then:
+    audience [#Amused]
+    audience -- amusement
+}
+
+// The very same misfortune framed earnest lands as poignant — the pain IS the point.
+rule Appraise_Earnest {
+  when:
+    char $c [+Hurt]
+    evt  $f [&Frames(agent=author, target=$c, as=earnest)]
+  then:
+    audience [#Moved]
+    audience -- pathos
+}
+
+// A sight framed as spectacle lands as awe — the aesthetic rung, served to the audience.
+rule Appraise_Spectacle {
+  when:
+    evt $f [&Frames(agent=author, target=$sight, as=spectacle)]
+  then:
+    audience [#Awed]
+    audience -- spectacle
+}
+
+
+// === (2) THE CURIOSITY GAP — the cognitive rung, as the audience-drive the author stimulates ===
+
+// A posed question the audience cannot yet answer opens a gap that pulls attention forward.
+rule Open_Gap {
+  when:
+    evt $q [&Poses(agent=author, question=$g)]
+  then:
+    audience [#Curious(about=$g)]
+    audience [+Attentive]
+    audience -- curiosity
+}
+
+// Closing the gap is the PAYOFF; held open (a cliffhanger) it is what keeps them watching.
+rule Payoff {
+  when:
+    audience [#Curious(about=$g)]
+    evt $a [&Answers(agent=author, question=$g)]
+  then:
+    audience [-Curious]
+    audience [+Satisfied]
+    audience -- payoff
+}
+
+
+// === (3) AUTHORIAL OVERRIDE — the author plays god ===
+
+// The author imposes an outcome the characters' motivation would never produce, justified only by
+// its effect. The author's word is narration ground-truth: it overrides the motivation and needs
+// engines wholesale — which is precisely why character motivation is not deterministic.
+rule Authorial_Fiat {
+  when:
+    evt $i [&Imposes(agent=author, outcome=$o, for=$effect)]
+  then:
+    !$i [+Canon]!
+    audience -- engagement
+}
+
+
+// === ASSOCIATIONS ===
+assoc rhetoric -> [
+  emotion_dynamics : "the audience's mirror, one plane up, of",
+  revelation       : "a curiosity gap pays off in a"
+]
+
+
+// === CONCRETE VIGNETTE: the same pratfall, framed two ways ===
+// One event — a dignified man slips on the ice — and the author's framing alone decides whether
+// the house laughs or aches.
+
+char the_man [+Hurt]
+
+scene the_fall {
+  beat 1 {
+    evt played_for_laughs [&Frames(agent=author, target=the_man, as=comic)]
+    // Appraise_Comic -> audience [#Amused]
+  }
+  beat 2 {
+    evt played_for_keeps [&Frames(agent=author, target=the_man, as=earnest)]
+    // Appraise_Earnest -> audience [#Moved] — the identical mishap, now it stings
+  }
+}

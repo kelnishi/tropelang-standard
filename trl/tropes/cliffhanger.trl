@@ -1,0 +1,51 @@
+// === PREAMBLE ===
+// @trope    Cliffhanger
+// @category Rhetoric / Suspense
+// @source   https://allthetropes.org/wiki/Cliff_Hanger
+// @version  1.3
+//
+// Laconic (per the wiki): stop the story at the height of tension and leave the audience wanting
+// — a device to hold their attention across the gap (the commercial break, the week, the year).
+// The curiosity GAP, deliberately held open: the cognitive need (the audience's need to KNOW) put
+// to work as a leash on attention. Rides the rhetoric module's Open_Gap, and refuses the Payoff.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/rhetoric.trl"          // Open_Gap -> audience [#Curious] [+Attentive]
+
+assoc cliffhanger -> [
+  rhetoric : "the held-open curiosity gap of",
+  audience : "leashes the attention of the"
+]
+
+
+// === ONTOLOGY ===
+
+imply Cliffhanger -> [Suspense, Attention, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: an open curiosity gap left unpaid hooks the audience — that hook IS a Cliffhanger.
+rule Cliffhanger {
+  when:
+    audience [#Curious(about=$g)]
+    not ( audience [+Satisfied] )
+  then:
+    audience [+Hooked]
+    audience -- cliffhanger
+}
+
+
+// === CONCRETE VIGNETTE: Dallas — "Who shot J.R.?" (television, 1980) ===
+// The season ends with the gunshots and no answer; the question hangs for eight months and holds
+// the attention of a third of the planet until the next premiere.
+
+char jr [+Antagonist]
+
+scene the_season_finale {
+  beat 1 {
+    evt the_gunshots [&Poses(agent=author, question=who_shot_jr)]
+    // Open_Gap (rhetoric) -> audience [#Curious(about=who_shot_jr)] [+Attentive]
+    // ...and the credits roll with no Payoff — Cliffhanger -> audience [+Hooked] for a summer
+  }
+}

@@ -63,6 +63,9 @@ import "trl/tropes/praetorian_guard.trl"
 import "trl/tropes/decadent_court.trl"
 import "trl/tropes/we_have_reserves.trl"
 import "trl/tropes/the_duel.trl"
+import "trl/tropes/rule_of_funny.trl"
+import "trl/tropes/deus_ex_machina.trl"
+import "trl/tropes/cliffhanger.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -161,6 +164,14 @@ concept we_have_reserves       [+Trope(category="Conflict", source="allthetropes
 // THE DUEL — bridges the Reputation and action_dynamics modules (honor injured -> honor answered
 // with a strike). Filed social/conflict; reuses [%Social] + [%Interpersonal] domains.
 concept the_duel               [+Trope(category="Honor", source="allthetropes.org/wiki/Duel_to_the_Death")] [%Social]
+
+// RHETORIC / AUDIENCE (ride rhetoric.trl — the author->audience layer). Rule of Funny (comic
+// framing makes the audience laugh, logic be damned; Zoolander), Deus Ex Machina (authorial
+// override imposes an unearned resolution — a diegetic crossing; Euripides), Cliffhanger (the
+// curiosity gap held open to leash attention; "Who shot J.R.?").
+concept rule_of_funny    [+Trope(category="Comedy", source="allthetropes.org/wiki/Rule_of_Funny")] [%Narrative]
+concept deus_ex_machina  [+Trope(category="Resolution", source="allthetropes.org/wiki/Deus_Ex_Machina")] [%Narrative]
+concept cliffhanger      [+Trope(category="Suspense", source="allthetropes.org/wiki/Cliff_Hanger")] [%Narrative]
 
 // UNRELIABLE NARRATOR — the narration's facts diverge from the truth. The first corpus trope
 // to use S14 diegetic levels: a non_canon narration plane (with a teller) vs the reality plane.

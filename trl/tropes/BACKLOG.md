@@ -35,7 +35,7 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 - [ ] In Medias Res
 - [~] The Climax                 (concept `climax` defined in `freytags_pyramid.trl`)
 - [x] Frame Story                 (S14 levels — `frame_story.trl`: Frankenstein, 3 canon planes nested)
-- [ ] Cliffhanger
+- [x] Cliffhanger                 (`cliffhanger.trl` — the curiosity gap held open; rhetoric layer)
 
 ## Setup, payoff & devices
 - [x] Foreshadowing               (Omnipresent)
@@ -110,6 +110,19 @@ Knowledge, belief, and truth as first-class dynamics — beyond the narrator tru
 - [x] Tomato Surprise              (`tomato_surprise.trl` — a fact withheld from the audience, surfaced; latent→absolute; Pale Fire)
 - [ ] Dramatic Irony (full)        (promote from `theory_of_mind.trl`)   ← **up next**
 - [ ] Tomato in the Mirror         (the PROTAGONIST learns the recontextualizing fact)
+
+## Rhetoric — author, audience & attention (`trl/modules/` + tropes)
+The layer ABOVE character motivation: an author cultivating an audience's attention. Fills the
+"thin rungs" of Maslow as AUDIENCE needs (cognitive=curiosity, aesthetic=spectacle), as
+capabilities not tautologies. Rides `rhetoric.trl`.
+- [x] Rhetoric system             (`rhetoric.trl`: framing-dependent audience appraisal · curiosity gap · authorial override)
+- [x] Rule of Funny               (comic framing → the audience laughs, logic be damned; Zoolander)
+- [x] Deus Ex Machina             (authorial override imposes an unearned resolution — a diegetic crossing; Euripides)
+- [x] Cliffhanger                 (the curiosity gap held open to leash attention; "Who shot J.R.?")
+- [ ] Rule of Cool / Rule of Drama (the override's other justifications)   ← **up next**
+- [ ] The Pratfall / Amusing Injuries (slapstick specifics)
+- [ ] Tear Jerker / Nightmare Fuel (audience-emotion-targeted devices)
+- [ ] Spectacle / Sensory Overload (the aesthetic rung, crafted)
 
 ## Collective / political scale (`trl/modules/` + tropes)
 The supra-individual arena — the [%Political] domain. Power as common knowledge of the right to
