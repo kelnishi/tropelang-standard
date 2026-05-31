@@ -372,7 +372,7 @@ concept sibling_rivalry [+Trope(category="Relationships", source="https://allthe
 concept talking_head [+Trope(category="Non-Fiction", source="https://allthetropes.org/wiki/Talking_Heads")] [%Narrative]
 concept tear_jerker [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Tear_Jerker")] [%Narrative]
 concept the_dilemma [+Trope(category="Drama", source="https://allthetropes.org/wiki/Sadistic_Choice")] [%Mind]
-concept the_lancer [+Trope(category="Characterization", source="https://allthetropes.org/wiki/The_Lancer")] [%Interpersonal      // registry label: relationships cluster]
+concept the_lancer [+Trope(category="Characterization", source="https://allthetropes.org/wiki/The_Lancer")] [%Interpersonal]
 concept the_love_interest [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Love_Interest")] [%Interpersonal]
 concept the_trickster [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/The_Trickster")] [%Narrative]
 concept tomato_in_the_mirror [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Tomato_in_the_Mirror")] [%Mind]

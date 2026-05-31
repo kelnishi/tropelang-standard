@@ -109,7 +109,7 @@ A `.trl` file has four sections in order:
 // @trope    TropeName
 // @category <Category, from the wiki>
 // @source   https://allthetropes.org/wiki/TropeName
-// @domain   Narrative          // registry label: Narrative|Mind|Interpersonal|Epistemic|Political|Social|Psychological
+// @domain   Narrative          @domain is a bare label: Narrative|Mind|Interpersonal|Epistemic|Political|Social|Psychological (no trailing comment)
 // @version  1.3
 //
 // Laconic (per the wiki): <one-line definition>. FRONTIER: <what new capability it adds, if any>.
