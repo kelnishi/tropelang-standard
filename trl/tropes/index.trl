@@ -30,6 +30,9 @@ import "trl/tropes/refusal_of_the_call.trl"
 import "trl/tropes/revenge.trl"
 import "trl/tropes/despair_event_horizon.trl"
 import "trl/tropes/heel_face_turn.trl"
+import "trl/tropes/redemption_arc.trl"
+import "trl/tropes/fall_from_grace.trl"
+import "trl/tropes/coming_of_age.trl"
 import "trl/tropes/survivors_guilt.trl"
 import "trl/tropes/finishing_move.trl"
 import "trl/tropes/bar_the_door.trl"
@@ -124,6 +127,12 @@ concept despair_event_horizon [+Trope(category="Despair", source="allthetropes.o
 // HEEL FACE TURN / FACE HEEL TURN — a moral-alignment reversal (villain -> hero, or the
 // fall back). Rides the emotion-dynamics appraisal layer (guilt / grief catalyzes the flip).
 concept heel_face_turn [+Trope(category="Character Development", source="allthetropes.org/wiki/Heel_Face_Turn")] [%Narrative]
+
+// CHARACTER TRANSFORMATION ARCS — the whole moral/developmental trajectory (vs the single-beat
+// turn): Redemption (ascent), Fall From Grace (the descending slide), Coming of Age (development).
+concept redemption_arc         [+Trope(category="Transformation", source="allthetropes.org/wiki/The_Atoner")] [%Mind]
+concept fall_from_grace        [+Trope(category="Transformation", source="allthetropes.org/wiki/Start_of_Darkness")] [%Mind]
+concept coming_of_age          [+Trope(category="Transformation", source="allthetropes.org/wiki/Coming_of_Age_Story")] [%Mind]
 concept face_heel_turn [+Trope(category="Character Development", source="allthetropes.org/wiki/Face_Heel_Turn")] [%Narrative]
 
 // SURVIVOR'S GUILT — the guilt of having lived when others died. A self-directed trauma

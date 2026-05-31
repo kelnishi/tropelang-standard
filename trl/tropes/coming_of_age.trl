@@ -1,0 +1,59 @@
+// === PREAMBLE ===
+// @trope    Coming of Age (Bildungsroman)
+// @category Character Development / Transformation
+// @source   https://allthetropes.org/wiki/Coming_of_Age_Story
+// @version  1.3
+//
+// Laconic (per the wiki): the passage from youth to adulthood — a young character grows through
+// experience, often loss or tragedy, into maturity. The Bildungsroman, the "novel of education."
+// FRONTIER: the third transformation axis — not virtue (redemption/fall) but DEVELOPMENT. The trade
+// is specific: maturity, meaning one's OWN judgment and agency, is bought with the loss of
+// innocence. The trial cannot be un-experienced; that irreversibility is what makes it an arc.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/needs.trl"                // the climb toward esteem and self-authorship
+import "trl/modules/heros_journey.trl"        // the journey is often the schooling
+
+assoc coming_of_age -> [
+  needs          : "climbs the self-authorship rungs of",
+  heros_journey  : "is the inward face of",
+  redemption_arc : "is a transformation arc beside"
+]
+
+
+// === ONTOLOGY ===
+imply ComingOfAge -> [Maturation, Transformation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// An innocent put to a test that cannot be undone, and who meets it with their OWN judgment rather
+// than received rules, crosses into maturity — paying for it with the innocence they can't get back.
+rule Coming_Of_Age {
+  when:
+    char $c [+Innocent]
+    evt  $trial [&Tested(subject=$c, by=$ordeal)]
+  then:
+    $c [-Innocent]
+    $c [+Mature]
+    $c -- maturation
+}
+
+
+// === CONCRETE VIGNETTE: Huckleberry Finn — the raft, the river (Twain, 1884) ===
+// Huck has been taught that helping a runaway slave is a sin he'll go to hell for. Drifting down the
+// Mississippi with Jim, who becomes his friend, the lesson and the man collide. When he could turn
+// Jim in and be "good" by the rules he was raised on, Huck tears up the letter — "All right, then,
+// I'll go to hell" — and chooses his own conscience over his world's. He is not a child after that.
+char huck [+Innocent]
+char jim  [+Deuteragonist]
+
+arc hucks_arc [+ComingOfAge]
+
+scene on_the_river {
+  beat 1 { huck -> jim : "the runaway becomes his friend, against everything he was taught" }
+  beat 2 {
+    evt the_letter [&Tested(subject=huck, by=his_conscience)]
+    // Coming_Of_Age -> huck [-Innocent] [+Mature] -- maturation
+  }
+}

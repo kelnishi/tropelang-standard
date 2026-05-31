@@ -1,0 +1,76 @@
+// === PREAMBLE ===
+// @trope    Fall From Grace (Start of Darkness)
+// @category Character Development / Transformation
+// @source   https://allthetropes.org/wiki/Start_of_Darkness
+// @version  1.3
+//
+// Laconic (per the wiki): how a good character descends into villainy — ambition tempts, morals are
+// compromised, and by degrees the virtuous become utterly corrupt. FRONTIER: the descending mirror
+// of the Redemption Arc, and a TRAJECTORY, not a flip — modelled here as a SLIDE. The first
+// transgression does not corrupt outright; it COMPROMISES, lowering the threshold for the next, and
+// it is the second yielding, made easy by the first, that completes the fall. Face/Heel Turn names
+// the moment; this names the slope.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/emotion_dynamics.trl"     // ambition and its rationalizations
+import "trl/modules/prophecy.trl"             // the goad that names the fall before it falls
+
+assoc fall_from_grace -> [
+  redemption_arc : "is the descending mirror of",
+  heel_face_turn : "is the slope whose moment is the Face/Heel of",
+  prophecy       : "is often goaded by a self-fulfilling"
+]
+
+
+// === ONTOLOGY ===
+imply FallFromGrace -> [Corruption, Transformation, Narrative]
+
+
+// === ABSTRACT RULES (the slide: compromise, then corruption) ===
+// 1 · The first yielding does not damn — it COMPROMISES, and lowers the threshold for the next.
+rule First_Compromise {
+  when:
+    char $c [+Virtuous]
+    evt  $deed [&Succumbs(agent=$c, to=$temptation)]
+  then:
+    $c [-Virtuous]
+    $c [+Compromised]
+    $c -- compromise
+}
+
+// 2 · A LATER, colder deed, made easy by the first, completes the fall — the good are now corrupt.
+// (A distinct verb: the slide is a SECOND, separate yielding, not the same one re-counted.)
+rule The_Slide {
+  when:
+    char $c [+Compromised]
+    evt  $deed [&Transgresses(agent=$c)]
+  then:
+    $c [-Compromised]
+    $c [+Corrupted]
+    $c -- corruption
+}
+
+
+// === CONCRETE VIGNETTE: Macbeth — the thane who would be king (Shakespeare, 1606) ===
+// A loyal soldier the witches hail as king-to-be; ambition, and his wife, do the rest. Duncan's
+// murder is the first yielding — it does not sit easy, his hands will not wash clean. But the next
+// killings, Banquo and Macduff's wife and children, come quicker and colder; "I am in blood stepped
+// in so far." By the end the brave thane is a tyrant the world unites to put down.
+char macbeth [+Virtuous]
+char duncan  [+Protagonist]
+
+arc macbeths_fall [+FallFromGrace]
+
+act the_first_blood {
+  beat 1 {
+    evt kills_duncan [&Succumbs(agent=macbeth, to=ambition)]
+    // First_Compromise -> macbeth [-Virtuous] [+Compromised] -- compromise
+  }
+}
+act the_slide {
+  beat 1 {
+    evt kills_again [&Transgresses(agent=macbeth)]   // Banquo, then Macduff's family — quicker, colder
+    // The_Slide -> macbeth [-Compromised] [+Corrupted] -- corruption
+  }
+}

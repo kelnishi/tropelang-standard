@@ -1,0 +1,66 @@
+// === PREAMBLE ===
+// @trope    Redemption Arc (The Atoner)
+// @category Character Development / Transformation
+// @source   https://allthetropes.org/wiki/The_Atoner
+// @version  1.3
+//
+// Laconic (per the wiki): a character who has done wrong spends the story ATONING — a Redemption
+// Quest following a Heel Realization, the debt of guilt discharged by costly good. Often the price
+// is everything: Redemption Equals Death, the amends sealed by the life that makes them. FRONTIER:
+// where Heel/Face Turn is the single-beat ALIGNMENT flip, this is the whole MORAL TRAJECTORY — the
+// debt carried across a story and paid down by degrees. The transformation is the arc, not a pivot.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/emotion_dynamics.trl"     // guilt is the engine of the arc
+import "trl/tropes/heroic_sacrifice.trl"      // the death-sealed variant (Redemption Equals Death)
+
+assoc redemption_arc -> [
+  heel_face_turn  : "is the whole arc whose pivot is",
+  fall_from_grace : "is the ascending mirror of",
+  guilt           : "is the debt discharged by an",
+  atonement       : "arrives at"
+]
+
+
+// === ONTOLOGY ===
+imply RedemptionArc -> [Atonement, Transformation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// A wrongdoer who carries guilt and then makes a COSTLY amends crosses from guilty to redeemed —
+// the heavier the cost, the more the amends seals (at the limit, it is paid with their life).
+rule Redemption_Arc {
+  when:
+    char $c [+Wrongdoer] [#Guilty]
+    evt  $amends [&Atones(agent=$c, for=$wrong, cost=$cost)]
+  then:
+    $c [-Guilty]
+    $c [+Redeemed]
+    $c -- atonement
+}
+
+
+// === CONCRETE VIGNETTE: Jean Valjean — Les Misérables (Hugo, 1862) ===
+// Nineteen years a convict for a stolen loaf, Valjean robs the one man who showed him kindness — and
+// the Bishop, instead of denouncing him, gives him the silver. The guilt of that mercy remakes him:
+// as Monsieur Madeleine he lifts a town, raises the orphaned Cosette, and at the barricade spares
+// the policeman who hunted him for decades. He dies redeemed, the candlesticks at his side.
+char valjean [+Wrongdoer]
+char bishop  [+Mentor]
+char javert  [+Antagonist]
+
+arc valjeans_arc [+RedemptionArc]
+
+act the_debt {
+  beat 1 {
+    valjean [#Guilty]   // repays the Bishop's mercy with theft, and is forgiven anyway
+  }
+}
+act the_atoning {
+  beat 1 { valjean -> cosette : "a stolen life spent raising another's child" }
+  beat 2 {
+    evt spares_javert [&Atones(agent=valjean, for=his_past, cost=his_safety)]
+    // Redemption_Arc -> valjean [-Guilty] [+Redeemed] -- atonement
+  }
+}

@@ -62,9 +62,9 @@ Star-Crossed Lovers · Mentor & Student.
 
 ### Character change & arcs
 Done (psychology arena): Heel/Face Turn · Revenge · Despair Event Horizon · Survivor's Guilt.
-- [ ] Coming of Age
-- [ ] Redemption Arc
-- [ ] Fall From Grace
+- [x] Redemption Arc (The Atoner — guilt discharged by costly amends) — `redemption_arc`
+- [x] Fall From Grace (Start of Darkness — the two-phase slide) — `fall_from_grace`
+- [x] Coming of Age (Bildungsroman — innocence traded for maturity) — `coming_of_age`
 
 ### Identity / worldbuilding (drams-flagged)
 Done: Hidden Identity · Rightful King Returns · The Chosen One · Unreliable Narrator.
