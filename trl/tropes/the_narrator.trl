@@ -1,0 +1,77 @@
+// === PREAMBLE ===
+// @trope    The Narrator
+// @category Narrative Devices / Point of View
+// @source   https://allthetropes.org/wiki/Narrator
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): the "helpful invisible man that fills in the blanks of the story" — a
+// voice that may sit inside the story or wholly external to it, and that ALWAYS breaks the fourth
+// wall, explicitly addressing the audience to tell them the tale. FRONTIER: where Frame Story
+// nests two diegeses and Unreliable Narrator weaponizes a non_canon plane, The Narrator names the
+// bare structural fact underneath both — a TELLER on a level ABOVE the story addressing the
+// audience plane OUTSIDE it. The narrator's own plane is canon and reliable here (cf. the
+// Infallible Narrator); his telling is a crossing DOWN into the tale and OUT to the audience. He
+// may be omniscient, a character looking back, or intrusive — the level geometry is the same.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // revelation, memory — what narration hands the audience
+
+assoc the_narrator -> [
+  frame_story         : "the bare voice beneath a",
+  unreliable_narrator : "reliable here; contrast the",
+  revelation          : "doles out, withholds, a",
+  memory              : "often relates from, a"
+]
+
+
+// === ONTOLOGY ===
+
+imply TheNarrator -> [Narration, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: when a teller on the framing plane addresses the audience to relate the tale below,
+// that act of telling IS Narration (tags the event). The narrator breaks the fourth wall by
+// construction — the address reaches OUT to the audience while the tale sits one level DOWN.
+rule The_Narrator {
+  when:
+    evt $tell [&Relates(agent=$teller, tale=$story)]
+  then:
+    $tell [+Narration]
+}
+
+
+// === CONCRETE VIGNETTE: A Series of Unfortunate Events — Lemony Snicket (children's novels, 1999) ===
+// Lemony Snicket is a distinct character on his own plane, external to the Baudelaire orphans'
+// misfortunes, who intrudes to define words, warn the reader away, and mourn — an omniscient,
+// reliable, intrusive Narrator. Three planes, flat and ambient: `book` (the framing voice's plane,
+// where Snicket writes), `book.tale` (the Baudelaire story he relates), and `audience` (the reader
+// he keeps addressing — the fourth wall he steps through). Every plane change is a loud crossing.
+
+// ===== the narrator's plane — Lemony Snicket at his desk, looking back =====
+<<book : teller=lemony>>
+char lemony [+Narrator] [+Observer]
+lemony [~Mourns(target=<<book.tale|beatrice>>)]   // his grief reaches DOWN into the tale he tells
+
+// ===== the tale he relates — the Baudelaire orphans, one level down =====
+<<book.tale : teller=lemony>>
+char violet [+Protagonist]
+char olaf   [+Antagonist]
+violet -- olaf : "the guardian who hunts the fortune"
+
+// ===== the reader — the audience plane Snicket steps OUT to address =====
+<<audience>>
+char reader [+Bystander]
+
+// ===== reopen the narrator's plane — the act of telling =====
+<<book : teller=lemony>>
+scene the_telling {
+  beat 1 {
+    // Snicket relates the tale below AND warns the reader above — the address that breaks the wall.
+    evt recount [&Relates(agent=lemony, tale=<<book.tale|violet>>)]
+    lemony [&Addresses(target=<<audience|reader>>)]
+    // The_Narrator -> recount [+Narration]
+  }
+}

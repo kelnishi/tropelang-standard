@@ -1,0 +1,70 @@
+// === PREAMBLE ===
+// @trope    Pincer Attack (Pincer Maneuver)
+// @category Conflict / Tactics
+// @source   https://allthetropes.org/wiki/Pincer_Attack
+// @domain   Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): hit the foe from two or more converging sides at once so they cannot
+// face both — caught between the jaws, every defence they raise leaves another flank open, and
+// they are enveloped. Rides the action-dynamics vocabulary: two Strikes from distinct agents on
+// one target. A guard turned to meet one jaw bares the target to the other — so the recognition
+// is that no single defence covers a target taken from two sides: it is overwhelmed and exposed.
+// Inverse of the Last Stand's narrow front (which lets one defender face one foe at a time).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/action_dynamics.trl"   // Strikes; the converging jaws expose the trapped foe
+
+assoc pincer_maneuver -> [
+  action_dynamics : "converging Strikes of",
+  conflict        : "envelops the foe in a",
+  ambush          : "often springs as one jaw of a",
+  last_stand      : "the front a narrow defile denies a"
+]
+
+
+// === ONTOLOGY ===
+
+imply PincerAttack -> [Envelopment, Tactic, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition: a target struck by two DISTINCT converging attackers cannot cover both jaws — it
+// is caught in the pincer and overwhelmed. The guard that meets one strike bares it to the other.
+rule Pincer_Attack {
+  when:
+    evt $left  [&Strikes(agent=$x, target=$y)]
+    evt $right [&Strikes(agent=$z, target=$y)]
+    $x != $z
+  then:
+    $y [+Pincered]
+    $y [+Overwhelmed]
+    $y [+Exposed]
+}
+
+
+// === CONCRETE VIGNETTE: Cannae — Hannibal's double envelopment (military history, 216 BCE) ===
+// Hannibal lets his thin centre buckle, drawing Varro's legions deep; then his Libyan veterans on
+// both wings wheel inward and his cavalry seals the rear. The Romans, packed shoulder to shoulder,
+// cannot even raise their shields — struck from left and right at once, the largest army Rome had
+// ever fielded is annihilated in a single afternoon.
+
+char left_wing  [+Protagonist] [+Collective]   // Hannibal's Libyan infantry, the left jaw
+char right_wing [+Protagonist] [+Collective]   // Hannibal's Libyan infantry, the right jaw
+char romans     [+Antagonist]  [+Collective]   // Varro's legions, crowded into the killing pocket
+set  cannae [+Exterior] [+Day] [+Plain]
+
+scene the_pocket {
+  beat 1 {
+    left_wing  @ cannae
+    right_wing @ cannae
+    romans     @ cannae
+  }
+  beat 2 {
+    evt the_left_jaw  [&Strikes(agent=left_wing,  target=romans)]
+    evt the_right_jaw [&Strikes(agent=right_wing, target=romans)]
+    // Pincer_Attack -> romans [+Pincered] [+Overwhelmed] [+Exposed]; neither jaw can be parried
+  }
+}

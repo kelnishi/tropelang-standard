@@ -232,6 +232,7 @@ concept the_big_bad        [+Trope(category="Cast", source="allthetropes.org/wik
 concept mentor_and_student [+Trope(category="Bonds", source="allthetropes.org/wiki/Mentors")] [%Interpersonal]
 concept pyrrhic_victory  [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Pyrrhic_Victory")] [%Interpersonal]   // a win that costs more than the loss it averts
 concept the_trap         [+Trope(category="Tactics", source="https://allthetropes.org/wiki/Lured_into_a_Trap")] [%Interpersonal]   // lure + sealed exit + strike (the kill-zone)
+concept pincer_maneuver  [+Trope(category="Tactics", source="https://allthetropes.org/wiki/Pincer_Attack")] [%Interpersonal]   // two converging jaws; the foe cannot face both
 
 // IDENTITY / WORLDBUILDING (the drams-flagged gap — archetype tags that subsume world-specific
 // lineage/disguise/destiny facts). Hidden Identity, Rightful King Returns, The Chosen One.
@@ -277,6 +278,7 @@ concept the_debate             [+Trope(category="Oratory", source="allthetropes.
 // UNRELIABLE NARRATOR — the narration's facts diverge from the truth. The first corpus trope
 // to use S14 diegetic levels: a non_canon narration plane (with a teller) vs the reality plane.
 concept unreliable_narrator [+Trope(category="Narrative Devices", source="allthetropes.org/wiki/Unreliable_Narrator")] [%Epistemic]
+concept the_narrator     [+Trope(category="Narrative Devices", source="https://allthetropes.org/wiki/Narrator")] [%Narrative]   // the teller on a level above the tale (S14)
 
 // DIEGETIC-LEVEL DEVICES (all built on S14 levels). Frame Story nests canon tales (Frankenstein,
 // 3 deep); Dream Sequence is a non_canon dream that dissolves to latent on waking (Link's
