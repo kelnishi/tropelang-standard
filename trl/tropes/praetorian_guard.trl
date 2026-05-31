@@ -1,0 +1,52 @@
+// === PREAMBLE ===
+// @trope    Praetorian Guard
+// @category Political / Power
+// @source   https://allthetropes.org/wiki/Praetorian_Guard
+// @version  1.3
+//
+// Laconic (per the wiki): the elite guard meant to protect the ruler — who come to MAKE and UNMAKE
+// rulers instead. The kingmaker case of power: a single faction decisive enough that its pledge
+// alone enthrones and its defection alone deposes, no broad coalition required. (The Roman
+// Praetorians killed Caligula and proclaimed Claudius; later they auctioned the Empire outright.)
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/power_dynamics.trl"    // Pledges / Ruler / Deposed
+
+assoc praetorian_guard -> [
+  power_dynamics : "the kingmaker case of the coalition rule of",
+  conflict       : "decides without a"
+]
+
+
+// === ONTOLOGY ===
+
+imply PraetorianGuard -> [Kingmaker, Power, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a kingmaker faction whose pledge alone makes a ruler IS a Praetorian Guard.
+rule Praetorian_Guard {
+  when:
+    char $guard [+Kingmaker]
+    evt  $act [&Pledges(agent=$guard, to=$claimant)]
+  then:
+    $claimant [+Ruler]
+    $act [+PraetorianGuard]
+}
+
+
+// === CONCRETE VIGNETTE: Rome, 41 CE — the Guard makes Claudius (history) ===
+// With Caligula dead by their own hands, the Praetorians find his uncle Claudius hiding behind a
+// curtain — and proclaim him Emperor, the first Roman ruler installed by the army that served him.
+
+char praetorians [+Collective] [+Kingmaker]   // the imperial guard, kingmakers now
+char claudius    [+Protagonist]
+
+scene the_proclamation {
+  beat 1 {
+    evt proclaim [&Pledges(agent=praetorians, to=claudius)]
+    // Praetorian_Guard -> claudius [+Ruler]
+  }
+}

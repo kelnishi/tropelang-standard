@@ -1,0 +1,56 @@
+// === PREAMBLE ===
+// @trope    The Coup (Coup d'État)
+// @category Political / Power
+// @source   https://allthetropes.org/wiki/The_Coup_d'%C3%89tat
+// @version  1.3
+//
+// Laconic: insiders — usually the military — seize the apparatus of the state, swiftly and from
+// within. Distinct from its cousins on the power scale: a Usurpation kills the *holder*, a
+// Revolution is the *mass* withdrawing consent over time; a Coup is a small group taking the
+// *machinery* of power in an afternoon. Rides power_dynamics (the ruler is [+Deposed], the
+// faction [+Ruler]).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/power_dynamics.trl"    // Deposed / Ruler
+
+assoc the_coup -> [
+  power_dynamics : "the seize-the-apparatus variant of",
+  conflict       : "a sudden, internal resolution of a"
+]
+
+
+// === ONTOLOGY ===
+
+imply TheCoup -> [Usurpation, Power, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a faction seizing the machinery of the state from within IS a Coup (tags it).
+rule The_Coup {
+  when:
+    char $ruler [+Ruler]
+    evt  $seize [&Seizes(agent=$faction, apparatus=$state)]
+    $faction != $ruler                       // the plotters depose the sitting ruler, not themselves
+  then:
+    $ruler [+Deposed]
+    $faction [+Ruler]
+    $seize [+TheCoup]
+}
+
+
+// === CONCRETE VIGNETTE: 18 Brumaire — Napoleon ends the Directory (history, 1799) ===
+// Backed by troops, Bonaparte dissolves the Directory and the councils in two days and installs
+// himself First Consul — the Republic's machinery taken whole, almost without a shot.
+
+char napoleon  [+Protagonist]
+char directory [+Ruler] [+Collective]       // the five-man executive of the French Republic
+set  france    [+State]
+
+scene brumaire {
+  beat 1 {
+    evt the_seizure [&Seizes(agent=napoleon, apparatus=france)]
+    // The_Coup -> directory [+Deposed], napoleon [+Ruler]
+  }
+}

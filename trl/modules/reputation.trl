@@ -1,0 +1,91 @@
+// === PREAMBLE ===
+// @title    Reputation — status as a social-epistemic quantity
+// @category Social Systems
+// @version  0.1
+// @note     The bridge between the political and the epistemic. A reputation is not a possession
+//           but a STANDING the community holds in common about you — so it is common knowledge
+//           wearing a name (cf. common_knowledge). That is why it is so asymmetric: it is built
+//           slowly by deeds and destroyed quickly by a well-placed lie, because slander needs
+//           only to plant a believable claim and let the crowd make it common. Honor is a
+//           reputation worth dying to defend; disgrace is its collapse; vindication, its slow,
+//           costly restoration.
+//
+// Import: import "trl/modules/reputation.trl"
+
+import "trl/concepts/index.trl"            // honor, shame
+import "trl/modules/common_knowledge.trl"  // a reputation is a standing held in common
+
+concept reputation [+System] [%Social]
+imply Reputation -> [Status, Social, Narrative]
+
+
+// === THE VOCABULARY ===
+verb Honors(target)      [+Social]         // publicly esteem
+verb Slanders(target)    [+Social]         // attack a name with a damaging claim
+verb Vindicates(target)  [+Social]         // clear a name
+
+
+// === RULES ===
+
+// Esteem, conferred by the community, is a standing — reputation built.
+rule Esteem {
+  when:
+    evt $h [&Honors(agent=$community, target=$person)]
+  then:
+    $person [+Honored]
+    $person -- reputation
+}
+
+// Slander plants a damaging belief; once it takes, the name is disgraced (built slow, broken fast).
+rule Disgrace {
+  when:
+    evt $s [&Slanders(agent=$rival, target=$person)]
+  then:
+    $person [+Disgraced]
+    $person -- shame
+}
+
+// Vindication clears a disgraced name — the standing restored, at length and at cost.
+rule Vindication {
+  when:
+    char $person [+Disgraced]
+    evt  $v [&Vindicates(agent=$champion, target=$person)]
+  then:
+    $person [-Disgraced]
+    $person [+Vindicated]
+    $person -- vindication
+}
+
+
+// === ASSOCIATIONS ===
+assoc reputation -> [
+  common_knowledge : "a standing held in common, per",
+  honor            : "the form worth defending is",
+  shame            : "its collapse is"
+]
+
+
+// === CONCRETE VIGNETTE: the Dreyfus Affair — slander, disgrace, vindication (history, 1894–1906) ===
+// A French officer is convicted of treason on forged evidence and broken on Devil's Island; years
+// later a novelist's open letter reopens the case, and the name is, at last, cleared.
+
+char dreyfus       [+Protagonist]
+char general_staff [+Antagonist] [+Collective]   // the army that framed him
+char zola          [+Ally]                        // Émile Zola
+
+scene the_affair {
+  beat 1 {
+    evt the_frame [&Slanders(agent=general_staff, target=dreyfus)]
+    // Disgrace -> dreyfus [+Disgraced]
+  }
+  beat 2 {
+    evt jaccuse [&Vindicates(agent=zola, target=dreyfus)]
+        dialog(inject=[speaker=zola], inline="""
+               speaker: "{speaker}"
+               cue: "the open letter, splashed across the front page of L'Aurore"
+               tone: thunderous
+               text: "J'accuse...!"
+               """)
+    // Vindication -> dreyfus [-Disgraced] [+Vindicated]
+  }
+}

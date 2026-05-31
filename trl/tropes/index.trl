@@ -58,6 +58,8 @@ import "trl/tropes/dramatic_irony.trl"
 import "trl/tropes/klingon_promotion.trl"
 import "trl/tropes/full_circle_revolution.trl"
 import "trl/tropes/divide_and_conquer.trl"
+import "trl/tropes/the_coup.trl"
+import "trl/tropes/praetorian_guard.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -148,6 +150,8 @@ dramatic_irony [+Trope(category="Narrative Devices", source="allthetropes.org/wi
 concept klingon_promotion      [+Trope(category="Power", source="allthetropes.org/wiki/Klingon_Promotion")] [%Political]
 concept full_circle_revolution [+Trope(category="Power", source="allthetropes.org/wiki/Full-Circle_Revolution")] [%Political]
 concept divide_and_conquer     [+Trope(category="Power", source="allthetropes.org/wiki/Divide_and_Conquer")] [%Political]
+concept the_coup               [+Trope(category="Power", source="allthetropes.org/wiki/The_Coup_d'Etat")] [%Political]
+concept praetorian_guard       [+Trope(category="Power", source="allthetropes.org/wiki/Praetorian_Guard")] [%Political]
 
 // UNRELIABLE NARRATOR — the narration's facts diverge from the truth. The first corpus trope
 // to use S14 diegetic levels: a non_canon narration plane (with a teller) vs the reality plane.

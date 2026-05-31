@@ -118,11 +118,11 @@ rule; coalitions, legitimacy, defection, revolution. Rides `power_dynamics.trl`.
 - [x] Klingon Promotion            (take a rank by killing its holder; Commodus / Gladiator)
 - [x] Full-Circle Revolution       (the deposers become the deposed; Animal Farm)
 - [x] Divide and Conquer           (keep rivals from uniting — inverse of coalition; Jay Gould)
-- [ ] The Coup                     (seize the state apparatus, not just the throne)   ← **up next**
-- [ ] Praetorian Guard             (the kingmakers who make and unmake rulers)
-- [ ] Decadent Court               (the rot inside legitimate power)
+- [x] The Coup                     (`the_coup.trl` — seize the apparatus from within; Napoleon's 18 Brumaire)
+- [x] Praetorian Guard             (`praetorian_guard.trl` — kingmaker faction, pledge alone enthrones; Claudius)
+- [x] Reputation / Honor system    (`reputation.trl` — status as common belief: honor/slander/vindication; Dreyfus)
+- [ ] Decadent Court               (the rot inside legitimate power)   ← **up next**
 - [ ] We Have Reserves             (the callous arithmetic of mass force)
-- [ ] Reputation / Honor system    (status as a social-epistemic quantity)
 
 ## Storytelling systems & frameworks (`trl/modules/`)
 Higher-level structures that *organize* tropes — name + sequence the stages, link the beats.
