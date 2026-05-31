@@ -74,11 +74,13 @@ rule Motivate_Avoidance {
     $c [~Avoids(target=$threat)]
 }
 
-// GRIEF + BLAME hardens into the vengeance thread.
+// GRIEF + BLAME aimed at ANOTHER hardens into the vengeance thread. (Self-blame — $culprit ==
+// $c, as in survivor's guilt — is a different mechanism; vengeance needs an external target.)
 rule Motivate_Vengeance {
   when:
     char $c [#Grieving]
     $c [~Blames(target=$culprit)]
+    $culprit != $c
   then:
     $c [#Vengeful(toward=$culprit)]
     $c [~Seeks(target=$culprit)]
