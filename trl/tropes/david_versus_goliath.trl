@@ -1,0 +1,86 @@
+// === PREAMBLE ===
+// @trope    David Versus Goliath
+// @category Combat Tropes
+// @source   https://allthetropes.org/wiki/David_Versus_Goliath
+// @domain   Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): the hero is vastly outmatched in size, strength, or numbers, yet wins —
+// because he is Weak but Skilled against an Unskilled but Strong foe, and by CHANGING HIS TACTICS the
+// underdog becomes the favorite. The signature this file recognizes is the INVERSE of a curb-stomp:
+// the weaker party does NOT meet force with force (he refuses that contest), he finds and strikes the
+// giant's one specific VULNERABILITY by an unconventional approach. Rides the action-dynamics
+// Exploit_Weakness -> Finisher chain — the strike is aimed at the foe's kind of weakness, which beats
+// any guard and opens them up, and the finisher ends it. Distinct from The Trickster / Feint: those
+// ride Bait -> Punish_Overcommit (a deception draws an overcommit); here there is a REAL weakness and
+// the underdog's skill, not the foe's mistake, is what lands the blow.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/action_dynamics.trl"   // Exploit_Weakness -> [+Exposed];  Finisher -> [+Defeated]
+
+assoc david_versus_goliath -> [
+  action_dynamics : "the Exploit_Weakness / Finisher rules of",
+  conflict        : "wins, while outmatched, a"
+]
+
+
+// === ONTOLOGY ===
+// The underdog victory is built on skill aimed at a weakness, not strength — an inversion of the
+// expected rout. (Outmatched is the gating condition; the deed reads as the weak overturning the strong.)
+imply DavidVersusGoliath -> [Skill, Combat, Underdog, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: an [+Outmatched] actor whose strike exploits the stronger foe's specific [+Vulnerable]
+// weakness, then finishes him, IS a David Versus Goliath (tags the finishing deed). The [+Outmatched]
+// precondition on the actor and the [+Vulnerable] precondition on the foe are the signature: the
+// weaker party wins by hitting the one weak point, not by matching force. Same Exploit_Weakness ->
+// Finisher mechanics as a plain skilled kill, but the SIGNATURE is who wins (the underdog) and how
+// (the giant's own vulnerability, struck unconventionally).
+rule DavidVersusGoliath {
+  when:
+    char $david [+Outmatched]
+    char $goliath [+Vulnerable(to=$k)] [+Exposed]
+    evt  $f [&Finishes(agent=$david, target=$goliath)]
+  then:
+    $f [+DavidVersusGoliath]
+    $david [+Outwits(target=$goliath)]
+}
+
+
+// === CONCRETE VIGNETTE: David and Goliath (Hebrew scripture, 1 Samuel 17, Iron Age) ===
+// The Philistine champion Goliath — a giant in bronze armor — challenges Israel to single combat, and
+// every soldier is too afraid to face him. David, a shepherd boy, refuses King Saul's offered armor
+// and sword: he will not fight the giant's fight. Instead he keeps to the one skill he has, the sling,
+// and meets the giant at range. Goliath's one unguarded spot is his forehead, bare above the bronze;
+// David's stone finds it, the giant falls stunned and exposed, and David finishes him with the giant's
+// own sword. The eponym of the trope: size and armor undone by skill aimed at the single weak point.
+
+// DAVID (the shepherd)
+char david [+Protagonist] [+Outmatched]
+david [+Skilled]
+// GOLIATH OF GATH (the Philistine champion)
+char goliath [+Antagonist]
+goliath [+Vulnerable(to="Forehead")]
+// THE SLING (the unconventional weapon — range, not reach)
+obj sling [+MacGuffin]
+// EXT. THE VALLEY OF ELAH - DAY
+set elah [+Exterior] [+Day]
+
+scene the_valley {
+  beat 1 {
+    david @ elah
+    goliath @ elah
+    david > sling
+    // David refuses Saul's armor and meets the giant at range — the unconventional approach
+    evt the_stone [&Strikes(agent=david, target=goliath, kind="Forehead")]
+    // Exploit_Weakness -> goliath [+Exposed]   (the stone finds the bare forehead; the giant falls stunned)
+  }
+  beat 2 {
+    // the finish: with the giant down and exposed, David ends it with Goliath's own sword
+    evt the_sword [&Finishes(agent=david, target=goliath)]
+    // Finisher -> goliath [+Defeated];  DavidVersusGoliath tags the deed, david [+Outwits(goliath)]
+  }
+}

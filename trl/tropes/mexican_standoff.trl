@@ -1,0 +1,77 @@
+// === PREAMBLE ===
+// @trope    Mexican Standoff
+// @category Conflict / Tactics
+// @source   https://allthetropes.org/wiki/Mexican_Standoff
+// @domain    Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): everyone has a weapon trained on someone else and all the threats are
+// balanced into a Mutual Disadvantage — no one can fire, because the first to act is killed by
+// another the instant they move. Frozen mutual deterrence. Bridges emotion_dynamics (the trained
+// weapon is a &Threatens — anticipated harm) and action_dynamics (the deterrence IS [+Guarded]:
+// each party's aim guards the next, and Strike requires not([+Guarded]) — so no strike can land).
+// The signature is PARALYSIS: mutual threat that produces a deadlock no party can break alone.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict, fear
+import "trl/modules/emotion_dynamics.trl"  // &Threatens — the weapon trained on the other
+import "trl/modules/action_dynamics.trl"   // [+Guarded] denies the next Strike — the deterrence
+
+assoc mexican_standoff -> [
+  action_dynamics : "the Guarded/Strike deterrence of",
+  emotion_dynamics : "the mutual Threatens of",
+  conflict        : "freezes a",
+  fear            : "held in balance by"
+]
+
+
+// === ONTOLOGY ===
+
+imply MexicanStandoff -> [Deadlock, Tactic, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition rule: when two parties have weapons trained on EACH OTHER (mutual &Threatens), the
+// deterrence cell forms — each aim guards the other ([+Guarded]), so neither Strike can land, and
+// the deed is a Mexican Standoff. (Extends transitively: a three-way ring is three such cells.)
+rule Mexican_Standoff {
+  when:
+    evt $aim_a [&Threatens(agent=$x, target=$y)]
+    evt $aim_b [&Threatens(agent=$y, target=$x)]
+  then:
+    $aim_a [+MexicanStandoff]
+    $x [+Guarded]
+    $y [+Guarded]
+    $x -- deadlock
+    $y -- deterrence
+}
+
+
+// === CONCRETE VIGNETTE: Reservoir Dogs — the warehouse finale (crime film, 1992) ===
+// Mr. White levels his gun at Joe; Nice Guy Eddie levels his at White; and White will not lower
+// his on Joe. Three weapons, three trained aims, no one able to fire first — a Tarantino tableau of
+// total paralysis. (Ends, as the trope warns, in a Blast Out the instant one of them moves.)
+
+// MR. WHITE (Larry Dimmick)
+char white [+Protagonist]
+// JOE CABOT (the boss)
+char joe   [+Antagonist] [+Authority]
+// NICE GUY EDDIE (Joe's son)
+char eddie [+Antagonist]
+// INT. WAREHOUSE - DAY
+set  warehouse [+Interior] [+Day]
+
+scene the_warehouse {
+  beat 1 {
+    white @ warehouse
+    joe   @ warehouse
+    eddie @ warehouse
+    // the ring of aims: White -> Joe, Eddie -> White, Joe -> White
+    evt white_on_joe  [&Threatens(agent=white, target=joe)]
+    evt eddie_on_white [&Threatens(agent=eddie, target=white)]
+    evt joe_on_white   [&Threatens(agent=joe, target=white)]
+    // Mexican_Standoff (white<->joe mutual aim) -> white_on_joe [+MexicanStandoff];
+    //   white, joe [+Guarded] -> no Strike can land -- deadlock / deterrence
+  }
+}

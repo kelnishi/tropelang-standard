@@ -1,0 +1,104 @@
+// === PREAMBLE ===
+// @trope    Wham Line
+// @category Epistemic / Narrative Devices
+// @source   https://allthetropes.org/wiki/Wham!_Line
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a single line of dialogue, totally at odds with the established tone,
+// that radically alters a scene and floors the audience in one stroke — it tends to come in the
+// form of a Reveal. Where Plot Twist names the COGNITIVE event (a held audience belief inverted)
+// and The Reveal names the DISCLOSURE, Wham Line names the DELIVERY MECHANISM: the revelatory
+// event is itself a single spoken utterance. One asserted line carries the fact whose contrary
+// the audience held — so the line is the revelation, and the standing belief overturns at the
+// moment of speech. FRONTIER: rides theory_of_mind's Asserts / Believes / `><` machinery to model
+// the reveal as an ATOMIC SPEECH ACT — a plot twist whose carrier is one utterance, not a montage.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // revelation
+import "trl/modules/theory_of_mind.trl"    // Asserts / Believes / Mistaken / Reveals, the >< divergence
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc wham_line -> [
+  revelation     : "delivers in a single utterance a",
+  theory_of_mind : "overturns a standing audience belief via the Asserts speech act of",
+  plot_twist     : "is the single-utterance delivery mechanism of a",
+  the_reveal     : "is a spoken-line form of",
+  tomato_surprise: "differs by overturning a held belief in one line, not surfacing a latent one"
+]
+
+
+// === ONTOLOGY ===
+
+imply WhamLine -> [Utterance, Reversal, Recontextualization, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition: the audience holds a surfaced belief $p (taken as true). A SINGLE spoken event —
+// an Asserts whose claim establishes the contrary $not_p — is itself the revelatory event. Because
+// one utterance both reveals and contradicts the standing belief ($p >< $not_p), the line floors
+// the audience: the prior reading becomes [#Mistaken] and the story re-reads. The signature that
+// separates Wham Line from Plot Twist / The Reveal: the reveal's CARRIER is a single line of
+// dialogue (the Asserts event), not a montage, document, or accreted disclosure.
+rule Wham_Line {
+  when:
+    char $audience [#Believes(claim=$p)]
+    char $speaker
+    evt  $line [&Asserts(agent=$speaker, claim=$not_p)]
+    evt  $line [&Reveals(fact=$not_p)]
+    $p >< $not_p
+  then:
+    $audience [-Believes(claim=$p)]
+    $audience [#Mistaken(subject=$p)]
+    !$line [+WhamLine]!
+    $line -- revelation : "Is"
+    surface_global(title="Wham Line", description="A single spoken line reveals the contrary of what the audience held; the story re-reads.")
+}
+
+
+// === CONCRETE VIGNETTE: Primal Fear — "There never was an Aaron" (film, 1996) ===
+// For the whole courtroom thriller the audience reads the accused, Aaron Stampler, as a meek,
+// stuttering altar boy whose violent acts belong to a separate personality, "Roy" — a dissociative
+// innocent. After his lawyer Marty Vail wins the verdict, Aaron lets the act drop in one line: the
+// timid Aaron never existed; the killer was the only self there ever was. A single utterance
+// inverts the standing belief and recontextualizes every scene of his fragile innocence.
+
+// AARON STAMPLER
+char aaron [+Antagonist]
+aaron [+Alias(name="Aaron")]
+
+// MARTIN "MARTY" VAIL
+char vail [+Protagonist]
+
+// THE AUDIENCE
+char audience [+Collective]
+
+// INT. COUNTY JAIL HOLDING CELL - DAY
+set holding_cell [+Interior] [+Day]
+
+scene the_drop {
+  beat 1 {
+    aaron @ holding_cell
+    vail  @ holding_cell
+    // The belief the audience has held all film — surfaced, taken as true.
+    audience [#Believes(claim=aaron_is_innocent)]
+  }
+  beat 2 {
+    // The wham line: a single asserted utterance that is itself the revelatory event.
+    evt the_line [&Asserts(agent=aaron, claim=aaron_was_the_act)]
+    evt the_line [&Reveals(fact=aaron_was_the_act)]
+        dialog(inject=[speaker=aaron], inline="""
+               speaker: "{speaker}"
+               cue: "the stutter gone, the meek boy nowhere in the voice"
+               tone: cold
+               text: "There never was an Aaron, counselor."
+               """)
+    // The held belief and the disclosed truth are contraries — one line inverts, not fills.
+    aaron_is_innocent >< aaron_was_the_act
+    // Wham_Line ->
+    audience [-Believes(claim=aaron_is_innocent)]
+    audience [#Mistaken(subject=aaron_is_innocent)]
+    !the_line [+WhamLine]!
+  }
+}

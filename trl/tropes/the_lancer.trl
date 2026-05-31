@@ -1,0 +1,74 @@
+// === PREAMBLE ===
+// @trope    The Lancer
+// @category Characterization / Relationships
+// @source   https://allthetropes.org/wiki/The_Lancer
+// @domain   Interpersonal      // registry label: relationships cluster
+// @version  1.3
+//
+// Laconic (per the wiki): the lieutenant and Foil for The Hero — the second-in-command, usually a
+// contrast to the lead (clean-cut hero -> grizzled snarker; driven hero -> relaxed and level-headed),
+// yet a grouchy-but-loyal Number Two. FRONTIER: the Lancer is the SUM of two corpus dyads — it is The
+// Foil (contrast on a shared axis) AND a loyal second-in-command at once. Neither alone is a Lancer:
+// a pure foil need not be loyal or subordinate; a pure sidekick need not contrast. The capability is
+// recognizing the conjunction — loyalty ACROSS a difference — that defines the number two who both
+// completes and challenges the number one.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // loyalty, contrast, identity
+
+assoc the_lancer -> [
+  the_foil     : "is a loyal, subordinate kind of",
+  the_sidekick : "is the contrasting, second-in-command kind of",
+  loyalty      : "holds across a difference, which is the heart of",
+  contrast     : "is defined, like the foil, by"
+]
+
+
+// === ONTOLOGY ===
+
+imply Lancer -> [Foil, Loyalty, Contrast, Narrative]
+
+
+// === ABSTRACT RULE ===
+// The capability: a SECOND who foils the hero on a shared axis (opposite value) AND stays loyally
+// subordinate to them. The conjunction is the whole point — the contrast is the foil half, the
+// Seconds bond is the sidekick half, and the Lancer is the one character carrying both. This is
+// strictly narrower than rule Foil (which needs no loyalty) and rule The_Sidekick (which needs no
+// contrast).
+rule The_Lancer {
+  when:
+    char $h [+Protagonist]
+    char $l [@Foils(other=$h)] [@Seconds(leader=$h)]
+    char $h [+Trait(axis=$d, value=$vh)]
+    char $l [+Trait(axis=$d, value=$vl)]
+    $vh != $vl
+  then:
+    $l [+Lancer]
+    $l [+Illuminated(by=$h)]
+    $h [+Illuminated(by=$l)]
+    $h [+Challenged(by=$l)]
+    $l -- contrast
+    $l -- loyalty
+}
+
+
+// === CONCRETE VIGNETTE: Star Wars — Han Solo to Luke Skywalker (film, 1977) ===
+// Same axis as the farmboy — what to believe in — but opposite value: Luke is all faith (the Force,
+// the cause); Han is all cynicism ("hokey religions and ancient weapons are no match for a good
+// blaster"). The smuggler comes back for the trench run anyway. He foils the hero's idealism and is
+// his loyal second — that conjunction, loyalty across the difference, is the Lancer.
+
+// LUKE SKYWALKER
+char luke [+Protagonist] [+Courageous] [+Trait(axis=conviction, value=faith)]
+
+// HAN SOLO
+char han  [+Deuteragonist] [+Loyal] [+Trait(axis=conviction, value=cynicism)]
+han [@Foils(other=luke)] [@Seconds(leader=luke)]
+
+scene the_trench_run {
+  beat 1 {
+    han -- luke : "you're all clear, kid — now blow this thing and go home"
+    // The_Lancer -> han [+Lancer] [+Illuminated(by=luke)], luke [+Challenged(by=han)]
+  }
+}

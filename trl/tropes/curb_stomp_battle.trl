@@ -1,0 +1,69 @@
+// === PREAMBLE ===
+// @trope    Curb-Stomp Battle (Curb-Stomp · No-Holds-Barred Beatdown)
+// @category Conflict / Tactics
+// @source   https://allthetropes.org/wiki/Curb_Stomp_Battle
+// @domain   Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): a completely one-sided battle — the victor reads every move, lands every
+// blow, never tires, and ends without a drop of their own blood spilled, while the loser is dead or
+// defeated. The OPPOSITE of the Duel's close contest: there is no real resistance to overcome. Rides
+// the action-dynamics Strikes vocabulary, but the recognition is the gross asymmetry — an
+// [+Outmatched] foe struck by a stronger party who never had to raise a guard: total domination,
+// not a contest. (Give the loser a few good hits and it becomes a Curb-Stomp Cushion instead.)
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/action_dynamics.trl"   // Strikes; the rout drives the foe straight to [+Defeated]
+
+assoc curb_stomp_battle -> [
+  action_dynamics : "an unanswered Strike of",
+  conflict        : "is the one-sided rout of a",
+  the_duel        : "the antithesis of the close contest in",
+  pincer_maneuver : "shares the overwhelmed foe of a"
+]
+
+
+// === ONTOLOGY ===
+
+imply CurbStompBattle -> [Domination, Rout, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition: a gross power asymmetry, not a contest. An [+Outmatched] foe is struck by a stronger
+// party — and never gets a guard up (no real resistance) — so the blow does not merely land, it
+// routs: the foe is overwhelmed and defeated outright. The not(Guarded) clause is the trope's whole
+// signature; it is what separates a curb-stomp from a fight the loser actually contested.
+rule Curb_Stomp_Battle {
+  when:
+    char $loser [+Outmatched]
+    evt  $blow [&Strikes(agent=$victor, target=$loser)]
+    not ( $loser [+Guarded] )
+  then:
+    $loser [+Overwhelmed]
+    $loser [+Defeated]
+    $blow [+CurbStompBattle]
+}
+
+
+// === CONCRETE VIGNETTE: Georgia Tech 222, Cumberland 0 (sports history, 1916) ===
+// The most lopsided game in college-football history. Cumberland had disbanded its program the year
+// before but was held to the fixture; Heisman, still smarting from a baseball ringer-loss, ran up
+// the score on a team of fill-in students. Tech led 126-0 at the half and never let up — no drive,
+// no first down, no point answered. A rout, never a contest.
+
+char yellow_jackets [+Protagonist] [+Collective]   // John Heisman's Georgia Tech, merciless
+char bulldogs       [+Antagonist]  [+Collective] [+Outmatched]   // Cumberland's scratch eleven
+set  grant_field [+Exterior] [+Day] [+Field]
+
+scene the_rout {
+  beat 1 {
+    yellow_jackets @ grant_field
+    bulldogs       @ grant_field
+  }
+  beat 2 {
+    evt the_kickoff [&Strikes(agent=yellow_jackets, target=bulldogs)]
+    // Curb_Stomp_Battle -> bulldogs [+Overwhelmed] [+Defeated]; no guard ever raised, 222-0
+  }
+}

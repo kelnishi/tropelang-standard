@@ -1,0 +1,132 @@
+// === PREAMBLE ===
+// @trope    Eucatastrophe
+// @category Happy Endings / Hope
+// @source   https://allthetropes.org/wiki/Eucatastrophe
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): the sudden joyous turn at the darkest moment — a good catastrophe;
+// deliverance against all hope, when doom is plausible and near and the tide turns anyway
+// (Greek eu- "good" + catastrophe "overturning", Tolkien's coinage for the Fairy-Story ending).
+// FRONTIER: rides the AUDIENCE-side of rhetoric — the room's own despair turned, in one beat,
+// to joy. The bright counterpart of the Despair Event Horizon, and the sibling of the Hope Spot:
+// where Hope Spot's glimmer is false and snatched away, the eucatastrophe's deliverance is REAL
+// and arrives. Unlike a Deus Ex Machina it is earned grace, not authorial fiat — the turn is
+// [+Unlooked_For] but never [&Imposes]; no god is winched in to write an ending the story
+// could not reach.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // joy, hope, despair as edge targets
+import "trl/modules/rhetoric.trl"          // the audience whose despair this turns to joy
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc eucatastrophe -> [
+  joy                    : "turns the room to",
+  despair                : "arrives at the bottom of",
+  hope                   : "delivers past the end of",
+  hope_spot              : "the real-deliverance sibling of",
+  despair_event_horizon  : "the bright counterpart of",
+  deus_ex_machina        : "earned grace, NOT the contrived override of",
+  audience               : "moves from despair to joy, the"
+]
+
+
+// === ONTOLOGY ===
+// A reversal that delivers — the same [Reversal, Deliverance, Narrative] cluster hope_spot's
+// "Delivered" branch names, here as the trope proper rather than a subversion. The turn itself
+// is an unlooked-for grace.
+
+imply Eucatastrophe -> [Reversal, Deliverance, Narrative]
+imply UnlookedForTurn -> [Reversal, Generative]
+
+
+// === ABSTRACT RULE ===
+// At the nadir: an imperiled character is doomed and the audience has fallen into despair over
+// the outcome. An UNLOOKED-FOR turn delivers a real rescue ([+TrueRescue], never [+Deceptive]) —
+// the imperiled one is [+Saved], and the audience is carried, in a single beat, from despair to
+// joy. The joy is asserted ABSOLUTE (!...!): the deliverance, once it lands, is the felt truth of
+// the ending. (Audience [#Joyful] is the bright mirror of the Despair Event Horizon's
+// !audience-grief! — both are rhetoric's audience plane, opposite signs.)
+rule Eucatastrophe {
+  when:
+    char $hero [#Imperiled]
+    audience [#Despairing]
+    evt $turn [&Delivers(to=$hero)]
+    not ( $turn [+Resolved] )
+    not ( $turn [&Imposes(agent=author)] )   // earned grace, not authorial fiat
+  then:
+    $turn [+Resolved] [+TrueRescue] [+Unlooked_For]
+    $hero [+Saved]
+    $hero [-Imperiled]
+    audience [-Despairing]
+    !audience [#Joyful]!
+    audience -> despair : "Turns From"
+    audience -> joy : "Turns To"
+    audience -- joy
+}
+
+
+// === CONCRETE VIGNETTE: A Christmas Carol — the redemption morning (novella, 1843) ===
+// At the nadir Scrooge stands over his own untended grave and the Cratchit hearth holds an empty
+// stool; the doom is plausible and near. Then he wakes — it is still Christmas Day, nothing is
+// undone, the turn against all expectation. The deliverance is REAL (he is not tricked; the bells
+// ring in earnest) and EARNED (the three spirits' night, not a god from a machine), and the
+// reader's dread breaks into joy.
+
+// EBENEZER SCROOGE
+char scrooge [+Protagonist] [#Imperiled]
+scrooge [+MotivatedBy(reason="Avarice")]
+
+// TINY TIM — the empty stool that need not stay empty
+char tiny_tim [+Victim] [#Imperiled]
+
+// THE UNTENDED GRAVE — the doom shown, not yet sealed
+obj the_grave [+Symbolic]
+the_grave [+Threshold]
+
+// EXT. THE CHURCHYARD - NIGHT — the bottom of the story
+set churchyard [+Exterior] [+Night] [+Dangerous]
+
+// INT. SCROOGE'S BEDCHAMBER - DAWN — the morning the turn arrives in
+set bedchamber [+Interior] [+Dawn]
+
+scene the_nadir {
+  beat 1 {
+    scrooge @ churchyard
+    scrooge > the_grave
+        dialog(inject=[speaker=scrooge], inline="""
+               speaker: "{speaker}"
+               cue: "his own name on the cold stone, the Cratchit stool standing empty"
+               tone: shattered
+               text: "Am I that man who lay upon the bed? No, Spirit! Oh no, no!"
+               """)
+    !audience [#Despairing]!
+    audience -- despair
+  }
+}
+
+scene the_turn {
+  beat 1 {
+    scrooge @ bedchamber
+    evt the_morning [&Delivers(to=scrooge)]
+        dialog(inject=[speaker=scrooge], inline="""
+               speaker: "{speaker}"
+               cue: "the bells pealing, the day not yet lost, the chance unspent"
+               tone: jubilant
+               text: "I haven't missed it! The Spirits have done it all in one night. I'm light as a feather, merry as a schoolboy!"
+               """)
+    // Eucatastrophe: a real, unlooked-for deliverance — not snatched away (Hope Spot),
+    // not imposed by fiat (Deus Ex Machina). The audience turns despair -> joy.
+    the_morning [+Resolved] [+TrueRescue] [+Unlooked_For]
+    scrooge [+Saved]
+    scrooge [-Imperiled]
+    tiny_tim [+Saved]
+    tiny_tim [-Imperiled]
+    audience [-Despairing]
+    !audience [#Joyful]!
+    audience -> despair : "Turns From"
+    audience -> joy : "Turns To"
+    audience -- joy
+  }
+}

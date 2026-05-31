@@ -30,7 +30,6 @@ assoc hope_spot -> [
 // glimmer is, secretly, FalseHope.
 
 imply HopeSpot      -> [Reversal, Emotional, Narrative]
-imply Eucatastrophe -> [Reversal, Deliverance, Narrative]
 imply FalseHope     -> [Deceptive, Crushing]
 
 
