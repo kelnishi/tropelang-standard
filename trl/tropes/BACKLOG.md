@@ -113,7 +113,7 @@ module unlocks a whole category of real-world forms:
 - [ ] the Sermon / the Rousing Speech (the St. Crispin's Day / pre-battle exhortation)
 - [ ] the Stump Speech · the Sales Pitch (persuasion for a vote / a sale)
 - [ ] the Debate (duelling persuasions; rebuttal)
-- [ ] Propaganda · the Big Lie (persuasion's dark twin — ethos & pathos weaponized against logos)
+- [x] Propaganda / the Big Lie (ethos & pathos + repetition vs logos; entrenchment) — `propaganda`
 
 ### Non-fiction storytelling (the corpus handles it at ~71%)
 Reality narrativized with the same grammar; the gap is the non-fiction *forms*.

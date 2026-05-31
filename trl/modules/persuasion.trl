@@ -35,6 +35,10 @@ concept speaker [%Narrative]
 verb Argues(thesis)   [+Narrative]   // assert a claim and reason toward it (logos)
 verb Cites(support)   [+Narrative]   // adduce evidence for the claim (logos)
 verb Exhorts(action)  [+Narrative]   // call the persuaded audience to act
+// the weaponized vocabulary — logos starved (used by propaganda, the dark twin)
+verb Stokes(fear)     [+Narrative]   // manufacture pathos by naming an enemy to fear
+verb Repeats(claim)   [+Narrative]   // assert again — repetition standing in for evidence
+verb Debunks(claim)   [+Narrative]   // present the truth against a claim
 imply Persuaded -> [Conviction, Belief, Narrative]   // the audience now holds the claim
 imply Committed -> [Resolve, Action, Narrative]      // ... and resolves to act on it
 

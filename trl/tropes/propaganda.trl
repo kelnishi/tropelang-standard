@@ -1,0 +1,88 @@
+// === PREAMBLE ===
+// @trope    Propaganda / The Big Lie
+// @category Oratory / Persuasion
+// @source   https://allthetropes.org/wiki/Big_Lie
+// @version  1.3
+//
+// Laconic (per the wiki): the Big Lie — a falsehood so colossal (Hitler's coinage, Mein Kampf 1925)
+// that no one believes someone would dare distort the truth so infamously; once accepted it is
+// extremely hard to dislodge. FRONTIER: propaganda is persuasion's DARK TWIN — the very machinery
+// of persuasion.trl run with LOGOS STARVED. Honest persuasion earns belief with a thesis and
+// evidence; propaganda installs it with ethos (authority, often by force) and pathos (fear of a
+// scapegoat), substituting REPETITION for the evidence it cannot supply, to seat a claim that
+// reality contradicts. Three capabilities honest persuasion lacks: the manufactured scapegoat, the
+// repetition-as-proof of the Big Lie, and ENTRENCHMENT — the truth, presented, bounces.
+
+import "trl/modules/persuasion.trl"          // the machinery it perverts (ethos, audience, Persuaded)
+import "trl/modules/common_knowledge.trl"    // repetition manufactures common knowledge
+import "trl/modules/non_fiction.trl"         // the verdict reality wrote, which the lie overwrites
+
+assoc propaganda -> [
+  persuasion         : "is the logos-starved dark twin of",
+  divide_and_conquer : "manufactures pathos with the scapegoat tactic of",
+  non_fiction        : "overwrites, in the audience's mind, the verdict of",
+  cassandra_truth    : "is the mirror of (there, truth disbelieved; here, a lie believed)"
+]
+
+imply Propaganda -> [Persuasion, Manipulation, Falsehood, Narrative]
+imply BigLie      -> [Falsehood, Repeated, Manipulation, Narrative]
+
+
+// === ABSTRACT RULES ===
+
+// (1) THE SCAPEGOAT — manufactured pathos. Name an enemy; fear does the work an argument would, and
+// the strongman is cast as the protector the frightened audience now clings to.
+rule Scapegoat {
+  when:
+    char $s [+Authoritative]
+    evt  $f [&Stokes(agent=$s, fear=$enemy)]
+  then:
+    audience [#Afraid(of=$enemy)]
+    audience [+Invested(in=$s)]
+}
+
+// (2) THE BIG LIE — a falsehood, asserted with authority and REPEATED until the repetition is itself
+// the evidence. No citation; ethos and pathos carry a claim reality denies. The lie becomes common
+// knowledge — the inversion of non_fiction, where reality, not the speaker, writes the verdict.
+rule Big_Lie {
+  when:
+    char $s [+Authoritative]
+    evt  $r [&Repeats(agent=$s, claim=$lie)]
+    $lie [+False]
+  then:
+    audience [+Persuaded(of=$lie)]
+    $lie [+CommonKnowledge]
+    audience -- conviction
+}
+
+// (3) ENTRENCHMENT — the Big Lie's signature. Once believed, the truth presented against it does not
+// dislodge it; it is reframed as the enemy's deception, and belief deepens. Debunking backfires.
+rule Entrench {
+  when:
+    audience [+Persuaded(of=$lie)]
+    evt  $d [&Debunks(agent=$t, claim=$lie)]
+  then:
+    audience [+Entrenched(in=$lie)]
+    audience -- backfire
+}
+
+
+// === CONCRETE VIGNETTE: Orwell's 1984 — the Ministry of Truth (novel, 1949) ===
+// The canonical depiction. The Party's ethos is authority by force; the Two Minutes Hate stokes
+// fear of Goldstein, the eternal scapegoat; the telescreen repeats what the record denies — Oceania
+// has ALWAYS been at war with Eastasia — until the city believes it against its own memory; and when
+// Winston's diary insists two and two make four, the truth does not free him, it marks him.
+char the_party [+Speaker] [+Credible]
+obj  the_lie   [+False]              // "Oceania has always been at war with Eastasia"
+
+scene the_ministry_of_truth {
+  beat 1 {
+    evt two_minutes_hate [&Stokes(agent=the_party, fear=goldstein)]   // Scapegoat -> fear + investment
+  }
+  beat 2 {
+    evt the_telescreen [&Repeats(agent=the_party, claim=the_lie)]     // Big_Lie -> audience [+Persuaded]
+  }
+  beat 3 {
+    evt winstons_diary [&Debunks(agent=winston, claim=the_lie)]       // Entrench -> the truth bounces
+  }
+}

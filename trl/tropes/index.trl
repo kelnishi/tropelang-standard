@@ -87,6 +87,7 @@ import "trl/tropes/putting_it_to_the_test.trl"
 import "trl/tropes/based_on_a_true_story.trl"
 import "trl/tropes/foregone_conclusion.trl"
 import "trl/tropes/human_interest_story.trl"
+import "trl/tropes/propaganda.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -240,6 +241,10 @@ concept foregone_conclusion    [+Trope(category="Suspense", source="allthetropes
 // HUMAN INTEREST STORY — the live-broadcast athlete profile; the purest instance of audience
 // INVESTMENT (rhetoric Â§3): endear a real person over an UNKNOWN outcome so the live result lands.
 concept human_interest_story   [+Trope(category="Non-Fiction", source="allthetropes.org/wiki/Human_Interest_Story")] [%Narrative]
+
+// PROPAGANDA — persuasion's dark twin: ethos + pathos + REPETITION installing a false belief
+// against reality, and entrenching it against the truth (the Big Lie).
+concept propaganda             [+Trope(category="Oratory", source="allthetropes.org/wiki/Big_Lie")] [%Narrative]
 
 // UNRELIABLE NARRATOR — the narration's facts diverge from the truth. The first corpus trope
 // to use S14 diegetic levels: a non_canon narration plane (with a teller) vs the reality plane.
