@@ -19,12 +19,21 @@ integrates it (registry, promotion, commit). Read `SKILL.md` first — this is t
    (keep distinct specificity).
 5. **Self-check — both must pass:**
    - `bash skills/trope-to-tropelang/scripts/gate.sh <file>` → `── GATE PASS ──`
-   - **Sim the rule:** add a scenario to `tools/sim.py` and run `python3 tools/sim.py <key>`; confirm the
-     rule fires and produces the claimed facts. Fix the rule if it misfires (the sim is the truth test).
+   - **Sim the rule AD HOC — do NOT edit `tools/sim.py`** (shared file; parallel agents collide). Run an
+     inline check that loads your trope's own rule file and a minimal scenario, e.g.:
+     ```bash
+     python3 - <<'PY'
+     import sys,os; sys.path.insert(0,'tools'); import sim
+     r=sim.load_rules('trl/tropes/<name>.trl')           # + any module it rides
+     sim.simulate(r, sim.parse_scenario("""<minimal char + beat scenario>"""), "<name>")
+     PY
+     ```
+     Confirm the rule fires and produces the claimed facts; fix the rule if it misfires (the sim is the
+     truth test). The coordinator decides whether to persist a permanent scenario.
 
 ## Hard rules
-- **Do NOT edit `trl/tropes/index.trl`** or any other shared file. One new trope file only. The
-  coordinator runs `tools/regen_index.py`.
+- **Write exactly ONE new file: `trl/tropes/<name>.trl`.** Do NOT edit `index.trl`, `tools/sim.py`,
+  or any other shared file — parallel agents must not collide. The coordinator runs `tools/regen_index.py`.
 - A trope is **log register** and MUST round-trip (`cargo run --quiet --example fidelity -- <file>` → `ok`).
 - Don't use `: "label"` on a tag statement — labels are only for edges (`a -> b : "x"`). Use `//` comments.
 - **Stop and return WITHOUT finishing** (flag it to the coordinator) if: the trope needs a NEW module

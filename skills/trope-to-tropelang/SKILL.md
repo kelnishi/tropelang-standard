@@ -40,7 +40,7 @@ Checks preamble completeness (`@trope/@category/@source/@domain`), validator (no
 
 **Sim-test any recognition rule.** Forward-chain it on a concrete scenario and confirm it fires as
 the prose claims — the sim has caught real logic bugs (self-vengeance; a coup deposing itself; a
-two-phase arc collapsing into one). Add a scenario to `tools/sim.py` and run `python3 tools/sim.py <key>`.
+two-phase arc collapsing into one). Run it AD HOC (load the rule file + a minimal scenario inline); do NOT edit the shared `tools/sim.py`.
 
 **Never edit the registry.** `trl/tropes/index.trl` is rebuilt deterministically. Write ONE
 self-contained trope file; do NOT touch `index.trl` (parallel agents collide on it). The coordinator
