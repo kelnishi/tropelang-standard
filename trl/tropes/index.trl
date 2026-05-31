@@ -80,6 +80,8 @@ import "trl/tropes/mentor_and_student.trl"
 import "trl/tropes/hidden_identity.trl"
 import "trl/tropes/rightful_king_returns.trl"
 import "trl/tropes/the_chosen_one.trl"
+import "trl/tropes/the_paragon.trl"
+import "trl/tropes/the_everyman.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -213,6 +215,11 @@ concept mentor_and_student [+Trope(category="Bonds", source="allthetropes.org/wi
 concept hidden_identity       [+Trope(category="Identity", source="allthetropes.org/wiki/Secret_Identity")] [%Epistemic]
 concept rightful_king_returns [+Trope(category="Identity", source="allthetropes.org/wiki/Rightful_King_Returns")] [%Political]
 concept the_chosen_one        [+Trope(category="Fate", source="allthetropes.org/wiki/The_Chosen_One")] [%Narrative]
+
+// CAST ARCHETYPES BY TRAIT (close the trait gap in both eval stories). The Paragon (incorruptible
+// virtue — Trustworthy/Loyal/Honorable) and The Everyman (the ordinary, mortal audience surrogate).
+concept the_paragon       [+Trope(category="Cast", source="allthetropes.org/wiki/The_Paragon")] [%Narrative]
+concept the_everyman      [+Trope(category="Cast", source="allthetropes.org/wiki/Everyman")] [%Narrative]
 
 // UNRELIABLE NARRATOR — the narration's facts diverge from the truth. The first corpus trope
 // to use S14 diegetic levels: a non_canon narration plane (with a teller) vs the reality plane.

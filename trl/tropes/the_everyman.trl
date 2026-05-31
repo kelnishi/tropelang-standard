@@ -1,0 +1,41 @@
+// === PREAMBLE ===
+// @trope    The Everyman
+// @category Cast / Character
+// @source   https://allthetropes.org/wiki/Everyman
+// @version  1.3
+//
+// Laconic: the ordinary person — unremarkable, relatable, mortal — through whose plain eyes an
+// extraordinary story is seen; the audience's surrogate and point of entry. The cast archetype
+// defined by NORMALCY: its power is that the reader could be them.
+
+import "trl/concepts/index.trl"            // identity
+
+assoc the_everyman -> [
+  identity : "the ordinary, mortal",
+  the_foil : "throws the extraordinary into relief like a"
+]
+
+// Archetype tags subsume the ordinariness/mortality facts stories give their surrogate figures.
+imply Everyman -> [Ordinary, Relatable, Mortal, Audience_Surrogate, Narrative]
+
+// Naming rule: an ordinary protagonist who is the audience's way in IS the Everyman (tags them).
+rule The_Everyman {
+  when:
+    char $c [+Protagonist] [+Ordinary]
+  then:
+    $c [+Everyman]
+    $c -- identity
+}
+
+// === CONCRETE VIGNETTE: The Hitchhiker's Guide — Arthur Dent (novel, 1979) ===
+// A thoroughly ordinary Englishman in a dressing gown, dragged across a galaxy that makes no sense
+// to him and shouldn't — and precisely because he is as baffled as we would be, he is the door we
+// walk through into the absurd.
+char arthur [+Protagonist] [+Ordinary]
+
+scene the_demolition {
+  beat 1 {
+    arthur -- earth : "still in his dressing gown when the planet is demolished"
+    // The_Everyman -> arthur [+Everyman]
+  }
+}

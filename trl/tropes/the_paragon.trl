@@ -1,0 +1,42 @@
+// === PREAMBLE ===
+// @trope    The Paragon
+// @category Cast / Character
+// @source   https://allthetropes.org/wiki/The_Paragon
+// @version  1.3
+//
+// Laconic: the moral exemplar — a character of incorruptible virtue who serves as the story's
+// ethical standard, the one whose trustworthiness and loyalty are never in doubt. A cast archetype
+// defined by TRAITS rather than role; its imply subsumes the virtue facts (Trustworthy, Loyal,
+// Honourable) that a story spends on its most upright figures.
+
+import "trl/concepts/index.trl"            // honor, integrity
+
+assoc the_paragon -> [
+  honor     : "the living standard of",
+  integrity : "is the unbending"
+]
+
+// Archetype tags subsume the virtue facts real stories use on their upright characters.
+imply Paragon -> [Virtuous, Trustworthy, Loyal, Honorable, Incorruptible, Narrative]
+
+// Naming rule: a character of unbending, incorruptible virtue IS the Paragon (tags them).
+rule The_Paragon {
+  when:
+    char $c [+Virtuous] [+Incorruptible]
+  then:
+    $c [+Paragon]
+    $c -- honor
+}
+
+// === CONCRETE VIGNETTE: To Kill a Mockingbird — Atticus Finch (novel, 1960) ===
+// A small-town lawyer who defends a man he knows the town will convict regardless, because it is
+// right — and does it with a courtesy and steadiness that make him the moral centre the whole book
+// is measured against.
+char atticus [+Protagonist] [+Virtuous] [+Incorruptible]
+
+scene the_courthouse {
+  beat 1 {
+    atticus -- justice : "does right when right cannot win"
+    // The_Paragon -> atticus [+Paragon]
+  }
+}

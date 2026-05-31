@@ -8,6 +8,15 @@ Converge the two.
 **Status:** `[x]` converted · `[~]` partial (lives in a module/imply) · `[ ]` todo.
 Vignettes must vary by story / medium / era — no franchise monoculture (see `SKILL.md`).
 
+## Non-fiction storytelling (eval + tropes)
+The corpus narrativizes REALITY with the same grammar (a MythBusters episode covers at 57% — the
+curiosity gap, the Foil, spectacle, the reveal). Non-fiction = rhetoric MINUS override-of-outcome:
+the author frames but reality writes the verdict. Eval: `examples/mythbusters_water_heater.trl`.
+- [ ] The Host / Presenter        (the on-screen non-fiction guide)   ← **gap (new category)**
+- [ ] Putting It to the Test      (the experiment as a narrative beat; empirical verdict)
+- [ ] Talking Head / Reenactment  (documentary forms)
+- [ ] Based on a True Story        (the truth-claim; reality constrains the author)
+
 ## Cast & character roles
 - [x] The Protagonist            (Universal)
 - [x] The Antagonist             (Universal)
@@ -18,6 +27,8 @@ Vignettes must vary by story / medium / era — no franchise monoculture (see `S
 - [ ] The Love Interest
 - [x] The Foil                   (`the_foil.trl` — contrastive characterization; Quixote & Sancho)
 - [ ] The Narrator
+- [x] The Paragon                (`the_paragon.trl` — incorruptible virtue; Atticus Finch)
+- [x] The Everyman               (`the_everyman.trl` — ordinary audience surrogate; Arthur Dent)
 - [ ] Anti-Hero
 - [ ] The Trickster
 - [x] The Big Bad                (`the_big_bad.trl` — the nemesis dyad; Moriarty)
