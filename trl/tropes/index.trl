@@ -99,6 +99,10 @@ import "trl/tropes/pincer_maneuver.trl"
 import "trl/tropes/the_narrator.trl"
 import "trl/tropes/the_trap.trl"
 import "trl/tropes/smear_campaign.trl"
+import "trl/tropes/flashback.trl"
+import "trl/tropes/plot_twist.trl"
+import "trl/tropes/sibling_rivalry.trl"
+import "trl/tropes/the_trickster.trl"
 
 // === TROPE TITLE ENTRIES ===
 
@@ -327,3 +331,7 @@ concept refusal_of_the_call [+Trope(category="Universal", source="allthetropes.o
 
 // === AUTO-REGISTERED TITLES (regen_index.py — do not hand-edit below) ===
 
+concept flashback [+Trope(category="Flashbacks and Chronology", source="https://allthetropes.org/wiki/Flashback_(trope)")] [%Narrative]
+concept plot_twist [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Plot_Twist")] [%Narrative]
+concept sibling_rivalry [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Sibling_Rivalry")] [%Interpersonal]
+concept the_trickster [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/The_Trickster")] [%Narrative]

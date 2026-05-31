@@ -52,13 +52,13 @@ Paragon · Everyman.
 - [ ] The Love Interest
 - [x] The Narrator — `the_narrator` (S14, agent-converted)
 - [ ] Anti-Hero
-- [ ] The Trickster
+- [x] The Trickster — `the_trickster` (Anansi)
 
 ### Character relationships (the dyad/triad)
 Done: The Rival · Unrequited Love · Found Family · Enemies to Lovers · Love Triangle ·
 Star-Crossed Lovers · Mentor & Student.
 - [ ] The Love Triangle's darker forms (Love Dodecahedron, Triang Relations variants)
-- [ ] Sibling Rivalry · Like Brother and Sister
+- [x] Sibling Rivalry — `sibling_rivalry` (Mufasa/Scar)  ·  [ ] Like Brother and Sister
 
 ### Character change & arcs
 Done (psychology arena): Heel/Face Turn · Revenge · Despair Event Horizon · Survivor's Guilt.
@@ -75,7 +75,7 @@ Done: Hidden Identity · Rightful King Returns · The Chosen One · Unreliable N
 ### Plot structure & devices
 Done: Three-Act · Call to Adventure · Refusal · Foreshadowing · The Reveal · Hope Spot ·
 Chekhov's Gun · Red Herring · Cliffhanger · Frame Story.
-- [ ] In Medias Res · Plot Twist · MacGuffin · Flashback
+- [x] Plot Twist — `plot_twist` · [x] Flashback — `flashback`  ·  [ ] In Medias Res · MacGuffin
 - [~] The Climax (concept in `freytags_pyramid`) · The Dilemma (`philosophy` → MoralDilemma)
 
 ### Diegetic-level devices (S14)

@@ -1,0 +1,100 @@
+// === PREAMBLE ===
+// @trope    Flashback
+// @category Flashbacks and Chronology
+// @source   https://allthetropes.org/wiki/Flashback_(trope)
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a narrative technique in which we are shown events that took place
+// before the main action — the story cuts AWAY from the present and BACK in time, then returns.
+// A trigger in the present (a line, an object, a face) opens the past; an idiosyncratic wipe or
+// dissolve marks the crossing. FRONTIER: where Dream Sequence opens a `non_canon` plane and Frame
+// Story nests two canon tellers, Flashback names the bare TEMPORAL crossing — an EARLIER, CANON
+// sub-level (it really happened; cf. the dream's unreality) that the narrative dives INTO and
+// climbs back OUT of. Modeled on the S14 level axis (a depicted, narrated, watched embedded scene
+// — a crossing), NOT a `past scene {}` window (a backward QUERY within one plane, used by
+// Foreshadowing's payoff). The remembering character is the level's `teller`; the level stays
+// `canon`, which is exactly what separates a flashback from a dream.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // memory, the_past, revelation
+
+assoc flashback -> [
+  memory     : "surfaces a",
+  the_past   : "depicts the",
+  revelation : "often a delayed",
+  frame_story : "a temporal sibling of the",
+  dream_sequence : "canon, unlike the"
+]
+
+
+// === ONTOLOGY ===
+
+imply Flashback -> [Nested, Anachronic, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: when a present trigger makes a character recall an earlier scene — the story cutting
+// back in time — that act of recall IS a Flashback (tags the event). The remembered tale sits one
+// level DOWN in time (the canon past plane); the crossing INTO it and the return are loud by S14.
+rule Flashback {
+  when:
+    evt $f [&Recalls(agent=$rememberer)]
+  then:
+    $f [+Flashback]
+}
+
+
+// === CONCRETE VIGNETTE: Casablanca — "As Time Goes By" cuts to Paris (film, 1942) ===
+// In Rick's Café, Ilsa asks Sam to play the song they shared; the music triggers Rick, and the
+// film dissolves to their Paris romance before the German occupation — a canon flashback that
+// really happened — then returns to the present-day café. Two planes, flat and ambient: `casa`
+// (the framing present, Casablanca 1941) and `casa.paris` (the earlier Paris love affair, told
+// from Rick's memory). The past plane is CANON; the crossing back in time and the return are loud.
+
+// ===== the framing present — Rick's Café Américain, the night Ilsa walks in =====
+<<casa>>
+
+// RICK BLAINE
+char rick [+Protagonist] [+Cynical]
+// ILSA LUND
+char ilsa [+LoveInterest]
+// SAM
+char sam [+Musician]
+// THE SONG — "As Time Goes By", the trigger object
+obj the_song [+Trigger]
+
+// INT. RICK'S CAFÉ AMÉRICAIN - NIGHT
+set cafe [+Interior] [+Night]
+
+// ===== the earlier Paris romance — one level down in time, told from Rick's memory; still canon =====
+<<casa.paris : teller=rick>>
+
+// EXT. PARIS - DAY (before the occupation)
+set paris [+Exterior] [+Day]
+rick -- ilsa : "the lovers they were, before the war took it"
+
+// ===== reopen the present — the dissolve that opens the flashback, and the return =====
+<<casa>>
+
+scene the_dissolve {
+  beat 1 {
+    sam @ cafe
+    ilsa @ cafe
+    ilsa > the_song
+    sam -- the_song : "Plays"
+  }
+  beat 2 {
+    rick @ cafe
+    rick > the_song
+    // the song opens the past: Rick recalls Paris — the film cuts back in time
+    evt remember [&Recalls(agent=rick, scene=<<casa.paris|paris>>)]
+    // Flashback -> remember [+Flashback]; the narrative dives DOWN into casa.paris, then returns
+  }
+  beat 3 {
+    // back in the present café — the flashback ends, the music stops, Rick is changed by it
+    rick @ cafe
+    rick [#Haunted(source=the_song)]
+  }
+}

@@ -1,0 +1,84 @@
+// === PREAMBLE ===
+// @trope    The Trickster
+// @category Character Archetypes
+// @source   https://allthetropes.org/wiki/The_Trickster
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a god, spirit, or anthropomorphic figure who plays tricks and disobeys
+// normal rules — a boundary-crosser who openly mocks authority, breaks convention, and (often as an
+// anti-hero short on strength or bravery) makes up the deficit with manipulation and cheating. The
+// signature this file recognizes: the Trickster, OUTMATCHED by force, does not meet the stronger foe
+// head-on — he BAITS them into overcommitting and lets their own momentum undo them. Rides the
+// action-dynamics Bait -> Punish_Overcommit chain (the deception verbs); what distinguishes the
+// Trickster from a plain Feint is the actor — a [+Cunning] [+Deceptive] underdog who wins by wit, so
+// the deed reads as the weaker party out-thinking the stronger, not merely a tactical reversal.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/action_dynamics.trl"   // Feints -> Bait -> [+Overcommitted];  Strikes -> Punish_Overcommit -> [+Hit]
+import "trl/modules/theory_of_mind.trl"    // deception — the trickster induces a false belief to set the bait
+
+assoc the_trickster -> [
+  action_dynamics : "the Bait / Punish_Overcommit rules of",
+  deception       : "induces a false belief via",
+  conflict        : "wins, while outmatched, a"
+]
+
+
+// === ONTOLOGY ===
+// The Trickster is an archetype built on cunning deception; the chaos/boundary-crossing reads as
+// disruption of the established order. (Trickster is a prelude archetype prop; reused, not redefined.)
+imply TheTrickster -> [Trickster, Deception, Cunning, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a [+Cunning] [+Deceptive] actor who is [+Outmatched] baits a stronger foe into
+// overcommitting and then lands the strike that punishes it — the weaker party prevails by wit, not
+// force. The deed IS The Trickster (tags it) and the trickster [+Outwits] the foe. The three
+// preconditions on the actor (cunning, deceptive, outmatched) are what separate this from a generic
+// Feint: same Bait -> Punish_Overcommit mechanics, but the SIGNATURE is who wins and how.
+rule TheTrickster {
+  when:
+    char $trickster [+Cunning] [+Deceptive] [+Outmatched]
+    char $foe [+Overcommitted]
+    evt  $a [&Strikes(agent=$trickster, target=$foe)]
+  then:
+    $a [+TheTrickster]
+    $trickster [+Outwits(target=$foe)]
+}
+
+
+// === CONCRETE VIGNETTE: Anansi and the Python (West African / Akan folktale, oral tradition) ===
+// Anansi the spider boasts he can capture Onini the python — far longer and stronger than any spider.
+// He cannot overpower the snake, so he goads it instead: he cuts a long bamboo pole and argues aloud
+// that Onini is surely shorter than the pole. Stung, the python stretches himself out FULL LENGTH
+// along the bamboo to prove his size — and in that overcommitted, fully-extended pose Anansi lashes
+// him to the pole, vine by vine, and carries him off. Vanity, not muscle, did the work; the weaker
+// trickster made the stronger creature defeat himself.
+
+// ANANSI (the spider)
+char anansi [+Protagonist] [+Cunning] [+Deceptive] [+Outmatched]
+// ONINI THE PYTHON
+char onini [+Antagonist]
+// THE BAMBOO POLE (the bait — a measuring contest the python cannot resist)
+obj bamboo [+MacGuffin]
+// EXT. THE RIVERBANK - DAY
+set riverbank [+Exterior] [+Day]
+
+scene the_measuring {
+  beat 1 {
+    anansi @ riverbank
+    onini @ riverbank
+    anansi > bamboo
+    // the goad: "you cannot be as long as this pole" — flattery dressed as doubt draws him in
+    evt the_taunt [&Feints(agent=anansi, target=onini)]
+    // Bait -> onini [+Overcommitted]   (he stretches out full length to prove his size)
+  }
+  beat 2 {
+    // the spring: while the python is extended and helpless, Anansi binds him to the bamboo
+    evt the_binding [&Strikes(agent=anansi, target=onini)]
+    // Punish_Overcommit -> onini [+Hit];  TheTrickster tags the deed, anansi [+Outwits(onini)]
+  }
+}

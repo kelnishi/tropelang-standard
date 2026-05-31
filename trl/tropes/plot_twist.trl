@@ -1,0 +1,86 @@
+// === PREAMBLE ===
+// @trope    Plot Twist
+// @category Epistemic / Narrative Devices
+// @source   https://allthetropes.org/wiki/Plot_Twist
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a sudden, unexpected revelation that REVERSES the audience's
+// understanding of the story so far — and so recontextualizes every prior scene. The signature
+// that separates it from a plain Reveal: a Plot Twist does not merely fill a gap (The Reveal) or
+// surface a fact the audience never suspected (Tomato Surprise) — it OVERTURNS a belief the
+// audience already actively held. The audience held `!$p!` (surfaced, taken as true); the twist
+// establishes `¬$p`, and the two DIVERGE (`$p >< ¬$p`). The held belief is now [#Mistaken], and
+// the story re-reads. FRONTIER: rides theory_of_mind's audience-belief machinery to model the
+// INVERSION of a standing belief, not the disclosure of an unknown.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // revelation
+import "trl/modules/theory_of_mind.trl"    // Believes / Reveals / Mistaken, the >< divergence
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc plot_twist -> [
+  revelation     : "delivers its reversal through a",
+  theory_of_mind : "inverts a standing audience belief modeled in",
+  the_reveal     : "is the belief-overturning cousin of",
+  tomato_surprise: "differs by overturning a held belief, not surfacing a latent one"
+]
+
+
+// === ONTOLOGY ===
+
+imply PlotTwist -> [Reversal, Recontextualization, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition: an audience holds a surfaced belief $p (taken as true). A revelatory event
+// establishes the contrary proposition $not_p, and the two DIVERGE (`$p >< $not_p`). Because the
+// belief was actively held (not a mere gap), the reveal OVERTURNS it: the prior reading becomes
+// [#Mistaken] and the story re-reads. This is the inversion-of-a-standing-belief that separates a
+// Plot Twist from a plain Reveal.
+rule Plot_Twist {
+  when:
+    char $audience [#Believes(claim=$p)]
+    evt  $reveal [&Reveals(fact=$not_p)]
+    $p >< $not_p
+  then:
+    $audience [-Believes(claim=$p)]
+    $audience [#Mistaken(subject=$p)]
+    !$reveal [+PlotTwist]!
+    $reveal -- revelation : "Is"
+    surface_global(title="Plot Twist", description="A belief the audience held is overturned; the story re-reads.")
+}
+
+
+// === CONCRETE VIGNETTE: The Sixth Sense — "I see dead people" (film, 1999) ===
+// For the whole film the audience reads child psychologist Malcolm Crowe as a living man treating a
+// troubled boy. The closing reveal — he was shot in the opening scene and has been dead all along —
+// inverts that standing belief and recontextualizes every scene he was in (no one but the boy ever
+// spoke to him; his wife never addressed him).
+
+// MALCOLM CROWE
+char crowe [+Protagonist]
+
+// THE AUDIENCE
+char audience [+Collective]
+
+// INT. CROWE'S STUDY - NIGHT
+set study [+Interior] [+Night]
+
+scene the_recognition {
+  beat 1 {
+    crowe @ study
+    // The belief the audience has actively held since the opening — surfaced, taken as true.
+    audience [#Believes(claim=crowe_is_alive)]
+  }
+  beat 2 {
+    evt the_wedding_ring [&Reveals(fact=crowe_is_dead)]
+    // The held belief and the disclosed truth are contraries — the reveal inverts, not fills.
+    crowe_is_alive >< crowe_is_dead
+    // Plot_Twist ->
+    audience [-Believes(claim=crowe_is_alive)]
+    audience [#Mistaken(subject=crowe_is_alive)]
+    !the_wedding_ring [+PlotTwist]!
+  }
+}
