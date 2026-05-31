@@ -1,0 +1,53 @@
+// === PREAMBLE ===
+// @trope    Ambush (Surprise Attack)
+// @category Conflict / Tactics
+// @source   https://allthetropes.org/wiki/Inescapable_Ambush
+// @version  1.3
+//
+// Laconic (per the wiki): lie in wait where the enemy will pass and pounce before they can react
+// — surprise weaponized against an unprepared foe. Rides the action-dynamics Spring_Ambush rule:
+// a strike from concealment exposes AND hits at once, bypassing any guard. The key precondition
+// is [+Concealed] — what separates an ambush from an ordinary strike.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/action_dynamics.trl"   // Spring_Ambush -> [+Exposed] [+Hit]
+
+assoc ambush -> [
+  action_dynamics : "the Spring_Ambush rule of",
+  conflict        : "opens a"
+]
+
+
+// === ONTOLOGY ===
+
+imply Ambush -> [Surprise, Tactic, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a strike launched from concealment IS an Ambush (tags the deed).
+rule Ambush {
+  when:
+    char $x [+Concealed]
+    evt  $a [&Strikes(agent=$x, target=$y)]
+  then:
+    $a [+Ambush]
+}
+
+
+// === CONCRETE VIGNETTE: the Teutoburg Forest — Arminius vs. Varus (military history, 9 CE) ===
+// Arminius leads three Roman legions onto a narrow forest track, then the waiting tribes fall on
+// the strung-out column. The legions can never form a line — exposed the instant it begins.
+
+char arminius [+Protagonist] [+Concealed]   // the Cheruscan, waiting in the trees
+char varus    [+Antagonist] [+Collective]   // Varus and Legions XVII, XVIII, XIX, on the march
+set  teutoburg [+Forest]
+
+scene the_forest {
+  beat 1 {
+    arminius @ teutoburg
+    evt the_trap [&Strikes(agent=arminius, target=varus)]
+    // Spring_Ambush -> varus [+Exposed] [+Hit];  Ambush tags the deed
+  }
+}

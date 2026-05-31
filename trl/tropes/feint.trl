@@ -1,0 +1,55 @@
+// === PREAMBLE ===
+// @trope    Feint (Defensive Feint Trap)
+// @category Conflict / Tactics
+// @source   https://allthetropes.org/wiki/Defensive_Feint_Trap
+// @version  1.3
+//
+// Laconic (per the wiki): feign weakness or retreat to lure the enemy in; once they've
+// overcommitted — spent their energy, broken formation, moved into position — turn the tables.
+// Rides the action-dynamics Bait → Punish_Overcommit chain: the feint draws an overcommit, and
+// the real blow lands clean because the guard is already spent.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/action_dynamics.trl"   // Bait -> [+Overcommitted] -> Punish_Overcommit
+
+assoc feint -> [
+  action_dynamics : "the Bait / Punish_Overcommit rules of",
+  conflict        : "reverses a"
+]
+
+
+// === ONTOLOGY ===
+
+imply Feint -> [Deception, Tactic, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a strike that punishes an overcommitment drawn by a feint IS a Feint (tags it).
+rule Feint {
+  when:
+    char $y [+Overcommitted]
+    evt  $a [&Strikes(agent=$x, target=$y)]
+  then:
+    $a [+Feint]
+}
+
+
+// === CONCRETE VIGNETTE: Cannae — Hannibal's crescent (military history, 216 BCE) ===
+// The Carthaginian centre is set deliberately weak and gives ground; the Romans pour into the
+// pocket, and the African wings swing shut — the textbook double envelopment.
+
+char hannibal [+Protagonist]
+char rome     [+Antagonist] [+Collective]   // the largest army Rome ever fielded
+
+scene cannae {
+  beat 1 {
+    evt give_way [&Feints(agent=hannibal, target=rome)]   // the centre yields on purpose
+    // Bait -> rome [+Overcommitted]
+  }
+  beat 2 {
+    evt envelop [&Strikes(agent=hannibal, target=rome)]   // the wings close
+    // Punish_Overcommit -> rome [+Hit];  Feint tags the reversal
+  }
+}

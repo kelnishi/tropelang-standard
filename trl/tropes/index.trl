@@ -41,6 +41,9 @@ import "trl/tropes/fourth_wall.trl"
 import "trl/tropes/dream_within_a_dream.trl"
 import "trl/tropes/show_within_a_show.trl"
 import "trl/tropes/or_was_it_a_dream.trl"
+import "trl/tropes/feint.trl"
+import "trl/tropes/ambush.trl"
+import "trl/tropes/heroic_sacrifice.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -86,6 +89,13 @@ concept survivors_guilt [+Trope(category="Trauma", source="allthetropes.org/wiki
 concept finishing_move   [+Trope(category="Combat", source="allthetropes.org/wiki/Finishing_Move")] [%Interpersonal]
 concept bar_the_door     [+Trope(category="Tactics", source="allthetropes.org/wiki/Hold_The_Line")] [%Interpersonal]
 concept improvised_weapon [+Trope(category="Tactics", source="allthetropes.org/wiki/Improvised_Weapon")] [%Interpersonal]
+
+// MORE ACTION TACTICS (ride action_dynamics). Feint (bait an overcommit, then punish it), Ambush
+// (strike from concealment, bypassing guard), and Heroic Sacrifice (spend your own position to
+// save an ally — the costly extreme of cooperation).
+concept feint            [+Trope(category="Tactics", source="allthetropes.org/wiki/Defensive_Feint_Trap")] [%Interpersonal]
+concept ambush           [+Trope(category="Tactics", source="allthetropes.org/wiki/Inescapable_Ambush")] [%Interpersonal]
+concept heroic_sacrifice [+Trope(category="Sacrifice", source="allthetropes.org/wiki/Heroic_Sacrifice")] [%Interpersonal]
 
 // UNRELIABLE NARRATOR — the narration's facts diverge from the truth. The first corpus trope
 // to use S14 diegetic levels: a non_canon narration plane (with a teller) vs the reality plane.

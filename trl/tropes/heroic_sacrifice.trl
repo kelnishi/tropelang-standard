@@ -1,0 +1,57 @@
+// === PREAMBLE ===
+// @trope    Heroic Sacrifice
+// @category Conflict / Cooperation / Character
+// @source   https://allthetropes.org/wiki/Heroic_Sacrifice
+// @version  1.3
+//
+// Laconic (per the wiki): a character does something incredibly brave at near-certain cost to
+// themselves, so that others survive. The cooperative extreme — where Cover merely guards an
+// ally at no cost, the Sacrifice Play spends the giver's own position (their life) to save them.
+// Rides the action-dynamics Sacrifice rule: the ally is [+Saved], the giver [+Fallen].
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // redemption, conflict
+import "trl/modules/action_dynamics.trl"   // Sacrifice -> ally [+Saved] / giver [+Fallen]
+
+assoc heroic_sacrifice -> [
+  action_dynamics : "the Sacrifice rule of",
+  redemption      : "is often a final"
+]
+
+
+// === ONTOLOGY ===
+
+imply HeroicSacrifice -> [Sacrifice, Altruism, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: spending your own position to save an ally IS a Heroic Sacrifice (tags the deed).
+rule Heroic_Sacrifice {
+  when:
+    evt $s [&Sacrifices(agent=$a, ally=$b)]
+  then:
+    $s [+HeroicSacrifice]
+}
+
+
+// === CONCRETE VIGNETTE: A Tale of Two Cities — Sydney Carton (novel, 1859) ===
+// The dissolute Carton, who looks just like the condemned Charles Darnay, takes his place in the
+// cell and goes to the guillotine so Darnay can live for the woman they both love — redeemed at
+// the very last.
+
+char carton [+Protagonist]                 // Sydney Carton — wasted, and finally not
+char darnay [+Ally]                         // Charles Darnay, sentenced to die
+
+scene the_substitution {
+  beat 1 {
+    evt the_swap [&Sacrifices(agent=carton, ally=darnay)]
+        dialog(inject=[speaker=carton], inline="""
+               speaker: "{speaker}"
+               cue: "calm at the scaffold, the tumbrils still, the crowd a roar below"
+               tone: serene, transcendent
+               text: "It is a far, far better thing that I do, than I have ever done."
+               """)
+    // Sacrifice -> darnay [+Saved];  carton [+Fallen];  Heroic_Sacrifice tags the deed
+  }
+}

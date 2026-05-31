@@ -90,10 +90,10 @@ improvise/bar). All sim-runnable (`tools/sim.py finisher_combo | bar_door | impr
 - [x] Finishing Move                (trope — combination finisher; Naruto + Shikamaru vs Hidan)
 - [x] Bar the Door                  (trope — deny access / buy time; Jesse's RV vs Hank)
 - [x] Improvised Weapon             (trope — indirect attack; Henry Jones' umbrella → gulls → plane)
-- [ ] Feint / Misdirection          (bait an action, punish the commitment)   ← **up next**
-- [ ] Ambush / Surprise Attack      (strike from concealment → auto-expose)
-- [ ] Last Stand / Hold the Line    (outnumbered defense that buys time at a cost)
-- [ ] Sacrifice Play                (trade your position to save/enable an ally)
+- [x] Feint / Misdirection          (`feint.trl` — Bait → Punish_Overcommit; Hannibal at Cannae)
+- [x] Ambush / Surprise Attack      (`ambush.trl` — Spring_Ambush bypasses guard; Teutoburg Forest)
+- [x] Heroic Sacrifice / Sacrifice Play (`heroic_sacrifice.trl` — giver [+Fallen], ally [+Saved]; Sydney Carton)
+- [ ] Last Stand / Hold the Line    (outnumbered defense that buys time at a cost)   ← **up next**
 - [ ] Disarm / Counter              (turn an attacker's commitment against them)
 
 ## Storytelling systems & frameworks (`trl/modules/`)

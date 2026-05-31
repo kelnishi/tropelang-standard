@@ -25,6 +25,8 @@ verb Finishes(target)    [+Interpersonal]   // a decisive, signature blow
 verb Shields(ally)       [+Interpersonal]   // cover an ally
 verb Bars(against)       [+Interpersonal]   // deny access with a barrier
 verb Improvises(target)  [+Interpersonal]   // attack via a non-weapon tool and a medium
+verb Feints(target)      [+Interpersonal]   // bait a commitment with feigned weakness/retreat
+verb Sacrifices(ally)    [+Interpersonal]   // trade your own position to save another
 
 
 // === CONFLICT ===
@@ -106,6 +108,50 @@ rule Bar_Access {
     $y [+Blocked]
     $x [+BoughtTime]
     $x -- denial
+}
+
+
+// === DECEPTION, POSITIONING & SACRIFICE ===
+
+// A feint — feigned weakness or retreat — lures the foe into overcommitting.
+rule Bait {
+  when:
+    evt $f [&Feints(agent=$x, target=$y)]
+  then:
+    $y [+Overcommitted]
+    $x -- misdirection
+}
+
+// An overcommitted foe has spent their guard; the real strike lands clean, guard or no.
+rule Punish_Overcommit {
+  when:
+    char $y [+Overcommitted]
+    evt  $a [&Strikes(agent=$x, target=$y)]
+  then:
+    $y [+Hit]
+    $x -- reversal
+}
+
+// A strike from concealment lands before the target can react — surprise exposes AND hits,
+// bypassing any guard (this is what makes an ambush an ambush).
+rule Spring_Ambush {
+  when:
+    char $x [+Concealed]
+    evt  $a [&Strikes(agent=$x, target=$y)]
+  then:
+    $y [+Exposed]
+    $y [+Hit]
+    $x -- surprise
+}
+
+// A sacrifice play — one ally spends their own position so another survives.
+rule Sacrifice {
+  when:
+    evt $s [&Sacrifices(agent=$a, ally=$b)]
+  then:
+    $b [+Saved]
+    $a [+Fallen]
+    $a -- sacrifice
 }
 
 
