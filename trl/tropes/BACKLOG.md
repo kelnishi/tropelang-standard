@@ -97,6 +97,17 @@ improvise/bar). All sim-runnable (`tools/sim.py finisher_combo | bar_door | impr
 - [x] The Cavalry                   (`the_cavalry.trl` — Reinforcement → [+Relieved], which spares the held line; Vienna 1683)
 - [x] Disarm / Counter              (`counter.trl` — Riposte: let them commit, turn it back → [+Defeated]; Musashi vs Kojiro)
 
+## Epistemic arenas (`trl/modules/` + tropes)
+Knowledge, belief, and truth as first-class dynamics — beyond the narrator truth-tiers.
+- [x] Prophecy / Foreknowledge      (system — `prophecy.trl`: foretell → ?latent? fate → !absolute!)
+- [x] Self-Fulfilling Prophecy      (trope — the avoidance seals the fate; Oedipus)
+- [x] Prophecy Twist                (trope — §11 ambiguity collapses the unforeseen way; Macbeth)
+- [ ] Common Knowledge / Open Secret (mutual vs common knowledge; the public utterance)   ← **in progress**
+- [ ] Cassandra Truth              (true foresight, disbelieved)
+- [ ] Dramatic Irony (full)        (promote from `theory_of_mind.trl`)
+- [ ] The Gambit / Batman Gambit   (a plan built on others' false beliefs)
+- [ ] Tomato Surprise / Twist Ending (retcon recontextualizes prior facts)
+
 ## Storytelling systems & frameworks (`trl/modules/`)
 Higher-level structures that *organize* tropes — name + sequence the stages, link the beats.
 - [x] The Hero's Journey / Monomyth   (Campbell — `heros_journey.trl`)

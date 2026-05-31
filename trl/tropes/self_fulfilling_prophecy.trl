@@ -1,0 +1,53 @@
+// === PREAMBLE ===
+// @trope    Self-Fulfilling Prophecy
+// @category Epistemic / Fate
+// @source   https://allthetropes.org/wiki/Self-Fulfilling_Prophecy
+// @version  1.3
+//
+// Laconic (per the wiki): the attempts to avert the prophecy are the very things that make it
+// come true. The archetype (Older Than Feudalism) is Oedipus, who flees his adoptive parents to
+// avoid the oracle — and runs straight into his real ones. Rides the prophecy module's
+// Self_Fulfilling rule: the act of avoidance promotes the LATENT fate to ABSOLUTE.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // fate
+import "trl/modules/prophecy.trl"          // Foretell -> ?Fated? ;  Self_Fulfilling -> !Fated!
+
+assoc self_fulfilling_prophecy -> [
+  prophecy : "the cruel engine of a",
+  fate     : "proves you can't outrun"
+]
+
+
+// === ONTOLOGY ===
+
+imply SelfFulfillingProphecy -> [Fate, Irony, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: an act meant to AVERT a foretold fate that instead seals it IS the trope.
+rule Self_Fulfilling_Prophecy {
+  when:
+    char $c [+Fated(to=$fate)]
+    evt  $a [&Averts(agent=$c, target=$fate)]
+  then:
+    $a [+SelfFulfillingProphecy]
+}
+
+
+// === CONCRETE VIGNETTE: Oedipus Rex — the flight that arrives (play, ~429 BCE) ===
+
+char oedipus [+Protagonist]
+
+scene the_oracle {
+  beat 1 {
+    evt foretold [&Foretells(agent=delphi, subject=oedipus, fate=patricide)]
+    ?oedipus [+Fated(to=patricide)]?            // the fate hangs latent over him
+  }
+  beat 2 {
+    evt flight [&Averts(agent=oedipus, target=patricide)]   // he flees Corinth to spare his "father"
+    !oedipus [+Fated(to=patricide)]!            // the road out of Corinth runs to Thebes — now absolute
+    // Self_Fulfilling_Prophecy -> flight [+SelfFulfillingProphecy]
+  }
+}

@@ -47,6 +47,8 @@ import "trl/tropes/heroic_sacrifice.trl"
 import "trl/tropes/last_stand.trl"
 import "trl/tropes/the_cavalry.trl"
 import "trl/tropes/counter.trl"
+import "trl/tropes/self_fulfilling_prophecy.trl"
+import "trl/tropes/prophecy_twist.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -106,6 +108,12 @@ concept heroic_sacrifice [+Trope(category="Sacrifice", source="allthetropes.org/
 concept last_stand  [+Trope(category="Tactics", source="allthetropes.org/wiki/Last_Stand")] [%Interpersonal]
 concept the_cavalry [+Trope(category="Tactics", source="allthetropes.org/wiki/The_Cavalry")] [%Interpersonal]
 concept counter     [+Trope(category="Tactics", source="allthetropes.org/wiki/Counter_Attack")] [%Interpersonal]
+
+// PROPHECY / FOREKNOWLEDGE (ride prophecy.trl). Self-Fulfilling (the avoidance seals the fate —
+// latent → absolute; Oedipus) and the Prophecy Twist (the equivocation collapses the unforeseen
+// way — §11 ambiguity + resolve; Macbeth's "none of woman born").
+concept self_fulfilling_prophecy [+Trope(category="Fate", source="allthetropes.org/wiki/Self-Fulfilling_Prophecy")] [%Epistemic]
+concept prophecy_twist           [+Trope(category="Fate", source="allthetropes.org/wiki/Prophecy_Twist")] [%Epistemic]
 
 // UNRELIABLE NARRATOR — the narration's facts diverge from the truth. The first corpus trope
 // to use S14 diegetic levels: a non_canon narration plane (with a teller) vs the reality plane.

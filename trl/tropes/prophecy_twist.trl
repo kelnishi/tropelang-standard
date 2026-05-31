@@ -1,0 +1,55 @@
+// === PREAMBLE ===
+// @trope    Prophecy Twist (No Man of Woman Born)
+// @category Epistemic / Fate
+// @source   https://allthetropes.org/wiki/Prophecy_Twist
+// @version  1.3
+//
+// Laconic (per the wiki): the prophecy is fulfilled literally — but not at all the way the fated
+// party read it. The mechanism is a genuine AMBIGUITY of meaning: Macbeth hears "none of woman
+// born shall harm him" and reads invincibility, so the truth is `( safe | doomed | … )`; the
+// battle collapses it the OTHER way — Macduff was "from his mother's womb untimely ripp'd." This
+// trope is the §11 ambiguity-and-collapse machinery wearing a witch's hat.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // fate, revelation
+import "trl/modules/prophecy.trl"          // Foretell / Fulfills
+
+assoc prophecy_twist -> [
+  prophecy   : "the equivocation in a",
+  revelation : "the misread meaning is a"
+]
+
+
+// === ONTOLOGY ===
+
+imply ProphecyTwist -> [Equivocation, Fate, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: fulfilling a prophecy by its unforeseen reading IS a Prophecy Twist (tags the deed).
+rule Prophecy_Twist {
+  when:
+    evt $f [&Fulfills(agent=$x, prophecy=$prophecy)]
+  then:
+    $f [+ProphecyTwist]
+}
+
+
+// === CONCRETE VIGNETTE: Macbeth — "none of woman born" (play, ~1606) ===
+
+char macbeth [+Antagonist]
+char macduff [+Protagonist] [+CaesareanBorn]   // "from his mother's womb untimely ripp'd"
+
+scene dunsinane {
+  beat 1 {
+    evt the_witches [&Foretells(agent=weird_sisters, subject=macbeth, fate=none_of_woman_born)]
+    // Macbeth reads the equivocation as invincibility — but the meaning is genuinely open:
+    ( macbeth [+Invincible] | macbeth [+Doomed] | ... ) as the_equivocation
+  }
+  beat 2 {
+    evt the_duel [&Fulfills(agent=macduff, prophecy=none_of_woman_born)]
+    resolve the_equivocation -> macbeth [+Doomed]   // it collapses the unforeseen way
+    // Prophecy_Twist -> the_duel [+ProphecyTwist]
+  }
+}

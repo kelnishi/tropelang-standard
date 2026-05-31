@@ -18,6 +18,7 @@ import "trl/modules/freytags_pyramid.trl"  // storytelling system (the five-act 
 import "trl/modules/story_circle.trl"      // storytelling system (Harmon's eight-step embryo)
 import "trl/modules/save_the_cat.trl"      // storytelling system (Snyder's fifteen-beat sheet)
 import "trl/modules/booker_seven_plots.trl" // storytelling system (Booker's plot-type taxonomy)
+import "trl/modules/prophecy.trl"          // epistemic system (foreknowledge: foretell -> self-fulfil / twist)
 import "trl/modules/emotion_dynamics.trl"     // psychological system (appraisal -> emotion -> motivation -> threads)
 import "trl/modules/five_stages_of_grief.trl" // psychological system (the staged Kübler-Ross grief thread)
 import "trl/modules/motivation_dynamics.trl"  // psychological system (desire -> pursuit -> attainment/obsession/abandonment)

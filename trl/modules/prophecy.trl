@@ -1,0 +1,85 @@
+// === PREAMBLE ===
+// @title    Prophecy — foreknowledge and fate
+// @category Epistemic Systems
+// @source   https://allthetropes.org/wiki/Prophecy
+// @version  0.1
+// @note     The epistemic arena of knowing the future. A prophecy is a fact that is true LATER
+//           and known NOW — so it composes the pieces the language already has: a `?latent?`
+//           future-fact (true in the graph, not yet realized), a knower who holds it, and the
+//           act that finally turns it `!absolute!`. Two dynamics are the whole drama: the
+//           SELF-FULFILLING case, where fleeing the fate is exactly what seals it (the latent
+//           promoted to absolute by the avoidance itself), and the TWIST, where the fated party
+//           read it the safe way and reality collapses the other (see prophecy_twist.trl).
+//
+// Import: import "trl/modules/prophecy.trl"
+
+import "trl/concepts/index.trl"            // fate, revelation
+
+concept prophecy [+System] [%Epistemic]
+imply Prophecy -> [Foreknowledge, Fate, Narrative]
+
+
+// === THE VOCABULARY ===
+verb Foretells(subject)  [+Epistemic]      // utter a prophecy about someone's future
+verb Averts(target)      [+Intentional]    // act to prevent a foretold fate
+verb Fulfills(prophecy)  [+Interpersonal]  // bring the foretold event to pass
+
+
+// === RULES ===
+
+// A prophecy is uttered: the foretold party comes to KNOW a fate that is, as yet, only LATENT —
+// present in the graph, not yet realized.
+rule Foretell {
+  when:
+    evt $p [&Foretells(agent=$oracle, subject=$c, fate=$fate)]
+  then:
+    $c [~Knows(target=$fate)]
+    ?$c [+Fated(to=$fate)]?
+    $oracle -- prophecy
+}
+
+// SELF-FULFILLING: the very act of fleeing the fate is what brings it about — the latent fate is
+// promoted to ABSOLUTE by the knower's own avoidance. (You can't fight fate by running at it.)
+rule Self_Fulfilling {
+  when:
+    char $c [+Fated(to=$fate)]
+    evt  $a [&Averts(agent=$c, target=$fate)]
+  then:
+    !$c [+Fated(to=$fate)]!
+    $c -- self_fulfilling
+}
+
+// FULFILLED AS FORETOLD: when the foretold event simply comes to pass, the prophecy stood true.
+rule Fulfilled {
+  when:
+    char $c [+Fated(to=$fate)]
+    evt  $e [&Fulfills(agent=$any, prophecy=$fate)]
+  then:
+    $fate [+Fulfilled]
+    !$c [+Fated(to=$fate)]!
+}
+
+
+// === ASSOCIATIONS ===
+assoc prophecy -> [
+  fate       : "binds a character to a",
+  revelation : "its fulfilment is a"
+]
+
+
+// === CONCRETE VIGNETTE: Croesus and the Delphic Oracle (Herodotus, 6c BCE) ===
+// Told that if he went to war "a great empire will fall," Croesus assumed it meant Persia and
+// attacked — and the great empire that fell was his own. Foretold, then fulfilled, ironically.
+
+char croesus [+King]
+
+scene the_oracle {
+  beat 1 {
+    evt pronouncement [&Foretells(agent=delphi, subject=croesus, fate=an_empire_falls)]
+    // Foretell -> croesus [~Knows]; ?croesus [+Fated(to=an_empire_falls)]?
+  }
+  beat 2 {
+    evt the_war [&Fulfills(agent=croesus, prophecy=an_empire_falls)]   // he marches on Persia
+    // Fulfilled -> an_empire_falls [+Fulfilled];  the empire that fell was Lydia
+  }
+}
