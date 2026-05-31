@@ -27,4 +27,5 @@ import "trl/modules/five_stages_of_grief.trl" // psychological system (the stage
 import "trl/modules/motivation_dynamics.trl"  // psychological system (desire -> pursuit -> attainment/obsession/abandonment)
 import "trl/modules/needs.trl"                // psychological system (Maslow's hierarchy: ranked needs + prepotency)
 import "trl/modules/rhetoric.trl"             // narrative system (author -> audience: framing, the curiosity gap, authorial override)
+import "trl/modules/non_fiction.trl"          // narrative system (storytelling bound to the real: reality writes the verdict)
 import "trl/modules/action_dynamics.trl"      // tactical system (the verbs of conflict & cooperation)

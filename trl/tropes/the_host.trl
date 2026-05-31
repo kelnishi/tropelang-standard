@@ -1,0 +1,41 @@
+// === PREAMBLE ===
+// @trope    The Host (Presenter)
+// @category Non-Fiction / Cast
+// @source   https://allthetropes.org/wiki/The_Host
+// @version  1.3
+//
+// Laconic: the on-screen guide of a non-fiction work — the presenter who frames each segment,
+// carries the audience through, and lends the whole the authority (or the warmth) of a single
+// trusted voice. The non-fiction cousin of the Narrator and the audience-surrogate Everyman.
+
+import "trl/modules/non_fiction.trl"        // Hosts / the guiding voice
+
+assoc the_host -> [
+  non_fiction : "the guiding voice of",
+  the_everyman : "is, for the audience, a knowledgeable"
+]
+
+imply Host -> [Presenter, Guide, Voice, Narrative]
+
+// Naming rule: a presenter guiding the audience through a non-fiction segment IS the Host.
+rule The_Host {
+  when:
+    char $h [+Host]
+    evt  $address [&Hosts(agent=$h, segment=$s)]
+  then:
+    audience [+Guided(by=$h)]
+    $h -- guidance
+}
+
+// === CONCRETE VIGNETTE: Planet Earth — David Attenborough (documentary) ===
+// A voice so woven into the natural world that for a generation it simply IS the sound of it —
+// hushed over a hunting leopard, delighted by a bird-of-paradise, the single thread that makes a
+// thousand disconnected wonders into one story.
+char attenborough [+Host]
+
+scene the_wild {
+  beat 1 {
+    evt the_narration [&Hosts(agent=attenborough, segment=the_hunt)]
+    // The_Host -> audience [+Guided(by=attenborough)]
+  }
+}

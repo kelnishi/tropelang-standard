@@ -1,0 +1,42 @@
+// === PREAMBLE ===
+// @trope    Putting It to the Test
+// @category Non-Fiction / Structure
+// @source   https://allthetropes.org/wiki/MythBusters
+// @version  1.3
+//
+// Laconic: the experiment as a narrative beat — pose a claim, build the rig, run the trial, and
+// reach a verdict the audience has been made to crave. The non-fiction engine of suspense: it
+// rides the curiosity gap (the claim is a posed question) but, unlike fiction, the payoff is an
+// EMPIRICAL verdict reality writes, not one the author chooses.
+
+import "trl/modules/non_fiction.trl"        // Tests -> [+Verdict] [+Empirical]
+
+assoc putting_it_to_the_test -> [
+  non_fiction : "the empirical-verdict rule of",
+  cliffhanger : "opens a curiosity gap like a"
+]
+
+imply PuttingItToTheTest -> [Experiment, Test, Method, Empirical, Verdict, Narrative]
+
+// Naming rule: a claim put to empirical trial, verdict pending, IS Putting It to the Test.
+rule Putting_It_To_The_Test {
+  when:
+    evt $test [&Tests(agent=$h, claim=$c)]
+  then:
+    $test [+PuttingItToTheTest]
+    audience [#Curious(about=$c)]
+}
+
+// === CONCRETE VIGNETTE: the Mentos-and-Diet-Coke geyser (popular science) ===
+// A claim everyone has heard — drop the mints, get a fountain — staged as a trial: the rig, the
+// countdown, the curiosity held taut, and then the column of foam that settles the matter by
+// simply happening.
+char host  [+Host]
+obj  the_claim [+Hypothesis]
+
+scene the_demo {
+  beat 1 {
+    evt the_drop [&Tests(agent=host, claim=the_claim)]
+    // Putting_It_To_The_Test -> audience [#Curious]; Reality_Writes_The_Verdict -> the_claim [+Verdict]
+  }
+}

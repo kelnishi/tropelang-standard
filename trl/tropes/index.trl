@@ -82,6 +82,9 @@ import "trl/tropes/rightful_king_returns.trl"
 import "trl/tropes/the_chosen_one.trl"
 import "trl/tropes/the_paragon.trl"
 import "trl/tropes/the_everyman.trl"
+import "trl/tropes/the_host.trl"
+import "trl/tropes/putting_it_to_the_test.trl"
+import "trl/tropes/based_on_a_true_story.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -220,6 +223,13 @@ concept the_chosen_one        [+Trope(category="Fate", source="allthetropes.org/
 // virtue — Trustworthy/Loyal/Honorable) and The Everyman (the ordinary, mortal audience surrogate).
 concept the_paragon       [+Trope(category="Cast", source="allthetropes.org/wiki/The_Paragon")] [%Narrative]
 concept the_everyman      [+Trope(category="Cast", source="allthetropes.org/wiki/Everyman")] [%Narrative]
+
+// NON-FICTION FORMS (ride non_fiction.trl). The Host (the on-screen guide), Putting It to the Test
+// (the experiment as a narrative beat; reality writes the verdict), Based on a True Story (the
+// truth-claim + fidelity dial).
+concept the_host                [+Trope(category="Non-Fiction", source="allthetropes.org/wiki/The_Host")] [%Narrative]
+concept putting_it_to_the_test  [+Trope(category="Non-Fiction", source="allthetropes.org/wiki/MythBusters")] [%Narrative]
+concept based_on_a_true_story   [+Trope(category="Non-Fiction", source="allthetropes.org/wiki/Based_on_a_True_Story")] [%Narrative]
 
 // UNRELIABLE NARRATOR — the narration's facts diverge from the truth. The first corpus trope
 // to use S14 diegetic levels: a non_canon narration plane (with a teller) vs the reality plane.

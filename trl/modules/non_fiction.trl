@@ -1,0 +1,69 @@
+// === PREAMBLE ===
+// @title    Non-Fiction — storytelling bound to the real
+// @category Narrative Systems
+// @version  0.1
+// @note     The corpus describes non-fiction storytelling well already (a MythBusters episode
+//           covers at ~57%) because tropes are narrative PATTERNS and we narrativize reality with
+//           the same grammar — the curiosity gap, the Foil, spectacle, the reveal all apply to a
+//           real experiment. What is DISTINCT is one capability: non-fiction is the rhetoric layer
+//           MINUS override-of-outcome. The author FRAMES, ESCALATES, SELECTS, and DRAMATIZES — but
+//           REALITY writes the verdict; the host cannot decide the result of the test. And the
+//           shaping comes with a fidelity dial: documentary -> dramatization -> "inspired by".
+//
+// Import: import "trl/modules/non_fiction.trl"
+
+import "trl/concepts/index.trl"               // truth
+import "trl/modules/rhetoric.trl"             // non-fiction is rhetoric, with the override removed
+
+concept non_fiction [+System] [%Narrative]
+imply NonFiction -> [Truth_Claim, Reality_Bound, Narrative]
+
+
+// === THE VOCABULARY ===
+verb Hosts(segment)     [+Narrative]   // guide the audience through, on screen
+verb Tests(claim)       [+Narrative]   // put a claim to empirical trial
+verb Dramatizes(events) [+Narrative]   // shape real events with narrative technique
+
+
+// === RULES ===
+
+// THE defining capability: the author may build all the suspense in the world around a test, but
+// REALITY writes its verdict — not authorial fiat (contrast rhetoric's Authorial_Fiat -> Canon).
+rule Reality_Writes_The_Verdict {
+  when:
+    evt $test [&Tests(agent=$host, claim=$c)]
+  then:
+    $c [+Verdict]
+    $test [+Empirical]
+    audience -- payoff
+}
+
+// Dramatization: real events shaped with narrative technique for an audience (at some fidelity).
+rule Dramatize {
+  when:
+    evt $d [&Dramatizes(agent=$author, events=$real)]
+  then:
+    $d [+Dramatization]
+    audience -- engagement
+}
+
+
+// === ASSOCIATIONS ===
+assoc non_fiction -> [
+  rhetoric : "is the framing of",
+  truth    : "answers, unlike fiction, to"
+]
+
+
+// === CONCRETE VIGNETTE: Príncipe, 1919 — Eddington tests Einstein (history) ===
+// An astronomer sails to an island to photograph a total eclipse, to see whether starlight bends
+// around the sun as a patent clerk's theory predicts. He frames the stakes, he builds the wait —
+// but the stars themselves, shifting exactly as foretold, write the verdict no one could impose.
+char eddington [+Host]
+
+scene the_eclipse {
+  beat 1 {
+    evt the_plates [&Tests(agent=eddington, claim=light_bends)]
+    // Reality_Writes_The_Verdict -> light_bends [+Verdict]; relativity confirmed by the sky itself
+  }
+}

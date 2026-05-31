@@ -1,0 +1,43 @@
+// === PREAMBLE ===
+// @trope    Based on a True Story
+// @category Non-Fiction / Truth-Claim
+// @source   https://allthetropes.org/wiki/Based_on_a_True_Story
+// @version  1.3
+//
+// Laconic (per the wiki): real events shaped into a story — and even when true, presented like a
+// fictional account, because reality has no dialogue and no three-act tidiness. It comes with a
+// FIDELITY dial: faithful Dramatization at one end, "Very Loosely Based On" and "Inspired By" at
+// the other ("we changed a bunch of stuff to make it less boring"). The truth-claim is itself a
+// device — it changes how the audience holds everything that follows.
+
+import "trl/modules/non_fiction.trl"        // Dramatizes / the truth-claim
+
+assoc based_on_a_true_story -> [
+  non_fiction : "the truth-claim of",
+  rhetoric    : "frames real events with the"
+]
+
+imply BasedOnATrueStory -> [Truth_Claim, Dramatization, Reality_Bound, Narrative]
+
+// Naming rule: real events shaped with narrative technique under a truth-claim IS the trope.
+rule Based_On_A_True_Story {
+  when:
+    evt $d [&Dramatizes(agent=$author, events=$real)]
+  then:
+    $d [+BasedOnATrueStory]
+    audience -- engagement
+}
+
+// === CONCRETE VIGNETTE: Apollo 13 — the faithful end of the dial (film, 1995) ===
+// A near-disaster reconstructed close to the record — the CO2 scrubber improvised from a list of
+// what was aboard, the line trimmed to "Houston, we have a problem" — dramatized for shape, but
+// anchored hard to a thing that really happened and a crew that really came home.
+char ron_howard [+Author]
+set  apollo_13  [+RealEvent]
+
+scene the_reconstruction {
+  beat 1 {
+    evt the_film [&Dramatizes(agent=ron_howard, events=apollo_13)]
+    // Based_On_A_True_Story -> the_film [+BasedOnATrueStory]; high fidelity, the faithful end
+  }
+}
