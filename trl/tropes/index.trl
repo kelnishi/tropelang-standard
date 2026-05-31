@@ -130,6 +130,7 @@ import "trl/tropes/reenactment.trl"
 import "trl/tropes/spectacle.trl"
 import "trl/tropes/the_climax.trl"
 import "trl/tropes/worthy_opponent.trl"
+import "trl/tropes/chekhovs_gunman.trl"
 
 // === TROPE TITLE ENTRIES ===
 
@@ -360,6 +361,7 @@ concept refusal_of_the_call [+Trope(category="Universal", source="allthetropes.o
 
 concept anti_hero [+Trope(category="Cast", source="https://allthetropes.org/wiki/Anti-Hero")] [%Narrative]
 concept batman_gambit [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Batman_Gambit")] [%Epistemic]
+concept chekhovs_gunman [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Gunman")] [%Narrative]
 concept curb_stomp_battle [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Curb_Stomp_Battle")] [%Interpersonal]
 concept david_versus_goliath [+Trope(category="Combat Tropes", source="https://allthetropes.org/wiki/David_Versus_Goliath")] [%Interpersonal]
 concept eucatastrophe [+Trope(category="Happy Endings", source="https://allthetropes.org/wiki/Eucatastrophe")] [%Narrative]

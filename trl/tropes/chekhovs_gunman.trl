@@ -1,0 +1,124 @@
+// === PREAMBLE ===
+// @trope    Chekhov's Gunman
+// @category Foreshadowing
+// @source   https://allthetropes.org/wiki/Chekhov's_Gunman
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a character introduced in a seemingly small role and brought back later
+// with a much larger, more important part to play — the person-shaped Chekhov's Gun. FRONTIER: the
+// CHARACTER variant of chekhovs_gun (which fires an OBJECT). A minor figure is conspicuously planted
+// early (a Bystander, a face in the crowd), the planting paid off only later when that same figure
+// proves pivotal. Rides the same foreshadowing setup/payoff layer as chekhovs_gun; the payoff query
+// reaches back into the early planting via `past scene {}` (as chekhovs_gun's object does). Distinct
+// from chekhovs_gun (this is a PERSON, not an object) and from hidden_identity (the figure need not
+// be in disguise — they are simply overlooked until they matter). Several at once = Chekhov's Army.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/narrative.trl"    // foreshadowing, revelation, consequence
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc chekhovs_gunman -> [
+  chekhovs_gun  : "the person-shaped",
+  foreshadowing : "an honest kind of",
+  revelation    : "can deliver",
+  consequence   : "pays off in",
+  red_herring   : "contrasts with"
+]
+
+
+// === ONTOLOGY ===
+// A planted minor character: a Bystander who is Foreshadowing on two legs, awaiting payoff.
+
+imply ChekhovsGunman -> [Foreshadowing, Bystander, Planted]
+
+
+// === ABSTRACT RULES ===
+
+// SETUP — a minor character is conspicuously introduced in a small part but is not yet pivotal;
+// a payoff is now owed on the person.
+rule ChekhovsGunman_Setup {
+  when:
+    char $minor [+Bystander] [+Conspicuous]
+    evt $intro [&Introduces(person=$minor)]
+    not ( $minor [+Pivotal] )
+  then:
+    $minor [+ChekhovsGunman]
+    $minor [+PendingPayoff]
+}
+
+// FIRED — the planted minor character finally takes a decisive part: they are the agent of a
+// pivotal event, and the early planting is confirmed by a backward `past scene {}` query (the
+// honest setup really WAS laid earlier). The debt is paid and the elevation is made ABSOLUTE —
+// once shown to have mattered all along, they cannot be demoted back to background.
+rule ChekhovsGunman_Fired {
+  when:
+    char $minor [+PendingPayoff]
+    evt $turn [&Acts(agent=$minor)] [+Decisive]
+    past scene $earlier {
+      evt $intro [&Introduces(person=$minor)]
+    }
+  then:
+    $minor [-PendingPayoff]
+    !$minor [+Pivotal]!
+    $turn [+Payoff(person=$minor)]
+    $minor -- consequence
+}
+
+
+// === CONCRETE VIGNETTE: The Incredibles — Buddy Pine / IncrediBoy → Syndrome (animated film, 2004) ===
+// In the opening, before the world has turned on supers, an over-eager kid in a homemade costume
+// climbs into Mr. Incredible's car begging to be his sidekick — an annoying minor nuisance, brushed
+// off and forgotten. Decades later that same overlooked boy returns as Syndrome, the central
+// villain, his whole scheme born of that early dismissal. The gunman planted in scene one fires in
+// the third act. The early planting is reached by the payoff rule's `past scene {}` backward query.
+
+// BUDDY PINE — IncrediBoy in the opening; SYNDROME in the climax
+char buddy [+Bystander] [+Conspicuous]
+
+// MR. INCREDIBLE / BOB PARR
+char mr_incredible [+Protagonist]
+
+// EXT. METROVILLE STREET - DAY (the golden age of supers)
+set metroville [+Exterior] [+Day]
+
+// INT. NOMANISAN ISLAND LAIR - NIGHT (years later)
+set nomanisan [+Interior] [+Night]
+
+// ===== the planting — an overlooked minor character, conspicuously introduced and brushed off =====
+scene the_eager_kid {
+  beat 1 {
+    buddy @ metroville
+    mr_incredible @ metroville
+    evt intro [&Introduces(person=buddy)]
+        dialog(inject=[speaker=buddy], inline="""
+               speaker: "{speaker}"
+               cue: "popping up in the back seat, mask askew"
+               tone: breathless
+               text: "I'm IncrediBoy! I can be your ward!"
+               """)
+    buddy -- mr_incredible : "Rebuffed By"
+    // ChekhovsGunman_Setup -> buddy [+ChekhovsGunman]; buddy [+PendingPayoff]
+    buddy [+ChekhovsGunman]
+    buddy [+PendingPayoff]
+  }
+}
+
+// ===== the payoff — the forgotten kid returns, now pivotal; the early planting fires =====
+scene the_island_reveal {
+  beat 1 {
+    buddy @ nomanisan
+    mr_incredible @ nomanisan
+    evt turn [&Acts(agent=buddy)] [+Decisive]
+        dialog(inject=[speaker=buddy], inline="""
+               speaker: "{speaker}"
+               cue: "stepping from the shadows, grown, grinning"
+               tone: triumphant
+               text: "You always, always say 'Be true to yourself,' but you never say which part of yourself to be true to! ... It's me. Buddy!"
+               """)
+    buddy [-PendingPayoff]
+    !buddy [+Pivotal]!
+    turn [+Payoff(person=buddy)]
+  }
+}

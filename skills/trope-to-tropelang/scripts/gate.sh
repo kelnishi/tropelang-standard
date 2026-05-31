@@ -22,7 +22,9 @@ else echo "✓ validates"; fi
 
 # 3 · round-trip (a self-contained trope is log-register and MUST round-trip; if it declares
 #     concept/verb/state it's library-register — that's a smell: move vocabulary to a module)
-rt="$(cargo run --quiet --example fidelity -- "$f" 2>&1)"
+# fidelity.rs prints ok|library-register to STDOUT; cargo build noise + parse-error detail go
+# to STDERR and must not be read as the result (a cold-build warning was tripping this).
+rt="$(cargo run --quiet --example fidelity -- "$f" 2>/dev/null)"
 case "$rt" in
   ok) echo "✓ round-trips" ;;
   library-register*) echo "⚠ library-register: a TROPE should import vocabulary, not declare concept/verb/state — move it to a module" ;;
