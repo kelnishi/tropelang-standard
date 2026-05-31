@@ -1,0 +1,79 @@
+// === PREAMBLE ===
+// @trope    Reenactment
+// @category Non-Fiction / Documentary
+// @source   https://allthetropes.org/wiki/Dramatization
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): inside a documentary, a real past event is staged with ACTORS standing in
+// for the real people, so the audience can SEE what happened — yet the account stays non-fiction,
+// because the events being dramatized really occurred. FRONTIER: the honest-dramatization cell of
+// the non_fiction apparatus. Based on a True Story dramatizes real events AS a film (the work is the
+// drama); a Reenactment embeds the dramatization INSIDE a factual account as illustration — the
+// staging serves a verdict reality already wrote. And it is the exact mirror of Mockumentary: same
+// actors, same staged scenes, same documentary frame — but here the events are REAL, so the staging
+// stays Reality_Bound. Mockumentary drops that tag; the Reenactment keeps it. The truth-claim is
+// honest: the costume is on the actors, not on the truth.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/non_fiction.trl"        // Dramatizes / the documentary apparatus, the truth-claim
+import "trl/concepts/index.trl"             // truth — what the account answers to
+
+assoc reenactment -> [
+  non_fiction          : "the staged-illustration dramatization of",
+  based_on_a_true_story : "embeds inside a factual account, not stands alone as, the dramatization of",
+  mockumentary         : "the honest mirror of — real events staged, not invented ones",
+  talking_head         : "shows what the witness only attests to, beside the",
+  truth                : "stages, without unmaking, a piece of"
+]
+
+
+// === ONTOLOGY ===
+// The signature pairing: a Dramatization of events that stay Reality_Bound — staged for the eye, but
+// still answering to the truth. The one tag Mockumentary drops is the one a Reenactment keeps.
+imply Reenactment -> [Dramatization, Reality_Bound, Truth_Claim, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: when a documentary author DRAMATIZES events that really happened, with actors standing
+// in for the real participants inside the factual account, that staging IS a Reenactment. The verdict
+// was reality's; the staging only illustrates it — so the dramatized events stay Reality_Bound (the
+// truth-claim is honest), the inverse of Mockumentary's costume.
+rule Reenactment {
+  when:
+    evt $d [&Dramatizes(agent=$author, events=$real)]
+    char $actor [+Stand_In(for=$real)]
+  then:
+    $d [+Reenactment]
+    $d [+Dramatization]
+    $real [+Reality_Bound]
+    audience -- engagement
+}
+
+
+// === CONCRETE VIGNETTE: Unsolved Mysteries — the staged disappearance (TV, Robert Stack era, 1988) ===
+// Over a synth-string dread, the host in the trench coat sets the scene; then the screen gives way to
+// hired actors walking a real vanished woman's last known evening — the diner, the rain-slicked lot,
+// the headlights pulling away — staged so the watching public might recognize a face and call the
+// hotline. The people on screen are actors, but the disappearance they walk through is on the record:
+// a real case, dramatized to be seen, not invented to be believed. CONTRAST trl/tropes/mockumentary.trl
+// — there the host fronts events the author dreamed up; here actors restage an event reality already
+// logged, and the truth-claim stays honest.
+
+// ===== the documentary's account — the assembled factual record =====
+<<doc>>
+char  robert_stack [+Host]
+set   the_vanishing [+RealEvent]
+
+// ===== the hired actor standing in for the real, vanished woman =====
+<<doc>>
+char  stand_in [+Stand_In(for=the_vanishing)]
+
+scene the_segment {
+  beat 1 {
+    evt the_restaging [&Dramatizes(agent=robert_stack, events=the_vanishing)]
+    // Reenactment -> the_restaging [+Reenactment] [+Dramatization]; the_vanishing [+Reality_Bound]
+    // honest dramatization: actors stage a real case so it can be SEEN, the truth-claim intact
+  }
+}

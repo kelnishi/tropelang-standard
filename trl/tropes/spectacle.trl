@@ -1,0 +1,62 @@
+// === PREAMBLE ===
+// @trope    Spectacle
+// @category Rhetoric / Spectacle
+// @source   https://allthetropes.org/wiki/Visual_Effects_of_Awesome_(Sugar_Wiki)
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a sight staged for sheer visual awe — the grand set-piece, the
+// breathtaking vista, the dazzling effect — crafted not to advance the plot but to overwhelm the
+// audience aesthetically (Aristotle's opsis; the "Visual Effects of Awesome" / "Scenery Porn"
+// family). It is the AUTHOR's prerogative: framing a sight AS spectacle is what makes the house
+// gasp. Rides rhetoric's Appraise_Spectacle — the aesthetic rung served to the audience as AWE —
+// and is the earnest-awe sibling of Rule of Cool's framed thrill: where that buys a jaw-drop from
+// a feat too cool to question, this buys it from a sight too beautiful to look away from.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/rhetoric.trl"          // Appraise_Spectacle -> audience [#Awed]
+
+assoc spectacle -> [
+  rhetoric     : "the spectacle-framing rule of",
+  audience     : "is overwhelmed with awe by the",
+  rule_of_cool : "the aesthetic-awe sibling of the cool-thrill"
+]
+
+
+// === ONTOLOGY ===
+
+imply Spectacle -> [Beauty, Awe, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a sight FRAMED for sheer visual awe IS the Spectacle (tags the framing). The
+// audience is awed by rhetoric's Appraise_Spectacle; this names the deed of staging it.
+rule Spectacle {
+  when:
+    evt $f [&Frames(agent=author, target=$sight, as=spectacle)]
+  then:
+    audience [#Awed]
+    $f [+Spectacle]
+}
+
+
+// === CONCRETE VIGNETTE: 2001: A Space Odyssey — the Star Gate (film, 1968) ===
+// Astronaut Bowman falls through the monolith into a wordless torrent of streaming light and
+// alien color — the "Star Gate" sequence. It carries no exposition and advances no argument; for
+// long minutes it simply IS, a crafted aesthetic overwhelm staged to flood the eye. Kubrick frames
+// the slit-scan vista for awe alone, and the house is overwhelmed.
+
+// DAVE BOWMAN
+char bowman [+Protagonist]
+
+// THE STAR GATE
+obj  star_gate [+Liminal]
+
+scene the_star_gate {
+  beat 1 {
+    bowman > star_gate
+    evt the_lightshow [&Frames(agent=author, target=star_gate, as=spectacle)]
+    // Appraise_Spectacle (rhetoric) -> audience [#Awed];  Spectacle tags the framing
+  }
+}

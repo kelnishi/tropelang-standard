@@ -1,0 +1,66 @@
+// === PREAMBLE ===
+// @trope    Worthy Opponent
+// @category Characterization / Relationships
+// @source   https://allthetropes.org/wiki/Worthy_Opponent
+// @domain   Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): a rival adversary who follows a strict code of honor — the one enemy to
+// whom you may say "It Has Been an Honor," and most often the feeling is mutual. Esteem held in
+// common across the line of conflict: each opponent recognizes the other's skill and honor, and
+// that recognition does not dissolve the enmity but ennobles it. The bridge where THE RIVAL's
+// adversarial bond meets REPUTATION's esteem — honor conferred not by one's own community but by
+// one's enemy, the most credible witness of all.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/tropes/the_rival.trl"          // the adversarial bond the esteem rides on
+import "trl/modules/reputation.trl"        // Honors / [+Honored] — esteem as a standing held in common
+
+assoc worthy_opponent -> [
+  the_rival  : "is the honored form of",
+  reputation : "is esteem conferred by the enemy, in",
+  honor      : "the quality each recognizes in the other is"
+]
+
+
+// === ONTOLOGY ===
+
+imply WorthyOpponent -> [Honor, Conflict, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition: two adversaries who each HONOR the other are Worthy Opponents — the esteem is
+// MUTUAL (both directions present) and survives the enmity. Each leaves the other [+Honored] (per
+// reputation's Esteem) and tags the pair [+WorthyOpponent]: respect held in common across the line.
+rule Worthy_Opponent {
+  when:
+    char $a [@Rival_Of(other=$b)]
+    evt  $esteem    [&Honors(agent=$a, target=$b)]
+    evt  $reciprocal [&Honors(agent=$b, target=$a)]
+  then:
+    $a [+Honored]
+    $b [+Honored]
+    $a [+WorthyOpponent]
+    $b [+WorthyOpponent]
+    $a -- honor
+    $b -- honor
+}
+
+
+// === CONCRETE VIGNETTE: The Final Problem — Holmes and Moriarty (Conan Doyle, 1893) ===
+// The detective and the "Napoleon of crime" are bound in lethal opposition, yet each names the
+// other the finest mind he has met. Holmes calls Moriarty's reach a thing of genius; Moriarty grants
+// Holmes the only adversary worth his own destruction — and at the Reichenbach Falls they go over
+// locked together, enemies who esteemed each other to the last.
+
+char holmes   [+Protagonist] [@Rival_Of(other=moriarty)]
+char moriarty [+Antagonist]  [@Rival_Of(other=holmes)]
+
+scene the_reichenbach_falls {
+  beat 1 {
+    evt holmes_esteems   [&Honors(agent=holmes, target=moriarty)]   // "the Napoleon of crime"
+    evt moriarty_esteems [&Honors(agent=moriarty, target=holmes)]   // the one mind worth his ruin
+    // Worthy_Opponent -> both [+Honored] [+WorthyOpponent]; respect held in common across the enmity
+  }
+}

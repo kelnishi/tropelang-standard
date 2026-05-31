@@ -1,0 +1,95 @@
+// === PREAMBLE ===
+// @trope    Heroic Second Wind
+// @category Heroic Spirit / Comeback
+// @source   https://allthetropes.org/wiki/Heroic_Second_Wind
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): the hero gets a climactic second wind — apparently beaten, they find
+// new resolve, stand up, and turn the fight, delivering the finishing blow. The bright in-combat
+// counterpart of the Despair Event Horizon: where that names hope crushed into absolute despair,
+// this names will overriding bodily defeat at the nadir of a fight.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"               // despair, hope, resolve, conflict
+import "trl/modules/action_dynamics.trl"      // the beating: [+Exposed] / [+Defeated], the Finisher it sets up
+import "trl/modules/needs.trl"                // the Inversion mechanism: a higher drive held harder than the body's lack
+import "trl/modules/emotion_dynamics.trl"     // the despair the resolve overrides
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc heroic_second_wind -> [
+  despair_event_horizon : "the bright counterpart of",
+  needs                 : "the Inversion of a combat nadir",
+  action_dynamics       : "rises from [+Exposed] to land the Finisher",
+  hope_spot             : "earns rather than dangles",
+  resolve               : "surges from",
+  despair               : "overrides"
+]
+
+
+// === ONTOLOGY ===
+
+imply HeroicSecondWind -> [Resolve, Comeback, Narrative]
+
+
+// === ABSTRACT RULE ===
+// At the nadir of a fight — the hero beaten down ([+Exposed], the body defeated, despair gripping)
+// — an esteem/becoming drive held HARDER than the body's defeat inverts the order (the needs
+// Inversion mechanism): will overrides the flesh. The hero sheds the exposure, rallies with renewed
+// resolve, and turns the fight. Not a deus ex machina dangled by the author — a surge earned from
+// within. ($hr is the higher rung — esteem/becoming; $br the bodily/safety lack pulling against it.)
+rule HeroicSecondWind {
+  when:
+    char $c [+Exposed]
+    char $c [#Despairing]
+    char $c [~Pursues(rank=$hr, salience=$hs)]
+    char $c [#Lacks(rank=$br, salience=$bs)]
+    $br < $hr
+    $hs > $bs
+    not ( $c [+Rallied] )
+  then:
+    $c [-Exposed]
+    $c [-Despairing]
+    $c [#Determined]
+    $c [+Transcendent]
+    $c [+Rallied]
+    $c -- resolve
+}
+
+
+// === CONCRETE VIGNETTE: Rocky — the final round against Apollo Creed (sports film, 1976) ===
+// Fifteen rounds, the body wrecked — Rocky is on the canvas, an eye cut shut, all but finished.
+// Going the distance was never about the belt (esteem he could not buy); it was about proving he
+// "weren't just another bum from the neighborhood" — a becoming held harder than a battered body.
+// At Mickey's "DOWN!" and the count, that drive inverts the defeat: he hauls himself off the mat,
+// rallies, and trades with the champion to the bell.
+
+// ROCKY BALBOA
+char rocky [+Protagonist] [+Underdog]
+
+// APOLLO CREED — the champion
+char apollo [+Antagonist] [+Champion]
+
+// INT. SPECTRUM ARENA - NIGHT
+set the_ring [+Interior] [+Night] [+Crowded]
+
+scene the_fifteenth_round {
+  beat 1 {
+    rocky @ the_ring
+    apollo @ the_ring
+    evt knockdown [&Finishes(agent=apollo, target=rocky)]
+    rocky [+Exposed]
+    // the beating: the body defeated, on the canvas
+  }
+  beat 2 {
+    rocky [#Despairing]
+    rocky [#Lacks(rank=1, salience=6)]      // the body — wrecked, cut, screaming to stay down
+    rocky [~Pursues(rank=4, salience=10)]   // esteem — to go the distance, to prove he is no bum; held past the body
+    // HeroicSecondWind (1 < 4, 10 > 6) -> rocky [-Exposed] [-Despairing] [#Determined] [+Transcendent] [+Rallied] -- resolve
+  }
+  beat 3 {
+    rocky -- apollo : "Rises and Trades"
+    // the rally: off the mat, back in the fight, to the final bell
+  }
+}

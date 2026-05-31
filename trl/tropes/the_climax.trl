@@ -1,0 +1,128 @@
+// === PREAMBLE ===
+// @trope    The Climax
+// @category Story Structure
+// @source   https://allthetropes.org/wiki/Climax
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): the peak where the battle reaches its greatest emotional and physical
+// intensity — the turning point toward which the rising action builds and after which it falls.
+// The protagonist will either prevail or, if it is that sort of story, fail so completely that
+// further struggle is impossible. NOT the dénouement (that is the aftermath, the falling action's
+// end) and NOT the Anticlimax (a built-up peak that fizzles). FRONTIER: this is a STRUCTURE-RIDING
+// recognizer, not a level-crossing or ordering device. It rides Freytag's pyramid and keys on the
+// canonical crest: a character who has been bonded to `rising_action` reaches the next beat,
+// `climax`, where the central conflict (a >< opposition) turns decisively and crosses the
+// `point_of_no_return`. The climax is the beat the whole pyramid is built around; this trope simply
+// RECOGNIZES that the peak beat IS the climax.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/freytags_pyramid.trl"   // exposition / rising_action / climax / falling_action — the arc it crowns
+import "trl/modules/rhetoric.trl"           // the audience whose attention crests at the peak
+import "trl/concepts/index.trl"             // conflict, consequence, point_of_no_return
+
+assoc the_climax -> [
+  rising_action      : "crests the",
+  falling_action     : "tips the arc into the",
+  conflict           : "the turn of the central",
+  point_of_no_return : "is, after the turn, past the",
+  consequence        : "everything after is",
+  denouement         : "NOT the aftermath, the",
+  eucatastrophe      : "a joyous-turn species of",
+  curb_stomp_battle  : "a one-sided species of"
+]
+
+
+// === ONTOLOGY ===
+// The peak beat of the dramatic arc — the decisive turning point of maximum intensity.
+
+imply TheClimax -> [TurningPoint, Peak, Decisive, Narrative]
+imply TurningPoint -> [Irreversible, Generative]
+
+
+// === ABSTRACT RULE ===
+// Recognizer: a protagonist who has been carried up the rising action (bonded to `rising_action`)
+// now reaches the next beat — bonded to `climax` — where the central conflict, the >< opposition
+// with the antagonist, comes to its decisive head. At that turn the protagonist either prevails or
+// fails completely; either way the story crosses the `point_of_no_return` and tips from rising into
+// falling action. The crest beat is named [+TheClimax] and the intensity is asserted ABSOLUTE
+// (!...!): once the peak lands, it is the felt high point of the whole arc. Contrast Anticlimax,
+// where the built-up >< never resolves at the peak.
+rule The_Climax {
+  when:
+    char $hero -- climax
+    char $foe
+    $hero >< $foe
+    past scene $earlier {
+      char $hero -- rising_action
+    }
+  then:
+    $hero -- climax : "The Turning Point — The Peak"
+    !$hero [+TheClimax]!
+    climax -- point_of_no_return : "Crosses"
+    climax -- conflict : "Turns The"
+    audience [#Riveted]
+    surface_global(title="The Climax", description="The rising action crests; the central conflict turns at its peak.")
+}
+
+
+// === CONCRETE VIGNETTE: Hamlet — the fencing match (stage play, c. 1600) ===
+// The whole tragedy has climbed to this: Hamlet's feigned madness, the murdered father, the
+// poisoned politics of Elsinore all crest in the rigged duel with Laertes. The rising action is
+// every deferred revenge across four acts; the climax is the match where the poisoned blade and the
+// poisoned cup come due — Gertrude drinks, Laertes confesses, Hamlet strikes the King, and all four
+// die. After the turn nothing can be walked back: the point of no return is crossed in a single
+// scene, and the play tips into its falling action and the arrival of Fortinbras.
+
+// HAMLET — Prince of Denmark, revenge long deferred
+char hamlet [+Protagonist]
+hamlet [+MotivatedBy(reason="Vengeance For His Father")]
+
+// LAERTES — wielder of the poisoned foil, the King's instrument
+char laertes [+Antagonist]
+
+// CLAUDIUS — the usurping King, who poisons both blade and cup
+char claudius [+BigBad] [+Authority]
+
+// THE POISONED FOIL — the unbated, envenomed sword
+obj poisoned_foil [+MacGuffin] [+Lethal]
+
+// INT. THE GREAT HALL OF ELSINORE — DAY — the court assembled for the match
+set great_hall [+Interior] [+Day] [+Crowded]
+
+// ===== the rising action — authored as the EARLIER scene the rule queries back into =====
+// Four acts of deferred revenge: the Ghost's charge, the feigned madness, the play-within-a-play,
+// Polonius slain, Ophelia drowned. By the duel, the pressure has climbed to its breaking point.
+scene the_long_deferral {
+  beat 1 {
+    hamlet @ great_hall
+    hamlet -- rising_action : "Four Acts Of Deferred Revenge; The Mousetrap; Polonius Slain"
+  }
+}
+
+// ===== the climax — the peak beat the rule recognizes =====
+scene the_fencing_match {
+  beat 1 {
+    hamlet @ great_hall
+    laertes @ great_hall
+    claudius @ great_hall
+    hamlet > poisoned_foil
+    // the central conflict comes to its decisive head — the >< opposition the rule keys on
+    hamlet >< laertes : "The Rigged Duel — Envenomed Blades Exchanged"
+        dialog(inject=[speaker=hamlet], inline="""
+               speaker: "{speaker}"
+               cue: "the queen fallen, the plot bared, the blade turned on its maker"
+               tone: terrible
+               text: "The point envenom'd too! Then, venom, to thy work."
+               """)
+    // The_Climax: the crest of the arc — rising action turns at its peak into the fall.
+    hamlet -- climax : "The Turning Point — The Peak"
+    !hamlet [+TheClimax]!
+    climax -- point_of_no_return : "Crosses"
+    climax -- conflict : "Turns The"
+    // the turn is total: the King struck, all four dead — no struggle can continue past it
+    hamlet -> claudius : "Strikes The King — Vengeance, At Last"
+    audience [#Riveted]
+  }
+}
