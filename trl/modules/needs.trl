@@ -58,21 +58,43 @@ meaning       -> tier_becoming
 transcendence -> tier_becoming
 
 
-// === THE RULE THAT MAKES IT A HIERARCHY ===
+// === PREPOTENCY AND ITS INVERSION (the rankings are NOT absolute) ===
+// A need carries a RANK (its rung on the ladder) and a SALIENCE (how hard it grips THIS character,
+// now). By default the basic needs grip hardest, so a lower unmet need outpulls a higher pursuit
+// — that is prepotency. But SALIENCE is the true driver and rank is only its default: a higher
+// need held hard enough INVERTS the order. The most human stories are about that inversion — the
+// soldier who reaches from cover for a butterfly, the artist who starves for the work, the martyr
+// who chooses meaning over the body. Same mechanism, opposite outcome; which one fires is decided
+// by which need pulls harder, not by which sits lower.
 
-// PREPOTENCY: an unmet lower need overrides a higher pursuit — attention falls to the basic need.
+// PREPOTENCY — the deeper lack pulls at least as hard, so it wins (the usual case).
 rule Prepotency {
   when:
-    char $c [~Pursues(rank=$high)]
-    char $c [#Lacks(rank=$low)]
-    $low < $high
+    char $c [~Pursues(rank=$hr, salience=$hs)]
+    char $c [#Lacks(rank=$lr, salience=$ls)]
+    $lr < $hr
+    $ls >= $hs
   then:
     $c [-Pursues]
-    $c [#Driven(rank=$low)]
+    $c [#Driven(rank=$lr)]
     $c -- prepotency
 }
 
-// Met, the lower need releases its grip — and the higher pursuit is free to resume (the ascent).
+// INVERSION — the higher need is held harder than the deeper lack, and displaces it. The ladder
+// gives way to the human spirit, and it usually costs the body everything.
+rule Inversion {
+  when:
+    char $c [~Pursues(rank=$hr, salience=$hs)]
+    char $c [#Lacks(rank=$lr, salience=$ls)]
+    $lr < $hr
+    $hs > $ls
+  then:
+    $c [#Driven(rank=$hr)]
+    $c [+Transcendent]
+    $c -- inversion
+}
+
+// Met, a lower need releases its grip — and the higher pursuit is free to resume (the ascent).
 rule Satisfy {
   when:
     char $c [#Lacks(rank=$r)]
@@ -93,18 +115,36 @@ assoc needs -> [
 
 
 // === PREPOTENCY VIGNETTE: Buzz Lightyear — a cosmos that is one boy's bedroom (animated film) ===
-// Toy stakes, the full Maslow dynamic: a grand self-image (rank 5) yields the instant a basic
-// bond is threatened (rank 3) — the galaxy can wait; getting back to Andy cannot.
+// Toy stakes, the usual order: a grand self-image (rank 5, lightly held) yields the instant a
+// basic bond is threatened (rank 3, gripping hard) — the galaxy can wait; getting back to Andy
+// cannot. The lower need is the more salient, so prepotency runs.
 
 char buzz [+Protagonist]
 
 scene the_bedroom_cosmos {
   beat 1 {
-    buzz [~Pursues(rank=5)]            // "I am a Space Ranger — I will save the galaxy"
+    buzz [~Pursues(rank=5, salience=3)]    // "I am a Space Ranger — I will save the galaxy"
   }
   beat 2 {
-    buzz [#Lacks(rank=3)]             // lost, far from his boy
-    // Prepotency (3 < 5) -> the mission is set aside; belonging drives now
+    buzz [#Lacks(rank=3, salience=8)]      // lost, far from his boy — and that pulls harder
+    // Prepotency (3 < 5, 8 >= 3) -> the mission is set aside; belonging drives now
+  }
+}
+
+
+// === INVERSION VIGNETTE: All Quiet on the Western Front — Paul and the butterfly (novel/film) ===
+// Years in the trenches reduced living to bare survival — and then, in a still moment, Paul
+// reaches from cover for a butterfly: the flicker of beauty, of the human he was. The higher need
+// (rank 5) is held harder than safety (rank 2), and outpulls it; a sniper takes him. The rankings
+// inverted, and it cost him everything — which is the whole point.
+
+char paul [+Protagonist]
+
+scene the_butterfly {
+  beat 1 {
+    paul [#Lacks(rank=2, salience=5)]      // safety — the sniper's line, the prudence of cover
+    paul [~Pursues(rank=5, salience=9)]    // beauty / the human spirit — held past all prudence
+    // Inversion (2 < 5, 9 > 5) -> paul [#Driven(rank=5)] [+Transcendent] -- inversion
   }
 }
 
