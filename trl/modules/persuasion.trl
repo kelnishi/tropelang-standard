@@ -39,6 +39,8 @@ verb Exhorts(action)  [+Narrative]   // call the persuaded audience to act
 verb Stokes(fear)     [+Narrative]   // manufacture pathos by naming an enemy to fear
 verb Repeats(claim)   [+Narrative]   // assert again — repetition standing in for evidence
 verb Debunks(claim)   [+Narrative]   // present the truth against a claim
+verb Rallies(cause)   [+Narrative]   // steel the disheartened by appeal to shared honor (honest pathos)
+verb Doubts(claim)    [+Narrative]   // raise a reasonable doubt — test a claim against the standard
 imply Persuaded -> [Conviction, Belief, Narrative]   // the audience now holds the claim
 imply Committed -> [Resolve, Action, Narrative]      // ... and resolves to act on it
 

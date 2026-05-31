@@ -1,0 +1,51 @@
+// === PREAMBLE ===
+// @trope    Rousing Speech
+// @category Oratory / Persuasion
+// @source   https://allthetropes.org/wiki/Rousing_Speech
+// @version  1.3
+//
+// Laconic (per the wiki): a speech that inspires courage and resolve — a leader transforming the
+// fear of the outnumbered and disheartened into the willingness to fight. FRONTIER: the BRIGHT
+// MIRROR of propaganda. Both run low on logos (you cannot argue a frightened army into courage),
+// but where propaganda stokes fear of a SCAPEGOAT and seats a lie, the rousing speech appeals to
+// shared HONOR and BELONGING and seats a truth the listeners already hold — and it galvanizes
+// directly to ACTION, skipping belief-change entirely. It is also in-DIEGETIC persuasion: a
+// character moving a group of characters, the speaker↔audience machinery run one level down.
+
+import "trl/modules/persuasion.trl"          // the machinery, honest and in-diegesis
+
+assoc rousing_speech -> [
+  persuasion : "is the honest, pathos-only end of",
+  propaganda : "is the bright mirror of (honor where it stokes fear)",
+  needs      : "rallies the belonging and esteem rungs of"
+]
+
+imply RousingSpeech -> [Pathos, Resolve, Narrative]
+
+// Naming rule: a leader who appeals to shared honor turns a disheartened band's fear into resolve —
+// no argument, no lie, only the calling-up of what they already are.
+rule Rousing_Speech {
+  when:
+    char $s [+Leader]
+    evt  $r [&Rallies(agent=$s, band=$g, cause=$cause)]
+    $g [#Disheartened]
+  then:
+    $g [-Disheartened]
+    $g [+Resolved(to=$cause)]
+    $g -- resolve
+}
+
+// === CONCRETE VIGNETTE: Henry V, the St. Crispin's Day speech — Agincourt (Shakespeare, 1599) ===
+// Outnumbered perhaps five to one, the English are sick, soaked, and sure they will die. Henry does
+// not argue the odds — he reframes the few as the privileged: "We few, we happy few, we band of
+// brothers." The fear does not vanish because the danger changed; it is displaced by a thing the
+// men want more than safety — to be of that band. They resolve to fight.
+char henry [+Leader]
+set  the_english [#Disheartened]
+
+scene before_agincourt {
+  beat 1 {
+    evt st_crispins_day [&Rallies(agent=henry, band=the_english, cause=brotherhood)]
+    // Rousing_Speech -> the_english [-Disheartened] [+Resolved(to=brotherhood)] -- resolve
+  }
+}

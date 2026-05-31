@@ -88,6 +88,8 @@ import "trl/tropes/based_on_a_true_story.trl"
 import "trl/tropes/foregone_conclusion.trl"
 import "trl/tropes/human_interest_story.trl"
 import "trl/tropes/propaganda.trl"
+import "trl/tropes/rousing_speech.trl"
+import "trl/tropes/rogue_juror.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -245,6 +247,13 @@ concept human_interest_story   [+Trope(category="Non-Fiction", source="allthetro
 // PROPAGANDA — persuasion's dark twin: ethos + pathos + REPETITION installing a false belief
 // against reality, and entrenching it against the truth (the Big Lie).
 concept propaganda             [+Trope(category="Oratory", source="allthetropes.org/wiki/Big_Lie")] [%Narrative]
+
+// ROUSING SPEECH — honest pathos-only persuasion (the bright mirror of propaganda): appeal to
+// shared honor to turn a disheartened band's fear into resolve, galvanizing straight to action.
+concept rousing_speech         [+Trope(category="Oratory", source="allthetropes.org/wiki/Rousing_Speech")] [%Narrative]
+
+// ROGUE JUROR — the burden-of-proof gate: a reasonable doubt defeats an otherwise-persuasive case.
+concept rogue_juror            [+Trope(category="Oratory", source="allthetropes.org/wiki/Rogue_Juror")] [%Narrative]
 
 // UNRELIABLE NARRATOR — the narration's facts diverge from the truth. The first corpus trope
 // to use S14 diegetic levels: a non_canon narration plane (with a teller) vs the reality plane.

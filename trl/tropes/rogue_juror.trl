@@ -1,0 +1,54 @@
+// === PREAMBLE ===
+// @trope    Rogue Juror
+// @category Oratory / Persuasion
+// @source   https://allthetropes.org/wiki/Rogue_Juror
+// @version  1.3
+//
+// Laconic (per the wiki): the lone juror who holds out against the rest, refusing to convict while a
+// doubt remains, and reasons the room around. FRONTIER: the BURDEN OF PROOF as a gate. Every
+// persuasion rule so far flips belief on any sufficient appeal — there is no THRESHOLD. The
+// courtroom adds one: to convict, the jury must be persuaded AND free of reasonable doubt, and the
+// burden sits on the accuser. So a single raised doubt can DEFEAT an otherwise-persuasive case — the
+// defensive mirror of persuasion, where not-believing is the disciplined act. The jury is the
+// audience, deliberating with itself.
+
+import "trl/modules/persuasion.trl"          // the jury is the audience; doubt tests the case
+
+assoc rogue_juror -> [
+  persuasion      : "imposes the burden of proof on",
+  cassandra_truth : "is the disciplined cousin of (doubt withheld, not truth ignored)",
+  common_knowledge : "turns one juror's doubt into the room's"
+]
+
+imply RogueJuror -> [Doubt, Judgment, Narrative]
+
+// Naming rule: a reasonable doubt raised against a verdict the jury had been persuaded of unseats
+// it — the standard, not the persuasion, decides. The burden was never on the doubter.
+rule Reasonable_Doubt {
+  when:
+    audience [+Persuaded(of=$verdict)]
+    evt $d [&Doubts(agent=$j, claim=$verdict)]
+  then:
+    audience [-Persuaded]
+    audience [+Acquits]
+    audience -- reasonable_doubt
+}
+
+// === CONCRETE VIGNETTE: Twelve Angry Men — Juror 8 (film, 1957) ===
+// Eleven jurors are ready to convict in minutes; the prosecution's case felt airtight. Juror 8 does
+// not claim the boy is innocent — only that he is not SURE, and that sure is what the law requires.
+// The switchblade that is not unique, the old man who could not have heard, the woman who was not
+// wearing her glasses: each is a doubt, and one reasonable doubt is enough.
+char prosecutor [+Speaker] [+Credible]
+
+scene the_deliberation {
+  beat 1 {
+    evt the_case    [&Argues(agent=prosecutor, thesis=guilty)]
+    evt the_exhibit [&Cites(agent=prosecutor, support=the_switchblade)]
+    // Establish_Ethos + Persuade_By_Logos -> audience [+Persuaded(of=guilty)]
+  }
+  beat 2 {
+    evt juror_eight [&Doubts(agent=davis, claim=guilty)]
+    // Reasonable_Doubt -> audience [-Persuaded] [+Acquits] -- reasonable_doubt
+  }
+}
