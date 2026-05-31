@@ -1,0 +1,57 @@
+// === PREAMBLE ===
+// @trope    Divide and Conquer
+// @category Political / Tactics
+// @source   https://allthetropes.org/wiki/Divide_and_Conquer
+// @version  1.3
+//
+// Laconic (per the wiki): keep your enemies from uniting — set them against each other so no
+// coalition forms against you. The mechanical INVERSE of the common-knowledge flip and of
+// coalition-building: where a revolution needs the shared grievance to become common, the divider
+// makes sure it never does. Rides the power-dynamics Divide_And_Conquer rule (the rivals are left
+// [+Fragmented]).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/power_dynamics.trl"    // Divide_And_Conquer -> rivals [+Fragmented]
+
+assoc divide_and_conquer -> [
+  power_dynamics   : "the coalition-prevention rule of",
+  common_knowledge : "denies the rivals the shared truth of"
+]
+
+
+// === ONTOLOGY ===
+
+imply DivideAndConquer -> [Manipulation, Power, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: setting rivals against each other to keep them divided IS Divide and Conquer.
+rule Divide_And_Conquer {
+  when:
+    evt $d [&Divides(agent=$ruler, targets=$rivals)]
+  then:
+    $d [+DivideAndConquer]
+}
+
+
+// === CONCRETE VIGNETTE: the Gilded Age — Jay Gould and the railroad strike (history, 1886) ===
+// The magnate's reported boast is the trope distilled: keep labour at labour's throat, and it
+// will never reach yours.
+
+char gould   [+Antagonist] [+Magnate]
+char workers [+Collective]
+
+scene the_strike {
+  beat 1 {
+    evt set_them_against [&Divides(agent=gould, targets=workers)]
+        dialog(inject=[speaker=gould], inline="""
+               speaker: "{speaker}"
+               cue: "to a fellow baron, untroubled"
+               tone: cold, amused
+               text: "I can hire one half of the working class to kill the other half."
+               """)
+    // Divide_And_Conquer -> workers [+Fragmented];  no coalition forms
+  }
+}

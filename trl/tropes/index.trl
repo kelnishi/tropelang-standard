@@ -55,6 +55,9 @@ import "trl/tropes/cassandra_truth.trl"
 import "trl/tropes/the_gambit.trl"
 import "trl/tropes/tomato_surprise.trl"
 import "trl/tropes/dramatic_irony.trl"
+import "trl/tropes/klingon_promotion.trl"
+import "trl/tropes/full_circle_revolution.trl"
+import "trl/tropes/divide_and_conquer.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -138,6 +141,13 @@ concept tomato_surprise  [+Trope(category="Narrative Devices", source="allthetro
 // DRAMATIC IRONY — promoted to a first-class trope (the baseline the epistemic cluster defines
 // itself against). Reuses the existing `dramatic_irony` concept from theory_of_mind.trl (DRY).
 dramatic_irony [+Trope(category="Narrative Devices", source="allthetropes.org/wiki/Dramatic_Irony")]
+
+// POLITICAL / COLLECTIVE SCALE (ride power_dynamics — the [%Political] domain). Klingon Promotion
+// (take a rank by killing its holder; Commodus), Full-Circle Revolution (the deposers become the
+// deposed; Animal Farm), Divide and Conquer (keep rivals from uniting; Jay Gould).
+concept klingon_promotion      [+Trope(category="Power", source="allthetropes.org/wiki/Klingon_Promotion")] [%Political]
+concept full_circle_revolution [+Trope(category="Power", source="allthetropes.org/wiki/Full-Circle_Revolution")] [%Political]
+concept divide_and_conquer     [+Trope(category="Power", source="allthetropes.org/wiki/Divide_and_Conquer")] [%Political]
 
 // UNRELIABLE NARRATOR — the narration's facts diverge from the truth. The first corpus trope
 // to use S14 diegetic levels: a non_canon narration plane (with a teller) vs the reality plane.

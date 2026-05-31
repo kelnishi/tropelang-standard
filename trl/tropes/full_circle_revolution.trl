@@ -1,0 +1,57 @@
+// === PREAMBLE ===
+// @trope    Full-Circle Revolution
+// @category Political / Power
+// @source   https://allthetropes.org/wiki/Full-Circle_Revolution
+// @version  1.3
+//
+// Laconic (per the wiki): a revolution that simply swaps one set of bastards for another — "meet
+// the new boss, same as the old boss." The deposers inherit the tyranny they overthrew. Rides
+// the power-dynamics Revolution rule and turns its irony into the trope: the old ruler falls, the
+// new one becomes indistinguishable. The prime example is Animal Farm.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/power_dynamics.trl"    // Revolution -> [+Deposed]; this is what comes after
+
+assoc full_circle_revolution -> [
+  power_dynamics : "the cyclical failure mode of the Revolution rule of",
+  conflict       : "resolves and then re-opens a"
+]
+
+
+// === ONTOLOGY ===
+
+imply FullCircleRevolution -> [Cyclical, Power, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a revolution's victor who becomes the tyrant they deposed closes the circle.
+rule Full_Circle_Revolution {
+  when:
+    char $old [+Deposed]
+    char $new [+Ruler] [+Tyrant]
+  then:
+    $new [+FullCircleRevolution]
+}
+
+
+// === CONCRETE VIGNETTE: Animal Farm — Napoleon (novel, 1945) ===
+// The animals drive out Farmer Jones and swear no animal shall ever be like a man — and by the
+// end the pigs walk on two legs, and the creatures looking from pig to man can no longer tell
+// which is which.
+
+char jones    [+Ruler]                      // Farmer Jones — the old master
+char napoleon [+Protagonist]                 // the pig who leads the revolt, then rules
+char animals  [+Collective]
+
+scene the_farm {
+  beat 1 {
+    evt the_rebellion [&Defects(agent=animals, from=jones)]
+    jones [+Deposed]                          // the humans are driven off
+  }
+  beat 2 {
+    napoleon [+Ruler] [+Tyrant]               // the pig in the farmhouse, walking on two legs
+    // Full_Circle_Revolution -> napoleon [+FullCircleRevolution]
+  }
+}

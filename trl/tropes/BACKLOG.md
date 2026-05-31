@@ -111,6 +111,19 @@ Knowledge, belief, and truth as first-class dynamics — beyond the narrator tru
 - [ ] Dramatic Irony (full)        (promote from `theory_of_mind.trl`)   ← **up next**
 - [ ] Tomato in the Mirror         (the PROTAGONIST learns the recontextualizing fact)
 
+## Collective / political scale (`trl/modules/` + tropes)
+The supra-individual arena — the [%Political] domain. Power as common knowledge of the right to
+rule; coalitions, legitimacy, defection, revolution. Rides `power_dynamics.trl`.
+- [x] Power Dynamics system        (`power_dynamics.trl`: pledge/coalition · legitimacy · revolution · usurp · divide)
+- [x] Klingon Promotion            (take a rank by killing its holder; Commodus / Gladiator)
+- [x] Full-Circle Revolution       (the deposers become the deposed; Animal Farm)
+- [x] Divide and Conquer           (keep rivals from uniting — inverse of coalition; Jay Gould)
+- [ ] The Coup                     (seize the state apparatus, not just the throne)   ← **up next**
+- [ ] Praetorian Guard             (the kingmakers who make and unmake rulers)
+- [ ] Decadent Court               (the rot inside legitimate power)
+- [ ] We Have Reserves             (the callous arithmetic of mass force)
+- [ ] Reputation / Honor system    (status as a social-epistemic quantity)
+
 ## Storytelling systems & frameworks (`trl/modules/`)
 Higher-level structures that *organize* tropes — name + sequence the stages, link the beats.
 - [x] The Hero's Journey / Monomyth   (Campbell — `heros_journey.trl`)

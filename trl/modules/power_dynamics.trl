@@ -1,0 +1,123 @@
+// === PREAMBLE ===
+// @title    Power Dynamics — the collective and political scale
+// @category Political Systems
+// @version  0.1
+// @note     The supra-individual arena, and the first use of the [%Political] domain. Everything
+//           else in the corpus is one mind or a few; this is the field of MANY — coalitions,
+//           legitimacy, factions, revolutions. The load-bearing idea, carried from the
+//           common-knowledge module: LEGITIMACY is common knowledge of the right to rule. So
+//           power is not a possession but a belief held in common — which is why a regime can
+//           hold for decades and then fall in a week, the moment defection becomes critical and
+//           the shared withdrawal of consent turns common (cf. Bucharest 1989, common_knowledge).
+//
+// Import: import "trl/modules/power_dynamics.trl"
+
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/common_knowledge.trl"  // legitimacy = the right to rule, made common
+
+concept power_dynamics [+System] [%Political]
+imply Power -> [Authority, Collective, Political]
+
+
+// === THE VOCABULARY ===
+verb  Pledges(to)        [+Political]      // swear allegiance to a power
+verb  Commands(subject)  [+Political]      // issue an order expecting compliance
+verb  Defects(from)      [+Political]      // withdraw allegiance
+verb  Usurps(target)     [+Political]      // seize a position by killing its holder
+verb  Divides(targets)   [+Political]      // set rivals against each other so no coalition forms
+prop  Ruler              [+Political]
+prop  Tyrant             [+Political]
+state Legitimate         [+Political]      // authority acknowledged as rightful
+state Deposed            [+Political]
+
+
+// === COALITION & LEGITIMACY ===
+
+// Allegiance pledged builds a ruler's coalition.
+rule Pledge {
+  when:
+    evt $p [&Pledges(agent=$x, to=$ruler)]
+  then:
+    $x [@Loyal_To(other=$ruler)]
+    $ruler -- coalition
+}
+
+// A ruler whose right to rule is COMMON KNOWLEDGE holds legitimate power — consent is shared.
+rule Legitimacy {
+  when:
+    char $ruler [+Ruler] [+CommonKnowledge]
+  then:
+    $ruler [+Legitimate]
+    $ruler -- legitimacy
+}
+
+// A legitimate ruler's command is obeyed by those loyal to them.
+rule Command_Obeyed {
+  when:
+    char $ruler [+Legitimate]
+    char $x [@Loyal_To(other=$ruler)]
+    evt  $o [&Commands(agent=$ruler, subject=$x)]
+  then:
+    $x [+Complies]
+}
+
+
+// === POWER SEIZED, LOST, AND KEPT ===
+
+// Usurpation: kill the holder of a position to take it — the violent shortcut to the throne.
+rule Usurp {
+  when:
+    char $holder [+Ruler]
+    evt  $kill [&Usurps(agent=$claimant, target=$holder)]
+  then:
+    $holder [+Deposed]
+    $claimant [+Ruler]
+    $claimant -- usurpation
+}
+
+// Revolution: when defection reaches critical mass, consent collapses and the regime falls.
+rule Revolution {
+  when:
+    char $ruler [+Ruler]
+    count( evt $d [&Defects(from=$ruler)] ) >= 3
+  then:
+    $ruler [+Deposed]
+    $ruler -- revolution
+}
+
+// Divide and conquer: set the rivals against each other and no coalition can form — the inverse
+// of the common-knowledge flip; the shared grievance is never allowed to become common.
+rule Divide_And_Conquer {
+  when:
+    evt $d [&Divides(agent=$ruler, targets=$rivals)]
+  then:
+    $rivals [+Fragmented]
+    $ruler -- divide_and_conquer
+}
+
+
+// === ASSOCIATIONS ===
+assoc power_dynamics -> [
+  common_knowledge : "legitimacy is the right to rule made common in",
+  conflict         : "the collective form of"
+]
+
+
+// === CONCRETE VIGNETTE: February 1917 — the fall of the Tsar (history) ===
+// Nicholas II held absolute power until, in a week, the pillars walked away: the garrison would
+// not fire on the crowds, the workers struck, the Duma turned. Three defections and the autocracy
+// that had stood three centuries was simply gone.
+
+char tsar     [+Ruler]
+char garrison [+Collective]
+char workers  [+Collective]
+char duma     [+Collective]
+
+scene february {
+  beat 1 { evt mutiny  [&Defects(agent=garrison, from=tsar)] }   // the soldiers join the crowds
+  beat 2 { evt strikes [&Defects(agent=workers, from=tsar)] }
+  beat 3 {
+    evt the_duma [&Defects(agent=duma, from=tsar)]
+    // Revolution (count of defections >= 3) -> tsar [+Deposed]
+  }
+}

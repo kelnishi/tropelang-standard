@@ -20,6 +20,7 @@ import "trl/modules/save_the_cat.trl"      // storytelling system (Snyder's fift
 import "trl/modules/booker_seven_plots.trl" // storytelling system (Booker's plot-type taxonomy)
 import "trl/modules/prophecy.trl"          // epistemic system (foreknowledge: foretell -> self-fulfil / twist)
 import "trl/modules/common_knowledge.trl"  // epistemic system (mutual vs common knowledge; the public utterance)
+import "trl/modules/power_dynamics.trl"    // political system (the collective scale: coalition, legitimacy, revolution)
 import "trl/modules/emotion_dynamics.trl"     // psychological system (appraisal -> emotion -> motivation -> threads)
 import "trl/modules/five_stages_of_grief.trl" // psychological system (the staged Kübler-Ross grief thread)
 import "trl/modules/motivation_dynamics.trl"  // psychological system (desire -> pursuit -> attainment/obsession/abandonment)

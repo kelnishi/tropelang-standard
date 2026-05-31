@@ -1,0 +1,51 @@
+// === PREAMBLE ===
+// @trope    Klingon Promotion
+// @category Political / Power
+// @source   https://allthetropes.org/wiki/Klingon_Promotion
+// @version  1.3
+//
+// Laconic (per the wiki): kill a superior, deliberately, to take their rank or office. The
+// violent shortcut up the hierarchy. Rides the power-dynamics Usurp rule: the holder is
+// [+Deposed] and the killer takes the throne. (Shakespeare's favourite engine of plot —
+// Macbeth, Richard III, Claudius all came by their crowns this way.)
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/power_dynamics.trl"    // Usurp -> holder [+Deposed], claimant [+Ruler]
+
+assoc klingon_promotion -> [
+  power_dynamics : "the Usurp rule of",
+  conflict       : "the most direct resolution of a"
+]
+
+
+// === ONTOLOGY ===
+
+imply KlingonPromotion -> [Usurpation, Power, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: killing the holder of a rank to take it IS a Klingon Promotion (tags the deed).
+rule Klingon_Promotion {
+  when:
+    char $holder [+Ruler]
+    evt  $kill [&Usurps(agent=$claimant, target=$holder)]
+  then:
+    $kill [+KlingonPromotion]
+}
+
+
+// === CONCRETE VIGNETTE: Gladiator — Commodus and Marcus Aurelius (film, 2000) ===
+// Passed over for the succession in favour of a return to the Republic, Commodus embraces his
+// father in the imperial tent — and smothers him, taking the purple by murder.
+
+char commodus        [+Antagonist]
+char marcus_aurelius [+Ruler]
+
+scene the_tent {
+  beat 1 {
+    evt the_embrace [&Usurps(agent=commodus, target=marcus_aurelius)]
+    // Usurp -> marcus_aurelius [+Deposed], commodus [+Ruler];  Klingon_Promotion tags it
+  }
+}
