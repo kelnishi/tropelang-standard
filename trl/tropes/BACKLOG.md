@@ -91,7 +91,7 @@ Open Secret · Cassandra Truth · The Gambit · Tomato Surprise · Dramatic Iron
 ### Specific actions (tactics)
 Done: Finishing Move · Bar the Door · Improvised Weapon · Feint · Ambush · Heroic Sacrifice ·
 Last Stand · The Cavalry · Counter.
-- [ ] Trap · Pincer · Pyrrhic Victory
+- [ ] Trap · Pincer  ·  [x] Pyrrhic Victory — `pyrrhic_victory` (agent-piloted)
 
 ### Collective / political
 Done: Klingon Promotion · Full-Circle Revolution · Divide and Conquer · The Coup · Praetorian

@@ -1,0 +1,68 @@
+// === PREAMBLE ===
+// @trope    Pyrrhic Victory
+// @category Conflict / Tactics
+// @source   https://allthetropes.org/wiki/Pyrrhic_Victory
+// @version  1.3
+// @domain    Interpersonal
+//
+// Laconic (per the wiki): a victory whose cost is ruinous to the victor — someone succeeds at
+// their goal, but at so high a price that the winning is tantamount to defeat (often a Heroic
+// Sacrifice, a "Was It Really Worth It?", a Bittersweet or Downer Ending). Rides the
+// action-dynamics Finisher rule: the foe is [+Defeated], yet the victor is themselves [+Fallen]
+// in the winning — the win that costs more than it gains.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/action_dynamics.trl"   // Finisher -> foe [+Defeated];  the victor falls in the win
+
+assoc pyrrhic_victory -> [
+  action_dynamics : "the ruinous half of the Finisher rule of",
+  conflict        : "wins-yet-loses a"
+]
+
+
+// === ONTOLOGY ===
+
+imply PyrrhicVictory -> [Cost, Tactic, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: when the victor who landed the deciding blow is himself [+Fallen] in the winning,
+// that win IS a Pyrrhic Victory (the foe is [+Defeated], but the victor is ruined). Tags the deed.
+rule Pyrrhic_Victory {
+  when:
+    char $y [+Defeated]
+    char $x [+Fallen]
+    evt  $f [&Finishes(agent=$x, target=$y)]
+  then:
+    $f [+PyrrhicVictory]
+}
+
+
+// === CONCRETE VIGNETTE: King Pyrrhus at Asculum (military history, 279 BCE) ===
+// Pyrrhus of Epirus breaks the Roman line and holds the field — the deciding blow lands — but
+// his irreplaceable veterans and officers are spent doing it. "Another such victory and we are
+// undone": the foe is beaten, the victor ruined by the winning. The namesake of the trope.
+
+char pyrrhus [+Protagonist]                 // King Pyrrhus of Epirus — wins the field, loses the war
+char rome    [+Antagonist] [+Collective]    // the Roman legions, who can replace their dead
+set  asculum [+Pass]                         // the field at Asculum, Apulia
+
+scene the_field_at_asculum {
+  beat 1 {
+    pyrrhus @ asculum
+    rome [+Exposed]                          // the Roman line is broken open
+  }
+  beat 2 {
+    pyrrhus [+Fallen]                        // his veterans and officers are spent in the breaking
+    evt the_breaking [&Finishes(agent=pyrrhus, target=rome)]
+        dialog(inject=[speaker=pyrrhus], inline="""
+               speaker: "{speaker}"
+               cue: "surveying the won field, the dead his own irreplaceable men"
+               tone: hollow, exhausted
+               text: "Another such victory and we are utterly undone."
+               """)
+    // Finisher -> rome [+Defeated];  victor pyrrhus already [+Fallen];  Pyrrhic_Victory tags the win
+  }
+}
