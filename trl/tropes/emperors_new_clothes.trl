@@ -1,0 +1,61 @@
+// === PREAMBLE ===
+// @trope    The Emperor's New Clothes
+// @category Epistemic / Social
+// @source   https://allthetropes.org/wiki/The_Emperor's_New_Clothes
+// @version  1.3
+//
+// Laconic (per the wiki): the grown-up world knowingly plays along with the lie to save face,
+// each lying to the others — until a child speaks the truth everyone fears to acknowledge, and
+// the bubble breaks. The UNSTABLE resolution of mutual knowledge: one public utterance promotes
+// it to common (common_knowledge module), and the social fiction collapses. The opposite of an
+// Open Secret, which is never spoken and so holds forever.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // revelation
+import "trl/modules/common_knowledge.trl"  // Make_Common -> [+CommonKnowledge] -> Standoff_Breaks
+
+assoc emperors_new_clothes -> [
+  common_knowledge : "the mutual-to-common flip of",
+  revelation       : "the child's cry is a"
+]
+
+
+// === ONTOLOGY ===
+
+imply EmperorsNewClothes -> [Pretense, Knowledge, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: an innocent saying aloud the thing all privately know IS the Emperor's New Clothes.
+rule Emperors_New_Clothes {
+  when:
+    evt $say [&Declares(agent=$child, fact=$truth)]
+  then:
+    $say [+EmperorsNewClothes]
+}
+
+
+// === CONCRETE VIGNETTE: Hans Christian Andersen — the procession (fairy tale, 1837) ===
+
+char emperor [+Ruler]
+char court   [+Collective]                 // the whole grown-up world, playing along
+char child   [+Innocent]
+obj  the_truth [+Plain]                     // "he isn't wearing anything at all"
+
+scene the_procession {
+  beat 1 {
+    court [~Knows(target=the_truth)]         // every adult sees it — and stays silent to save face
+  }
+  beat 2 {
+    evt the_cry [&Declares(agent=child, fact=the_truth)]
+        dialog(inject=[speaker=child], inline="""
+               speaker: "{speaker}"
+               cue: "a small clear voice from the crowd, with no fear for its dignity"
+               tone: artless
+               text: "But he hasn't got anything on!"
+               """)
+    // Make_Common -> !the_truth [+CommonKnowledge]!;  Standoff_Breaks -> court [+Emboldened] (the laughter)
+    // Emperors_New_Clothes -> the_cry [+EmperorsNewClothes]
+  }
+}

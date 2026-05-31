@@ -102,8 +102,10 @@ Knowledge, belief, and truth as first-class dynamics — beyond the narrator tru
 - [x] Prophecy / Foreknowledge      (system — `prophecy.trl`: foretell → ?latent? fate → !absolute!)
 - [x] Self-Fulfilling Prophecy      (trope — the avoidance seals the fate; Oedipus)
 - [x] Prophecy Twist                (trope — §11 ambiguity collapses the unforeseen way; Macbeth)
-- [ ] Common Knowledge / Open Secret (mutual vs common knowledge; the public utterance)   ← **in progress**
-- [ ] Cassandra Truth              (true foresight, disbelieved)
+- [x] Common Knowledge             (system — `common_knowledge.trl`: mutual → common via the public utterance)
+- [x] The Emperor's New Clothes    (trope — the spoken resolution: the child makes it common, the fiction collapses)
+- [x] Open Secret                  (trope — the unspoken resolution: a tacit pact, never made common; Discworld's Carrot)
+- [ ] Cassandra Truth              (true foresight, disbelieved)   ← **up next**
 - [ ] Dramatic Irony (full)        (promote from `theory_of_mind.trl`)
 - [ ] The Gambit / Batman Gambit   (a plan built on others' false beliefs)
 - [ ] Tomato Surprise / Twist Ending (retcon recontextualizes prior facts)

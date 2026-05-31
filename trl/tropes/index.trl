@@ -49,6 +49,8 @@ import "trl/tropes/the_cavalry.trl"
 import "trl/tropes/counter.trl"
 import "trl/tropes/self_fulfilling_prophecy.trl"
 import "trl/tropes/prophecy_twist.trl"
+import "trl/tropes/emperors_new_clothes.trl"
+import "trl/tropes/open_secret.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -114,6 +116,12 @@ concept counter     [+Trope(category="Tactics", source="allthetropes.org/wiki/Co
 // way — §11 ambiguity + resolve; Macbeth's "none of woman born").
 concept self_fulfilling_prophecy [+Trope(category="Fate", source="allthetropes.org/wiki/Self-Fulfilling_Prophecy")] [%Epistemic]
 concept prophecy_twist           [+Trope(category="Fate", source="allthetropes.org/wiki/Prophecy_Twist")] [%Epistemic]
+
+// COMMON KNOWLEDGE (ride common_knowledge.trl). The two resolutions of mutual knowledge: spoken
+// (Emperor's New Clothes — the child makes it common and the fiction collapses) vs. unspoken
+// (Open Secret — a tacit pact keeps it from ever becoming common; Discworld's Carrot).
+concept emperors_new_clothes [+Trope(category="Social", source="allthetropes.org/wiki/The_Emperor's_New_Clothes")] [%Epistemic]
+concept open_secret          [+Trope(category="Social", source="allthetropes.org/wiki/Open_Secret")] [%Epistemic]
 
 // UNRELIABLE NARRATOR — the narration's facts diverge from the truth. The first corpus trope
 // to use S14 diegetic levels: a non_canon narration plane (with a teller) vs the reality plane.

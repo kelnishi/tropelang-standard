@@ -1,0 +1,75 @@
+// === PREAMBLE ===
+// @title    Common Knowledge — mutual vs. common, and the utterance between them
+// @category Epistemic Systems
+// @source   https://allthetropes.org/wiki/Open_Secret
+// @version  0.1
+// @note     The recursive epistemic arena: not just "everyone knows," but "everyone knows that
+//           everyone knows." MUTUAL knowledge — each privately knows, but no one is sure anyone
+//           will SAY it, so the silence holds. COMMON knowledge — the fact is public and
+//           acknowledged, so all can coordinate on it. The bridge between them is a single PUBLIC
+//           UTTERANCE. We model the infinite tower ("…knows that everyone knows that everyone
+//           knows…") with one practical tier, [+CommonKnowledge], and make the utterance the
+//           operator that promotes mutual to common. The drama lives in that promotion: speak it
+//           and a tyranny falls (Emperor's New Clothes); refuse to, and a polite fiction holds
+//           forever (Open Secret).
+//
+// Import: import "trl/modules/common_knowledge.trl"
+
+import "trl/concepts/index.trl"            // revelation
+
+concept common_knowledge [+System] [%Epistemic]
+imply CommonKnowledge -> [Knowledge, Social, Narrative]
+
+
+// === THE VOCABULARY ===
+verb Declares(fact)  [+Epistemic]          // say it aloud, in the open, before everyone
+
+
+// === RULES ===
+
+// A public declaration converts MUTUAL knowledge (each privately knows) into COMMON knowledge
+// (everyone now knows that everyone knows). [+CommonKnowledge] stands in for that infinite tower.
+rule Make_Common {
+  when:
+    evt $say [&Declares(agent=$speaker, fact=$truth)]
+  then:
+    !$truth [+CommonKnowledge]!
+    $say -- common_knowledge
+}
+
+// Once it is common, the silence that froze each private knower breaks — they can finally act on
+// what they all now openly share (the crowd finds its voice; the standoff collapses).
+rule Standoff_Breaks {
+  when:
+    char $w [~Knows(target=$truth)]
+    $truth [+CommonKnowledge]
+  then:
+    $w [+Emboldened]
+    $w -- coordination
+}
+
+
+// === ASSOCIATIONS ===
+assoc common_knowledge -> [
+  revelation : "the utterance that makes it common is a"
+]
+
+
+// === CONCRETE VIGNETTE: Bucharest, December 1989 — the speech that fell (history) ===
+// The crowd had long privately despised the regime, but each feared to be the first — mutual
+// knowledge, not common. Then a jeer rose from the square, live on television: the shared
+// contempt became common knowledge in an instant, and the regime had days left.
+
+char ceausescu [+Tyrant]
+char crowd     [+Collective]
+
+scene the_balcony {
+  beat 1 {
+    crowd [~Knows(target=the_regime_is_hated)]   // each knows — and each thinks themselves alone
+  }
+  beat 2 {
+    evt the_jeer [&Declares(agent=crowd, fact=the_regime_is_hated)]
+    // Make_Common -> !the_regime_is_hated [+CommonKnowledge]!
+    // Standoff_Breaks -> crowd [+Emboldened] -- coordination
+  }
+}
