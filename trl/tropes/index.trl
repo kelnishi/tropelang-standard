@@ -86,6 +86,7 @@ import "trl/tropes/the_host.trl"
 import "trl/tropes/putting_it_to_the_test.trl"
 import "trl/tropes/based_on_a_true_story.trl"
 import "trl/tropes/foregone_conclusion.trl"
+import "trl/tropes/human_interest_story.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -235,6 +236,10 @@ concept based_on_a_true_story   [+Trope(category="Non-Fiction", source="allthetr
 // FOREGONE CONCLUSION — the assumption-fix the Olympic biopic surfaced: the curiosity gap has a
 // PROCESS mode (known outcome, suspense in the how/why), not only the Cliffhanger's outcome mode.
 concept foregone_conclusion    [+Trope(category="Suspense", source="allthetropes.org/wiki/Foregone_Conclusion")] [%Narrative]
+
+// HUMAN INTEREST STORY — the live-broadcast athlete profile; the purest instance of audience
+// INVESTMENT (rhetoric Â§3): endear a real person over an UNKNOWN outcome so the live result lands.
+concept human_interest_story   [+Trope(category="Non-Fiction", source="allthetropes.org/wiki/Human_Interest_Story")] [%Narrative]
 
 // UNRELIABLE NARRATOR — the narration's facts diverge from the truth. The first corpus trope
 // to use S14 diegetic levels: a non_canon narration plane (with a teller) vs the reality plane.

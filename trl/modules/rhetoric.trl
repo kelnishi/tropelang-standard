@@ -1,7 +1,7 @@
 // === PREAMBLE ===
 // @title    Rhetoric — the author, the audience, and the cultivation of attention
 // @category Narrative Systems
-// @version  0.1
+// @version  0.2
 // @note     Every other system here simulates the STORY; this one simulates the TRANSACTION the
 //           story exists for — an AUTHOR cultivating an AUDIENCE's attention. It supplies one half
 //           of what the "thin rungs" wanted: the cognitive need (CURIOSITY) and the aesthetic need
@@ -13,7 +13,15 @@
 //               author's FRAMING (a fall framed comic is funny; framed earnest, it stings);
 //           (2) the CURIOSITY GAP — a posed question pulls attention forward, a cliffhanger holds
 //               it open, a payoff closes it;
-//           (3) AUTHORIAL OVERRIDE — character motivation is NOT an ironclad determinant; the
+//           (3) AUDIENCE INVESTMENT — curiosity buys ATTENTION (do I want to KNOW?); investment
+//               buys STAKES (do I CARE which way it goes?). By endearing a person to the audience —
+//               their backstory, their struggle, their likability — the author converts neutral
+//               onlookers into PARTISANS who root for an outcome. This is the engine of the live
+//               broadcast's athlete profile: it airs BEFORE the race, over an outcome no one yet
+//               knows, precisely so the unknown result will land. Investment + an unknown outcome is
+//               peak engagement (you care AND you don't know) — the opposite of a foregone
+//               conclusion, not a cousin of it;
+//           (4) AUTHORIAL OVERRIDE — character motivation is NOT an ironclad determinant; the
 //               author can play god and impose an outcome the characters would never reach,
 //               justified only by its effect. Motivation predicts; the author disposes.
 //
@@ -34,7 +42,12 @@ concept audience [%Narrative]   // the one whose attention is the whole point
 verb Frames(target)    [+Narrative]   // set the register an event reads in
 verb Poses(question)   [+Narrative]   // open a question the audience cannot yet answer
 verb Answers(question) [+Narrative]   // ... and, eventually, close it
+verb Endears(subject)  [+Narrative]   // bond the audience to a person, building rooting interest
+verb Resolves(subject) [+Narrative]   // the contest's real outcome arrives (reality, not the author)
 verb Imposes(outcome)  [+Narrative]   // override in-world logic for effect
+
+// reality as agent — the non-fiction author-surrogate that resolves an outcome the author cannot
+concept reality [%Narrative]
 
 
 // === (1) AUDIENCE APPRAISAL — the SAME event, framed two ways, lands two ways ===
@@ -93,7 +106,36 @@ rule Payoff {
 }
 
 
-// === (3) AUTHORIAL OVERRIDE — the author plays god ===
+// === (3) AUDIENCE INVESTMENT — curiosity wants to KNOW; investment wants a SIDE ===
+
+// Endearing a person to the audience — their backstory, their struggle, their likability — converts
+// neutral onlookers into PARTISANS. Now there is an outcome they WANT, so the contest has stakes
+// for them even though (especially when) no one knows how it ends. This is what the live-broadcast
+// athlete profile manufactures, and why it airs before the gun, not after.
+rule Build_Investment {
+  when:
+    evt $profile [&Endears(agent=author, subject=$p)]
+  then:
+    audience [~RootsFor(target=$p)]
+    audience [+Invested(in=$p)]
+    audience -- investment
+}
+
+// The payoff of investment is not relief (that is curiosity's) but EMOTION proportional to the
+// stakes built: the rooted-for result lands as elation or heartbreak. A neutral audience feels a
+// scoreline; an invested one feels a verdict. Reality may write the outcome (non_fiction) — the
+// investment is what makes that outcome MATTER to the room.
+rule Stakes_Land {
+  when:
+    audience [+Invested(in=$p)]
+    evt $r [&Resolves(agent=reality, subject=$p)]
+  then:
+    audience [#Moved]
+    audience -- stakes
+}
+
+
+// === (4) AUTHORIAL OVERRIDE — the author plays god ===
 
 // The author imposes an outcome the characters' motivation would never produce, justified only by
 // its effect. The author's word is narration ground-truth: it overrides the motivation and needs

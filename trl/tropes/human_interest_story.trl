@@ -1,0 +1,54 @@
+// === PREAMBLE ===
+// @trope    Human Interest Story
+// @category Rhetoric / Non-Fiction
+// @source   https://allthetropes.org/wiki/Human_Interest_Story
+// @version  1.3
+//
+// Laconic (per the wiki): a story that focuses on a person or group in an emotional manner, with
+// the goal of creating EMPATHY between the audience and the subject. FRONTIER / ASSUMPTION-FIX: the
+// Olympic biopic probe corrected a wrong assumption — the live-broadcast athlete profile is NOT a
+// Foregone Conclusion. Its outcome is genuinely unknown, decided live; the profile airs BEFORE the
+// gun precisely to build INVESTMENT (rhetoric.trl §3) so the unknown result will land. This is the
+// purest instance of the investment capability: endear a real person to a neutral audience and they
+// become partisans who care which way it goes. ABC's "Up Close and Personal" segments are the name
+// brand; the device is older than television.
+
+import "trl/modules/rhetoric.trl"          // the investment capability it instantiates
+import "trl/modules/non_fiction.trl"       // reality, not the author, writes the verdict
+
+assoc human_interest_story -> [
+  rhetoric           : "manufactures the audience investment of",
+  non_fiction        : "raises stakes over the live, unauthored outcome of",
+  foregone_conclusion : "is the unknown-outcome opposite of"
+]
+
+imply HumanInterestStory -> [Empathy, Investment, Audience, Narrative]
+
+// Naming rule: an emotional profile of a real person, aired over an outcome still unknown, IS the
+// human-interest device — it endears the subject and converts the audience into partisans.
+rule Human_Interest_Story {
+  when:
+    char $p [+RealPerson] [+Striving]
+    evt  $profile [&Endears(agent=author, subject=$p)]
+  then:
+    $profile [+HumanInterestStory]
+    audience [+Invested(in=$p)]
+}
+
+// === CONCRETE VIGNETTE: the up-close-and-personal package before the final (broadcast) ===
+// Minutes before a swimmer no one has heard of dives for a final, the broadcast cuts to her town,
+// her 4 a.m. pool, the parent who drove her there. By the time she steps to the blocks the audience
+// is no longer watching a stranger swim — they are willing someone they have come to love. The race
+// has not happened yet; that is the whole point.
+char the_swimmer [+RealPerson] [+Striving]
+
+scene the_package {
+  beat 1 {
+    evt up_close [&Endears(agent=author, subject=the_swimmer)]
+    // Human_Interest_Story -> the_swimmer profiled; audience [+Invested(in=the_swimmer)]
+  }
+  beat 2 {
+    evt the_final [&Resolves(agent=reality, subject=the_swimmer)]
+    // Stakes_Land (rhetoric) -> audience [#Moved] — the unknown result now lands as a verdict
+  }
+}
