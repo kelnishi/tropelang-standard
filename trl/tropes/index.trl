@@ -54,6 +54,7 @@ import "trl/tropes/open_secret.trl"
 import "trl/tropes/cassandra_truth.trl"
 import "trl/tropes/the_gambit.trl"
 import "trl/tropes/tomato_surprise.trl"
+import "trl/tropes/dramatic_irony.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -133,6 +134,10 @@ concept open_secret          [+Trope(category="Social", source="allthetropes.org
 concept cassandra_truth  [+Trope(category="Knowledge", source="allthetropes.org/wiki/Cassandra_Truth")] [%Epistemic]
 concept the_gambit       [+Trope(category="Strategy", source="allthetropes.org/wiki/Batman_Gambit")] [%Epistemic]
 concept tomato_surprise  [+Trope(category="Narrative Devices", source="allthetropes.org/wiki/Tomato_Surprise")] [%Epistemic]
+
+// DRAMATIC IRONY — promoted to a first-class trope (the baseline the epistemic cluster defines
+// itself against). Reuses the existing `dramatic_irony` concept from theory_of_mind.trl (DRY).
+dramatic_irony [+Trope(category="Narrative Devices", source="allthetropes.org/wiki/Dramatic_Irony")]
 
 // UNRELIABLE NARRATOR — the narration's facts diverge from the truth. The first corpus trope
 // to use S14 diegetic levels: a non_canon narration plane (with a teller) vs the reality plane.

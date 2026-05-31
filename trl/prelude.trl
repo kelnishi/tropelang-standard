@@ -1,5 +1,5 @@
 // @title   TropeLang Prelude — Standard Library
-// @version 1.4
+// @version 1.5
 //
 // Automatically in scope for every .trl file.
 // Do not import manually. Override with // @no-prelude for a clean slate.
@@ -145,6 +145,7 @@ state Resentful    [+Psychological]
 state Aware        [+Psychological]
 state Ignorant     [+Psychological]    // does not know a relevant fact
 state Deceived     [+Psychological]
+state Disbelieving [+Psychological]    // refuses a true thing told — the Cassandra's hearers
 state Enlightened  [+Psychological]
 state Transformed  [+Psychological]   // emerged from an experience changed
 state Disillusioned [+Psychological]
@@ -334,6 +335,9 @@ prop Victim        [+Narrative]
 prop Instigator    [+Narrative]
 prop Catalyst      [+Narrative]    // causes change; does not change itself
 prop Vessel        [+Narrative]    // carries something beyond itself
+
+// Narrative conditions
+state Fated(to)    [+Narrative]    // bound to a foretold outcome (the prophecy cluster's core state)
 
 // Deep archetypes (Campbell / Vogler / Propp)
 prop TheHero       [+Narrative]

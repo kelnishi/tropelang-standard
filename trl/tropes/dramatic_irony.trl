@@ -1,0 +1,43 @@
+// === PREAMBLE ===
+// @trope    Dramatic Irony
+// @category Epistemic / Narrative Devices
+// @source   https://allthetropes.org/wiki/Dramatic_Irony
+// @version  1.3
+//
+// Laconic: the audience knows something a character does not, and watches them act on the gap.
+// PROMOTED to a first-class trope because the whole epistemic cluster defines itself against it:
+// Tomato Surprise is its inverse (the audience kept in the dark), Cassandra Truth is the
+// in-world version (a character who knows, disbelieved). The concept, `imply`, and recognition
+// rule already live in theory_of_mind.trl (DramaticIrony); this reuses them and gives the trope
+// its registry entry and a worked example — it is not redeclared here (DRY).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/theory_of_mind.trl"    // the dramatic_irony concept + the DramaticIrony rule
+
+assoc dramatic_irony -> [
+  theory_of_mind : "the asymmetric-knowledge rule of",
+  revelation     : "withholds from the character a"
+]
+
+
+// === CONCRETE VIGNETTE: Othello — "honest Iago" (play, ~1603) ===
+// Iago tells the audience his whole treachery in soliloquy, then plays the loyal friend. We watch
+// Othello trust the one man set on destroying him, and doubt the one woman who is true — knowing
+// both the opposite of what he believes.
+
+char othello   [+Protagonist]
+char iago      [+Antagonist]
+char desdemona [+LoveInterest]
+
+scene the_handkerchief {
+  beat 1 {
+    !iago [+Treacherous]!                            // the audience has heard the asides — we KNOW
+    othello [#Believes(claim=iago_is_honest)]         // Othello trusts "honest Iago"
+  }
+  beat 2 {
+    !desdemona [+Faithful]!                           // and we know she is true
+    othello [#Believes(claim=desdemona_is_false)]     // while he is poisoned into believing otherwise
+    // the audience holds both truths the hero cannot — DramaticIrony (theory_of_mind.trl)
+  }
+}

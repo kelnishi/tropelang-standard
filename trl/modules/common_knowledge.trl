@@ -22,7 +22,8 @@ imply CommonKnowledge -> [Knowledge, Social, Narrative]
 
 
 // === THE VOCABULARY ===
-verb Declares(fact)  [+Epistemic]          // say it aloud, in the open, before everyone
+verb  Declares(fact)      [+Epistemic]     // say it aloud, in the open, before everyone
+state CommonKnowledge     [+Epistemic]     // promoted: everyone knows that everyone knows (the tier)
 
 
 // === RULES ===
