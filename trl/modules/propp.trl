@@ -81,6 +81,14 @@ concept punishment           [+ProppFunction]   // 30 · the villain is punished
 concept wedding              [+ProppFunction]   // 31 · the hero marries and ascends the throne
 
 
+// NOTE — Propp is a pure SCAFFOLD, not an overlay, and deliberately adds NO imply onto popular
+// archetypes. The lesson came from drams: a module that implies (e.g.) ProppDonor -> Mentor makes
+// the *Mentor* tag map back to Propp's own titles, inflating the density of EVERY story with a
+// mentor — a framework polluting the whole corpus's measurement. So the functions and roles get no
+// archetype-implies; a tale is credited through the real tropes that RIDE each function (the donor
+// IS tagged [+Mentor], the recognition [+HiddenIdentity]), while Propp supplies only the ORDER.
+
+
 // === THE ONE FIXED SEQUENCE (a tale selects a subsequence; the order never inverts) ===
 absentation -> interdiction -> violation -> reconnaissance -> delivery -> trickery -> complicity
 complicity -> villainy_or_lack -> mediation -> counteraction -> departure
