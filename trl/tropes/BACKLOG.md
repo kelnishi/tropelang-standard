@@ -113,7 +113,7 @@ module unlocks a whole category of real-world forms:
 - [x] the Rousing Speech (St. Crispin's Day — honest pathos-only, fear→resolve) — `rousing_speech`
 - [x] the Reasonable-Doubt gate / Rogue Juror (burden of proof defeats persuasion) — `rogue_juror`
 - [ ] the Stump Speech · the Sales Pitch (persuasion for a vote / a sale)
-- [ ] the Debate (duelling persuasions; rebuttal)
+- [x] the Debate (adversarial persuasion; rebuttal unseats, the audience swings) — `the_debate`
 - [x] Propaganda / the Big Lie (ethos & pathos + repetition vs logos; entrenchment) — `propaganda`
 
 ### Non-fiction storytelling (the corpus handles it at ~71%)

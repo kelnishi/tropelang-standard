@@ -1,0 +1,56 @@
+// === PREAMBLE ===
+// @trope    The Debate
+// @category Oratory / Persuasion
+// @source   https://allthetropes.org/wiki/Forced_Perspective_Debate
+// @version  1.3
+//
+// Laconic: two speakers contend for one audience, each arguing a thesis and REBUTTING the other's.
+// FRONTIER: ADVERSARIAL persuasion. Every persuasion rule so far is one-directional — a speaker
+// works on an audience that holds still. A debate makes the audience CONTESTED GROUND: a rebuttal
+// does not merely add a claim, it unseats the opponent's, and belief swings to whoever last held
+// the floor and the better case. Persuasion becomes a duel (cf. the_duel, one arena down), and the
+// audience the prize.
+
+import "trl/modules/persuasion.trl"          // two persuaders, one audience; rebuttal unseats
+
+assoc the_debate -> [
+  persuasion : "makes adversarial — two speakers contending in",
+  the_duel   : "is the oratorical form of",
+  rogue_juror : "shares the unseating-by-doubt move of"
+]
+
+imply Debate -> [Contest, Persuasion, Narrative]
+
+// Naming rule: a rebuttal aimed at the thesis the audience currently holds unseats it — the floor of
+// belief is vacated, for the rebutter then to claim with a case of their own.
+rule Rebuttal {
+  when:
+    audience [+Persuaded(of=$claim)]
+    evt $r [&Rebuts(agent=$opp, claim=$claim)]
+  then:
+    audience [-Persuaded]
+    audience [#Swayed(by=$opp)]
+    audience -- swing
+}
+
+// === CONCRETE VIGNETTE: the Lincoln–Douglas debates — Freeport, Illinois (1858) ===
+// Douglas argues popular sovereignty — let each territory choose — and the crowd is with him. Lincoln
+// rebuts with the Freeport Question, forcing Douglas onto the horns of his own doctrine, then makes
+// the moral case a house divided cannot stand. The same audience that cheered the one now weighs the
+// other.
+char douglas [+Speaker] [+Credible]
+char lincoln [+Speaker] [+Credible]
+
+scene the_debate {
+  beat 1 {
+    evt douglas_case   [&Argues(agent=douglas, thesis=popular_sovereignty)]
+    evt douglas_appeal [&Cites(agent=douglas, support=states_rights)]
+    // -> audience [+Persuaded(of=popular_sovereignty)]
+  }
+  beat 2 {
+    evt freeport_question [&Rebuts(agent=lincoln, claim=popular_sovereignty)]   // Rebuttal -> swing
+    evt lincoln_case      [&Argues(agent=lincoln, thesis=a_house_divided)]
+    evt lincoln_appeal    [&Cites(agent=lincoln, support=moral_wrong_of_slavery)]
+    // -> audience [+Persuaded(of=a_house_divided)]
+  }
+}

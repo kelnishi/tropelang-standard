@@ -41,6 +41,7 @@ verb Repeats(claim)   [+Narrative]   // assert again — repetition standing in 
 verb Debunks(claim)   [+Narrative]   // present the truth against a claim
 verb Rallies(cause)   [+Narrative]   // steel the disheartened by appeal to shared honor (honest pathos)
 verb Doubts(claim)    [+Narrative]   // raise a reasonable doubt — test a claim against the standard
+verb Rebuts(claim)    [+Narrative]   // attack the opponent's thesis, not merely assert your own
 imply Persuaded -> [Conviction, Belief, Narrative]   // the audience now holds the claim
 imply Committed -> [Resolve, Action, Narrative]      // ... and resolves to act on it
 

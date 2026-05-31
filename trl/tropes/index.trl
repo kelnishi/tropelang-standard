@@ -90,6 +90,7 @@ import "trl/tropes/human_interest_story.trl"
 import "trl/tropes/propaganda.trl"
 import "trl/tropes/rousing_speech.trl"
 import "trl/tropes/rogue_juror.trl"
+import "trl/tropes/the_debate.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -254,6 +255,10 @@ concept rousing_speech         [+Trope(category="Oratory", source="allthetropes.
 
 // ROGUE JUROR — the burden-of-proof gate: a reasonable doubt defeats an otherwise-persuasive case.
 concept rogue_juror            [+Trope(category="Oratory", source="allthetropes.org/wiki/Rogue_Juror")] [%Narrative]
+
+// THE DEBATE — adversarial persuasion: two speakers contend for one audience, a rebuttal unseats
+// the held thesis and belief swings. The audience is contested ground.
+concept the_debate             [+Trope(category="Oratory", source="allthetropes.org/wiki/The_Debate")] [%Narrative]
 
 // UNRELIABLE NARRATOR — the narration's facts diverge from the truth. The first corpus trope
 // to use S14 diegetic levels: a non_canon narration plane (with a teller) vs the reality plane.
