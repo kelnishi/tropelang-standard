@@ -121,8 +121,10 @@ rule; coalitions, legitimacy, defection, revolution. Rides `power_dynamics.trl`.
 - [x] The Coup                     (`the_coup.trl` — seize the apparatus from within; Napoleon's 18 Brumaire)
 - [x] Praetorian Guard             (`praetorian_guard.trl` — kingmaker faction, pledge alone enthrones; Claudius)
 - [x] Reputation / Honor system    (`reputation.trl` — status as common belief: honor/slander/vindication; Dreyfus)
-- [ ] Decadent Court               (the rot inside legitimate power)   ← **up next**
-- [ ] We Have Reserves             (the callous arithmetic of mass force)
+- [x] Decadent Court               (`decadent_court.trl` — power's rot from within; King's Landing)
+- [x] We Have Reserves             (`we_have_reserves.trl` — the pitiless inverse of Last Stand; the Somme)
+- [x] The Duel                     (`the_duel.trl` — BRIDGES reputation + action_dynamics; Hamilton–Burr)
+- [ ] Smear Campaign / Trial by Media (weaponize common knowledge against a reputation)   ← **up next**
 
 ## Storytelling systems & frameworks (`trl/modules/`)
 Higher-level structures that *organize* tropes — name + sequence the stages, link the beats.

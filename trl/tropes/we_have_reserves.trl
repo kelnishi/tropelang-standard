@@ -1,0 +1,54 @@
+// === PREAMBLE ===
+// @trope    We Have Reserves
+// @category Political / Conflict
+// @source   https://allthetropes.org/wiki/We_Have_Reserves
+// @version  1.3
+//
+// Laconic (per the wiki): everyone is expendable, as long as the objective falls — the commander
+// who treats his own soldiers as a disposable resource, used to establish him as a villain. The
+// pitiless inverse of the Last Stand: where those defenders spend their lives because they have
+// no reserves and it costs them everything, this commander spends others' lives because he has
+// reserves and it costs him nothing.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/power_dynamics.trl"    // the collective scale — here, treated as fuel
+
+assoc we_have_reserves -> [
+  power_dynamics : "the callous arithmetic of",
+  conflict       : "wins at any cost a"
+]
+
+
+// === ONTOLOGY ===
+
+imply WeHaveReserves -> [Attrition, Power, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a commander spending his own as disposable IS We Have Reserves — and a villain.
+rule We_Have_Reserves {
+  when:
+    char $commander [+Callous]
+    evt  $order [&Spends(agent=$commander, force=$troops)]
+  then:
+    $troops [+Expended]
+    $commander [+Villainous]
+    $order [+WeHaveReserves]
+}
+
+
+// === CONCRETE VIGNETTE: the Somme — the big push (military history, 1916) ===
+// Wave after wave of New Army volunteers ordered to walk into uncut wire and machine guns; nearly
+// twenty thousand dead on the first morning, and the order to press on regardless.
+
+char haig    [+Antagonist] [+Callous]        // the high command, far behind the line
+char tommies [+Collective]                    // the men going over the top
+
+scene the_first_day {
+  beat 1 {
+    evt the_push [&Spends(agent=haig, force=tommies)]
+    // We_Have_Reserves -> tommies [+Expended], haig [+Villainous]
+  }
+}

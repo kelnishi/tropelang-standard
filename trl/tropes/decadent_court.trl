@@ -1,0 +1,55 @@
+// === PREAMBLE ===
+// @trope    Deadly Decadent Court
+// @category Political / Power
+// @source   https://allthetropes.org/wiki/Deadly_Decadent_Court
+// @version  1.3
+//
+// Laconic (per the wiki): corrupt nobles who abuse their power for selfish ends, scheming
+// against each other behind a mask of ritual and luxury. Power's rot from WITHIN — distinct from
+// the coup, the revolution, and the usurpation, which all come from outside. The court flatters
+// and plots until the ruler is sealed off from the truth (the Cassandra cannot be heard here,
+// and no Emperor's-New-Clothes child is allowed to speak), and the realm decays under a crown
+// still nominally legitimate.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/power_dynamics.trl"    // Ruler — legitimate, and rotting
+
+assoc decadent_court -> [
+  power_dynamics : "the rot-from-within of",
+  conflict       : "a slow internal"
+]
+
+
+// === ONTOLOGY ===
+
+imply DecadentCourt -> [Corruption, Power, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a court scheming around its ruler, sealing them off from truth, IS a Decadent Court.
+rule Decadent_Court {
+  when:
+    char $ruler [+Ruler]
+    evt  $intrigue [&Schemes(agent=$court, target=$ruler)]
+  then:
+    $ruler [+Isolated]
+    $court [+Decadent]
+    $intrigue [+DecadentCourt]
+}
+
+
+// === CONCRETE VIGNETTE: King's Landing — the small council (A Song of Ice and Fire) ===
+// Every councillor plays their own game — Littlefinger's ladder, Varys's whispers, Cersei's
+// pride — while the realm they are sworn to serve frays beneath them.
+
+char throne        [+Ruler]                  // whoever sits the Iron Throne
+char small_council [+Collective]             // the schemers around it
+
+scene the_red_keep {
+  beat 1 {
+    evt the_games [&Schemes(agent=small_council, target=throne)]
+    // Decadent_Court -> throne [+Isolated], small_council [+Decadent]
+  }
+}

@@ -60,6 +60,9 @@ import "trl/tropes/full_circle_revolution.trl"
 import "trl/tropes/divide_and_conquer.trl"
 import "trl/tropes/the_coup.trl"
 import "trl/tropes/praetorian_guard.trl"
+import "trl/tropes/decadent_court.trl"
+import "trl/tropes/we_have_reserves.trl"
+import "trl/tropes/the_duel.trl"
 
 
 // === TROPE TITLE ENTRIES ===
@@ -152,6 +155,12 @@ concept full_circle_revolution [+Trope(category="Power", source="allthetropes.or
 concept divide_and_conquer     [+Trope(category="Power", source="allthetropes.org/wiki/Divide_and_Conquer")] [%Political]
 concept the_coup               [+Trope(category="Power", source="allthetropes.org/wiki/The_Coup_d'Etat")] [%Political]
 concept praetorian_guard       [+Trope(category="Power", source="allthetropes.org/wiki/Praetorian_Guard")] [%Political]
+concept decadent_court         [+Trope(category="Power", source="allthetropes.org/wiki/Deadly_Decadent_Court")] [%Political]
+concept we_have_reserves       [+Trope(category="Conflict", source="allthetropes.org/wiki/We_Have_Reserves")] [%Political]
+
+// THE DUEL — bridges the Reputation and action_dynamics modules (honor injured -> honor answered
+// with a strike). Filed social/conflict; reuses [%Social] + [%Interpersonal] domains.
+concept the_duel               [+Trope(category="Honor", source="allthetropes.org/wiki/Duel_to_the_Death")] [%Social]
 
 // UNRELIABLE NARRATOR — the narration's facts diverge from the truth. The first corpus trope
 // to use S14 diegetic levels: a non_canon narration plane (with a teller) vs the reality plane.

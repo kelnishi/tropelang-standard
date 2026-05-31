@@ -1,0 +1,57 @@
+// === PREAMBLE ===
+// @trope    The Duel (Duel to the Death · Affair of Honor)
+// @category Social / Conflict
+// @source   https://allthetropes.org/wiki/Duel_to_the_Death
+// @version  1.3
+//
+// Laconic (per the wiki): the offended party will have satisfaction no other way — the glove
+// thrown, the weapons chosen, the meeting at dawn. The trope that BRIDGES two arenas: an injury
+// to REPUTATION (reputation.trl — a slander, a disgrace) is answered with ACTION (action_dynamics
+// — a strike), honor settled by blood. It is the social-epistemic and the tactical layers meeting
+// on a field at first light.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/reputation.trl"        // the disgrace that demands satisfaction
+import "trl/modules/action_dynamics.trl"   // the strike that gives it
+
+assoc the_duel -> [
+  reputation     : "answers an injury to one's standing in",
+  action_dynamics : "settles it with the Strike of"
+]
+
+
+// === ONTOLOGY ===
+
+imply TheDuel -> [Honor, Combat, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a disgraced party calling out the one who wronged them IS a Duel (tags the challenge).
+rule The_Duel {
+  when:
+    char $offended [+Disgraced]
+    evt  $challenge [&Challenges(agent=$offended, target=$offender)]
+  then:
+    $challenge [+TheDuel]
+}
+
+
+// === CONCRETE VIGNETTE: Weehawken — Hamilton and Burr (history, 1804) ===
+// Years of Hamilton's public attacks leave the sitting Vice President's honor in tatters; Burr
+// demands satisfaction, and the two row across the Hudson at dawn to the duelling ground.
+
+char hamilton [+Protagonist]
+char burr     [+Antagonist]
+
+scene weehawken {
+  beat 1 {
+    evt the_attacks [&Slanders(agent=hamilton, target=burr)]      // a career of public injury
+    // Disgrace (reputation) -> burr [+Disgraced]
+  }
+  beat 2 {
+    evt the_challenge [&Challenges(agent=burr, target=hamilton)]
+    evt the_shot [&Strikes(agent=burr, target=hamilton)]          // action_dynamics resolves it
+    // The_Duel -> the_challenge [+TheDuel];  Strike -> hamilton [+Hit];  honor "satisfied" at a price
+  }
+}
