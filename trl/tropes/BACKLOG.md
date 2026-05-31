@@ -1,169 +1,124 @@
-# Core Tropes — conversion backlog
+# TropeLang corpus — map & worklist
 
-A curated list of foundational ("core") tropes to encode in `trl/tropes/`, worked **one at a
-time**. This is the *forward* plan; the *measured* plan is the drams gap — `drams.py <story>`
-shows which facts a real story leaves uncovered, and `corpus_reuse.py` shows what to reuse.
-Converge the two.
+What began as a flat "convert core tropes" list is now a **layered model of narrative**: a stack
+of systems (modules that *simulate* a dynamic) with tropes riding on top (named patterns that
+*recognize* an instance). This doc is the map of what exists and the forward worklist.
 
-**Status:** `[x]` converted · `[~]` partial (lives in a module/imply) · `[ ]` todo.
-Vignettes must vary by story / medium / era — no franchise monoculture (see `SKILL.md`).
+**How the work is steered**
+- **drams** (`drams.py <story>`) measures `density over coverage` against eval stories and prints
+  the uncovered-fact worklist. Coverage follows the **imply closure** (a `[+Heir_of_Isildur]` fact
+  is credited to a trope about `Royalty`). Eval targets: `examples/aragorn_fotr.trl` (fantasy, ~43%)
+  and `examples/mythbusters_water_heater.trl` (non-fiction, ~57%).
+- **sim** (`tools/sim.py <scenario>`) forward-chains the real rule blocks — every system is run,
+  not just written; it has caught real bugs (self-vengeance, the coup self-deposing, prepotency).
+- **Sourcing**: definitions from allthetropes.org (the `source=` field); WebFetch 403s on the
+  datacenter IP, so the search cache is used. Never TVTropes.
+- **Variety**: vary story / medium / era **and the scale of stakes** — a toy's bedroom and a
+  sundered nation are equally valid (see `[[trope-example-variety]]`). An over-epic vignette set is
+  itself a gap.
 
-## Non-fiction storytelling (eval + tropes)
-The corpus narrativizes REALITY with the same grammar (a MythBusters episode covers at 57% — the
-curiosity gap, the Foil, spectacle, the reveal). Non-fiction = rhetoric MINUS override-of-outcome:
-the author frames but reality writes the verdict. Eval: `examples/mythbusters_water_heater.trl`.
-- [ ] The Host / Presenter        (the on-screen non-fiction guide)   ← **gap (new category)**
-- [ ] Putting It to the Test      (the experiment as a narrative beat; empirical verdict)
-- [ ] Talking Head / Reenactment  (documentary forms)
-- [ ] Based on a True Story        (the truth-claim; reality constrains the author)
+**Legend:** `[x]` done · `[~]` partial (lives in a module/imply) · `[ ]` todo.
 
-## Cast & character roles
-- [x] The Protagonist            (Universal)
-- [x] The Antagonist             (Universal)
-- [x] The Deuteragonist          (Universal)
-- [x] The Hero                   (Universal)
-- [x] The Mentor                 (Universal)
-- [x] The Sidekick               (`the_sidekick.trl` — loyal support; Donkey/Shrek)
+---
+
+## Systems (the modules in `trl/modules/`)
+Each is a forward-chaining dynamic that tropes ride on.
+
+- **Psychology** — `emotion_dynamics` (appraisal→emotion→motivation→threads) · `motivation_dynamics`
+  (desire→pursuit→outcome) · `needs` (Maslow's 8 rungs + **prepotency and its inversion**, scale-
+  invariant) · `five_stages_of_grief`
+- **Tactics** — `action_dynamics` (conflict & cooperation verbs: strike/guard/exploit/finisher ·
+  pin/cover/improvise/bar · feint/ambush/sacrifice · hold/reinforce/riposte)
+- **Epistemic** — `prophecy` · `common_knowledge` (mutual↔common) · `theory_of_mind` · `cognitive_biases`
+- **Social / political** — `power_dynamics` (coalition·legitimacy·revolution) · `reputation` (status
+  as common belief)
+- **Rhetoric** — `rhetoric` (the author↔audience layer: framing-dependent appraisal · curiosity gap ·
+  authorial override). Non-fiction = this **minus** override-of-outcome.
+- **Storytelling frameworks** — `heros_journey` · `freytags_pyramid` · `story_circle` · `save_the_cat`
+  · `booker_seven_plots` · `philosophy`
+- **Language feature** — S14 diegetic levels (`specs/14`), implemented in the reference parser.
+
+---
+
+## Open worklist by arena
+Done tropes are summarized; **todo** is the actionable list.
+
+### Cast & character roles
+Done: Protagonist · Antagonist · Deuteragonist · Hero · Mentor · Sidekick · Foil · Big Bad ·
+Paragon · Everyman.
 - [ ] The Love Interest
-- [x] The Foil                   (`the_foil.trl` — contrastive characterization; Quixote & Sancho)
 - [ ] The Narrator
-- [x] The Paragon                (`the_paragon.trl` — incorruptible virtue; Atticus Finch)
-- [x] The Everyman               (`the_everyman.trl` — ordinary audience surrogate; Arthur Dent)
 - [ ] Anti-Hero
 - [ ] The Trickster
-- [x] The Big Bad                (`the_big_bad.trl` — the nemesis dyad; Moriarty)
 
-## Conflict
-- [x] Conflict — the engine (vs Man / Self / Nature / Society / Fate)   (Omnipresent)
-- [ ] Rivalry
-- [~] The Dilemma                 (`philosophy.trl` → `MoralDilemma`)
+### Character relationships (the dyad/triad)
+Done: The Rival · Unrequited Love · Found Family · Enemies to Lovers · Love Triangle ·
+Star-Crossed Lovers · Mentor & Student.
+- [ ] The Love Triangle's darker forms (Love Dodecahedron, Triang Relations variants)
+- [ ] Sibling Rivalry · Like Brother and Sister
 
-## Plot structure & arc
-- [x] Three-Act Structure        (Universal)
-- [x] The Hero's Journey         (system — `trl/modules/heros_journey.trl`)
-- [x] Call to Adventure          (Universal)
-- [x] Refusal of the Call        (Universal)
-- [ ] In Medias Res
-- [~] The Climax                 (concept `climax` defined in `freytags_pyramid.trl`)
-- [x] Frame Story                 (S14 levels — `frame_story.trl`: Frankenstein, 3 canon planes nested)
-- [x] Cliffhanger                 (`cliffhanger.trl` — the curiosity gap held open; rhetoric layer)
-
-## Setup, payoff & devices
-- [x] Foreshadowing               (Omnipresent)
-- [x] The Reveal                  (Omnipresent)
-- [x] Hope Spot                   (Omnipresent)
-- [x] Chekhov's Gun               (Omnipresent — promoted from foreshadowing's imply)
-- [x] Red Herring                 (Omnipresent — promoted from foreshadowing's imply)
-- [ ] Plot Twist
-- [ ] MacGuffin                   (cf. skill example `MacGuffinDelivery`)
-- [~] Dramatic Irony              (`theory_of_mind.trl`)
-- [ ] Flashback
-- [x] Unreliable Narrator         (FRONTIER — first corpus use of S14 diegetic levels: a non_canon
-                                    narration plane vs the reality plane; The Usual Suspects)
-- [x] Dream Sequence              (S14 lifecycle — `dream_sequence.trl`: a non_canon dream that
-                                    dissolves to LATENT on waking; Link's Awakening)
-- [x] Breaking the Fourth Wall    (S14 outward crossing — `fourth_wall.trl`: a character reaches OUT
-                                    to the audience plane; Ferris Bueller)
-- [x] Dream Within a Dream        (S14 deep nesting — `dream_within_a_dream.trl`: 4 stacked non_canon
-                                    planes + the kick; Inception)
-- [x] Show Within a Show          (S14 inner-fiction-loops-back — `show_within_a_show.trl`: a non_canon
-                                    play mirrors a canon crime to expose it; Hamlet's Mousetrap)
-- [x] Or Was It a Dream?          (S14 levels × §11 ambiguity — `or_was_it_a_dream.trl`: a dream-residue
-                                    leaves an uncollapsed (real|dream) ambiguity; Coleridge's flower)
-
-## Character change & arcs
+### Character change & arcs
+Done (psychology arena): Heel/Face Turn · Revenge · Despair Event Horizon · Survivor's Guilt.
 - [ ] Coming of Age
-- [ ] Heel Face Turn              (cf. skill example `HeelFaceTurn`)
 - [ ] Redemption Arc
 - [ ] Fall From Grace
 
-## Relationships
-- [ ] Found Family
-- [x] Star-Crossed Lovers        (`star_crossed_lovers.trl` — love across an unbridgeable obstacle; Pyramus & Thisbe)
-- [x] Mentor and Student         (`mentor_and_student.trl` — the teaching bond; Whiplash)         (the teaching bond + its arc)
+### Identity / worldbuilding (drams-flagged)
+Done: Hidden Identity · Rightful King Returns · The Chosen One · Unreliable Narrator.
+- [ ] Secret Legacy / Heritage
+- [ ] role archetypes: the Wanderer/Ranger, the Mage/Wizard (covers `Ranger`,`Wizard` gap facts)
+- [ ] fantastic-species framing (`Hobbit`,`Elf`,`Dunedain` — low general value; consider eval re-encode instead)
 
-## Psychological systems & emotion threads (`trl/modules/` + tropes)
-Code that *simulates/estimates* emotional response as threads progress — appraisal,
-motivation, and state transitions — general enough to compose arbitrary emotional arcs.
-- [x] Emotion Dynamics             (system — `emotion_dynamics.trl`: appraisal → emotion → motivation → threads)
-- [x] Revenge                      (trope — rides the vengeance thread)
-- [x] Despair Event Horizon        (trope — irreversible hope → despair crossing; dark mirror of Hope Spot)
-- [x] Five Stages of Grief         (system — `five_stages_of_grief.trl`: staged denial → … → acceptance thread)
-- [x] Heel Face Turn / Face Heel Turn   (paired trope — `heel_face_turn.trl`: alignment reversal riding the appraisal layer)
-- [x] Survivor's Guilt / Trauma    (trope — `survivors_guilt.trl`: S8 imprint → trigger → catharsis/repression; self-directed blame)
-- [x] Motivation / goals system    (system — `motivation_dynamics.trl`: desire → pursuit → attainment/obsession/abandonment; determination is the hinge)
+### Plot structure & devices
+Done: Three-Act · Call to Adventure · Refusal · Foreshadowing · The Reveal · Hope Spot ·
+Chekhov's Gun · Red Herring · Cliffhanger · Frame Story.
+- [ ] In Medias Res · Plot Twist · MacGuffin · Flashback
+- [~] The Climax (concept in `freytags_pyramid`) · The Dilemma (`philosophy` → MoralDilemma)
 
-## Specific actions — conflict & cooperation (`trl/modules/` + tropes)
-Event-level tactics: what a character actually DOES in a contested moment — the layer a game
-mechanic maps onto. Rides `action_dynamics.trl` (strike/guard/exploit/finisher · pin/cover/
-improvise/bar). All sim-runnable (`tools/sim.py finisher_combo | bar_door | improvised`).
-- [x] Action Dynamics system        (`action_dynamics.trl`: the verbs of conflict & cooperation)
-- [x] Finishing Move                (trope — combination finisher; Naruto + Shikamaru vs Hidan)
-- [x] Bar the Door                  (trope — deny access / buy time; Jesse's RV vs Hank)
-- [x] Improvised Weapon             (trope — indirect attack; Henry Jones' umbrella → gulls → plane)
-- [x] Feint / Misdirection          (`feint.trl` — Bait → Punish_Overcommit; Hannibal at Cannae)
-- [x] Ambush / Surprise Attack      (`ambush.trl` — Spring_Ambush bypasses guard; Teutoburg Forest)
-- [x] Heroic Sacrifice / Sacrifice Play (`heroic_sacrifice.trl` — giver [+Fallen], ally [+Saved]; Sydney Carton)
-- [x] Last Stand / Hold the Line    (`last_stand.trl` — Hold_The_Line: count(strikes)≥3 → BoughtTime+Fallen; Thermopylae)
-- [x] The Cavalry                   (`the_cavalry.trl` — Reinforcement → [+Relieved], which spares the held line; Vienna 1683)
-- [x] Disarm / Counter              (`counter.trl` — Riposte: let them commit, turn it back → [+Defeated]; Musashi vs Kojiro)
+### Diegetic-level devices (S14)
+Done: Frame Story · Dream Sequence · Fourth Wall · Dream Within a Dream · Show Within a Show ·
+Or Was It a Dream? · Unreliable Narrator.
+- [ ] Within a Frame Story · Reality Bleed (the boundary fails — a deliberate §7 leak)
 
-## Epistemic arenas (`trl/modules/` + tropes)
-Knowledge, belief, and truth as first-class dynamics — beyond the narrator truth-tiers.
-- [x] Prophecy / Foreknowledge      (system — `prophecy.trl`: foretell → ?latent? fate → !absolute!)
-- [x] Self-Fulfilling Prophecy      (trope — the avoidance seals the fate; Oedipus)
-- [x] Prophecy Twist                (trope — §11 ambiguity collapses the unforeseen way; Macbeth)
-- [x] Common Knowledge             (system — `common_knowledge.trl`: mutual → common via the public utterance)
-- [x] The Emperor's New Clothes    (trope — the spoken resolution: the child makes it common, the fiction collapses)
-- [x] Open Secret                  (trope — the unspoken resolution: a tacit pact, never made common; Discworld's Carrot)
-- [x] Cassandra Truth              (`cassandra_truth.trl` — true foresight that can't propagate; inverse of common knowledge; Troy)
-- [x] The Gambit / Batman Gambit   (`the_gambit.trl` — a plan built on predicting others' behaviour; weaponized ToM; Code Geass)
-- [x] Tomato Surprise              (`tomato_surprise.trl` — a fact withheld from the audience, surfaced; latent→absolute; Pale Fire)
-- [ ] Dramatic Irony (full)        (promote from `theory_of_mind.trl`)   ← **up next**
-- [ ] Tomato in the Mirror         (the PROTAGONIST learns the recontextualizing fact)
+### Epistemic arenas
+Done: Self-Fulfilling Prophecy · Prophecy Twist · Common Knowledge · Emperor's New Clothes ·
+Open Secret · Cassandra Truth · The Gambit · Tomato Surprise · Dramatic Irony.
+- [ ] Tomato in the Mirror (the protagonist, not just the audience, is blindsided)
 
-## Rhetoric — author, audience & attention (`trl/modules/` + tropes)
-The layer ABOVE character motivation: an author cultivating an audience's attention. Fills the
-"thin rungs" of Maslow as AUDIENCE needs (cognitive=curiosity, aesthetic=spectacle), as
-capabilities not tautologies. Rides `rhetoric.trl`.
-- [x] Rhetoric system             (`rhetoric.trl`: framing-dependent audience appraisal · curiosity gap · authorial override)
-- [x] Rule of Funny               (comic framing → the audience laughs, logic be damned; Zoolander)
-- [x] Deus Ex Machina             (authorial override imposes an unearned resolution — a diegetic crossing; Euripides)
-- [x] Cliffhanger                 (the curiosity gap held open to leash attention; "Who shot J.R.?")
-- [x] Rule of Cool                (`rule_of_cool.trl` — logic forgiven for awe; Furious 7)
-- [ ] Rule of Drama              (the override's other justification)   ← **up next**
-- [ ] The Pratfall / Amusing Injuries (slapstick specifics)
-- [ ] Tear Jerker / Nightmare Fuel (audience-emotion-targeted devices)
-- [ ] Spectacle / Sensory Overload (the aesthetic rung, crafted)
+### Specific actions (tactics)
+Done: Finishing Move · Bar the Door · Improvised Weapon · Feint · Ambush · Heroic Sacrifice ·
+Last Stand · The Cavalry · Counter.
+- [ ] Trap · Pincer · Pyrrhic Victory
 
-## Collective / political scale (`trl/modules/` + tropes)
-The supra-individual arena — the [%Political] domain. Power as common knowledge of the right to
-rule; coalitions, legitimacy, defection, revolution. Rides `power_dynamics.trl`.
-- [x] Power Dynamics system        (`power_dynamics.trl`: pledge/coalition · legitimacy · revolution · usurp · divide)
-- [x] Klingon Promotion            (take a rank by killing its holder; Commodus / Gladiator)
-- [x] Full-Circle Revolution       (the deposers become the deposed; Animal Farm)
-- [x] Divide and Conquer           (keep rivals from uniting — inverse of coalition; Jay Gould)
-- [x] The Coup                     (`the_coup.trl` — seize the apparatus from within; Napoleon's 18 Brumaire)
-- [x] Praetorian Guard             (`praetorian_guard.trl` — kingmaker faction, pledge alone enthrones; Claudius)
-- [x] Reputation / Honor system    (`reputation.trl` — status as common belief: honor/slander/vindication; Dreyfus)
-- [x] Decadent Court               (`decadent_court.trl` — power's rot from within; King's Landing)
-- [x] We Have Reserves             (`we_have_reserves.trl` — the pitiless inverse of Last Stand; the Somme)
-- [x] The Duel                     (`the_duel.trl` — BRIDGES reputation + action_dynamics; Hamilton–Burr)
-- [ ] Smear Campaign / Trial by Media (weaponize common knowledge against a reputation)   ← **up next**
+### Collective / political
+Done: Klingon Promotion · Full-Circle Revolution · Divide and Conquer · The Coup · Praetorian
+Guard · Decadent Court · We Have Reserves · The Duel.
+- [ ] Smear Campaign / Trial by Media (reputation × common_knowledge × power)
 
-## Storytelling systems & frameworks (`trl/modules/`)
-Higher-level structures that *organize* tropes — name + sequence the stages, link the beats.
-- [x] The Hero's Journey / Monomyth   (Campbell — `heros_journey.trl`)
-- [x] Freytag's Pyramid               (Freytag — `freytags_pyramid.trl`; defines `climax` et al.)
-- [x] Dan Harmon's Story Circle       (system — `story_circle.trl`: the 8-step closed loop; order/chaos halves, two threshold crossings)
-- [x] Save the Cat beat sheet         (system — `save_the_cat.trl`: the 15 beats with page-target params, on the three-act spine)
-- [x] The Seven Basic Plots           (system — `booker_seven_plots.trl`: plot-TYPE taxonomy wired to corpus mechanisms; 7-story gallery)
-- [ ] Propp's Morphology              (31 narrative functions)
-- [ ] Kishōtenketsu                   (4-act, no central conflict — East Asian)
+### Rhetoric — author, audience & attention
+Done: Rule of Funny · Rule of Cool · Deus Ex Machina · Cliffhanger.
+- [ ] Rule of Drama (the override's other justification)
+- [ ] The Pratfall · Tear Jerker · crafted Spectacle (the aesthetic rung in full)
 
-## Recommended order (simple building blocks first)
-1. ~~Conflict~~ ✓ — the engine that Protagonist + Antagonist create.
-2. ~~The Hero~~ ✓ / ~~The Mentor~~ ✓ — core cast well underway.
-3. ~~Call to Adventure~~ ✓ / ~~Three-Act Structure~~ ✓ — the spine of plot.
-4. ~~Chekhov's Gun~~ ✓ / ~~Red Herring~~ ✓ — promoted from `foreshadowing.trl`'s imply to full tropes.
-5. **Next:** finish the cast (Sidekick, Foil, Love Interest, Narrator…) or the remaining journey beats (The Climax, The Hero's Journey), then converge with the drams gap on the eval stories.
+### Non-fiction storytelling (the corpus handles it at ~57%)
+Reality narrativized with the same grammar; the gap is the non-fiction *forms*.
+- [ ] The Host / Presenter (closes the `Host` gap)
+- [ ] Putting It to the Test (the experiment as a narrative beat; the empirical verdict)
+- [ ] Talking Head · Reenactment (documentary forms)
+- [ ] Based on a True Story (the truth-claim — reality constrains the author)
+
+### Storytelling frameworks
+Done: Hero's Journey · Freytag · Story Circle · Save the Cat · Booker's Seven Plots.
+- [ ] Propp's Morphology (31 functions) · Kishōtenketsu (4-act, conflict-free)
+
+---
+
+## drams gap (the measured forward target)
+The remaining uncovered facts on the eval stories, in priority order — the worklist that actually
+moves coverage:
+- **fantasy** (`aragorn_fotr`): `Hobbit`, `Chieftain_of_the_Dunedain`, `Dangerous`, `Kingly_Bearing`,
+  `Ranger`, `Dunedain`, `Wizard`, `Maiar`, `Elf`, `Halfelven` — mostly fantastic species/roles (low
+  general value); `Rightful_King_of_Gondor`/`Exile_Who_Refuses_Crown` would cover *for free* if the
+  eval story implied them to `Royalty` (a one-line eval fix, not new tropes).
+- **non-fiction** (`mythbusters`): `Host`, `Experiments`, `Escalates`, `Confirmed` — the non-fiction
+  forms above.
