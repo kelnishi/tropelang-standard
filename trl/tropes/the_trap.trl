@@ -1,0 +1,76 @@
+// === PREAMBLE ===
+// @trope    The Trap (Lured into a Trap)
+// @category Conflict / Tactics
+// @source   https://allthetropes.org/wiki/Lured_into_a_Trap
+// @domain   Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): a seemingly innocent reason draws the target to a chosen place — a clue,
+// an informant, a comrade to rescue — but the place is a prepared position with the foe already in
+// it, and the way out is sealed. Rides the action-dynamics Bait -> Bar_Access -> Strike chain: the
+// lure (Feints) pulls the target in, the exits close (Bars -> [+Blocked]), and the spring lands on a
+// foe who cannot flee. The signature that separates The Trap from a feint or an ambush is the
+// [+Blocked] kill-zone — the victim came willingly and now there is no way back.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/action_dynamics.trl"   // Bait -> [+Overcommitted];  Bar_Access -> [+Blocked];  Strike -> [+Hit]
+
+assoc the_trap -> [
+  action_dynamics : "the Bait / Bar_Access / Strike rules of",
+  conflict        : "springs a"
+]
+
+
+// === ONTOLOGY ===
+
+imply The_Trap -> [Deception, Tactic, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a strike on a target who was lured in and then sealed off — [+Overcommitted] from the
+// bait AND [+Blocked] with no exit — IS The Trap (tags the deed). The two preconditions are what
+// distinguish it: a feint has the overcommit but no sealed exit; an ambush has the strike but no lure.
+rule The_Trap {
+  when:
+    char $y [+Overcommitted]
+    char $y [+Blocked]
+    evt  $a [&Strikes(agent=$x, target=$y)]
+  then:
+    $a [+The_Trap]
+}
+
+
+// === CONCRETE VIGNETTE: Return of the Jedi — "It's a trap!" at Endor (film, 1983) ===
+// The Rebel fleet is fed the bait: a vulnerable shield generator on Endor, the Death Star defenseless
+// and incomplete. They commit the whole fleet to the attack — and arrive to find the shield still up,
+// the battle station fully armed, and a wall of Star Destroyers closing the only way out. Admiral
+// Ackbar reads the sealed exits and the waiting guns in one breath: it was a trap all along.
+
+// ADMIRAL ACKBAR (the Rebel fleet)
+char ackbar [+Protagonist] [+Collective]   // the Alliance fleet, committed to the attack
+// EMPEROR PALPATINE (the waiting Imperial fleet + the operational Death Star)
+char empire [+Antagonist] [+Collective]
+// EXT. ORBIT OF THE FOREST MOON OF ENDOR - SPACE
+set endor_orbit [+Exterior] [+Night]
+
+scene the_ambush_at_endor {
+  beat 1 {
+    // the bait: a defenseless station and a reachable shield generator draw the fleet in
+    evt the_lure [&Feints(agent=empire, target=ackbar)]
+    // Bait -> ackbar [+Overcommitted]   (the whole fleet is committed to the attack run)
+  }
+  beat 2 {
+    ackbar @ endor_orbit
+    empire @ endor_orbit
+    // the jaws close: Star Destroyers seal the only way out
+    evt close_the_jaws [&Bars(agent=empire, against=ackbar)]
+    // Bar_Access -> ackbar [+Blocked]   ("It's a trap!")
+  }
+  beat 3 {
+    // the spring: the fully operational Death Star opens fire on the trapped fleet
+    evt the_spring [&Strikes(agent=empire, target=ackbar)]
+    // Strike -> ackbar [+Hit];  The_Trap tags the deed (lured in, sealed off, sprung)
+  }
+}

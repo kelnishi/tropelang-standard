@@ -95,6 +95,9 @@ import "trl/tropes/rousing_speech.trl"
 import "trl/tropes/rogue_juror.trl"
 import "trl/tropes/the_debate.trl"
 import "trl/tropes/pyrrhic_victory.trl"
+import "trl/tropes/pincer_maneuver.trl"
+import "trl/tropes/the_narrator.trl"
+import "trl/tropes/the_trap.trl"
 
 // === TROPE TITLE ENTRIES ===
 
@@ -228,6 +231,7 @@ concept love_triangle     [+Trope(category="Romance", source="allthetropes.org/w
 concept the_big_bad        [+Trope(category="Cast", source="allthetropes.org/wiki/Big_Bad")] [%Interpersonal]
 concept mentor_and_student [+Trope(category="Bonds", source="allthetropes.org/wiki/Mentors")] [%Interpersonal]
 concept pyrrhic_victory  [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Pyrrhic_Victory")] [%Interpersonal]   // a win that costs more than the loss it averts
+concept the_trap         [+Trope(category="Tactics", source="https://allthetropes.org/wiki/Lured_into_a_Trap")] [%Interpersonal]   // lure + sealed exit + strike (the kill-zone)
 
 // IDENTITY / WORLDBUILDING (the drams-flagged gap — archetype tags that subsume world-specific
 // lineage/disguise/destiny facts). Hidden Identity, Rightful King Returns, The Chosen One.
