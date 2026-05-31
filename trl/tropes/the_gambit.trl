@@ -1,0 +1,58 @@
+// === PREAMBLE ===
+// @trope    The Gambit (Batman Gambit)
+// @category Epistemic / Strategy
+// @source   https://allthetropes.org/wiki/Batman_Gambit
+// @version  1.3
+//
+// Laconic (per the wiki): a plan that relies on people doing exactly as predicted — the
+// chessmaster uses what they know about the marks against them, guiding the "obvious" move so it
+// serves the scheme. Unlike the foolproof Xanatos Gambit, it HAS a failure condition: the mark
+// could break pattern. The meta-epistemic move — weaponizing theory_of_mind, acting on a model
+// of how another will (mis)read the moment.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/theory_of_mind.trl"    // a gambit IS an applied model of another's mind
+
+assoc the_gambit -> [
+  theory_of_mind : "weaponizes the",
+  conflict       : "wins without fighting a"
+]
+
+
+// === ONTOLOGY ===
+
+imply TheGambit -> [Manipulation, Strategy, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a mark behaving exactly as the schemer predicted springs the plan — a Gambit.
+// (The failure condition is implicit: the rule fires only if the mark actually acts as foreseen.)
+rule The_Gambit {
+  when:
+    char $schemer [~Predicts(target=$mark)]
+    evt  $act [&Acts(agent=$mark)]
+  then:
+    $schemer [+Outwits(target=$mark)]
+    $act [+TheGambit]
+}
+
+
+// === CONCRETE VIGNETTE: Code Geass — Lelouch scripts the mind-reader (anime) ===
+// Against Mao, who reads minds, Lelouch records his half of the conversation in advance — the
+// gambit out-predicts the predictor: Mao reacts exactly as the script foresaw, distracted long
+// enough for the trap to close.
+
+char lelouch [+Protagonist]
+char mao     [+Antagonist] [+MindReader]
+
+scene the_recording {
+  beat 1 {
+    lelouch [~Predicts(target=mao)]            // he scripts Mao's every reply ahead of time
+  }
+  beat 2 {
+    evt the_script [&Acts(agent=mao)]          // Mao responds exactly as foreseen
+    // The_Gambit -> lelouch [+Outwits(mao)];  the_script [+TheGambit]
+  }
+}

@@ -1,0 +1,54 @@
+// === PREAMBLE ===
+// @trope    Cassandra Truth
+// @category Epistemic / Knowledge
+// @source   https://allthetropes.org/wiki/Cassandra_Truth
+// @version  1.3
+//
+// Laconic (per the wiki): a character foresees something true and warns of it — and is ignored.
+// The mythical namesake's prophecies were always accurate, never believed (Apollo's curse). The
+// EPISTEMIC INVERSE of common knowledge: there an utterance makes a truth spread; here a true
+// warning cannot propagate at all, because the hearers are [+Disbelieving]. Knowledge that is
+// real and yet stays stuck in one head.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // revelation
+import "trl/modules/prophecy.trl"          // foreknowledge — here, foreknowledge that no one will take
+
+assoc cassandra_truth -> [
+  prophecy   : "true sight without belief in",
+  revelation : "the warning that fails to become a"
+]
+
+
+// === ONTOLOGY ===
+
+imply CassandraTruth -> [Foreknowledge, Disbelief, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a true warning that its hearers refuse to believe IS a Cassandra Truth (tags it).
+rule Cassandra_Truth {
+  when:
+    evt  $warn [&Warns(agent=$c, target=$victim, about=$doom)]
+    char $victim [+Disbelieving]
+  then:
+    $warn [+CassandraTruth]
+}
+
+
+// === CONCRETE VIGNETTE: Cassandra of Troy — the warning unheeded (myth) ===
+
+char cassandra [+Prophet] [+Cursed]          // Apollo's curse: she sees true, and is never believed
+char troy      [+Collective] [+Disbelieving]
+
+scene the_horse {
+  beat 1 {
+    !cassandra [~Knows(target=the_fall)]!     // her foresight is, in fact, ABSOLUTE — it is true
+    evt warns [&Warns(agent=cassandra, target=troy, about=the_fall)]
+    // Cassandra_Truth -> warns [+CassandraTruth];  Troy is [+Disbelieving], so the truth cannot land
+  }
+  beat 2 {
+    evt the_sack [&Fulfills(agent=greeks, prophecy=the_fall)]   // the city burns, exactly as she said
+  }
+}

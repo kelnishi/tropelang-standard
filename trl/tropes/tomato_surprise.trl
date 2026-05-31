@@ -1,0 +1,53 @@
+// === PREAMBLE ===
+// @trope    Tomato Surprise
+// @category Epistemic / Narrative Devices
+// @source   https://allthetropes.org/wiki/Tomato_Surprise
+// @version  1.3
+//
+// Laconic (per the wiki): a plot resolved by the sudden disclosure of an important detail
+// deliberately hidden FROM THE VIEWER — the exact opposite of Dramatic Irony (where the audience
+// knows what the characters don't). It works by the latent → surfaced mechanic: a fact true all
+// along is held `?latent?` (present, unsurfaced), and the reveal turns it `!absolute!`, so every
+// prior scene re-reads. (Contrast Tomato in the Mirror, where it's the PROTAGONIST, not just the
+// audience, who is blindsided.)
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // revelation
+import "trl/modules/theory_of_mind.trl"    // the inverse of the dramatic irony it lives next to
+
+assoc tomato_surprise -> [
+  revelation     : "is built entirely around its",
+  theory_of_mind : "the inverse of the dramatic irony in"
+]
+
+
+// === ONTOLOGY ===
+
+imply TomatoSurprise -> [Withholding, Twist, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: disclosing a deliberately-withheld fact that recolours the whole story IS the trope.
+rule Tomato_Surprise {
+  when:
+    evt $reveal [&Reveals(agent=$x, fact=$truth)]
+  then:
+    $reveal [+TomatoSurprise]
+}
+
+
+// === CONCRETE VIGNETTE: Pale Fire — Charles Kinbote (novel, 1962) ===
+// Kinbote annotates a dead poet's work, forever steering it toward the exiled king of Zembla.
+// The detail withheld from the reader, true from the first gloss: Kinbote IS that king.
+
+char kinbote [+Narrator]
+?kinbote [+ExiledKingOfZembla]?              // true from the opening page — but unsurfaced to the reader
+
+scene the_commentary {
+  beat 1 {
+    evt the_dawning [&Reveals(agent=kinbote, fact=his_own_identity)]
+    !kinbote [+ExiledKingOfZembla]!           // surfaced — and every annotation behind it re-reads
+    // Tomato_Surprise -> the_dawning [+TomatoSurprise]
+  }
+}

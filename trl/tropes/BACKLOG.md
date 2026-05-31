@@ -105,10 +105,11 @@ Knowledge, belief, and truth as first-class dynamics — beyond the narrator tru
 - [x] Common Knowledge             (system — `common_knowledge.trl`: mutual → common via the public utterance)
 - [x] The Emperor's New Clothes    (trope — the spoken resolution: the child makes it common, the fiction collapses)
 - [x] Open Secret                  (trope — the unspoken resolution: a tacit pact, never made common; Discworld's Carrot)
-- [ ] Cassandra Truth              (true foresight, disbelieved)   ← **up next**
-- [ ] Dramatic Irony (full)        (promote from `theory_of_mind.trl`)
-- [ ] The Gambit / Batman Gambit   (a plan built on others' false beliefs)
-- [ ] Tomato Surprise / Twist Ending (retcon recontextualizes prior facts)
+- [x] Cassandra Truth              (`cassandra_truth.trl` — true foresight that can't propagate; inverse of common knowledge; Troy)
+- [x] The Gambit / Batman Gambit   (`the_gambit.trl` — a plan built on predicting others' behaviour; weaponized ToM; Code Geass)
+- [x] Tomato Surprise              (`tomato_surprise.trl` — a fact withheld from the audience, surfaced; latent→absolute; Pale Fire)
+- [ ] Dramatic Irony (full)        (promote from `theory_of_mind.trl`)   ← **up next**
+- [ ] Tomato in the Mirror         (the PROTAGONIST learns the recontextualizing fact)
 
 ## Storytelling systems & frameworks (`trl/modules/`)
 Higher-level structures that *organize* tropes — name + sequence the stages, link the beats.
