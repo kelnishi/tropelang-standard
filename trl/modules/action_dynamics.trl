@@ -27,6 +27,9 @@ verb Bars(against)       [+Interpersonal]   // deny access with a barrier
 verb Improvises(target)  [+Interpersonal]   // attack via a non-weapon tool and a medium
 verb Feints(target)      [+Interpersonal]   // bait a commitment with feigned weakness/retreat
 verb Sacrifices(ally)    [+Interpersonal]   // trade your own position to save another
+verb Holds(against)      [+Interpersonal]   // hold a position against overwhelming odds
+verb Reinforces(ally)    [+Interpersonal]   // arrive in force to turn the tide
+verb Counters(target)    [+Interpersonal]   // wait for the commitment, then turn it back
 
 
 // === CONFLICT ===
@@ -152,6 +155,42 @@ rule Sacrifice {
     $b [+Saved]
     $a [+Fallen]
     $a -- sacrifice
+}
+
+
+// === ATTRITION, RELIEF & RIPOSTE ===
+
+// A last stand: holding against overwhelming numbers buys time, but the holder falls —
+// unless relief reaches them first (see Reinforcement / The Cavalry).
+rule Hold_The_Line {
+  when:
+    evt  $h [&Holds(agent=$x, against=$y)]
+    count( evt $atk [&Strikes(target=$x)] ) >= 3
+    not ( $x [+Relieved] )
+  then:
+    $x [+BoughtTime]
+    $x [+Fallen]
+    $x -- last_stand
+}
+
+// The Cavalry: reinforcements arrive at the brink and relieve the beleaguered.
+rule Reinforcement {
+  when:
+    evt $r [&Reinforces(agent=$rescuer, ally=$held)]
+  then:
+    $held [+Relieved]
+    $rescuer -- rescue
+}
+
+// A riposte: let the foe commit to a strike, then turn that very force back on them — decisive,
+// because the attacker's guard is spent in the attack.
+rule Riposte {
+  when:
+    evt $atk [&Strikes(agent=$x, target=$y)]
+    evt $cnt [&Counters(agent=$y, target=$x)]
+  then:
+    $x [+Defeated]
+    $y -- counter
 }
 
 

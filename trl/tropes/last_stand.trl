@@ -1,0 +1,59 @@
+// === PREAMBLE ===
+// @trope    Last Stand (Hold the Line)
+// @category Conflict / Tactics
+// @source   https://allthetropes.org/wiki/Last_Stand
+// @version  1.3
+//
+// Laconic (per the wiki): defenders outnumbered so badly they can kill a hundred and still be
+// overwhelmed — so they hold their position to BUY TIME, and take as many of the enemy with them
+// as they can. Rides the action-dynamics Hold_The_Line rule: a hold under overwhelming numbers
+// (count of strikes ≥ 3) yields BoughtTime but a Fallen holder — unless relief reaches them first
+// (see The Cavalry).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/action_dynamics.trl"   // Hold_The_Line -> [+BoughtTime] [+Fallen]
+
+assoc last_stand -> [
+  action_dynamics : "the Hold_The_Line rule of",
+  conflict        : "buys time in a"
+]
+
+
+// === ONTOLOGY ===
+
+imply LastStand -> [Defiance, Tactic, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: holding a position against the odds IS a Last Stand (tags the hold).
+rule Last_Stand {
+  when:
+    evt $h [&Holds(agent=$x, against=$y)]
+  then:
+    $h [+LastStand]
+}
+
+
+// === CONCRETE VIGNETTE: Thermopylae — Leonidas and the 300 (military history, 480 BCE) ===
+// A handful of Spartans and allies wedge the Persian host into the narrow Hot Gates, wave after
+// wave, buying the Greek cities the days they need — and are finally overwhelmed to the last man.
+
+char leonidas [+Protagonist] [+Collective]   // Leonidas and the 300 (and their allies)
+char xerxes   [+Antagonist] [+Collective]    // the Persian host, beyond counting
+set  thermopylae [+Pass]
+
+scene the_hot_gates {
+  beat 1 {
+    leonidas @ thermopylae
+    evt hold [&Holds(agent=leonidas, against=xerxes)]
+    // Last_Stand -> hold [+LastStand]
+  }
+  beat 2 { evt wave_one   [&Strikes(agent=xerxes, target=leonidas)] }
+  beat 3 { evt wave_two   [&Strikes(agent=xerxes, target=leonidas)] }
+  beat 4 {
+    evt wave_three [&Strikes(agent=xerxes, target=leonidas)]
+    // Hold_The_Line (count of strikes >= 3) -> leonidas [+BoughtTime] [+Fallen]
+  }
+}

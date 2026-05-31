@@ -1,0 +1,53 @@
+// === PREAMBLE ===
+// @trope    Counter Attack (Parry-Riposte / Disarm)
+// @category Conflict / Tactics
+// @source   https://allthetropes.org/wiki/Counter_Attack
+// @version  1.3
+//
+// Laconic (per the wiki): the patient warrior waits until the opponent commits to an attack, then
+// turns that very force back on them — and the reward for the timing is a blow far more decisive
+// than a normal one. The reactive mirror of the Feint (which baits the commitment); the Counter
+// merely waits for it. Rides the action-dynamics Riposte rule: an incoming strike met by a counter
+// undoes the attacker, whose guard is spent in the attack.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/action_dynamics.trl"   // Riposte -> attacker [+Defeated]
+
+assoc counter -> [
+  action_dynamics : "the Riposte rule of",
+  conflict        : "reverses a"
+]
+
+
+// === ONTOLOGY ===
+
+imply Counter -> [Reactive, Tactic, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: meeting a committed strike with a turn-it-back blow IS a Counter (tags the riposte).
+rule Counter {
+  when:
+    evt $atk [&Strikes(agent=$x, target=$y)]
+    evt $cnt [&Counters(agent=$y, target=$x)]
+  then:
+    $cnt [+Counter]
+}
+
+
+// === CONCRETE VIGNETTE: Ganryū Island — Musashi vs. Sasaki Kojiro (history/legend, 1612) ===
+// Musashi arrives late to fray Kojiro's nerves, then lets the master commit to his famous
+// "swallow's cut" — and ends the duel in a single timed blow from a sword he whittled from an oar.
+
+char musashi [+Protagonist]
+char kojiro  [+Antagonist]
+
+scene the_duel {
+  beat 1 {
+    evt swallows_cut [&Strikes(agent=kojiro, target=musashi)]   // the commitment — Kojiro's signature stroke
+    evt one_blow     [&Counters(agent=musashi, target=kojiro)]  // the timed riposte
+    // Riposte -> kojiro [+Defeated];  Counter tags the one blow
+  }
+}

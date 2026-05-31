@@ -93,8 +93,9 @@ improvise/bar). All sim-runnable (`tools/sim.py finisher_combo | bar_door | impr
 - [x] Feint / Misdirection          (`feint.trl` — Bait → Punish_Overcommit; Hannibal at Cannae)
 - [x] Ambush / Surprise Attack      (`ambush.trl` — Spring_Ambush bypasses guard; Teutoburg Forest)
 - [x] Heroic Sacrifice / Sacrifice Play (`heroic_sacrifice.trl` — giver [+Fallen], ally [+Saved]; Sydney Carton)
-- [ ] Last Stand / Hold the Line    (outnumbered defense that buys time at a cost)   ← **up next**
-- [ ] Disarm / Counter              (turn an attacker's commitment against them)
+- [x] Last Stand / Hold the Line    (`last_stand.trl` — Hold_The_Line: count(strikes)≥3 → BoughtTime+Fallen; Thermopylae)
+- [x] The Cavalry                   (`the_cavalry.trl` — Reinforcement → [+Relieved], which spares the held line; Vienna 1683)
+- [x] Disarm / Counter              (`counter.trl` — Riposte: let them commit, turn it back → [+Defeated]; Musashi vs Kojiro)
 
 ## Storytelling systems & frameworks (`trl/modules/`)
 Higher-level structures that *organize* tropes — name + sequence the stages, link the beats.

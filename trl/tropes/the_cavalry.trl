@@ -1,0 +1,51 @@
+// === PREAMBLE ===
+// @trope    The Cavalry
+// @category Conflict / Cooperation
+// @source   https://allthetropes.org/wiki/The_Cavalry
+// @version  1.3
+//
+// Laconic (per the wiki): reinforcements arrive just when it looks like evil will win, and the
+// day is saved by their mere approach. The natural partner of the Last Stand — the held line buys
+// the time, the Cavalry spends it. Rides the action-dynamics Reinforcement rule: the beleaguered
+// become [+Relieved], which (per Hold_The_Line) is exactly what spares the holder from falling.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/action_dynamics.trl"   // Reinforcement -> [+Relieved]
+
+assoc the_cavalry -> [
+  action_dynamics : "the Reinforcement rule of",
+  conflict        : "turns the tide of a"
+]
+
+
+// === ONTOLOGY ===
+
+imply TheCavalry -> [Relief, Timing, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: reinforcements arriving to relieve the beleaguered ARE The Cavalry (tags it).
+rule The_Cavalry {
+  when:
+    evt $r [&Reinforces(agent=$x, ally=$y)]
+  then:
+    $r [+TheCavalry]
+}
+
+
+// === CONCRETE VIGNETTE: the Siege of Vienna — the Winged Hussars (military history, 1683) ===
+// The city has held for two months against Kara Mustafa's army when Jan Sobieski's Polish hussars
+// crest the Kahlenberg and pour downhill — the largest cavalry charge in history breaks the siege.
+
+char vienna   [+Protagonist] [+City]         // the besieged capital, at its last
+char sobieski [+Ally]                         // Jan III Sobieski and the Winged Hussars
+char ottomans [+Antagonist] [+Collective]     // Kara Mustafa's besieging army
+
+scene the_relief {
+  beat 1 {
+    evt the_charge [&Reinforces(agent=sobieski, ally=vienna)]
+    // Reinforcement -> vienna [+Relieved];  The_Cavalry tags the charge
+  }
+}
