@@ -195,6 +195,7 @@ concept klingon_promotion      [+Trope(category="Power", source="allthetropes.or
 concept full_circle_revolution [+Trope(category="Power", source="allthetropes.org/wiki/Full-Circle_Revolution")] [%Political]
 concept divide_and_conquer     [+Trope(category="Power", source="allthetropes.org/wiki/Divide_and_Conquer")] [%Political]
 concept the_coup               [+Trope(category="Power", source="allthetropes.org/wiki/The_Coup_d'Etat")] [%Political]
+concept smear_campaign   [+Trope(category="Reputation", source="https://allthetropes.org/wiki/Malicious_Slander")] [%Social]   // serialised slander brands one name into common belief
 concept praetorian_guard       [+Trope(category="Power", source="allthetropes.org/wiki/Praetorian_Guard")] [%Political]
 concept decadent_court         [+Trope(category="Power", source="allthetropes.org/wiki/Deadly_Decadent_Court")] [%Political]
 concept we_have_reserves       [+Trope(category="Conflict", source="allthetropes.org/wiki/We_Have_Reserves")] [%Political]
