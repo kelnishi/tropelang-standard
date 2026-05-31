@@ -1,0 +1,70 @@
+// === PREAMBLE ===
+// @trope    Like Brother and Sister
+// @category Relationships / Bonds
+// @source   https://allthetropes.org/wiki/Like_Brother_and_Sister
+// @domain    Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): two unrelated characters are so close — they would die for each other,
+// cannot imagine life apart — that everyone assumes they must be a couple. Except they are not.
+// They love each other the way a brother and sister do, and are at pains to say so. The signature
+// is intimacy WITHOUT romance: chosen-family closeness defined by the romantic edge that is
+// explicitly ABSENT — the bond is real, the courtship is the thing it is NOT.
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/tropes/found_family.trl"       // FoundFamily, belonging — the chosen-kinship it rides
+import "trl/concepts/index.trl"            // belonging, connection, love
+
+assoc like_brother_and_sister -> [
+  found_family : "is the two-person form of",
+  connection   : "a sibling-deep, blood-free",
+  belonging    : "answers a need for",
+  love         : "all of it but the romance — the half-edge withheld is"
+]
+
+// === ONTOLOGY ===
+// Chosen kinship at dyad scale, minus the romance: a Bond + Kinship that is pointedly NOT Romance.
+imply LikeBrotherAndSister -> [Bond, Kinship, Narrative]
+
+// === ABSTRACT RULE ===
+// Recognition rule: two unrelated characters each devoted to the other — chosen kin, not blood —
+// where NEITHER carries a romantic edge toward the other. The deep bond reads as family precisely
+// BECAUSE the courtship that onlookers expect is absent. The negated [~Loves] is the trope's spine:
+// strip it and this collapses into a romance. Each is tagged as the other's like-sibling.
+rule Like_Brother_And_Sister {
+  when:
+    char $a [~Devoted_To(target=$b)]
+    char $b [~Devoted_To(target=$a)]
+    not ( $a [@Sibling_Of(other=$b)] )
+    not ( $a [~Loves(target=$b)] )
+    not ( $b [~Loves(target=$a)] )
+  then:
+    $a [+LikeBrotherAndSister]
+    $a [@Kin_Of(other=$b)]
+    $a [+Family(with=$b)]
+    $a -- belonging
+}
+
+// === CONCRETE VIGNETTE: Harry Potter — Harry and Hermione (novel series, 1997–2007) ===
+// Two unrelated friends who fight, grieve, and would die for each other across seven years — and
+// whom readers and characters alike keep waiting to see fall in love. They never do. The bond is
+// total and the romance is pointedly not there: she is the sister Harry never had, he the brother
+// to her, and the story is at pains to keep the line drawn. Coming-of-age stakes; literary.
+
+// HARRY POTTER
+char harry    [+Protagonist]   [~Devoted_To(target=hermione)]
+
+// HERMIONE GRANGER
+char hermione [+Deuteragonist] [~Devoted_To(target=harry)]
+
+// THE BURROW — common ground, neither's blood home
+set the_burrow [+Interior] [+Day]
+
+scene the_tent_in_the_woods {
+  beat 1 {
+    harry @ the_burrow
+    hermione @ the_burrow
+    harry -- hermione : "like a brother and sister — never once like that"
+    // Like_Brother_And_Sister -> harry [+LikeBrotherAndSister] [@Kin_Of(hermione)] [+Family(with=hermione)] -- belonging
+  }
+}

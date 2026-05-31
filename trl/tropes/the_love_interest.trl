@@ -1,0 +1,75 @@
+// === PREAMBLE ===
+// @trope    The Love Interest
+// @category Relationships / Romance
+// @source   https://allthetropes.org/wiki/Love_Interest
+// @domain   Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): the character presented as the One True Love of a central character —
+// the romantic focus the protagonist pursues, wins, or loses, and around whom the love thread of
+// the story is built. A RELATIONSHIP-ROLE trope: not a plot or an obstacle but a ROLE one half of
+// a romantic dyad occupies — the protagonist loves them, and that love is a belonging need
+// (needs.trl, tier_bonds, rung 3). FRONTIER: names the dyad PARTNER itself, where the cluster's
+// other riders name the dyad's failure modes — sundering (star_crossed), asymmetry
+// (unrequited), bonds-as-family (found_family). This is the rung met, not thwarted.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // love, belonging, connection
+import "trl/modules/needs.trl"             // the belonging rung the role serves (tier_bonds)
+
+assoc the_love_interest -> [
+  love      : "the protagonist's romantic thread is directed —",
+  belonging : "the need the dyad answers is",
+  connection : "what the won dyad becomes is"
+]
+
+
+// === ONTOLOGY ===
+// Private archetype components — the role rides the romance/belonging cluster, not its own.
+imply TheLoveInterest -> [Romance, Bond, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: the character a protagonist loves — the one their romantic thread is built around —
+// occupies the Love Interest role and is the protagonist's beloved (the dyad partner). Distinct
+// from Unrequited (which requires the love unanswered) and Star-Crossed (which requires sundering):
+// this is the bare role, the rung sought.
+rule The_Love_Interest {
+  when:
+    char $protagonist [+Protagonist]
+    char $beloved
+    $beloved != $protagonist
+    $protagonist [~Loves(target=$beloved)]
+  then:
+    $beloved [+LoveInterest]
+    $protagonist [@Beloved_Of(other=$beloved)]
+    $protagonist -- belonging
+}
+
+
+// === CONCRETE VIGNETTE: The Tale of Genji — Genji and Murasaki (novel, Heian Japan, ~1008) ===
+// Murasaki Shikibu's court romance, often called the first novel. Among the many women of Genji's
+// life, Murasaki no Ue is the central, defining love interest: he first glimpses her as a child
+// who resembles a lost love, raises and weds her, and she becomes the one woman the whole arc of
+// his heart returns to — the dyad the romance is built around. A non-Western classical novel: a
+// won, central beloved, distinct from the cluster's sundered (Pyramus/Thisbe) and asymmetric
+// (Cyrano/Roxane) dyads.
+
+// HIKARU GENJI — the Shining Prince
+char genji [+Protagonist] [~Loves(target=murasaki)]
+
+// MURASAKI NO UE — the lady of the spring quarter
+char murasaki [+LoveInterest]
+
+// INT. THE SPRING QUARTER OF THE ROKUJO ESTATE - NIGHT
+set spring_quarter [+Interior] [+Night]
+
+scene the_one_he_returns_to {
+  beat 1 {
+    genji @ spring_quarter
+    murasaki @ spring_quarter
+    genji -- murasaki : "the one his heart returns to, of all the court"
+    // The_Love_Interest -> murasaki [+LoveInterest], genji [@Beloved_Of(other=murasaki)] -- belonging
+  }
+}

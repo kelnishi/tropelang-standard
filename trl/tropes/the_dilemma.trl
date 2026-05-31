@@ -1,0 +1,140 @@
+// === PREAMBLE ===
+// @trope    The Dilemma (Morton's Fork / Sadistic Choice)
+// @category Drama / Choice
+// @source   https://allthetropes.org/wiki/Sadistic_Choice
+// @domain   Mind
+// @version  1.3
+//
+// Laconic (per the wiki): a character is presented two alternatives, both untenable — choose A and
+// something dear is lost, choose B and something else dear is lost, with no third way out. Morton's
+// Fork is the version where both forks gore the same; the Sadistic Choice is the version played for
+// drama, a cruel hand forcing the pick between two things the agent cannot bear to lose. FRONTIER:
+// the philosophy module's MoralDilemma RECOGNIZES the standing antinomy (two ends in mutual
+// conflict); The Dilemma adds the FORCING and the COST — an event imposes the pick, and each horn
+// is a mortal life, so that the act of choosing is itself the ordeal.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/philosophy.trl"   // the MoralDilemma concept; imply Moral_Dilemma -> [Conflicted, Binding, Generative]
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc the_dilemma -> [
+  trolley_problem  : "is the lived form of",
+  utilitarianism   : "is the price exacted by",
+  deontology       : "is the price exacted by",
+  heroic_sacrifice : "is what the unchosen horn demands"
+]
+
+
+// === ONTOLOGY ===
+// The Dilemma is a Moral_Dilemma with no escape: each of its two horns is a mortal stake, and the
+// cruelty is that there is no third option. Morton's Fork (the two forks gore the same) and the
+// Sadistic Choice (a forcer twists the knife) are its two faces.
+
+imply Dilemma        -> [Moral_Dilemma, Inescapable, Narrative]
+imply MortonsFork    -> [Dilemma, Equivalent]
+imply SadisticChoice -> [Dilemma, Coerced, Cruel]
+
+
+// === ABSTRACT RULE ===
+// Recognition: an agent is committed to two distinct ends that stand in mutual conflict (the
+// MoralDilemma core, `><`), each end is a mortal life ([%Mortal]) the agent will lose if the other
+// is chosen, AND an event has forced the pick. The mortal stakes on BOTH horns are what raise a mere
+// conflict to The Dilemma — losing either is unbearable, and choosing is the ordeal. The prompt is
+// the choice itself: each branch keeps one horn and severs the other (its bearer will die), and
+// either way the agent is left [#Guilty] over the horn they could not take.
+rule The_Dilemma {
+  when:
+    char $c
+    char $horn_a [%Mortal]
+    char $horn_b [%Mortal]
+    $c [~Committed_To(target=$horn_a)]
+    $c [~Committed_To(target=$horn_b)]
+    $horn_a != $horn_b
+    $horn_a >< $horn_b
+    evt $force [&Confronted(other=$c)]
+  then:
+    $c [+Dilemma(between=$horn_a)]
+    $c [#Conflicted]
+    prompt(
+      target   = $c
+      question = "Two you cannot lose — and you must lose one. Which?"
+      choices  = {
+        "Keep the first; the second is lost." : {
+          $c -- $horn_a : "Keeps"
+          $c !-- $horn_b : "Committed"
+          $horn_b [=Dying]
+          $c [#Guilty]
+        }
+        "Keep the second; the first is lost." : {
+          $c -- $horn_b : "Keeps"
+          $c !-- $horn_a : "Committed"
+          $horn_a [=Dying]
+          $c [#Guilty]
+        }
+      }
+    )
+}
+
+
+// === CONCRETE VIGNETTE: Sophie's Choice — the selection at Auschwitz (novel, 1979) ===
+// On the ramp at Auschwitz, an SS doctor — idle, drunk on his own power — tells Sophie she may keep
+// one of her two children; the other goes to the gas. If she chooses neither, he will send both.
+// There is no third way: the cruelty is engineered. She screams that she cannot choose, and the
+// choosing is the wound she carries the rest of her life. Both horns are a child's life; keeping one
+// is paid for in the other.
+
+// SOPHIE ZAWISTOWSKA
+char sophie [+Protagonist]
+
+// DR. FRITZ JEMAND VON NIEMAND (the selecting SS physician)
+char doctor [+Antagonist] [+Cruel]
+
+// JAN — Sophie's son
+char jan [%Mortal]
+// EVA — Sophie's daughter
+char eva [%Mortal]
+
+// EXT. THE SELECTION RAMP, AUSCHWITZ-BIRKENAU - NIGHT
+set the_ramp [+Exterior] [+Night]
+
+scene the_selection {
+  beat 1 {
+    sophie @ the_ramp
+    doctor @ the_ramp
+    jan @ the_ramp
+    eva @ the_ramp
+    // a mother committed to both children; keeping either is the death of the other
+    sophie [~Committed_To(target=jan)]
+    sophie [~Committed_To(target=eva)]
+    jan >< eva : "Either Child Is The Other's Death"
+  }
+  beat 2 {
+    // the forcer imposes the pick — and seals off the third option (refuse, and both die)
+    evt the_demand [&Confronted(other=sophie)]
+        dialog(inject=[speaker=doctor], inline="""
+               speaker: "{speaker}"
+               cue: "smiling, a riding crop tapping his boot, the line shuffling past"
+               tone: idle, sadistic
+               text: "You may keep one of your children. The other one will go. You may keep one."
+               """)
+    // The_Dilemma fires: sophie [+Dilemma]; [#Conflicted]; the prompt is the choice itself
+    sophie [+Dilemma(between=jan)]
+    sophie [#Conflicted]
+  }
+  beat 3 {
+    // she takes the only move left to her — she keeps the daughter, and pays in the son
+    evt she_chooses [&Confronted(other=sophie)]
+        dialog(inject=[speaker=sophie], inline="""
+               speaker: "{speaker}"
+               cue: "the words torn out of her, already destroying her"
+               tone: shattered
+               text: "Take my little girl! Take Eva!"
+               """)
+    sophie -- eva : "Keeps"
+    sophie !-- jan : "Committed"
+    jan [=Dying]
+    // the choosing is the ordeal — the guilt is the cost no branch escapes
+    !sophie [#Guilty]!
+  }
+}

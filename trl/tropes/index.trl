@@ -103,6 +103,13 @@ import "trl/tropes/flashback.trl"
 import "trl/tropes/plot_twist.trl"
 import "trl/tropes/sibling_rivalry.trl"
 import "trl/tropes/the_trickster.trl"
+import "trl/tropes/anti_hero.trl"
+import "trl/tropes/in_medias_res.trl"
+import "trl/tropes/like_brother_and_sister.trl"
+import "trl/tropes/macguffin.trl"
+import "trl/tropes/the_dilemma.trl"
+import "trl/tropes/the_love_interest.trl"
+import "trl/tropes/tomato_in_the_mirror.trl"
 
 // === TROPE TITLE ENTRIES ===
 
@@ -331,7 +338,14 @@ concept refusal_of_the_call [+Trope(category="Universal", source="allthetropes.o
 
 // === AUTO-REGISTERED TITLES (regen_index.py — do not hand-edit below) ===
 
+concept anti_hero [+Trope(category="Cast", source="https://allthetropes.org/wiki/Anti-Hero")] [%Narrative]
 concept flashback [+Trope(category="Flashbacks and Chronology", source="https://allthetropes.org/wiki/Flashback_(trope)")] [%Narrative]
+concept in_medias_res [+Trope(category="Narrative Devices", source="https://allthetropes.org/wiki/In_Medias_Res")] [%Narrative]
+concept like_brother_and_sister [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Like_Brother_and_Sister")] [%Interpersonal]
+concept macguffin [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/MacGuffin")] [%Narrative]
 concept plot_twist [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Plot_Twist")] [%Narrative]
 concept sibling_rivalry [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Sibling_Rivalry")] [%Interpersonal]
+concept the_dilemma [+Trope(category="Drama", source="https://allthetropes.org/wiki/Sadistic_Choice")] [%Mind]
+concept the_love_interest [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Love_Interest")] [%Interpersonal]
 concept the_trickster [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/The_Trickster")] [%Narrative]
+concept tomato_in_the_mirror [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Tomato_in_the_Mirror")] [%Mind]

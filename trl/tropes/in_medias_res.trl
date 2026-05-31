@@ -1,0 +1,112 @@
+// === PREAMBLE ===
+// @trope    In Medias Res
+// @category Narrative Devices / Structure
+// @source   https://allthetropes.org/wiki/In_Medias_Res
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): from Horace, "into the middle of things" — the story OPENS at a late
+// point, after much action has already happened; the beginning is filled in afterward. Homer's
+// Iliad opens in the ninth year of the ten-year siege (Older Than Feudalism); the Aeneid does the
+// same. On TV it is usually a preamble to a "How We Got Here" flashback. FRONTIER: this is an
+// ORDERING trope, not a level-crossing one. It rides Freytag's pyramid and INVERTS the canonical
+// `exposition -> rising_action` sequence — the opening scene depicts a mid-arc DramaticBeat
+// (rising_action / climax), and the exposition that PRECEDES it in story-time is narrated LATER.
+// The backfill is a `past scene {}` — a backward QUERY within ONE canon plane (the beginning
+// really IS earlier; it is merely told out of order), NOT the level-axis crossing into an embedded
+// <<level>> that Flashback / Frame Story use. (How-We-Got-Here = In Medias Res opening + Flashback
+// backfill; the two compose.)
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/freytags_pyramid.trl"   // exposition / rising_action / climax — the beats it reorders
+import "trl/concepts/index.trl"             // the_past, revelation
+
+assoc in_medias_res -> [
+  exposition    : "defers the",
+  the_past      : "fills in the earlier",
+  flashback     : "the backfill is usually a",
+  frame_story   : "an ordering cousin, not a level-crosser like the",
+  rising_action : "opens already inside the"
+]
+
+
+// === ONTOLOGY ===
+// An ordering device: anachronic (told out of sequence) and front-loaded (opens mid-arc).
+
+imply InMediasRes -> [Anachronic, FrontLoaded, Ordering, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: when the OPENING event drops us into a mid-arc beat — a character bonded to
+// `rising_action` (the rising war, the quarrel) rather than `exposition` — AND the deferred
+// beginning is supplied only LATER, reachable as a `past scene {}` backward query that bonds the
+// same character to `exposition`, that inverted ordering IS In Medias Res. The opening is tagged
+// and the audience is dropped mid-action, left to reconstruct how it came to be. Contrast Flashback:
+// there the earlier material sits one LEVEL down (a crossing into <<level>>); here it stays on the
+// SAME canon plane, only out of telling-order — a backward query, not a level descent.
+rule In_Medias_Res {
+  when:
+    evt $opening [&Opens]
+    char $c -- rising_action
+    not ( $c -- exposition )
+    past scene $earlier {
+      char $c -- exposition
+    }
+  then:
+    $opening [+InMediasRes]
+    audience [#Curious(about=how)]
+    surface_global(title="Into the Middle of Things", description="We open mid-action; the beginning is filled in later.")
+}
+
+
+// === CONCRETE VIGNETTE: Homer's Iliad — opening in the ninth year of the siege (epic poem, c. 8th c. BCE) ===
+// The poem does NOT begin with Paris and Helen or the launching of the thousand ships. It opens
+// already deep inside the war — year nine of ten — with the quarrel between Agamemnon and Achilles
+// and the wrath that drives the plague through the Achaean camp. The earlier years (the abduction,
+// the muster at Aulis, the long siege) are the exposition, and they are supplied LATER, narrated by
+// the characters' own recollection — the same plane, told out of order. Two scenes: `the_wrath`
+// (the opening, mid-arc) and `before_the_walls` (the earlier years, backfilled).
+
+// ACHILLES — the best of the Achaeans, withdrawn in rage
+char achilles [+Protagonist] [#Wrathful]
+
+// AGAMEMNON — overlord of the host, who seized Achilles' prize
+char agamemnon [+Authority] [+Antagonist]
+
+// HELEN — the cause of the war, ten years gone
+char helen [+LoveInterest]
+
+// EXT. THE ACHAEAN CAMP BEFORE TROY - DAY (the ninth year)
+set camp [+Exterior] [+Day]
+
+// EXT. THE WALLS OF TROY - the years of siege already past
+set walls [+Exterior]
+
+// ===== the opening — authored FIRST: we are dropped into the ninth year, mid-action =====
+// The telling-order is what matters: the mid-arc scene is narrated first. The rule keys on an
+// [&Opens] event (scope-block openers can't carry a tag, and `past scene {}` is a rule-only
+// backward query — not a vignette block — so the deferred exposition is just an ordinary scene
+// written AFTER this one, queried back into by the rule).
+scene the_wrath {
+  beat 1 {
+    evt open [&Opens]   // the poem begins HERE — the middle of the war, not its start
+    achilles @ camp
+    agamemnon @ camp
+    // the poem's first line is already the quarrel — the middle of the war, not its start
+    achilles -- rising_action : "The Wrath of Achilles; The Quarrel Over the Prize"
+    achilles >< agamemnon : "Sing, Goddess, of the Wrath"
+    // In_Medias_Res -> open [+InMediasRes]; audience [#Curious(about=how)]
+  }
+}
+
+// ===== the deferred exposition — authored LATER though it is EARLIER in story-time =====
+// The abduction, the muster at Aulis, the long siege — the beginning, supplied only now, on the
+// same canon plane (not a level-crossing flashback, just out of telling-order). The rule's
+// `past scene {}` backward query reaches this scene from the opening.
+scene before_the_walls {
+  beat 1 {
+    helen @ walls
+    achilles -- exposition : "Ten Years of Siege; Helen Behind the Walls"
+  }
+}

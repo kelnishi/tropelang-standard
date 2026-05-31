@@ -1,0 +1,84 @@
+// === PREAMBLE ===
+// @trope    Anti-Hero
+// @category Cast / Character
+// @source   https://allthetropes.org/wiki/Anti-Hero
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): the central character who lacks the conventional attributes of a hero —
+// selfish, ruthless, cynical, or morally grey — yet remains the one we follow and root for. The
+// classical sense: a protagonist who is no moral paragon, almost never possessing both the physical
+// AND the moral capabilities of a true hero. FRONTIER: the role/virtue split. The Protagonist gives
+// the role (Central, Sympathetic_Focus) and The Paragon gives incorruptible virtue; the Anti-Hero is
+// the deliberate GAP between them — a protagonist who KEEPS the audience's allegiance while FAILING
+// the virtue axis. Not a Villain Protagonist (whom we watch, but do not root for) and not a Fall From
+// Grace (a trajectory); the Anti-Hero is a stable cast position: un-heroic methods, heroic standing.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // virtues — the axis the anti-hero fails
+
+assoc anti_hero -> [
+  the_protagonist : "is a kind of",
+  the_paragon     : "is the protagonist who is NOT a",
+  the_hero        : "withholds the virtue of",
+  integrity       : "is sympathetic despite lacking",
+  fall_from_grace : "is a standing state, not the slope of"
+]
+
+
+// === ONTOLOGY ===
+// The archetype subsumes: a protagonist's sympathetic focus, plus the morally-grey path, MINUS the
+// paragon's virtue. The signature is the co-presence of allegiance and un-heroic morality.
+imply AntiHero -> [Protagonist, Sympathetic_Focus, Path_Ambiguous, Unheroic, Narrative]
+
+
+// === ABSTRACT RULE ===
+// A protagonist who holds the audience's sympathy (Sympathetic_Focus) yet is NOT virtuous — no
+// paragon's incorruptibility — IS the Anti-Hero. The not(... [+Virtuous]) clause is load-bearing: it
+// is the gap from The Paragon, and the [+Sympathetic_Focus] is the allegiance The Villain Protagonist
+// lacks (we watch the villain protagonist but do not root for them).
+rule Anti_Hero {
+  when:
+    char $c [+Protagonist] [+Sympathetic_Focus]
+    not( char $c [+Virtuous] )
+  then:
+    $c [+Unheroic]
+    $c [+Path_Ambiguous]
+    $c [+AntiHero]
+    $c -- integrity : "rooted for in spite of the lack"
+}
+
+
+// === CONCRETE VIGNETTE: A Fistful of Dollars — the Man with No Name (Spaghetti Western, 1964) ===
+// A nameless drifting gunslinger rides into a town held by two warring smuggler clans and hires
+// himself out to both, pocketing money from each while playing them toward mutual ruin — mercenary,
+// cynical, no paragon. Yet he is the one we follow, and when he finds a family the clans have torn
+// apart, he frees them and guns down the worse of the two houses. Un-heroic methods, heroic standing:
+// the morality is grey, the allegiance never wavers.
+
+// THE MAN WITH NO NAME (Joe)
+char stranger [+Protagonist] [+Sympathetic_Focus]
+stranger [!Virtuous]
+stranger [+Cunning] [+Mercenary]
+
+// THE TWO CLANS (Rojos & Baxters)
+char clans [+Antagonist] [+Faction]
+
+// THE CAPTIVE FAMILY
+char family [+Victim]
+
+// EXT. SAN MIGUEL — A DUSTY BORDER TOWN — DAY
+set san_miguel [+Exterior] [+Day] [+Contested]
+
+scene the_two_paymasters {
+  beat 1 {
+    stranger @ san_miguel
+    stranger -> clans : "hires himself to both houses for coin"
+    clans -- stranger : "Each thinks they bought him"
+  }
+  beat 2 {
+    stranger -> family : "frees the family the clans had torn apart"
+    // Anti_Hero -> stranger [+Unheroic] [+Path_Ambiguous] [+AntiHero] -- integrity
+  }
+}

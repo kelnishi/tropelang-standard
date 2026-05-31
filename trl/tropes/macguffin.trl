@@ -1,0 +1,81 @@
+// === PREAMBLE ===
+// @trope    MacGuffin
+// @category Plot Devices
+// @source   https://allthetropes.org/wiki/MacGuffin
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): an object whose only narrative purpose is to DRIVE the plot —
+// everyone wants it, pursues it, fights over it; its actual nature is irrelevant and
+// interchangeable (Mona Lisa or Hope diamond, it makes no difference). It is necessary
+// only that the characters want it. FRONTIER: recognizes the object-as-plot-engine — an
+// item becomes a MacGuffin not from any property of its own but from being pursued by
+// multiple parties; the desire is the trope, the thing is a placeholder.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/motivation_dynamics.trl"   // ~Desires / ~Pursues — the multi-party pursuit it rides
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc macguffin -> [
+  motivation_dynamics : "rides the pursuit of",
+  ambition            : "what every party is moved by",
+  the_handkerchief    : "a sister MacGuffin (smear_campaign)"
+]
+
+
+// === ONTOLOGY ===
+
+imply MacGuffin -> [Object, Contested]
+
+
+// === ABSTRACT RULE ===
+
+// RECOGNITION — an object that two or more distinct parties pursue becomes the plot's
+// driver: a MacGuffin, and contested ground. Its own nature is never inspected — only the
+// convergence of wanting matters, so the rule reads desire, not the item.
+rule MacGuffin_Driver {
+  when:
+    obj  $item
+    char $a [~Pursues(target=$item)]
+    char $b [~Pursues(target=$item)]
+    $a != $b
+    not ( $item [+MacGuffin] )
+  then:
+    $item [+MacGuffin]
+    $item [+Contested]
+    $item -- ambition
+}
+
+
+// === CONCRETE VIGNETTE: The Maltese Falcon (film noir, 1941) ===
+
+// SAM SPADE — the private eye drawn into the chase
+char spade [+Protagonist]
+spade [~Desires(target=the_falcon)]
+
+// KASPAR GUTMAN — "the Fat Man," who has hunted the bird for seventeen years
+char gutman [+Antagonist]
+gutman [~Desires(target=the_falcon)]
+
+// THE BLACK BIRD — a jewel-encrusted statuette everyone kills for; it proves to be lead
+obj the_falcon
+
+scene the_chase {
+  beat 1 {
+    spade [~Pursues(target=the_falcon)]
+    gutman [~Pursues(target=the_falcon)]
+    // both parties converge on one object
+  }
+  beat 2 {
+    the_falcon [+MacGuffin]
+    the_falcon [+Contested]
+    the_falcon -- ambition
+    spade -- gutman : "Rivals For The Bird"
+    // MacGuffin_Driver (two pursuers, one item) -> [+MacGuffin] [+Contested] -- ambition
+  }
+  beat 3 {
+    evt the_unwrapping -> spade > the_falcon : "Scratches The Enamel — It Is Lead"
+    // the item's nature is finally inspected and it is worthless; the pursuit was the plot
+  }
+}

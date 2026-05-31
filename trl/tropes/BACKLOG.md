@@ -49,9 +49,9 @@ Done tropes are summarized; **todo** is the actionable list.
 ### Cast & character roles
 Done: Protagonist · Antagonist · Deuteragonist · Hero · Mentor · Sidekick · Foil · Big Bad ·
 Paragon · Everyman.
-- [ ] The Love Interest
+- [x] The Love Interest — `the_love_interest` (Genji)
 - [x] The Narrator — `the_narrator` (S14, agent-converted)
-- [ ] Anti-Hero
+- [x] Anti-Hero — `anti_hero` (Man with No Name)
 - [x] The Trickster — `the_trickster` (Anansi)
 
 ### Character relationships (the dyad/triad)
@@ -75,8 +75,8 @@ Done: Hidden Identity · Rightful King Returns · The Chosen One · Unreliable N
 ### Plot structure & devices
 Done: Three-Act · Call to Adventure · Refusal · Foreshadowing · The Reveal · Hope Spot ·
 Chekhov's Gun · Red Herring · Cliffhanger · Frame Story.
-- [x] Plot Twist — `plot_twist` · [x] Flashback — `flashback`  ·  [ ] In Medias Res · MacGuffin
-- [~] The Climax (concept in `freytags_pyramid`) · The Dilemma (`philosophy` → MoralDilemma)
+- [x] Plot Twist · [x] Flashback · [x] In Medias Res — `in_medias_res` · [x] MacGuffin — `macguffin`
+- [~] The Climax (concept in `freytags_pyramid`)  ·  [x] The Dilemma — `the_dilemma` (Sophie's Choice)
 
 ### Diegetic-level devices (S14)
 Done: Frame Story · Dream Sequence · Fourth Wall · Dream Within a Dream · Show Within a Show ·
@@ -86,7 +86,7 @@ Or Was It a Dream? · Unreliable Narrator.
 ### Epistemic arenas
 Done: Self-Fulfilling Prophecy · Prophecy Twist · Common Knowledge · Emperor's New Clothes ·
 Open Secret · Cassandra Truth · The Gambit · Tomato Surprise · Dramatic Irony.
-- [ ] Tomato in the Mirror (the protagonist, not just the audience, is blindsided)
+- [x] Tomato in the Mirror — `tomato_in_the_mirror` (Oedipus)
 
 ### Specific actions (tactics)
 Done: Finishing Move · Bar the Door · Improvised Weapon · Feint · Ambush · Heroic Sacrifice ·
