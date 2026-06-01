@@ -65,14 +65,16 @@ obj nightlock [+Conspicuous] [+Lethal]
 
 scene the_woods {
   beat 1 {
-    evt learn -> katniss > nightlock : "Learns The Berries Are Deadly"
-    nightlock [+ChekhovsGun]
-    nightlock [+PendingPayoff]
+    // The berries are conspicuously introduced — ChekhovsGun_Setup fires here, deriving
+    // nightlock [+ChekhovsGun] [+PendingPayoff] (the debt is owed, not hand-asserted).
+    evt learn [&Introduces(object=nightlock)]    // Katniss learns the berries are deadly
   }
 }
 
 scene the_final_gambit {
   beat 1 {
+    // The planted object is used at the decisive moment — ChekhovsGun_Fired fires, paying the
+    // debt: [-PendingPayoff], !Fired!, gambit [+Payoff], nightlock -- consequence.
     evt gambit [&Uses(object=nightlock, agent=katniss)]
         dialog(inject=[speaker=katniss], inline="""
                speaker: "{speaker}"
@@ -80,8 +82,5 @@ scene the_final_gambit {
                tone: defiant
                text: "On the count of three."
                """)
-    nightlock [-PendingPayoff]
-    !nightlock [+Fired]!
-    gambit [+Payoff(item=nightlock)]
   }
 }

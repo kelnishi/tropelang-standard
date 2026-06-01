@@ -68,11 +68,8 @@ scene the_chase {
     // both parties converge on one object
   }
   beat 2 {
-    the_falcon [+MacGuffin]
-    the_falcon [+Contested]
-    the_falcon -- ambition
     spade -- gutman : "Rivals For The Bird"
-    // MacGuffin_Driver (two pursuers, one item) -> [+MacGuffin] [+Contested] -- ambition
+    // MacGuffin_Driver fires (two pursuers, one item) -> the_falcon [+MacGuffin] [+Contested] -- ambition
   }
   beat 3 {
     evt the_unwrapping -> spade > the_falcon : "Scratches The Enamel — It Is Lead"

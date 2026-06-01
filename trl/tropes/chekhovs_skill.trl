@@ -101,9 +101,7 @@ scene the_botany_joke {
                tone: self-deprecating
                text: "I'm the botanist. Somebody's gotta keep the plants alive."
                """)
-    // ChekhovsSkill_Setup -> watney [+ChekhovsSkill]; watney [+PendingPayoff]
-    watney [+ChekhovsSkill]
-    watney [+PendingPayoff]
+    // ChekhovsSkill_Setup fires here, deriving watney [+ChekhovsSkill] [+PendingPayoff].
   }
 }
 
@@ -118,8 +116,7 @@ scene farming_mars {
                tone: defiant
                text: "Mars will come to fear my botany powers. I'm going to have to science the heck out of this."
                """)
-    watney [-PendingPayoff]
-    !watney [+Pivotal]!
-    use [+Payoff(skill=watney)]
+    // ChekhovsSkill_Fired pays the debt on this decisive use (keys on an earlier demo scene —
+    // a `past scene` clause; see the temporal-recognition note).
   }
 }

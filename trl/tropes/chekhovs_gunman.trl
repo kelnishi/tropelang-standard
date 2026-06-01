@@ -99,9 +99,7 @@ scene the_eager_kid {
                text: "I'm IncrediBoy! I can be your ward!"
                """)
     buddy -- mr_incredible : "Rebuffed By"
-    // ChekhovsGunman_Setup -> buddy [+ChekhovsGunman]; buddy [+PendingPayoff]
-    buddy [+ChekhovsGunman]
-    buddy [+PendingPayoff]
+    // ChekhovsGunman_Setup fires here, deriving buddy [+ChekhovsGunman] [+PendingPayoff].
   }
 }
 
@@ -117,8 +115,7 @@ scene the_island_reveal {
                tone: triumphant
                text: "You always, always say 'Be true to yourself,' but you never say which part of yourself to be true to! ... It's me. Buddy!"
                """)
-    buddy [-PendingPayoff]
-    !buddy [+Pivotal]!
-    turn [+Payoff(person=buddy)]
+    // ChekhovsGunman_Fired pays the debt off this decisive return (it keys on an earlier
+    // introducing scene — a `past scene` clause; see the temporal-recognition note below).
   }
 }
