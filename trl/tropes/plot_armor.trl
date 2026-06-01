@@ -1,0 +1,99 @@
+// === PREAMBLE ===
+// @trope    Plot Armor
+// @category Rhetoric / Narrative Causality
+// @source   https://allthetropes.org/wiki/Plot_Armor
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): something that should be very bad for the hero falls short the moment he
+// is involved, for no reason but luck — "Script Immunity," a "Character Shield." The audience knows
+// that if the hero died the story would be over, so he does not die; the author shields him. Rides
+// the rhetoric module's AUTHORIAL OVERRIDE: the author IMPOSES the protagonist's survival against
+// in-world odds, justified only by narrative need (for=survival), and the survival is written into
+// canon by fiat. The standing-immunity cousin of Deus Ex Machina — not one sudden external rescue
+// (for=resolution) but ONGOING survival immunity that follows the protagonist through every danger,
+// because the story needs him alive. (Distinct from Nigh Invulnerability, which is in-world powers,
+// not authorial fiat — if Superman survives the bullet that is his biology; if the ordinary hero
+// does, that is Plot Armor.)
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/rhetoric.trl"          // Authorial_Fiat: &Imposes(agent=author) -> !Canon!
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc plot_armor -> [
+  rhetoric        : "the Authorial_Fiat rule of",
+  author          : "shields the protagonist from death, the",
+  deus_ex_machina : "ONGOING survival immunity, not the one-time external rescue of",
+  audience        : "knows the hero cannot die because the story would end, the"
+]
+
+
+// === ONTOLOGY ===
+// The protagonist's survival is imposed for narrative need — a Protection/Override cluster, the
+// standing companion of DeusExMachina's [Resolution, Override, Narrative].
+
+imply PlotArmor -> [Protection, Override, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: the protagonist is imperiled by a danger in-world logic says should kill him, yet
+// the author imposes his survival anyway — justified only by narrative need (for=survival), not by
+// any in-world cause. The imposition is canon by Authorial_Fiat (rhetoric); the protagonist comes
+// through [+Saved] and the immunity is tagged on him so it follows into the next danger (the
+// standing shield, not a single rescue). Guarded by not([+PlotArmor]) so it tags once.
+rule Plot_Armor {
+  when:
+    char $hero [+Protagonist] [#Imperiled]
+    evt $shield [&Imposes(agent=author, outcome=survival, for=$hero)]
+    not ( $hero [+PlotArmor] )
+  then:
+    !$shield [+Canon]!
+    $hero [+Saved]
+    $hero [-Imperiled]
+    $hero [+PlotArmor] [+ScriptImmunity]
+    audience -- engagement
+}
+
+
+// === CONCRETE VIGNETTE: James Bond — the villain's slow death-trap (film franchise, 1960s– ) ===
+// The signature Bond beat: captured and helpless, Bond is not simply shot. The villain straps him
+// to an elaborate contraption, monologues his entire scheme, and leaves him to a slow, certain
+// death — the laser creeping up the table, the shark tank, the buzzsaw. By any in-world logic he is
+// dead. He is not, because he is Bond and there are eighteen films left to make: the author imposes
+// the escape, the gadget watch cuts the laser, and 007 walks out untouched to do it all again next
+// reel. The danger was real; the immunity is the author's.
+
+// JAMES BOND, 007
+char bond [+Protagonist] [#Imperiled]
+bond [+Skilled]
+
+// THE VILLAIN — every reason and every means to simply pull the trigger
+char the_villain [+Antagonist]
+
+// THE DEATH-TRAP — the laser, the slow blade, the certain end
+obj the_death_trap [+Symbolic]
+the_death_trap [+Dangerous]
+
+// INT. VILLAIN'S LAIR - NIGHT
+set the_lair [+Interior] [+Night] [+Dangerous]
+
+scene the_slow_death {
+  beat 1 {
+    bond @ the_lair
+    the_villain @ the_lair
+    bond >< the_villain
+    the_villain > the_death_trap
+    // Bond is strapped down, the blade creeping closer — by all in-world logic, dead.
+  }
+  beat 2 {
+    evt the_escape [&Imposes(agent=author, outcome=survival, for=bond)]
+    // Authorial_Fiat (rhetoric) -> !the_escape [+Canon]!; the gadget that "happened" to be there.
+    // Plot_Armor: the author shields the protagonist — survival imposed against the odds.
+    !the_escape [+Canon]!
+    bond [+Saved]
+    bond [-Imperiled]
+    bond [+PlotArmor] [+ScriptImmunity]   // the shield stays on — it follows him into the next film
+    audience -- engagement
+  }
+}

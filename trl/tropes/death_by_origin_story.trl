@@ -1,0 +1,103 @@
+// === PREAMBLE ===
+// @trope    Death by Origin Story
+// @category Death Tropes
+// @source   https://allthetropes.org/wiki/Death_by_Origin_Story
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a loved one's death is the foundational event that forges the
+// protagonist into a hero — "some legends can only be born in tragedy." The loss IS the
+// origin: it is the catalyst that drives the survivor onto the heroic / avenging path.
+// Rides the emotion-dynamics grief -> motivation thread (loss -> grief, grief biases what
+// the survivor will try next); names the case where that motivation is the hero's making.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"               // grief, calling, sacrifice
+import "trl/concepts/narrative.trl"           // calling, duty
+import "trl/modules/emotion_dynamics.trl"     // Appraise_Loss: [~Attached_To] + [&Died] -> [#Grieving]
+import "trl/tropes/the_hero.trl"              // the heroic path the loss forges
+import "trl/tropes/revenge.trl"               // the avenging path the loss can instead forge
+import "trl/tropes/reluctant_hero.trl"        // the unwilling form the forged hero often takes
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc death_by_origin_story -> [
+  grief    : "born of",
+  calling  : "forges",
+  sacrifice : "the hero it makes will make",
+  revenge  : "the alternate path the loss forges",
+  duty     : "the survivor inherits"
+]
+
+
+// === ONTOLOGY ===
+// The death is not a beat the hero recovers from — it is the GENESIS of the hero. The loss
+// and the heroism are the same event seen twice: tragedy, then its issue.
+imply DeathByOriginStory -> [Tragedy, Genesis, Narrative]
+
+
+// === ABSTRACT RULE ===
+// A survivor grieving an attachment they were bonded to, who answers the calling BECAUSE of
+// that death — crossing onto the heroic path — has been forged by Death by Origin Story. The
+// grief is the SETUP (Appraise_Loss already wrote [#Grieving] from the [~Attached_To] + [&Died]
+// pair); this rule fires only when that grief becomes the threshold the survivor crosses, and
+// tags BOTH the death (the origin) and the survivor (the hero it made).
+rule DeathByOriginStory {
+  when:
+    char $survivor [~Attached_To(target=$loved)] [#Grieving(source=$loved)]
+    evt  $death [&Died(subject=$loved)]
+    evt  $forging [&Crosses(agent=$survivor, threshold=$calling)]
+  then:
+    $survivor [+Hero]
+    $survivor -- calling
+    $death [+DeathByOriginStory]
+    $forging [+DeathByOriginStory]
+}
+
+
+// === CONCRETE VIGNETTE: The Lion King — Simba & Mufasa (animated film, 1994) ===
+// Mufasa dies in the gorge stampede saving his son; Scar twists the loss into exile and
+// shame. Years later, called home, Simba crosses back over the threshold the death left him —
+// not avenging in rage but claiming the kingship his father's death made his to carry. The
+// loss is the origin: the cub becomes the king BECAUSE Mufasa fell.
+
+// SIMBA — the cub the loss forges into the king
+char simba [+Protagonist] [~Attached_To(target=mufasa)]
+
+// MUFASA — the father whose death is the origin
+char mufasa [+Mentor] [+Ruler]
+
+// SCAR — who engineers the death and the exile that follows it
+char scar [+Antagonist]
+
+// PRIDE ROCK — the throne the death leaves vacant for Simba to reclaim
+set pride_rock [+Exterior] [+Day]
+
+// THE CALLING — the kingship Mufasa's death makes Simba's to take up
+obj the_calling [+Threshold]
+
+scene the_origin {
+  beat 1 {
+    // the death: Mufasa falls in the stampede saving Simba — the founding loss
+    evt the_gorge [&Died(subject=mufasa)]
+    scar -> simba : "It Was Your Fault"
+    mufasa [+Dead]
+    // Appraise_Loss -> simba [#Grieving(source=mufasa)] [~Mourns(mufasa)] -- grief
+    simba [#Grieving(source=mufasa)]
+  }
+  beat 2 {
+    // the forging: called home, he crosses onto the path the death left him
+    simba @ pride_rock
+    evt the_return [&Crosses(agent=simba, threshold=the_calling)]
+        dialog(inject=[speaker=simba], inline="""
+               speaker: "{speaker}"
+               cue: "facing Scar on the storm-lit rock, his father's voice 'remember who you are'"
+               tone: resolved, grieving
+               text: "I'm not running anymore. This is my kingdom. My father died for it."
+               """)
+    simba [+Hero]
+    simba -- calling : "Becomes The King The Loss Made Him"
+    the_gorge [+DeathByOriginStory]
+    the_return [+DeathByOriginStory]
+  }
+}

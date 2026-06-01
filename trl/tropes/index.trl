@@ -166,6 +166,13 @@ import "trl/tropes/reluctant_hero.trl"
 import "trl/tropes/senseless_sacrifice.trl"
 import "trl/tropes/together_in_death.trl"
 import "trl/tropes/you_shall_not_pass.trl"
+import "trl/tropes/anagnorisis.trl"
+import "trl/tropes/death_by_origin_story.trl"
+import "trl/tropes/heel_face_door_slam.trl"
+import "trl/tropes/hope_bringer.trl"
+import "trl/tropes/plot_armor.trl"
+import "trl/tropes/the_worf_effect.trl"
+import "trl/tropes/trauma_conga_line.trl"
 
 // === TROPE TITLE ENTRIES ===
 
@@ -394,6 +401,7 @@ concept refusal_of_the_call [+Trope(category="Universal", source="allthetropes.o
 
 // === AUTO-REGISTERED TITLES (regen_index.py — do not hand-edit below) ===
 
+concept anagnorisis [+Trope(category="Narrative Devices", source="https://allthetropes.org/wiki/Anagnorisis")] [%Narrative]
 concept anti_hero [+Trope(category="Cast", source="https://allthetropes.org/wiki/Anti-Hero")] [%Narrative]
 concept batman_gambit [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Batman_Gambit")] [%Epistemic]
 concept be_careful_what_you_wish_for [+Trope(category="Wishplots", source="https://allthetropes.org/wiki/Be_Careful_What_You_Wish_For")] [%Narrative]
@@ -406,6 +414,7 @@ concept chekhovs_skill [+Trope(category="Foreshadowing", source="https://allthet
 concept curb_stomp_battle [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Curb_Stomp_Battle")] [%Interpersonal]
 concept david_versus_goliath [+Trope(category="Combat Tropes", source="https://allthetropes.org/wiki/David_Versus_Goliath")] [%Interpersonal]
 concept deal_with_the_devil [+Trope(category="Drama", source="https://allthetropes.org/wiki/Deal_with_the_Devil")] [%Mind]
+concept death_by_origin_story [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Death_by_Origin_Story")] [%Narrative]
 concept defiant_to_the_end [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Defiant_to_the_End")] [%Narrative]
 concept determinator [+Trope(category="Heroic Spirit", source="https://allthetropes.org/wiki/Determinator")] [%Narrative]
 concept disney_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Disney_Death")] [%Narrative]
@@ -413,10 +422,12 @@ concept eucatastrophe [+Trope(category="Happy Endings", source="https://allthetr
 concept even_evil_has_standards [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Even_Evil_Has_Standards")] [%Psychological]
 concept fatal_flaw [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Fatal_Flaw")] [%Mind]
 concept flashback [+Trope(category="Flashbacks and Chronology", source="https://allthetropes.org/wiki/Flashback_(trope)")] [%Narrative]
+concept heel_face_door_slam [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Heel_Face_Door-Slam")] [%Narrative]
 concept heel_realization [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Heel_Realization")] [%Mind]
 concept heroic_bsod [+Trope(category="Trauma", source="https://allthetropes.org/wiki/Heroic_BSOD")] [%Psychological]
 concept heroic_second_wind [+Trope(category="Heroic Spirit", source="https://allthetropes.org/wiki/Heroic_Second_Wind")] [%Narrative]
 concept hoist_by_his_own_petard [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Hoist_by_His_Own_Petard")] [%Narrative]
+concept hope_bringer [+Trope(category="Heroes", source="https://allthetropes.org/wiki/Hope_Bringer")] [%Narrative]
 concept i_gave_my_word [+Trope(category="Characterization", source="https://allthetropes.org/wiki/I_Gave_My_Word")] [%Interpersonal]
 concept in_medias_res [+Trope(category="Narrative Devices", source="https://allthetropes.org/wiki/In_Medias_Res")] [%Narrative]
 concept jerk_with_a_heart_of_gold [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Jerk_with_a_Heart_of_Gold")] [%Narrative]
@@ -431,6 +442,7 @@ concept mockumentary [+Trope(category="Non-Fiction", source="https://allthetrope
 concept moment_of_awesome [+Trope(category="Audience Reactions", source="https://allthetropes.org/wiki/Moment_of_Awesome_(Sugar_Wiki)")] [%Narrative]
 concept not_so_different [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Not_So_Different")] [%Interpersonal]
 concept pet_the_dog [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Pet_the_Dog")] [%Narrative]
+concept plot_armor [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Plot_Armor")] [%Narrative]
 concept plot_twist [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Plot_Twist")] [%Narrative]
 concept power_of_friendship [+Trope(category="Friendship Tropes", source="https://allthetropes.org/wiki/The_Power_of_Friendship")] [%Interpersonal]
 concept pratfall [+Trope(category="Slapstick", source="https://allthetropes.org/wiki/The_Pratfall")] [%Narrative]
@@ -452,10 +464,12 @@ concept the_dog_bites_back [+Trope(category="Character Tropes", source="https://
 concept the_lancer [+Trope(category="Characterization", source="https://allthetropes.org/wiki/The_Lancer")] [%Interpersonal]
 concept the_love_interest [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Love_Interest")] [%Interpersonal]
 concept the_trickster [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/The_Trickster")] [%Narrative]
+concept the_worf_effect [+Trope(category="Combat", source="https://allthetropes.org/wiki/The_Worf_Effect")] [%Narrative]
 concept together_in_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Together_in_Death")] [%Interpersonal]
 concept tomato_in_the_mirror [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Tomato_in_the_Mirror")] [%Mind]
 concept took_a_level_in_badass [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Took_a_Level_in_Badass")] [%Mind]
 concept tragic_hero [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Tragic_Hero")] [%Narrative]
+concept trauma_conga_line [+Trope(category="Tragedy", source="https://allthetropes.org/wiki/Trauma_Conga_Line")] [%Narrative]
 concept villainous_breakdown [+Trope(category="Villains", source="https://allthetropes.org/wiki/Villainous_Breakdown")] [%Narrative]
 concept wham_line [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Wham!_Line")] [%Narrative]
 concept worthy_opponent [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Worthy_Opponent")] [%Interpersonal]

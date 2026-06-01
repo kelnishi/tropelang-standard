@@ -1,0 +1,99 @@
+// === PREAMBLE ===
+// @trope    Heel Face Door-Slam
+// @category Character Development / Alignment
+// @source   https://allthetropes.org/wiki/Heel_Face_Door-Slam
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a villain who genuinely begins to turn toward good — becoming a reluctant
+// ally, trying to atone, defecting from their old side — is killed or damned at that very moment,
+// the door to redemption slammed shut just as they reach it. FRONTIER: the THRESHOLD-DENIAL of the
+// Heel/Face Turn. heel_face_turn takes the turn ([&Defects] -> [+Ally] -- redemption); redemption_arc
+// walks the whole trajectory; redemption_rejection is the hand REFUSED from inside. This is the hand
+// reaching out and STRUCK from outside: the turn is real and underway, but a blow (often from the
+// wrongdoer's own old side) lands before [+Redeemed] can. Distinct from Redemption Equals Death,
+// where the death IS the completed atonement and the wrongdoer dies [+Redeemed]; here the death
+// PRE-EMPTS the redemption — reached, then denied. The turn taken, and not allowed to land.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/action_dynamics.trl"            // the [&Strikes] / [&Finishes] blow that slams the door
+import "trl/tropes/heel_face_turn.trl"              // the turn underway — [&Defects], here cut short
+import "trl/tropes/redemption_arc.trl"              // the trajectory begun, never finished
+import "trl/tropes/redemption_equals_death.trl"     // the near-twin: death that SEALS vs. death that DENIES
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc heel_face_door_slam -> [
+  heel_face_turn          : "is the turn struck down mid-flight",
+  redemption_equals_death : "the near-twin — but death DENIES here, where it SEALS there",
+  redemption_arc          : "the trajectory begun and never completed",
+  redemption_rejection    : "the mirror — refused from inside, where this is denied from outside",
+  redemption             : "reached for, and not allowed to arrive",
+  betrayal               : "often the blow comes from the wrongdoer's own abandoned side"
+]
+
+
+// === ONTOLOGY ===
+// A Reversal that begins but is cut off — Redemption touched, then a Death that forecloses it.
+imply HeelFaceDoorSlam -> [Reversal, Redemption, Narrative]
+
+
+// === ABSTRACT RULE ===
+// A guilty wrongdoer is in the ACT of turning — the agent of a [&Defects] — when a blow from
+// ANOTHER hand strikes them down before the turn can complete. The recognition is the CONJUNCTION
+// AND the NEGATION: (a) the same character is a guilty wrongdoer defecting, (b) some other agent
+// strikes them, (c) they fall [+Dead] — and the door is slammed only because (d) they are NOT yet
+// [+Redeemed]. That last guard is what separates this from Redemption Equals Death: there the
+// wrongdoer dies [+Redeemed] (the death seals the amends); here the death PRE-EMPTS it. The
+// redemption is touched as the path reached-but-foreclosed, never arrived at.
+rule HeelFaceDoorSlam {
+  when:
+    char $c [+Wrongdoer] [#Guilty]
+    evt  $turn   [&Defects(agent=$c)]            // the turn is genuine and underway
+    evt  $blow   [&Strikes(agent=$k, target=$c)] // a DIFFERENT hand — often the old side
+    not ( $c [+Redeemed] )                        // the amends has NOT yet landed
+  then:
+    $c [+Dead]                                    // struck down at the threshold
+    $c [+DoorSlammed]                             // the turn taken, and not allowed to complete
+    $c -- redemption                              // the path is reached — and foreclosed from outside
+    $blow [+HeelFaceDoorSlam]
+}
+
+
+// === CONCRETE VIGNETTE: Carlito's Way — Grand Central, the last train (crime film, 1993) ===
+// Carlito Brigante, a Puerto Rican gangster sprung on a technicality, means it this time: he wants
+// out, a stake in a Bahamas car-rental, a life with Gail. He genuinely defects from the life — turns
+// down the old work, tries to keep the kid Benny Blanco at arm's length, runs for the train that
+// carries him out of it all. He reaches the platform; the dream is in his hand. Then Benny Blanco's
+// man, a remnant of the world he is leaving, guns him down on the concourse. He dies looking at the
+// billboard for the paradise he was one train from — redemption reached, and slammed shut.
+
+// CARLITO BRIGANTE — the gangster genuinely turning, one train from the life he wants
+char carlito [+Wrongdoer]
+carlito [#Guilty]
+carlito [+Path_Redemption]
+
+// BENNY BLANCO (FROM THE BRONX) — the rising punk of the old world; the hand that slams the door
+char benny [+Antagonist]
+
+// GAIL — the life he is reaching for; the dream on the far side of the threshold
+char gail [+LoveInterest]
+
+// INT. GRAND CENTRAL TERMINAL - CONCOURSE - NIGHT — the threshold; one train to the far shore
+set grand_central [+Interior] [+Night]
+grand_central [+Threshold]
+
+scene the_last_train {
+  beat 1 {
+    carlito @ grand_central
+    evt the_break [&Defects(agent=carlito)]      // genuinely out: turns down the life, runs for the train
+    carlito -> gail : "Reaches For The Life"
+  }
+  beat 2 {
+    benny @ grand_central
+    evt the_shooting [&Strikes(agent=benny, target=carlito)]   // a different hand — the world he left
+    benny !> carlito : "Guns Him Down On The Concourse"
+    // HeelFaceDoorSlam -> carlito [+Dead] [+DoorSlammed] -- redemption ; the_shooting [+HeelFaceDoorSlam]
+    // (NOT Redemption Equals Death: carlito never reaches [+Redeemed] — the death FORECLOSES it)
+  }
+}

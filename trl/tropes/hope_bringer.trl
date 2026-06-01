@@ -1,0 +1,95 @@
+// === PREAMBLE ===
+// @trope    Hope Bringer
+// @category Heroes / Character
+// @source   https://allthetropes.org/wiki/Hope_Bringer
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): living proof that one figure can make a difference and even the odds —
+// by his deeds and his very presence he restores hope in the hearts of his allies and leads the
+// broken back into the fight and to victory. FRONTIER: the FIGURE who is the exact inverse of the
+// Despair Event Horizon. Where the horizon takes a hopeful character and makes despair ABSOLUTE,
+// the Hope Bringer takes the [#Despairing] and turns them [#Hopeful] / [+Resolved] — restoration
+// where the horizon was foreclosure. Distinct from the Rousing Speech: that is the SPEECH ACT (an
+// orator turning a [#Disheartened] band's fear with words, cause + band); this is the ROLE — the
+// beacon restores by PRESENCE and DEEDS, not by oratory, and the figure himself IS the argument.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"               // hope, despair, courage
+import "trl/modules/emotion_dynamics.trl"     // [#Despairing], [#Hopeful], the despair <-> hope thread
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc hope_bringer -> [
+  despair_event_horizon : "the restoring inverse of (turns despair where it forecloses)",
+  rousing_speech        : "the figure-by-presence cousin of the speech-by-oratory",
+  the_paragon           : "an upright Hope Bringer is also the moral",
+  hope                  : "rekindles",
+  courage               : "leads the broken back into",
+  despair               : "the [#Despairing] he turns"
+]
+
+
+// === ONTOLOGY ===
+// The beacon-figure: living proof one figure evens the odds (the Ace, the Chosen, the Rebel Leader).
+imply HopeBringer -> [Beacon, Inspiring, Heroic, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (the inverse of the Despair Event Horizon): a beacon-figure whose DEED reaches the
+// [#Despairing] turns them — despair is dropped, hope and resolve restored, and the broken are led
+// back toward the fight. By PRESENCE/DEEDS, not oratory: the figure is a [+Beacon] and the event is
+// his deed aimed at the despairing ones ($d), no band / cause oration in the signature.
+rule Hope_Bringer {
+  when:
+    char $h [+Beacon]
+    evt  $deed [&Rallies(agent=$h, target=$d)]
+    $d [#Despairing]
+  then:
+    $d [-Despairing]
+    $d [#Hopeful]
+    $d [+Resolved]
+    $d -- hope
+    $d -- courage
+}
+
+
+// === CONCRETE VIGNETTE: Joan of Arc at the Siege of Orléans (military history, 1429) ===
+// The English have held the siege for months; the French garrison is beaten, sick of losing, and
+// sure the war is lost. A teenage peasant girl arrives claiming a divine mandate — and it is not a
+// speech that turns them. It is her: she rides the walls under fire, plants her banner at the
+// assaults, takes an arrow through the shoulder and returns to the line the same day. By her deeds
+// and her presence the demoralized garrison is remade into an army that believes it can win — and
+// within days they lift a siege that had stood for seven months.
+
+// THE MAID OF ORLÉANS — the beacon, living proof the odds can be evened
+char joan [+Protagonist] [+Beacon]
+joan [+Chosen] [+Devoted_To(target=france)]
+
+// THE ORLÉANS GARRISON — the broken, beaten defenders
+char garrison [+Collective] [#Despairing]
+
+// EXT. THE BOULEVART OF LES TOURELLES - DAY
+set les_tourelles [+Exterior] [+Day]
+les_tourelles [+Contested]
+
+scene the_relief {
+  beat 1 {
+    joan @ les_tourelles
+    garrison @ les_tourelles
+    // Not a speech — the deed: wounded at the assault, she pulls the arrow and goes back to the line.
+    evt the_assault [&Rallies(agent=joan, target=garrison)]
+        dialog(inject=[speaker=joan], inline="""
+               speaker: "{speaker}"
+               cue: "an English bolt through her shoulder, the banner taken up again, back at the ditch"
+               tone: unflinching, certain
+               text: "All is yours — go in! When my banner touches the wall, the place is yours."
+               """)
+    // Hope_Bringer fires (the inverse of the Despair Event Horizon):
+    garrison [-Despairing]
+    garrison [#Hopeful]
+    garrison [+Resolved]
+    garrison -- hope
+    garrison -- courage
+  }
+}

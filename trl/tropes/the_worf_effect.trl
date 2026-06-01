@@ -1,0 +1,88 @@
+// === PREAMBLE ===
+// @trope    The Worf Effect (The Worf Effect · Worf Barrage)
+// @category Combat / Rhetoric
+// @source   https://allthetropes.org/wiki/The_Worf_Effect
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a (supposedly) powerful, established fighter is defeated — easily, often in
+// one blow — for the narrative purpose of showing the audience how dangerous a new opponent is. The
+// loser's whole job here is to be tough enough that beating them MEANS something; the defeat exists for
+// AUDIENCE SIGNALLING, not the plot. Named for Worf in Star Trek: TNG/DS9, whom hostile creatures
+// routinely tossed aside to establish themselves. Rides action_dynamics for the defeat itself
+// (Finishes -> [+Defeated]) and rhetoric for the point of it: the author FRAMES that defeat so the
+// house reads the newcomer as a major threat (Appraise_Spectacle -> audience [#Awed]/[#Afraid] of the
+// WINNER). The signature precondition is that the loser is already-known-[+Formidable] — flatten an
+// unknown and nothing is established; flatten the resident badass and the new foe is now The Real Deal.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/action_dynamics.trl"   // Finishes -> [+Defeated]: the established fighter goes down
+import "trl/modules/rhetoric.trl"          // Appraise_Spectacle: the author FRAMES the rout to awe the house
+
+assoc the_worf_effect -> [
+  action_dynamics  : "the established fighter is Finished and [+Defeated] by",
+  rhetoric         : "the defeat is FRAMED for the audience by the author of",
+  curb_stomp_battle: "looks like the one-sided rout of, but here the POINT is signalling the winner's threat",
+  reputation       : "spends the loser's established standing to mint the winner's, in"
+]
+
+
+// === ONTOLOGY ===
+// The trope is an authorial TRANSACTION dressed as a fight: the loser's established formidability is
+// spent as currency to buy the audience's read of the winner. The component cluster is the defeat
+// (Combat) put to work as audience signalling (Spectacle/Threat) — a Narrative deed, not a plot beat.
+imply TheWorfEffect -> [Combat, Spectacle, Threat, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition: an already-known-[+Formidable] fighter ($worf) is [+Defeated] by a newcomer ($threat),
+// AND the author FRAMES that very defeat as spectacle — so the audience does not merely watch a fight,
+// it reads a verdict about the WINNER: [#Awed] of, and [#Afraid] of, this new foe. The [+Formidable]
+// precondition on the LOSER is the whole signature — that is the established toughness the trope spends;
+// flatten a nobody and the rule does not fire, because nothing about the winner is established. The
+// tag lands on the framing deed, not the blow: the Worf Effect is the authorial USE of the defeat, not
+// the defeat itself.
+rule TheWorfEffect {
+  when:
+    char $worf [+Formidable] [+Defeated]
+    evt  $f [&Frames(agent=author, target=$threat, as=spectacle)]
+  then:
+    audience [#Awed(of=$threat)]
+    audience [#Afraid(of=$threat)]
+    $f [+TheWorfEffect]
+}
+
+
+// === CONCRETE VIGNETTE: heavyweight title fight (sports drama, film) ===
+// The reigning champion is the man the whole crowd KNOWS is unbeatable — undefeated, feared, the
+// resident badass the cards have been built around for years. The challenger is an unknown import
+// nobody rates. The bell rings; the champion is on the canvas inside a round, finished by a single
+// blow he never saw. The director holds on the fallen champion, then cuts to the challenger standing
+// over him as the arena goes silent — framing the knockout not as an upset but as an unveiling. The
+// crowd, who came to watch the champion defend, leave certain of one thing: the newcomer is a monster.
+
+// THE CHAMPION (the established, feared title-holder — our Worf)
+char champ [+Protagonist] [+Formidable]
+// caught by a blow he never saw — the one opening the resident badass is never supposed to give
+champ [+Exposed]
+// THE CHALLENGER (the unknown newcomer the defeat exists to establish)
+char challenger [+Antagonist]
+// INT. THE ARENA - NIGHT
+set arena [+Interior] [+Night] [+Crowded]
+
+scene the_unveiling {
+  beat 1 {
+    champ @ arena
+    challenger @ arena
+    // the established champion goes down — action_dynamics resolves the defeat on the [+Exposed] foe
+    evt the_knockout [&Finishes(agent=challenger, target=champ)]
+    // Finisher -> champ [+Defeated]   (the resident badass, flattened in one round)
+  }
+  beat 2 {
+    // the POINT: the director frames the fallen-champion shot to establish the WINNER as a threat
+    evt the_hold_on_the_fallen [&Frames(agent=author, target=challenger, as=spectacle)]
+    // TheWorfEffect -> audience [#Awed(of=challenger)] [#Afraid(of=challenger)];  tags the framing deed
+  }
+}
