@@ -87,17 +87,13 @@ scene the_freeze {
                tone: paralysed, unmanned
                text: "..."
                """)
-    upham [#Withdrawn] [+Status_Numb] [+InBSOD]
-    upham [~Avoids(target=the_killing)]
-    upham -- isolation
-    // HeroicBSOD_Shutdown — the freeze, NOT a crossing: no [+CrossedTheHorizon]
+    // HeroicBSOD_Shutdown fires here (the freeze, NOT a crossing: no [+CrossedTheHorizon]), deriving
+    // upham [#Withdrawn] [+Status_Numb] [+InBSOD] [~Avoids(the_killing)] -- isolation.
   }
   beat 2 {
     // Later, in the open: he steadies, levels his rifle, and finally acts. "He's Back."
     evt he_steadies [&Rallies(target=upham)]
-    upham [-Status_Numb] [-InBSOD]
-    upham [#Determined]
-    upham -- courage
-    // HeroicBSOD_Recovery — the reboot the Despair Event Horizon forecloses
+    // HeroicBSOD_Recovery fires here — the reboot the Despair Event Horizon forecloses — deriving
+    // upham [-Status_Numb] [-InBSOD] [#Determined] -- courage.
   }
 }

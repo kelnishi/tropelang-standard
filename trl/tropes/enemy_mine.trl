@@ -110,9 +110,10 @@ scene the_grand_alliance {
     //   the_pact [+EnemyMine]; -- tier_safety (shared survival) / coalition (realignment)
   }
   beat 3 {
-    // 1945 — Berlin falls; the enmity resumes (the Cold War). The Reich ceasing to be the [+Threat] is
-    // a TEMPORAL state-change the atemporal engine can't scope (it would also un-fire Enemy_Mine), so
-    // the standing-threat fact is left intact here — Enemy_Mine fires; Enemy_Mine_Resumed is the sequel.
+    // 1945 — Berlin falls; the Reich is no longer the [+Threat]. This is a TEMPORAL retraction: the
+    // threat held over beats 1–2 (Enemy_Mine fires, anchored at the pact), and is gone by here —
+    // so Enemy_Mine_Resumed (a stateless rule, read at end-of-story) now fires too.
+    reich [-Threat]
     usa >< ussr : "the Cold War re-opens"
   }
 }
