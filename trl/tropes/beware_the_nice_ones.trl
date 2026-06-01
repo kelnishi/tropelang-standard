@@ -1,0 +1,109 @@
+// === PREAMBLE ===
+// @trope    Beware the Nice Ones
+// @category Character Tropes / Personality
+// @source   https://allthetropes.org/wiki/Beware_the_Nice_Ones
+// @domain   Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): a genuinely nice, gentle, patient character — not a facade, not a
+// Bitch in Sheep's Clothing — submits to a rare act of malice when finally pushed too far; the
+// calmest person in the room turns out to be the most dangerous when provoked. The signature is
+// RESTRAINED STRENGTH unleashed: the nice one already HOLDS formidable capability, kept in check
+// by kindness, and a single provocation past the threshold drops the restraint and reveals a
+// frightening wrath. FRONTIER: the kindness-as-leash axis. Distinct from The Dog Bites Back — that
+// is an abused, POWERLESS inferior ([+Subject]) whose >= 3 accumulated &Crushes finally turn
+// outward; here the provoked one was never powerless, only forbearing, and it can be a SINGLE
+// provocation that crosses the line. Distinct from Took a Level in Badass: no new capability is
+// EARNED — the capability was always there, merely sheathed; this is its unsheathing, not a
+// level-up. Good Is Not Soft / Let's Get Dangerous are the adjacent faces of the same coin.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"               // wrath, fear, dread, mercy, endurance, courage, dignity
+import "trl/modules/emotion_dynamics.trl"     // the provocation appraised — the one &Crushes too far that snaps the leash
+import "trl/modules/action_dynamics.trl"      // what the unleashed capability cashes out as: the Strike / Finisher
+import "trl/tropes/the_dog_bites_back.trl"    // the cousin: an abused INFERIOR turning — Nice Ones is restrained STRENGTH, not powerlessness
+import "trl/tropes/took_a_level_in_badass.trl" // the competence-axis sibling: there capability is EARNED, here it was always sheathed
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc beware_the_nice_ones -> [
+  wrath               : "the held-back fury the kindness was leashing",
+  mercy               : "the restraint that the provocation finally spends",
+  endurance           : "the long forbearance that precedes the snap",
+  fear                : "what the calmest one becomes the source of",
+  dread               : "the frightening capability the niceness was hiding",
+  dignity             : "what the line, once crossed, is defended in the name of",
+  the_dog_bites_back  : "the powerless-inferior cousin (restrained strength vs. abused weakness)",
+  took_a_level_in_badass : "the earned-capability sibling (always-sheathed vs. newly-acquired)",
+  emotion_dynamics    : "rides the provocation appraisal of"
+]
+
+
+// === ONTOLOGY ===
+// The gentle one whose kindness is a leash on real, frightening capability.
+imply BewareTheNiceOnes -> [Reversal, Threat, Narrative]
+
+
+// === ABSTRACT RULE ===
+// A genuinely [+Gentle] character holds formidable capability [+Restrained] behind their kindness —
+// they are NOT the powerless inferior of The Dog Bites Back (the not([+Subject]) guard keeps the two
+// distinct). A single provocation past the threshold — one &Crushes too far — spends the restraint:
+// the leash drops, the latent capability surfaces ([+Formidable]), and the calmest person becomes
+// the most [+Fearsome], wrath unleashed. The key against Took a Level in Badass: nothing is forged
+// here, no rank is climbed — the capability was always present, only sheathed by forbearance. The
+// turn is a release of held power, not the acquisition of new power.
+rule BewareTheNiceOnes {
+  when:
+    char $nice [+Gentle]
+    char $nice [+Restrained]                          // latent capability held in check by kindness — NOT powerlessness
+    evt  $provocation [&Crushes(target=$nice)]        // the one provocation too far, past the line
+    not ( $nice [+Subject] )                          // distinct from The Dog Bites Back: not an abused inferior
+  then:
+    $nice [-Restrained]
+    $nice [+Provoked]
+    $nice [+Formidable]
+    $nice [+Fearsome]
+    $nice -- wrath
+}
+
+
+// === CONCRETE VIGNETTE: A History of Violence — the diner owner (Cronenberg, film, 2005) ===
+// Tom Stall runs a small-town diner in Indiana: a soft-spoken, gentle family man, the mildest person
+// in the room, beloved for exactly that ease. When two drifters pull a gun on his customers and put a
+// blade to a waitress's throat, the kindness that defines him does not save anyone — but the buried,
+// frightening capability under it does. In a blink the gentlest man in town moves like a different
+// creature: he disarms the killers and leaves them dead on his own floor, the whole room staring at a
+// stranger who was always standing right there. The niceness was real. So was what it was leashing.
+
+// TOM STALL — the soft-spoken diner owner; the gentlest man in town
+char tom [+Protagonist] [+Gentle]
+tom [+Restrained]
+
+// THE DRIFTERS — the killers who push the line, blade to a hostage's throat
+char drifters [+Antagonist] [+Collective]
+
+// INT. STALL'S DINER - NIGHT — the warm small-town room that turns
+set diner [+Interior] [+Night]
+
+scene the_diner_holdup {
+  beat 1 {
+    tom @ diner
+    drifters @ diner
+    evt the_blade_to_the_throat [&Crushes(target=tom)]
+    // the one provocation too far: a knife at a hostage in his own room crosses the line
+  }
+  beat 2 {
+    // BewareTheNiceOnes fires: a [+Gentle] [+Restrained] man, not [+Subject], pushed past the threshold —
+    // the leash drops and the buried capability surfaces
+    tom [-Restrained]
+    tom [+Provoked]
+    tom [+Formidable]
+    tom [+Fearsome]
+    tom -- wrath
+  }
+  beat 3 {
+    evt the_disarm [&Finishes(agent=tom, target=drifters)]
+    // the unleashed capability cashes out (action_dynamics): the gentlest man leaves the killers dead on his floor
+    drifters -- dread : "Who Was Always Standing There"
+  }
+}

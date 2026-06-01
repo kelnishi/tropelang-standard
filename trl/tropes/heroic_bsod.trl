@@ -1,0 +1,103 @@
+// === PREAMBLE ===
+// @trope    Heroic BSOD
+// @category Trauma / Psychological
+// @source   https://allthetropes.org/wiki/Heroic_BSOD
+// @domain   Psychological
+// @version  1.3
+//
+// Laconic (per the wiki): an earth-shattering event or revelation shakes the hero to the core
+// and his mind shuts down for a while — emotionally comatose, mute, unable to act — like a
+// Despair Event Horizon, except TEMPORARY instead of permanent (in psychology, an acute stress
+// reaction). FRONTIER: names the RECOVERABLE shutdown on emotion_dynamics' withdrawal pathway —
+// the same overwhelming blow as the Despair Event Horizon, but WITHOUT crossing it: a recovery
+// ("He's Back") reboots the hero into action. The distinction IS the trope.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"                     // despair, fear, grief, courage
+import "trl/modules/emotion_dynamics.trl"           // [#Withdrawn], [&Crushes], Motivate_Withdrawal, isolation
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc heroic_bsod -> [
+  despair_event_horizon : "the temporary, recoverable mirror of",
+  trauma                : "an acute-stress instance of",
+  fear                  : "a freeze response to overwhelming",
+  isolation             : "shuts the hero into",
+  hope                  : "suspends but does not foreclose"
+]
+
+
+// === ONTOLOGY ===
+// A shutdown, not a crossing: paralysed and numb, yet recoverable (distinct from Irreversible).
+imply HeroicBSOD -> [Trauma, Recoverable, Narrative]
+
+
+// === ABSTRACT RULES (shutdown -> recovery — the recoverability is the signature) ===
+
+// SHUTDOWN — an overwhelming blow floods the hero past his capacity to act. He goes numb and
+// withdrawn (the freeze of an acute stress reaction) but, crucially, does NOT cross the horizon:
+// no [+CrossedTheHorizon], no [+Hopeless]. The shutdown is a temporary [+Status_Numb] state.
+rule HeroicBSOD_Shutdown {
+  when:
+    char $c [+Protagonist]
+    evt  $shock [&Crushes(target=$c)]
+    not ( $c [+CrossedTheHorizon] )
+    not ( $c [+InBSOD] )
+  then:
+    $c [#Withdrawn] [+Status_Numb] [+InBSOD]
+    $c [~Avoids(target=$shock)]
+    $c -- isolation
+}
+
+// RECOVERY — "He's Back". A rallying call or a stake he cannot abandon reaches the shut-down
+// hero; the numbness breaks and agency returns. This is what the Despair Event Horizon forbids,
+// and what makes the BSOD the recoverable trope.
+rule HeroicBSOD_Recovery {
+  when:
+    char $c [+InBSOD]
+    evt  $rally [&Rallies(target=$c)]
+  then:
+    $c [-Withdrawn] [-Status_Numb] [-InBSOD]
+    $c [#Determined]
+    $c -- courage
+}
+
+
+// === CONCRETE VIGNETTE: Saving Private Ryan — Corporal Upham on the stairs (war film, 1998) ===
+
+// CORPORAL UPHAM — the translator, no combat experience
+char upham [+Protagonist]
+upham [+Skilled(domain="Languages")]
+
+// PRIVATE MELLISH — the comrade he cannot bring himself to save
+char mellish [+Ally]
+
+// INT. RUINED FRENCH TOWNHOUSE - STAIRWELL - DAY
+set stairwell [+Interior] [+Day]
+stairwell [+RuinsOfWar]
+
+scene the_freeze {
+  beat 1 {
+    upham @ stairwell
+    // Mellish loses the knife-fight one floor up; Upham, ammo in hand, hears it through the wall.
+    evt the_killing [&Crushes(target=upham)]
+        dialog(inject=[speaker=upham], inline="""
+               speaker: "{speaker}"
+               cue: "frozen on the stairs, weeping, the cries of the man being killed above him"
+               tone: paralysed, unmanned
+               text: "..."
+               """)
+    upham [#Withdrawn] [+Status_Numb] [+InBSOD]
+    upham [~Avoids(target=the_killing)]
+    upham -- isolation
+    // HeroicBSOD_Shutdown — the freeze, NOT a crossing: no [+CrossedTheHorizon]
+  }
+  beat 2 {
+    // Later, in the open: he steadies, levels his rifle, and finally acts. "He's Back."
+    evt he_steadies [&Rallies(target=upham)]
+    upham [-Status_Numb] [-InBSOD]
+    upham [#Determined]
+    upham -- courage
+    // HeroicBSOD_Recovery — the reboot the Despair Event Horizon forecloses
+  }
+}

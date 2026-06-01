@@ -1,0 +1,125 @@
+// === PREAMBLE ===
+// @trope    Defiant to the End
+// @category Characterization / Death
+// @source   https://allthetropes.org/wiki/Defiant_to_the_End
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a character faces certain death and refuses to yield — no begging, no
+// breaking, no recanting; they spit their defiance and die on their OWN terms. FRONTIER: this is
+// the needs-module Inversion read as the final act, and an INVERSION of its companions. Where Last
+// Stand spends the body to BUY TIME (a tactic) and Heroic Sacrifice spends it to SAVE ANOTHER (a
+// gift), Defiant to the End spends nothing and saves nothing — the death is already certain; what
+// is held is ESTEEM ITSELF (rank 4 — dignity, the unbowed self), kept harder than life (rank 1)
+// at the very edge, so that the body falls but the dignity is held PAST the body's death. The
+// signature is that nothing is bought by it: the defiance is its own and only point. Cousin to
+// I Gave My Word (esteem over safety, but here the esteem is bare self-possession, not a kept oath)
+// and to The Dog Bites Back (dignity reclaimed in a blow, but here in the last breath, not a turn).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/needs.trl"               // the Inversion: dignity (esteem, rank 4) held over life (rank 1)
+import "trl/modules/emotion_dynamics.trl"    // the fear (Appraise_Threat) the defiance overrides
+import "trl/concepts/index.trl"              // dignity, defiance, courage, despair
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc defiant_to_the_end -> [
+  needs              : "is the dignity-over-life Inversion of, fired at the edge of death",
+  last_stand         : "spends the body to buy time; this spends it to yield NOTHING",
+  heroic_sacrifice   : "spends the body to save another; this saves no one but the self's dignity",
+  i_gave_my_word     : "the esteem-over-safety Inversion of — here bare dignity, not a kept oath",
+  the_dog_bites_back : "reclaims dignity too — there in a blow, here in the last breath",
+  dignity            : "is the esteem held past the body's death",
+  defiance           : "is the final act of"
+]
+
+
+// === ONTOLOGY ===
+// A doomed character is one whose death is certain (Lacks life, rank 1, gripping hardest). To be
+// Defiant to the End is to hold dignity (esteem, rank 4) HARDER than that lack at the very edge —
+// the needs Inversion, run as the last act — so the body falls Fallen but the self is held Unbroken
+// and Transcendent: the dignity outlasts the body it was held in. The death buys nothing; the
+// defiance is its own point.
+imply Defiance        -> [Dignity, Esteem, Narrative]
+imply DefiantToTheEnd -> [Defiance, Inversion, Final]
+
+
+// === ABSTRACT RULE ===
+// Recognition: a [+Doomed] character — death already certain — Lacks life (rank 1) at killing
+// salience, AND pursues dignity (esteem, rank 4) held HARDER than that lack ($hs > $ls). Prudence
+// (and the killers) demand the break: beg, recant, yield. The signature of the trope is that the
+// esteem is held harder than the very life ($ls < $hs while $lr=1 < $hr=4), so the needs Inversion
+// fires AT THE EDGE: the dignity displaces the survival drive even though no survival is on offer.
+// The body is left Fallen, but the self is Defiant, Unbroken, and Transcendent — the dignity is
+// held PAST the body's death, which is the whole inversion. Nothing is bought; that is the point.
+rule Defiant_To_The_End {
+  when:
+    char $c [+Doomed]
+    char $c [~Pursues(rank=$hr, salience=$hs)]
+    char $c [#Lacks(rank=$lr, salience=$ls)]
+    $lr < $hr
+    $hr == 4
+    $hs > $ls
+  then:
+    // the needs Inversion, fired at the edge of certain death
+    $c [#Driven(rank=$hr)]
+    $c [+Transcendent]
+    // the body falls; the dignity is held past it
+    $c [+Fallen]
+    !$c [+Defiant]!
+    $c [+Unbroken]
+    $c -- dignity : "Holds Past Death"
+}
+
+
+// === CONCRETE VIGNETTE: Scarface — Tony Montana's last stand on the staircase (film, 1983) ===
+// Cornered in his own marble palace, the cartel's gunmen everywhere, Tony Montana is already a dead
+// man — riddled with rounds, the empire gone, no one coming. He does not beg and does not run: he
+// hefts the grenade launcher and roars his defiance — "Say hello to my little friend!" — and goes
+// down firing, on his own terms. A villain-protagonist's death: nothing is saved, no time is bought,
+// the dignity held is only his own swagger — esteem (rank 4) gripped harder than the life leaving
+// him (rank 1) — and the Inversion fires at the very edge.
+
+// TONY MONTANA — the fallen kingpin, cornered and doomed
+char tony [+Protagonist] [+Doomed]
+tony [~Committed_To(target=dignity)]
+
+// THE SOSA HITMEN — the cartel's gunmen flooding the mansion
+char sosa_men [+Antagonist] [+Collective]
+
+// INT. MONTANA MANSION, GRAND STAIRCASE — NIGHT
+set the_staircase [+Interior] [+Night]
+
+scene the_last_stand_on_the_stair {
+  beat 1 {
+    tony @ the_staircase
+    sosa_men @ the_staircase
+    // the threat closes in — fear is the prudent appraisal
+    evt the_assault [&Threatens(agent=sosa_men, target=tony)]
+    // Appraise_Threat -> tony [#Afraid(source=sosa_men)]
+  }
+  beat 2 {
+    // the death is certain; life itself is the gripping lack (rank 1)
+    tony [#Lacks(rank=1, salience=7)]
+    // dignity — the unbowed swagger — held harder still (esteem, rank 4)
+    tony [~Pursues(rank=4, salience=10)]
+    // Defiant_To_The_End ([+Doomed], 1 < 4, 4==4, 10 > 7): the esteem outpulls the life
+    tony [#Driven(rank=4)]
+    tony [+Transcendent]
+  }
+  beat 3 {
+    // "Say hello to my little friend!" — he goes down firing, on his own terms
+    evt last_words -> tony > sosa_men : "Say Hello To My Little Friend"
+        dialog(inject=[speaker=tony], inline="""
+               speaker: "{speaker}"
+               cue: "bleeding, riddled, hefting the launcher at the top of the stair"
+               tone: roaring, unbowed
+               text: "You wanna play rough? Okay. Say hello to my little friend!"
+               """)
+    // the body falls Fallen; the dignity is held past it — Defiant, Unbroken, Transcendent
+    tony [+Fallen]
+    !tony [+Defiant]!
+    tony [+Unbroken]
+    tony -- dignity : "Holds Past Death"
+  }
+}

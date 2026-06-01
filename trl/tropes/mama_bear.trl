@@ -1,0 +1,119 @@
+// === PREAMBLE ===
+// @trope    Mama Bear / Papa Wolf
+// @category Character Tropes / The Parent Trope
+// @source   https://allthetropes.org/wiki/Mama_Bear
+// @domain   Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): like a she-bear over her cubs, a normally meek, gentle, non-combative
+// parent or guardian turns ferociously, terrifyingly dangerous the instant their child or charge
+// is threatened — protective love weaponized; threaten the cub and you will wish you never had.
+// FRONTIER: the BOND is the trigger. emotion_dynamics' Appraise_Threat aims a threat at $c and
+// yields $c's own [#Afraid] -> Motivate_Avoidance (flee). Mama Bear is the redirect: the threat
+// lands on the WARD, and the GUARDIAN appraises it through the tier_bonds attachment — so instead
+// of fear-for-self the bond converts the threat into fury-for-the-other, and the non-combatant
+// who would have fled instead Strikes the source. It is NOT a threat to the guardian's own person
+// (that is the ordinary Appraise_Threat / Beware the Nice Ones, where provoking the gentle one
+// rouses them on their OWN account) — here the trigger is specifically a threat to the CHILD/charge,
+// and the guardian's ferocity is borrowed entirely from the love that binds them to the ward.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // love, fear, wrath, courage, belonging
+import "trl/modules/emotion_dynamics.trl"  // Appraise_Threat — redirected through the bond into fury
+import "trl/modules/needs.trl"             // tier_bonds — the love/belonging drive that is the trigger
+import "trl/modules/action_dynamics.trl"   // Strikes / [+Hit] — what the protective fury cashes out as
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc mama_bear -> [
+  love             : "the protective love it weaponizes",
+  fear             : "what the threatened cub feels — and what the guardian skips",
+  wrath            : "the ferocity the bond unleashes",
+  courage          : "the meek made fearless for another's sake",
+  tier_bonds       : "the belonging drive that is the trigger",
+  emotion_dynamics : "redirects the threat-appraisal of",
+  action_dynamics  : "the strike the fury cashes out through"
+]
+
+
+// === ONTOLOGY ===
+// Protective fury: a defensive reversal driven by a bond.
+imply MamaBear -> [Protection, Reversal, Narrative]
+
+
+// === ABSTRACT RULE ===
+// A normally non-combative guardian ([+Pacifist], NOT [+Courageous] — so the ordinary path for
+// them is Motivate_Avoidance, flight) is bound to a ward by the tier_bonds attachment
+// ([@Guardian_Of(ward=$cub)] + [~Attached_To(target=$cub)]). The threat lands on the WARD, not the
+// guardian — that redirect is the whole trope: $threat threatens $cub, $cub is the one bound to the
+// guardian. The bond converts the appraisal: rather than fear-for-self, the guardian becomes
+// ferocious toward the source and Strikes it down. The signature is the identity redirect — the
+// menaced party ($cub) and the avenging party ($guardian) are NOT the same, and the strike flows
+// from the bond between them. (Beware the Nice Ones is the same fury when $cub == the provoked one;
+// here it is strictly love for ANOTHER.)
+rule MamaBear {
+  when:
+    char $guardian [+Pacifist] [@Guardian_Of(ward=$cub)]
+    char $guardian [~Attached_To(target=$cub)]
+    char $cub
+    not ( $guardian [+Courageous] )                  // the meek one — default path would be flight
+    evt  $threat [&Threatens(agent=$source, target=$cub)]
+    evt  $defense [&Strikes(agent=$guardian, target=$source)]
+    $guardian != $cub                                // the threat is to the CHARGE, not to the self
+    $source != $guardian
+  then:
+    $guardian [#Ferocious(toward=$source)]
+    $source [+Hit]
+    $guardian -- wrath
+    $guardian -- love
+    $defense [+MamaBear]
+}
+
+
+// === CONCRETE VIGNETTE: Aliens — "Get away from her, you bitch!" (film, 1986) ===
+// Ellen Ripley is no soldier — a warrant officer, a survivor, a civilian among Colonial Marines —
+// and Newt is not her child by blood but a foundling she has adopted in all but name across the
+// hive's dark. When the Alien Queen closes on the cowering girl, the woman who has spent the film
+// running turns: she straps into a cargo loader, a forklift, the least martial machine imaginable,
+// and walks INTO the thing that has killed everyone else. The bond does the work — it is not for
+// herself she fights but for the charge at her back. Protective love, weaponized, against the
+// largest mother in the galaxy.
+
+// ELLEN RIPLEY — the non-combatant guardian; the bond makes her ferocious
+char ripley [+Protagonist] [+Pacifist] [@Guardian_Of(ward=newt)]
+ripley [~Attached_To(target=newt)]
+
+// NEWT (REBECCA JORDEN) — the orphaned charge, the cub menaced
+char newt [+Victim]
+
+// THE ALIEN QUEEN — the threat that closes on the child
+char queen [+Antagonist] [+Lethal]
+
+// INT. ATMOSPHERE PROCESSOR — HIVE — the dripping dark where the cub is cornered
+set hive [+Interior] [+Night]
+
+scene the_loader {
+  beat 1 {
+    newt @ hive
+    queen @ hive
+    evt the_closing [&Threatens(agent=queen, target=newt)]
+    // the threat lands on the WARD — newt, not ripley: this is the redirect the trope turns on
+  }
+  beat 2 {
+    ripley @ hive
+    evt the_stand [&Strikes(agent=ripley, target=queen)]
+        dialog(inject=[speaker=ripley], inline="""
+               speaker: "{speaker}"
+               cue: "rising into the cargo loader's frame, stepping between the Queen and the child"
+               tone: cold, absolute
+               text: "Get away from her, you bitch!"
+               """)
+    // MamaBear fires: ripley is [+Pacifist], not [+Courageous], bound to newt as ward; the threat
+    // is to newt (ripley != newt); so the bond converts it to protective fury and she strikes —
+    ripley [#Ferocious(toward=queen)]
+    queen [+Hit]
+    ripley -- wrath
+    ripley -- love
+    the_stand [+MamaBear]
+  }
+}
