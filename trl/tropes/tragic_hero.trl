@@ -1,0 +1,108 @@
+// === PREAMBLE ===
+// @trope    Tragic Hero
+// @category Characterization / Tragedy
+// @source   https://allthetropes.org/wiki/Tragic_Hero
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a great and sympathetic protagonist, admirable and even noble, who is
+// brought low by a single flaw or error of judgement (hamartia) rather than by villainy — their
+// downfall evoking pity and fear in the audience. FRONTIER: the NOBLE doomed. Fatal Flaw names the
+// causal LINK (the trait that authors the ruin); Fall From Grace names the SLOPE down into villainy
+// (virtue is spent — the good become Corrupted). The Tragic Hero is the third corner: the flaw
+// undoes them, the fortune REVERSES (peripeteia), and yet the virtue is INTACT at the fall. The
+// recognition is load-bearing on the negative: not([+Corrupted]). A hero who slides into villainy is
+// a Fall From Grace; the Tragic Hero keeps our pity precisely because they remain admirable while
+// the very excess of their virtue destroys them.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/booker_seven_plots.trl"    // TRAGEDY — "a flaw drives the protagonist down into ruin"
+import "trl/concepts/index.trl"                 // the excess a flaw is made of: pride_excess, wrath, envy
+import "trl/tropes/fatal_flaw.trl"              // the NAMED trait that does the undoing
+import "trl/tropes/fall_from_grace.trl"         // the slope the Tragic Hero does NOT take (virtue intact)
+
+assoc tragic_hero -> [
+  fatal_flaw      : "is undone by the named",
+  fall_from_grace : "is the noble who does NOT slide into the",
+  tragedy         : "is the protagonist of Booker's",
+  pride_excess    : "is the commonest hamartia of the noble doomed",
+  despair         : "leaves the audience in pity, fear, and"
+]
+
+
+// === ONTOLOGY ===
+// The Tragic Hero subsumes the protagonist's standing, the virtue that makes the fall a loss, the
+// hamartia that authors it, and the reversal (peripeteia) that enacts it — the tragic machinery seen
+// from the side of the one who keeps our sympathy to the end.
+imply TragicHero -> [Protagonist, Virtuous, Hamartia, Tragedy, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition: a VIRTUOUS protagonist, defined by a flaw modelled as an obsession toward an excess
+// ([~Obsessed_With(target=$flaw)]), whose fortune is REVERSED by an event (peripeteia) — AND who is
+// NOT corrupted by it. The not([+Corrupted]) clause is the whole signature: it forks this away from
+// Fall From Grace (whose endpoint IS [+Corrupted]). The hero falls [+Fallen] with virtue intact; the
+// flaw is tied to the fall as the named cause, and the ruin evokes the tragic pity (-- despair).
+rule Tragic_Hero {
+  when:
+    char $c [+Protagonist] [+Virtuous] [~Obsessed_With(target=$flaw)]
+    evt  $reversal [&Reverses(state=$c)]
+    not( char $c [+Corrupted] )
+  then:
+    $c [+Fallen]
+    $c [+Virtuous]
+    $flaw -> $c : "Undoes"
+    $c -- despair : "the fall evokes pity and fear"
+    $c [+TragicHero]
+}
+
+
+// === CONCRETE VIGNETTE: Coriolanus — Rome's incorruptible warrior, undone by pride (Shakespeare, 1608) ===
+// Caius Martius Coriolanus is Rome's greatest soldier — fearless, unbribable, contemptuous of flattery
+// and of the very idea of trading on his deeds for votes. That incorruptibility is real virtue; it is
+// also his hamartia. His pride will not bend to court the plebeians' voices, and the consulship he has
+// earned in blood is taken back; he is banished from the city he saved. He turns his arms against Rome,
+// then — alone among tragic turns — his mother's plea stays his hand, and for that mercy his Volscian
+// allies cut him down. He never sells himself, never slides into villainy; the same unyielding pride
+// that makes him admirable is exactly what destroys him. The virtue is intact at the fall.
+
+// CAIUS MARTIUS CORIOLANUS — Rome's incorruptible warrior, too proud to bend
+char coriolanus [+Protagonist] [+Virtuous]
+coriolanus [~Obsessed_With(target=pride_excess)]
+
+// VOLUMNIA — the mother whose plea both saves Rome and dooms her son
+char volumnia [+LoveInterest]
+
+// THE PLEBEIANS / TRIBUNES — the voices his pride will not court
+char tribunes [+Antagonist] [+Faction]
+
+// THE CONSULSHIP — the honour earned in blood, then revoked
+obj consulship [+Symbolic]
+
+// EXT. CORIOLES — THE VOLSCIAN CITY — DAY
+set corioles [+Exterior] [+Day] [+Contested]
+
+arc coriolanus_undoing [+TragicHero]
+
+scene the_pride_that_falls {
+  beat 1 {
+    coriolanus > consulship : "earns the consulship in blood, then will not beg for votes"
+    coriolanus [~Obsessed_With(target=pride_excess)]   // the hamartia: pride that will not bend
+    tribunes -- coriolanus : "turn the people against him; the honour is revoked"
+  }
+  beat 2 {
+    coriolanus @ corioles
+    // banished, he turns on Rome; his mother's plea stays his hand — and damns him for the mercy
+    evt cut_down [&Reverses(state=coriolanus)]
+        dialog(inject=[speaker=coriolanus], inline="""
+               speaker: "{speaker}"
+               cue: "to the plebeians who would have his voice bought, before the banishment"
+               tone: unbending, contemptuous, proud
+               text: "I banish you. There is a world elsewhere."
+               """)
+    // Tragic_Hero -> coriolanus [+Fallen] [+Virtuous] [+TragicHero];  pride_excess -> coriolanus : "Undoes";  coriolanus -- despair
+    !coriolanus [+Fallen]!
+    pride_excess -> coriolanus : "Undoes"
+  }
+}

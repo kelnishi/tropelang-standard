@@ -1,0 +1,107 @@
+// === PREAMBLE ===
+// @trope    Jerk with a Heart of Gold
+// @category Characterization / Sympathy
+// @source   https://allthetropes.org/wiki/Jerk_with_a_Heart_of_Gold
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a character whose abrasive, rude, caustic surface conceals a fundamentally
+// DECENT core — the gruffness is the costume, the kindness is the person, and a crisis is what pulls
+// the costume off. FRONTIER: the self-foil. The Foil makes meaning from the GAP between two
+// characters on a shared axis; here that gap collapses into ONE person — surface vs. core on the
+// kindness axis — so the character foils THEMSELF. Where Pet the Dog endears a VILLAIN (it REQUIRES
+// [+Antagonist]: one soft beat humanises a monster), the Jerk is explicitly NOT an antagonist: the
+// not([+Antagonist]) clause is the whole divide. The crisis-deed does not just buy sympathy — via
+// theory_of_mind it REVEALS the compassion that was the true self all along, and via rhetoric it
+// reframes the abrasive surface (Endears + Frames earnest) so the audience reads the rudeness, in
+// hindsight, as armour. Distinct from the Anti-Hero (un-heroic methods, grey morality): the Jerk's
+// morality is SOUND — only their manner is bad.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/rhetoric.trl"          // Endears -> Build_Investment (audience warms); Frames(as=earnest) -> Appraise_Earnest reframes the surface
+import "trl/modules/theory_of_mind.trl"    // Reveals(fact) -> the deed establishes the hidden compassion as a fact in the world
+import "trl/tropes/the_foil.trl"           // the character is their OWN foil — surface vs core on one axis
+import "trl/concepts/index.trl"            // compassion — the decent core the deed reveals
+
+assoc jerk_with_a_heart_of_gold -> [
+  the_foil           : "is the self-applied case of — surface foils core within one character",
+  compassion         : "the abrasive surface conceals a core of",
+  rhetoric           : "uses the audience-investment + reframing levers of",
+  theory_of_mind     : "the deed REVEALS a hidden mental state, per",
+  pet_the_dog        : "the NON-antagonist cousin of — same soft beat, but the heart was always gold",
+  anti_hero          : "distinct from — the Jerk's morality is sound, only the manner is bad",
+  beware_the_nice_ones : "the inverse register — nice surface, hard core, where this is hard surface, soft core"
+]
+
+
+// === ONTOLOGY ===
+// The signature cluster: a contrast HELD WITHIN one character — an abrasive surface over a decent,
+// compassionate core — revealed by a crisis deed that endears. (Contrast is the foil register; the
+// substance of the core is compassion; the warming is rhetoric's investment.)
+imply JerkWithAHeartOfGold -> [Contrast, Compassion, Sympathy, Investment, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition: an ABRASIVE character who is NOT an antagonist commits a kind deed in a crisis; the
+// deed both ENDEARS them (rhetoric's Build_Investment converts the audience) and REVEALS compassion
+// (theory_of_mind establishes the hidden core as a world fact), and the author FRAMES it earnestly so
+// the surface re-reads as armour (Appraise_Earnest). The not([+Antagonist]) clause is the load-bearing
+// divide from Pet the Dog (which REQUIRES an antagonist). The payoff: the surface foils the core —
+// the character is [+Decent] [+Sympathetic] [+Illuminated], and the audience warms.
+rule Jerk_With_A_Heart_Of_Gold {
+  when:
+    char $c [+Abrasive]
+    not( char $c [+Antagonist] )
+    evt  $deed     [&Endears(agent=author, subject=$c)]
+    evt  $reveal   [&Reveals(fact=$c)]
+    evt  $framing  [&Frames(agent=author, target=$c, as=earnest)]
+  then:
+    $deed [+JerkWithAHeartOfGold]
+    $c [+Decent]
+    $c [+Sympathetic]
+    $c [+Illuminated(by=$deed)]
+    audience [~RootsFor(target=$c)]
+    audience [+Invested(in=$c)]
+    audience -- investment
+}
+
+
+// === CONCRETE VIGNETTE: House, M.D. — the misanthrope diagnostician (television, 2004) ===
+// Gregory House is gratuitously rude to patients, colleagues, and his own boss — he insults the
+// dying, mocks the grieving, and declares that "everybody lies" as a working creed. He is not the
+// villain of the show; he is its hero, and the gruffness is the armour. When a case turns to crisis
+// and a patient is about to die from a diagnosis no one else can crack, House does the thing the
+// pleasant doctors cannot: he stays, he obsesses, he risks his licence to save them — and in that
+// deed the show frames dead earnest, the misanthropy reads, in hindsight, as a man who cares too
+// much to be soft about it. The abrasive surface foils the decent core, and the audience that
+// flinched at him an hour ago is rooting for him now.
+
+// DR. GREGORY HOUSE — the diagnostician whose cruelty is the costume; the save is the person
+char house [+Abrasive]
+house [+Skilled] [+Cynical]
+
+// THE DYING PATIENT — the crisis that pulls the costume off
+char patient [+Imperiled]
+
+// INT. PRINCETON-PLAINSBORO TEACHING HOSPITAL — DAY
+set hospital [+Interior] [+Day]
+
+scene the_save {
+  beat 1 {
+    house @ hospital
+    house -> patient : "insults them, mocks the grief — everybody lies"
+    // established as a jerk; NOT the antagonist — he is the show's hero
+  }
+  beat 2 {
+    house @ hospital
+    evt cracks_the_case [&Endears(agent=author, subject=house)]
+    house -> patient : "stays, obsesses, risks his licence to save them"
+    // Build_Investment (rhetoric) -> audience [~RootsFor(target=house)] [+Invested(in=house)]
+    evt the_truth [&Reveals(fact=house)]
+    // Reveals (theory_of_mind) -> the hidden compassion is established as a world fact
+    evt played_straight [&Frames(agent=author, target=house, as=earnest)]
+    // Appraise_Earnest (rhetoric) -> audience [#Moved]; the rudeness re-reads as armour
+    // Jerk_With_A_Heart_Of_Gold -> cracks_the_case [+JerkWithAHeartOfGold]; house [+Decent] [+Sympathetic] [+Illuminated]
+  }
+}

@@ -1,0 +1,125 @@
+// === PREAMBLE ===
+// @trope    Chekhov's Skill
+// @category Foreshadowing
+// @source   https://allthetropes.org/wiki/Chekhov's_Skill
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): an ability a character is shown to possess early — offhand, seemingly
+// trivial or merely characterizing — turns out to be exactly what is needed to resolve a later
+// crisis. The ABILITY-shaped Chekhov's Gun. FRONTIER: the SKILL variant of chekhovs_gun (which
+// fires an OBJECT) and chekhovs_gunman (which fires a PERSON). Here what is conspicuously planted
+// early is a COMPETENCE — a knack demonstrated in passing, registered by the audience as flavor,
+// not yet load-bearing. The planting pays off only later, when that same mundane skill becomes the
+// decisive instrument of the resolution. Rides the same foreshadowing setup/payoff layer as
+// chekhovs_gun and chekhovs_gunman; the payoff query reaches back into the early demonstration via
+// `past scene {}` (as the object and the gunman do). Distinct from chekhovs_gun (this fires an
+// ABILITY the character carries, not a thing they hold) and from chekhovs_gunman (the PERSON is
+// already prominent — it is their overlooked KNACK that was planted).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/narrative.trl"    // foreshadowing, revelation, consequence
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc chekhovs_skill -> [
+  chekhovs_gun    : "the ability-shaped",
+  chekhovs_gunman : "the skill variant alongside the person variant of",
+  foreshadowing   : "an honest kind of",
+  revelation      : "can deliver",
+  consequence     : "pays off in",
+  red_herring     : "contrasts with"
+]
+
+
+// === ONTOLOGY ===
+// A planted mundane competence: a Skilled knack shown offhand, Foreshadowing in the form of an
+// ability, awaiting the crisis that needs it.
+
+imply ChekhovsSkill -> [Foreshadowing, Skilled, Planted]
+
+
+// === ABSTRACT RULES ===
+
+// SETUP — a character is conspicuously shown to possess a mundane, seemingly inconsequential
+// ability; it has not yet mattered to the plot. A payoff is now owed on the skill.
+rule ChekhovsSkill_Setup {
+  when:
+    char $hero [+Skilled] [+Conspicuous]
+    evt $demo [&Demonstrates(skill=$hero)] [+Mundane]
+    not ( $hero [+Pivotal] )
+  then:
+    $hero [+ChekhovsSkill]
+    $hero [+PendingPayoff]
+}
+
+// FIRED — the once-trivial ability is finally put to decisive use at the crisis: the character
+// applies it as the agent of a pivotal event, and the early demonstration is confirmed by a
+// backward `past scene {}` query (the honest setup really WAS laid earlier). The debt is paid and
+// the skill's significance is made ABSOLUTE — once shown to have been the answer all along, it
+// cannot be re-trivialized back into mere flavor.
+rule ChekhovsSkill_Fired {
+  when:
+    char $hero [+PendingPayoff]
+    evt $use [&Uses(skill=$hero, agent=$hero)] [+Decisive]
+    past scene $earlier {
+      evt $demo [&Demonstrates(skill=$hero)]
+    }
+  then:
+    $hero [-PendingPayoff]
+    !$hero [+Pivotal]!
+    $use [+Payoff(skill=$hero)]
+    $hero -- consequence
+}
+
+
+// === CONCRETE VIGNETTE: The Martian — Mark Watney's botany (novel 2011 / film 2015) ===
+// Early on, Watney's training as the mission botanist is treated as a running joke — the crew's
+// least glamorous specialty, good for a wisecrack about growing plants on a dead world. Stranded
+// alone on Mars with finite rations, that offhand competence becomes the literal engine of his
+// survival: he farms potatoes in Martian soil and buys himself the months he needs to be rescued.
+// The skill planted as flavor in the briefing fires as the answer in the crisis. The early
+// demonstration is reached by the payoff rule's `past scene {}` backward query.
+
+// MARK WATNEY — mission botanist; the joke in the briefing, the survivor on Mars
+char watney [+Skilled] [+Conspicuous]
+
+// INT. ARES III BRIEFING ROOM - DAY (before launch; the botany running joke)
+set briefing_room [+Interior] [+Day]
+
+// EXT. MARTIAN SURFACE / HAB - DAY (stranded, alone, rationing)
+set hab [+Exterior] [+Day]
+
+// ===== the planting — a mundane competence shown offhand, not yet load-bearing =====
+scene the_botany_joke {
+  beat 1 {
+    watney @ briefing_room
+    evt demo [&Demonstrates(skill=watney)] [+Mundane]
+        dialog(inject=[speaker=watney], inline="""
+               speaker: "{speaker}"
+               cue: "shrugging at the mission roster, half a grin"
+               tone: self-deprecating
+               text: "I'm the botanist. Somebody's gotta keep the plants alive."
+               """)
+    // ChekhovsSkill_Setup -> watney [+ChekhovsSkill]; watney [+PendingPayoff]
+    watney [+ChekhovsSkill]
+    watney [+PendingPayoff]
+  }
+}
+
+// ===== the payoff — the trivial skill becomes the decisive instrument of survival =====
+scene farming_mars {
+  beat 1 {
+    watney @ hab
+    evt use [&Uses(skill=watney, agent=watney)] [+Decisive]
+        dialog(inject=[speaker=watney], inline="""
+               speaker: "{speaker}"
+               cue: "elbow-deep in Martian regolith, jury-rigged greenhouse glowing"
+               tone: defiant
+               text: "Mars will come to fear my botany powers. I'm going to have to science the heck out of this."
+               """)
+    watney [-PendingPayoff]
+    !watney [+Pivotal]!
+    use [+Payoff(skill=watney)]
+  }
+}

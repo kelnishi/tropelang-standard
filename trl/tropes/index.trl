@@ -152,6 +152,13 @@ import "trl/tropes/heroic_bsod.trl"
 import "trl/tropes/mama_bear.trl"
 import "trl/tropes/moment_of_awesome.trl"
 import "trl/tropes/power_of_friendship.trl"
+import "trl/tropes/break_the_haughty.trl"
+import "trl/tropes/chekhovs_skill.trl"
+import "trl/tropes/disney_death.trl"
+import "trl/tropes/jerk_with_a_heart_of_gold.trl"
+import "trl/tropes/karmic_death.trl"
+import "trl/tropes/tragic_hero.trl"
+import "trl/tropes/villainous_breakdown.trl"
 
 // === TROPE TITLE ENTRIES ===
 
@@ -385,11 +392,14 @@ concept batman_gambit [+Trope(category="Epistemic", source="https://allthetropes
 concept beware_the_nice_ones [+Trope(category="Character Tropes", source="https://allthetropes.org/wiki/Beware_the_Nice_Ones")] [%Interpersonal]
 concept big_damn_heroes [+Trope(category="Heroism", source="https://allthetropes.org/wiki/Big_Damn_Heroes")] [%Narrative]
 concept break_the_cutie [+Trope(category="Tragedy", source="https://allthetropes.org/wiki/Break_the_Cutie")] [%Narrative]
+concept break_the_haughty [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Break_the_Haughty")] [%Narrative]
 concept chekhovs_gunman [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Gunman")] [%Narrative]
+concept chekhovs_skill [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Skill")] [%Narrative]
 concept curb_stomp_battle [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Curb_Stomp_Battle")] [%Interpersonal]
 concept david_versus_goliath [+Trope(category="Combat Tropes", source="https://allthetropes.org/wiki/David_Versus_Goliath")] [%Interpersonal]
 concept defiant_to_the_end [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Defiant_to_the_End")] [%Narrative]
 concept determinator [+Trope(category="Heroic Spirit", source="https://allthetropes.org/wiki/Determinator")] [%Narrative]
+concept disney_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Disney_Death")] [%Narrative]
 concept eucatastrophe [+Trope(category="Happy Endings", source="https://allthetropes.org/wiki/Eucatastrophe")] [%Narrative]
 concept even_evil_has_standards [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Even_Evil_Has_Standards")] [%Psychological]
 concept fatal_flaw [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Fatal_Flaw")] [%Mind]
@@ -400,6 +410,8 @@ concept heroic_second_wind [+Trope(category="Heroic Spirit", source="https://all
 concept hoist_by_his_own_petard [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Hoist_by_His_Own_Petard")] [%Narrative]
 concept i_gave_my_word [+Trope(category="Characterization", source="https://allthetropes.org/wiki/I_Gave_My_Word")] [%Interpersonal]
 concept in_medias_res [+Trope(category="Narrative Devices", source="https://allthetropes.org/wiki/In_Medias_Res")] [%Narrative]
+concept jerk_with_a_heart_of_gold [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Jerk_with_a_Heart_of_Gold")] [%Narrative]
+concept karmic_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Karmic_Death")] [%Narrative]
 concept kick_the_dog [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Kick_the_Dog")] [%Narrative]
 concept like_brother_and_sister [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Like_Brother_and_Sister")] [%Interpersonal]
 concept macguffin [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/MacGuffin")] [%Narrative]
@@ -430,6 +442,8 @@ concept the_love_interest [+Trope(category="Relationships", source="https://allt
 concept the_trickster [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/The_Trickster")] [%Narrative]
 concept tomato_in_the_mirror [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Tomato_in_the_Mirror")] [%Mind]
 concept took_a_level_in_badass [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Took_a_Level_in_Badass")] [%Mind]
+concept tragic_hero [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Tragic_Hero")] [%Narrative]
+concept villainous_breakdown [+Trope(category="Villains", source="https://allthetropes.org/wiki/Villainous_Breakdown")] [%Narrative]
 concept wham_line [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Wham!_Line")] [%Narrative]
 concept worthy_opponent [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Worthy_Opponent")] [%Interpersonal]
 concept xanatos_gambit [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Xanatos_Gambit")] [%Epistemic]
