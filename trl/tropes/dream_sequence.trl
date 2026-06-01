@@ -49,7 +49,7 @@ char wind_fish [+Dreamer]                         // the slumbering whale whose 
 <<world.dream : non_canon, teller=wind_fish>>     // Koholint Island — a dream; it mints no truth
 char marin [+LoveInterest]
 char nightmare [+Antagonist]
-link -- marin : "the girl who only exists inside the dream"
+<<world|link>> -- marin : "the girl who only exists inside the dream"   // link recalled into the dream (S14 §7)
 
 <<world>>                                          // Link wakes the Wind Fish — the dream dissolves
 scene the_awakening {

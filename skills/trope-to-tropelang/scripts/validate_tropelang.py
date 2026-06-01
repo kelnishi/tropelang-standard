@@ -365,7 +365,9 @@ def check_levels(tokens, label, warn_crossings=False):
                 if warn_crossings and not (path == active or active.startswith(path + ".")):
                     warnings.append(f"[{label}] line {ln}: [style] inward/sideways crossing to "
                                     f"'{fmt(path)}' from '{fmt(active)}' (--warn-crossings)")
-                i += 1                                                   # walk content (exempt-guarded)
+                i = j + 1                                               # skip the `<<path|` prefix; walk
+                # only the content (exempt-guarded). NB: the path's own dotted components (e.g. the
+                # `victor` in `<<voyage.victor|…>>`) are level names, never entity references.
             else:
                 active = path                                           # a directive sets the plane
                 i = _match_close(tokens, i) + 1

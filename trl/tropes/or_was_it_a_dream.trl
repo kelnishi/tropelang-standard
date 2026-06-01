@@ -47,7 +47,7 @@ char dreamer [+Protagonist]
 
 <<world.dream : non_canon, teller=dreamer>>      // the dream of paradise — it mints no truth
 obj flower [+FromTheDream]
-dreamer -- flower : "plucks a strange and beautiful flower in heaven"
+<<world|dreamer>> -- flower : "plucks a strange and beautiful flower in heaven"   // dreamer into the dream (S14 §7)
 
 <<world>>                                        // he wakes — but the flower is the residue
 scene the_waking {

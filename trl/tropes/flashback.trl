@@ -73,7 +73,8 @@ set cafe [+Interior] [+Night]
 
 // EXT. PARIS - DAY (before the occupation)
 set paris [+Exterior] [+Day]
-rick -- ilsa : "the lovers they were, before the war took it"
+// rick and ilsa are the present (casa) characters recalled into the Paris memory — a loud crossing (S14 §7)
+<<casa|rick>> -- <<casa|ilsa>> : "the lovers they were, before the war took it"
 
 // ===== reopen the present — the dissolve that opens the flashback, and the return =====
 <<casa>>

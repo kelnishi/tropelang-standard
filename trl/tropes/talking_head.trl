@@ -61,7 +61,7 @@ rule Talking_Head {
 <<doc>>
 char shelby [+RealPerson] [+Observer]
 shelby [+Witness_To(event=appomattox)]
-set  appomattox [+RealEvent]
+evt  appomattox [+RealEvent]   // the surrender at Appomattox — an event, not a place
 
 // ===== the audience he leans toward — one step OUT, the watched plane =====
 <<audience : non_canon>>

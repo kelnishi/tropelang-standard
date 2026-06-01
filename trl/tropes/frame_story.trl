@@ -46,11 +46,11 @@ walton -- victor : "finds him dying on the ice"
 
 <<voyage.victor : teller=victor>>                // Victor's confession, framed by Walton's letters
 char creature [+Tragic]
-victor -- creature : "the thing he made and fled"
+<<voyage|victor>> -- creature : "the thing he made and fled"   // victor into his own confession (S14 §7)
 
 <<voyage.victor.creature : teller=creature>>     // the Creature's own tale, framed within Victor's
 char delacey [+Innocent]
-creature -- delacey : "the cottagers he watched and loved unseen"
+<<voyage.victor|creature>> -- delacey : "the cottagers he watched and loved unseen"   // creature into his nested tale (S14 §7)
 
 <<voyage>>                                        // back on the ice — Walton sets it all down
 scene the_record {
