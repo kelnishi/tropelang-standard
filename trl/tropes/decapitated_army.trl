@@ -1,0 +1,87 @@
+// === PREAMBLE ===
+// @trope    Decapitated Army
+// @category Military and Warfare
+// @source   https://allthetropes.org/wiki/Decapitated_Army
+// @domain   Political
+// @version  1.3
+//
+// Laconic (per the wiki): cut through to the enemy commander and kill him or drive him from the
+// field, and the force he led collapses — its resistance ends with his fall. The army was only as
+// strong as its one head: cohesion flowed downward from the leader (the coalition was held by him,
+// the commands obeyed because of him), so when he falls the structure has nothing left to stand on
+// and the host routs, surrenders, or disintegrates. Rides action_dynamics (the leader's fall —
+// the Finisher that leaves him [+Defeated]/[+Fallen]) and power_dynamics (the cohesion that flowed
+// from the head — coalition and obedience, which the head's removal cannot survive). The pitiless
+// economy of the One-Man Army read from the other side: defeat the man and the mass is moot. When
+// the collapse is total and permanent it is the Keystone Army.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/action_dynamics.trl"   // Finisher -> the leader [+Defeated]/[+Fallen]
+import "trl/modules/power_dynamics.trl"    // the coalition / obedience that flowed from the head
+
+assoc decapitated_army -> [
+  power_dynamics  : "cohesion-from-the-head fails in",
+  action_dynamics : "the leader's fall in",
+  conflict        : "ends with one death a"
+]
+
+
+// === ONTOLOGY ===
+// Private to this trope: a force whose cohesion was load-bearing on a single head, and the rout
+// that follows the head's removal. Kept distinct from power_dynamics' [+Fragmented] — a routed
+// host is the specific battlefield collapse (flight / surrender), not merely a sundered coalition.
+imply DecapitatedArmy -> [Rout, Collapse, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a force whose cohesion ran through one commander, that commander now [+Fallen],
+// has nothing to hold it — it is left [+Leaderless] and breaks ([+Routed]), and its prior
+// cohesion is gone ([-Cohesive]). One death, and the mass is moot.
+rule Decapitated_Army {
+  when:
+    char $force  [+Collective] [+Cohesive]
+    char $leader [+Leader] [@Leads(other=$force)]
+    $leader [+Fallen]
+  then:
+    $force [+Leaderless]
+    $force [+Routed]
+    $force [-Cohesive]
+    $force -- collapse
+}
+
+
+// === CONCRETE VIGNETTE: the Battle of Issus — Alexander breaks the Persians (history, 333 BC) ===
+// Alexander's phalanx pins the vast Persian host while he and the Companion cavalry drive straight
+// for Darius' chariot. The line does not have to be beaten — only the king reached. When Darius
+// turns and flees the field, the army that had cohered around the Great King's person dissolves
+// behind him: the wings rout, the host scatters, and the empire that stood on that one head begins
+// to come apart. The phalanx held; the cavalry decapitated; the mass was moot.
+
+// DARIUS III, GREAT KING OF PERSIA
+char darius [+Leader] [+Ruler]
+
+// THE PERSIAN HOST
+char persians [+Antagonist] [+Collective] [+Cohesive]
+darius [@Leads(other=persians)]
+
+// ALEXANDER AND THE COMPANION CAVALRY
+char alexander [+Protagonist]
+
+// EXT. THE PINARUS RIVER, ISSUS - DAY
+set issus [+Exterior] [+Day] [+Contested]
+
+scene the_break {
+  beat 1 {
+    alexander @ issus
+    darius @ issus
+    evt the_charge [&Finishes(agent=alexander, target=darius)]
+    // (in the field: Darius does not die but flees — reached, unseated, removed as the head)
+    darius [+Fallen]
+  }
+  beat 2 {
+    persians @ issus
+    // Decapitated_Army -> persians [+Leaderless] [+Routed] [-Cohesive]
+  }
+}

@@ -1,0 +1,119 @@
+// === PREAMBLE ===
+// @trope    Enemy Mine
+// @category Conflict / Alliances
+// @source   https://allthetropes.org/wiki/Enemy_Mine
+// @domain   Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): sworn enemies are forced to set aside their hostility and ally against a
+// greater common threat — and the alliance lasts only as long as the shared danger. FRONTIER: the
+// CONTINGENT alliance, riding power_dynamics (the realignment of coalition under threat) and needs
+// (shared survival, the rank-2 safety rung, overriding the standing enmity). Where a Heel-Face Turn
+// is a PERMANENT change of side, Enemy Mine is conditional: the bond is true NOW but predicated on
+// the threat — when the greater enemy is gone, the prior enmity resumes. That conditionality is the
+// trope, so the alliance edge is written in the CONTINGENT tier (*…*): asserted true, perspective-
+// and condition-dependent, not the narrator's permanent ground truth (cf. a real Heel-Face Turn).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/power_dynamics.trl"    // the realignment of coalition under a common threat; Allies_With
+import "trl/modules/needs.trl"             // shared survival (tier_safety, rank 2) overriding the enmity
+import "trl/concepts/index.trl"            // conflict, security, survival
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc enemy_mine -> [
+  power_dynamics  : "is the coalition-under-threat realignment of",
+  needs           : "is enmity overruled by the shared safety rung of",
+  conflict        : "suspends, but does not dissolve, a",
+  heel_face_turn  : "is the CONTINGENT, threat-bounded counterpart to the permanent",
+  not_so_different : "may seed the across-the-line kinship recognized by",
+  the_rival       : "binds, for the duration of the danger, a"
+]
+
+
+// === ONTOLOGY ===
+// The threat-bounded alliance of enemies — coalition realigned by a greater danger, dissolving when
+// the danger passes. A coalition act (rank-2 survival), not a change of heart; distinct from the
+// permanent realignment of a Heel-Face Turn.
+imply EnemyMine -> [Alliance, Collective, Political]
+
+
+// === ABSTRACT RULE ===
+// Recognition: two parties stand in mutual enmity (each [@Rival_Of] the other), a GREATER common
+// [+Threat] appears (a third party, distinct from both), and they ally against it (&Allies_With).
+// The payoff is a CONTINGENT alliance edge (*…*) — true now, predicated on the threat — plus the
+// coalition-realignment touch of power_dynamics and the shared-survival (tier_safety) touch of
+// needs. The rivalry bond is NOT severed: it is suspended, ready to resume. (That is the line from
+// a Heel-Face Turn, which would sever the enmity for good.)
+rule Enemy_Mine {
+  when:
+    char $x      [@Rival_Of(other=$y)]                  // sworn enemies — the standing enmity, both ways
+    char $y      [@Rival_Of(other=$x)]
+    char $threat [+Threat]                              // a greater common danger…
+    $threat != $x                                       // …that is neither of them
+    $threat != $y
+    evt  $pact   [&Allies_With(agent=$x, other=$y)]     // the forced alliance is struck
+  then:
+    *$x -- $y : "Allies"*                               // CONTINGENT — true now, conditional on the threat
+    $x [+Allied_Against(target=$threat)]
+    $y [+Allied_Against(target=$threat)]
+    $pact [+EnemyMine]
+    $x -- tier_safety                                   // needs: shared survival (rank 2) overrides the enmity
+    $x -- coalition                                     // power_dynamics: the coalition realigns under threat
+    $y -- coalition
+}
+
+// RESUMED: the threat is gone (no longer carries [+Threat]), and the contingent alliance lapses back
+// into the prior enmity — the line that separates Enemy Mine from a Heel-Face Turn. The rivalry bond
+// was never severed, so the moment the shared danger no longer holds, the old conflict re-opens.
+rule Enemy_Mine_Resumed {
+  when:
+    char $x [+Allied_Against(target=$threat)]
+    char $x [@Rival_Of(other=$y)]
+    not ( char $threat [+Threat] )                      // the common danger has passed
+  then:
+    $x !-- $y : "Allies"                                // the contingent alliance lapses
+    $x [-Allied_Against]
+    $x [~Opposes(target=$y)]                            // the prior enmity resumes — no Heel-Face Turn
+    $x -- conflict
+}
+
+
+// === CONCRETE VIGNETTE: The Grand Alliance — the USA and the USSR vs. Nazi Germany (history, WWII) ===
+// Two systems that regarded each other as the existential foe — capitalist West and communist East —
+// were driven into a Grand Alliance by a greater common threat: Hitler's Germany after the June 1941
+// invasion. Roosevelt and Stalin made common cause for survival; Lend-Lease flowed east, the Eastern
+// and Western fronts squeezed the Reich. But the alliance was always contingent on that one shared
+// danger. When Berlin fell in 1945 and the [+Threat] was gone, the enmity resumed almost at once —
+// the Cold War. A textbook contingent alliance, NOT a change of heart.
+
+// THE UNITED STATES — the capitalist West
+char usa  [+Collective] [@Rival_Of(other=ussr)]
+// THE SOVIET UNION — the communist East
+char ussr [+Collective] [@Rival_Of(other=usa)]
+// NAZI GERMANY — the greater common threat that forces the alliance
+char reich [+Antagonist] [+Threat]
+// EXT. THE EASTERN FRONT — the shared front of survival
+set eastern_front [+Exterior] [+Day]
+
+scene the_grand_alliance {
+  beat 1 {
+    // June 1941 — the invasion makes the Reich the greater danger to both
+    reich >< ussr : "Operation Barbarossa"
+    usa -- ussr : "wary, across an ideological line"
+  }
+  beat 2 {
+    usa  @ eastern_front
+    ussr @ eastern_front
+    evt the_pact [&Allies_With(agent=usa, other=ussr)]   // the Grand Alliance is struck
+    // Enemy_Mine -> *usa -- ussr : "Allies"*, both [+Allied_Against(target=reich)],
+    //   the_pact [+EnemyMine]; -- tier_safety (shared survival) / coalition (realignment)
+  }
+  beat 3 {
+    // 1945 — Berlin falls; the Reich is no longer the [+Threat], and the enmity resumes (the Cold War)
+    reich [-Threat]
+    // Enemy_Mine_Resumed -> usa !-- ussr : "Allies"; usa [~Opposes(target=ussr)] -- conflict.
+    // NOT a Heel-Face Turn: the rivalry was suspended, never severed.
+    usa >< ussr : "the Cold War re-opens"
+  }
+}

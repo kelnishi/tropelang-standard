@@ -1,0 +1,112 @@
+// === PREAMBLE ===
+// @trope    Taking You With Me
+// @category Combat / Death / Sacrifice
+// @source   https://allthetropes.org/wiki/Taking_You_with_Me
+// @domain   Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): someone who knows they are already dead spends that death to make sure
+// their enemy dies too — the last act of a doomed combatant is the mutual kill. FRONTIER: the
+// MUTUAL-DESTRUCTION read of the action-dynamics Finisher. Cousin to Heroic Sacrifice — but the
+// inverted aim is the whole point. Where the Sacrifice rule spends the giver's position so an ALLY
+// is [+Saved] (the giver [+Fallen]), Taking You With Me spends a [+Doomed] combatant's certain
+// death so the ENEMY is [+Fallen] too: the one final deed lands both bodies. Nothing is saved; what
+// is bought is the foe's destruction. Where Defiant to the End spends the death to buy NOTHING (bare
+// dignity), this spends it to buy the enemy's grave — one blow, two corpses.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict, death, revenge
+import "trl/modules/action_dynamics.trl"   // Finishes -> the decisive final blow; [+Fallen]
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc taking_you_with_me -> [
+  action_dynamics  : "the mutual-kill read of the Finisher of",
+  heroic_sacrifice : "the inverted aim of — that spends the death to SAVE an ally; this to DESTROY a foe",
+  defiant_to_the_end : "the death buys NOTHING there; here it buys the enemy's grave",
+  death            : "is spent — the agent's own, certain — to deal another",
+  revenge          : "the doomed combatant's last is often a final stroke of"
+]
+
+
+// === ONTOLOGY ===
+// A doomed combatant is one whose own death is already certain (the body is forfeit). To Take You
+// With Me is to spend that forfeit death as the instrument of the enemy's: the one final deed leaves
+// BOTH [+Fallen]. It is the mutual-destruction face of the Finisher — not a guard, not a gift, but a
+// trade of one certain death for another. The deed is its own grave-marker for two.
+imply MutualKill        -> [Finisher, Reciprocal, Conflict]
+imply TakingYouWithMe   -> [MutualKill, Doomed, Final]
+
+
+// === ABSTRACT RULE ===
+// Recognition: a [+Doomed] combatant ($a) — own death already certain — lands a final, decisive
+// strike (the action-dynamics Finishes verb) on an enemy ($y). The signature that distinguishes this
+// from a plain Finisher is that the AGENT is already doomed: the deed is not a victory but a mutual
+// kill — the agent spends the death that is already coming as the instrument of the foe's. So the
+// one final deed leaves both bodies down — the enemy [+Fallen] by the blow, and the doomed agent
+// [+Fallen] by the death that was already certain. The deed is tagged [+TakingYouWithMe]; the agent
+// touches the death concept they spend, and the revenge the last stroke so often carries. (The
+// symmetric `><` of the mutual fight is carried as story-graph flavor in the vignette below.)
+rule Taking_You_With_Me {
+  when:
+    char $a [+Doomed]
+    evt $f [&Finishes(agent=$a, target=$y)]
+  then:
+    // the one final deed — the enemy falls by the blow
+    $y [+Fallen]
+    // and the doomed agent falls with them: the death that was already certain
+    $a [+Fallen]
+    // the mutual kill is named on the deed
+    $f [+TakingYouWithMe]
+    $a -- death : "Spends To Deal"
+    $a -- revenge : "Last Stroke Of"
+}
+
+
+// === CONCRETE VIGNETTE: Star Trek II: The Wrath of Khan — the Genesis gambit (film, 1982) ===
+// Beaten in the nebula, his ship a hulk and his body broken, Khan Noonien Singh is a dead man and
+// knows it. He will not let Kirk walk away. With his dying strength he arms the Genesis Device —
+// "From hell's heart I stab at thee; for hate's sake I spit my last breath at thee" — to detonate
+// and take the Enterprise with him into the grave. The one deed is meant to land both crews; Kirk
+// slips the blast by minutes, but Khan dies having spent his certain death as a weapon — the
+// doomed combatant's mutual kill, aimed true even if it falls short.
+
+// KHAN NOONIEN SINGH — the broken superman, dying, set on one last blow
+char khan [+Antagonist] [+Doomed]
+khan [~Committed_To(target=revenge)]
+
+// JAMES T. KIRK / THE ENTERPRISE — the enemy he means to take with him
+char kirk [+Protagonist]
+
+// THE GENESIS DEVICE — the lifegiving torpedo turned into a grave for two ships
+obj genesis_device [+MacGuffin] [+Doomsday]
+
+// INT. RELIANT BRIDGE — DERELICT, NEBULA-DARK
+set reliant_bridge [+Interior]
+
+scene from_hells_heart {
+  beat 1 {
+    khan @ reliant_bridge
+    // the duel through the nebula has come to its end — both ships crippled, the hate mutual
+    khan >< kirk : "Mutual"
+    // his own death is already certain; the body is forfeit
+    khan [+Doomed]
+  }
+  beat 2 {
+    khan > genesis_device
+    // "From hell's heart I stab at thee" — he spends the death he cannot escape as the weapon
+    evt arm_genesis [&Finishes(agent=khan, target=kirk)]
+        dialog(inject=[speaker=khan], inline="""
+               speaker: "{speaker}"
+               cue: "dying at the dark console, hand crawling to the activation switch"
+               tone: hateful, exultant, spent
+               text: "From hell's heart I stab at thee; for hate's sake I spit my last breath at thee."
+               """)
+    // Taking_You_With_Me ([+Doomed] + Finishes on the mutual foe): the deed is the mutual kill
+    kirk [+Fallen]
+    khan [+Fallen]
+    arm_genesis [+TakingYouWithMe]
+    khan -- death : "Spends To Deal"
+    khan -- revenge : "Last Stroke Of"
+  }
+}

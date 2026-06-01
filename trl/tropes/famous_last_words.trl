@@ -1,0 +1,114 @@
+// === PREAMBLE ===
+// @trope    Famous Last Words
+// @category Death / Characterization
+// @source   https://allthetropes.org/wiki/Famous_Last_Words
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a brief, poignant line spoken by a character at the point of death —
+// character-defining to the point of being the very CLIMAX of their development, leaving a lasting
+// impression on the survivors and the audience. Where Defiant to the End names the CONTENT of one
+// such line (the refusal, esteem held past the body) and Heroic Sacrifice names the DEED the death
+// performs, Famous Last Words names the UTTERANCE ITSELF and its WEIGHTING: a final assertion whose
+// significance is multiplied precisely because nothing follows it. FRONTIER: rides theory_of_mind's
+// Asserts speech act and the prelude's Died life-event to model the last line as the act that CROWNS
+// an arc — a summation / defiance / confession / irony sharpened by being unrepeatable, the speaker
+// then [+Fallen]. The signature is the coincidence: the assertion and the death are the SAME beat,
+// so the words carry the whole of the character because they are the last the character has.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // grief, acceptance — what the line leaves in the survivors
+import "trl/modules/theory_of_mind.trl"    // Asserts — the final utterance as a speech act
+import "trl/modules/emotion_dynamics.trl"  // Appraise_Loss — the grief the words leave behind
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc famous_last_words -> [
+  theory_of_mind   : "weights the final Asserts speech act of, made unrepeatable by death",
+  emotion_dynamics : "leaves the line in the survivors as the Appraise_Loss grief of",
+  defiant_to_the_end : "names the CONTENT of one such line (refusal); this names the utterance itself",
+  heroic_sacrifice : "names the DEED the death performs; this names the words spoken doing it",
+  together_in_death : "the line is often the last addressed to the one died-beside",
+  grief            : "is what the words leave in the survivors",
+  acceptance       : "the line is often the speaker's own"
+]
+
+
+// === ONTOLOGY ===
+// A final utterance is an assertion (Utterance) that is also Final — nothing follows it — and so is
+// weighted as a Summation, the line read back across the whole arc once death seals it. The trope is
+// the coincidence of the speech act and the death: an Utterance made Final, and thereby a Crowning
+// of the character it ends.
+imply FamousLastWords -> [Utterance, Final, Summation, Crowning, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition: a character $c Asserts a claim $summation, and in the SAME beat Dies ($death whose
+// subject is $c). The two events coincide — the assertion is the last act the character performs —
+// so the line is weighted as their summation and the character is left [+Fallen]. The signature that
+// separates Famous Last Words from any ordinary line of dialogue: the utterance is UNREPEATABLE
+// (death follows it in the same beat), which is exactly what crowns the arc — the words carry the
+// whole character precisely because they are the last the character will speak. The line is tagged
+// [+FamousLastWords] (the weighted utterance), the speaker [+Fallen].
+rule Famous_Last_Words {
+  when:
+    char $c
+    evt  $line  [&Asserts(agent=$c, claim=$summation)]
+    evt  $death [&Died(subject=$c)]
+  then:
+    // the utterance is weighted as the summation — unrepeatable, it crowns the arc
+    !$line [+FamousLastWords]!
+    $line [+Final]
+    // the body falls; the words are what is left
+    $c [+Fallen]
+    $line -- grief : "Leaves In The Survivors"
+    surface_global(title="Famous Last Words", description="A character's final line, spoken in the same beat as their death, is weighted as the summation that crowns their arc.")
+}
+
+
+// === CONCRETE VIGNETTE: Blade Runner — Roy Batty, "tears in rain" (film, 1982) ===
+// On the rain-soaked rooftop, the replicant Roy Batty — his four-year lifespan running out at the
+// exact moment he chooses to spare the man hunting him — does not boast or curse. He speaks of what
+// only he has seen, attack ships off Orion, C-beams at the Tannhäuser Gate, and grieves that all of
+// it will vanish with him: "like tears in rain." Then his head bows and he stops. The assertion and
+// the death are one beat; the line, unrepeatable, becomes the summation of an artificial life that
+// wanted only more of itself — and it is Deckard, the survivor, in whom the words land as grief.
+
+// ROY BATTY — the replicant, his lifespan expiring as he speaks
+char roy [+Antagonist]
+roy [+Dying]
+
+// RICK DECKARD — the blade runner he spares, the survivor the words land in
+char deckard [+Protagonist]
+deckard [~Attached_To(target=roy)]
+
+// EXT. BRADBURY BUILDING ROOFTOP - NIGHT
+set the_rooftop [+Exterior] [+Night] [+Raining]
+
+scene the_tears_in_rain {
+  beat 1 {
+    roy @ the_rooftop
+    deckard @ the_rooftop
+    // The final utterance: a summation of all he has witnessed, grieved as it goes with him.
+    evt the_line [&Asserts(agent=roy, to=deckard, claim=all_those_moments)]
+        dialog(inject=[speaker=roy], inline="""
+               speaker: "{speaker}"
+               cue: "rain streaming, the dove in his hand, the light going out of him"
+               tone: wondering, valedictory
+               text: "I've seen things you people wouldn't believe... All those moments will be lost in time, like tears in rain. Time to die."
+               """)
+    // ...and in the same beat, the lifespan runs out — the assertion is his last act.
+    evt the_expiry [&Died(subject=roy)]
+    // Famous_Last_Words -> the_line [+FamousLastWords] [+Final];  roy [+Fallen];  the_line -- grief
+    !the_line [+FamousLastWords]!
+    the_line [+Final]
+    roy [+Fallen]
+  }
+  beat 2 {
+    // The line lands in the survivor as grief — emotion_dynamics' Appraise_Loss on the death.
+    // Appraise_Loss (deckard [~Attached_To(roy)], the_expiry [&Died(subject=roy)]) ->
+    //   deckard [#Grieving(source=roy)] [~Mourns(target=roy)] -- grief
+    deckard [#Grieving(source=roy)]
+    deckard -- grief
+  }
+}
