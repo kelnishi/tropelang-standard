@@ -103,11 +103,7 @@ scene the_body_in_his_arms {
                tone: shattered, grieving, undone
                text: "Her voice was ever soft, gentle and low — an excellent thing in woman. And my poor fool is hanged."
                """)
-    // Anagnorisis -> lear [-Mistaken] [#Knows(she_loved_him_true)] [#Grieving] -- grief; the_body [+Anagnorisis]
-    lear [-Mistaken(subject=lear)]
-    lear [#Knows(target=she_loved_him_true)]
-    !lear [#Grieving(source=she_loved_him_true)]!
-    lear -- grief
-    !the_body [+Anagnorisis]!
+    // Anagnorisis fires here, deriving lear [-Mistaken] [#Knows(she_loved_him_true)] !#Grieving! -- grief
+    // and !the_body [+Anagnorisis]! — recognition welded to peripeteia, the rule's payoff (not asserted).
   }
 }

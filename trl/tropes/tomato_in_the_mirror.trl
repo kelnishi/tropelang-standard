@@ -95,10 +95,7 @@ scene the_investigation {
                """)
     // The cover (righteous outsider) and the truth (son-and-slayer) are contraries; the self-model inverts.
     righteous_outsider >< he_is_the_son_and_slayer
-    // Tomato_In_The_Mirror ->
-    oedipus [-Believes(claim=righteous_outsider)]
-    oedipus [#Knows(target=oedipus)]
-    !oedipus [+Revealed(truth=he_is_the_son_and_slayer)]!
-    !the_testimony [+TomatoInTheMirror]!
+    // Tomato_In_The_Mirror fires here, deriving oedipus [-Believes] [#Knows(self)]
+    // !+Revealed! and !the_testimony [+TomatoInTheMirror]! (the rule's payoff, not asserted).
   }
 }

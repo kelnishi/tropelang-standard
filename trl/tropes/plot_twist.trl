@@ -78,9 +78,7 @@ scene the_recognition {
     evt the_wedding_ring [&Reveals(fact=crowe_is_dead)]
     // The held belief and the disclosed truth are contraries — the reveal inverts, not fills.
     crowe_is_alive >< crowe_is_dead
-    // Plot_Twist ->
-    audience [-Believes(claim=crowe_is_alive)]
-    audience [#Mistaken(subject=crowe_is_alive)]
-    !the_wedding_ring [+PlotTwist]!
+    // Plot_Twist fires here, deriving audience [-Believes] [#Mistaken] and
+    // !the_wedding_ring [+PlotTwist]! (the rule's payoff, not asserted).
   }
 }

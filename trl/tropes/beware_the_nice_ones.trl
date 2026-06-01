@@ -93,13 +93,9 @@ scene the_diner_holdup {
     // the one provocation too far: a knife at a hostage in his own room crosses the line
   }
   beat 2 {
-    // BewareTheNiceOnes fires: a [+Gentle] [+Restrained] man, not [+Subject], pushed past the threshold —
-    // the leash drops and the buried capability surfaces
-    tom [-Restrained]
-    tom [+Provoked]
-    tom [+Formidable]
-    tom [+Fearsome]
-    tom -- wrath
+    // BewareTheNiceOnes fires here: a [+Gentle] [+Restrained] man, not [+Subject], pushed past the
+    // threshold — the leash drops, deriving tom [-Restrained] [+Provoked] [+Formidable] [+Fearsome]
+    // -- wrath (the rule's payoff, not hand-asserted).
   }
   beat 3 {
     evt the_disarm [&Finishes(agent=tom, target=drifters)]

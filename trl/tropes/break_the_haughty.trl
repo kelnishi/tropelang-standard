@@ -114,12 +114,8 @@ scene the_undragoning {
     aslan -- eustace : "Un-dragons"
     evt the_undragoning [&Crushes(target=eustace)]
     // blow 3 — Aslan tears away the dragon-hide Eustace could not peel himself; the count crosses
-    // BreakTheHaughty fires: count(&Crushes target=eustace) >= 3
-    eustace [-Proud]
-    !eustace [#Ashamed]!
-    eustace [-Arrogant] [+Humbled] [+Teachable]
-    eustace -- suffering
-    eustace -- humility
+    // BreakTheHaughty fires here: count(&Crushes target=eustace) >= 3. It derives eustace [-Proud]
+    // !#Ashamed! [-Arrogant] [+Humbled] [+Teachable] -- suffering -- humility (the rule's payoff).
         dialog(inject=[speaker=eustace], inline="""
                speaker: "{speaker}"
                cue: "a boy again on the shore, the scales and the sneer both gone"

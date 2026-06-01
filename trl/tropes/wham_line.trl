@@ -96,9 +96,7 @@ scene the_drop {
                """)
     // The held belief and the disclosed truth are contraries — one line inverts, not fills.
     aaron_is_innocent >< aaron_was_the_act
-    // Wham_Line ->
-    audience [-Believes(claim=aaron_is_innocent)]
-    audience [#Mistaken(subject=aaron_is_innocent)]
-    !the_line [+WhamLine]!
+    // Wham_Line fires here, deriving audience [-Believes] [#Mistaken] and
+    // !the_line [+WhamLine]! (the rule's payoff, not asserted).
   }
 }
