@@ -1,0 +1,86 @@
+// === PREAMBLE ===
+// @trope    Together in Death
+// @category Death Tropes
+// @source   https://allthetropes.org/wiki/Together_in_Death
+// @domain    Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): lovers (or deeply bonded characters) kept apart in life are reunited in
+// death — dying together, or one following the other, so that death joins what life could not.
+// FRONTIER: this is the death-side ANSWER to Star-Crossed Lovers. Where Star-Crossed names the
+// SUNDERING ([@Sundered_From]) — the belonging need (needs.trl, tier_bonds) thwarted by a gap
+// neither lover can close in life — Together in Death names the only closing left: both go to the
+// grave, and the union denied above ground is granted below it. The bond (emotion) outlasts the
+// bodies; the belonging is met, but only by dying.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/tropes/star_crossed_lovers.trl"   // the sundering this answers — [@Sundered_From]
+import "trl/modules/needs.trl"                // belonging (tier_bonds) — the need met only in death
+import "trl/modules/emotion_dynamics.trl"     // the love/grief that drives the second to follow
+
+assoc together_in_death -> [
+  star_crossed_lovers : "is the grave-side answer to",
+  belonging           : "the bond-need finally met by",
+  love                : "outlasts the body as",
+  grief               : "the survivor follows out of",
+  connection          : "denied in life, sealed in"
+]
+
+
+// === ONTOLOGY ===
+// At once a union and a death: the joining IS the dying.
+imply TogetherInDeath -> [Romance, Sacrifice, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition is the CONJUNCTION of sundering and shared death: two characters who (a) love each
+// other and (b) were [@Sundered_From] one another in life, and who (c) both die, are JOINED in
+// death — the belonging the gap denied is granted in the grave. Mutual love without the sundering
+// is a plain love story; the sundering without both deaths is plain Star-Crossed. Only when the
+// sundered pair both fall does death close what life could not.
+rule Together_In_Death {
+  when:
+    char $a [~Loves(target=$b)] [@Sundered_From(other=$b)]
+    char $b [~Loves(target=$a)]
+    $a [+Fallen]
+    $b [+Fallen]
+  then:
+    $a [-Sundered_From(other=$b)]
+    $a [@Joined_In_Death(other=$b)]
+    $b [@Joined_In_Death(other=$a)]
+    $a -- belonging : "met at last, in the grave"
+    $a [+TogetherInDeath]
+    $b [+TogetherInDeath]
+}
+
+
+// === CONCRETE VIGNETTE: Tristan and Iseult — the briar and the rose (medieval romance, 12th c.) ===
+// Iseult is married to King Mark of Cornwall; she and Tristan are bound by the love-potion and
+// sundered by that marriage all their lives. Tristan, dying of a poisoned wound far away, sends for
+// her — but is told (by a jealous lie) that her ship's sail is black, and despairs and dies the
+// moment before she lands. Iseult arrives, finds him dead, and lays herself beside him to die of
+// grief. Mark buries them apart, on opposite sides of the chantry — and from Tristan's grave springs
+// a briar that climbs the chapel and roots again in Iseult's tomb. Thrice cut down, thrice it grows
+// back: the sundering they could not cross in life is crossed, in death, by the plants over their
+// graves.
+char tristan [+Protagonist]   [~Loves(target=iseult)] [@Sundered_From(other=iseult)]
+char iseult  [+LoveInterest]  [~Loves(target=tristan)]
+
+scene the_black_sail {
+  beat 1 {
+    evt the_lie -> tristan : "told the homecoming sail is black"
+    evt tristans_death [&Died(subject=tristan)]
+    tristan [+Fallen]
+  }
+  beat 2 {
+    iseult @ tristan : "lays herself beside the body she came too late to save"
+    evt iseults_grief [&Died(subject=iseult)]
+    iseult [+Fallen]
+    // Together_In_Death -> tristan [-Sundered_From], both [@Joined_In_Death],
+    //                      belonging met -- "in the grave"; both [+TogetherInDeath]
+  }
+  beat 3 {
+    tristan -- iseult : "the briar from his grave roots again in hers — thrice cut, thrice grown"
+  }
+}

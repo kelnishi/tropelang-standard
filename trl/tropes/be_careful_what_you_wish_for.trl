@@ -1,0 +1,84 @@
+// === PREAMBLE ===
+// @trope    Be Careful What You Wish For
+// @category Wishplots / Irony
+// @source   https://allthetropes.org/wiki/Be_Careful_What_You_Wish_For
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): you get exactly what you wished for — and the getting is the curse; the
+// wish is granted, but its fulfilment is itself the ruin. The wisher desired the thing; the thing,
+// delivered, brings the disaster (the monkey's-paw twist). Rides the prophecy module: a wish is a
+// future-fact a wisher HOLDS as a desire, promoted to the graph by an utterance, then turned
+// !absolute! by Fulfills — only here the party FULFILLED is the wisher, and the fulfilment lands
+// as catastrophe rather than relief. Sits beside Prophecy Twist (a foretelling fulfilled the
+// unforeseen way) and Self-Fulfilling Prophecy (the flight that arrives): all three are the
+// prophecy engine's ironic-fulfilment plane. Distinct from a Deal with the Devil — no bargain is
+// struck, no price agreed up front; the wish ALONE backfires, the desire's own grant is the cost.
+// FRONTIER: the fated $wish is the wisher's OWN ~Desires target, and Fulfills delivers it as a
+// curse upon the very one who wished — the grant and the ruin collapse onto one act.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // fate, revelation, consequence, cost
+import "trl/modules/prophecy.trl"          // Foretell -> ?Fated? ;  Fulfills -> !Fated!, the granted wish
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc be_careful_what_you_wish_for -> [
+  prophecy                : "the ironic-fulfilment engine of",
+  prophecy_twist          : "the foretelling-sibling of, fulfilled the unwanted way",
+  self_fulfilling_prophecy : "the avoidance-sibling of, on the prophecy plane",
+  desire                  : "the wisher's own, turned against him",
+  consequence             : "the grant IS the",
+  cost                    : "the wish pays itself, no bargain struck"
+]
+
+
+// === ONTOLOGY ===
+// The granted wish whose fulfilment is the disaster — desire elevated to its own punishment.
+imply BeCarefulWhatYouWishFor -> [Reversal, Irony, Fate, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a wisher DESIRES some $wish and is bound to it as a latent fate (the wish, uttered,
+// hangs over him); when that very $wish is FULFILLED — granted to the one who wished it — the grant
+// lands as ruin: the wisher is [+Cursed] and the granting deed IS Be Careful What You Wish For.
+// The signature that separates it from a plain prophecy: the FULFILLED party and the WISHER are the
+// same character ($c desired it, $c is what its granting destroys), and no bargain preceded it.
+rule Be_Careful_What_You_Wish_For {
+  when:
+    char $c [~Desires(target=$wish)]
+    char $c [+Fated(to=$wish)]
+    evt  $grant [&Fulfills(agent=$any, prophecy=$wish)]
+  then:
+    $grant [+BeCarefulWhatYouWishFor]
+    $c [+Cursed]
+}
+
+
+// === CONCRETE VIGNETTE: The Monkey's Paw — Mr. White's £200 (W.W. Jacobs, horror short story, 1902) ===
+// Warned the talisman grants three wishes that bite, Mr. White wishes for two hundred pounds. The
+// wish is granted — as compensation for his son Herbert, killed the next day in the factory machinery.
+// He got exactly the sum he asked; the getting was the coffin it paid for.
+
+// MR. WHITE
+char white [+Protagonist] [~Desires(target=two_hundred_pounds)]
+
+// HERBERT WHITE — the son
+char herbert [+Protagonist]
+
+// THE MONKEY'S PAW — the cursed talisman
+obj the_paw [+MacGuffin] [+Cursed]
+
+scene the_wish {
+  beat 1 {
+    white > the_paw
+    evt the_wishing [&Foretells(agent=the_paw, subject=white, fate=two_hundred_pounds)]
+    ?white [+Fated(to=two_hundred_pounds)]?      // the wish hangs latent, granted but unrealized
+  }
+  beat 2 {
+    evt the_compensation [&Fulfills(agent=the_factory, prophecy=two_hundred_pounds)]   // the £200, paid for Herbert's death
+    !white [+Fated(to=two_hundred_pounds)]!      // the sum arrives — absolute, and ruinous
+    herbert [+Doomed]
+    // Be_Careful_What_You_Wish_For -> the_compensation [+BeCarefulWhatYouWishFor]; white [+Cursed]
+  }
+}

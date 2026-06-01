@@ -1,0 +1,102 @@
+// === PREAMBLE ===
+// @trope    Senseless Sacrifice
+// @category Heroic Sacrifice Tropes / Despair
+// @source   https://allthetropes.org/wiki/Senseless_Sacrifice
+// @domain   Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): the downer counterpart of the Heroic Sacrifice — a character spends
+// their life for a cause or to save others, but the sacrifice accomplishes NOTHING: the Big Bad
+// survives the charge, the prophecy is misread, the saved are lost anyway. They die in vain.
+// FRONTIER: rides the SAME action-dynamics Sacrifice rule as Heroic Sacrifice (giver [+Fallen]),
+// but INVERTED — the intended payoff (the ally [+Saved]) never lands, so the deed is [+InVain]
+// and the audience is left to grieve the WASTE rather than be moved by a death that bought
+// something. Where Heroic Sacrifice tags a deed that succeeds, this tags one that fails its aim.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // grief, sacrifice, despair, loss
+import "trl/modules/action_dynamics.trl"   // the Sacrifice rule -> ally [+Saved] / giver [+Fallen]
+import "trl/modules/rhetoric.trl"          // the audience whose grief this waste leaves uncomforted
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc senseless_sacrifice -> [
+  action_dynamics : "the failed Sacrifice rule of",
+  sacrifice       : "a spent-for-nothing",
+  grief           : "leaves the audience in unredeemed",
+  loss            : "the saved are taken anyway as",
+  despair         : "a death that buys",
+  heroic_sacrifice : "the futile dark mirror of"
+]
+
+
+// === ONTOLOGY ===
+// The same Sacrifice/Altruism root as the heroic deed, but terminating in waste rather than
+// deliverance — [InVain] is the inverting facet, the sibling of HeroicSacrifice's success.
+imply SenselessSacrifice -> [Sacrifice, InVain, Narrative]
+imply InVain -> [Irreversible, Narrative]
+
+
+// === ABSTRACT RULE ===
+// A sacrifice play fires (the giver spends their position), but its WHOLE point — the ally it
+// was meant to save — is LOST ANYWAY: the ally ends [+Fallen] despite the deed, the cause
+// unbought. (The action_dynamics Sacrifice rule reflexively marks the ally [+Saved]; here that
+// rescue is overtaken — the ally falls regardless, which is the very inversion: a sacrifice that
+// did not, in the end, save.) The deed is recognized as [+InVain], the giver still [+Fallen]
+// (the cost was real), and the audience is left grieving a WASTE rather than carried by a
+// purchase — the dark mirror of the Heroic Sacrifice, whose ally LIVES. The grief is asserted
+// ABSOLUTE (!...!): nothing arrives to redeem it.
+rule Senseless_Sacrifice {
+  when:
+    evt  $s [&Sacrifices(agent=$a, ally=$b)]
+    char $b [+Fallen]             // the one it was meant to save is lost anyway — the payoff failed
+    not ( $s [+InVain] )
+  then:
+    $s [+InVain]
+    $a [+Fallen]
+    !audience [#Grieving]!
+    audience -- grief
+    $a -- loss
+}
+
+
+// === CONCRETE VIGNETTE: Gallipoli — the charge at the Nek (war film, 1981) ===
+// At Anzac Cove the diversionary feint that was meant to draw the Turkish guns has already
+// failed; the supporting bombardment lifts too early. Archy goes over the parapet anyway,
+// sprinting into the machine-gun fire so the wave behind him might break through — but the line
+// is already broken, the attack pointless, and he is cut down in the first yards. His death
+// saves no one and takes no ground: the whistle blew on an order that should have been recalled.
+
+// ARCHY HAMILTON — the sprinter, sent over the top
+char archy [+Protagonist] [+Path_Sacrifice]
+archy [+MotivatedBy(reason="Duty")]
+
+// THE WAVE BEHIND — the men the charge was meant to carry through
+char the_wave [+Ally] [+Collective]
+
+// EXT. THE NEK - DAWN — a few yards of churned ground no one will hold
+set the_nek [+Exterior] [+Dawn] [+Dangerous]
+
+scene the_whistle {
+  beat 1 {
+    archy @ the_nek
+    the_wave @ the_nek
+    evt over_the_top [&Sacrifices(agent=archy, ally=the_wave)]
+        dialog(inject=[speaker=archy], inline="""
+               speaker: "{speaker}"
+               cue: "the whistle at his lips, the guns already ranging, the order never recalled"
+               tone: terrified, resolved
+               text: "What are your legs? Springs. Steel springs. What are they going to do? Hurl me down the track."
+               """)
+    // action_dynamics Sacrifice -> the_wave [+Saved];  archy [+Fallen]
+    // ...but the line is already broken: the wave is cut down regardless — lost anyway.
+    the_wave [+Fallen]
+    // Senseless_Sacrifice: the ally it was meant to save is [+Fallen] -> over_the_top [+InVain];
+    // the grief is unredeemed (nothing was bought).
+    over_the_top [+InVain]
+    archy [+Fallen]
+    !audience [#Grieving]!
+    audience -- grief
+    archy -- loss
+  }
+}

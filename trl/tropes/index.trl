@@ -159,6 +159,13 @@ import "trl/tropes/jerk_with_a_heart_of_gold.trl"
 import "trl/tropes/karmic_death.trl"
 import "trl/tropes/tragic_hero.trl"
 import "trl/tropes/villainous_breakdown.trl"
+import "trl/tropes/be_careful_what_you_wish_for.trl"
+import "trl/tropes/deal_with_the_devil.trl"
+import "trl/tropes/redemption_rejection.trl"
+import "trl/tropes/reluctant_hero.trl"
+import "trl/tropes/senseless_sacrifice.trl"
+import "trl/tropes/together_in_death.trl"
+import "trl/tropes/you_shall_not_pass.trl"
 
 // === TROPE TITLE ENTRIES ===
 
@@ -389,6 +396,7 @@ concept refusal_of_the_call [+Trope(category="Universal", source="allthetropes.o
 
 concept anti_hero [+Trope(category="Cast", source="https://allthetropes.org/wiki/Anti-Hero")] [%Narrative]
 concept batman_gambit [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Batman_Gambit")] [%Epistemic]
+concept be_careful_what_you_wish_for [+Trope(category="Wishplots", source="https://allthetropes.org/wiki/Be_Careful_What_You_Wish_For")] [%Narrative]
 concept beware_the_nice_ones [+Trope(category="Character Tropes", source="https://allthetropes.org/wiki/Beware_the_Nice_Ones")] [%Interpersonal]
 concept big_damn_heroes [+Trope(category="Heroism", source="https://allthetropes.org/wiki/Big_Damn_Heroes")] [%Narrative]
 concept break_the_cutie [+Trope(category="Tragedy", source="https://allthetropes.org/wiki/Break_the_Cutie")] [%Narrative]
@@ -397,6 +405,7 @@ concept chekhovs_gunman [+Trope(category="Foreshadowing", source="https://allthe
 concept chekhovs_skill [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Skill")] [%Narrative]
 concept curb_stomp_battle [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Curb_Stomp_Battle")] [%Interpersonal]
 concept david_versus_goliath [+Trope(category="Combat Tropes", source="https://allthetropes.org/wiki/David_Versus_Goliath")] [%Interpersonal]
+concept deal_with_the_devil [+Trope(category="Drama", source="https://allthetropes.org/wiki/Deal_with_the_Devil")] [%Mind]
 concept defiant_to_the_end [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Defiant_to_the_End")] [%Narrative]
 concept determinator [+Trope(category="Heroic Spirit", source="https://allthetropes.org/wiki/Determinator")] [%Narrative]
 concept disney_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Disney_Death")] [%Narrative]
@@ -427,9 +436,12 @@ concept power_of_friendship [+Trope(category="Friendship Tropes", source="https:
 concept pratfall [+Trope(category="Slapstick", source="https://allthetropes.org/wiki/The_Pratfall")] [%Narrative]
 concept reality_bleed [+Trope(category="Metafiction", source="https://allthetropes.org/wiki/Reality_Bleed")] [%Narrative]
 concept redemption_equals_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Redemption_Equals_Death")] [%Narrative]
+concept redemption_rejection [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Redemption_Rejection")] [%Mind]
 concept reenactment [+Trope(category="Non-Fiction", source="https://allthetropes.org/wiki/Dramatization")] [%Narrative]
+concept reluctant_hero [+Trope(category="Character Tropes", source="https://allthetropes.org/wiki/Reluctant_Hero")] [%Narrative]
 concept rule_of_drama [+Trope(category="Drama", source="https://allthetropes.org/wiki/Rule_of_Drama")] [%Narrative]
 concept secret_legacy [+Trope(category="Heritage", source="https://allthetropes.org/wiki/Secret_Legacy")] [%Epistemic]
+concept senseless_sacrifice [+Trope(category="Heroic Sacrifice Tropes", source="https://allthetropes.org/wiki/Senseless_Sacrifice")] [%Interpersonal]
 concept sibling_rivalry [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Sibling_Rivalry")] [%Interpersonal]
 concept spectacle [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Visual_Effects_of_Awesome_(Sugar_Wiki)")] [%Narrative]
 concept talking_head [+Trope(category="Non-Fiction", source="https://allthetropes.org/wiki/Talking_Heads")] [%Narrative]
@@ -440,6 +452,7 @@ concept the_dog_bites_back [+Trope(category="Character Tropes", source="https://
 concept the_lancer [+Trope(category="Characterization", source="https://allthetropes.org/wiki/The_Lancer")] [%Interpersonal]
 concept the_love_interest [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Love_Interest")] [%Interpersonal]
 concept the_trickster [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/The_Trickster")] [%Narrative]
+concept together_in_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Together_in_Death")] [%Interpersonal]
 concept tomato_in_the_mirror [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Tomato_in_the_Mirror")] [%Mind]
 concept took_a_level_in_badass [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Took_a_Level_in_Badass")] [%Mind]
 concept tragic_hero [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Tragic_Hero")] [%Narrative]
@@ -447,3 +460,4 @@ concept villainous_breakdown [+Trope(category="Villains", source="https://allthe
 concept wham_line [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Wham!_Line")] [%Narrative]
 concept worthy_opponent [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Worthy_Opponent")] [%Interpersonal]
 concept xanatos_gambit [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Xanatos_Gambit")] [%Epistemic]
+concept you_shall_not_pass [+Trope(category="Conflict", source="https://allthetropes.org/wiki/You_Shall_Not_Pass")] [%Interpersonal]

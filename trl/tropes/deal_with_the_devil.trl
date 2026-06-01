@@ -1,0 +1,119 @@
+// === PREAMBLE ===
+// @trope    Deal With The Devil (Faustian Bargain)
+// @category Drama / Choice
+// @source   https://allthetropes.org/wiki/Deal_with_the_Devil
+// @domain   Mind
+// @version  1.3
+//
+// Laconic (per the wiki): a character strikes a bargain — usually with a literal or figurative devil
+// — trading something precious (their soul, a loved one, their future) for power, a wish, or rescue,
+// only for the terrible cost to come due later. FRONTIER: this is motivation_dynamics' Adopt_Means
+// read as RUIN. The coveted end is genuinely ATTAINED — the wish is granted, the rescue is real —
+// but the attainment REQUIRES surrendering something dearer than the prize, and that surrender is
+// not a setback but the price of the deal: the character walks away with what they wanted AND bound
+// to a debt that will come due. The signature is the asymmetry — the gain is up front and certain,
+// the cost is precious and deferred, so the bargain looks like a win until it is collected.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/motivation_dynamics.trl"   // Adopt_Means / Attained: the end attained at the price of the means
+import "trl/concepts/index.trl"                // temptation, price, cost, sacrifice, surrender
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc deal_with_the_devil -> [
+  motivation_dynamics : "is the ruinous Adopt_Means of",
+  price               : "is the deferred form of",
+  temptation          : "is the bargain offered by",
+  fall_from_grace     : "is often the slope the bargain begins",
+  the_dilemma         : "is the choice the tempter forces",
+  pyrrhic_victory     : "is the bargain whose bill comes due"
+]
+
+
+// === ONTOLOGY ===
+// A Faustian bargain is a deal whose payoff is real and whose price is precious and deferred. The
+// tempter offers the coveted thing; the mark gets it; the cost — soul, loved one, future — is
+// surrendered as the very condition of the gift, leaving the mark Indebted to a bill not yet
+// collected. Temptation names the offer; the Devil's Deal names the trade; the Cost Comes Due names
+// the collection.
+imply FaustianBargain -> [Temptation, Binding, Costly, Narrative]
+imply DevilsDeal      -> [FaustianBargain, Coerced, Irreversible]
+
+
+// === ABSTRACT RULE ===
+// Recognition: a character is pursuing a coveted end; an event ATTAINS that end FOR them (the wish
+// granted, the rescue real) — but the very attainment REQUIRES surrendering something precious
+// ($end requires giving up $precious). That conjunction is the bargain: the prize is delivered, yet
+// the surrender it was bought with leaves the mark Indebted — bound to the price, with the cost
+// deferred, not waived. The deed is tagged the bargain; the surrendered precious thing is now
+// Absent (gone from the one who paid it); the mark gets what they wanted and the bill that comes
+// with it.
+rule Deal_With_The_Devil {
+  when:
+    char $mark [~Pursues(target=$end)]
+    evt  $deal [&Attains(agent=$mark, object=$end)]
+    evt  $terms [&Requires(subject=$end, object=$precious)]
+  then:
+    $mark [+Indebted]
+    $mark -- price
+    $precious [+Absent]
+    $deal [+FaustianBargain]
+}
+
+
+// === CONCRETE VIGNETTE: The Little Mermaid — Ariel's bargain with Ursula (animated film, 1989) ===
+// Ariel wants Prince Eric and the human world above the waves; the sea witch Ursula grants it —
+// real legs, three days on land — but the price is her voice, signed away in the contract, and the
+// fine print is her very self forfeit to Ursula if she fails to win true love's kiss in time. The
+// wish is genuinely granted; the surrender of the voice is the condition of the gift, not an
+// obstacle to it. Ariel walks onto the shore with the legs she craved and the debt that will come
+// due — the bargain delivers and binds in the same stroke.
+
+// PRINCESS ARIEL — the mermaid who would be human
+char ariel [+Protagonist]
+ariel [~Desires(target=the_surface)]
+
+// URSULA — the sea witch; the tempter who deals in desperate wishes
+char ursula [+Antagonist] [+Cunning]
+ursula [+Deceptive]
+
+// THE SURFACE WORLD / PRINCE ERIC — the coveted end above the waves
+char the_surface [+MacGuffin]
+
+// ARIEL'S VOICE — the precious thing signed away
+obj the_voice [+Symbolic] [+Singular]
+
+// INT. URSULA'S LAIR — the cave of the polyps where the contract is signed
+set the_lair [+Interior] [+Sealed]
+
+scene the_bargain {
+  beat 1 {
+    ariel @ the_lair
+    ursula @ the_lair
+    // the desire crystallizes into a pursuit (motivation_dynamics' Form_Goal)
+    ariel [~Pursues(target=the_surface)]
+    ariel [#Determined]
+  }
+  beat 2 {
+    // the tempter names the terms: the coveted end is granted, but it REQUIRES the voice
+    evt the_terms [&Requires(subject=the_surface, object=the_voice)]
+        dialog(inject=[speaker=ursula], inline="""
+               speaker: "{speaker}"
+               cue: "looming over the shrinking mermaid, the contract unfurling, eels circling"
+               tone: silken, predatory
+               text: "You'll have your legs, your prince, your world up there. All I want in return... is your voice."
+               """)
+    // Adopt_Means -> ariel [~Pursues(target=the_voice)] -- instrumental  (the surrender becomes the means)
+  }
+  beat 3 {
+    // the deal is struck: the end is ATTAINED for her — and the price is paid in the same stroke
+    evt signs [&Attains(agent=ariel, object=the_surface)]
+    // Attained -> ariel [-Pursues] [#Satisfied] -- fulfillment  (the wish is genuinely granted)
+    // Deal_With_The_Devil fires: the attainment required the voice -->
+    ariel [+Indebted]                 // bound to a bill not yet collected
+    the_voice [+Absent]               // the precious thing, signed away — gone from her
+    ariel -- the_voice : "Forfeits"   // the voice passes out of her keeping
+    !signs [+FaustianBargain]!        // the deal that delivers and binds in one stroke
+    ariel -- price
+  }
+}

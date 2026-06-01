@@ -1,0 +1,83 @@
+// === PREAMBLE ===
+// @trope    You Shall Not Pass
+// @category Conflict / Tactics / Sacrifice
+// @source   https://allthetropes.org/wiki/You_Shall_Not_Pass
+// @domain   Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): one character singlehandedly holds back the enemy horde at a narrow
+// point so the others can escape or reach their goal — usually dying to do it. The lone-defender
+// fusion of Last Stand and Heroic Sacrifice, narrowed to a chokepoint: where Last Stand is a
+// doomed GROUP buying time and Bar the Door denies a threshold non-violently, this is ONE holder
+// at a bridge/gate/pass who Holds against the host AND, by it, Saves the fleeing imperiled.
+// Rides action-dynamics Hold_The_Line + Sacrifice over a Pass.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/action_dynamics.trl"   // Holds / Sacrifices -> [+BoughtTime] [+Fallen] / [+Saved]
+
+assoc you_shall_not_pass -> [
+  last_stand       : "the lone-defender narrowing of",
+  heroic_sacrifice : "spends the holder's life like",
+  bar_the_door     : "holds a chokepoint as",
+  action_dynamics  : "the Hold + Sacrifice rules of"
+]
+
+
+// === ONTOLOGY ===
+
+imply YouShallNotPass -> [Defiance, Sacrifice, Tactic, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a lone hold against the host that buys a fleeing imperiled ally their escape IS
+// You Shall Not Pass. The fleeing-ally clause is the distinguisher: Last Stand is a bare hold (a
+// doomed group buying time for no one named); here the hold SAVES someone who gets clear. The
+// chokepoint geography (a bridge/gate/[+Pass]) lives in the vignette, as in Last Stand.
+rule You_Shall_Not_Pass {
+  when:
+    char $ally [#Imperiled]
+    evt  $h [&Holds(agent=$x, against=$y)]
+    not ( $x [+Relieved] )
+  then:
+    $h [+YouShallNotPass]
+    $ally [+Saved]
+    $ally [-Imperiled]
+}
+
+
+// === CONCRETE VIGNETTE: Horatius at the Bridge — the Pons Sublicius (Roman legend, c. 508 BCE) ===
+// As Lars Porsena's Etruscan army storms Rome, Horatius Cocles plants himself at the far end of the
+// wooden Pons Sublicius — the one bridge over the Tiber — and holds the throng off, wave on wave,
+// while behind him the Romans hack the span down. The bridge falls into the river; the city is
+// saved; Horatius (in the older telling) goes down with it. The earliest instance of the trope.
+
+// HORATIUS COCLES
+char horatius [+Protagonist]
+// THE ETRUSCAN HOST OF LARS PORSENA
+char porsena  [+Antagonist] [+Collective]    // the army beyond counting
+// THE ROMANS BEHIND HIM, CUTTING THE BRIDGE
+char rome     [+Ally] [#Imperiled]
+// EXT. PONS SUBLICIUS — THE WOODEN BRIDGE OVER THE TIBER — DAY
+set  pons_sublicius [+Exterior] [+Day] [+Pass]
+
+scene the_bridge {
+  beat 1 {
+    horatius @ pons_sublicius
+    evt hold [&Holds(agent=horatius, against=porsena)]
+        dialog(inject=[speaker=horatius], inline="""
+               speaker: "{speaker}"
+               cue: "alone at the bridge-head, the axes ringing behind him, the host pressing on"
+               tone: defiant, valedictory
+               text: "Hew down the bridge! I will keep the way alone."
+               """)
+    // You_Shall_Not_Pass -> hold [+YouShallNotPass];  rome [+Saved] [-Imperiled]
+  }
+  beat 2 { evt wave_one   [&Strikes(agent=porsena, target=horatius)] }
+  beat 3 { evt wave_two   [&Strikes(agent=porsena, target=horatius)] }
+  beat 4 {
+    evt wave_three [&Strikes(agent=porsena, target=horatius)]
+    // Hold_The_Line (count of strikes >= 3) -> horatius [+BoughtTime] [+Fallen]
+  }
+}
