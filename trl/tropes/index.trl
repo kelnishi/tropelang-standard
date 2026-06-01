@@ -186,6 +186,9 @@ import "trl/tropes/wounded_gazelle_gambit.trl"
 import "trl/tropes/achilles_heel.trl"
 import "trl/tropes/combat_pragmatist.trl"
 import "trl/tropes/zerg_rush.trl"
+import "trl/tropes/diabolus_ex_machina.trl"
+import "trl/tropes/face_heel_turn.trl"
+import "trl/tropes/karma_houdini.trl"
 
 // === TROPE TITLE ENTRIES ===
 
@@ -434,6 +437,7 @@ concept death_by_origin_story [+Trope(category="Death Tropes", source="https://a
 concept decapitated_army [+Trope(category="Military and Warfare", source="https://allthetropes.org/wiki/Decapitated_Army")] [%Political]
 concept defiant_to_the_end [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Defiant_to_the_End")] [%Narrative]
 concept determinator [+Trope(category="Heroic Spirit", source="https://allthetropes.org/wiki/Determinator")] [%Narrative]
+concept diabolus_ex_machina [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Diabolus_Ex_Machina")] [%Narrative]
 concept disney_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Disney_Death")] [%Narrative]
 concept enemy_mine [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Enemy_Mine")] [%Interpersonal]
 concept eucatastrophe [+Trope(category="Happy Endings", source="https://allthetropes.org/wiki/Eucatastrophe")] [%Narrative]
@@ -451,6 +455,7 @@ concept i_gave_my_word [+Trope(category="Characterization", source="https://allt
 concept in_medias_res [+Trope(category="Narrative Devices", source="https://allthetropes.org/wiki/In_Medias_Res")] [%Narrative]
 concept internal_reveal [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Internal_Reveal")] [%Narrative]
 concept jerk_with_a_heart_of_gold [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Jerk_with_a_Heart_of_Gold")] [%Narrative]
+concept karma_houdini [+Trope(category="Karma Tropes", source="https://allthetropes.org/wiki/Karma_Houdini")] [%Narrative]
 concept karmic_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Karmic_Death")] [%Narrative]
 concept kick_the_dog [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Kick_the_Dog")] [%Narrative]
 concept like_brother_and_sister [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Like_Brother_and_Sister")] [%Interpersonal]

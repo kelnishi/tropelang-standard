@@ -1,0 +1,61 @@
+// === PREAMBLE ===
+// @trope    Diabolus Ex Machina
+// @category Rhetoric / Resolution
+// @source   https://allthetropes.org/wiki/Diabolus_Ex_Machina
+// @version  1.3
+// @domain    Narrative
+//
+// Laconic (per the wiki): the Evil Counterpart of Deus Ex Machina — an often-contrived twist,
+// unforeseen and unearned, summoned out of left field to make absolutely sure things get much
+// WORSE for the protagonists (a Downer Ending, a villain's reprieve), with no foreshadowing. The
+// dark twin of "god from the machine": where Deus reaches down to rescue, Diabolus reaches down
+// to ruin. Same crane, same authorial override — but the god lowered onto the stage is a demon.
+// Rides the rhetoric module's Authorial_Fiat (the author imposes an outcome by fiat), and is the
+// same DIEGETIC-LEVEL crossing (S14): the author reaches DOWN from his plane and writes a
+// catastrophe the story never earned.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/rhetoric.trl"          // Authorial_Fiat -> !Canon!
+
+assoc diabolus_ex_machina -> [
+  deus_ex_machina : "dark inverse of",
+  rhetoric        : "the Authorial_Fiat rule of",
+  audience        : "has a downer the plot never earned imposed on the"
+]
+
+
+// === ONTOLOGY ===
+
+imply DiabolusExMachina -> [Catastrophe, Override, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: an imposed catastrophe no character or chain of events could reach IS a
+// Diabolus Ex Machina (tags it). Mirror of Deus_Ex_Machina with for=catastrophe, not resolution.
+rule Diabolus_Ex_Machina {
+  when:
+    evt $i [&Imposes(agent=author, outcome=$o, for=catastrophe)]
+  then:
+    $i [+DiabolusExMachina]
+}
+
+
+// === CONCRETE VIGNETTE: The West Wing — the death of Mrs. Landingham (television, 2001) ===
+// At the close of "18th and Potomac," Bartlet's beloved secretary buys her first new car and
+// drives it home — and a drunk driver runs a red light and kills her, with no foreshadowing
+// whatsoever. The wiki cites this as the textbook case: the writers reach down and summon a
+// catastrophe out of nowhere to gut the protagonist, an outcome the story did nothing to earn.
+
+<<story>>
+char mrs_landingham [+Protagonist]
+char the_drunk_driver [+Antagonist]
+
+<<author>>
+scene the_red_light {
+  beat 1 {
+    evt the_collision [&Imposes(agent=author, outcome=her_death, for=catastrophe)]
+    <<story | mrs_landingham [+Killed(by=the_drunk_driver)]>>   // the author writes the ruin in by fiat
+    // Authorial_Fiat (rhetoric) -> !the_collision [+Canon]!;  Diabolus_Ex_Machina tags the imposition
+  }
+}
