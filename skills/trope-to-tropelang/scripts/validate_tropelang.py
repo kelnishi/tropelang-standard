@@ -203,14 +203,16 @@ def build_declaration_registry(tokens):
 
 def build_kind_registry(tokens):
     """Map each declared name to its declaring keyword (char/set/obj/evt/arc/concept/
-    attr/prop/state/verb/rel). Used for existence + entity-type checks on references."""
+    attr/prop/state/verb/rel) — plus SCOPE names (scene/act/beat/arc), which the v1.3 grammar makes
+    first-class taggable entities (`scene the_finale [+Endgame] { … }`), mirroring the reference parser.
+    Used for existence + entity-type checks on references."""
     reg = {}
-    all_decl_kw = ENTITY_TYPES | DECL_TYPES
+    all_decl_kw = ENTITY_TYPES | DECL_TYPES | SCOPE_TYPES
     for i in range(len(tokens) - 1):
         kind, val, _ = tokens[i]
         if kind == 'ID' and val in all_decl_kw:
             k2, v2, _ = tokens[i + 1]
-            if k2 in ('ID', 'VAR'):
+            if k2 in ('ID', 'VAR'):  # an ident/var name (a numbered `beat 1` has a NUM here — skipped)
                 reg.setdefault(v2, val)
     return reg
 
@@ -238,7 +240,9 @@ def check_references(tokens, kinds, label):
             if val not in kinds:
                 warnings.append(f"[{label}] line {line}: param {key}={val} references "
                                 f"'{val}', not declared in this file — ensure it is imported")
-            elif key in EXPECTED_KIND and kinds[val] != EXPECTED_KIND[key]:
+            elif key in EXPECTED_KIND and kinds[val] != EXPECTED_KIND[key] and kinds[val] not in SCOPE_TYPES:
+                # a scope (scene/act/beat) is a flexible temporal/structural referent — a flashback
+                # scene referenced as `event=` is legitimate — so it satisfies any reserved-key kind.
                 errors.append(f"[{label}] line {line}: param {key}={val} expects a "
                               f"{EXPECTED_KIND[key]}, but '{val}' is declared a {kinds[val]}")
 
