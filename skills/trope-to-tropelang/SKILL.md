@@ -338,4 +338,4 @@ node; `event=`/`site=` must match entity type). Then consolidate (see above).
 - `scripts/validate_tropelang.py` — structural validator + `--report` tag-origin mode (Python 3, no deps)
 - `scripts/corpus_reuse.py` — consolidation assist: inline tags + corpus vocab, `--json` for an agent
 - `scripts/dialog_context.py` — interrogates `dialog(...)` annotations (preconditions / motivations / postconditions / context)
-- `scripts/drams.py` — the coverage metric, `density over coverage` (specs/00 §6.7); the gap list is the conversion worklist
+- `cargo run --example drams -- <file>` — the exact (S3) coverage metric, `density over coverage` (specs/00 §6.7); a SIGNAL not a gate; the gap list is the conversion worklist

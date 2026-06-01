@@ -36,7 +36,8 @@ esac
 echo "· DRY (consolidate inline-invented tags if they duplicate corpus vocab):"
 python3 skills/trope-to-tropelang/scripts/corpus_reuse.py "$f" 2>&1 | grep -iE "inline|reuse|consolidat" | head -4 || echo "  (none flagged)"
 
-# 5 · drams (informational; for a NEW MODULE confirm an unrelated eval did not move — scaffold rule)
-echo "· drams: $(python3 skills/trope-to-tropelang/scripts/drams.py "$f" 2>&1 | sed -n '2p' | sed 's/^  //')"
+# 5 · drams — exact (S3) coverage. A SIGNAL, not a gate: confidence when it changes, never pass/fail.
+#     (For a NEW MODULE confirm an unrelated eval did not move — the scaffold rule.)
+echo "· drams (signal): $(cargo run --quiet --example drams -- "$f" 2>/dev/null | sed -n '2p' | sed 's/^  //')"
 
 [ $fail -eq 0 ] && echo "── GATE PASS ──" || { echo "── GATE FAIL ──"; exit 1; }

@@ -5,10 +5,11 @@ of systems (modules that *simulate* a dynamic) with tropes riding on top (named 
 *recognize* an instance). This doc is the map of what exists and the forward worklist.
 
 **How the work is steered**
-- **drams** (`drams.py <story>`) measures `density over coverage` against eval stories and prints
-  the uncovered-fact worklist. Coverage follows the **imply closure** (a `[+Heir_of_Isildur]` fact
-  is credited to a trope about `Royalty`). Eval targets: `examples/aragorn_fotr.trl` (fantasy, ~43%)
-  and `examples/mythbusters_water_heater.trl` (non-fiction, ~57%).
+- **drams** (`cargo run --quiet --example drams -- <story>`) is the EXACT (S3) metric — a **signal,
+  not a requirement** (confidence when it moves, never pass/fail). It runs the engine over a story with
+  the full trope overlay and counts which tropes actually **fire** and what encoded facts they bind;
+  coverage follows firings, not imply-closure. The gap list is the conversion worklist. Eval targets:
+  `examples/aragorn_fotr.trl`, `examples/mythbusters_water_heater.trl`. (The old `drams.py` proxy is retired.)
 - **sim** (`tools/sim.py <scenario>`) forward-chains the real rule blocks — every system is run,
   not just written; it has caught real bugs (self-vengeance, the coup self-deposing, prepotency).
 - **Sourcing**: definitions from allthetropes.org (the `source=` field); WebFetch 403s on the
