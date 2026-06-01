@@ -131,16 +131,8 @@ scene the_coda {
                tone: quietly triumphant
                text: "Somewhere cold and bright, a small piece of him remembered which way was home."
                """)
-    // Disney Death: the death was never real — a &Reveals lifts it. Not snatched away (Hope Spot),
-    // not a fresh rescue of the doomed (Eucatastrophe): the loss itself is revoked.
-    reassembly [+Resolved] [+TheReveal]
-    giant [-Dead]
-    giant [+Alive]
-    audience [-Grieving]
-    !giant [+Alive]!
-    !audience [#Joyful]!
-    audience -> grief : "Turns From"
-    audience -> joy : "Turns To"
-    audience -- joy
+    // Disney_Death fires here: the death was never real — a &Reveals lifts it (not snatched away like a
+    // Hope Spot, not a fresh rescue of the doomed like a Eucatastrophe; the loss itself is revoked). It
+    // derives giant [-Dead] !+Alive!, audience [-Grieving] !#Joyful!, turning grief to joy.
   }
 }

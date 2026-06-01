@@ -85,11 +85,8 @@ scene the_relief {
                tone: unflinching, certain
                text: "All is yours — go in! When my banner touches the wall, the place is yours."
                """)
-    // Hope_Bringer fires (the inverse of the Despair Event Horizon):
-    garrison [-Despairing]
-    garrison [#Hopeful]
-    garrison [+Resolved]
-    garrison -- hope
-    garrison -- courage
+    // Hope_Bringer fires here (the inverse of the Despair Event Horizon), deriving garrison
+    // [-Despairing] [#Hopeful] [+Resolved] -- hope -- courage. The trigger is joan's [+Beacon] rally
+    // on the [#Despairing] garrison; the turn is the rule's payoff, not hand-asserted.
   }
 }

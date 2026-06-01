@@ -115,11 +115,7 @@ scene the_conveyor {
                tone: desperate
                text: "There — the shutoff. Lift him up. He can reach it."
                """)
-    woody [#Hopeful]
-    buzz [#Hopeful]
-    glimmer -- hope : "Promises"
-    // The button is in reach, but the hope is already doomed — Lotso will not press it.
-    ?glimmer [+Deceptive]?
+    // Hope_Spot fires here, deriving woody/buzz [#Hopeful], glimmer -- hope, ?glimmer [+Deceptive]?.
   }
   beat 2 {
     evt betrayal [&Dashes(hope=glimmer)]
@@ -129,12 +125,6 @@ scene the_conveyor {
                tone: cruel
                text: "Where's your kid now, Sheriff?"
                """)
-    glimmer [+Resolved] [+FalseHope]
-    woody [-Hopeful]
-    buzz [-Hopeful]
-    woody -> despair : "Falls Into"
-    buzz -> despair : "Falls Into"
-    !woody [#Despairing]!
-    !buzz [#Despairing]!
+    // The Dash resolves the glimmer and drops the toys into despair (the rule's payoff, not asserted here).
   }
 }

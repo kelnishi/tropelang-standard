@@ -116,17 +116,8 @@ scene the_turn {
                tone: jubilant
                text: "I haven't missed it! The Spirits have done it all in one night. I'm light as a feather, merry as a schoolboy!"
                """)
-    // Eucatastrophe: a real, unlooked-for deliverance — not snatched away (Hope Spot),
-    // not imposed by fiat (Deus Ex Machina). The audience turns despair -> joy.
-    the_morning [+Resolved] [+TrueRescue] [+Unlooked_For]
-    scrooge [+Saved]
-    scrooge [-Imperiled]
-    tiny_tim [+Saved]
-    tiny_tim [-Imperiled]
-    audience [-Despairing]
-    !audience [#Joyful]!
-    audience -> despair : "Turns From"
-    audience -> joy : "Turns To"
-    audience -- joy
+    // Eucatastrophe fires here — a real, unlooked-for deliverance (not snatched away like a Hope Spot,
+    // not imposed by fiat like Deus Ex Machina). It derives the_morning [+Resolved][+TrueRescue]
+    // [+Unlooked_For], scrooge [+Saved][-Imperiled], and turns the audience from despair to !joy!.
   }
 }

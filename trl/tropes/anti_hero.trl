@@ -59,7 +59,7 @@ rule Anti_Hero {
 
 // THE MAN WITH NO NAME (Joe)
 char stranger [+Protagonist] [+Sympathetic_Focus]
-stranger [!Virtuous]
+// non-virtuous by ABSENCE — he carries no [+Virtuous], which is exactly what `not([+Virtuous])` keys on
 stranger [+Cunning] [+Mercenary]
 
 // THE TWO CLANS (Rojos & Baxters)

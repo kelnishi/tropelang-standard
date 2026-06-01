@@ -110,10 +110,9 @@ scene the_grand_alliance {
     //   the_pact [+EnemyMine]; -- tier_safety (shared survival) / coalition (realignment)
   }
   beat 3 {
-    // 1945 — Berlin falls; the Reich is no longer the [+Threat], and the enmity resumes (the Cold War)
-    reich [-Threat]
-    // Enemy_Mine_Resumed -> usa !-- ussr : "Allies"; usa [~Opposes(target=ussr)] -- conflict.
-    // NOT a Heel-Face Turn: the rivalry was suspended, never severed.
+    // 1945 — Berlin falls; the enmity resumes (the Cold War). The Reich ceasing to be the [+Threat] is
+    // a TEMPORAL state-change the atemporal engine can't scope (it would also un-fire Enemy_Mine), so
+    // the standing-threat fact is left intact here — Enemy_Mine fires; Enemy_Mine_Resumed is the sequel.
     usa >< ussr : "the Cold War re-opens"
   }
 }

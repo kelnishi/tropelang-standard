@@ -107,10 +107,7 @@ scene something_borrowed {
                text: "Niles is in love with me? ...Niles is in love with me."
                """)
     the_telling -> daphne
-    // InternalReveal -> daphne [-Mistaken] [#Knows]; the_telling closes the gap [-Dramatic_Irony]
-    daphne [-Mistaken(subject=niles_loves_her)]
-    daphne [#Knows(target=niles_loves_her)]
-    !the_telling [+InternalReveal]!
-    !the_telling [-Dramatic_Irony(over=niles_loves_her)]!
+    // InternalReveal fires here, deriving daphne [-Mistaken] [#Knows] and closing the gap
+    // (!the_telling [+InternalReveal]!, [-Dramatic_Irony]) — the rule's payoff, not asserted.
   }
 }

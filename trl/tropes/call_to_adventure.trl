@@ -70,8 +70,6 @@ scene the_choice {
                text: "You take the red pill — you stay in Wonderland."
                """)
     neo -- calling
-    neo [-OrdinaryWorld]
-    neo [+Called]
-    offer [+CallToAdventure]
+    // Call_To_Adventure fires here, deriving neo [-OrdinaryWorld] [+Called] and offer [+CallToAdventure].
   }
 }
