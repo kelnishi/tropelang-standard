@@ -1,0 +1,7 @@
+# The standard TropeLang corpus — the root layer (no base). Assembled by the same tool as any fork:
+#   python3 tools/assemble_corpus.py trl/tropes/corpus.toml
+# To build your own corpus, copy this manifest, set `base = "trl/tropes/corpus.toml"`, point `tropes`
+# at your own tree, and add `strike = [...]`. See corpora/ for a worked fork.
+name   = "standard"
+tropes = "trl/tropes"
+index  = "trl/tropes/index.trl"

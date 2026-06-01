@@ -45,7 +45,8 @@ Read `SKILL.md` first — this is the operational checklist.
 
 ## Hard rules
 - **Write exactly ONE new file: `trl/tropes/<bucket>/<name>.trl`.** Do NOT edit `index.trl`, `tools/sim.py`,
-  or any other shared file — parallel agents must not collide. The coordinator runs `tools/regen_index.py`.
+  or any other shared file — parallel agents must not collide. The coordinator runs the corpus assembler
+  (`cargo run --quiet --example assemble -- trl/tropes/corpus.toml`).
 - A trope is **log register** and MUST round-trip (`cargo run --quiet --example fidelity -- <file>` → `ok`).
 - Don't use `: "label"` on a tag statement — labels are only for edges (`a -> b : "x"`). Use `//` comments.
 - **Stop and return WITHOUT finishing** (flag it to the coordinator) if: the trope needs a NEW module

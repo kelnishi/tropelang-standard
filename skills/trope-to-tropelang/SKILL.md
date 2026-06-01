@@ -44,7 +44,7 @@ two-phase arc collapsing into one). Run it AD HOC (load the rule file + a minima
 
 **Never edit the registry.** `trl/tropes/index.trl` is rebuilt deterministically. Write ONE
 self-contained trope file; do NOT touch `index.trl` (parallel agents collide on it). The coordinator
-runs `python3 tools/regen_index.py` to regenerate imports and mint the concept entry — so carry full
+runs `cargo run --quiet --example assemble -- trl/tropes/corpus.toml` to regenerate imports and mint the concept entry — so carry full
 preamble metadata, including `@domain` — the registry domain LABEL (one of those in use: `Narrative Mind Interpersonal Epistemic Political Social Psychological`; match the nearest cluster, e.g. relationships -> Interpersonal).
 
 **Sourcing.** `https://allthetropes.org/wiki/<Trope>` via **WebSearch** — direct WebFetch 403s here,
