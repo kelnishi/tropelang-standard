@@ -1,0 +1,110 @@
+// === PREAMBLE ===
+// @trope    Karmic Death
+// @category Death Tropes / Death by Irony
+// @source   https://allthetropes.org/wiki/Karmic_Death
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a villain dies in a manner that fits their crimes — poetic justice, the
+// punishment mirroring the sin. A form of Death by Irony, often invoked to relieve the hero of
+// dispatching the villain himself; the manner of the death answers the manner of the wrong. Rides
+// action_dynamics' death-blow (&Slays) and rhetoric's audience appraisal: the author FRAMES the
+// death as=fitting, so the house reads it as poetic justice and the gap of moral debt pays off —
+// audience [+Satisfied], a touch on -- justice. The signature: the villain is [+Guilty(of=$sin)]
+// and the KIND of the killing MIRRORS that same $sin — $sin binds ONCE across the crime and the
+// death. Compare Hoist by His Own Petard, the narrower cousin where the device recoils on its own
+// maker (agent == target); Karmic Death frees the slayer — ANY hand may strike, so long as the
+// MANNER fits the sin. FRONTIER: the mirror is carried by a single bound $sin (crime kind == death
+// kind), not by collapsing agent onto target.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"                  // justice, consequence, cost, conflict
+import "trl/modules/action_dynamics.trl"         // &Slays — the death-blow whose kind mirrors the sin
+import "trl/modules/rhetoric.trl"                // Frames(as=fitting) -> audience [+Satisfied], -- justice
+import "trl/tropes/death/hoist_by_his_own_petard.trl"  // the narrower cousin: the device recoils on its maker
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc karmic_death -> [
+  action_dynamics          : "the &Slays death-blow of",
+  rhetoric                 : "the death framed fitting, appraised by the audience-engine of",
+  hoist_by_his_own_petard  : "the narrower self-recoiling cousin of",
+  justice                  : "reads as poetic",
+  consequence              : "the sin's own, returned in kind",
+  cost                     : "the villain pays in the coin he minted"
+]
+
+
+// === ONTOLOGY ===
+// The death whose manner answers the crime — irony elevated to moral accounting.
+imply KarmicDeath -> [Retribution, Irony, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition: a villain is [+Guilty(of=$sin)] — the crime named by its kind — and is felled by a
+// &Slays whose KIND is that SAME $sin. The one bound $sin does the work: it appears once in the
+// guilt and once in the death's kind, so the manner of the killing MIRRORS the manner of the wrong
+// (the cutter cut, the drowner drowned). The slayer is FREE — $slayer binds to any hand, unlike
+// Hoist's self-recoil where the maker and the slain collapse. The author FRAMES that death
+// as=fitting, and the audience reads poetic justice: the gap of moral debt closes — audience
+// [+Satisfied], a touch on -- justice. That fit, not the death alone, IS Karmic Death (tags the deed).
+rule Karmic_Death {
+  when:
+    char $villain [+Guilty(of=$sin)]
+    evt  $reckoning [&Slays(agent=$slayer, target=$villain, kind=$sin)]
+    evt  $f [&Frames(agent=author, target=$reckoning, as=fitting)]
+  then:
+    $villain [+Hit]
+    $reckoning [+KarmicDeath]
+    audience [+Satisfied]
+    audience -- justice
+    $villain -- consequence
+}
+
+
+// === CONCRETE VIGNETTE: Theseus and Procrustes — the bed of the bandit (Greek myth) ===
+// On the road to Athens the smith Procrustes keeps a house with an iron bed, and offers every
+// passing guest its hospitality. The catch is the fit: he stretches the short on a rack until they
+// match the frame, and lops the limbs of the tall until they do — guests cut and racked to fit a
+// bed, never the bed to the guest. Theseus, clearing the road of its bandits, accepts the welcome,
+// then turns the courtesy on its keeper: he lays Procrustes on his own bed and makes him fit it
+// exactly, cutting him down to the length of the iron. The bandit who cut his guests to fit is cut
+// to fit. The slayer is not the device and not himself — it is Theseus's hand — yet the MANNER
+// answers the crime precisely: the kind of the killing (cutting-to-fit) mirrors the kind of the sin.
+
+// PROCRUSTES — the smith of the iron bed, guilty of cutting guests to fit it
+char procrustes [+Antagonist]
+procrustes [+Guilty(of=cutting_to_fit)]
+
+// THESEUS — the hero clearing the road, who turns the bed on its keeper (any hand, not the device)
+char theseus [+Protagonist]
+
+// THE IRON BED — the frame every guest was made to match
+obj iron_bed [+Lethal]
+
+// INT. THE HOUSE OF PROCRUSTES ON THE ROAD TO ATHENS - NIGHT
+set procrustes_house [+Interior] [+Night]
+
+scene the_bed_of_procrustes {
+  beat 1 {
+    procrustes @ procrustes_house
+    theseus @ procrustes_house
+    procrustes > iron_bed
+    // the bandit's crime is established: he cut his guests to fit the iron frame
+    procrustes -- cruelty : "racked the short and lopped the tall to match the bed"
+  }
+  beat 2 {
+    // Theseus turns the hospitality on its keeper — laid on the bed, cut to its length
+    evt the_fitting [&Slays(agent=theseus, target=procrustes, kind=cutting_to_fit)]
+        dialog(inject=[speaker=theseus], inline="""
+               speaker: "{speaker}"
+               cue: "laying the bandit on his own iron bed, measuring him to it"
+               tone: grim, exacting
+               text: "Lie down, host. Let us see that you fit your own welcome."
+               """)
+    evt played_fitting [&Frames(agent=author, target=the_fitting, as=fitting)]
+    // Karmic_Death fires: villain [+Guilty(of=cutting_to_fit)] slain by a &Slays of the SAME kind,
+    //   framed fitting -> the_fitting [+KarmicDeath]; audience [+Satisfied]; audience -- justice
+    // the slayer is Theseus, not the bed and not Procrustes — yet the manner mirrors the sin
+  }
+}

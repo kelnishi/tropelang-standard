@@ -1,0 +1,127 @@
+// === PREAMBLE ===
+// @trope    Big Damn Heroes
+// @category Heroism / Rescue
+// @source   https://allthetropes.org/wiki/Big_Damn_Heroes
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): the heroes make a very last-minute rescue — they burst in at the
+// exact moment all seems lost and turn the tide, a sure-fire Crowning Moment of Awesome.
+// FRONTIER: the TIMING and the DRAMA that distinguish it from a plain Cavalry. The Cavalry
+// is the bare FACT of reinforcement (Reinforcement -> [+Relieved]); Big Damn Heroes is that
+// same arrival staged at the NADIR — the beleaguered already [#Imperiled] and the audience
+// already [#Despairing] — and FRAMED as spectacle, so the rescue lands on the room as awe and
+// relief, not mere tactics. It rides the_cavalry for the turn and rhetoric for the room: the
+// audience plane carries despair -> awe in one beat (Appraise_Spectacle -> audience [#Awed]),
+// the bright entrance-music mirror of the Hope Spot's crush. Unlike Eucatastrophe the deliverers
+// are KNOWN agents who choose to come back — earned by character, not an unlooked-for grace.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/tropes/conflict/war/the_cavalry.trl"        // Reinforcement -> [+Relieved]; the turn it stages
+import "trl/modules/rhetoric.trl"          // the audience the spectacle turns: despair -> awe
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc big_damn_heroes -> [
+  the_cavalry  : "the last-second, spectacle-framed staging of",
+  hope_spot    : "the relieving mirror of",
+  audience     : "turns from despair to awe, the",
+  awe          : "lands the rescue on the room as",
+  timing       : "is defined by its"
+]
+
+
+// === ONTOLOGY ===
+// The same Relief/Timing cluster The Cavalry names — here sharpened by the last-second beat and
+// the audience-facing spectacle. The entrance itself is an unlooked-for-feeling Reversal that
+// delivers, framed to be SEEN.
+imply BigDamnHeroes -> [Relief, Timing, Narrative]
+imply HeroicEntrance -> [Reversal, Spectacle]
+
+
+// === ABSTRACT RULE ===
+// At the nadir: the beleaguered are [#Imperiled] (the line about to break) and the audience has
+// fallen into [#Despairing] over the outcome. The heroes Reinforce AT THAT MOMENT — the_cavalry's
+// Reinforcement fires, relieving the held — and the author FRAMES the entrance as spectacle, so
+// the room turns, in one beat, from despair to awe. The relief is asserted ABSOLUTE (!...!): once
+// the heroes burst in, the rescue is the felt truth of the beat. (Audience [#Awed] is rhetoric's
+// Appraise_Spectacle target; here it is the bright mirror of the Hope Spot's audience-crush.)
+rule BigDamnHeroes {
+  when:
+    char $held [#Imperiled]
+    audience [#Despairing]
+    evt $arrival [&Reinforces(agent=$heroes, ally=$held)]
+    evt $stage [&Frames(agent=author, target=$arrival, as=spectacle)]
+    not ( $arrival [+Resolved] )
+  then:
+    $arrival [+Resolved] [+TheCavalry]
+    $held [+Relieved]
+    $held [-Imperiled]
+    audience [-Despairing]
+    !audience [#Awed]!
+    audience -> despair : "Turns From"
+    audience -- spectacle
+    $heroes -- rescue
+}
+
+
+// === CONCRETE VIGNETTE: Star Wars — Han Solo at the Death Star trench (film, 1977) ===
+// Luke is in the trench, Vader's fighters locked on, the targeting computer set aside, the line
+// about to break — and Han, who took his reward and flew off, comes screaming back out of the sun.
+// The Falcon's cannon scatters the TIEs, knocks Vader spinning into space ("You're all clear, kid!"),
+// and the audience that had given up the run breaks from dread into a whoop of awe. The deliverer is
+// KNOWN — Han CHOSE to return — and the entrance is staged to be seen: this is the Cavalry, but
+// landed at the last possible second and framed as the picture's Crowning Moment of Awesome.
+
+// LUKE SKYWALKER — the held line, alone in the trench
+char luke [+Protagonist] [#Imperiled]
+
+// HAN SOLO — the one who came back
+char han [+Ally]
+han [+MotivatedBy(reason="Loyalty")]
+
+// DARTH VADER — the gun about to fire
+char vader [+Antagonist]
+
+// EXT. THE DEATH STAR TRENCH - SPACE — the nadir, the last few seconds before the shot
+set trench [+Exterior] [+Dangerous] [+Liminal]
+
+scene the_nadir {
+  beat 1 {
+    luke @ trench
+    vader @ trench
+    vader -- luke : "Locks On"
+        dialog(kind=narration, inline="""
+               cue: "the crosshairs settling, the squadron gone, no shot lined up but Vader's"
+               tone: airless
+               text: "Just one X-wing left, and the eye of the Death Star already turning its way."
+               """)
+    !audience [#Despairing]!
+    audience -- despair
+  }
+}
+
+scene the_entrance {
+  beat 1 {
+    han @ trench
+    evt the_return [&Reinforces(agent=han, ally=luke)]
+    // the_cavalry's Reinforcement -> luke [+Relieved]; BigDamnHeroes tags the arrival [+TheCavalry]
+    evt staged [&Frames(agent=author, target=the_return, as=spectacle)]
+        dialog(inject=[speaker=han], inline="""
+               speaker: "{speaker}"
+               cue: "the Falcon roaring in out of the sun, cannon flashing, Vader spinning away"
+               tone: exultant
+               text: "Yahoo! You're all clear, kid. Now let's blow this thing and go home!"
+               """)
+    // Big Damn Heroes: the Cavalry landed at the last second and FRAMED as spectacle.
+    // The room turns, in one beat, from despair to awe.
+    the_return [+Resolved] [+TheCavalry]
+    luke [+Relieved]
+    luke [-Imperiled]
+    audience [-Despairing]
+    !audience [#Awed]!
+    audience -> despair : "Turns From"
+    audience -- spectacle
+    han -- rescue
+  }
+}

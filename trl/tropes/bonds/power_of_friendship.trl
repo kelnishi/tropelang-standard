@@ -1,0 +1,99 @@
+// === PREAMBLE ===
+// @trope    The Power of Friendship
+// @category Friendship Tropes
+// @source   https://allthetropes.org/wiki/The_Power_of_Friendship
+// @domain   Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): the bonds between characters become a literal or decisive source of
+// strength — friendship and love empower the heroes to prevail where alone they would fail. The
+// connection itself is the power: a hero fighting to protect, or buoyed by, those they are bonded
+// to draws on a drive (love/belonging — the bonds rung) held harder than the body's defeat, and so
+// turns a fight that solitary will could not. Where Heroic Second Wind sources its rally from
+// esteem (self-proving) and Found Family names the bond's formation, this names the bond as the
+// SOURCE OF STRENGTH that wins — together they achieve what neither could alone.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"               // belonging, solidarity, love, connection
+import "trl/tropes/bonds/found_family.trl"          // the bond it draws on: [@Bonded_To], FoundFamily
+import "trl/modules/needs.trl"                // tier_bonds (rank 3) + the Inversion mechanism
+import "trl/modules/emotion_dynamics.trl"     // the love/devotion the surge is appraised from
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc power_of_friendship -> [
+  found_family        : "draws its strength from the bond named by",
+  needs               : "the Inversion of the bonds rung (tier_bonds, rank 3)",
+  heroic_second_wind  : "the bond-sourced sibling of (esteem-sourced)",
+  tier_bonds          : "held harder than defeat",
+  solidarity          : "stronger under pressure, it becomes",
+  love                : "the empowering drive is",
+  belonging           : "answers and is empowered by"
+]
+
+
+// === ONTOLOGY ===
+
+imply PowerOfFriendship -> [Bond, Resolve, Narrative]
+
+
+// === ABSTRACT RULE ===
+// At a fight's nadir — beaten down, the body lacking — the hero is BONDED to an ally and pursues
+// the bonds rung ($br3 == 3, tier_bonds: to protect / not to fail those they love) held HARDER
+// than the bodily lack ($bl). That is the needs Inversion, but sourced from the CONNECTION rather
+// than from esteem: the bond is the strength. Will overrides the flesh, the ally fights at their
+// side, and together they prevail. ($bl is the bodily/safety lack pulling against the bond drive.)
+rule PowerOfFriendship {
+  when:
+    char $c [+Exposed]
+    char $c [@Bonded_To(other=$ally)]
+    char $c [~Pursues(rank=3, salience=$bs)]
+    char $c [#Lacks(rank=$bl, salience=$ls)]
+    $bl < 3
+    $bs > $ls
+    not ( $c [+Empowered] )
+  then:
+    $c [-Exposed]
+    $c [#Driven(rank=3)]
+    $c [+Empowered]
+    $c [+Transcendent]
+    $c [&Aids(other=$ally)]
+    $c -- solidarity
+}
+
+
+// === CONCRETE VIGNETTE: Naruto vs. Pain — protecting the bond is the strength (shonen anime) ===
+// Pain has flattened the Hidden Leaf and pinned Naruto, the body all but finished. What turns it is
+// not a wish to prove himself but the people he is bonded to — Iruka, the village, the dead he
+// fought beside: he fights to protect them, the bonds rung held past the body's ruin. The connection
+// inverts the defeat, Naruto rises Empowered, and the bond — not solitary strength — carries the day.
+
+// NARUTO UZUMAKI
+char naruto [+Protagonist] [@Bonded_To(other=iruka)]
+
+// IRUKA UMINO — the bond he fights to protect
+char iruka [+Ally]
+
+// PAIN — the one who flattened the Leaf
+char pain [+Antagonist]
+
+// EXT. RUINS OF THE HIDDEN LEAF VILLAGE - DAY
+set the_leaf [+Exterior] [+Day]
+
+scene the_bond_holds {
+  beat 1 {
+    naruto @ the_leaf
+    pain @ the_leaf
+    naruto [+Exposed]
+    // the nadir: pinned, the body all but finished
+  }
+  beat 2 {
+    naruto [#Lacks(rank=1, salience=6)]      // the body — pinned, broken, screaming to stay down
+    naruto [~Pursues(rank=3, salience=10)]   // the bond (tier_bonds) — to protect those he loves; held past the body
+    // PowerOfFriendship (1 < 3, 10 > 6) -> naruto [-Exposed] [#Driven(rank=3)] [+Empowered] [+Transcendent] [&Aids(iruka)] -- solidarity
+  }
+  beat 3 {
+    naruto -- pain : "Rises — for the ones he is bonded to"
+    // the connection, not solitary will, turns the fight
+  }
+}

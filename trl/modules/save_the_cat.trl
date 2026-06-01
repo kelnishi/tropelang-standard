@@ -15,7 +15,7 @@
 
 // === DEPENDENCIES ===
 import "trl/concepts/index.trl"                  // transformation, despair, …
-import "trl/tropes/three_act_structure.trl"      // the spine these beats sit on
+import "trl/tropes/structure/three_act_structure.trl"      // the spine these beats sit on
 import "trl/modules/story_circle.trl"            // a coarser parallel structure
 
 

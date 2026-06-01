@@ -1,7 +1,10 @@
 # Conversion agent brief
 
-You convert **one** trope into a self-contained `trl/tropes/<name>.trl` file. The coordinator
-integrates it (registry, promotion, commit). Read `SKILL.md` first — this is the operational checklist.
+You convert **one** trope into a self-contained `.trl` file under a **functional bucket**:
+`trl/tropes/<bucket>/<name>.trl` (e.g. `conflict/tactics/`, `arc/fall/`, `epistemic/reveal/`). The
+coordinator tells you the bucket when assigning the trope, and integrates it (registry, promotion,
+commit). If no bucket was given, pick the closest one from `trl/tropes/README.md` and flag your choice.
+Read `SKILL.md` first — this is the operational checklist.
 
 ## Task
 1. **Source** the assigned trope from allthetropes.org via **WebSearch** (never tvtropes; WebFetch 403s
@@ -25,7 +28,7 @@ integrates it (registry, promotion, commit). Read `SKILL.md` first — this is t
 5. **Self-check — both must pass:**
    - `bash skills/trope-to-tropelang/scripts/gate.sh <file>` → `── GATE PASS ──`
    - **The recognition must FIRE on your vignette under the real engine:**
-     `cargo run --quiet --example eval -- trl/tropes/<name>.trl` → your rule appears under "rules fired"
+     `cargo run --quiet --example eval -- trl/tropes/<bucket>/<name>.trl` → your rule appears under "rules fired"
      and its outputs under "derived facts" (NOT hand-asserted in the vignette). If it doesn't fire, the
      vignette isn't triggering the rule — fix the triggers, don't paper over it by asserting the output.
    - **Sim the rule AD HOC — do NOT edit `tools/sim.py`** (shared file; parallel agents collide). Run an
@@ -33,7 +36,7 @@ integrates it (registry, promotion, commit). Read `SKILL.md` first — this is t
      ```bash
      python3 - <<'PY'
      import sys,os; sys.path.insert(0,'tools'); import sim
-     r=sim.load_rules('trl/tropes/<name>.trl')           # + any module it rides
+     r=sim.load_rules('trl/tropes/<bucket>/<name>.trl')  # + any module it rides
      sim.simulate(r, sim.parse_scenario("""<minimal char + beat scenario>"""), "<name>")
      PY
      ```
@@ -41,7 +44,7 @@ integrates it (registry, promotion, commit). Read `SKILL.md` first — this is t
      truth test). The coordinator decides whether to persist a permanent scenario.
 
 ## Hard rules
-- **Write exactly ONE new file: `trl/tropes/<name>.trl`.** Do NOT edit `index.trl`, `tools/sim.py`,
+- **Write exactly ONE new file: `trl/tropes/<bucket>/<name>.trl`.** Do NOT edit `index.trl`, `tools/sim.py`,
   or any other shared file — parallel agents must not collide. The coordinator runs `tools/regen_index.py`.
 - A trope is **log register** and MUST round-trip (`cargo run --quiet --example fidelity -- <file>` → `ok`).
 - Don't use `: "label"` on a tag statement — labels are only for edges (`a -> b : "x"`). Use `//` comments.

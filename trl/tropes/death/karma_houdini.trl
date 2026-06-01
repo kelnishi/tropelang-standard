@@ -1,0 +1,118 @@
+// === PREAMBLE ===
+// @trope    Karma Houdini
+// @category Karma Tropes / Audience Reactions
+// @source   https://allthetropes.org/wiki/Karma_Houdini
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a villain justly deserving punishment ends the story with NONE of it — no
+// comeuppance, no loss, sometimes outright rewarded; the bad karma simply never lands. The exact
+// INVERSE of Karmic Death: where that trope closes the moral ledger (the manner of the death answers
+// the manner of the sin, audience [+Satisfied], -- justice), Karma Houdini leaves it OPEN at the
+// final curtain — the wrong stays unanswered. It rides the same reckoning that Karmic Death pays
+// off — action_dynamics' &Strikes(kind=$sin), the blow whose kind would mirror the crime — but the
+// recognition fires on that blow's ABSENCE: at [+Endgame] no such reckoning exists. That endgame-
+// absence is the same shape as Foreshadowing's Red Herring (a pending thread that never pays off by
+// [+Endgame]); here the unpaid thread is the villain's own moral debt. The author FRAMES the open
+// ledger (rhetoric's Frames), and the house, denied its catharsis, reads INJUSTICE: audience
+// [#Resentful], a touch on -- injustice — the dark mirror of Karmic Death's satisfied -- justice.
+// Exaggerated: the villain is not merely spared but REWARDED. FRONTIER: a recognition keyed to a
+// MISSING reckoning at [+Endgame] — the guilt is asserted, the karmic blow is not, and that gap IS
+// the trope (the cutter walks; the drowner is never drowned).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"               // justice, injustice, consequence, accountability, guilt
+import "trl/modules/action_dynamics.trl"      // &Strikes(kind=$sin) — the reckoning that never comes
+import "trl/modules/rhetoric.trl"             // Frames -> the author frames the open ledger; audience appraisal
+import "trl/tropes/death/karmic_death.trl"          // the inverse: the ledger CLOSED, the blow mirroring the sin
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc karma_houdini -> [
+  karmic_death     : "inverse of",
+  foreshadowing    : "shares the endgame-absence shape of a Red Herring with",
+  action_dynamics  : "the &Strikes reckoning that never lands, of",
+  rhetoric         : "the open ledger framed, appraised by the audience-engine of",
+  injustice        : "the house reads",
+  consequence      : "the sin's own, never returned",
+  accountability   : "escaped entire",
+  complicity       : "the story's silence reads as"
+]
+
+
+// === ONTOLOGY ===
+// The wrong that never pays — moral accounting left open at the final curtain.
+imply KarmaHoudini -> [Impunity, Irony, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition (the mirror of Karmic_Death): a villain is [+Guilty(of=$sin)] — the crime named by its
+// kind — and the story reaches its [+Endgame] with NO reckoning of that sin: no &Strikes whose kind
+// is $sin ever falls on them. The one bound $sin does the work it does in Karmic Death, but here it
+// appears in the guilt and is ABSENT from any blow — the manner that WOULD mirror the wrong never
+// arrives. That endgame-absence is the Red-Herring shape (a thread pending at the curtain); the unpaid
+// thread is the villain's moral debt. The author FRAMES the open ledger, and the house — denied the
+// catharsis Karmic Death grants — reads injustice: audience [#Resentful], a touch on -- injustice.
+// The villain walks [+Triumphant], the debt unsettled: $villain !-- consequence, !-- accountability.
+// That MISSING blow, not any blow, IS Karma Houdini (it tags the ending that let him go).
+rule Karma_Houdini {
+  when:
+    char  $villain [+Guilty(of=$sin)]
+    scene $endgame [+Endgame]
+    evt   $f [&Frames(agent=author, target=$endgame, as=unanswered)]
+    not ( evt $reckoning [&Strikes(target=$villain, kind=$sin)] )   // the karmic blow never falls
+  then:
+    $villain [+KarmaHoudini]
+    $villain [+Triumphant]
+    $villain !-- consequence
+    $villain !-- accountability
+    $endgame [+KarmaHoudini]
+    audience [#Resentful]
+    audience -- injustice
+}
+
+
+// === CONCRETE VIGNETTE: A Clockwork Orange — "I was cured all right" (novel/film, 1962/1971) ===
+// Alex DeLarge leads his droogs through a spree of beatings, rape, and a killing, gleeful and
+// remorseless. Caught, he is handed to the State's Ludovico Technique — conditioning that would make
+// violence sicken him, the closest thing to a reckoning the story offers. But the cure is a political
+// embarrassment, and the same State that imposed it REVERSES it to save face: the aversion is undone,
+// Alex restored to exactly the predator he was, his public image rehabilitated in the bargain. The
+// film closes on him unrepentant, untouched, free — "I was cured all right." No blow ever answers the
+// crimes; the ledger stays open at the curtain. The guilt is asserted (the spree); the reckoning that
+// would mirror it (a &Strikes for his cruelty) is exactly the event that never occurs — so the engine,
+// at [+Endgame], finds the debt unpaid and names the ending Karma Houdini.
+
+// ALEX DeLARGE — the droog whose violence the story never makes him answer for
+char alex [+Antagonist]
+alex [+Guilty(of=cruelty)]
+
+// THE STATE — imposes the cure, then reverses it for its own convenience (its complicity is the edge below)
+char the_state [+Authority]
+
+// INT. THE HOSPITAL WARD — DAY (the reversal, the press, the offered post)
+set hospital_ward [+Interior] [+Day]
+
+// the final curtain falls here [+Endgame] — the scene at which the moral ledger is read, still open
+scene the_reversal [+Endgame] {
+  beat 1 {
+    alex @ hospital_ward
+    the_state @ hospital_ward
+    // the State's crime is established: it undoes the only reckoning, for its own face
+    the_state -- complicity : "reversed the cure to bury a scandal, freeing the predator"
+  }
+  beat 2 {
+    // The author frames the final curtain as an OPEN ledger — the wrong left unanswered.
+    evt closing_curtain [&Frames(agent=author, target=the_reversal, as=unanswered)]
+        dialog(inject=[speaker=alex], inline="""
+               speaker: "{speaker}"
+               cue: "grinning into the vision of violence, conditioning peeled away, scot-free"
+               tone: gleeful, unrepentant
+               text: "I was cured all right."
+               """)
+    // Karma_Houdini fires: alex [+Guilty(of=cruelty)], the scene is [+Endgame], the author frames
+    //   the ending unanswered, and NO &Strikes(target=alex, kind=cruelty) ever falls ->
+    //   alex [+KarmaHoudini] [+Triumphant]; alex !-- consequence !-- accountability;
+    //   audience [#Resentful]; audience -- injustice. The reckoning's ABSENCE is the trope.
+  }
+}

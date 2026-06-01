@@ -1,0 +1,86 @@
+// === PREAMBLE ===
+// @trope    Magnificent Bastard
+// @category Character Archetypes / Villains
+// @source   https://allthetropes.org/wiki/Magnificent_Bastard
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): the Chessmaster, the Trickster, and the Manipulative Bastard fused into
+// one bold, charismatic, audacious schemer — a villain so brilliant and stylish that the audience
+// loves to watch him no matter how bad he is, and even those who hate his guts have to admit respect.
+// What distinguishes him from a plain Big Bad is the SOURCE of his hold on us: not the threat he
+// poses but the STYLE and cunning with which he poses it. The bridge where THE GAMBIT's masterful
+// scheme meets REPUTATION's esteem and RHETORIC's audience-awe — a scheme so well-executed that it
+// earns admiration across the line of conflict (a foe esteems it) AND across the fourth wall (the
+// author frames it as spectacle, and the audience is awed). Charisma plus competence, conferring
+// reverence even on villainy.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/tropes/conflict/tactics/the_gambit.trl"         // the masterful scheme the admiration rides on
+import "trl/modules/reputation.trl"        // Honors / [+Honored] — esteem, even from the enemy
+import "trl/modules/rhetoric.trl"          // Frames(as=spectacle) -> audience [#Awed] — admiration across the fourth wall
+
+assoc magnificent_bastard -> [
+  the_gambit : "is the admired, in-person form of",
+  reputation : "earns esteem even from his foes, per",
+  rhetoric   : "wins the audience's awe across the fourth wall, per",
+  the_big_bad : "distinguished from a mere, by STYLE and cunning"
+]
+
+
+// === ONTOLOGY ===
+// A villain archetype built on cunning manipulation that reads as admirable style — the antagonist
+// who steals the show. (Cunning is a prelude prop; Antagonist a prelude role; reused, not redefined.)
+
+imply MagnificentBastard -> [Antagonist, Cunning, Manipulation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition: a [+Antagonist] [+Cunning] schemer runs a scheme so well-executed that BOTH a foe
+// honors it (esteem across the line of conflict — reputation's Esteem confers [+Honored]) AND the
+// author frames it as spectacle (admiration across the fourth wall — rhetoric's Appraise_Spectacle
+// leaves the audience [#Awed]). The double admiration — from inside the story AND from the house —
+// is the signature: it is the STYLE and cunning, not the menace, that earns the reverence. The
+// schemer becomes [+Honored] and [+MagnificentBastard]. (Distinguished from The Big Bad, which is
+// admired for nothing — only opposed.)
+rule Magnificent_Bastard {
+  when:
+    char $bastard [+Antagonist] [+Cunning]
+    evt  $scheme  [&Schemes(agent=$bastard, target=$foe)]
+    evt  $esteem  [&Honors(agent=$foe, target=$bastard)]
+    evt  $framing [&Frames(agent=author, target=$scheme, as=spectacle)]
+  then:
+    $bastard [+Honored]
+    $bastard [+MagnificentBastard]
+    audience [#Awed]
+    audience -- spectacle
+    $scheme [+TheGambit]
+}
+
+
+// === CONCRETE VIGNETTE: The Talented Mr. Ripley — Tom Ripley's seamless self (novel, 1955) ===
+// Tom Ripley murders Dickie Greenleaf and then, audaciously, BECOMES him — forging the signature,
+// living off the dead man's allowance, charming the very people who go looking for him. When the
+// investigator Marge and the police circle in, Tom improvises a second identity on the spot, switching
+// between "Dickie" and "Tom" by hotel and by post, always one forged letter ahead. Highsmith stages
+// it so the reader, against every moral instinct, holds their breath FOR him — and even the dogged
+// inquirer is half-charmed into conceding the sheer nerve of the thing. We esteem the impostor we
+// should want caught; that is the trap, and it is magnificent.
+
+// TOM RIPLEY
+char ripley [+Antagonist] [+Cunning] [+Deceptive]
+
+// MARGE SHERWOOD — Dickie's fiancée, the foe who circles the truth
+char marge [+Ally]
+
+scene becoming_dickie {
+  beat 1 {
+    evt the_impersonation [&Schemes(agent=ripley, target=marge)]   // forge the signature, BE the dead man
+  }
+  beat 2 {
+    evt margenods [&Honors(agent=marge, target=ripley)]            // even the pursuer concedes the nerve of it
+    evt staged    [&Frames(agent=author, target=the_impersonation, as=spectacle)]   // Highsmith makes us root for him
+    // Magnificent_Bastard -> ripley [+Honored] [+MagnificentBastard]; audience [#Awed]; the scheme [+TheGambit]
+  }
+}

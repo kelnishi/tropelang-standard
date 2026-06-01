@@ -12,9 +12,9 @@
 
 // === DEPENDENCIES ===
 import "trl/concepts/index.trl"               // return, transformation, fate, …
-import "trl/tropes/call_to_adventure.trl"     // stage 1 — a full trope
-import "trl/tropes/refusal_of_the_call.trl"   // stage 2 — a full trope
-import "trl/tropes/the_mentor.trl"            // the giver of supernatural aid
+import "trl/tropes/arc/growth/call_to_adventure.trl"     // stage 1 — a full trope
+import "trl/tropes/arc/growth/refusal_of_the_call.trl"   // stage 2 — a full trope
+import "trl/tropes/character/roles/the_mentor.trl"            // the giver of supernatural aid
 
 
 // === THE SYSTEM ===

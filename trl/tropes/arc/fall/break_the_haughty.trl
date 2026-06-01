@@ -1,0 +1,126 @@
+// === PREAMBLE ===
+// @trope    Break the Haughty
+// @category Character Development / Karmic
+// @source   https://allthetropes.org/wiki/Break_the_Haughty
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): bad things happen to an arrogant character — one who, the audience feels,
+// HAD IT COMING — until the accumulated misfortune grinds their pride away and humbles them. Like its
+// sister trope Break the Cutie, the ACCUMULATION is the engine: no single humiliation does it, the
+// COUNT does (the same count(&Crushes) >= 3 accumulation emotion_dynamics' Thread_Hope_To_Despair
+// uses). The inversion of the cutie's polarity: where the cutie begins [+Innocent] [#Hopeful] and is
+// ground down into despair and an empty husk, the haughty begins [#Proud] [+Arrogant] and is ground
+// down into shame and a HUMBLED self — pride shattered, not hope. The payoff is moral: the leftover is
+// a person the misfortune has made teachable. When the proud refuse the lesson, the same blows only
+// harden the arrogance into bitterness instead (subverted).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/emotion_dynamics.trl"   // count of &Crushes accumulation (Thread_Hope_To_Despair)
+import "trl/tropes/arc/fall/break_the_cutie.trl"     // sibling: same accumulation engine, opposite polarity
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc break_the_haughty -> [
+  pride_excess     : "the hubris the misfortune grinds away",
+  humility         : "the virtue the breaking teaches",
+  shame            : "the accumulated humiliation appraises as",
+  suffering        : "ground down by accumulated",
+  break_the_cutie  : "the proud-targeted, pride-shattering twin of",
+  heel_realization : "shares the self-directed shame, without the wrongdoing"
+]
+
+
+// === ONTOLOGY ===
+// The haughty's defining arrogance, and the humbled self the misfortune leaves behind.
+imply BreakTheHaughty -> [Suffering, Narrative]
+imply HumbledHaughty  -> [Ashamed, Humbled]
+
+
+// === ABSTRACT RULE ===
+// A PROUD, arrogant character subjected to repeated misfortune — the count is what matters, not any
+// one blow (>= 3, the same accumulation threshold the cutie and Thread_Hope_To_Despair use) — is
+// broken: the pride is stripped, shame lands, and what remains is a HUMBLED self the misfortune has
+// made teachable. The polar inversion of Break the Cutie: proud->humbled, not innocent->empty.
+rule BreakTheHaughty {
+  when:
+    char $c [#Proud] [+Arrogant]
+    count( evt $blow [&Crushes(target=$c)] ) >= 3
+    not ( $c [+Humbled] )
+    not ( $c [+Defiant] )            // the proud who refuse the lesson take the other branch (subverted)
+  then:
+    $c [-Proud]
+    !$c [#Ashamed]!
+    $c [-Arrogant] [+Humbled] [+Teachable]
+    $c -- suffering
+    $c -- humility
+}
+
+// SUBVERSION — the haughty refuses to be humbled: the same accumulated misfortune does not teach but
+// embitters, hardening the arrogance into spite (How the Mighty Have Fallen without the lesson).
+rule BreakTheHaughty_Refused {
+  when:
+    char $c [#Proud] [+Arrogant] [+Defiant]
+    count( evt $blow [&Crushes(target=$c)] ) >= 3
+    not ( $c [+Humbled] )
+  then:
+    $c [-Proud]
+    $c [+Embittered] [+Spiteful]
+    $c -- pride_excess
+}
+
+
+// === CONCRETE VIGNETTE: The Voyage of the Dawn Treader — Eustace Scrubb (novel, 1952) ===
+// C. S. Lewis's conceited, sneering boy who "almost deserved" his name. Dragged aboard the Dawn
+// Treader, Eustace mocks everyone, shirks every duty, and pities himself at every turn. The misfortunes
+// pile on: seasick and friendless, he is caught stealing water, then wanders off and falls asleep on a
+// dragon's hoard with greedy thoughts in his heart — and wakes transformed into a dragon, monstrously
+// alone. Only when Aslan un-dragons him, peeling away the scaled hide he could not shed himself, is the
+// arrogance finally stripped with it. He comes back a boy made kind — humbled, teachable, "a different
+// boy," as the others note, "the cure had begun."
+
+// EUSTACE CLARENCE SCRUBB — the conceited boy who almost deserved the name
+char eustace [#Proud] [+Arrogant]
+eustace [+Sneering] [+SelfPitying]
+
+// REEPICHEEP — the gallant mouse whose courtesy is the foil to Eustace's contempt
+char reepicheep [+Foil]
+
+// ASLAN — the lion who un-dragons him, peeling away what he could not shed himself
+char aslan [+Mentor]
+
+// EXT. DRAGON ISLAND - DAWN — the lonely shore where the hoard, and the curse, are found
+set dragon_island [+Exterior] [+Dawn]
+
+scene the_undragoning {
+  beat 1 {
+    eustace @ dragon_island
+    reepicheep -- eustace : "Rebukes"
+    evt water_theft [&Crushes(target=eustace)]
+    // blow 1 — caught pilfering the ship's water ration; the contempt of the whole crew
+        dialog(inject=[speaker=eustace], inline="""
+               speaker: "{speaker}"
+               cue: "caught at the water cask, still certain the fault is everyone else's"
+               tone: petulant, superior
+               text: "It's all of you who are mad. A pack of brutes on a leaky tub."
+               """)
+  }
+  beat 2 {
+    evt the_dragoning [&Crushes(target=eustace)]
+    // blow 2 — greedy thoughts on the hoard turn him into a dragon; monstrous and utterly alone
+  }
+  beat 3 {
+    eustace @ dragon_island
+    aslan -- eustace : "Un-dragons"
+    evt the_undragoning [&Crushes(target=eustace)]
+    // blow 3 — Aslan tears away the dragon-hide Eustace could not peel himself; the count crosses
+    // BreakTheHaughty fires here: count(&Crushes target=eustace) >= 3. It derives eustace [-Proud]
+    // !#Ashamed! [-Arrogant] [+Humbled] [+Teachable] -- suffering -- humility (the rule's payoff).
+        dialog(inject=[speaker=eustace], inline="""
+               speaker: "{speaker}"
+               cue: "a boy again on the shore, the scales and the sneer both gone"
+               tone: quiet, ashamed
+               text: "I've been such an ass. I'm sorry. I don't know how to put it right."
+               """)
+  }
+}

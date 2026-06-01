@@ -1,0 +1,34 @@
+# Trope corpus — functional layout
+
+Tropes are organized by **narrative function** — what the trope *does* in a story — not by the engine
+module it rides (a trope rides several; that stays as `import` metadata). Flat buckets by default,
+nested one level where a bucket earns it. Every trope has exactly one home.
+
+`index.trl` imports the whole tree; `assoc`/`imply`/sibling-imports reference tropes by **bare name**,
+so a trope can move buckets without breaking cross-references. `tools/regen_index.py` rebuilds the
+import block recursively; `tools/reorg_tropes.py` holds the canonical name→bucket manifest.
+
+| Bucket | What lives here |
+|--------|-----------------|
+| `character/roles/` | ensemble positions — the_hero, the_foil, the_mentor, the_big_bad, praetorian_guard |
+| `character/archetypes/` | character *types* — anti_hero, magnificent_bastard, the_trickster, mama_bear, fatal_flaw |
+| `conflict/tactics/` | schemes & maneuvers — feint, ambush, the gambits, divide_and_conquer, spanner_in_the_works |
+| `conflict/combat/` | fights & duels — the_duel, curb_stomp_battle, finishing_move, the_worf_effect |
+| `conflict/war/` | mass/military — the_siege, the_cavalry, last_stand, zerg_rush, enemy_mine |
+| `arc/redemption/` | turns toward good — heel_face_turn, redemption_arc, pet_the_dog, even_evil_has_standards |
+| `arc/fall/` | downward trajectories (moral or psychological) — face_heel_turn, fall_from_grace, break_the_cutie, despair_event_horizon |
+| `arc/growth/` | maturation/competence — coming_of_age, took_a_level_in_badass, call_to_adventure |
+| `epistemic/reveal/` | who/what is disclosed — the_reveal, plot_twist, hidden_identity, the_mole, unreliable_narrator |
+| `epistemic/foreshadowing/` | planted-then-paid — foreshadowing, the chekhovs, red_herring, foregone_conclusion |
+| `epistemic/irony/` | knowledge gaps & fate — dramatic_irony, cassandra_truth, self_fulfilling_prophecy |
+| `bonds/` | relationship dynamics — love_triangle, found_family, conflicting_loyalty, worthy_opponent |
+| `death/` | death, sacrifice & vengeance — heroic_sacrifice, karmic_death, taking_you_with_me, revenge |
+| `structure/` | plot shape & devices — three_act_structure, in_medias_res, cliffhanger, deus_ex_machina, macguffin |
+| `rhetoric/` | persuasion, spectacle & audience-effect — rousing_speech, propaganda, spectacle, the_dilemma, tear_jerker |
+| `power/` | political & social authority — the_coup, decadent_court, rightful_king_returns, smear_campaign |
+| `meta/metafiction/` | the work aware of itself — fourth_wall, show_within_a_show, mockumentary, reality_bleed |
+| `meta/nonfiction/` | truth-claim forms — based_on_a_true_story, talking_head, reenactment, putting_it_to_the_test |
+
+**Adding a trope:** drop it in the closest bucket (a borderline trope picks its *primary* function;
+the secondary ones live in `assoc` links). If a genuinely new function appears that fits nowhere, add a
+bucket here and to the manifest in `tools/reorg_tropes.py`. Then run `python3 tools/regen_index.py`.

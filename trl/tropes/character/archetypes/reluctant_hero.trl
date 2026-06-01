@@ -1,0 +1,100 @@
+// === PREAMBLE ===
+// @trope    Reluctant Hero
+// @category Character Tropes
+// @source   https://allthetropes.org/wiki/Reluctant_Hero
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a capable character who receives the Call to Adventure but at first
+// refuses it — and whom events then conspire to force into accepting, until they rise to heroism
+// despite themselves. The refusal is overcome, not permanent: the arc of the unwilling hero who
+// answers anyway. Sits between Call to Adventure and Refusal of the Call on the Hero's Journey.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/narrative.trl"            // calling, duty
+import "trl/concepts/emotional.trl"            // fear
+import "trl/modules/heros_journey.trl"         // the call / refusal / crossing the threshold
+import "trl/tropes/arc/growth/call_to_adventure.trl"      // the summons that marks [+Called]
+import "trl/tropes/arc/growth/refusal_of_the_call.trl"    // the turning-away that marks [+Refused]
+import "trl/tropes/character/roles/the_hero.trl"               // what the reluctant one finally rises to
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc reluctant_hero -> [
+  call_to_adventure   : "first answers",
+  refusal_of_the_call : "begins by",
+  crossing_the_threshold : "is finally forced across",
+  hero                : "rises despite itself to",
+  fear                : "is held back by",
+  duty                : "is overtaken by"
+]
+
+
+// === ONTOLOGY ===
+// The unwilling hero overcomes their own refusal: a reluctance that yields, not one that holds.
+imply ReluctantHero -> [Reluctance, Threshold, Aspirational, Narrative]
+
+
+// === ABSTRACT RULE ===
+// A hero who was called and refused, when events cross them over the threshold anyway, overcomes
+// the refusal — drops [+Refused], answers the calling, and rises to The Hero. The refusal is the
+// SETUP, not the ending; this rule fires only because the turning-away was already there to undo.
+rule ReluctantHero {
+  when:
+    char $hero [+Called] [+Refused]
+    evt  $crossing [&Crosses(agent=$hero, threshold=$call)]
+  then:
+    $hero [-Refused]
+    $hero [+Hero]
+    $hero -- calling
+    $crossing [+ReluctantHero]
+}
+
+
+// === CONCRETE VIGNETTE: Spider-Man — "with great power..." (superhero comic / film, modern) ===
+// Peter Parker has the power but not the will: handed the call, he turns away — lets the thief run
+// past, deciding it is not his problem. The refusal comes home when that same thief kills Uncle Ben.
+// Forced across the threshold by the consequence of his own turning-away, he answers — not because he
+// wants to be a hero, but because he now cannot not be one.
+
+// PETER PARKER
+char peter [+Protagonist] [+Called] [+Reluctant]
+
+// UNCLE BEN — whose death is the consequence that forces the call home
+char uncle_ben [+Ally]
+
+// THE BURGLAR — the call refused, returned as catastrophe
+char burglar [+Antagonist]
+
+// THE CALL ITSELF — the responsibility Peter is handed and at first declines
+obj the_call [+Threshold]
+
+scene the_turning {
+  beat 1 {
+    // refusal: he lets the thief pass, "not my problem"
+    evt let_him_go [&Refuses(agent=peter)]
+    peter !@ burglar : "Lets The Thief Run Past"
+    peter [+Refused]
+    peter -- fear : "Held Back By Wanting An Ordinary Life"
+  }
+  beat 2 {
+    // the consequence: the spared burglar kills Uncle Ben
+    burglar > uncle_ben : "Kills The One He Loved"
+    uncle_ben [+Dead]
+    peter [+Grieving]
+  }
+  beat 3 {
+    // forced across the threshold by his own refusal's cost — he answers anyway
+    evt take_up_the_mask [&Crosses(agent=peter, threshold=the_call)]
+        dialog(inject=[speaker=peter], inline="""
+               speaker: "{speaker}"
+               cue: "the mask in his hands; Ben's words in his ears"
+               tone: resolved, grieving
+               text: "With great power there must also come great responsibility."
+               """)
+    peter [-Refused]
+    peter [+Hero]
+    peter -- calling : "Answers Despite Himself"
+    take_up_the_mask [+ReluctantHero]
+  }
+}

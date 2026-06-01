@@ -1,0 +1,90 @@
+// === PREAMBLE ===
+// @trope    Moment of Awesome (Crowning Moment of Awesome)
+// @category Audience Reactions / Awesome
+// @source   https://allthetropes.org/wiki/Moment_of_Awesome_(Sugar_Wiki)
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a single moment when a character does something so impressive that they
+// will be remembered for it forever — the defining badass deed that wins the eternal loyalty of the
+// fans. The DEED sibling of Spectacle: where Spectacle frames a SIGHT for awe (a vista too beautiful
+// to look away from), this frames a character's ACT for awe — and the awe lands on the DOER, crowning
+// them in the audience's eyes. Rides rhetoric's cool-framing (the thrill of Rule of Cool) and turns
+// that thrill into rooting interest: the deed both [#Thrilled]s and [#Awed]s the house, and the house
+// comes out the other side a partisan of the one who did it. Distinct from Spectacle (deed vs vista)
+// and from a plain feat (this one CROWNS — it defines the character, not just the moment).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/rhetoric.trl"          // Frames(as=cool) -> [#Thrilled]; Appraise_Spectacle -> [#Awed]; RootsFor
+import "trl/modules/action_dynamics.trl"   // Strikes/Finishes — the DEED that is framed (a doer's act)
+import "trl/tropes/rhetoric/rule_of_cool.trl"       // the cool-framed thrill the awe is built on
+import "trl/tropes/rhetoric/spectacle.trl"          // the vista-awe sibling this is the DEED form of
+
+assoc moment_of_awesome -> [
+  rhetoric     : "the deed-awe rule of",
+  rule_of_cool : "turns the cool-framed thrill into rooting interest, per",
+  spectacle    : "the DEED form of the awe that names a, vista",
+  audience     : "is crowned in the eyes of the, by the doer"
+]
+
+
+// === ONTOLOGY ===
+// The crowning is the signature: a deed framed for awe confers a defining, remembered status on its
+// doer. (Awe a rhetoric appraisal; Spectacle the vista sibling; Narrative the plane — all reused.)
+
+imply MomentOfAwesome -> [Awe, Spectacle, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition: a character lands a decisive DEED (an action_dynamics act — here a Finisher, the
+// signature blow), and the author frames THAT DEED for awe (cool-framing — the same lever Rule of
+// Cool pulls). Unlike Spectacle, the framed target is an act BY a doer, so the awe lands on the doer:
+// the house is [#Thrilled] and [#Awed] AND comes out a partisan of the one who did it ([~RootsFor]).
+// The deed becomes [+MomentOfAwesome] and CROWNS the character — a defining, remembered status, not
+// merely a moment that passed. (Distinct from Spectacle, whose target is a $sight, not a doer's $deed.)
+rule Moment_Of_Awesome {
+  when:
+    char $hero
+    evt  $deed    [&Finishes(agent=$hero, target=$foe)]
+    evt  $framing [&Frames(agent=author, target=$deed, as=cool)]
+  then:
+    audience [#Thrilled]
+    audience [#Awed]
+    audience [~RootsFor(target=$hero)]
+    $hero [+MomentOfAwesome]
+    $deed [+MomentOfAwesome]
+    audience -- spectacle
+}
+
+
+// === CONCRETE VIGNETTE: Raiders of the Lost Ark — Indy shoots the swordsman (film, 1981) ===
+// In a Cairo bazaar a black-robed swordsman blocks Indiana Jones's path, theatrically flourishing a
+// scimitar through an intimidating display of bladework. The whole frame braces for an elaborate
+// whip-versus-sword duel — and Indy, weary and unimpressed, simply draws his revolver and shoots him
+// dead. The economy of it is the awe: one tired shrug of a gunshot that defines the character's
+// no-nonsense competence forever. Spielberg frames the anticlimax FOR the laugh-and-cheer, and the
+// house, thrilled, is Indy's the rest of the way.
+
+// INDIANA JONES
+char indy [+Protagonist] [+Skilled]
+
+// THE CAIRO SWORDSMAN — the flourishing obstacle
+char swordsman [+Antagonist]
+
+// INT./EXT. CAIRO BAZAAR - DAY
+set bazaar [+Exterior] [+Day] [+Crowded]
+
+scene the_bazaar {
+  beat 1 {
+    swordsman @ bazaar
+    indy @ bazaar
+    swordsman -- indy : "Blocks Path"
+    // the elaborate sword display sets up the expected duel
+  }
+  beat 2 {
+    evt the_gunshot [&Finishes(agent=indy, target=swordsman)]   // the unbothered draw-and-fire ends it
+    evt staged      [&Frames(agent=author, target=the_gunshot, as=cool)]   // Spielberg frames the anticlimax FOR awe
+    // Moment_Of_Awesome -> indy [+MomentOfAwesome]; audience [#Thrilled] [#Awed] [~RootsFor(indy)]
+  }
+}

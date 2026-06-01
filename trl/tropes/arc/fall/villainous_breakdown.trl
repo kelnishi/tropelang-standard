@@ -1,0 +1,103 @@
+// === PREAMBLE ===
+// @trope    Villainous Breakdown
+// @category Villains / Psychological
+// @source   https://allthetropes.org/wiki/Villainous_Breakdown
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): the moment a villain, watching their carefully laid schemes collapse,
+// loses all composure — the suave, in-control mask cracks into screaming rage, gibbering panic,
+// or outright madness. The calmer and more collected the villain was, the more spectacular the
+// shattering. FRONTIER: names the EMOTION_DYNAMICS appraisal of a schemer's own [&Fails] — the
+// inverse of MAGNIFICENT_BASTARD's serene mask. Where the Magnificent Bastard's poise is the
+// SOURCE of our regard, the Breakdown is what happens when that poise has nothing left to stand
+// on: [#Certain] inverts to [-Certain] [#Afraid], and the composed surface goes [+Volatile]. A
+// near-miss of the DESPAIR EVENT HORIZON — the panic of a will that has not yet abandoned hope,
+// only its self-command.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/emotion_dynamics.trl"   // appraisal of failure -> loss of composure; [#Afraid], fear
+import "trl/tropes/conflict/tactics/the_gambit.trl"          // the plan whose [&Fails] springs the breakdown
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc villainous_breakdown -> [
+  the_gambit            : "the breakdown is the failure mode of",
+  magnificent_bastard   : "the cracking of the serene mask of",
+  despair_event_horizon : "the panicked near-miss of",
+  fear                  : "the composed schemer is overtaken by",
+  failure               : "appraises the schemer's own as identity-shattering"
+]
+
+
+// === ONTOLOGY ===
+// The composed-villain-unmasked: cunning antagonism whose poise was load-bearing, and shatters
+// when the scheme does. (Antagonist a prelude role, Cunning/Volatile prelude props — reused.)
+
+imply VillainousBreakdown -> [Antagonist, Cunning, Volatile, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition: a composed [+Antagonist] [+Cunning] [#Certain] villain — certainty being the
+// outward sign of the in-control mask — suffers the failure of their own scheme ([&Fails], the
+// failure mode of The Gambit). The appraisal of that failure cracks the mask: certainty inverts
+// ([-Certain]), the surface goes [+Volatile], and the dread the poise was holding back surfaces
+// as [#Afraid]. The schemer becomes [+VillainousBreakdown]. (The composure must be present FIRST
+// — [#Certain] in the when: — so the rule fires on the COLLAPSE of control, not on a villain who
+// was panicky all along. It stops short of the Despair Event Horizon: a will undone, not abandoned.)
+rule VillainousBreakdown {
+  when:
+    char $villain [+Antagonist] [+Cunning] [#Certain]
+    evt  $collapse [&Fails(agent=$villain)]
+  then:
+    $villain [-Certain]
+    $villain [+Volatile]
+    $villain [#Afraid(source=$collapse)]
+    $villain [+VillainousBreakdown]
+    $villain -- fear
+}
+
+
+// === CONCRETE VIGNETTE: One Flew Over the Cuckoo's Nest — Nurse Ratched, the ward erupts (film, 1975) ===
+// Nurse Ratched runs Ward 3 as a glacial machine of routine and quiet humiliation — never raising
+// her voice, her control so total it reads as serenity. Her scheme is the ward itself: the men
+// kept docile, McMurphy's rebellion contained by procedure. When the ward erupts — the party, the
+// broken window, Billy Bibbit's suicide laid at her feet and McMurphy's hands at her throat — the
+// machine of her composure fails. The flat administrative calm finally cracks: the certainty that
+// the system would hold is gone, the voice rises, the unflappable mask shows fear. The institution
+// reasserts itself, but the woman who never lost control has, for once and visibly, lost it.
+
+// NURSE RATCHED — the glacial-calm administrator; control IS the scheme
+char ratched [+Antagonist] [+Cunning] [#Certain]
+
+// RANDLE McMURPHY — the rebellion that breaks the routine
+char mcmurphy [+Protagonist]
+
+// INT. WARD 3, STATE MENTAL HOSPITAL - DAY
+set ward [+Interior] [+Day]
+ward [+Institutional]
+
+scene the_mask_cracks {
+  beat 1 {
+    ratched @ ward
+    mcmurphy @ ward
+    // The control holds: the ward runs on her routine, the men managed by procedure.
+    ratched -- mcmurphy : "Contains"
+  }
+  beat 2 {
+    // The ward erupts — Billy's death, McMurphy's hands at her throat. Her scheme of control fails.
+    evt the_eruption [&Fails(agent=ratched)]
+        dialog(inject=[speaker=ratched], inline="""
+               speaker: "{speaker}"
+               cue: "the flat administrative calm gone, the voice finally rising, fear on the unflappable face"
+               tone: cracked, no longer serene
+               text: "The best thing we can do is go on with our daily routine."
+               """)
+    ratched [-Certain]
+    ratched [+Volatile]
+    ratched [#Afraid(source=the_eruption)]
+    ratched [+VillainousBreakdown]
+    ratched -- fear
+    // VillainousBreakdown — the composed mask ([#Certain]) shatters into [-Certain] [+Volatile] [#Afraid]
+  }
+}

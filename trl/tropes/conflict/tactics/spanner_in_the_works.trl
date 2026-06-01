@@ -1,0 +1,105 @@
+// === PREAMBLE ===
+// @trope    Spanner in the Works
+// @category Plot / Causality
+// @source   https://allthetropes.org/wiki/Spanner_in_the_Works
+// @domain   Epistemic
+// @version  1.3
+//
+// Laconic (per the wiki): "That imbecile has ruined all of my plans." A carefully laid scheme is
+// wrecked not by a rival's superior counter-plan but by an agent or factor the schemer never
+// modeled at all — a wildcard outside everyone's calculation (the cat that wanders off with the
+// villain's mask; the bystander who blunders into the heist). FRONTIER: rides motivation_dynamics
+// (a [&Schemes] plan toward a goal) and the gambit cluster (the_gambit / batman_gambit — the plan
+// that is wrecked), but inverts their epistemics. A Batman Gambit STAKES the plan on an explicitly
+// [@Models]'d mark behaving as foreseen; a Spanner is the opposite — the wrecker is precisely the
+// agent the schemer did NOT model ([+Unforeseen], not part of either side's theory of mind), so the
+// plan is [+Foiled] by a variable that was never a player. Distinct from Out-Gambitted (a modeled
+// rival's better plan beats yours) and from the_gambit (where the prediction HOLDS): here no
+// counter-plan and no prediction — just an unaccounted variable falling across the works.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"               // conflict
+import "trl/modules/motivation_dynamics.trl"  // [&Schemes]/[&Thwarts] — the plan and the obstacle that wrecks it
+import "trl/modules/theory_of_mind.trl"       // [@Models] — the model the schemer pointedly does NOT have of the spanner
+import "trl/tropes/conflict/tactics/the_gambit.trl"            // the plan that is wrecked is a Gambit; [+Outwits] is what fails to land
+
+assoc spanner_in_the_works -> [
+  the_gambit       : "the unmodeled-wildcard failure mode of",
+  batman_gambit    : "the epistemic inverse of (modeled mark) — an",
+  theory_of_mind   : "a wrecker outside the schemer's",
+  motivation_dynamics : "thwarts a pursued plan in",
+  conflict         : "loses, to no one's plan, a"
+]
+
+
+// === ONTOLOGY ===
+// A Spanner is the unforeseen wrecker plus the wrecking of a Gambit: an [+Unforeseen] agent
+// (outside the modeled field) whose act [&Thwarts] the plan, leaving it [+Foiled]. (TheGambit is the
+// parent plan-cluster reused from the_gambit.trl; Bystander/Unforeseen are the wildcard's marks.)
+imply SpannerInTheWorks -> [TheGambit, Unforeseen, Foiled, Narrative]
+
+// The wrecker's mark: an agent the schemer never put in the model — a wildcard, often a Bystander.
+imply Unforeseen -> [Bystander, Unaccounted]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a schemer is running a plan ([&Schemes]); a SECOND agent — one the schemer does NOT
+// model ([@Models] is absent for that agent), tagged [+Unforeseen] — acts, and that act [&Thwarts]
+// the schemer. THAT wrecks the plan. The load-bearing clause is the negated model: had the schemer
+// modeled this agent and staked the plan on them, it would be a Batman Gambit, not a Spanner; here
+// the wrecker is outside the calculation entirely. The deed IS the Spanner (tags it), the plan is
+// [+Foiled], and the schemer's intended win ([+Outwits], inherited from the_gambit) does not land.
+// Contrast Out-Gambitted: there the wrecker is a modeled rival with a better plan; here there is no
+// rival plan at all — just an unaccounted variable.
+rule SpannerInTheWorks {
+  when:
+    char $schemer [&Schemes(target=$field)]
+    char $spanner [+Unforeseen]
+    not ( $schemer [@Models(other=$spanner)] )
+    evt  $wildcard [&Acts(agent=$spanner)] [&Thwarts(target=$schemer)]
+  then:
+    $wildcard [+SpannerInTheWorks]
+    $schemer  [+Plan_Foiled]
+    $schemer  [-Outwits]
+}
+
+
+// === CONCRETE VIGNETTE: Jurassic Park — Nedry's heist meets the Dilophosaurus (film, 1993) ===
+// Dennis Nedry's plan is airtight on its own terms: shut down the park's security to cover the theft,
+// smuggle the embryos out in a shaving-cream can, make the East Dock boat. He has modeled every
+// system and every guard he needs to evade. What he never modeled — what was never a player in his
+// scheme at all — is a single Dilophosaurus loose in the storm. Lost, his Jeep stuck, he is ambushed
+// and killed by an animal that has nothing to do with anyone's plan; the embryos roll into the mud
+// and dissolve. No rival out-schemed him. A wildcard fell across the works.
+
+// DENNIS NEDRY — the disgruntled programmer running the embryo heist
+char nedry [+Antagonist] [+Cunning]
+nedry [&Schemes(target=the_park)]                 // his plan is aimed at the park's systems, not at any creature
+nedry [#MotivatedBy(reason="Greed")]
+// THE PARK'S SECURITY SYSTEMS (the field of play he means to subvert)
+char the_park [+Institution]
+// THE DILOPHOSAURUS — the wildcard: never in Nedry's model, never a player in anyone's scheme
+char dilophosaurus [+Unforeseen] [+Bystander]
+// THE EMBRYO CAN (the prize the foiled plan was carrying out)
+obj embryo_can [+MacGuffin]
+// EXT. JUNGLE ROAD IN THE STORM - NIGHT
+set jungle_road [+Exterior] [+Night]
+
+scene the_heist {
+  beat 1 {
+    nedry @ jungle_road
+    nedry > embryo_can
+    // the plan in motion: systems down, prize in hand, dock ahead — modeled end to end
+    evt the_run [&Schemes(agent=nedry, target=the_park)]
+    // nedry [&Schemes(the_park)] — but he never modeled the loose animal in the dark
+  }
+  beat 2 {
+    dilophosaurus @ jungle_road
+    // the unaccounted variable acts AND wrecks the plan — not a counter-scheme, a wildcard
+    evt the_ambush [&Acts(agent=dilophosaurus)] [&Thwarts(target=nedry)]
+    // SpannerInTheWorks -> the_ambush [+SpannerInTheWorks]; nedry [+Plan_Foiled]; nedry [-Outwits]
+    nedry [+Plan_Foiled]
+    nedry [-Outwits]
+  }
+}

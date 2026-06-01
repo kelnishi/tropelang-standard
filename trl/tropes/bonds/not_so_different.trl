@@ -1,0 +1,113 @@
+// === PREAMBLE ===
+// @trope    Not So Different
+// @category Characterization / Relationships
+// @source   https://allthetropes.org/wiki/Not_So_Different
+// @domain   Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): two characters who seem radically opposed turn out to have more in common
+// than either would like — most often the VILLAIN is first to notice, points it out ("We're not so
+// different, you and I"), and the hero recoils ("I'm nothing like you!"). FRONTIER: the COLLAPSE of
+// The Foil. Where the Foil sets two characters on a shared AXIS with OPPOSITE values so the contrast
+// illuminates both, Not So Different is the dual — the same axis, the SAME value, the contrast caving
+// in. The villain (the hero's Evil Counterpart / Shadow) holds up the mirror and DEMONSTRATES the
+// shared trait; the recognition lands as the hero is forced to see his own reflection in the enemy.
+// The Foil divides; this reveals the seam was never there.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/tropes/character/roles/the_foil.trl"            // the contrast axis whose collapse this trope IS
+import "trl/modules/theory_of_mind.trl"     // Asserts — the villain demonstrates the shared trait to the hero
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc not_so_different -> [
+  the_foil    : "is the collapse of the contrast drawn by",
+  recognition : "forces on the hero an unwilling",
+  identity    : "unsettles, by reflection, the hero's",
+  conflict    : "ennobles or poisons, but never dissolves, the",
+  worthy_opponent : "shares the across-the-line kinship of",
+  heel_realization : "is the other-pointed mirror to the self-seen wrong of"
+]
+
+
+// === ONTOLOGY ===
+// The reveal of likeness across the line of conflict — the dark-mirror recognition, distinct from
+// the mere contrast of the Foil it inverts.
+imply NotSoDifferent -> [Shadow, Recognition, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition: take a Foil pairing (a shared AXIS), but bind the SAME value on BOTH sides — the
+// contrast collapses into sameness. The villain ASSERTS that very axis to the hero (claim=$d), holding
+// up the mirror. The villain is revealed as the hero's [+Shadow] (dark mirror, per the prelude); the
+// hero is [+Confronted] with it and becomes [#Aware] of the likeness. The enmity does NOT dissolve —
+// the thread is recognition, not reconciliation.
+rule Not_So_Different {
+  when:
+    char $hero    [@Foils(other=$villain)]
+    char $hero    [+Trait(axis=$d, value=$v)]
+    char $villain [+Trait(axis=$d, value=$v)]            // SAME value -> the Foil's contrast caves in
+    evt  $mirror  [&Asserts(agent=$villain, to=$hero, claim=$d)]
+  then:
+    $villain [+Shadow]                                   // revealed as the hero's dark mirror
+    $hero [+Confronted(other=$villain)]                  // the mirror forced upon him
+    $hero [#Aware]                                       // he sees the likeness — the recognition lands
+    $hero -- recognition
+}
+
+// SUBVERTED: the hero is handed the same mirror and names the one axis on which they genuinely DIVERGE
+// — "we are different, because I would not have done THAT." The claimed sameness is rejected on a
+// second axis where the values truly differ, and the hero holds the moral line instead of crossing it.
+rule Not_So_Different_Rejected {
+  when:
+    char $hero    [@Foils(other=$villain)]
+    evt  $mirror  [&Asserts(agent=$villain, to=$hero, claim=$d)]
+    char $hero    [+Trait(axis=$line, value=$vh)]
+    char $villain [+Trait(axis=$line, value=$vx)]
+    $vh != $vx                                           // a second axis where they truly diverge
+  then:
+    $hero [#Resolute]
+    $hero -- identity
+}
+
+
+// === CONCRETE VIGNETTE: The Dark Knight — the Joker's ferry gambit (film, 2008) ===
+// The Joker has spent the film insisting that order is a thin coat of paint — that Gotham's white
+// knight is "one bad day" from the abyss the clown already lives in. They share an axis: both have
+// staked everything on a thesis about Gotham's true nature. The Joker's whole scheme is the assertion,
+// pressed to a proof — "you complete me," "you're just a freak, like me" — daring Batman to break his
+// one rule and confirm the likeness. Batman is forced to look, and the disquiet is real: the mirror is
+// not a lie. He answers it not by denying the kinship but by refusing the single act that would seal
+// it — choosing the rule as the one axis the Joker can't collapse. (Recognition lands; the line holds.)
+
+// BRUCE WAYNE / BATMAN — the white knight the Joker insists is a reflection
+char batman [+Protagonist] [@Foils(other=joker)]
+// on the shared axis (a thesis about Gotham's nature), the same staked conviction
+batman [+Trait(axis=gotham_thesis, value=absolutism)]
+// the second axis where he will NOT meet the Joker — the one rule
+batman [+Trait(axis=the_rule, value=no_kill)]
+
+// THE JOKER — the agent of chaos, the dark mirror who names the likeness
+char joker [+Antagonist] [@Foils(other=batman)]
+joker [+Trait(axis=gotham_thesis, value=absolutism)]
+joker [+Trait(axis=the_rule, value=anything)]
+
+// EXT. GOTHAM HARBOR — NIGHT — two ferries wired to blow, the social experiment
+set gotham_harbor [+Exterior] [+Night]
+
+scene the_ferry_gambit {
+  beat 1 {
+    batman @ gotham_harbor
+    joker @ gotham_harbor
+    joker -- batman : "you're just a freak, like me"
+  }
+  beat 2 {
+    evt the_taunt [&Asserts(agent=joker, to=batman, claim=gotham_thesis)]   // the mirror held up
+    // Not_So_Different -> joker [+Shadow], batman [+Confronted(other=joker)] [#Aware] -- recognition
+  }
+  beat 3 {
+    // Not_So_Different_Rejected -> on axis=the_rule the values DIVERGE (no_kill != anything):
+    // batman [#Resolute] -- identity. The likeness is owned; the one act that would seal it, refused.
+    batman -- joker : "the rule is the line you can't make me cross"
+  }
+}

@@ -12,8 +12,8 @@
 
 // === DEPENDENCIES ===
 import "trl/concepts/index.trl"               // conflict, consequence, point_of_no_return
-import "trl/tropes/conflict.trl"              // what rises across the arc
-import "trl/tropes/three_act_structure.trl"  // the related three-part model
+import "trl/tropes/structure/conflict.trl"              // what rises across the arc
+import "trl/tropes/structure/three_act_structure.trl"  // the related three-part model
 
 
 // === THE SYSTEM ===

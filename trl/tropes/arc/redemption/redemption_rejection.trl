@@ -1,0 +1,84 @@
+// === PREAMBLE ===
+// @trope    Redemption Rejection
+// @category Character Development / Alignment
+// @source   https://allthetropes.org/wiki/Redemption_Rejection
+// @domain   Mind
+// @version  1.3
+//
+// Laconic (per the wiki): another character — or the universe itself — goes out of its way to
+// offer a wrongdoer a genuine chance to mend their ways, and the offer is firmly refused: the
+// villain will not see the wrong, thinks atonement impossible, or simply prefers what they are.
+// FRONTIER: the NEGATION of the Heel/Face Turn. Where heel_face_turn takes the offered path
+// ([&Defects] -> [+Ally] -- redemption) and redemption_arc walks its whole trajectory, this is
+// the SAME extended hand REFUSED — the door held open and the wrongdoer choosing to stay inside.
+// Not a Heel Realization that curdles into resolve (that needs no offer); here the way out is
+// named and laid at their feet, and they push it away. The turn not taken.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/emotion_dynamics.trl"     // the appraisal layer the redemption path rides
+import "trl/tropes/arc/redemption/heel_face_turn.trl"        // the turn TAKEN — this is its mirror, the turn refused
+import "trl/tropes/arc/redemption/redemption_arc.trl"        // the offered trajectory — declined at the threshold
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc redemption_rejection -> [
+  heel_face_turn : "is the negation of",
+  redemption_arc : "is the offered path of, refused",
+  redemption     : "spurns the offer of",
+  mercy          : "answers with refusal",
+  heel_realization : "needs no dawning — the wrong is named for them, and declined"
+]
+
+
+// === ONTOLOGY ===
+// The refusal is its own beat: a Reversal that does NOT happen — the alignment held by choice.
+imply RedemptionRejection -> [Refusal, Corruption, Narrative]
+
+
+// === ABSTRACT RULE ===
+// A wrongdoer is offered redemption (a hand extended) and refuses it. Unlike HeelFaceTurn, no
+// defection follows: the antagonist stays antagonist, hardened by the choice, and the spurned
+// redemption is touched as the path NOT taken.
+rule RedemptionRejection {
+  when:
+    char $c [+Antagonist]
+    evt  $offer  [&OffersRedemption(to=$c)]
+    evt  $spurn  [&Refuses(agent=$c)]
+  then:
+    $c [+Unrepentant]                  // the offer named the way out; he keeps the wrong
+    $c [+Hardened]                     // the choice sets, rather than softens, the alignment
+    $c -- redemption                   // the path is touched — and declined
+    $spurn [+RedemptionRejection]
+}
+
+
+// === CONCRETE VIGNETTE: Marvel's The Avengers — Loki on the parapet (film, 2012) ===
+// On the Stark Tower terrace, his invasion collapsing, Loki finds his brother already beside him.
+// Thor does not strike — he offers the way back: "It's not too late to stop this." For an instant
+// Loki seems to soften, lowers the scepter — and then drives the blade into Thor's side, naming
+// the extended hand "sentiment." The hand was real; the door was open; he chose the throne he had
+// already lost over the brother still holding it out. The turn not taken.
+
+// LOKI — the wrongdoer offered a way back, who answers the offer with a knife
+char loki [+Antagonist]
+
+// THOR — the one who extends the hand; not a foe here but a door held open
+char thor [+Protagonist]
+
+// EXT. STARK TOWER PARAPET - DUSK — the city burning below, the offer made in the lull
+set parapet [+Exterior] [+Dusk]
+
+scene the_offer_refused {
+  beat 1 {
+    loki @ parapet
+    thor @ parapet
+    evt the_hand [&OffersRedemption(to=loki)]   // "It's not too late to stop this"
+    thor -- loki : "Extends A Hand"
+  }
+  beat 2 {
+    evt the_knife [&Refuses(agent=loki)]         // softens, then stabs — names it "sentiment"
+    loki !> thor : "Drives The Blade"
+    // RedemptionRejection -> loki [+Unrepentant] [+Hardened] -- redemption ; the_knife [+RedemptionRejection]
+    // (NOT a turn: no [&Defects], no [-Antagonist]/[+Ally] — heel_face_turn's mirror)
+  }
+}
