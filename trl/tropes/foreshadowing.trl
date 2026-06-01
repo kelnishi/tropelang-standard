@@ -105,6 +105,10 @@ set heath [+Exterior] [+Storm] [+Liminal]
 // INT. DUNSINANE CASTLE - DAY
 set dunsinane [+Interior] [+Day]
 
+// THE FORESHADOWED END — planted here as a referent (STYLE §3: seed the loaded gun at the top). The
+// prophecy below points at this event by name; it does not OCCUR until Dunsinane (the_payoff scene).
+evt macbeth_falls
+
 scene the_prophecy {
   beat 1 {
     witches @ heath
@@ -139,7 +143,7 @@ scene the_payoff {
     macduff [+NotOfWomanBorn]
     // The loophole lands: the ambiguity collapses and the doom is made manifest.
     resolve prophecy_meaning -> macbeth [+Doomed_By_Loophole]
-    evt macbeth_falls [&Slain(agent=macduff, target=macbeth)]
+    macbeth_falls [&Slain(agent=macduff, target=macbeth)]   // the planted event OCCURS here (the payoff)
     macbeth -- macduff : "Falls To"
     prophecy [#Revealed]
   }

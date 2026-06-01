@@ -13,12 +13,21 @@ integrates it (registry, promotion, commit). Read `SKILL.md` first — this is t
 3. **Draft** the file: full preamble (`@trope/@category/@source/@domain/@version 1.3` + laconic),
    imports, `assoc` lateral links, `imply Title -> [...]`, the recognition `rule`, and a CONCRETE
    VIGNETTE from a real story. Vary story/medium/era/stakes — do not reuse a franchise already common
-   in the corpus (check existing vignettes; e.g. avoid stacking LotR).
+   in the corpus (check existing vignettes; e.g. avoid stacking LotR). Follow **`STYLE.md`** —
+   especially: **(§1) declare the vignette cast ahead of use** (char/obj/set/evt in a block before the
+   scenes), and **(§8) the vignette TRIGGERS the rule, it does not hardcode its conclusions** — assert
+   only the `when` trigger facts and let the engine DERIVE the `then` outputs. Hand-asserting an output
+   (`$x [+TheTrope]`, a `[+Resolved]`/`[+Pivotal]`) makes the example look right while the rule never
+   fires — and often *blocks* it (a `not(Resolved)` clause fails).
 4. **DRY.** Reuse existing corpus tags/concepts rather than reinvent. Run
    `python3 skills/trope-to-tropelang/scripts/corpus_reuse.py <file>` and consolidate genuine duplicates
    (keep distinct specificity).
 5. **Self-check — both must pass:**
    - `bash skills/trope-to-tropelang/scripts/gate.sh <file>` → `── GATE PASS ──`
+   - **The recognition must FIRE on your vignette under the real engine:**
+     `cargo run --quiet --example eval -- trl/tropes/<name>.trl` → your rule appears under "rules fired"
+     and its outputs under "derived facts" (NOT hand-asserted in the vignette). If it doesn't fire, the
+     vignette isn't triggering the rule — fix the triggers, don't paper over it by asserting the output.
    - **Sim the rule AD HOC — do NOT edit `tools/sim.py`** (shared file; parallel agents collide). Run an
      inline check that loads your trope's own rule file and a minimal scenario, e.g.:
      ```bash

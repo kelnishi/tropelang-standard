@@ -15,6 +15,19 @@ Declare every entity — `char` / `obj` / `set` / `evt` / `arc` / `concept` — 
 the file**, before the temporal log that uses it. A reference that appears before its declaration is a
 paper cut for the parser, for the validator (which flags undeclared referents), and for the reader.
 
+**The firm rule:** nothing in the temporal log (a `scene` / `beat` / `act`) may name an entity not yet
+declared. An entity that springs into being mid-story — used in a beat, never introduced — is the
+defect this guide exists to kill. Even an entity the story only *points at* from the future belongs up
+front: a foreshadowing omen's `[&Foreshadows(event=the_fall)]`, a Chekhov's gun, a planted twist —
+declare the referent at the top (a bare `evt the_fall`) and let it *occur* later (§3). **The advisory:**
+within the setup block itself, prefer to declare a bare entity before any sibling's tag names it
+(declare `char polynices` before `antigone [@LoyalTo(faction=polynices)]`) — declarations first, then
+the cross-referencing relationships (§4). A forward reference to a sibling *inside* the setup block is a
+minor nit, not a defect; the whole block is read as a unit before the timeline begins.
+
+Sweep a file (or the corpus) with `skills/trope-to-tropelang/scripts/audit_declare_ahead.py` — it
+separates SEVERE (temporal-log) hits from advisory (intra-setup) ones.
+
 ❌ The forgery springs into being mid-swap, never introduced:
 ```trl
 scene the_swap {
