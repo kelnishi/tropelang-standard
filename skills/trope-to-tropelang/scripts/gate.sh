@@ -15,9 +15,10 @@ for k in trope category source domain; do
 done
 [ $fail -eq 0 ] && echo "✓ preamble (@trope/@category/@source/@domain)"
 
-# 2 · structural validator (errors fail; warnings ok)
-if python3 skills/trope-to-tropelang/scripts/validate_tropelang.py "$f" 2>&1 | grep -qE "✗|ERROR|error:"; then
-  echo "✗ validator errors"; python3 skills/trope-to-tropelang/scripts/validate_tropelang.py "$f" 2>&1 | grep -E "✗|error" | head; fail=1
+# 2 · structural validator (Rust reference; errors fail, warnings ok)
+vout="$(cargo run --quiet --example validate -- "$f" 2>/dev/null)"
+if printf '%s' "$vout" | grep -qE "✗"; then
+  echo "✗ validator errors"; printf '%s\n' "$vout" | grep -E "✗" | head; fail=1
 else echo "✓ validates"; fi
 
 # 3 · round-trip (a self-contained trope is log-register and MUST round-trip; if it declares
