@@ -278,7 +278,109 @@ def check_intent_targets(tokens, registry, label):
         i += 1
 
 
-def validate(src, label=""):
+def _read_level_path(tokens, i):
+    """tokens[i] is the first token after '<<'. Read a dotted level path `ID ('.' ID)*`.
+    Return (path_string, index_just_after_the_path)."""
+    parts, n = [], len(tokens)
+    if i < n and tokens[i][0] == 'ID':
+        parts.append(tokens[i][1]); i += 1
+        while i + 1 < n and tokens[i][0] == 'OP' and tokens[i][1] == '.' and tokens[i + 1][0] == 'ID':
+            parts.append(tokens[i + 1][1]); i += 2
+    return ".".join(parts), i
+
+
+def _match_close(tokens, lt):
+    """Given index `lt` of a '<<', return the index of its matching '>>' (depth-aware)."""
+    depth, n = 0, len(tokens)
+    for k in range(lt, n):
+        if tokens[k] == ('OP', '<<', tokens[k][2]):
+            depth += 1
+        elif tokens[k] == ('OP', '>>', tokens[k][2]):
+            depth -= 1
+            if depth == 0:
+                return k
+    return n - 1
+
+
+def check_levels(tokens, label, warn_crossings=False):
+    """S14 §7 — diegetic-level reference resolution over the token stream. Tracks the active
+    level (set by `<<path>>` directives; the implicit `ground` before any) and each declared
+    node's HOME level (the active level at its declaration), then checks:
+      §7.1  a BARE reference whose home level != the active level is a silent crossing (error)
+            — it must be written `<<home|name>>`. Crossings never leak by omission.
+      §7.2  a directive or `<<path|…>>` crossing naming an undeclared level (error; typo guard).
+    `--warn-crossings` (opt-in, off by default) adds a `style` note at each inward/sideways
+    crossing. A file with no level directive stays on ground, so nothing is ever a crossing
+    and the rule never fires (every existing single-level TRL is unaffected). §8 (a non_canon
+    level minting an `!absolute!` fact) is enforced in the reference parser (`src/lib.rs`)."""
+    n = len(tokens)
+
+    # PASS 1 — declared levels + each declared node's home level (active level at declaration).
+    levels, home, active = set(), {}, ""
+    i = 0
+    while i < n:
+        k, v, _ = tokens[i]
+        if k == 'OP' and v == '<<':
+            path, j = _read_level_path(tokens, i + 1)
+            close = _match_close(tokens, i)
+            if not (j < n and tokens[j] == ('OP', '|', tokens[j][2])):   # a directive (no '|')
+                levels.add(path)
+                active = path
+            i = close + 1
+            continue
+        if k == 'ID' and v in ENTITY_TYPES and i + 1 < n and tokens[i + 1][0] in ('ID', 'VAR'):
+            home.setdefault(tokens[i + 1][1], active)
+            i += 2
+            continue
+        i += 1
+
+    # Mark every token that sits inside a crossing's CONTENT (between `<<path|` and `>>`):
+    # such references are explicitly leveled, so §7.1 cannot fire on them.
+    exempt = [False] * n
+    for lt in range(n):
+        if tokens[lt] == ('OP', '<<', tokens[lt][2]):
+            _, j = _read_level_path(tokens, lt + 1)
+            if j < n and tokens[j] == ('OP', '|', tokens[j][2]):
+                for m in range(j + 1, _match_close(tokens, lt)):
+                    exempt[m] = True
+
+    fmt = lambda lv: lv if lv else "ground"
+
+    # PASS 2 — resolve references, validate crossing/directive level names, run the lint.
+    active, bdepth, i = "", 0, 0
+    while i < n:
+        k, v, ln = tokens[i]
+        if k == 'OP' and v == '<<':
+            path, j = _read_level_path(tokens, i + 1)
+            is_cross = j < n and tokens[j] == ('OP', '|', tokens[j][2])
+            if path not in levels:                                       # §7.2 unknown level
+                errors.append(f"[{label}] line {ln}: unknown level '{fmt(path)}' in a "
+                              f"{'crossing' if is_cross else 'directive'} — no `<<{path}>>` "
+                              f"section declares it (S14 §7)")
+            if is_cross:
+                if warn_crossings and not (path == active or active.startswith(path + ".")):
+                    warnings.append(f"[{label}] line {ln}: [style] inward/sideways crossing to "
+                                    f"'{fmt(path)}' from '{fmt(active)}' (--warn-crossings)")
+                i += 1                                                   # walk content (exempt-guarded)
+            else:
+                active = path                                           # a directive sets the plane
+                i = _match_close(tokens, i) + 1
+            continue
+        if k == 'OP' and v == '[':
+            bdepth += 1; i += 1; continue
+        if k == 'OP' and v == ']':
+            bdepth = max(0, bdepth - 1); i += 1; continue
+        if k in ('ID', 'VAR') and bdepth == 0 and not exempt[i] and v in home:
+            prev = tokens[i - 1] if i > 0 else ('', '', 0)
+            is_decl = prev[0] == 'ID' and prev[1] in ENTITY_TYPES
+            if not is_decl and home[v] != active:                       # §7.1 silent crossing
+                errors.append(f"[{label}] line {ln}: '{v}' (home level '{fmt(home[v])}') "
+                              f"referenced on level '{fmt(active)}' without a crossing — "
+                              f"write `<<{fmt(home[v])}|{v}>>` (S14 §7)")
+        i += 1
+
+
+def validate(src, label="", warn_crossings=False):
     toks = lex(src, label)
     check_braces(toks, label)
     check_tags(toks, label)
@@ -288,6 +390,7 @@ def validate(src, label=""):
     kinds = build_kind_registry(toks)
     check_intent_targets(toks, set(kinds.keys()), label)
     check_references(toks, kinds, label)
+    check_levels(toks, label, warn_crossings)
     return toks
 
 
@@ -485,7 +588,7 @@ if __name__ == "__main__":
         report(src, label, target_path=files[0])
         sys.exit(0)
 
-    toks = validate(src, label)
+    toks = validate(src, label, warn_crossings="--warn-crossings" in flags)
 
     if errors:
         print("ERRORS:")
