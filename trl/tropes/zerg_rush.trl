@@ -1,0 +1,89 @@
+// === PREAMBLE ===
+// @trope    Zerg Rush (Quantity Over Quality · Death by a Thousand Cuts of bodies)
+// @category Military and Warfare Tropes
+// @source   https://allthetropes.org/wiki/Zerg_Rush
+// @domain   Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): defeat a stronger opponent with a very large number of cheap, disposable
+// combatants — quantity over quality, named for the StarCraft Zerg who swamp a better foe under a
+// tide of weak, expendable units. The signature this file recognizes is the TACTIC of winning by
+// NUMBERS, not skill: a [+Horde] of [+Expendable] units swarms a [+Stronger] / [+Outnumbered]
+// target, and it is the sheer COUNT of attackers crashing in — not any one decisive blow — that
+// overwhelms the target. Rides the action-dynamics Strikes vocabulary, counted: a high tally of
+// strikes against one target swamps it. Distinct from We Have Reserves (the COMMANDER's callous
+// attitude — that he spends his own as fuel and it costs him nothing): Zerg Rush is the assault
+// itself, won by quantity. Distinct from a Last Stand (a few HOLD against the many) and a
+// Curb-Stomp (a stronger party routs a weaker): here the WEAKER-per-unit side wins, by bodies.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/action_dynamics.trl"   // Strikes — the swarm of attacks, counted, against one target
+
+assoc zerg_rush -> [
+  action_dynamics  : "a counted flood of Strikes in",
+  conflict         : "wins by numbers, not skill, a",
+  we_have_reserves : "the tactic to the commander's callous attitude in",
+  the_siege        : "an assault-by-mass rather than the slow encirclement of",
+  curb_stomp_battle : "the underdog-per-unit inverse of the rout in",
+  last_stand       : "the swarm that finally swamps a"
+]
+
+
+// === ONTOLOGY ===
+// Quantity over quality: the win is the count of expendable bodies, not any single blow's force.
+imply ZergRush -> [Attrition, Swarm, Tactic, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a [+Stronger] / [+Outnumbered] target swarmed by a [+Horde] of [+Expendable] units —
+// recognized by the COUNT of strikes crashing in on that one target (five or more: a tide, not a
+// duel) — is swamped: [+Overwhelmed] by numbers. The count() clause is the trope's whole signature
+// and what separates it from a single Strike or Finisher: no one blow is decisive; the mass is. The
+// target's per-unit superiority ([+Stronger]) is precisely what is overrun, so the win reads as
+// quantity-over-quality. (Who throws the bodies and why they're disposable is We Have Reserves; here
+// the recognition is the assault that wins by drowning the foe.)
+rule Zerg_Rush {
+  when:
+    char $horde  [+Horde] [+Expendable]
+    char $target [+Outnumbered]
+    count( evt $rush [&Strikes(agent=$horde, target=$target)] ) >= 5
+  then:
+    $target [+Swamped]
+    $target [+Overwhelmed]
+    $horde [+ZergRush]
+}
+
+
+// === CONCRETE VIGNETTE: StarCraft — a zergling rush on a terran base (real-time strategy game, 1998) ===
+// The eponym. The Zerg pour cheap zerglings out of the hatchery faster than they can be killed and
+// send them swarming across the map at a terran outpost before its defenders are ready. Any single
+// zergling is trash — a marine outclasses it one-on-one — but they don't come one at a time. Wave
+// after wave crashes into the chokepoint; the bunker's fire drops a dozen and a dozen more pour
+// over the bodies, until the line is simply swamped under claws. The base falls not to a better
+// unit but to more units than it can shoot. Quantity over quality, the trope's namesake play.
+
+// THE ZERG SWARM (the cheap, endless zerglings)
+char swarm   [+Antagonist] [+Collective] [+Horde] [+Expendable]
+// THE TERRAN OUTPOST GARRISON (better troops, too few of them)
+char garrison [+Protagonist] [+Collective] [+Outnumbered]
+garrison [+Stronger]                        // per-unit superior — and precisely what gets overrun
+// EXT. THE OUTPOST CHOKEPOINT — THE RAMP — DAY
+set  chokepoint [+Exterior] [+Day] [+Field]
+
+scene the_rush {
+  beat 1 {
+    swarm    @ chokepoint
+    garrison @ chokepoint
+  }
+  beat 2 { evt wave_one   [&Strikes(agent=swarm, target=garrison)] }
+  beat 3 { evt wave_two   [&Strikes(agent=swarm, target=garrison)] }
+  beat 4 { evt wave_three [&Strikes(agent=swarm, target=garrison)] }
+  beat 5 { evt wave_four  [&Strikes(agent=swarm, target=garrison)] }
+  beat 6 {
+    evt wave_five [&Strikes(agent=swarm, target=garrison)]
+    // Zerg_Rush fires: count(&Strikes agent=swarm target=garrison) >= 5
+    //   -> garrison [+Swamped] [+Overwhelmed];  swarm [+ZergRush]   (not one blow — the mass)
+  }
+}

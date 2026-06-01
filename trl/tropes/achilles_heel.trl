@@ -1,0 +1,96 @@
+// === PREAMBLE ===
+// @trope    Achilles' Heel
+// @category Combat Tropes
+// @source   https://allthetropes.org/wiki/Achilles%27_Heel
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): any seemingly nigh-invulnerable entity will inevitably have ONE key
+// weakness that can and will be exploited — the single weak point that, struck, undoes a foe nothing
+// else could touch. Named for Achilles, dipped in the Styx to be invincible save the heel his mother
+// held him by. The signature this file recognizes: an entity that is [+Invulnerable] EVERYWHERE save a
+// single [+Vulnerable] [+WeakPoint] (often [+Hidden], unknown even to the entity), and a strike aimed
+// PRECISELY at that one point — not force against force — that gets through and lays the mighty one low,
+// [+Fallen] despite all its power. Rides the action_dynamics Exploit_Weakness -> Finisher chain: the
+// strike's kind matches the foe's kind of vulnerability, beating the invulnerability, then the finisher
+// lands on the now-[+Exposed] giant. Distinct from David Versus Goliath (which keys on an [+Outmatched]
+// underdog as the WHO of the win); here the signature is the entity's own structure — invincible but for
+// the one gap — and the deed is the gap being found and struck, by anyone or anything. The weak point is
+// the planted Chekhov's Gun of the foe's anatomy: established as the one chink, then fired upon.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/modules/action_dynamics.trl"   // Exploit_Weakness -> [+Exposed];  Finisher -> [+Defeated]
+
+assoc achilles_heel -> [
+  action_dynamics      : "the Exploit_Weakness / Finisher rules of",
+  conflict             : "the one weak point decides a",
+  david_versus_goliath : "the weaker party wins by hitting the giant's one weak point, an instance of",
+  the_worf_effect      : "the established invincible is laid low to make a point, a cousin of",
+  chekhovs_gun         : "the weak point is planted as the one chink, then fired upon, like the"
+]
+
+
+// === ONTOLOGY ===
+// The pattern is invulnerability defined by its single exception: overwhelming power, but for one gap —
+// and the story exists to find and strike that gap. The component cluster is the weak point (Vulnerable)
+// inside an otherwise impervious whole (Combat), the chink that fells the mighty (Narrative).
+imply AchillesHeel -> [Vulnerable, Combat, WeakPoint, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition: an [+Invulnerable] entity ($mighty) carries exactly one [+Vulnerable] [+WeakPoint],
+// keyed to a kind $k; a strike of that very kind finds it (action_dynamics' Exploit_Weakness having
+// opened the giant to [+Exposed], because a kind-matched strike beats any guard — here, beats the
+// invulnerability), and a finisher lands. The deed IS an Achilles' Heel: the mighty one is [+Fallen]
+// despite its power, undone not by greater force but by the single gap in it. The [+Invulnerable] +
+// lone-[+WeakPoint] structure on the foe is the whole signature — strike a merely-tough foe anywhere and
+// this does not fire; strike the one chink in the impervious and the giant falls. Tags the felling deed.
+rule AchillesHeel {
+  when:
+    char $mighty [+Invulnerable] [+WeakPoint] [+Vulnerable(to=$k)] [+Exposed]
+    evt  $f [&Finishes(agent=$striker, target=$mighty)]
+  then:
+    $f [+AchillesHeel]
+    $mighty [+Fallen]
+}
+
+
+// === CONCRETE VIGNETTE: The War of the Worlds (H. G. Wells, novel, 1898) ===
+// The Martians come in their fighting-machines and lay England waste. No human weapon touches them:
+// the Heat-Ray and Black Smoke break every army sent against them; artillery, navy, and rifle alike are
+// useless — they are, to all of humanity's force, invulnerable. But the invaders carry one weak point
+// none of them know they have, hidden in their very biology: arriving from a sterilized Mars, they have
+// no immunity to Earth's bacteria. The microbes — the humblest things on the planet, against which not a
+// shot is fired — find that one gap. The conquerors, untouched by all our power, are laid low in their
+// machines by the common cold; the tripods stand silent. The invincible invasion falls, not to a hero's
+// strike but to the single biological chink in an otherwise impervious foe.
+
+// THE MARTIANS (the invaders in their fighting-machines — invulnerable to every human weapon)
+char martians [+Antagonist] [+Invulnerable]
+// the one gap, hidden in their biology: no immunity to Earth's microbes — unknown even to them
+martians [+WeakPoint]
+martians [+Vulnerable(to="Microbes")]
+// THE EARTH BACTERIA (the humblest agent — the strike no army could land, aimed at the one weak point)
+char bacteria [+Common]
+// THE MARTIAN FIGHTING-MACHINE (the tripod — power that nothing human can touch)
+obj tripod [+Conspicuous]
+// EXT. THE RUINED OUTSKIRTS OF LONDON - DAY (the silenced machines, the red weed dying back)
+set london [+Exterior] [+Day]
+
+scene the_red_weed {
+  beat 1 {
+    martians @ london
+    bacteria @ london
+    // the microbes reach the one gap — a strike of the kind the Martians have no defence against;
+    // action_dynamics' Exploit_Weakness fires (kind="Microbes" matches Vulnerable(to="Microbes")),
+    // deriving martians [+Exposed] — the invulnerability beaten at its single weak point.
+    evt the_infection [&Strikes(agent=bacteria, target=martians, kind="Microbes")]
+  }
+  beat 2 {
+    // the finish: the conquerors die in their machines — the tripods stand silent over a saved Earth.
+    evt the_silence [&Finishes(agent=bacteria, target=martians)]
+    // Finisher -> martians [+Defeated];  AchillesHeel tags the deed, martians [+Fallen] despite all power.
+  }
+}

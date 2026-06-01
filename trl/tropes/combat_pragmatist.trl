@@ -1,0 +1,86 @@
+// === PREAMBLE ===
+// @trope    Combat Pragmatist (Dirty Fighting · Anti-Honor Fighter)
+// @category Conflict / Tactics
+// @source   https://allthetropes.org/wiki/Combat_Pragmatist
+// @domain   Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): a fighter with extensive knowledge of — or simple willingness to use —
+// tactics others call "dirty": eye-gouges, groin-kicks, hair-pulling, biting, a gun in a knife
+// fight, striking the wounded. There is something real at stake, so honor is a luxury and victory
+// is the only metric. Rides the action-dynamics Exploit_Weakness/Finisher vocabulary: where a
+// Worthy Opponent earns the win inside a code, the Pragmatist takes whatever opening is there and
+// finishes the [+Exposed] foe — [+Pragmatic], explicitly NOT [+Honorable]. The contrast with the
+// honorable fighter IS the trope: the duel's etiquette is exactly what he discards, and he wins
+// because of it.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict, honor
+import "trl/modules/action_dynamics.trl"   // Exploit_Weakness -> [+Exposed]; Finisher -> [+Defeated]
+
+assoc combat_pragmatist -> [
+  action_dynamics : "exploits the opening and lands the Finisher of",
+  conflict        : "is the no-rules resolution of a",
+  honor           : "is the deliberate refusal of",
+  the_duel        : "discards the dueling etiquette of",
+  worthy_opponent : "is the dishonorable foil of the",
+  curb_stomp_battle : "shares the lopsided finish of a"
+]
+
+
+// === ONTOLOGY ===
+// Victory over glory: the cluster is winning, not honor. [+Pragmatic] and [+Dishonorable] are the
+// signature; [+Combat] places it on the action layer.
+imply CombatPragmatist -> [Pragmatic, Dishonorable, Combat, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition: a fighter who is [+Pragmatic] and NOT [+Honorable] lands a Finisher on a foe he has
+// opened up ([+Exposed], typically via action_dynamics' Exploit_Weakness — the gouged eye, the
+// kicked groin, the struck wound). The not([+Honorable]) clause is the whole signature: it is what
+// separates the Pragmatist from a Worthy Opponent who would never take that opening. The opening is
+// taken, the foe falls, and the blow is tagged the trope.
+rule Combat_Pragmatist {
+  when:
+    char $fighter [+Pragmatic]
+    not ( $fighter [+Honorable] )
+    char $foe [+Exposed]
+    evt  $finish [&Finishes(agent=$fighter, target=$foe)]
+  then:
+    $foe [+Defeated]
+    $finish [+CombatPragmatist]
+    $fighter -- conflict
+}
+
+
+// === CONCRETE VIGNETTE: Raiders of the Lost Ark — the Cairo swordsman (film, 1981) ===
+// In a Cairo marketplace a black-clad swordsman clears the crowd and flourishes his scimitar,
+// inviting a duel of blades. Indiana Jones, exhausted and unimpressed by the ceremony, simply
+// draws his revolver and shoots him dead. The audience's biggest laugh in the film is the trope
+// itself: the showy honorable challenge answered by the pragmatic, unceremonious win.
+
+// INDIANA JONES
+char indy [+Protagonist] [+Pragmatic]
+indy [!Honorable]                                  // he refuses the duel's code outright
+
+// THE CAIRO SWORDSMAN
+char swordsman [+Antagonist] [+Honorable]
+swordsman [+Vulnerable(to=Gunfire)]                // a blade against a gun — the opening is total
+set cairo_market [+Exterior] [+Day]
+
+scene the_marketplace {
+  beat 1 {
+    indy      @ cairo_market
+    swordsman @ cairo_market
+    swordsman >< indy : "Flourishes Scimitar"      // the showy challenge to an honorable duel
+  }
+  beat 2 {
+    evt the_draw [&Strikes(agent=indy, target=swordsman, kind=Gunfire)]
+    // Exploit_Weakness (action_dynamics) -> swordsman [+Exposed]; the blade never had an answer
+  }
+  beat 3 {
+    evt the_shot [&Finishes(agent=indy, target=swordsman)]
+    // Combat_Pragmatist -> swordsman [+Defeated]; the_shot [+CombatPragmatist]; victory over glory
+  }
+}

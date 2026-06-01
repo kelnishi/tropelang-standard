@@ -183,6 +183,9 @@ import "trl/tropes/the_siege.trl"
 import "trl/tropes/conflicting_loyalty.trl"
 import "trl/tropes/spanner_in_the_works.trl"
 import "trl/tropes/wounded_gazelle_gambit.trl"
+import "trl/tropes/achilles_heel.trl"
+import "trl/tropes/combat_pragmatist.trl"
+import "trl/tropes/zerg_rush.trl"
 
 // === TROPE TITLE ENTRIES ===
 
@@ -411,6 +414,7 @@ concept refusal_of_the_call [+Trope(category="Universal", source="allthetropes.o
 
 // === AUTO-REGISTERED TITLES (regen_index.py — do not hand-edit below) ===
 
+concept achilles_heel [+Trope(category="Combat Tropes", source="https://allthetropes.org/wiki/Achilles%27_Heel")] [%Narrative]
 concept anagnorisis [+Trope(category="Narrative Devices", source="https://allthetropes.org/wiki/Anagnorisis")] [%Narrative]
 concept anti_hero [+Trope(category="Cast", source="https://allthetropes.org/wiki/Anti-Hero")] [%Narrative]
 concept batman_gambit [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Batman_Gambit")] [%Epistemic]
@@ -421,6 +425,7 @@ concept break_the_cutie [+Trope(category="Tragedy", source="https://allthetropes
 concept break_the_haughty [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Break_the_Haughty")] [%Narrative]
 concept chekhovs_gunman [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Gunman")] [%Narrative]
 concept chekhovs_skill [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Skill")] [%Narrative]
+concept combat_pragmatist [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Combat_Pragmatist")] [%Interpersonal]
 concept conflicting_loyalty [+Trope(category="Internal Conflict", source="https://allthetropes.org/wiki/Conflicting_Loyalty")] [%Interpersonal]
 concept curb_stomp_battle [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Curb_Stomp_Battle")] [%Interpersonal]
 concept david_versus_goliath [+Trope(category="Combat Tropes", source="https://allthetropes.org/wiki/David_Versus_Goliath")] [%Interpersonal]
@@ -495,3 +500,4 @@ concept worthy_opponent [+Trope(category="Characterization", source="https://all
 concept wounded_gazelle_gambit [+Trope(category="Manipulation", source="https://allthetropes.org/wiki/Wounded_Gazelle_Gambit")] [%Mind]
 concept xanatos_gambit [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Xanatos_Gambit")] [%Epistemic]
 concept you_shall_not_pass [+Trope(category="Conflict", source="https://allthetropes.org/wiki/You_Shall_Not_Pass")] [%Interpersonal]
+concept zerg_rush [+Trope(category="Military and Warfare Tropes", source="https://allthetropes.org/wiki/Zerg_Rush")] [%Interpersonal]
