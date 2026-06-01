@@ -180,6 +180,9 @@ import "trl/tropes/internal_reveal.trl"
 import "trl/tropes/taking_you_with_me.trl"
 import "trl/tropes/the_mole.trl"
 import "trl/tropes/the_siege.trl"
+import "trl/tropes/conflicting_loyalty.trl"
+import "trl/tropes/spanner_in_the_works.trl"
+import "trl/tropes/wounded_gazelle_gambit.trl"
 
 // === TROPE TITLE ENTRIES ===
 
@@ -418,6 +421,7 @@ concept break_the_cutie [+Trope(category="Tragedy", source="https://allthetropes
 concept break_the_haughty [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Break_the_Haughty")] [%Narrative]
 concept chekhovs_gunman [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Gunman")] [%Narrative]
 concept chekhovs_skill [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Skill")] [%Narrative]
+concept conflicting_loyalty [+Trope(category="Internal Conflict", source="https://allthetropes.org/wiki/Conflicting_Loyalty")] [%Interpersonal]
 concept curb_stomp_battle [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Curb_Stomp_Battle")] [%Interpersonal]
 concept david_versus_goliath [+Trope(category="Combat Tropes", source="https://allthetropes.org/wiki/David_Versus_Goliath")] [%Interpersonal]
 concept deal_with_the_devil [+Trope(category="Drama", source="https://allthetropes.org/wiki/Deal_with_the_Devil")] [%Mind]
@@ -466,6 +470,7 @@ concept rule_of_drama [+Trope(category="Drama", source="https://allthetropes.org
 concept secret_legacy [+Trope(category="Heritage", source="https://allthetropes.org/wiki/Secret_Legacy")] [%Epistemic]
 concept senseless_sacrifice [+Trope(category="Heroic Sacrifice Tropes", source="https://allthetropes.org/wiki/Senseless_Sacrifice")] [%Interpersonal]
 concept sibling_rivalry [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Sibling_Rivalry")] [%Interpersonal]
+concept spanner_in_the_works [+Trope(category="Plot", source="https://allthetropes.org/wiki/Spanner_in_the_Works")] [%Epistemic]
 concept spectacle [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Visual_Effects_of_Awesome_(Sugar_Wiki)")] [%Narrative]
 concept taking_you_with_me [+Trope(category="Combat", source="https://allthetropes.org/wiki/Taking_You_with_Me")] [%Interpersonal]
 concept talking_head [+Trope(category="Non-Fiction", source="https://allthetropes.org/wiki/Talking_Heads")] [%Narrative]
@@ -487,5 +492,6 @@ concept trauma_conga_line [+Trope(category="Tragedy", source="https://allthetrop
 concept villainous_breakdown [+Trope(category="Villains", source="https://allthetropes.org/wiki/Villainous_Breakdown")] [%Narrative]
 concept wham_line [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Wham!_Line")] [%Narrative]
 concept worthy_opponent [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Worthy_Opponent")] [%Interpersonal]
+concept wounded_gazelle_gambit [+Trope(category="Manipulation", source="https://allthetropes.org/wiki/Wounded_Gazelle_Gambit")] [%Mind]
 concept xanatos_gambit [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Xanatos_Gambit")] [%Epistemic]
 concept you_shall_not_pass [+Trope(category="Conflict", source="https://allthetropes.org/wiki/You_Shall_Not_Pass")] [%Interpersonal]

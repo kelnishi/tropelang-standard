@@ -1,0 +1,143 @@
+// === PREAMBLE ===
+// @trope    Conflicting Loyalty
+// @category Internal Conflict / Betrayal
+// @source   https://allthetropes.org/wiki/Conflicting_Loyalty
+// @domain   Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): a character is bound by GENUINE loyalty to two parties, and those two
+// parties come into opposition — so the character is forced to choose, and every choice is a
+// betrayal of someone they love. FRONTIER: this is the_dilemma's FORCED CHOICE, but with the two
+// horns specified as two LOVES — the character is [@LoyalTo] two parties who [@Opposes] / >< each
+// other, and the loyalty to BOTH is real and OVERT (theory_of_mind: each party rightly models the
+// character as one of their own). The signature is the [+Torn] state and the broken bond: choosing
+// one party severs the loyalty owed the other, and the cost is borne whichever way it falls.
+//
+// DISTINCT FROM The Mole: there the allegiance to one side is SECRET and LATENT (?@LoyalTo?), a lie
+// lived under cover; here both loyalties are genuine and known. No deception, no infiltration — the
+// anguish is precisely that both bonds are true. DISTINCT FROM a bare Dilemma: the two horns are not
+// two OUTCOMES but two LOVES — parties the character is bound to — so the choice is a betrayal of a
+// person, not merely the loss of a thing.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/needs.trl"             // belonging (tier_bonds): a real bond owed to each party
+import "trl/modules/theory_of_mind.trl"    // each party MODELS the character as genuinely their own
+import "trl/tropes/the_dilemma.trl"        // the forced choice — but with two LOVES as the horns
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc conflicting_loyalty -> [
+  the_dilemma  : "is the forced-choice ordeal of, with two loves as the horns",
+  needs        : "two belonging bonds (tier_bonds) pulled in opposite directions by",
+  the_mole     : "NOT — the mole's allegiance is secret and one-sided; here both bonds are genuine",
+  i_gave_my_word : "the unchosen bond is the word that must be broken in",
+  star_crossed_lovers : "a kindred bind — love set against the loyalty owed one's own side",
+  betrayal     : "is what every available choice is read as by the party not chosen"
+]
+
+
+// === ONTOLOGY ===
+// Conflicting Loyalty is a Dilemma whose two horns are bonds of love: the character is committed to
+// two opposed parties, both genuinely, and is Torn between them. Choosing is unavoidable and the
+// unchosen bond is Broken — so the act is a Betrayal of someone loved, no matter which way it goes.
+imply ConflictingLoyalty -> [Dilemma, Divided, Binding, Narrative]
+imply TornBetween         -> [ConflictingLoyalty, Conflicted, Costly]
+
+
+// === ABSTRACT RULE ===
+// Recognition: a character $c is GENUINELY loyal to two distinct parties $a and $b (overtly — each
+// is committed-to, not latent), AND those two parties stand in mutual opposition ($a >< $b). The
+// opposition forces the bind: $c cannot honour both, so $c is [+Torn] and [#Conflicted]. The prompt
+// is the choice itself — each branch keeps one bond and BREAKS the other (the unchosen party reads
+// it as betrayal); whichever way it falls, $c is left [#Guilty] over the bond they could not keep.
+// This is the_dilemma's structure with the horns typed as loves: $a and $b are PARTIES the character
+// is [@LoyalTo], not mere outcomes — that is what makes each option a betrayal of someone.
+rule Conflicting_Loyalty {
+  when:
+    char $c
+    char $a [+Faction]
+    char $b [+Faction]
+    $c [@LoyalTo(faction=$a)]
+    $c [@LoyalTo(faction=$b)]
+    $c [~Committed_To(target=$a)]
+    $c [~Committed_To(target=$b)]
+    $a != $b
+    $a >< $b
+  then:
+    $c [+Torn(between=$a)]
+    $c [#Conflicted]
+    prompt(
+      target   = $c
+      question = "Two you are bound to — and they are at war. Whom do you betray?"
+      choices  = {
+        "Keep faith with the first; break with the second." : {
+          $c -- $a : "Keeps Faith"
+          $c [-LoyalTo(faction=$b)]
+          $b -- $c : "Betrayed"
+          $c [#Guilty]
+        }
+        "Keep faith with the second; break with the first." : {
+          $c -- $b : "Keeps Faith"
+          $c [-LoyalTo(faction=$a)]
+          $a -- $c : "Betrayed"
+          $c [#Guilty]
+        }
+      }
+    )
+}
+
+
+// === CONCRETE VIGNETTE: Antigone — kin against king (Greek tragedy, Sophocles, 441 BCE) ===
+// Antigone is bound two ways at once, both genuinely: to her dead brother Polynices — by blood, by
+// the unwritten law of the gods that the dead be buried — and to Thebes and its king Creon, her own
+// uncle and sovereign, whose edict forbids the burial on pain of death. The two she is loyal to have
+// come into open opposition: to honour Polynices is to defy Creon; to obey Creon is to abandon her
+// brother to the dogs and birds. She is torn, and there is no third way. She chooses her brother and
+// the gods' law — and is walled up alive for it, a traitor in Creon's eyes the moment she scatters
+// the dust. Every choice was a betrayal of someone she was bound to love and obey.
+
+// ANTIGONE — daughter of Oedipus, bound to brother and to state alike
+char antigone [+Protagonist]
+antigone [@LoyalTo(faction=polynices)]
+antigone [@LoyalTo(faction=thebes)]
+
+// POLYNICES — her dead brother, owed burial by the gods' law (the kin/divine bond)
+char polynices [+Faction]
+// CREON / THEBES — her uncle and king, owed obedience by the city's law (the civic bond)
+char thebes [+Faction] [+Authority]
+
+// EXT. THE PLAIN BEFORE THEBES — the unburied body, the forbidden ground
+set the_plain [+Exterior] [+Day]
+// INT. THE PALACE OF THEBES — Creon's edict, the throne she must defy
+set the_palace [+Interior] [+Day]
+
+scene the_edict {
+  beat 1 {
+    antigone @ the_palace
+    // both bonds are real and overt: blood and the gods' law on one side, the city's law on the other
+    antigone [~Committed_To(target=polynices)]
+    antigone [~Committed_To(target=thebes)]
+    // the two she is bound to have come into open opposition — kin-law against city-law
+    polynices >< thebes : "The Buried Brother Against The King's Edict"
+    // Conflicting_Loyalty fires: antigone [+Torn(between=polynices)]; [#Conflicted]
+    antigone [+Torn(between=polynices)]
+    antigone [#Conflicted]
+  }
+  beat 2 {
+    // she takes the only branch she can bear — keeps faith with her brother, breaks with the king
+    antigone @ the_plain
+    evt the_burial -> antigone > polynices : "Scatters The Dust"
+        dialog(inject=[speaker=antigone], inline="""
+               speaker: "{speaker}"
+               cue: "to Creon, unbowed, the dust still on her hands"
+               tone: defiant, grieving
+               text: "It was not Zeus who made that proclamation. I did not think your edict so strong it could override the unwritten, unfailing laws of the gods."
+               """)
+    antigone -- polynices : "Keeps Faith"
+    antigone [-LoyalTo(faction=thebes)]
+    // the unchosen bond is broken — Creon reads the burial as treason against the city
+    thebes -- antigone : "Betrayed"
+    // the choosing is the wound: a traitor to the one whichever way she turned
+    !antigone [#Guilty]!
+  }
+}

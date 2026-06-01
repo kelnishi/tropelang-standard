@@ -1,0 +1,105 @@
+// === PREAMBLE ===
+// @trope    Wounded Gazelle Gambit
+// @category Manipulation / Deception
+// @source   https://allthetropes.org/wiki/Wounded_Gazelle_Gambit
+// @domain   Mind
+// @version  1.3
+//
+// Laconic (per the wiki): the perp plays the victim to frame their real victim — a schemer FEIGNS
+// being attacked, staging their own injury or distress, so onlookers' sympathy flows to the schemer
+// and their animosity to the alleged aggressor. ("What would you assume if you saw a wounded gazelle
+// next to a lion?") FRONTIER: this rides theory_of_mind (a FALSE belief is implanted in the onlookers
+// — they take the target for the aggressor) and persuasion (the staged wound is pure pathos, sympathy
+// manufactured with the schemer's OWN apparent harm as the evidence). The signature is a STAGED
+// injury: the wound is real-looking but the target never caused it, so the falseness lives in the
+// ?…? latent tier (in the graph, surfaced to no one) — the onlooker, who never witnessed the truth,
+// reasons gazelle-and-lion straight to the wrong culprit.
+//
+// DISTINCT FROM a genuine victim: here the harm is self-staged, not suffered. DISTINCT FROM a plain
+// Frame-Up / Smear Campaign: there the schemer plants OUTSIDE evidence against the target; here the
+// schemer uses their OWN apparent injury as the evidence, weaponising the sympathy a victim commands.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/theory_of_mind.trl"    // the onlooker's false belief: takes the target for the aggressor
+import "trl/modules/persuasion.trl"        // the staged wound is pathos — sympathy manufactured as evidence
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc wounded_gazelle_gambit -> [
+  theory_of_mind   : "implants a false belief in the onlooker (target = aggressor) via",
+  persuasion       : "manufactures sympathy as pathos — the wound is the appeal",
+  smear_campaign   : "a one-shot cousin of — there outside evidence is planted; here the schemer's OWN wound is it",
+  the_mole         : "shares the latent-falseness idiom — the deception lives in the ?…? tier until it springs",
+  false_belief     : "is the gazelle-and-lion inference run on a STAGED premise"
+]
+
+
+// === ONTOLOGY ===
+// A staged victimhood: a feigned injury used as deceptive evidence to misdirect sympathy and blame.
+imply WoundedGazelleGambit -> [Deception, Feigned_Victimhood, Misdirection, Pathos, Narrative]
+
+
+// === ABSTRACT RULE ===
+// A schemer DISPLAYS a wound and ASSERTS to an onlooker that the target inflicted it — but the injury
+// is self-staged (by=$schemer), and the onlooker never witnessed the staging. The onlooker runs the
+// gazelle-and-lion inference: visible wound + named aggressor = victim and culprit. Sympathy goes to
+// the schemer (perceived as victim), blame to the framed target. The falseness is LATENT (?…?) —
+// present in the graph, surfaced to no one — exactly as the laconic claims: the wound is real-looking,
+// the accusation is false, and the onlooker is none the wiser.
+rule WoundedGazelleGambit {
+  when:
+    char $schemer [+Antagonist]
+    char $target
+    char $onlooker
+    evt  $display [&Wounded(subject=$schemer, by=$schemer)]               // self-staged — the schemer is their own "lion"
+    evt  $accusation [&Asserts(agent=$schemer, to=$onlooker, claim=$blame_target)]
+    not ( $onlooker [@Witness_To(event=$display)] )
+    $schemer != $target
+    $onlooker != $target
+    $onlooker != $schemer
+  then:
+    $onlooker [+Perceives(target=$schemer, as=victim)]                    // gazelle: sympathy flows here
+    $onlooker [+Perceives(target=$target, as=aggressor)]                  // lion: blame flows here
+    $onlooker [~Blames(target=$target)]
+    ?$display [+Deceptive]?                                               // latent: the injury is staged, known to none
+    ?$schemer [+Feigning(victimhood=true)]?
+    $display [+WoundedGazelleGambit]
+}
+
+
+// === CONCRETE VIGNETTE: Gone Girl — Amy frames Desi Collings (novel/film, 2012/2014) ===
+// Having faked her own murder to frame her husband, Amy Dunne holes up with the wealthy, doting Desi
+// Collings — then turns the gambit on HIM. She binds her own wrists raw, slashes herself, and stages
+// the bedroom as a captivity scene, so that when she kills Desi and returns to the police she is the
+// rescued victim of a kidnapping and rape that never happened. The detectives, who never saw the
+// staging, run the gazelle-and-lion inference exactly as she planned: a bloodied, sobbing woman beside
+// a dead "captor" reads as one thing. Their sympathy is hers; their case is built against Desi's ghost.
+
+// AMY DUNNE — the schemer, staging her own harm
+char amy [+Antagonist]
+amy [+MotivatedBy(reason="Control")]
+
+// DESI COLLINGS — the framed "aggressor", who never harmed her
+char desi [+Victim]
+
+// DETECTIVE BONEY — the onlooker whose belief is steered
+char boney [+Observer]
+boney [@Member_Of(group=police)]
+
+scene the_return {
+  beat 1 {
+    evt the_staging [&Wounded(subject=amy, by=amy)]                      // she binds and cuts herself
+    // (no onlooker witnesses this — the falseness stays latent)
+  }
+  beat 2 {
+    evt the_account [&Asserts(agent=amy, to=boney, claim=desi_kidnapped_me)]
+        dialog(inject=[speaker=amy], inline="""
+               speaker: "{speaker}"
+               cue: "wrists raw, voice broken, the perfect rescued victim"
+               tone: trembling
+               text: "He took me. He tied me up. I did what I had to do to get home."
+               """)
+    // WoundedGazelleGambit -> boney [+Perceives(amy, as=victim)]; boney [+Perceives(desi, as=aggressor)];
+    //   boney [~Blames(desi)]; ?the_staging [+Deceptive]?; ?amy [+Feigning]?; the_account marked
+  }
+}
