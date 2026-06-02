@@ -171,6 +171,16 @@ state Defiant      [+Psychological]    // refuses to yield — stands against pr
 state Moved        [+Psychological]    // stirred — feeling reached and shifted by something
 state Guarded      [+Psychological]    // wary; affect and trust held back behind a defence
 state Illuminated(by) [+Psychological] // brought to understanding — a light shed, often by another
+state AtPeace      [+Psychological]    // settled, reconciled — the storm passed; acceptance
+state Overwhelmed  [+Psychological]    // swamped — feeling or demand past what can be borne
+state Affronted    [+Psychological]    // insulted; dignity stung — the slight registered
+state Empty        [+Psychological]    // hollowed out — feeling drained away, nothing left to give
+state Vengeful     [+Psychological]    // set on payback — the wrong nursed into a will to repay
+state Thrilled     [+Psychological]    // lit up with excitement — the rush of a wanted thing arriving
+state Hopeless     [+Psychological]    // sees no way out — hope extinguished (cf. Despairing)
+state Hardened     [+Psychological]    // toughened by hardship — feeling walled off, no longer tender
+state Cynical      [+Psychological]    // expects the worst of motives — trust soured into suspicion
+state Resolute     [+Psychological]    // firmly set on a course — will fixed, not to be turned
 
 
 // =============================================================================
