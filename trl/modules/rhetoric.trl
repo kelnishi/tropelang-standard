@@ -43,6 +43,7 @@ verb Frames(target)    [+Narrative]   // set the register an event reads in
 verb Poses(question)   [+Narrative]   // open a question the audience cannot yet answer
 verb Answers(question) [+Narrative]   // ... and, eventually, close it
 verb Endears(subject)  [+Narrative]   // bond the audience to a person, building rooting interest
+verb Addresses(target) [+Narrative]   // speak TO the audience or another directly — apostrophe, the aside
 verb Resolves(subject) [+Narrative]   // the contest's real outcome arrives (reality, not the author)
 verb Imposes(outcome)  [+Narrative]   // override in-world logic for effect
 

@@ -118,6 +118,9 @@ rule Bar_Access {
 
 // State produced by the Bait rule below — declared here so [+Overcommitted] resolves.
 state Overcommitted      [+Interpersonal]   // has spent their guard lunging at a feint; open to a clean strike
+state Hit                [+Interpersonal]   // took the blow — a strike that landed
+state Outmatched         [+Interpersonal]   // outclassed in the contest — losing the exchange of force
+state Outwits            [+Interpersonal]   // holds the cleverness edge — has out-thought the foe
 
 // A feint — feigned weakness or retreat — lures the foe into overcommitting.
 rule Bait {

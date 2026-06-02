@@ -115,6 +115,7 @@ state Vulnerable   [+Vital]      // open to harm — defences down, a soft point
 state Saved        [+Vital]      // pulled from danger or death — rescued in time
 state Imperiled    [+Vital]      // in present danger — the stakes against the body or life
 state Crowded      [+Spatial]    // thick with people — a press of bodies, no room, many eyes
+state Concealed    [+Vital]      // kept out of sight — hidden by intent (cf. Hidden, the plain state)
 
 
 // =============================================================================
@@ -166,6 +167,10 @@ state Driven       [+Psychological]    // compelled toward an end; will outrunni
 state Satisfied    [+Psychological]    // a want met; settled, for now
 state Withdrawn    [+Psychological]    // pulled inward; affect closed off from others
 state Painful      [+Psychological]    // marks an experience that wounds — a hard loss, a cutting memory
+state Defiant      [+Psychological]    // refuses to yield — stands against pressure or threat
+state Moved        [+Psychological]    // stirred — feeling reached and shifted by something
+state Guarded      [+Psychological]    // wary; affect and trust held back behind a defence
+state Illuminated(by) [+Psychological] // brought to understanding — a light shed, often by another
 
 
 // =============================================================================
@@ -187,6 +192,8 @@ prop Skilled       [+Ontological]    // practised, capable at a craft or art
 prop Virtuous      [+Ontological]    // of good character; acts rightly by disposition
 prop Credible      [+Ontological]    // believable, worthy of being trusted on a claim
 prop Innocent      [+Ontological]    // without guilt or wrongdoing; morally clear
+prop Decisive      [+Ontological]    // acts firmly and to effect; settles the matter
+prop Trait(axis, value) [+Ontological]  // a placed characterization — a value along a named axis
 prop Volatile      [+Ontological]
 
 // Object traits
@@ -279,6 +286,7 @@ rel Bound_To(force)        [+Social]
 rel Indebted_To(other)     [+Social]
 rel LoyalTo(side)          [+Social]    // allegiance to a side, faction, or cause
 rel Avenges(subject)       [+Social]    // bound to right a wrong done to the subject — the vengeance tie
+rel Foils(other)           [+Narrative]  // a contrast tie — one character throws another into relief
 
 
 // =============================================================================
@@ -332,6 +340,10 @@ verb Celebrated(with)      [+Interpersonal]
 verb Confronted(other)     [+Interpersonal]
 verb Consoled(other)       [+Interpersonal]
 verb Silenced(other)       [+Interpersonal]
+verb Threatens(target)     [+Interpersonal]    // menaces — promises harm to coerce
+verb Attains(object)       [+Interpersonal]    // reaches / wins a goal or object
+verb Refuses               [+Interpersonal]    // declines — the no (the call, the terms, the demand)
+verb Acts                  [+Interpersonal]    // exercises agency — takes the decisive action
 
 
 // =============================================================================
@@ -373,6 +385,7 @@ state Fated(to)    [+Narrative]    // bound to a foretold outcome (the prophecy 
 state Redeemed     [+Narrative]    // completed a redemption arc — the turn paid off
 state Doomed       [+Narrative]    // bound for a fall — the outcome already leaning toward ruin
 state Reversal     [+Narrative]    // a turn of fortune — the peripeteia, the line of the story bending
+state Called       [+Narrative]    // summoned to the story's task — the call to adventure landed
 
 // Deep archetypes (Campbell / Vogler / Propp)
 prop TheHero       [+Narrative]
@@ -555,6 +568,7 @@ verb Pursues(goal)             [+Intentional]    // directed at a goal/objective
 verb Distrusts(target)         [+Intentional]
 verb Mourns(target)            [+Intentional]    // target may be concept or entity
 verb Envies(target)            [+Intentional]
+verb RootsFor(target)          [+Intentional]    // pulls for — the audience's (or ally's) alignment toward someone
 verb Reveres(target)           [+Intentional]
 verb Attached_To(target)       [+Intentional]
 verb Repelled_By(target)       [+Intentional]
