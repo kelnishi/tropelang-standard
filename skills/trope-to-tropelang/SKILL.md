@@ -228,7 +228,7 @@ drafting, run the reuse assist and consolidate.
 
 **See where every tag comes from:**
 ```bash
-python3 scripts/validate_tropelang.py <file>.trl --report
+cargo run --quiet --example report -- <file>.trl
 ```
 Resolves each tag across the whole corpus (prelude + concepts + modules + tropes) into:
 declared here / defined by imply / **reused from the corpus** / **inline — invented here**.
@@ -237,8 +237,8 @@ report's "corpus node references" section is where concept reuse shows up.
 
 **Get reuse candidates for the inline tags:**
 ```bash
-python3 scripts/corpus_reuse.py <file>.trl          # deterministic name shortlist
-python3 scripts/corpus_reuse.py <file>.trl --json   # inline tags + corpus vocab, for an agent
+cargo run --quiet --example report -- <file>.trl --reuse          # deterministic name shortlist
+cargo run --quiet --example report -- <file>.trl --reuse --json   # inline tags + corpus vocab, for an agent
 ```
 Name-matching is precision-only — it misses meaning (`[+Imperiled]`, `[&OffersEscape]`).
 Hand the `--json` task to an agent for meaning-level matches.
@@ -321,7 +321,7 @@ print `── GATE PASS ──`:
 
 ```bash
 bash skills/trope-to-tropelang/scripts/gate.sh output.trl   # the gate (preamble/validate/round-trip/DRY/drams)
-python3 scripts/validate_tropelang.py output.trl --report   # tag origins (reuse vs inline) — DRY worklist
+cargo run --quiet --example report -- output.trl   # tag origins (reuse vs inline) — DRY worklist
 cargo run --quiet --example fidelity -- output.trl          # round-trip alone (ok | library-register | FAIL)
 ```
 
@@ -335,7 +335,7 @@ node; `event=`/`site=` must match entity type). Then consolidate (see above).
 
 - `references/grammar.md` — complete syntax reference (✓ = in the Rust parser, ◎ = validator-only)
 - `references/examples.md` — worked trope mappings
-- `scripts/validate_tropelang.py` — structural validator + `--report` tag-origin mode (Python 3, no deps)
-- `scripts/corpus_reuse.py` — consolidation assist: inline tags + corpus vocab, `--json` for an agent
+- `examples/validate.rs` (`cargo run --example validate`) — structural validator (Rust reference / LSP backend)
+- `examples/report.rs` (`cargo run --example report [-- --reuse [--json]]`) — tag origins + consolidation assist
 - `scripts/dialog_context.py` — interrogates `dialog(...)` annotations (preconditions / motivations / postconditions / context)
 - `cargo run --example drams -- <file>` — the exact (S3) coverage metric, `density over coverage` (specs/00 §6.7); a SIGNAL not a gate; the gap list is the conversion worklist

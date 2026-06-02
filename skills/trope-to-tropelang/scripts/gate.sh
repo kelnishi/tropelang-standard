@@ -34,7 +34,7 @@ esac
 
 # 4 · DRY — inline-invented tags to consider consolidating (informational)
 echo "· DRY (consolidate inline-invented tags if they duplicate corpus vocab):"
-python3 skills/trope-to-tropelang/scripts/corpus_reuse.py "$f" 2>&1 | grep -iE "inline|reuse|consolidat" | head -4 || echo "  (none flagged)"
+cargo run --quiet --example report -- "$f" --reuse 2>/dev/null | grep -iE "inline|reuse|consolidat" | head -4 || echo "  (none flagged)"
 
 # 5 · drams — exact (S3) coverage. A SIGNAL, not a gate: confidence when it changes, never pass/fail.
 #     (For a NEW MODULE confirm an unrelated eval did not move — the scaffold rule.)

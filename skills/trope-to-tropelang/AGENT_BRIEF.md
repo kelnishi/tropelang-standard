@@ -23,7 +23,7 @@ Read `SKILL.md` first — this is the operational checklist.
    (`$x [+TheTrope]`, a `[+Resolved]`/`[+Pivotal]`) makes the example look right while the rule never
    fires — and often *blocks* it (a `not(Resolved)` clause fails).
 4. **DRY.** Reuse existing corpus tags/concepts rather than reinvent. Run
-   `python3 skills/trope-to-tropelang/scripts/corpus_reuse.py <file>` and consolidate genuine duplicates
+   `cargo run --quiet --example report -- <file> --reuse` and consolidate genuine duplicates
    (keep distinct specificity).
 5. **Self-check — both must pass:**
    - `bash skills/trope-to-tropelang/scripts/gate.sh <file>` → `── GATE PASS ──`
