@@ -116,6 +116,9 @@ rule Bar_Access {
 
 // === DECEPTION, POSITIONING & SACRIFICE ===
 
+// State produced by the Bait rule below — declared here so [+Overcommitted] resolves.
+state Overcommitted      [+Interpersonal]   // has spent their guard lunging at a feint; open to a clean strike
+
 // A feint — feigned weakness or retreat — lures the foe into overcommitting.
 rule Bait {
   when:

@@ -36,6 +36,7 @@ prop ReliefCommander [+Social]      // commander of the distant column marching 
 prop Champion        [+Social]      // a host's chosen man at the breach — its single best blade
 prop Defender        [+Social]      // one who holds the place against the investment
 prop Army            [+Social]      // a host — the collective body that besieges or relieves
+prop Aurochs         [+Social]      // a host fighting under a beast-totem — its standard, name, and people
 
 
 // === THE PLACE & ITS WORKS — the fortified ground and the engines against it ===
@@ -45,6 +46,8 @@ prop Chokepoint      [+Spatial]     // a narrow the defence can hold against num
 prop Inner_Gate      [+Spatial]     // the last door inside the walls; the final ground to hold
 prop Sally_Door      [+Spatial]     // a small hidden door the garrison sorties from (and treachery opens)
 prop Belfry          [+Spatial]     // a siege tower — a rolling assault engine against the wall
+prop Engine          [+Spatial]     // a siege engine — ram, tower, or belfry rolled against the wall
+prop Water           [+Vital]       // the wells / cisterns — a hold's life, and the besieged's clock
 
 
 // === THE STATES — how the siege grinds the place and the men ===
@@ -63,6 +66,8 @@ state Emboldened     [+Psychological] // heartened by a win — the garrison aft
 state Repulsed       [+Social]      // driven off the place — the investment broken (state on the besieger)
 state Held           [+Spatial]     // a gate / place kept against the assault — held, at its price
 state Surrendered    [+Social]      // the place given up — the third exit (terms accepted)
+state Unbarred       [+Spatial]     // a gate's bar lifted — by sortie, or quietly by treachery within
+state Open           [+Spatial]     // a gate / way standing open — no longer held shut
 
 
 // === THE VERBS — the event-level tactics of the campaign (the game bridge) ===
