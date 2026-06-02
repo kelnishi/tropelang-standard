@@ -84,7 +84,7 @@ rule TheReveal_UnReveal {
 char luke [+Protagonist] [#Despairing]
 
 // DARTH VADER
-char vader [+Villain]
+char vader [+TheVillain]
 vader [+Alias(name="Vader")]
 
 // EXT. CLOUD CITY GANTRY

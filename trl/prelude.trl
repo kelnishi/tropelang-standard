@@ -397,16 +397,18 @@ state Doomed       [+Narrative]    // bound for a fall — the outcome already l
 state Reversal     [+Narrative]    // a turn of fortune — the peripeteia, the line of the story bending
 state Called       [+Narrative]    // summoned to the story's task — the call to adventure landed
 
-// Deep archetypes (Campbell / Vogler / Propp)
-prop TheHero       [+Narrative]
-prop Villain       [+Narrative]
-prop Mentor        [+Narrative]
-prop Herald        [+Narrative]    // announces change; delivers the call
-prop Trickster     [+Narrative]    // disrupts; reveals through chaos
-prop Guardian      [+Narrative]    // threshold guardian — tests the hero
-prop Shapeshifter  [+Narrative]    // allegiance or nature is unclear
-prop Shadow        [+Narrative]    // dark mirror of the protagonist
-prop LoveInterest  [+Narrative]
+// Deep archetypes (Campbell / Vogler / Propp). The definite article marks the *archetype* — the
+// universal role — distinct from the same-named *role-trope* (`the_mentor` → `imply Mentor`): TheX is
+// the archetype, X is the trope (STYLE §5 / S13 §6.1).
+prop TheHero        [+Narrative]
+prop TheVillain     [+Narrative]
+prop TheMentor      [+Narrative]
+prop TheHerald      [+Narrative]    // announces change; delivers the call
+prop TheTrickster   [+Narrative]    // disrupts; reveals through chaos
+prop TheGuardian    [+Narrative]    // threshold guardian — tests the hero
+prop TheShapeshifter [+Narrative]   // allegiance or nature is unclear
+prop TheShadow      [+Narrative]    // dark mirror of the protagonist
+prop TheLoveInterest [+Narrative]
 
 
 // =============================================================================

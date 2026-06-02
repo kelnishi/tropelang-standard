@@ -27,7 +27,7 @@ assoc the_love_interest -> [
 
 // === ONTOLOGY ===
 // Private archetype components — the role rides the romance/belonging cluster, not its own.
-imply TheLoveInterest -> [Romance, Bond, Narrative]
+imply LoveInterest -> [Romance, Bond, Narrative]
 
 
 // === ABSTRACT RULE ===

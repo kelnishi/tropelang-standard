@@ -29,8 +29,8 @@ assoc the_trickster -> [
 
 // === ONTOLOGY ===
 // The Trickster is an archetype built on cunning deception; the chaos/boundary-crossing reads as
-// disruption of the established order. (Trickster is a prelude archetype prop; reused, not redefined.)
-imply TheTrickster -> [Trickster, deception, Cunning, Narrative]
+// disruption of the established order. (TheTrickster is a prelude archetype prop; reused, not redefined.)
+imply Trickster -> [TheTrickster, deception, Cunning, Narrative]
 
 
 // === ABSTRACT RULE ===
@@ -39,13 +39,13 @@ imply TheTrickster -> [Trickster, deception, Cunning, Narrative]
 // force. The deed IS The Trickster (tags it) and the trickster [+Outwits] the foe. The three
 // preconditions on the actor (cunning, deceptive, outmatched) are what separate this from a generic
 // Feint: same Bait -> Punish_Overcommit mechanics, but the SIGNATURE is who wins and how.
-rule TheTrickster {
+rule Trickster {
   when:
     char $trickster [+Cunning] [+Deceptive] [+Outmatched]
     char $foe [+Overcommitted]
     evt  $a [&Strikes(agent=$trickster, target=$foe)]
   then:
-    $a [+TheTrickster]
+    $a [+Trickster]
     $trickster [+Outwits(target=$foe)]
 }
 
@@ -79,6 +79,6 @@ scene the_measuring {
   beat 2 {
     // the spring: while the python is extended and helpless, Anansi binds him to the bamboo
     evt the_binding [&Strikes(agent=anansi, target=onini)]
-    // Punish_Overcommit -> onini [+Hit];  TheTrickster tags the deed, anansi [+Outwits(onini)]
+    // Punish_Overcommit -> onini [+Hit];  Trickster tags the deed, anansi [+Outwits(onini)]
   }
 }

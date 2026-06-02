@@ -50,7 +50,7 @@ rule CallToAdventure {
 char neo [+Protagonist] [+OrdinaryWorld]
 
 // MORPHEUS, THE HERALD
-char morpheus [+Herald] [+Mysterious]
+char morpheus [+TheHerald] [+Mysterious]
 
 // THE RED PILL
 obj red_pill [+Threshold]

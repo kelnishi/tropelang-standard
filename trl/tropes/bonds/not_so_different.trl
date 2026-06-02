@@ -33,13 +33,13 @@ assoc not_so_different -> [
 // === ONTOLOGY ===
 // The reveal of likeness across the line of conflict — the dark-mirror recognition, distinct from
 // the mere contrast of the Foil it inverts.
-imply NotSoDifferent -> [Shadow, recognition, Narrative]
+imply NotSoDifferent -> [TheShadow, recognition, Narrative]
 
 
 // === ABSTRACT RULE ===
 // Recognition: take a Foil pairing (a shared AXIS), but bind the SAME value on BOTH sides — the
 // contrast collapses into sameness. The villain ASSERTS that very axis to the hero (claim=$d), holding
-// up the mirror. The villain is revealed as the hero's [+Shadow] (dark mirror, per the prelude); the
+// up the mirror. The villain is revealed as the hero's [+TheShadow] (dark mirror, per the prelude); the
 // hero is [+Confronted] with it and becomes [#Aware] of the likeness. The enmity does NOT dissolve —
 // the thread is recognition, not reconciliation.
 rule Not_So_Different {
@@ -49,7 +49,7 @@ rule Not_So_Different {
     char $villain [+Trait(axis=$d, value=$v)]            // SAME value -> the Foil's contrast caves in
     evt  $mirror  [&Asserts(agent=$villain, to=$hero, claim=$d)]
   then:
-    $villain [+Shadow]                                   // revealed as the hero's dark mirror
+    $villain [+TheShadow]                                   // revealed as the hero's dark mirror
     $hero [+Confronted(other=$villain)]                  // the mirror forced upon him
     $hero [#Aware]                                       // he sees the likeness — the recognition lands
     $hero -- recognition
@@ -103,7 +103,7 @@ scene the_ferry_gambit {
   }
   beat 2 {
     evt the_taunt [&Asserts(agent=joker, to=batman, claim=gotham_thesis)]   // the mirror held up
-    // Not_So_Different -> joker [+Shadow], batman [+Confronted(other=joker)] [#Aware] -- recognition
+    // Not_So_Different -> joker [+TheShadow], batman [+Confronted(other=joker)] [#Aware] -- recognition
   }
   beat 3 {
     // Not_So_Different_Rejected -> on axis=the_rule the values DIVERGE (no_kill != anything):

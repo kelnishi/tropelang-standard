@@ -11,7 +11,7 @@
 // signage. Rides rhetoric's audience appraisal (the deed is FRAMED earnest — the pain IS the point,
 // so the house recoils rather than laughs) and reputation's Disgrace (the standing the audience
 // holds about the character collapses): the author Endears no one here, he REVOKES rooting interest,
-// turning neutral onlookers into partisans AGAINST the kicker, who is branded [+Villain]. It is the
+// turning neutral onlookers into partisans AGAINST the kicker, who is branded [+TheVillain]. It is the
 // exact dark pair of Pet the Dog (a kindness that buys sympathy). Distinct from a plot-driven evil
 // act, whose cruelty serves the scheme; Kick the Dog's cruelty serves only the AUDIENCE'S verdict.
 
@@ -32,7 +32,7 @@ assoc kick_the_dog -> [
 
 // === ONTOLOGY ===
 // The deed (gratuitous cruelty as authorial signage) and the verdict it manufactures.
-imply KickTheDog -> [cruelty, Villain, Narrative]
+imply KickTheDog -> [cruelty, TheVillain, Narrative]
 
 
 // === ABSTRACT RULE ===
@@ -42,7 +42,7 @@ imply KickTheDog -> [cruelty, Villain, Narrative]
 // than laughs at a comic kick). The result is pure signage: the audience's appraisal turns AGAINST
 // the kicker (the dark mirror of Build_Investment's [~RootsFor] — here rooting interest is revoked
 // and curdles to [#Resentful]), and the deed disgraces the character in the house's eyes, branding
-// them [+Villain]. The gratuity is the trope: cruelty in service of a plot is just antagonism;
+// them [+TheVillain]. The gratuity is the trope: cruelty in service of a plot is just antagonism;
 // cruelty in service of the audience's verdict is Kicking the Dog.
 rule Kick_The_Dog {
   when:
@@ -54,7 +54,7 @@ rule Kick_The_Dog {
     $deed [+KickTheDog]
     audience [#Resentful]                  // rooting interest revoked — the dark mirror of [~RootsFor]
     audience -- cruelty
-    $kicker [+Villain] [+Disgraced]        // the verdict: branded evil in the audience's standing
+    $kicker [+TheVillain] [+Disgraced]        // the verdict: branded evil in the audience's standing
     $kicker -- shame
 }
 
@@ -89,7 +89,7 @@ scene the_smothering {
                """)
     evt played_earnest [&Frames(agent=author, target=the_embrace, as=earnest)]
     // Kick_The_Dog fires: a gratuitous cruelty (no scheme it serves), framed earnest ->
-    //   the_embrace [+KickTheDog]; audience [#Resentful]; commodus [+Villain] [+Disgraced]
+    //   the_embrace [+KickTheDog]; audience [#Resentful]; commodus [+TheVillain] [+Disgraced]
     // the throne was already his — the murder is signage, not strategy
   }
 }

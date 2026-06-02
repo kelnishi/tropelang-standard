@@ -86,7 +86,7 @@ char job [+Protagonist] [+Innocent]
 job [#Hopeful] [+Faithful]
 
 // THE MESSENGERS — each arriving before the last has finished, "while he was yet speaking"
-char messengers [+Herald]
+char messengers [+TheHerald]
 
 // JOB'S WIFE — who counsels him to curse God and die; even kin turns the knife
 char wife [+LoveInterest]
