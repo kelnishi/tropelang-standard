@@ -100,6 +100,28 @@ Declarations first, the timeline second. Everything the timeline names already e
   domain facets · and the epistemic *wrappers* `!…!` / `*…*` / `?…?`.
 - **Reserved param keys** carry meaning to the engine — use them: `agent`, `target`, `site` (a set),
   `event` (an evt), `as` (an alias). A scene/act/beat is itself a taggable entity (`scene s [+Endgame]`).
+- **Reference a concept in lowercase; CamelCase is for tags.** Concepts are lowercase abstract nouns
+  (`concept corruption`, `concept honor`). Reference them lowercase *everywhere* — param values
+  (`goal=justice`) **and** imply components (`imply DecadentCourt -> [corruption, Power]`). CamelCase
+  names are props / states / attrs / roles (`[+Corrupted]`, `[+Protagonist]`, `Power`). A CamelCase
+  concept reference (`[… Corruption …]`) will **not** resolve to `concept corruption` — casing is
+  meaning-bearing. (Legacy CamelCase concept refs are bridged in `concepts/concept_aliases.trl`; prefer
+  the lowercase form in new code.)
+
+### Where a new tag lives — declare it, don't strand it
+
+A name that doesn't resolve reads **broken (red)** in the IDE. That is a signal, not a bug: either the
+name belongs in shared vocabulary (declare it) or it is one-off color (leave it). Route it:
+
+- **Universal** — any story could use it (`Pursues`, `Imperiled`, `Vengeful`, `Hurt`): the **prelude**.
+- **Domain dynamics** — a system one scale up (siege / heist / reputation / persuasion / …): the
+  **module** declares the vocabulary, **and its own rule outputs**. A `[+Overcommitted]` a rule
+  *produces* must be a `state Overcommitted` in that module, or it reads broken.
+- **Abstract theme** (`corruption`, `atonement`, `tragedy`): the **concepts library**, lowercase.
+- **One-off story flavor** (`Blooded`, this host's `Aurochs` totem): leave it **bespoke**. A red tag is
+  the honest mark that it is not shared vocabulary — don't promote color to the corpus.
+- Before coining, **check it doesn't already exist** — both article forms (`Siege`/`TheSiege`), the
+  lowercase concept form (`corruption`). Reuse or `alias` rather than mint a duplicate.
 
 ## 6. Epistemic discipline
 
