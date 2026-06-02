@@ -1,0 +1,186 @@
+// === PREAMBLE ===
+// @title    Siege — the protracted investment of a fortified place
+// @category Military Systems
+// @version  0.1
+// @note     The collective-tactical arena ONE scale up from action_dynamics' single contested moment:
+//           an investing host rings a fortified defender, cuts it off, and grinds it down over a
+//           TEMPORAL SPINE — investment, attrition (bombard / sap / sabotage), the breach-assault,
+//           and the three exits (breach, relief, surrender). Where action_dynamics resolves a strike
+//           or a hold in one beat, siege is the slow campaign those tactics accrete into: encircle ▸
+//           bombard ▸ undermine ▸ breach, answered by sally ▸ hold ▸ relief. It DECLARES the reusable
+//           siege/military vocabulary the master narrative narratives/the_salt_gate.trl rides; the
+//           Siege TROPE (trl/tropes/conflict/war/siege.trl) RECOGNISES an instance of it. The
+//           load-bearing verbs (Encircles / Bombards / Breaches / Relieves) are the event-level
+//           tactics a game mechanic can map onto — the action arena's collective register.
+//
+// Import: import "trl/modules/siege.trl"
+
+import "trl/concepts/index.trl"            // conflict, surrender
+import "trl/modules/action_dynamics.trl"   // [&Strikes]/[&Holds] — the single-beat tactics siege accretes
+
+concept siege [+System] [%Interpersonal]
+// (the `imply Siege -> […]` naming rule lives in the Siege TROPE, not here — a module declares the
+// dynamic + its vocabulary; the trope owns the title's expansion.)
+
+
+// === THE ROLES — who stands in a siege ===
+prop Besieger        [+Social]      // the investing force that rings and reduces the place
+prop Besieged        [+Social]      // the garrison holding the walls from inside the ring
+prop Warlord         [+Social]      // the commander of the investing host; spends men to take the prize
+prop Soldier         [+Social]      // a common fighter on the wall or in the field
+prop Sergeant        [+Social]      // a non-commissioned leader; holds a stretch of the line
+prop Veteran         [+Social]      // a seasoned soldier; the one who has held a wall before
+prop Quartermaster   [+Social]      // keeper of the stores; trusted with supply (and so, betrayal's seat)
+prop Commander       [+Social]      // the officer who directs the defence (or the assault)
+prop ReliefCommander [+Social]      // commander of the distant column marching to break the siege
+prop Champion        [+Social]      // a host's chosen man at the breach — its single best blade
+prop Defender        [+Social]      // one who holds the place against the investment
+prop Army            [+Social]      // a host — the collective body that besieges or relieves
+
+
+// === THE PLACE & ITS WORKS — the fortified ground and the engines against it ===
+prop Fortress        [+Spatial]     // the fortified place under siege — walls, gate, keep
+prop Rampart         [+Spatial]     // a defensive wall / curtain the besieger batters
+prop Chokepoint      [+Spatial]     // a narrow the defence can hold against numbers — the killing ground
+prop Inner_Gate      [+Spatial]     // the last door inside the walls; the final ground to hold
+prop Sally_Door      [+Spatial]     // a small hidden door the garrison sorties from (and treachery opens)
+prop Belfry          [+Spatial]     // a siege tower — a rolling assault engine against the wall
+
+
+// === THE STATES — how the siege grinds the place and the men ===
+state Besieging      [+Social]      // a host actively investing a place
+state Siege          [+Narrative]   // an arc / campaign that IS a siege (the master tags its arc [+Siege])
+state Salt_Rich      [+Spatial]     // a place still holding its prize / stores (the Salt Gate's salt)
+state Battered       [+Spatial]     // a wall worked down by bombardment, not yet breached
+state Stunned        [+Psychological] // reeling — the ground underfoot turned to rubble and dust
+state Steadfast      [+Psychological] // unshaken on the line; holds where greener men break
+state Galled         [+Psychological] // stung — a besieger who loses an engine or a night's sleep to a sally
+state Encircled      [+Spatial]     // ringed by the host; the ground around it held by the besieger
+state Cut_Off        [+Spatial]     // sealed from the world — road and river closed; the siege clock starts
+state Broken         [+Spatial]     // a wall opened — breached, not merely battered
+state Ablaze         [+Spatial]     // an engine or work afire — the sortie's mark on the field
+state Emboldened     [+Psychological] // heartened by a win — the garrison after a sortie lands
+state Repulsed       [+Social]      // driven off the place — the investment broken (state on the besieger)
+state Held           [+Spatial]     // a gate / place kept against the assault — held, at its price
+state Surrendered    [+Social]      // the place given up — the third exit (terms accepted)
+
+
+// === THE VERBS — the event-level tactics of the campaign (the game bridge) ===
+// Reserved param keys (agent/target/site) carry to the engine; declared param is the non-agent slot.
+verb Encircles(target)   [+Interpersonal]   // close the ring; cut road and river — the investment
+verb Bombards(target)    [+Interpersonal]   // work a wall down with engines, day on day — attrition
+verb Breaches(target)    [+Interpersonal]   // open the wall — the breach the assault pours through
+verb Sallies(target)     [+Interpersonal]   // a sortie out a postern to burn an engine or spoil works
+verb Withdraws(from)     [+Interpersonal]   // break off the siege rather than be caught between hammer & anvil
+verb Relieves(target)    [+Interpersonal]   // a column reaches the place and lifts the siege from outside
+verb Undermines(target)  [+Interpersonal]   // sap a mine under a tower and bring it down — the breach below
+verb Demands(of, price)  [+Interpersonal]   // send terms to the wall: surrender the prize for your lives
+verb Opens(target)       [+Interpersonal]   // swing a barred door — the sally-door, or the traitor's postern
+verb Fouls(target)       [+Interpersonal]   // spoil the place's water / stores — sabotage from within the ring
+verb Burns(target)       [+Interpersonal]   // fire an engine or a work — the sortie's prize
+
+
+// === THE INVESTMENT ===
+
+// The ring closes: a host encircles a place and the place is cut off — the siege clock starts.
+rule Investment {
+  when:
+    evt $e [&Encircles(agent=$besieger, target=$place)]
+  then:
+    $place [+Encircled] [+Cut_Off]
+    $besieger [+Besieging]
+    $besieger -- $place : "Invests"
+}
+
+// Terms to the wall: a refused demand hardens both sides — no surrender, the grind begins.
+rule Refused_Terms {
+  when:
+    evt  $d [&Demands(agent=$besieger, of=$holder)]
+    char $holder [+Defender]
+    not ( $holder [+Surrendered] )
+  then:
+    $holder [+Steadfast]
+    $besieger -- $holder : "Sends Terms"
+}
+
+
+// === ATTRITION — the wall worked down, the works spoiled ===
+
+// Bombardment batters a rampart: worked down day on day, but not yet broken.
+rule Bombardment {
+  when:
+    evt $b [&Bombards(agent=$besieger, target=$wall)]
+  then:
+    $wall [+Battered]
+    $besieger -- attrition
+}
+
+// A mine under the tower opens the wall from below — the sap becomes the breach.
+rule Sap_And_Mine {
+  when:
+    evt $m [&Undermines(agent=$besieger, target=$wall)]
+    evt $c [&Breaches(agent=$besieger, target=$wall)]
+  then:
+    $wall [+Broken]
+    $besieger -- breach
+}
+
+
+// === THE GARRISON ANSWERS — sortie, and relief ===
+
+// A sally out the postern fires the besieger's engine — a rare win that galls the host.
+rule Sortie {
+  when:
+    evt $s [&Sallies(agent=$holder, target=$besieger)]
+    evt $f [&Burns(agent=$holder, target=$engine)]
+  then:
+    $engine [+Ablaze]
+    $holder [+Emboldened]
+    $besieger [#Galled]
+    $holder -- sortie
+}
+
+// Relief: a column reaches the place from outside and the spent host breaks off rather than be caught.
+rule Relief {
+  when:
+    evt $r [&Relieves(agent=$rescuer, target=$place)]
+    char $besieger [+Besieging]
+  then:
+    $place [+Relieved]
+    $besieger [-Besieger] [+Repulsed]
+    $rescuer -- relief
+}
+
+
+// === ASSOCIATIONS ===
+assoc siege -> [
+  action_dynamics : "the collective, campaign-scale form of the strike/hold tactics in",
+  conflict        : "the protracted, fortified form of"
+]
+
+
+// === CONCRETE VIGNETTE: the Siege of Vienna — the relief at Kahlenberg (military history, 1683) ===
+// Kara Mustafa's Ottoman host ringed Vienna and sapped mines under the bastions for two months,
+// the garrison's wall crumbling and its stores draining — until a relief army under Sobieski crested
+// the Kahlenberg heights and shattered the besiegers from outside. The host, caught between the
+// walls and the winged hussars, broke off and fled. The relief, not the breach, ended the siege.
+
+// KARA MUSTAFA — grand vizier, commander of the investing host
+char kara_mustafa [+Warlord] [+Besieger]
+// THE VIENNA GARRISON — Starhemberg's defenders on the crumbling bastions
+char starhemberg  [+Commander] [+Defender]
+// JAN SOBIESKI — king of Poland, commander of the relief column off the heights
+char sobieski     [+ReliefCommander]
+// THE CITY OF VIENNA — the fortified place under the ring
+set  vienna       [+Fortress] [+Salt_Rich]
+
+scene the_relief_of_vienna {
+  beat 1 {
+    evt the_ring [&Encircles(agent=kara_mustafa, target=vienna)]
+    // Investment -> vienna [+Encircled] [+Cut_Off]; kara_mustafa [+Besieging]
+  }
+  beat 2 {
+    evt the_relief [&Relieves(agent=sobieski, target=vienna)]
+    // Relief -> vienna [+Relieved]; kara_mustafa [-Besieger] [+Repulsed]
+  }
+}

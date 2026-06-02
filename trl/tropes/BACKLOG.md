@@ -162,8 +162,14 @@ green in the IDE. Two masters, two domains. Priority order = frequency × reusab
   `Endears`. → a crime/caper set.
 
 **P3 — structural tropes (convert).** The masters *demonstrate* these tropes, yet they don't exist:
-- **Heist** (flagship example throughout STYLE/specs; `[+Heist]` ×15) — `imply Heist -> […]` + caper rule.
-- **Siege** — the salt-gate spine; `imply Siege -> […]` + investment/relief rule.
+- [x] **Heist** — `tropes/conflict/tactics/heist.trl` riding `modules/heist.trl` (Antwerp 2003 vignette).
+- [x] **Siege** — `tropes/conflict/war/siege.trl` riding `modules/siege.trl` (Orléans 1429 vignette).
+      NOTE: a thin pre-existing `the_siege.trl` (`imply TheSiege`, Masada) now coexists — coordinator
+      to decide coexist vs. fold/`alias TheSiege -> Siege`.
+
+P2 progress: `modules/siege.trl` + `modules/heist.trl` declare the bulk of each master's domain
+vocabulary (Besieger/Rampart/…; Grifter/Counterfeit/…). Remaining P1 prelude candidates still broken:
+`Pursues` (biggest), `Avenges`, `LoyalTo`, `Trusted`, `Exposed`, `Redeemed`, `MadeBy`, `Survivor`.
 
 Keep genuinely bespoke flavor tags (one-off character descriptors) broken per the closed-vocabulary
 decision unless promoted here.

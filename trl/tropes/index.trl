@@ -89,6 +89,7 @@ import "trl/tropes/conflict/tactics/counter.trl"
 import "trl/tropes/conflict/tactics/curb_stomp_battle.trl"
 import "trl/tropes/conflict/tactics/divide_and_conquer.trl"
 import "trl/tropes/conflict/tactics/feint.trl"
+import "trl/tropes/conflict/tactics/heist.trl"
 import "trl/tropes/conflict/tactics/improvised_weapon.trl"
 import "trl/tropes/conflict/tactics/mexican_standoff.trl"
 import "trl/tropes/conflict/tactics/pincer_maneuver.trl"
@@ -102,6 +103,7 @@ import "trl/tropes/conflict/war/big_damn_heroes.trl"
 import "trl/tropes/conflict/war/decapitated_army.trl"
 import "trl/tropes/conflict/war/enemy_mine.trl"
 import "trl/tropes/conflict/war/last_stand.trl"
+import "trl/tropes/conflict/war/siege.trl"
 import "trl/tropes/conflict/war/the_cavalry.trl"
 import "trl/tropes/conflict/war/the_siege.trl"
 import "trl/tropes/conflict/war/we_have_reserves.trl"
@@ -447,6 +449,7 @@ concept fatal_flaw [+Trope(category="Characterization", source="https://allthetr
 concept flashback [+Trope(category="Flashbacks and Chronology", source="https://allthetropes.org/wiki/Flashback_(trope)")] [%Narrative]
 concept heel_face_door_slam [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Heel_Face_Door-Slam")] [%Narrative]
 concept heel_realization [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Heel_Realization")] [%Mind]
+concept heist [+Trope(category="Crime", source="https://allthetropes.org/wiki/The_Caper")] [%Social]
 concept heroic_bsod [+Trope(category="Trauma", source="https://allthetropes.org/wiki/Heroic_BSOD")] [%Psychological]
 concept heroic_second_wind [+Trope(category="Heroic Spirit", source="https://allthetropes.org/wiki/Heroic_Second_Wind")] [%Narrative]
 concept hoist_by_his_own_petard [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Hoist_by_His_Own_Petard")] [%Narrative]
@@ -480,6 +483,7 @@ concept rule_of_drama [+Trope(category="Drama", source="https://allthetropes.org
 concept secret_legacy [+Trope(category="Heritage", source="https://allthetropes.org/wiki/Secret_Legacy")] [%Epistemic]
 concept senseless_sacrifice [+Trope(category="Heroic Sacrifice Tropes", source="https://allthetropes.org/wiki/Senseless_Sacrifice")] [%Interpersonal]
 concept sibling_rivalry [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Sibling_Rivalry")] [%Interpersonal]
+concept siege [+Trope(category="Military and Warfare Tropes", source="https://allthetropes.org/wiki/The_Siege")] [%Political]
 concept spanner_in_the_works [+Trope(category="Plot", source="https://allthetropes.org/wiki/Spanner_in_the_Works")] [%Epistemic]
 concept spectacle [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Visual_Effects_of_Awesome_(Sugar_Wiki)")] [%Narrative]
 concept taking_you_with_me [+Trope(category="Combat", source="https://allthetropes.org/wiki/Taking_You_with_Me")] [%Interpersonal]

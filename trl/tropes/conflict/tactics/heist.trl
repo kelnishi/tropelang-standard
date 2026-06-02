@@ -1,0 +1,76 @@
+// === PREAMBLE ===
+// @trope    The Caper (Heist)
+// @category Crime / Tactics
+// @source   https://allthetropes.org/wiki/The_Caper
+// @version  1.3
+// @domain   Social
+//
+// Laconic (per the wiki): a robbery told from the criminals' side — a crew with assigned roles plans
+// and executes a job against a target's security, defeating it (usually by misdirection: the eyes go
+// dark, a swap nobody sees, the watched prize is gone). The crooks are the rounded, colourful side;
+// the opposition is the obstacle. FRONTIER: the first trope to ride the heist module — it recognizes
+// the SHAPE of a caper (grifter-led crew · security disabled · coveted prize lifted) rather than any
+// single tactic, so a swap-job and a vault-job both read as the same pattern.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // crime, justice
+import "trl/modules/heist.trl"             // Grifter / Mark / Coveted / Disables / Lifted / The_Swap
+import "trl/modules/action_dynamics.trl"   // the caper borrows the feint as misdirection
+
+assoc heist -> [
+  heist           : "recognizes a job built from the vocabulary of",
+  action_dynamics : "draws its misdirection (the feint) from",
+  justice         : "the long con is, beneath the prize, often FOR"
+]
+
+
+// === ONTOLOGY ===
+
+imply Heist -> [Crime, Deception, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a grifter-led crew kills the mark's security and lifts the watched prize — that job IS
+// a Heist. It recognizes the caper SHAPE (a disable that opens the secured place + the coveted prize
+// going out), not any one tactic, so a swap-job and a smash-the-vault job both trigger it.
+rule The_Heist {
+  when:
+    char $thief [+Grifter]
+    obj  $prize [+Coveted]
+    evt  $kill  [&Disables(agent=$crew, target=$site)]
+    evt  $take  [&Swaps(agent=$thief, decoy=$fake, real=$prize)]
+  then:
+    $take [+Heist]
+    $thief [+Reputable]          // the cover holds — to the mark, the appraiser simply left
+    $thief [+Departed]
+}
+
+
+// === CONCRETE VIGNETTE: the Antwerp Diamond Heist (real crime, 2003) ===
+// Leonardo Notarbartolo spent years renting an office in the Antwerp Diamond Centre as a respected
+// Italian gem merchant — a cover that bought him a tenant's key to the vault floor. On a February
+// weekend his crew defeated the vault's ten layers of security (heat/motion sensors, the magnetic
+// seal, the lock) and emptied 109 of 189 safe-deposit boxes of diamonds, gold and jewels. The guards
+// found the cover identity gone and the boxes open: the watched fortune simply lifted out.
+
+char leonardo [+Grifter] [+Alias(name="Merchant")]   // the mastermind, working a long cover
+char the_crew [+Hacker] [+Collective]                 // the specialists who beat the sensors
+char the_centre [+Collector] [+Mark]                  // the diamond centre — keeper of the prize
+obj  the_diamonds [+MacGuffin] [+Coveted]             // the watched fortune in the boxes
+obj  the_copy [+Counterfeit]                          // a dummied seal left where the real one was
+set  the_vault [+Interior] [+Night] [+Secured]        // INT. ANTWERP DIAMOND VAULT - NIGHT
+
+scene the_job {
+  beat 1 {
+    // the eyes go dark — the crew defeats the vault's security layers
+    evt the_bypass [&Disables(agent=the_crew, target=the_vault)]
+    // Disable_Security -> the_vault [-Secured]
+  }
+  beat 2 {
+    // the lift, staged as a swap: the real seal/prize out, a dummy left in its place
+    evt the_lift [&Swaps(agent=leonardo, decoy=the_copy, real=the_diamonds)]
+    // The_Swap -> the_diamonds [+Lifted];  the_copy [+InTheCase]
+    // The_Heist -> the_lift [+Heist];  leonardo [+Reputable] [+Departed]
+  }
+}

@@ -1,0 +1,95 @@
+// === PREAMBLE ===
+// @trope    Siege
+// @category Military and Warfare Tropes
+// @source   https://allthetropes.org/wiki/The_Siege
+// @domain   Political
+// @version  1.3
+//
+// Laconic (per the wiki): an investing host rings a fortified place, cuts it off from the world, and
+// grinds it down over time — the garrison holds the walls while supply and hope drain — until the
+// line breaks one of three ways: breach, relief, or surrender. FRONTIER: the first trope to ride the
+// new SIEGE module (the collective-campaign register one scale up from action_dynamics' single
+// contested beat). Where the existing The Siege rides action_dynamics' bare Bars/Holds tactics, this
+// recognises the siege on its OWN siege-specific shape — an [&Encircles] investment that leaves the
+// place [+Cut_Off] and the host [+Besieging] — the event-level form a game mechanic maps onto. The
+// three exits live downstream: relief fires the module's Relief rule ([+Repulsed]); breach/surrender
+// are the other two. Distinct from a Last Stand (a bare hold that buys time, one rush) — a Siege is
+// the protracted investment, the slow being-cut-off, where the weapon is attrition, not one charge.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict, surrender
+import "trl/modules/siege.trl"             // the dynamic it rides: Encircles/Besieging/Cut_Off + Investment/Relief
+import "trl/modules/action_dynamics.trl"   // the single-beat Holds/Strikes the campaign accretes
+
+assoc siege -> [
+  siege           : "recognises an instance of the dynamic in",
+  action_dynamics : "the collective, protracted form of the strike/hold tactics of",
+  last_stand      : "the slow attrition behind a",
+  the_cavalry     : "is broken by relief, the",
+  surrender       : "forces, by being cut off, a"
+]
+
+
+// === ONTOLOGY ===
+// A Siege is the investment-and-attrition cluster: a host that rings a fortified place and cuts it
+// off (Investment, Encircled) grinding it by Attrition toward one of three exits.
+imply Siege -> [Investment, Attrition, Encircled, Tactic, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: an investing host ENCIRCLES a fortified place ([+Fortress]) — closing the ring so the
+// place is cut off — WHILE that place's defender HOLDS the walls, and relief has not yet reached
+// them: THAT is a Siege (tags the investment). The [+Fortress] + [&Holds] pair is what makes it a
+// siege and not a mere blockade or a field battle: there is a wall to hold and a garrison holding it.
+// The three exits (breach / relief / surrender) resolve downstream — relief fires the siege module's
+// Relief rule; this rule only RECOGNISES the protracted investment itself.
+rule Siege {
+  when:
+    char $place    [+Fortress]
+    evt  $invest   [&Encircles(agent=$besieger, target=$place)]
+    evt  $hold     [&Holds(agent=$holder, target=$place)]
+    not ( $place [+Relieved] )
+  then:
+    $invest   [+Siege]
+    $place    [+Besieged]
+    $besieger -- $place : "Invests"
+}
+
+
+// === CONCRETE VIGNETTE: the Siege of Orléans — the relief that turned the war (military history, 1428–29) ===
+// The English ringed Orléans with a chain of bastilles, cutting the city off across the Loire and
+// settling in to starve it out over the winter — the last great barrier before the French heartland.
+// Months in, a relief force led by Joan of Arc broke through to the walls, the garrison sortied to
+// storm the bastilles, and the English broke off the siege and withdrew. Relief, not breach, ended it
+// — and turned the Hundred Years' War.
+
+// THE EARL OF SUFFOLK — commander of the English investing host on the Loire
+char suffolk  [+Antagonist] [+Warlord] [+Besieger]
+// THE ORLÉANS GARRISON — Dunois and the city's defenders holding the walls
+char dunois   [+Protagonist] [+Commander] [+Defender]
+// JEANNE D'ARC — at the head of the relief column that breaks through to the walls
+char jeanne   [+Ally] [+ReliefCommander]
+// THE CITY OF ORLÉANS ON THE LOIRE — the fortified place under the ring
+char orleans  [+Fortress] [+Salt_Rich]
+// THE CHAIN OF BASTILLES — the English siege-works ringing the city
+set  the_bastilles [+Exterior] [+Rampart]
+
+scene the_siege_of_orleans {
+  beat 1 {
+    suffolk @ the_bastilles
+    // THE INVESTMENT — the host closes the ring across the river; the city is cut off
+    evt the_ring [&Encircles(agent=suffolk, target=orleans)]
+    // Investment (siege module) -> orleans [+Encircled] [+Cut_Off]; suffolk [+Besieging]
+  }
+  beat 2 {
+    // THE HOLD — the garrison keeps the walls through the winter, supply draining
+    evt the_hold [&Holds(agent=dunois, target=orleans)]
+    // Siege -> the_ring [+Siege]; orleans [+Besieged]; suffolk -- orleans : "Invests"
+  }
+  beat 3 {
+    // THE RELIEF — Jeanne's column breaks through; the host breaks off rather than be caught
+    evt the_relief [&Relieves(agent=jeanne, target=orleans)]
+    // Relief (siege module) -> orleans [+Relieved]; suffolk [-Besieger] [+Repulsed]
+  }
+}
