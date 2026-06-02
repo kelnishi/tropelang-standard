@@ -1,0 +1,74 @@
+// Verb ontology for S12 Shape Recognition (spec 15 §6.1, §12).
+//
+// Maps surface verbs to dynamic CLASSES via `imply`, so a shape written on a class fires across stories
+// that use different words for the same dynamic (`&Defects`, `&Forsakes`, `&Undermines` -> Betray).
+// This is the IR's verb normalizer. A verb may carry several classes.
+//
+// Read directly by `src/shape.rs`; deliberately NOT imported by `trl/tropes/index.trl` — it must not
+// enter the S3 / drams imply closures (it is a recognition aid, not story vocabulary).
+
+// — Betrayal —
+imply Defects      -> [Betray]
+imply Betrayed     -> [Betray]
+imply Forsakes     -> [Betray]
+imply Undermines   -> [Betray]
+imply Usurps       -> [Betray]
+imply Transgresses -> [Betray]
+imply Slanders     -> [Betray, Smear]
+
+// — Plant (foreshadow) —
+imply Foreshadows  -> [Plant]
+imply Foretells    -> [Plant]
+imply Warns        -> [Plant]
+imply Marks        -> [Plant]
+
+// — Slay (death) —
+imply Slays        -> [Slay]
+imply Slain        -> [Slay]
+imply Died         -> [Slay]
+imply Succumbs     -> [Slay]
+imply Destroyed    -> [Slay]
+imply Sacrificed   -> [Slay]
+imply Sacrifices   -> [Slay, Rescue]
+
+// — Reveal —
+imply Reveals      -> [Reveal]
+imply Exposes      -> [Reveal]
+imply Admits       -> [Reveal]
+imply Debunks      -> [Reveal]
+imply Demonstrates -> [Reveal]
+
+// — Rescue (relief) —
+imply Relieves     -> [Rescue]
+imply Reinforces   -> [Rescue]
+imply Rallies      -> [Rescue]
+imply Aids         -> [Rescue]
+imply Shields      -> [Rescue]
+imply Delivers     -> [Rescue]
+imply Averts       -> [Rescue]
+
+// — Offer (a way out) —
+imply OffersEscape     -> [Offer]
+imply OffersRedemption -> [Offer]
+imply Pledges          -> [Offer, Vow]
+
+// — Dash / thwart (hope or plan crushed) —
+imply Dashes       -> [Dash]
+imply Crushes      -> [Dash]
+imply Thwarts      -> [Dash]
+imply Fails        -> [Dash]
+
+// — Deceive / scheme —
+imply Schemes      -> [Deceive]
+imply Frames       -> [Deceive, Smear]
+imply Feints       -> [Deceive]
+imply Swaps        -> [Deceive]
+imply Disables     -> [Deceive]
+imply Forged       -> [Deceive]
+imply Stages       -> [Deceive]
+
+// — Strike (attack) —
+imply Strikes      -> [Strike]
+imply Finishes     -> [Strike, Slay]
+imply Bombards     -> [Strike]
+imply Breaches     -> [Strike]
