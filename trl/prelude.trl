@@ -106,6 +106,7 @@ state Present      [+Vital]
 state Absent       [+Vital]
 state Hidden       [+Vital]
 state Revealed     [+Vital]
+state Exposed      [+Vital]      // uncovered, open to harm — lost cover or concealment
 
 
 // =============================================================================
@@ -137,6 +138,7 @@ state Heartbroken  [+Psychological]
 state Jealous      [+Psychological]
 state Trusting     [+Psychological]
 state Suspicious   [+Psychological]
+state Paranoid     [+Psychological]    // suspicion turned chronic — trusts no one, reads plots everywhere
 state Forgiven     [+Psychological]
 state Grateful     [+Psychological]
 state Resentful    [+Psychological]
@@ -166,6 +168,7 @@ prop Cunning       [+Ontological]
 prop Wise          [+Ontological]
 prop Naive         [+Ontological]
 prop Resilient     [+Ontological]
+prop Strong        [+Ontological]    // forceful, hard to overcome — of a person, a host, or a position
 prop Volatile      [+Ontological]
 
 // Object traits
@@ -208,6 +211,7 @@ state Indebted     [+Social]
 state Obligated    [+Social]
 state Compromised  [+Social]
 state Aligned      [+Social]
+state Trusted      [+Social]        // held in another's confidence — a standing that can be lost
 state Opposed      [+Social]
 state Negotiating  [+Social]
 state Active       [+Social]
@@ -249,6 +253,8 @@ rel Beloved_Of(other)      [+Social]
 rel Witness_To(event)      [+Social]
 rel Bound_To(force)        [+Social]
 rel Indebted_To(other)     [+Social]
+rel LoyalTo(side)          [+Social]    // allegiance to a side, faction, or cause
+rel Avenges(subject)       [+Social]    // bound to right a wrong done to the subject — the vengeance tie
 
 
 // =============================================================================
@@ -335,9 +341,12 @@ prop Victim        [+Narrative]
 prop Instigator    [+Narrative]
 prop Catalyst      [+Narrative]    // causes change; does not change itself
 prop Vessel        [+Narrative]    // carries something beyond itself
+prop Survivor      [+Narrative]    // the one who lives through what others did not
+prop Traitor       [+Narrative]    // betrays the side they appear to serve
 
 // Narrative conditions
 state Fated(to)    [+Narrative]    // bound to a foretold outcome (the prophecy cluster's core state)
+state Redeemed     [+Narrative]    // completed a redemption arc — the turn paid off
 
 // Deep archetypes (Campbell / Vogler / Propp)
 prop TheHero       [+Narrative]
@@ -480,6 +489,7 @@ rel Prophet_Of(deity)         [+Mythological]
 rel Cursed_By(agent)          [+Mythological]
 rel Blessed_By(agent)         [+Mythological]
 rel Created_By(creator)       [+Mythological]
+rel MadeBy(by)                [+Social]         // mundane provenance — an object's maker (cf. mythological Created_By)
 
 
 // =============================================================================
@@ -515,6 +525,7 @@ verb Loves(target)             [+Intentional]    // love directed at concept/thi
 verb Hates(target)             [+Intentional]
 verb Obsessed_With(target)     [+Intentional]
 verb Devoted_To(target)        [+Intentional]
+verb Pursues(goal)             [+Intentional]    // directed at a goal/objective (a concept or graph node)
 verb Distrusts(target)         [+Intentional]
 verb Mourns(target)            [+Intentional]    // target may be concept or entity
 verb Envies(target)            [+Intentional]
