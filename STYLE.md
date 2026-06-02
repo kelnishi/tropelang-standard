@@ -90,6 +90,12 @@ Declarations first, the timeline second. Everything the timeline names already e
 ## 5. Naming & tags
 
 - **snake_case** entity ids (`the_salt_gate`, `the_pact`); **CamelCase** tag names (`PendingPayoff`).
+- **The definite article is meaning-bearing, not noise.** `hero` (common noun) → `Hero` (concept) →
+  `TheHero` (definite archetype) is a three-tier signal, and `The X` is sometimes a distinct concept
+  (`TheSublime` ≠ sublime, `TheOther` ≠ other). So `TheX` and `X` are **two symbols** — the resolver
+  never strips the article. When they truly are the same trope under two names, link them deliberately
+  with `alias TheX -> X`. Before minting a `TheX`/`X` trope, check the corpus for the other form first
+  (S13 §6.1).
 - **Sigils:** `+` prop · `-` remove · `#` status · `@` rel · `~` intent · `&` event verb · `=`/`%`
   domain facets · and the epistemic *wrappers* `!…!` / `*…*` / `?…?`.
 - **Reserved param keys** carry meaning to the engine — use them: `agent`, `target`, `site` (a set),

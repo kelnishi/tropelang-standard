@@ -7,6 +7,10 @@ commit). If no bucket was given, pick the closest one from `trl/tropes/README.md
 Read `SKILL.md` first — this is the operational checklist.
 
 ## Task
+0. **Check it doesn't already exist.** Before creating, `grep -rE "imply (The)?<Name>" trl/tropes` for
+   **both** article forms (and obvious synonyms). The definite article is meaning-bearing (`TheX` ≠ `X`
+   in general — S13 §6.1), so a broken `[+Siege]` does NOT prove there's no `TheSiege`. If a match
+   exists, reconcile with a deliberate `alias` (or extend it) — do NOT mint a duplicate.
 1. **Source** the assigned trope from allthetropes.org via **WebSearch** (never tvtropes; WebFetch 403s
    here). Pull the laconic, setup (→`when:`), payoff (→`then:`), participants, subversions.
 2. **Find the module(s) it rides.** A trope RECOGNIZES an instance of a dynamic some `trl/modules/*.trl`
