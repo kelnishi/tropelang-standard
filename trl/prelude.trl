@@ -60,6 +60,9 @@ attr Epistemic     [+Kind]       // knowledge, belief, perception
 // Trope — a named narrative pattern. Promoted to core: every converted trope title
 // is a [+Trope], so references to it rehydrate against one shared category (see trl/tropes/).
 attr Trope         [+Narrative]
+attr System        [+Narrative]    // a dynamics module — a simulated arena (action, power, reputation, …)
+attr Structure     [+Narrative]    // a structural / framework pattern — the shape a story takes
+attr Tactic        [+Narrative]    // a single tactical move within a system (a strike, a feint, a gambit)
 
 
 // =============================================================================
@@ -107,6 +110,11 @@ state Absent       [+Vital]
 state Hidden       [+Vital]
 state Revealed     [+Vital]
 state Exposed      [+Vital]      // uncovered, open to harm — lost cover or concealment
+state Hurt         [+Vital]      // bodily harmed, short of a true wound — struck, bruised, winded
+state Vulnerable   [+Vital]      // open to harm — defences down, a soft point exposed
+state Saved        [+Vital]      // pulled from danger or death — rescued in time
+state Imperiled    [+Vital]      // in present danger — the stakes against the body or life
+state Crowded      [+Spatial]    // thick with people — a press of bodies, no room, many eyes
 
 
 // =============================================================================
@@ -152,6 +160,12 @@ state Enlightened  [+Psychological]
 state Transformed  [+Psychological]   // emerged from an experience changed
 state Disillusioned [+Psychological]
 state Determined   [+Psychological]
+state Curious      [+Psychological]    // drawn to know — the mind's pull toward a gap
+state Awed         [+Psychological]    // struck by something vast — wonder, the sublime
+state Driven       [+Psychological]    // compelled toward an end; will outrunning comfort
+state Satisfied    [+Psychological]    // a want met; settled, for now
+state Withdrawn    [+Psychological]    // pulled inward; affect closed off from others
+state Painful      [+Psychological]    // marks an experience that wounds — a hard loss, a cutting memory
 
 
 // =============================================================================
@@ -169,6 +183,10 @@ prop Wise          [+Ontological]
 prop Naive         [+Ontological]
 prop Resilient     [+Ontological]
 prop Strong        [+Ontological]    // forceful, hard to overcome — of a person, a host, or a position
+prop Skilled       [+Ontological]    // practised, capable at a craft or art
+prop Virtuous      [+Ontological]    // of good character; acts rightly by disposition
+prop Credible      [+Ontological]    // believable, worthy of being trusted on a claim
+prop Innocent      [+Ontological]    // without guilt or wrongdoing; morally clear
 prop Volatile      [+Ontological]
 
 // Object traits
@@ -195,12 +213,16 @@ prop Stranger      [+Social]
 prop Native        [+Social]
 prop Chosen        [+Social]         // selected by external force
 prop Peer          [+Social]
+prop Wrongdoer     [+Social]         // one who has done the wrong — the guilty party in a moral reckoning
+prop Speaker       [+Social]         // the one addressing an audience — the rhetor at the rostrum
 
 // Institutional props
 prop Authority     [+Social]
 prop Subject       [+Social]
 prop Faction       [+Social]         // a group with shared interests
 prop Institution   [+Social]         // persistent structure: law, guild, church
+prop Bond          [+Social]         // a tie between entities — the relationship itself, as a thing
+prop Romance       [+Social]         // a romantic bond — the love-tie, as element and as register
 
 // Mutable position states
 state In_Power     [+Social]
@@ -212,6 +234,8 @@ state Obligated    [+Social]
 state Compromised  [+Social]
 state Aligned      [+Social]
 state Trusted      [+Social]        // held in another's confidence — a standing that can be lost
+state Defeated     [+Social]        // beaten in a contest of force or will — lost the field
+state Conspicuous  [+Social]        // drawing notice — marked out, watched, hard to miss
 state Opposed      [+Social]
 state Negotiating  [+Social]
 state Active       [+Social]
@@ -347,6 +371,8 @@ prop Traitor       [+Narrative]    // betrays the side they appear to serve
 // Narrative conditions
 state Fated(to)    [+Narrative]    // bound to a foretold outcome (the prophecy cluster's core state)
 state Redeemed     [+Narrative]    // completed a redemption arc — the turn paid off
+state Doomed       [+Narrative]    // bound for a fall — the outcome already leaning toward ruin
+state Reversal     [+Narrative]    // a turn of fortune — the peripeteia, the line of the story bending
 
 // Deep archetypes (Campbell / Vogler / Propp)
 prop TheHero       [+Narrative]

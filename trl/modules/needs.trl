@@ -22,6 +22,10 @@ import "trl/modules/motivation_dynamics.trl"  // this RANKS and arbitrates what 
 concept needs [+System] [%Psychological]
 imply Needs -> [Motivation, Hierarchy, Psychological]
 
+// The core deficit predicate — a need going unmet at a ladder rank, weighted by salience. Applied with
+// the mind facet: [#Lacks(rank=N, salience=S)]. The whole needs engine reads and writes this.
+state Lacks(rank, salience) [+Psychological]
+
 
 // === THE PHYSIOLOGICAL BASE (the gap — the body's own drives, not just its failures) ===
 state Hungry     [+Vital]

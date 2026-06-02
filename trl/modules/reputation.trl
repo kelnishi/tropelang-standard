@@ -24,6 +24,8 @@ verb Honors(target)      [+Social]         // publicly esteem
 verb Slanders(target)    [+Social]         // attack a name with a damaging claim
 verb Vindicates(target)  [+Social]         // clear a name
 state Vindicated         [+Social]         // a name cleared — the output of the Vindication rule (was Disgraced)
+state Disgraced          [+Social]         // a name brought low — the output of slander / a fall
+state Honored            [+Social]         // a name publicly esteemed — the output of Honors
 
 
 // === RULES ===

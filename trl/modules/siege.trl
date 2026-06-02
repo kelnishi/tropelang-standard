@@ -66,6 +66,7 @@ state Emboldened     [+Psychological] // heartened by a win — the garrison aft
 state Repulsed       [+Social]      // driven off the place — the investment broken (state on the besieger)
 state Held           [+Spatial]     // a gate / place kept against the assault — held, at its price
 state Surrendered    [+Social]      // the place given up — the third exit (terms accepted)
+state Relieved       [+Social]      // the ring broken from outside — the besieged freed (the Relief output)
 state Unbarred       [+Spatial]     // a gate's bar lifted — by sortie, or quietly by treachery within
 state Open           [+Spatial]     // a gate / way standing open — no longer held shut
 
