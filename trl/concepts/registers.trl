@@ -1,0 +1,43 @@
+// @title   TropeLang Concept Library — Perceptual Registers
+// @version 0.1
+// @note    How an act or agent is PERCEIVED or PLAYED — the framing qualities that fill the `as` slot of
+//          Perceives / Frames (`[+Perceives(target=…, as=earnest)]`). These are shared vocabulary, NOT
+//          narrative-local literals: declared here so a bare `as=earnest` resolves and chases instead of
+//          reading as a broken reference. Surface variants are attached as `aka` aliases (S13).
+//
+// Import: import "trl/concepts/registers.trl"
+
+
+// =============================================================================
+// PERCEPTUAL REGISTERS — the manner in which an act or agent reads
+// =============================================================================
+
+// Sincere, genuine, meant in earnest — without irony or performance.
+concept earnest        [%Timeless] [+Abstract] (aka sincere, in_earnest)
+
+// Played as theatrical display — staged to be watched, larger than life.
+concept spectacle      [%Timeless] [+Abstract] (aka theatrical)
+
+// Played for comedy — the act reads as funny rather than grave.
+concept comic          [%Timeless] [+Abstract] (aka comedic)
+
+// Apt, deserved, just-so — the outcome reads as appropriate to what came before.
+concept fitting        [%Timeless] [+Abstract] (aka apt)
+
+// Composed, unflappable — affect withheld; grace under pressure.
+concept cool           [%Timeless] [+Abstract] (aka composed)
+
+// Heightened, serious, weighted — the act reads as drama, not farce.
+concept dramatic       [%Timeless] [+Abstract] (aka heightened)
+
+// Framed as the wronged party — the one to whom harm is done.
+concept victim         [%Timeless] [+Abstract]
+
+// Framed as the one who strikes first — the initiator of harm.
+concept aggressor      [%Timeless] [+Abstract]
+
+// A trusted member working from within — loyalty worn as cover.
+concept loyal_insider  [%Timeless] [+Abstract] (aka insider)
+
+// Left open — a question or beat deliberately not resolved.
+concept unanswered     [%Timeless] [+Abstract]
