@@ -9,9 +9,10 @@
 // grinds it down over time — the garrison holds the walls while supply and hope drain — until the
 // line breaks one of three ways: breach, relief, or surrender. FRONTIER: the first trope to ride the
 // new SIEGE module (the collective-campaign register one scale up from action_dynamics' single
-// contested beat). Where the existing The Siege rides action_dynamics' bare Bars/Holds tactics, this
-// recognises the siege on its OWN siege-specific shape — an [&Encircles] investment that leaves the
-// place [+Cut_Off] and the host [+Besieging] — the event-level form a game mechanic maps onto. The
+// contested beat). It unifies the earlier action_dynamics-based The Siege — folding its Masada vignette
+// in below, with `alias TheSiege -> Siege` keeping the old name resolving — and recognises the siege on
+// its OWN siege-specific shape: an [&Encircles] investment that leaves the place [+Cut_Off] and the host
+// [+Besieging], the event-level form a game mechanic maps onto. The
 // three exits live downstream: relief fires the module's Relief rule ([+Repulsed]); breach/surrender
 // are the other two. Distinct from a Last Stand (a bare hold that buys time, one rush) — a Siege is
 // the protracted investment, the slow being-cut-off, where the weapon is attrition, not one charge.
@@ -35,6 +36,7 @@ assoc siege -> [
 // A Siege is the investment-and-attrition cluster: a host that rings a fortified place and cuts it
 // off (Investment, Encircled) grinding it by Attrition toward one of three exits.
 imply Siege -> [Investment, Attrition, Encircled, Tactic, Narrative]
+alias TheSiege -> Siege   // unify the earlier action_dynamics-based `The Siege` into this canonical name (S13)
 
 
 // === ABSTRACT RULE ===
@@ -91,5 +93,39 @@ scene the_siege_of_orleans {
     // THE RELIEF — Jeanne's column breaks through; the host breaks off rather than be caught
     evt the_relief [&Relieves(agent=jeanne, target=orleans)]
     // Relief (siege module) -> orleans [+Relieved]; suffolk [-Besieger] [+Repulsed]
+  }
+}
+
+
+// === CONCRETE VIGNETTE: the Siege of Masada — the investment with no relief (military history, 73–74 CE) ===
+// The contrasting exit (folded from the former The Siege): where Orléans was broken by relief, Masada was
+// broken by attrition and assault. After Jerusalem fell, the last Sicarii held the desert fortress atop
+// its sheer rock. The Tenth Legion ringed the plateau with a circumvallation wall, sealing the defenders
+// off, then raised a great earthen ramp against the western face over months. No relief came; when the
+// breach finally opened, the garrison chose mass suicide over surrender — the third exit, refused.
+
+// THE SICARII GARRISON ATOP THE ROCK — Eleazar ben Ya'ir and the defenders holding the heights
+char eleazar  [+Protagonist] [+Collective] [+Defender]
+// THE TENTH LEGION (FRETENSIS) — Flavius Silva ringing the plateau
+char silva    [+Antagonist] [+Warlord] [+Besieger]
+// THE FORTRESS OF MASADA — the desert rock; no relief can reach it
+char masada   [+Fortress]
+// THE CIRCUMVALLATION & THE RAMP — the Roman siege-works against the western face
+set  the_ramp_works [+Exterior] [+Rampart]
+
+scene the_rock {
+  beat 1 {
+    silva @ the_ramp_works
+    // THE INVESTMENT — the ring-wall seals the plateau; the rock is cut off, no relief coming
+    evt circumvallation [&Encircles(agent=silva, target=masada)]
+  }
+  beat 2 {
+    // THE HOLD — the Sicarii keep the heights as the ramp creeps up and supplies drain
+    evt the_hold_at_masada [&Holds(agent=eleazar, target=masada)]
+    // Siege -> circumvallation [+Siege]; masada [+Besieged]; silva -- masada : "Invests"
+  }
+  beat 3 {
+    // THE BREACH — the ramp crests; assault, not relief, ends it (surrender refused)
+    evt the_breach [&Breaches(agent=silva, target=masada)]
   }
 }

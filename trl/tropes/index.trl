@@ -105,7 +105,6 @@ import "trl/tropes/conflict/war/enemy_mine.trl"
 import "trl/tropes/conflict/war/last_stand.trl"
 import "trl/tropes/conflict/war/siege.trl"
 import "trl/tropes/conflict/war/the_cavalry.trl"
-import "trl/tropes/conflict/war/the_siege.trl"
 import "trl/tropes/conflict/war/we_have_reserves.trl"
 import "trl/tropes/conflict/war/you_shall_not_pass.trl"
 import "trl/tropes/conflict/war/zerg_rush.trl"
@@ -495,7 +494,6 @@ concept the_dog_bites_back [+Trope(category="Character Tropes", source="https://
 concept the_lancer [+Trope(category="Characterization", source="https://allthetropes.org/wiki/The_Lancer")] [%Interpersonal]
 concept the_love_interest [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Love_Interest")] [%Interpersonal]
 concept the_mole [+Trope(category="Spy Fiction", source="https://allthetropes.org/wiki/The_Mole")] [%Mind]
-concept the_siege [+Trope(category="Military and Warfare Tropes", source="https://allthetropes.org/wiki/The_Siege")] [%Interpersonal]
 concept the_trickster [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/The_Trickster")] [%Narrative]
 concept the_worf_effect [+Trope(category="Combat", source="https://allthetropes.org/wiki/The_Worf_Effect")] [%Narrative]
 concept together_in_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Together_in_Death")] [%Interpersonal]
