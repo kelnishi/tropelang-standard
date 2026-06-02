@@ -136,6 +136,25 @@ name belongs in shared vocabulary (declare it) or it is one-off color (leave it)
 - Before coining, **check it doesn't already exist** — both article forms (`Siege`/`TheSiege`), the
   lowercase concept form (`corruption`). Reuse or `alias` rather than mint a duplicate.
 
+### Typed parameter signatures
+
+A signature may type each slot: `verb Reinterpret(variable: entity [+Container])`. The shape is
+`name (: type)? ([+Tag] …)?` — an untyped slot is still valid (typing is gradual; add it where the type
+is unambiguous). The validator checks each call site against the declared type and constraint tags:
+
+- Types: `value` (a literal — string/number), `concept` (a reference, never a literal), and the entity
+  kinds `entity | char | set | obj | evt | arc | node`. A `[+Tag]` constraint requires the referent to
+  carry that tag (`Stash(item=plate)` warns if `plate` is not `[+Container]`).
+- `$var` and list values are unverifiable statically (they bind at rule-application) — the checker skips
+  them. So type a slot from what the corpus *concretely* passes, then sweep to confirm zero warnings
+  (HOUSEKEEPING §7) — `Trait(value: …)` looks literal but the corpus passes concept refs, so it is
+  `concept`, not `value`.
+
+**Reserved-key hygiene.** A param name must not shadow an entity-type or declaration keyword: `Initiates(arc)`
+reads as the keyword, not a slot — and the value isn't an `arc`, it *is* the thing. Rename to a role-noun
+(`Initiates(thread: arc)`, `Reverses(subject: entity)`). The validator flags these collisions at the
+signature. Short prepositions and sanctioned keys are fine — `as` is a real param key (`Perceives(target, as)`).
+
 ## 6. Epistemic discipline
 
 | Tier | Form | Use it for |
