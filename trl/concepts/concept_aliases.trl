@@ -1,0 +1,36 @@
+// @title   TropeLang Concept Library — CamelCase aliases
+// @version 0.1
+// @note    Bridges the CamelCase spelling of a concept (as it appears in `imply` components) to its
+//          canonical lowercase declaration (S13). `imply DecadentCourt -> [Corruption, …]` references
+//          `concept corruption`; these aliases let the CamelCase form resolve without rewriting every
+//          trope. The CANONICAL form is the lowercase concept — prefer it in new code; CamelCase here is
+//          a legacy-compatibility bridge, not a second symbol (casing is otherwise meaning-bearing).
+//
+// Import: import "trl/concepts/concept_aliases.trl"
+
+alias Atonement     -> atonement
+alias Audience      -> audience
+alias Author        -> author
+alias Bargaining    -> bargaining
+alias Beginning     -> beginning
+alias Comedy        -> comedy
+alias Corruption    -> corruption
+alias Cost          -> cost
+alias Cruelty       -> cruelty
+alias Deception     -> deception
+alias Denial        -> denial
+alias Despair       -> despair
+alias Dignity       -> dignity
+alias Empathy       -> empathy
+alias Ending        -> ending
+alias Fate          -> fate
+alias Guilt         -> guilt
+alias Honor         -> honor
+alias Kishotenketsu -> kishotenketsu
+alias Love          -> love
+alias Loyalty       -> loyalty
+alias Recognition   -> recognition
+alias Revelation    -> revelation
+alias Suffering     -> suffering
+alias Temptation    -> temptation
+alias Tragedy       -> tragedy
