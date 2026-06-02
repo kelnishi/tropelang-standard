@@ -47,7 +47,7 @@ imply TragicHero -> [Protagonist, Virtuous, Hamartia, tragedy, Narrative]
 rule Tragic_Hero {
   when:
     char $c [+Protagonist] [+Virtuous] [~Obsessed_With(target=$flaw)]
-    evt  $reversal [&Reverses(state=$c)]
+    evt  $reversal [&Reverses(subject=$c)]
     not( char $c [+Corrupted] )
   then:
     $c [+Fallen]
@@ -94,7 +94,7 @@ scene the_pride_that_falls {
   beat 2 {
     coriolanus @ corioles
     // banished, he turns on Rome; his mother's plea stays his hand — and damns him for the mercy
-    evt cut_down [&Reverses(state=coriolanus)]
+    evt cut_down [&Reverses(subject=coriolanus)]
         dialog(inject=[speaker=coriolanus], inline="""
                speaker: "{speaker}"
                cue: "to the plebeians who would have his voice bought, before the banishment"

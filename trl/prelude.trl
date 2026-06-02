@@ -203,7 +203,7 @@ prop Virtuous      [+Ontological]    // of good character; acts rightly by dispo
 prop Credible      [+Ontological]    // believable, worthy of being trusted on a claim
 prop Innocent      [+Ontological]    // without guilt or wrongdoing; morally clear
 prop Decisive      [+Ontological]    // acts firmly and to effect; settles the matter
-prop Trait(axis, value) [+Ontological]  // a placed characterization — a value along a named axis
+prop Trait(axis: concept, value: concept) [+Ontological]  // a placed characterization — a value (concept) along a named axis (concept)
 prop Volatile      [+Ontological]
 
 // Object traits
@@ -291,7 +291,7 @@ rel Mentor_Of(student)     [+Social]
 rel Student_Of(mentor)     [+Social]
 rel Confidant_Of(other)    [+Social]
 rel Beloved_Of(other)      [+Social]
-rel Witness_To(event)      [+Social]
+rel Witness_To(event: evt)  [+Social]
 rel Bound_To(force)        [+Social]
 rel Indebted_To(other)     [+Social]
 rel LoyalTo(side)          [+Social]    // allegiance to a side, faction, or cause
@@ -341,7 +341,7 @@ verb Pursued(other)        [+Interpersonal]
 verb Rejected(other)       [+Interpersonal]
 verb Deceived(other)       [+Interpersonal]
 verb Revealed(fact, to)    [+Interpersonal]
-verb Witnessed(event)      [+Interpersonal]
+verb Witnessed(event: evt)  [+Interpersonal]
 verb Challenged(other)     [+Interpersonal]
 verb Surrendered(to)       [+Interpersonal]
 verb Aided(other)          [+Interpersonal]
@@ -436,14 +436,14 @@ prop Remnant          [+Narrative]    // what survives — relic, scar, memory
 prop PendingPayoff    [+Narrative]    // Chekhov tracker — parameterize with item=
 
 // Story-level verbs — what events do at the narrative level
-verb Foreshadows(event)    [+Narrative]
+verb Foreshadows(event: evt) [+Narrative]
 verb Resolves(tension)     [+Narrative]
-verb Reverses(state)       [+Narrative]    // peripeteia — fortune inverts
+verb Reverses(subject: entity) [+Narrative] // peripeteia — the one whose fortune inverts (param off the `state` keyword)
 verb Reveals(truth)        [+Narrative]    // anagnorisis — recognition
 verb Crosses(threshold)    [+Narrative]
 verb Transforms(entity)    [+Narrative]
-verb Initiates(arc)        [+Narrative]
-verb Concludes(arc)        [+Narrative]
+verb Initiates(thread: arc) [+Narrative]   // begins a narrative arc (param renamed off the `arc` keyword)
+verb Concludes(thread: arc) [+Narrative]   // closes a narrative arc
 verb Catalyzes(change)     [+Narrative]
 
 
@@ -549,13 +549,13 @@ rel MadeBy(by)                [+Social]         // mundane provenance — an obj
 // Applies universally — mystery, drama, tragedy, comedy equally.
 // =============================================================================
 
-prop Alias(name)               [+Epistemic]
+prop Alias(name: value)        [+Epistemic]    // the alias surface form — a literal string
 prop Perceives(target, as)     [+Epistemic]
 prop Knows(target)             [+Epistemic]
 prop Suspects(target)          [+Epistemic]
 prop Believes(fact)            [+Epistemic]
-prop Remembers(event)          [+Epistemic]
-prop Forgot(event)             [+Epistemic]
+prop Remembers(event: evt)     [+Epistemic]
+prop Forgot(event: evt)        [+Epistemic]
 prop MotivatedBy(reason)       [+Epistemic]
 prop Trusts(target)            [+Epistemic]
 prop Lineage(id)               [+Epistemic]

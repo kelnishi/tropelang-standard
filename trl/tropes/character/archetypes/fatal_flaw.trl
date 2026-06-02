@@ -44,7 +44,7 @@ imply FatalFlaw -> [Hamartia, tragedy, Transformation, Narrative]
 rule Fatal_Flaw {
   when:
     char $c [+Protagonist] [~Obsessed_With(target=$flaw)]
-    evt  $undoing [&Reverses(state=$c)]
+    evt  $undoing [&Reverses(subject=$c)]
   then:
     $c [+Fallen]
     $flaw -> $c : "Undoes"
@@ -87,7 +87,7 @@ scene the_dream_that_kills {
   beat 2 {
     gatsby @ the_pool
     // he takes Daisy's guilt as his own — the flaw makes him do it
-    evt the_shooting [&Reverses(state=gatsby)]
+    evt the_shooting [&Reverses(subject=gatsby)]
         dialog(inject=[speaker=gatsby], inline="""
                speaker: "{speaker}"
                cue: "to Nick, the night before, certain the past is still in reach"

@@ -54,7 +54,7 @@ imply Anagnorisis -> [recognition, Reversal, tragedy, Narrative]
 rule Anagnorisis {
   when:
     char $c [#Mistaken(subject=$c)]
-    evt  $disclosure [&Reveals(fact=$truth)] [&Reverses(state=$c)]
+    evt  $disclosure [&Reveals(fact=$truth)] [&Reverses(subject=$c)]
   then:
     $c [-Mistaken(subject=$c)]
     $c [#Knows(target=$truth)]
@@ -96,7 +96,7 @@ scene the_body_in_his_arms {
   beat 2 {
     // The disclosure surfaces the truth AND inverts his fortune in one stroke — recognition welded
     // to peripeteia: she is dead, and she was the one who truly loved him.
-    evt the_body [&Reveals(fact=she_loved_him_true)] [&Reverses(state=lear)]
+    evt the_body [&Reveals(fact=she_loved_him_true)] [&Reverses(subject=lear)]
         dialog(inject=[speaker=lear], inline="""
                speaker: "{speaker}"
                cue: "over Cordelia's body, the recognition and the ruin in one breath"
