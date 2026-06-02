@@ -24,7 +24,7 @@ assoc pyrrhic_victory -> [
 
 // === ONTOLOGY ===
 
-imply PyrrhicVictory -> [Cost, Tactic, Narrative]
+imply PyrrhicVictory -> [cost, Tactic, Narrative]
 
 
 // === ABSTRACT RULE ===

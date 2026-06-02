@@ -36,7 +36,7 @@ assoc wounded_gazelle_gambit -> [
 
 // === ONTOLOGY ===
 // A staged victimhood: a feigned injury used as deceptive evidence to misdirect sympathy and blame.
-imply WoundedGazelleGambit -> [Deception, Feigned_Victimhood, Misdirection, Pathos, Narrative]
+imply WoundedGazelleGambit -> [deception, Feigned_Victimhood, Misdirection, Pathos, Narrative]
 
 
 // === ABSTRACT RULE ===

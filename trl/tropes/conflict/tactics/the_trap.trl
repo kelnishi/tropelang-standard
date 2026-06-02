@@ -25,7 +25,7 @@ assoc the_trap -> [
 
 // === ONTOLOGY ===
 
-imply The_Trap -> [Deception, Tactic, Narrative]
+imply The_Trap -> [deception, Tactic, Narrative]
 
 
 // === ABSTRACT RULE ===

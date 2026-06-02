@@ -23,7 +23,7 @@ assoc self_fulfilling_prophecy -> [
 
 // === ONTOLOGY ===
 
-imply SelfFulfillingProphecy -> [Fate, Irony, Narrative]
+imply SelfFulfillingProphecy -> [fate, Irony, Narrative]
 
 
 // === ABSTRACT RULE ===

@@ -27,9 +27,9 @@ assoc three_act_structure -> [
 // === ONTOLOGY ===
 
 imply ThreeActStructure -> [Structure, Narrative]
-imply Act_Setup         -> [Beginning, Establishing]
+imply Act_Setup         -> [beginning, Establishing]
 imply Act_Confrontation -> [Rising_Action, Complication]
-imply Act_Resolution    -> [Ending, Denouement]
+imply Act_Resolution    -> [ending, Denouement]
 
 
 // === ABSTRACT RULE ===

@@ -25,7 +25,7 @@ assoc decadent_court -> [
 
 // === ONTOLOGY ===
 
-imply DecadentCourt -> [Corruption, Power, Narrative]
+imply DecadentCourt -> [corruption, Power, Narrative]
 
 
 // === ABSTRACT RULE ===

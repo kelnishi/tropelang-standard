@@ -30,7 +30,7 @@ assoc the_trickster -> [
 // === ONTOLOGY ===
 // The Trickster is an archetype built on cunning deception; the chaos/boundary-crossing reads as
 // disruption of the established order. (Trickster is a prelude archetype prop; reused, not redefined.)
-imply TheTrickster -> [Trickster, Deception, Cunning, Narrative]
+imply TheTrickster -> [Trickster, deception, Cunning, Narrative]
 
 
 // === ABSTRACT RULE ===

@@ -27,7 +27,7 @@ assoc the_lancer -> [
 
 // === ONTOLOGY ===
 
-imply Lancer -> [Foil, Loyalty, Contrast, Narrative]
+imply Lancer -> [Foil, loyalty, Contrast, Narrative]
 
 
 // === ABSTRACT RULE ===

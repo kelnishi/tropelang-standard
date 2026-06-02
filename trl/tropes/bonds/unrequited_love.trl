@@ -16,7 +16,7 @@ assoc unrequited_love -> [
   longing : "settles, unanswered, into"
 ]
 
-imply UnrequitedLove -> [Love, Sorrow, Narrative]
+imply UnrequitedLove -> [love, Sorrow, Narrative]
 
 // Naming rule: loving one who does not love back leaves the lover pining — that is Unrequited Love.
 rule Unrequited_Love {

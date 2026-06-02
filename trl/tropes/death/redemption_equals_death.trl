@@ -29,7 +29,7 @@ assoc redemption_equals_death -> [
 
 // === ONTOLOGY ===
 // The conjunction: it is at once an Atonement, a Sacrifice, and a Death.
-imply RedemptionEqualsDeath -> [Atonement, Sacrifice, Narrative]
+imply RedemptionEqualsDeath -> [atonement, Sacrifice, Narrative]
 
 
 // === ABSTRACT RULE ===

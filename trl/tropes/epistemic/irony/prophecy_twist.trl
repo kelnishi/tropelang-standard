@@ -24,7 +24,7 @@ assoc prophecy_twist -> [
 
 // === ONTOLOGY ===
 
-imply ProphecyTwist -> [Equivocation, Fate, Narrative]
+imply ProphecyTwist -> [Equivocation, fate, Narrative]
 
 
 // === ABSTRACT RULE ===

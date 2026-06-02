@@ -33,7 +33,7 @@ assoc break_the_haughty -> [
 
 // === ONTOLOGY ===
 // The haughty's defining arrogance, and the humbled self the misfortune leaves behind.
-imply BreakTheHaughty -> [Suffering, Narrative]
+imply BreakTheHaughty -> [suffering, Narrative]
 imply HumbledHaughty  -> [Ashamed, Humbled]
 
 

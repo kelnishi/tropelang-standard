@@ -35,7 +35,7 @@ assoc be_careful_what_you_wish_for -> [
 
 // === ONTOLOGY ===
 // The granted wish whose fulfilment is the disaster — desire elevated to its own punishment.
-imply BeCarefulWhatYouWishFor -> [Reversal, Irony, Fate, Narrative]
+imply BeCarefulWhatYouWishFor -> [Reversal, Irony, fate, Narrative]
 
 
 // === ABSTRACT RULE ===

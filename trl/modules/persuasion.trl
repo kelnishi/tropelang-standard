@@ -25,7 +25,7 @@ import "trl/modules/reputation.trl"         // ethos = credibility, status as co
 import "trl/modules/common_knowledge.trl"   // belief-change is what persuasion edits
 
 concept persuasion [+System] [%Narrative]
-imply Persuasion -> [Conviction, Audience, Narrative]
+imply Persuasion -> [Conviction, audience, Narrative]
 
 // the speaker — author and on-stage figure in one, addressing the audience directly
 concept speaker [%Narrative]

@@ -52,7 +52,7 @@ rule TheReveal_Disclosed {
   when:
     char $subject [+Alias(name=$cover)]
     char $observer [+Perceives(target=$subject, as=$cover)]
-    obj  $evidence [+Revelation]
+    obj  $evidence [+revelation]
     evt  $disclosure [&Reveals(fact=$truth)]
     $disclosure -> $observer
   then:

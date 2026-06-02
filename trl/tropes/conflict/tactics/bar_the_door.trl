@@ -22,7 +22,7 @@ assoc bar_the_door -> [
 
 // === ONTOLOGY ===
 
-imply BarTheDoor -> [Denial, Defensive, Narrative]
+imply BarTheDoor -> [denial, Defensive, Narrative]
 
 
 // === ABSTRACT RULE ===

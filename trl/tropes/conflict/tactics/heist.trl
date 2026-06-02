@@ -27,7 +27,7 @@ assoc heist -> [
 
 // === ONTOLOGY ===
 
-imply Heist -> [Crime, Deception, Narrative]
+imply Heist -> [Crime, deception, Narrative]
 
 
 // === ABSTRACT RULE ===

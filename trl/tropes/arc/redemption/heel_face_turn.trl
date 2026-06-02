@@ -29,7 +29,7 @@ assoc heel_face_turn -> [
 // === ONTOLOGY ===
 
 imply HeelFaceTurn -> [Reversal, Redemption, Narrative]
-imply FaceHeelTurn -> [Reversal, Corruption, Narrative]
+imply FaceHeelTurn -> [Reversal, corruption, Narrative]
 
 
 // === ABSTRACT RULES ===

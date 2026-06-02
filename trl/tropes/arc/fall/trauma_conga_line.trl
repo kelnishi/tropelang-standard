@@ -35,7 +35,7 @@ assoc trauma_conga_line -> [
 
 // === ONTOLOGY ===
 // The unbroken chain itself, and the beleaguered target the pile-on singles out.
-imply TraumaCongaLine -> [Suffering, Relentless, Narrative]
+imply TraumaCongaLine -> [suffering, Relentless, Narrative]
 imply CongaLineTarget -> [Beleaguered, LongSuffering]
 
 

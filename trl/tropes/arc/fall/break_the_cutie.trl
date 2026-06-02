@@ -29,8 +29,8 @@ assoc break_the_cutie -> [
 
 // === ONTOLOGY ===
 // The cutie's defining sweetness, and the husk left when it is crushed.
-imply BreakTheCutie -> [Suffering, Innocent, Narrative]
-imply BrokenCutie   -> [Despair, Hollow]
+imply BreakTheCutie -> [suffering, Innocent, Narrative]
+imply BrokenCutie   -> [despair, Hollow]
 
 
 // === ABSTRACT RULE ===

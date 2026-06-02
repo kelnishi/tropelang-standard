@@ -24,7 +24,7 @@ assoc the_duel -> [
 
 // === ONTOLOGY ===
 
-imply TheDuel -> [Honor, Combat, Narrative]
+imply TheDuel -> [honor, Combat, Narrative]
 
 
 // === ABSTRACT RULE ===

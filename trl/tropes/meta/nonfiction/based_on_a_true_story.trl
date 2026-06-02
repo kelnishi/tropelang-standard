@@ -33,7 +33,7 @@ rule Based_On_A_True_Story {
 // A near-disaster reconstructed close to the record — the CO2 scrubber improvised from a list of
 // what was aboard, the line trimmed to "Houston, we have a problem" — dramatized for shape, but
 // anchored hard to a thing that really happened and a crew that really came home.
-char ron_howard [+Author]
+char ron_howard [+author]
 set  apollo_13  [+RealEvent]
 
 scene the_reconstruction {

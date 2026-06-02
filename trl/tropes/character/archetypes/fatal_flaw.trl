@@ -32,7 +32,7 @@ assoc fatal_flaw -> [
 // A Fatal Flaw is the hamartia: the trait that doubles as the undoing. The cluster is the tragic
 // machinery — the recognition (anagnorisis) comes too late, the reversal (peripeteia) is already in
 // motion, and the fall is the flaw's own consequence.
-imply FatalFlaw -> [Hamartia, Tragedy, Transformation, Narrative]
+imply FatalFlaw -> [Hamartia, tragedy, Transformation, Narrative]
 
 
 // === ABSTRACT RULE ===

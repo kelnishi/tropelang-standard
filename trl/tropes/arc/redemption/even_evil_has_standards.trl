@@ -39,7 +39,7 @@ assoc even_evil_has_standards -> [
 // A villain's code is defined by what it FORBIDS: an act Beyond The Pale is the abhorrent thing even
 // a villain refuses. To refuse it is to reveal a Standard — a Binding limit that, by condemning a
 // worse act, confers a grudging Honored standing the villain did nothing kind to earn.
-imply BeyondThePale -> [Cruelty, Abhorrent, Narrative]
+imply BeyondThePale -> [cruelty, Abhorrent, Narrative]
 imply EvenEvilHasStandards -> [Antagonist, Binding, Integrity, Narrative]
 
 

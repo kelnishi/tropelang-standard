@@ -32,7 +32,7 @@ assoc kick_the_dog -> [
 
 // === ONTOLOGY ===
 // The deed (gratuitous cruelty as authorial signage) and the verdict it manufactures.
-imply KickTheDog -> [Cruelty, Villain, Narrative]
+imply KickTheDog -> [cruelty, Villain, Narrative]
 
 
 // === ABSTRACT RULE ===

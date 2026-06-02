@@ -31,7 +31,7 @@ import "trl/concepts/index.trl"               // revelation
 import "trl/modules/emotion_dynamics.trl"     // audience appraisal is its mirror, one plane up
 
 concept rhetoric [+System] [%Narrative]
-imply Rhetoric -> [Audience, Effect, Narrative]
+imply Rhetoric -> [audience, Effect, Narrative]
 
 // the two agents of the transaction — above the story, not in it
 concept author   [%Narrative]   // the one playing god

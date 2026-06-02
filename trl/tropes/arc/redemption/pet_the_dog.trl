@@ -36,7 +36,7 @@ assoc pet_the_dog -> [
 // The signature cluster: a moment of sympathy manufactured FOR a hard character — kindness as the
 // instrument, audience-warming as the payoff. (Sympathy is the rhetoric/investment register; the
 // act itself draws on the compassion/mercy concepts.)
-imply PetTheDog -> [Sympathy, Compassion, Investment, Audience, Narrative]
+imply PetTheDog -> [Sympathy, Compassion, Investment, audience, Narrative]
 
 
 // === ABSTRACT RULE ===

@@ -16,7 +16,7 @@
 import "trl/concepts/index.trl"            // fate, revelation
 
 concept prophecy [+System] [%Epistemic]
-imply Prophecy -> [Foreknowledge, Fate, Narrative]
+imply Prophecy -> [Foreknowledge, fate, Narrative]
 
 
 // === THE VOCABULARY ===

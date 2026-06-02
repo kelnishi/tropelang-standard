@@ -26,7 +26,7 @@ assoc worthy_opponent -> [
 
 // === ONTOLOGY ===
 
-imply WorthyOpponent -> [Honor, Conflict, Narrative]
+imply WorthyOpponent -> [honor, Conflict, Narrative]
 
 
 // === ABSTRACT RULE ===

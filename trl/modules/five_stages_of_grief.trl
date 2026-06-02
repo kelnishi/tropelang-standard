@@ -61,17 +61,17 @@ rule Grief_Bargaining {
     evt  $plea [&Pleads(agent=$c)]
   then:
     $c [-Angry]
-    $c [#Bargaining]
+    $c [#bargaining]
     $c -- bargaining
 }
 
 // BARGAINING -> DEPRESSION. No deal can be struck; the unchangeable settles its full weight.
 rule Grief_Depression {
   when:
-    char $c [#Bargaining]
+    char $c [#bargaining]
     evt  $futility [&Fails(agent=$c)]
   then:
-    $c [-Bargaining]
+    $c [-bargaining]
     $c [#Depressed]
     $c -- depression
 }
@@ -123,6 +123,6 @@ scene the_year {
   }
   beat 3 {
     evt the_plea  [&Pleads(agent=joan)]        // if she reconstructs the night exactly, she can undo it
-    // Grief_Bargaining -> [#Bargaining]
+    // Grief_Bargaining -> [#bargaining]
   }
 }

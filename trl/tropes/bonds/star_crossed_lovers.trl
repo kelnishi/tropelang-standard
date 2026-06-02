@@ -24,7 +24,7 @@ assoc star_crossed_lovers -> [
 
 // === ONTOLOGY ===
 
-imply StarCrossedLovers -> [Romance, Fate, Narrative]
+imply StarCrossedLovers -> [Romance, fate, Narrative]
 
 
 // === ABSTRACT RULE ===

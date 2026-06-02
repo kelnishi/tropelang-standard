@@ -27,7 +27,7 @@ assoc pratfall -> [
 
 // === ONTOLOGY ===
 // The dignity-deflation: a dignified body undone by gravity, the harm framed harmless.
-imply Pratfall -> [Slapstick, Comedy, Schadenfreude, Narrative]
+imply Pratfall -> [Slapstick, comedy, Schadenfreude, Narrative]
 
 
 // === ABSTRACT RULE ===

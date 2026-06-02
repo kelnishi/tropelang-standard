@@ -35,7 +35,7 @@ assoc tragic_hero -> [
 // The Tragic Hero subsumes the protagonist's standing, the virtue that makes the fall a loss, the
 // hamartia that authors it, and the reversal (peripeteia) that enacts it — the tragic machinery seen
 // from the side of the one who keeps our sympathy to the end.
-imply TragicHero -> [Protagonist, Virtuous, Hamartia, Tragedy, Narrative]
+imply TragicHero -> [Protagonist, Virtuous, Hamartia, tragedy, Narrative]
 
 
 // === ABSTRACT RULE ===

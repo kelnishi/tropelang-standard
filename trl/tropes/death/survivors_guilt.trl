@@ -28,7 +28,7 @@ assoc survivors_guilt -> [
 
 // === ONTOLOGY ===
 
-imply SurvivorsGuilt -> [Guilt, Trauma, Narrative]
+imply SurvivorsGuilt -> [guilt, Trauma, Narrative]
 
 
 // === ABSTRACT RULES (the S8 imprint -> trigger -> catharsis / repression arc) ===

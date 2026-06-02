@@ -17,7 +17,7 @@ assoc the_sidekick -> [
   the_foil : "is very often also a"
 ]
 
-imply Sidekick -> [Loyalty, Support, Narrative]
+imply Sidekick -> [loyalty, Support, Narrative]
 
 // Naming rule: one who loyally supports the protagonist IS a Sidekick (tags the bond).
 rule The_Sidekick {

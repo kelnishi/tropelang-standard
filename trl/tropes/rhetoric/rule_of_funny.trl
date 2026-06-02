@@ -24,7 +24,7 @@ assoc rule_of_funny -> [
 
 // === ONTOLOGY ===
 
-imply RuleOfFunny -> [Comedy, Override, Narrative]
+imply RuleOfFunny -> [comedy, Override, Narrative]
 
 
 // === ABSTRACT RULE ===

@@ -25,7 +25,7 @@ assoc fall_from_grace -> [
 
 
 // === ONTOLOGY ===
-imply FallFromGrace -> [Corruption, Transformation, Narrative]
+imply FallFromGrace -> [corruption, Transformation, Narrative]
 
 
 // === ABSTRACT RULES (the slide: compromise, then corruption) ===

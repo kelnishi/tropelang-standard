@@ -32,7 +32,7 @@ assoc face_heel_turn -> [
 
 // === ONTOLOGY ===
 // The crossing is itself a Reversal — the mirror of the redemptive one, bending toward Corruption.
-imply FaceHeelTurn -> [Reversal, Corruption, Narrative]
+imply FaceHeelTurn -> [Reversal, corruption, Narrative]
 
 
 // === ABSTRACT RULE ===

@@ -19,7 +19,7 @@ import "trl/modules/action_dynamics.trl"   // the caper borrows the feint (Feint
 import "trl/modules/reputation.trl"        // the con FOR someone pays off as Vindication
 
 concept heist [+System] [%Social]
-imply Heist -> [Crime, Deception, Narrative]
+imply Heist -> [Crime, deception, Narrative]
 
 
 // === THE CREW — roles a caper slots a player into (stable props on a char) ===

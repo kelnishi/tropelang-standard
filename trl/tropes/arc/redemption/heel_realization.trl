@@ -29,7 +29,7 @@ assoc heel_realization -> [
 
 // === ONTOLOGY ===
 // The recognition is itself a beat of self-awareness — distinct from the Reversal it may precede.
-imply HeelRealization -> [Recognition, Conscience, Narrative]
+imply HeelRealization -> [recognition, Conscience, Narrative]
 
 
 // === ABSTRACT RULE ===

@@ -25,7 +25,7 @@ assoc redemption_arc -> [
 
 
 // === ONTOLOGY ===
-imply RedemptionArc -> [Atonement, Transformation, Narrative]
+imply RedemptionArc -> [atonement, Transformation, Narrative]
 
 
 // === ABSTRACT RULE ===

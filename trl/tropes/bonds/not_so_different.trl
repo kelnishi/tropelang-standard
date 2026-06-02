@@ -33,7 +33,7 @@ assoc not_so_different -> [
 // === ONTOLOGY ===
 // The reveal of likeness across the line of conflict — the dark-mirror recognition, distinct from
 // the mere contrast of the Foil it inverts.
-imply NotSoDifferent -> [Shadow, Recognition, Narrative]
+imply NotSoDifferent -> [Shadow, recognition, Narrative]
 
 
 // === ABSTRACT RULE ===

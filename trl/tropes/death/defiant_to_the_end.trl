@@ -40,7 +40,7 @@ assoc defiant_to_the_end -> [
 // the needs Inversion, run as the last act — so the body falls Fallen but the self is held Unbroken
 // and Transcendent: the dignity outlasts the body it was held in. The death buys nothing; the
 // defiance is its own point.
-imply Defiance        -> [Dignity, Esteem, Narrative]
+imply Defiance        -> [dignity, Esteem, Narrative]
 imply DefiantToTheEnd -> [Defiance, Inversion, Final]
 
 

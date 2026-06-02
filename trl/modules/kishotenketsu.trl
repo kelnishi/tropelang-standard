@@ -23,7 +23,7 @@ import "trl/modules/rhetoric.trl"          // the reader is worked, but by contr
 
 
 // === THE SYSTEM ===
-concept kishotenketsu [+Kishotenketsu] [%Narrative]
+concept kishotenketsu [+kishotenketsu] [%Narrative]
 imply Kishotenketsu -> [Structure, Contrast, Narrative]
 imply KishoStep     -> [Beat, Structure, Narrative]
 
@@ -85,7 +85,7 @@ assoc kishotenketsu -> [
 char daughters   [+Subject]
 char the_warriors [+Subject]
 
-arc the_itoya_poem [+Kishotenketsu]
+arc the_itoya_poem [+kishotenketsu]
 
 scene the_poem {
   beat 1 { daughters -- ki  : "The daughters of Itoya, in the Honmachi of Osaka" }

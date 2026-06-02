@@ -32,7 +32,7 @@ assoc redemption_rejection -> [
 
 // === ONTOLOGY ===
 // The refusal is its own beat: a Reversal that does NOT happen — the alignment held by choice.
-imply RedemptionRejection -> [Refusal, Corruption, Narrative]
+imply RedemptionRejection -> [Refusal, corruption, Narrative]
 
 
 // === ABSTRACT RULE ===

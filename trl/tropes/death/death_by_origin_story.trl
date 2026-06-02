@@ -33,7 +33,7 @@ assoc death_by_origin_story -> [
 // === ONTOLOGY ===
 // The death is not a beat the hero recovers from — it is the GENESIS of the hero. The loss
 // and the heroism are the same event seen twice: tragedy, then its issue.
-imply DeathByOriginStory -> [Tragedy, Genesis, Narrative]
+imply DeathByOriginStory -> [tragedy, Genesis, Narrative]
 
 
 // === ABSTRACT RULE ===

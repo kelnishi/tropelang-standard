@@ -41,7 +41,7 @@ assoc anagnorisis -> [
 // === ONTOLOGY ===
 // Anagnorisis subsumes the recognition itself, the tragic register it belongs to, and the reversal
 // (peripeteia) Aristotle binds it to — the turn from ignorance to knowledge seen as a tragic beat.
-imply Anagnorisis -> [Recognition, Reversal, Tragedy, Narrative]
+imply Anagnorisis -> [recognition, Reversal, tragedy, Narrative]
 
 
 // === ABSTRACT RULE ===

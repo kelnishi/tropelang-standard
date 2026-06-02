@@ -23,7 +23,7 @@ assoc feint -> [
 
 // === ONTOLOGY ===
 
-imply Feint -> [Deception, Tactic, Narrative]
+imply Feint -> [deception, Tactic, Narrative]
 
 
 // === ABSTRACT RULE ===

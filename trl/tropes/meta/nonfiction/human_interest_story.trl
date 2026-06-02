@@ -23,7 +23,7 @@ assoc human_interest_story -> [
   foregone_conclusion : "is the unknown-outcome opposite of"
 ]
 
-imply HumanInterestStory -> [Empathy, Investment, Audience, Narrative]
+imply HumanInterestStory -> [empathy, Investment, audience, Narrative]
 
 // Naming rule: an emotional profile of a real person, aired over an outcome still unknown, IS the
 // human-interest device — it endears the subject and converts the audience into partisans.

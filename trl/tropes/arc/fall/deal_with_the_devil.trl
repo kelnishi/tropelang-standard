@@ -36,7 +36,7 @@ assoc deal_with_the_devil -> [
 // surrendered as the very condition of the gift, leaving the mark Indebted to a bill not yet
 // collected. Temptation names the offer; the Devil's Deal names the trade; the Cost Comes Due names
 // the collection.
-imply FaustianBargain -> [Temptation, Binding, Costly, Narrative]
+imply FaustianBargain -> [temptation, Binding, Costly, Narrative]
 imply DevilsDeal      -> [FaustianBargain, Coerced, Irreversible]
 
 
