@@ -102,11 +102,16 @@ Declarations first, the timeline second. Everything the timeline names already e
   `event` (an evt), `as` (an alias). A scene/act/beat is itself a taggable entity (`scene s [+Endgame]`).
 - **Reference a concept in lowercase; CamelCase is for tags.** Concepts are lowercase abstract nouns
   (`concept corruption`, `concept honor`). Reference them lowercase *everywhere* — param values
-  (`goal=justice`) **and** imply components (`imply DecadentCourt -> [corruption, Power]`). CamelCase
-  names are props / states / attrs / roles (`[+Corrupted]`, `[+Protagonist]`, `Power`). A CamelCase
-  concept reference (`[… Corruption …]`) will **not** resolve to `concept corruption` — casing is
-  meaning-bearing. (Legacy CamelCase concept refs are bridged in `concepts/concept_aliases.trl`; prefer
-  the lowercase form in new code.)
+  (`goal=justice`) **and** imply components (`imply DecadentCourt -> [corruption, Power]`). A CamelCase
+  concept reference (`[… Corruption …]`) will **not** resolve to `concept corruption`.
+- **The casing is ontological, not cosmetic.** A **lowercase** name is a *foundational node* — a concept
+  (`corruption`, `justice`) sits at the **same level of abstraction as a character** (`vale`): a unique,
+  declared thing in the graph that you tag, relate to, and reference *by identity*, defined once and
+  reused everywhere (DRY), **not derived** from anything. A **CamelCase** name is *derivative* — a prop /
+  state / role / attr **attached** to a node and mechanically implied or expanded (`imply`, `[+Tag]`). So
+  you reference a concept lowercase because it **is** a node, like an entity — not a tag; a CamelCase
+  concept-ref fails precisely because the resolver is then looking for a *derived tag*, not the unique
+  node. Concepts live in `trl/concepts/`, declared once — reuse them, never redeclare.
 
 ### Where a new tag lives — declare it, don't strand it
 
