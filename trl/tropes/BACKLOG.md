@@ -139,3 +139,31 @@ moves coverage:
   eval story implied them to `Royalty` (a one-line eval fix, not new tropes).
 - **non-fiction** (`mythbusters`): `Host`, `Experiments`, `Escalates`, `Confirmed` — the non-fiction
   forms above.
+
+## Broken-ref drive-down — current masters (links-first)
+
+Driven by what the master narratives actually reference but the corpus does not yet declare (scan:
+`links().tags` with `known=false` over `narratives/` + corpus). Resolving these is what turns red tags
+green in the IDE. Two masters, two domains. Priority order = frequency × reusability.
+
+**P1 — generic vocabulary (prelude candidates).** Universal, not domain-specific; belong in `prelude.trl`:
+- `Pursues` (82, intent), `Avenges` (rel), `Trusts`/`Trusted`, `LoyalTo`, `Exposed`, `Redeemed`,
+  `Coveted`, `Secured`, `Lifted`, `Authentic`, `Overcommitted`, `Demands`, `Opens`, `Held`, `Burns`,
+  `Withdraws`. Decide prelude vs. concept per term; `Pursues` is the single biggest win.
+
+**P2 — domain vocabulary libraries (declare, not convert).** Reusable across any story in the domain:
+- **Siege / military** (`the_salt_gate`): `Besieger`/`Besieged`/`Besieging`, `Siege`, `Fortress`,
+  `Rampart`, `Chokepoint`, `Inner_Gate`, `Sally_Door`, `Belfry`, `Salt_Rich`, roles `Warlord`/`Soldier`/
+  `Sergeant`/`Veteran`/`Quartermaster`/`Commander`/`ReliefCommander`/`Champion`/`Defender`/`Army`, verbs
+  `Encircles`/`Bombards`/`Breaches`/`Sallies`/`Battered`/`Stunned`/`Steadfast`/`Galled`. → a
+  `concepts/`+`modules/` military set.
+- **Heist / crime** (`the_lacquer_nightingale`): roles `Grifter`/`Hacker`/`Collector`/`InsideOperator`/
+  `Mark`, `RealTarget`/`Counterfeit`/`Offstage`/`Artisan`/`Wronged`, verbs `Swaps`/`Disables`/`Feints`/
+  `Endears`. → a crime/caper set.
+
+**P3 — structural tropes (convert).** The masters *demonstrate* these tropes, yet they don't exist:
+- **Heist** (flagship example throughout STYLE/specs; `[+Heist]` ×15) — `imply Heist -> […]` + caper rule.
+- **Siege** — the salt-gate spine; `imply Siege -> […]` + investment/relief rule.
+
+Keep genuinely bespoke flavor tags (one-off character descriptors) broken per the closed-vocabulary
+decision unless promoted here.
