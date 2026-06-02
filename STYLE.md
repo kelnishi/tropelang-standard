@@ -112,6 +112,14 @@ Declarations first, the timeline second. Everything the timeline names already e
   you reference a concept lowercase because it **is** a node, like an entity — not a tag; a CamelCase
   concept-ref fails precisely because the resolver is then looking for a *derived tag*, not the unique
   node. Concepts live in `trl/concepts/`, declared once — reuse them, never redeclare.
+- **Casing signals the system's assumptions — and flags when a concept is outgrowing its tier.** Writing
+  a name lowercase asserts *one fixed, foundational meaning*, referenced by identity — that is what the
+  engine (and the reader) will assume. So the choice is also a design check: ask **"does this token ever
+  take an alternate or adjusted meaning?"** If yes, it is not a plain concept — either it has **dynamics**
+  (break it out into a **module** that simulates how its meaning shifts with context) or it is a
+  **recognized pattern** (break it out into a **trope**). A concept that needs context to land right has
+  outgrown the concept tier. CamelCase, conversely, reads as something *added on top of* the foundation —
+  a derived property layered onto the nodes, never part of the bedrock.
 
 ### Where a new tag lives — declare it, don't strand it
 
