@@ -51,7 +51,7 @@ rule WoundedGazelleGambit {
     char $schemer [+Antagonist]
     char $target
     char $onlooker
-    evt  $display [&Wounded(subject=$schemer, by=$schemer)]               // self-staged — the schemer is their own "lion"
+    evt  $display [&Wounds(subject=$schemer, by=$schemer)]               // self-staged — the schemer is their own "lion"
     evt  $accusation [&Asserts(agent=$schemer, to=$onlooker, claim=$blame_target)]
     not ( $onlooker [@Witness_To(event=$display)] )
     $schemer != $target
@@ -88,7 +88,7 @@ boney [@Member_Of(group=police)]
 
 scene the_return {
   beat 1 {
-    evt the_staging [&Wounded(subject=amy, by=amy)]                      // she binds and cuts herself
+    evt the_staging [&Wounds(subject=amy, by=amy)]                      // she binds and cuts herself
     // (no onlooker witnesses this — the falseness stays latent)
   }
   beat 2 {
