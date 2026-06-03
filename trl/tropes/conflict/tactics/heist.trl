@@ -2,35 +2,92 @@
 // @trope    The Caper (Heist)
 // @category Crime / Tactics
 // @source   https://allthetropes.org/wiki/The_Caper
-// @version  1.3
+// @version  1.4
 // @domain   Social
 //
 // Laconic (per the wiki): a robbery told from the criminals' side — a crew with assigned roles plans
 // and executes a job against a target's security, defeating it (usually by misdirection: the eyes go
 // dark, a swap nobody sees, the watched prize is gone). The crooks are the rounded, colourful side;
-// the opposition is the obstacle. FRONTIER: the first trope to ride the heist module — it recognizes
-// the SHAPE of a caper (grifter-led crew · security disabled · coveted prize lifted) rather than any
-// single tactic, so a swap-job and a vault-job both read as the same pattern.
+// the opposition is the obstacle. This trope OWNS the caper vocabulary outright — the crew roles, the
+// prize/decoy object-states, and the two crime-specific verbs (the swap and the disable) — and
+// recognizes the SHAPE of a caper (grifter-led crew · security disabled · coveted prize lifted)
+// rather than any single tactic, so a swap-job and a vault-job both read as the same pattern. The
+// watched-prize device it turns on (Coveted/Counterfeit) is base narrative vocabulary and lives in
+// the prelude beside MacGuffin. The caper RIDES verbs it borrows from other dynamics — the feint is a
+// tactic (action_dynamics Feints) — and declares only what is its own: the crew, the prizes, the swap.
 
 
 // === IMPORTS & ASSOCIATIONS ===
 import "trl/concepts/index.trl"            // crime, justice
-import "trl/modules/heist.trl"             // Grifter / Mark / Coveted / Disables / Lifted / The_Swap
 import "trl/modules/action_dynamics.trl"   // the caper borrows the feint as misdirection
 
 assoc heist -> [
-  heist           : "recognizes a job built from the vocabulary of",
   action_dynamics : "draws its misdirection (the feint) from",
   justice         : "the long con is, beneath the prize, often FOR"
 ]
 
 
 // === ONTOLOGY ===
-
+concept heist [+System] [%Social]
 imply Heist -> [Crime, deception, Narrative]
 
 
-// === ABSTRACT RULE ===
+// === THE CREW — roles a caper slots a player into (stable props on a char) ===
+prop Grifter         [+Social]      // the con-artist mastermind; runs the long game on the mark
+prop Hacker          [+Social]      // kills the eyes — cameras, alarms, the security system
+prop InsideOperator  [+Social]      // works the floor on the day; springs the diversion
+prop Artisan         [+Social]      // the forger/maker who builds the decoy off-stage
+prop Collector       [+Social]      // the holder of the prize; trusts his own eye (a mark archetype)
+prop Mark            [+Social]      // the target of the con — the one being played
+prop Wronged         [+Social]      // the party the job is FOR; the injustice the con avenges
+prop Offstage        [+Social]      // a real player the story only gestures at, never stages
+
+// Standing of a player relative to the crew — the green hand vs. the made operator.
+prop Greenhorn       [+Social]      // untested; the rookie on their first job
+prop Formidable      [+Social]      // a proven, dangerous operator — the crew to beat
+
+
+// === THE PRIZES & THE DECOY — object/states the swap turns on ===
+// (the watched prize and its forgery — Coveted / Counterfeit — are base vocabulary in the prelude.)
+state RealTarget     [+Narrative]   // latent: the thing the whole job is actually FOR (not the watched one)
+state Lifted         [+Social]      // taken — successfully stolen out from under its keeper
+state InTheCase      [+Social]      // sitting where the prize was; what the mark finds when he checks
+state Authentic      [+Narrative]   // genuine — the real article (what the mark BELIEVES he still has)
+
+
+// === SECURITY & STANDING — the states the caper toggles ===
+state Secured        [+Spatial]     // a place under guard — cameras live, vault sealed (on a set)
+state Reputable      [+Social]      // a cover identity the mark vouches for — the grifter's good name
+state Departed       [+Social]      // gone, exited clean — left the scene without a trace
+
+
+// === THE CRIME-SPECIFIC VERBS (on evt nodes) ===
+verb Swaps(decoy, real)  [+Interpersonal]   // put the forgery in the case, take the real one out
+verb Disables(target)    [+Interpersonal]   // knock out a security system — kill the eyes
+
+
+// === RULES ===
+
+// The disable: the hacker kills a place's eyes, and the secured space goes open.
+rule Disable_Security {
+  when:
+    evt $d [&Disables(agent=$hacker, target=$site)]
+  then:
+    $site [-Secured]
+    $hacker -- intrusion
+}
+
+// The swap: the decoy goes into the case and the real prize comes out — a theft nobody sees,
+// because what's left behind looks exactly like what was taken.
+rule The_Swap {
+  when:
+    evt $s [&Swaps(agent=$thief, decoy=$fake, real=$prize)]
+  then:
+    $prize [+Lifted]
+    $fake  [+InTheCase]
+    $thief -- misdirection
+}
+
 // Naming rule: a grifter-led crew kills the mark's security and lifts the watched prize — that job IS
 // a Heist. It recognizes the caper SHAPE (a disable that opens the secured place + the coveted prize
 // going out), not any one tactic, so a swap-job and a smash-the-vault job both trigger it.
@@ -44,6 +101,18 @@ rule The_Heist {
     $take [+Heist]
     $thief [+Reputable]          // the cover holds — to the mark, the appraiser simply left
     $thief [+Departed]
+}
+
+// The minimal con: a grifter plays a mark and swaps the prize for a decoy — no vault, no security to
+// kill. The swap is the whole trick, so a pure street con still reads as a Heist.
+rule The_Caper {
+  when:
+    char $thief [+Grifter]
+    char $mark  [+Mark]
+    evt  $s [&Swaps(agent=$thief, decoy=$fake, real=$prize)]
+  then:
+    $s [+Heist]
+    $thief -- caper
 }
 
 
@@ -72,5 +141,24 @@ scene the_job {
     evt the_lift [&Swaps(agent=leonardo, decoy=the_copy, real=the_diamonds)]
     // The_Swap -> the_diamonds [+Lifted];  the_copy [+InTheCase]
     // The_Heist -> the_lift [+Heist];  leonardo [+Reputable] [+Departed]
+  }
+}
+
+
+// === CONCRETE VIGNETTE: the pigeon drop — a classic street con (folklore / con-craft) ===
+// The shortest possible caper: a grifter wins a passing mark's trust, then swaps a fat envelope of
+// "found money" for a decoy stuffed with newsprint. The mark walks away holding the fake; the
+// grifter has lifted the real one. No vault, no crew — the swap is the whole trick.
+
+char operator [+Grifter]                  // the street con-artist
+char passerby [+Mark]                     // the trusting passer-by who's been played
+obj  the_roll [+MacGuffin] [+Coveted]     // the envelope of real cash
+obj  the_dummy [+Counterfeit]             // an identical envelope stuffed with cut paper
+
+scene the_drop {
+  beat 1 {
+    evt the_handoff [&Swaps(agent=operator, decoy=the_dummy, real=the_roll)]
+    // The_Swap -> the_roll [+Lifted];  the_dummy [+InTheCase]
+    // The_Caper -> the_handoff [+Heist]   (a grifter + a mark + a swap)
   }
 }

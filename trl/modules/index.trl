@@ -33,4 +33,3 @@ import "trl/modules/persuasion.trl"           // oratory system (speaker -> audi
 import "trl/modules/non_fiction.trl"          // narrative system (storytelling bound to the real: reality writes the verdict)
 import "trl/modules/action_dynamics.trl"      // tactical system (the verbs of conflict & cooperation)
 import "trl/modules/siege.trl"                 // military system (protracted investment: encircle/bombard/breach → sortie/relief)
-import "trl/modules/heist.trl"                 // crime system (the caper: crew roles, the swap, security disabled → prize lifted)

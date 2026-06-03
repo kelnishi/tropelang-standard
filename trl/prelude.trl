@@ -431,6 +431,8 @@ prop Path_Hidden      [+Narrative]    // true path not yet visible
 // =============================================================================
 
 prop MacGuffin        [+Narrative]    // desired object; its nature is irrelevant
+prop Coveted          [+Narrative]    // the watched prize all eyes are on — a MacGuffin in play
+prop Counterfeit      [+Narrative]    // a forged copy — the decoy built to take the prize's place
 prop Threshold        [+Narrative]    // crossing this changes everything
 prop Remnant          [+Narrative]    // what survives — relic, scar, memory
 prop PendingPayoff    [+Narrative]    // Chekhov tracker — parameterize with item=
