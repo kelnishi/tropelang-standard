@@ -26,8 +26,13 @@ concept anger       [%Psychological] [#Painful]
 concept bargaining  [%Psychological]
 concept depression  [%Psychological] [#Painful]
 
+// The system comprises its five stages (membership edges).
+five_stages_of_grief -> denial
+five_stages_of_grief -> anger
+five_stages_of_grief -> bargaining
+five_stages_of_grief -> depression
+five_stages_of_grief -> acceptance
 // The canonical sequence (edges, not a forced order — stages recur and skip in life).
-five_stages_of_grief -> [denial, anger, bargaining, depression, acceptance]
 denial -> anger -> bargaining -> depression -> acceptance
 
 
