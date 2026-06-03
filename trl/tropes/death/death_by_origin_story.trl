@@ -15,7 +15,7 @@
 // === IMPORTS & ASSOCIATIONS ===
 import "trl/concepts/index.trl"               // grief, calling, sacrifice
 import "trl/concepts/narrative.trl"           // calling, duty
-import "trl/modules/emotion_dynamics.trl"     // Appraise_Loss: [~Attached_To] + [&Died] -> [#Grieving]
+import "trl/modules/emotion_dynamics.trl"     // Appraise_Loss: [~Attached_To] + [&Dies] -> [#Grieving]
 import "trl/tropes/character/roles/the_hero.trl"              // the heroic path the loss forges
 import "trl/tropes/death/revenge.trl"               // the avenging path the loss can instead forge
 import "trl/tropes/character/archetypes/reluctant_hero.trl"        // the unwilling form the forged hero often takes
@@ -39,13 +39,13 @@ imply DeathByOriginStory -> [tragedy, Genesis, Narrative]
 // === ABSTRACT RULE ===
 // A survivor grieving an attachment they were bonded to, who answers the calling BECAUSE of
 // that death — crossing onto the heroic path — has been forged by Death by Origin Story. The
-// grief is the SETUP (Appraise_Loss already wrote [#Grieving] from the [~Attached_To] + [&Died]
+// grief is the SETUP (Appraise_Loss already wrote [#Grieving] from the [~Attached_To] + [&Dies]
 // pair); this rule fires only when that grief becomes the threshold the survivor crosses, and
 // tags BOTH the death (the origin) and the survivor (the hero it made).
 rule DeathByOriginStory {
   when:
     char $survivor [~Attached_To(target=$loved)] [#Grieving(source=$loved)]
-    evt  $death [&Died(subject=$loved)]
+    evt  $death [&Dies(subject=$loved)]
     evt  $forging [&Crosses(agent=$survivor, threshold=$calling)]
   then:
     $survivor [+Hero]
@@ -79,7 +79,7 @@ obj the_calling [+Threshold]
 scene the_origin {
   beat 1 {
     // the death: Mufasa falls in the stampede saving Simba — the founding loss
-    evt the_gorge [&Died(subject=mufasa)]
+    evt the_gorge [&Dies(subject=mufasa)]
     scar -> simba : "It Was Your Fault"
     mufasa [+Dead]
     // Appraise_Loss -> simba [#Grieving(source=mufasa)] [~Mourns(mufasa)] -- grief

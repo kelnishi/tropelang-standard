@@ -96,8 +96,11 @@ Declarations first, the timeline second. Everything the timeline names already e
   never strips the article. When they truly are the same trope under two names, link them deliberately
   with `alias TheX -> X`. Before minting a `TheX`/`X` trope, check the corpus for the other form first
   (S13 §6.1).
-- **Sigils:** `+` prop · `-` remove · `#` status · `@` rel · `~` intent · `&` event verb · `=`/`%`
-  domain facets · and the epistemic *wrappers* `!…!` / `*…*` / `?…?`.
+- **Sigils — one slot, two families.** *Dynamics* (how a trope is deployed, chosen per use): `+`
+  straight / default · `-` subverted / remove · `~` deconstructed / intent-toward-`target` · `?` averted /
+  query · `!` invoked / assert-absent. *Domain facets* (which ontological facet a tag **denotes** — a fixed
+  property of the tag): `=` Body · `#` Mind · `%` Essence · `@` Rel · `&` Verb. Plus the epistemic
+  *wrappers* `!…!` / `*…*` / `?…?` around a whole statement.
 - **Reserved param keys** carry meaning to the engine — use them: `agent`, `target`, `site` (a set),
   `event` (an evt), `as` (an alias). A scene/act/beat is itself a taggable entity (`scene s [+Endgame]`).
 - **Reference a concept in lowercase; CamelCase is for tags.** Concepts are lowercase abstract nouns
@@ -120,6 +123,30 @@ Declarations first, the timeline second. Everything the timeline names already e
   **recognized pattern** (break it out into a **trope**). A concept that needs context to land right has
   outgrown the concept tier. CamelCase, conversely, reads as something *added on top of* the foundation —
   a derived property layered onto the nodes, never part of the bedrock.
+
+### Facets are canonical — split the verb from the state
+
+A tag's **domain facet is canonical**: a name denotes exactly one facet, so it must always carry the same
+domain sigil. `Timeless` is always `%`, `Painful` always `#`. Using two *different* facet sigils for one
+name (`[#Pain]` and `[=Pain]`) is a **consistency error**, not two tags — the eval fact base keys on the
+*name* alone (`Fact::Tag(e, "Pain", …)`), so the two silently collapse into one and the facet is thrown
+away. The `corpus_facet_consistency` test (`tests/facets.rs`, via `tropelang::tag_facets`) enforces this;
+the fix is to pick one facet or **split the name**. (`+` is the unmarked default — write it explicitly, no
+naked tags; it is *not* a facet and never conflicts with one.)
+
+The classic split is **the act vs. the resulting state** — same root, two facets, two names:
+
+- the **act** is a `&` **Verb** tag, **present-tense 3rd-person** (`&Betrays`, `&Strikes`, `&Dies`,
+  `&Frames`), on an `evt` node;
+- the **state** is a **past participle** on the entity the act lands on, carrying whatever facet its
+  *condition* denotes — Body `=` (`han [=FrozenInCarbonite]`, `[=Wounded]`), Mind `#` (`[#Betrayed]`,
+  `[#Heartbroken]`), Essence `%`, …
+
+(`#` is **not** a generic "state" sigil — it is specifically *Mind*; the betrayal case lands on `#`
+only because feeling betrayed is mental. A bodily condition takes `=`, and so on.) So `Betrayed` split
+into the event `&Betrays(agent, target)` and the felt state `state Betrayed` / `[#Betrayed]`; a rule
+reads the act and writes the state (`[&Betrays] → [#Heartbroken] [#Resentful]`). Keep verb-facet names
+present-tense — past-tense verbs (`&Died`, `&Betrayed`) are the outliers to fix.
 
 ### Where a new tag lives — declare it, don't strand it
 

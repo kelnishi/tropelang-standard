@@ -23,7 +23,7 @@ concept emotion_dynamics [+System] [%Psychological]
 rule Appraise_Loss {
   when:
     char $c [~Attached_To(target=$lost)]
-    evt  $e [&Died(subject=$lost)]
+    evt  $e [&Dies(subject=$lost)]
   then:
     $c [#Grieving(source=$lost)]
     $c [~Mourns(target=$lost)]
@@ -34,7 +34,7 @@ rule Appraise_Loss {
 rule Appraise_Betrayal {
   when:
     char $c
-    evt  $e [&Betrayed(agent=$betrayer, target=$c)]
+    evt  $e [&Betrays(agent=$betrayer, target=$c)]
   then:
     $c [#Heartbroken]
     $c [#Resentful]
@@ -157,7 +157,7 @@ char fernand [+Antagonist]
 
 scene the_thread {
   beat 1 {
-    evt betrayal [&Betrayed(agent=fernand, target=dantes)]
+    evt betrayal [&Betrays(agent=fernand, target=dantes)]
     // Appraise_Betrayal -> [#Heartbroken] [#Resentful] [~Blames(fernand)]
   }
   beat 2 {

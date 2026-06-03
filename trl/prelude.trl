@@ -151,6 +151,7 @@ state Paranoid     [+Psychological]    // suspicion turned chronic — trusts no
 state Forgiven     [+Psychological]
 state Grateful     [+Psychological]
 state Resentful    [+Psychological]
+state Betrayed     [+Psychological]    // the felt state of having been betrayed — the act is the verb [&Betrays]
 
 // Cognitive states
 state Aware        [+Psychological]
@@ -305,7 +306,7 @@ rel Foils(other)           [+Narrative]  // a contrast tie — one character thr
 // =============================================================================
 
 verb Born                  [+Vital]
-verb Died                  [+Vital]
+verb Dies                  [+Vital]
 verb Wounded(by)           [+Vital]
 verb Healed(by)            [+Vital]
 
@@ -333,7 +334,7 @@ verb Abdicated(to)         [+Political]
 
 verb Confessed(to)         [+Interpersonal]
 verb Forgave(other)        [+Interpersonal]
-verb Betrayed(other)       [+Interpersonal]
+verb Betrays(other)       [+Interpersonal]
 verb Sacrificed_For(other) [+Interpersonal]
 verb Protected(other)      [+Interpersonal]
 verb Abandoned(other)      [+Interpersonal]

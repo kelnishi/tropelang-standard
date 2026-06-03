@@ -9,7 +9,7 @@
 
 // — Betrayal —
 imply Defects      -> [Betray]
-imply Betrayed     -> [Betray]
+imply Betrays     -> [Betray]
 imply Forsakes     -> [Betray]
 imply Undermines   -> [Betray]
 imply Usurps       -> [Betray]
@@ -25,7 +25,7 @@ imply Marks        -> [Plant]
 // — Slay (death) —
 imply Slays        -> [Slay]
 imply Slain        -> [Slay]
-imply Died         -> [Slay]
+imply Dies         -> [Slay]
 imply Succumbs     -> [Slay]
 imply Destroyed    -> [Slay]
 imply Sacrificed   -> [Slay]

@@ -78,7 +78,7 @@ scene the_crossing {
   beat 1 {
     michael @ louis_restaurant
     mccluskey @ louis_restaurant
-    evt the_shooting [&Betrayed(agent=mccluskey, target=vito)]   // the attack on what he loves
+    evt the_shooting [&Betrays(agent=mccluskey, target=vito)]   // the attack on what he loves
     michael [~Attached_To(target=vito)]
     michael [#Resentful]                 // the wound curdles — Appraise_Betrayal's blame, turned hard
   }

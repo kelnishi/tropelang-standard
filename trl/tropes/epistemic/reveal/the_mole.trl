@@ -65,7 +65,7 @@ rule TheMole_Springs {
   when:
     char $mole [+Trusted] [@LoyalTo(faction=$enemy)]
     char $insider [+Perceives(target=$mole, as=loyal_insider)]
-    evt  $strike [&Betrayed(agent=$mole, target=$insider)]
+    evt  $strike [&Betrays(agent=$mole, target=$insider)]
   then:
     $insider [-Perceives(target=$mole, as=loyal_insider)]
     $insider [#Knows(target=$mole)]
@@ -121,7 +121,7 @@ scene the_cover {
 
 scene it_springs {
   beat 1 {
-    evt the_tipoff [&Betrayed(agent=sullivan, target=queenan)]   // Sullivan warns Costello; the unit is sold out
+    evt the_tipoff [&Betrays(agent=sullivan, target=queenan)]   // Sullivan warns Costello; the unit is sold out
         dialog(inject=[speaker=sullivan], inline="""
                speaker: "{speaker}"
                cue: "low, fast, into a phone the squad does not know he carries"

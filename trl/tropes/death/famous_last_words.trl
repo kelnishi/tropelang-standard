@@ -11,7 +11,7 @@
 // such line (the refusal, esteem held past the body) and Heroic Sacrifice names the DEED the death
 // performs, Famous Last Words names the UTTERANCE ITSELF and its WEIGHTING: a final assertion whose
 // significance is multiplied precisely because nothing follows it. FRONTIER: rides theory_of_mind's
-// Asserts speech act and the prelude's Died life-event to model the last line as the act that CROWNS
+// Asserts speech act and the prelude's Dies life-event to model the last line as the act that CROWNS
 // an arc — a summation / defiance / confession / irony sharpened by being unrepeatable, the speaker
 // then [+Fallen]. The signature is the coincidence: the assertion and the death are the SAME beat,
 // so the words carry the whole of the character because they are the last the character has.
@@ -54,7 +54,7 @@ rule Famous_Last_Words {
   when:
     char $c
     evt  $line  [&Asserts(agent=$c, claim=$summation)]
-    evt  $death [&Died(subject=$c)]
+    evt  $death [&Dies(subject=$c)]
   then:
     // the utterance is weighted as the summation — unrepeatable, it crowns the arc
     !$line [+FamousLastWords]!
@@ -98,7 +98,7 @@ scene the_tears_in_rain {
                text: "I've seen things you people wouldn't believe... All those moments will be lost in time, like tears in rain. Time to die."
                """)
     // ...and in the same beat, the lifespan runs out — the assertion is his last act.
-    evt the_expiry [&Died(subject=roy)]
+    evt the_expiry [&Dies(subject=roy)]
     // Famous_Last_Words -> the_line [+FamousLastWords] [+Final];  roy [+Fallen];  the_line -- grief
     !the_line [+FamousLastWords]!
     the_line [+Final]
@@ -106,7 +106,7 @@ scene the_tears_in_rain {
   }
   beat 2 {
     // The line lands in the survivor as grief — emotion_dynamics' Appraise_Loss on the death.
-    // Appraise_Loss (deckard [~Attached_To(roy)], the_expiry [&Died(subject=roy)]) ->
+    // Appraise_Loss (deckard [~Attached_To(roy)], the_expiry [&Dies(subject=roy)]) ->
     //   deckard [#Grieving(source=roy)] [~Mourns(target=roy)] -- grief
     deckard [#Grieving(source=roy)]
     deckard -- grief

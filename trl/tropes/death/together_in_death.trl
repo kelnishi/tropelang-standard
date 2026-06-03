@@ -70,12 +70,12 @@ char iseult  [+LoveInterest]  [~Loves(target=tristan)]
 scene the_black_sail {
   beat 1 {
     evt the_lie -> tristan : "told the homecoming sail is black"
-    evt tristans_death [&Died(subject=tristan)]
+    evt tristans_death [&Dies(subject=tristan)]
     tristan [+Fallen]
   }
   beat 2 {
     iseult @ tristan : "lays herself beside the body she came too late to save"
-    evt iseults_grief [&Died(subject=iseult)]
+    evt iseults_grief [&Dies(subject=iseult)]
     iseult [+Fallen]
     // Together_In_Death -> tristan [-Sundered_From], both [@Joined_In_Death],
     //                      belonging met -- "in the grave"; both [+TogetherInDeath]
