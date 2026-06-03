@@ -232,12 +232,12 @@ concept face_heel_turn [+Trope(category="Character Development", source="allthet
 
 // SURVIVOR'S GUILT — the guilt of having lived when others died. A self-directed trauma
 // that composes with S8 (Memory): imprint -> trigger -> catharsis / repression.
-concept survivors_guilt [+Trope(category="Trauma", source="allthetropes.org/wiki/Survivor_Guilt")] [%Psychological]
+survivors_guilt [+Trope(category="Trauma", source="allthetropes.org/wiki/Survivor_Guilt")] [%Psychological]
 
 // SPECIFIC ACTIONS — conflict & cooperation at the event level (ride action_dynamics).
 // The Finishing Move (a decisive signature blow, often set up by an ally), Bar the Door (deny
 // access / buy time), and the Improvised Weapon (an indirect, environmental attack).
-concept finishing_move   [+Trope(category="Combat", source="allthetropes.org/wiki/Finishing_Move")] [%Interpersonal]
+finishing_move   [+Trope(category="Combat", source="allthetropes.org/wiki/Finishing_Move")] [%Interpersonal]
 concept bar_the_door     [+Trope(category="Tactics", source="allthetropes.org/wiki/Hold_The_Line")] [%Interpersonal]
 concept improvised_weapon [+Trope(category="Tactics", source="allthetropes.org/wiki/Improvised_Weapon")] [%Interpersonal]
 
@@ -251,9 +251,9 @@ concept heroic_sacrifice [+Trope(category="Sacrifice", source="allthetropes.org/
 // SIEGE & REACTIVE TACTICS (ride action_dynamics). Last Stand (hold against the odds, buy time at
 // a cost) and The Cavalry (relief arrives) are a matched pair — the held line and its relief.
 // Counter (let the foe commit, then turn it back) is the reactive mirror of the Feint.
-concept last_stand  [+Trope(category="Tactics", source="allthetropes.org/wiki/Last_Stand")] [%Interpersonal]
+last_stand  [+Trope(category="Tactics", source="allthetropes.org/wiki/Last_Stand")] [%Interpersonal]
 concept the_cavalry [+Trope(category="Tactics", source="allthetropes.org/wiki/The_Cavalry")] [%Interpersonal]
-concept counter     [+Trope(category="Tactics", source="allthetropes.org/wiki/Counter_Attack")] [%Interpersonal]
+counter     [+Trope(category="Tactics", source="allthetropes.org/wiki/Counter_Attack")] [%Interpersonal]
 
 // PROPHECY / FOREKNOWLEDGE (ride prophecy.trl). Self-Fulfilling (the avoidance seals the fate —
 // latent → absolute; Oedipus) and the Prophecy Twist (the equivocation collapses the unforeseen
@@ -284,7 +284,7 @@ dramatic_irony [+Trope(category="Narrative Devices", source="allthetropes.org/wi
 // deposed; Animal Farm), Divide and Conquer (keep rivals from uniting; Jay Gould).
 concept klingon_promotion      [+Trope(category="Power", source="allthetropes.org/wiki/Klingon_Promotion")] [%Political]
 concept full_circle_revolution [+Trope(category="Power", source="allthetropes.org/wiki/Full-Circle_Revolution")] [%Political]
-concept divide_and_conquer     [+Trope(category="Power", source="allthetropes.org/wiki/Divide_and_Conquer")] [%Political]
+divide_and_conquer     [+Trope(category="Power", source="allthetropes.org/wiki/Divide_and_Conquer")] [%Political]
 concept the_coup               [+Trope(category="Power", source="allthetropes.org/wiki/The_Coup_d'Etat")] [%Political]
 concept smear_campaign   [+Trope(category="Reputation", source="https://allthetropes.org/wiki/Malicious_Slander")] [%Social]   // serialised slander brands one name into common belief
 concept praetorian_guard       [+Trope(category="Power", source="allthetropes.org/wiki/Praetorian_Guard")] [%Political]
@@ -301,7 +301,7 @@ concept the_duel               [+Trope(category="Honor", source="allthetropes.or
 // curiosity gap held open to leash attention; "Who shot J.R.?").
 concept rule_of_funny    [+Trope(category="Comedy", source="allthetropes.org/wiki/Rule_of_Funny")] [%Narrative]
 concept deus_ex_machina  [+Trope(category="Resolution", source="allthetropes.org/wiki/Deus_Ex_Machina")] [%Narrative]
-concept cliffhanger      [+Trope(category="Suspense", source="allthetropes.org/wiki/Cliff_Hanger")] [%Narrative]
+cliffhanger      [+Trope(category="Suspense", source="allthetropes.org/wiki/Cliff_Hanger")] [%Narrative]
 concept rule_of_cool     [+Trope(category="Spectacle", source="allthetropes.org/wiki/Rule_of_Cool")] [%Narrative]
 
 // CHARACTER RELATIONSHIPS (the dyad — long a gap). The Foil (contrastive characterization — a
@@ -407,14 +407,14 @@ concept mentor [+Trope(category="Universal", source="allthetropes.org/wiki/Mento
 
 // CALL TO ADVENTURE — the inciting summons out of the ordinary world. Reuses the `calling`
 // concept (narrative.trl).
-concept call_to_adventure [+Trope(category="Universal", source="allthetropes.org/wiki/Call_to_Adventure")] [%Narrative]
+call_to_adventure [+Trope(category="Universal", source="allthetropes.org/wiki/Call_to_Adventure")] [%Narrative]
 
 // THREE-ACT STRUCTURE — the dramatic spine (setup / confrontation / resolution). Maps onto
 // the built-in `act` temporal scopes.
 concept three_act_structure [+Trope(category="Universal", source="allthetropes.org/wiki/Three_Act_Structure")] [%Narrative]
 
 // REFUSAL OF THE CALL — the hero first declines the summons (Hero's Journey beat 2).
-concept refusal_of_the_call [+Trope(category="Universal", source="allthetropes.org/wiki/Refusal_of_the_Call")] [%Narrative]
+refusal_of_the_call [+Trope(category="Universal", source="allthetropes.org/wiki/Refusal_of_the_Call")] [%Narrative]
 
 // === AUTO-REGISTERED TITLES (generated by `assemble` — do not hand-edit below) ===
 

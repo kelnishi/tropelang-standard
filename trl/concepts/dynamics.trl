@@ -1,0 +1,317 @@
+// @title   TropeLang Concept Library — Dynamics
+// @version 1.0
+// @note    Process and dynamic concepts — the motions of motivation, conflict,
+//          persuasion, social power, and narrative structure. Unlike static
+//          conditions, these name things that unfold, escalate, or resolve over
+//          time. They appear as edge targets across tropes and modules:
+//          a scheme runs on misdirection, a rivalry on attrition, a payoff on
+//          earlier investment.
+//
+// Import: import "trl/concepts/dynamics.trl"
+
+
+// =============================================================================
+// MOTIVATION AND WILL
+// =============================================================================
+
+// The drive toward attainment beyond one's present station; the reach for more.
+// Ambition is directional and open-ended — it names the wanting, not the having.
+concept ambition         [+Abstract]
+
+// Firm belief held as settled truth; the steadiness from which one acts.
+// Conviction precedes and outlasts evidence; it is what doubt erodes.
+concept conviction       [+Abstract]
+
+// The binding of oneself to a course, person, or cause beyond easy retreat.
+// Commitment converts intention into obligation — it raises the cost of turning back.
+concept commitment       [+Abstract]
+
+// The hardened will to see a thing through despite cost or resistance.
+// Resolve is conviction under pressure — tested, not merely held.
+concept resolve          [+Abstract]
+
+// The fixation of will on a single object until it crowds out all else.
+// Obsession is desire that has lost proportion; it consumes the one who carries it.
+concept obsession        [+Abstract]
+
+// The sense that an outcome is appointed and will arrive regardless of resistance.
+// Destiny names a future that pulls rather than a present that pushes.
+concept destiny          [+Abstract] [+Inevitable]
+
+// The use of a thing, person, or act as a means toward some further end.
+// The instrumental is never wanted for itself — its value is borrowed from its purpose.
+concept instrumental     [+Abstract]
+
+// The condition of a need or drive overriding all competing concerns.
+// Prepotency names the urge that takes precedence — what must be answered first.
+concept prepotency       [+Abstract]
+
+// The ripening of a self over time into fuller capacity or understanding.
+// Maturation is becoming made gradual — growth measured against who one was.
+concept maturation       [+Abstract]
+
+// The draining of will or hope; the sapping of the drive to continue.
+// Discouragement is not yet defeat — it is the weakening that precedes it.
+concept discouragement   [+Abstract] [#Painful]
+
+// The settling into acceptance of an unwanted condition one has ceased to fight.
+// Resignation differs from acceptance: it yields without peace.
+concept resignation      [+Abstract]
+
+
+// =============================================================================
+// EMOTION
+// =============================================================================
+
+// The thwarting of a drive that has no outlet; will met by a wall.
+// Frustration is desire blocked, accumulating pressure with nowhere to go.
+concept frustration      [+Abstract] [#Painful]
+
+// The completion of a longing or purpose; a need brought to its rest.
+// Fulfillment names the arrival, not the journey — wanting answered.
+concept fulfillment      [+Abstract]
+
+// The settled pleasure of having enough; a desire met without excess.
+// Satisfaction is quieter than joy and more durable than relief.
+concept satisfaction     [+Abstract]
+
+// The easing that follows the lifting of a threat, pain, or strain.
+// Relief is defined by what precedes it — it cannot exist without prior tension.
+concept relief           [+Abstract]
+
+// The light pleasure of the incongruous or playful; delight without stakes.
+// Amusement is brief and surface-level — it asks nothing and leaves no mark.
+concept amusement        [+Abstract]
+
+// The pull toward the unknown; the appetite to know what is hidden or withheld.
+// Curiosity is desire pointed at information — it is what mysteries exploit.
+concept curiosity        [+Abstract]
+
+// The jolt of the unexpected; expectation overturned in an instant.
+// Surprise is the gap between what was anticipated and what arrived.
+concept surprise         [+Abstract]
+
+// Feeling that moves the witness to pity or sorrow; suffering made affecting.
+// Pathos is the quality by which another's pain reaches and claims us.
+concept pathos           [+Abstract] [#Painful]
+
+
+// =============================================================================
+// COGNITION AND PERSUASION
+// =============================================================================
+
+// The construction of acceptable reasons for what was done from other motives.
+// Rationalization makes the chosen look justified after the fact.
+concept rationalization  [+Abstract]
+
+// The margin of uncertainty sufficient to withhold judgment or conviction.
+// Reasonable doubt is the gap a case must close — the room left for innocence.
+concept reasonable_doubt [+Abstract]
+
+// The pushing of an unwanted truth or feeling below conscious reach.
+// Repression hides a thing from oneself; what is buried persists and presses.
+concept repression       [+Abstract]
+
+// The deliberate keeping of a truth from those who would act on it.
+// Concealment hides from others what they would otherwise see.
+concept concealment      [+Abstract]
+
+// The steering of attention away from what matters toward what does not.
+// Misdirection wins not by hiding the truth but by aiming the eye elsewhere.
+concept misdirection     [+Abstract]
+
+// The clearing of a name or position by proof against prior doubt or accusation.
+// Vindication is conviction confirmed by outcome — being shown to have been right.
+concept vindication      [+Abstract]
+
+// The recoil of a scheme upon the one who set it; harm returned to its source.
+// Backfire names the plan that becomes the agent's own undoing.
+concept backfire         [+Abstract] [+Paradoxical]
+
+// The shift of a belief or allegiance from one side toward its opposite.
+// Swing is persuasion in motion — the moment a held position gives way.
+concept swing            [+Abstract]
+
+
+// =============================================================================
+// SOCIAL AND POWER
+// =============================================================================
+
+// The joining of separate parties into a common front for shared ends.
+// A coalition is unity assembled, not given — it holds only while interests align.
+concept coalition        [%Political] [+Abstract] [+Fragile]
+
+// The recognized right to hold power or be obeyed; authority others accept.
+// Legitimacy is granted, not seized — it lives in the consent of those it governs.
+concept legitimacy       [%Political] [+Abstract] [+Fragile]
+
+// The seizing of a position or right that belongs to another.
+// Usurpation takes power without legitimacy — the throne held against its claim.
+concept usurpation       [%Political] [+Abstract]
+
+// The discouraging of an act by raising its expected cost beyond its gain.
+// Deterrence works by threat held in reserve — it succeeds when nothing happens.
+concept deterrence       [%Political] [+Abstract]
+
+// The aligning of separate actors toward a joint result they could not reach alone.
+// Coordination is the structure beneath cooperation — who moves when, and with whom.
+concept coordination     [+Abstract]
+
+// The settlement reached when each party yields part of its claim.
+// Compromise resolves by mutual loss — neither side prevails, both consent.
+concept compromise       [+Abstract]
+
+// The use of another's labor, need, or weakness for one's own gain.
+// Exploitation extracts value from a relation of unequal power.
+concept exploitation     [%Interpersonal] [+Abstract]
+
+// The shielding of the vulnerable from harm by one who stands between.
+// Protection is care made active — the guarding of what cannot guard itself.
+concept protection       [+Abstract]
+
+// The fitting-together of parts into a balanced, self-sustaining whole.
+// Harmony is order that feels effortless — concord without strain.
+concept harmony          [+Abstract] [+Fragile]
+
+// The setting of one thing against another so each defines the other by difference.
+// Contrast generates meaning through opposition — the light known by the dark.
+concept contrast         [+Abstract]
+
+
+// =============================================================================
+// CONFLICT AND TACTICS
+// =============================================================================
+
+// The forceful pressing toward another with intent to harm, dominate, or seize.
+// Aggression is conflict initiated — the first move that forces a response.
+concept aggression       [+Abstract]
+
+// The warding-off of attack; the holding of ground against a pressing force.
+// Defense answers aggression — it succeeds by denying, not by gaining.
+concept defense          [+Abstract]
+
+// The grinding-down of an opponent through sustained, cumulative cost.
+// Attrition wins not by a blow but by outlasting — the slow exhaustion of the other.
+concept attrition        [+Abstract]
+
+// The forcing of a boundary, defense, or barrier that was meant to hold.
+// A breach is the point where what enclosed gives way.
+concept breach           [+Abstract]
+
+// A sudden outward strike from a defended position against those besieging it.
+// A sortie trades the safety of the wall for the initiative of the sally.
+concept sortie           [+Abstract]
+
+// The locked stalemate where neither side can advance nor afford to yield.
+// Deadlock is conflict frozen — force met by equal force, motion canceled.
+concept deadlock         [+Abstract]
+
+// The unwelcome entry into a space, body, or order that was closed against it.
+// Intrusion violates a boundary — presence where presence was not permitted.
+concept intrusion        [+Abstract]
+
+// An intricate scheme executed by a skilled team against a hard target.
+// A caper is conflict as choreography — its pleasure is in the precision of the plan.
+concept caper            [+Abstract]
+
+// The sudden failure of a structure, order, or will that had been holding.
+// Collapse is the moment accumulated strain exceeds what can bear it.
+concept collapse         [+Abstract]
+
+
+// =============================================================================
+// NARRATIVE AND STRUCTURE
+// =============================================================================
+
+// The deferred return on something earlier set up; the cashing-in of a setup.
+// A payoff redeems a prior promise — it depends on what was planted before it.
+concept payoff           [%Narrative] [+Abstract]
+
+// The holding of attention; the grip a story keeps on those it has drawn in.
+// Engagement is the live tension between audience and unfolding — interest sustained.
+concept engagement       [%Narrative] [+Abstract]
+
+// What stands to be won or lost; the weight that makes an outcome matter.
+// Stakes name the cost of failure — without them, events carry no tension.
+concept stakes           [%Narrative] [+Abstract]
+
+// The turning of a situation to its opposite; fortune swung from up to down or back.
+// Reversal is the hinge of a plot — the moment direction flips.
+concept reversal         [%Narrative] [+Abstract]
+
+// The turning of a pattern inside-out so its terms exchange roles.
+// Inversion preserves the structure while reversing what fills it.
+concept inversion        [%Narrative] [+Abstract] [+Paradoxical]
+
+// The earlier commitment of resources or attention that a later payoff draws upon.
+// Investment is what is risked or planted now in expectation of a return later.
+concept investment       [%Narrative] [+Abstract]
+
+// The rendering of events into a told sequence; the giving of shape to what happened.
+// An account is experience narrated — selected, ordered, and addressed to a listener.
+concept account          [%Narrative] [+Abstract]
+
+// The making of a way forward from whatever is at hand, without a prior plan.
+// Improvisation is order composed in the moment — design under time's pressure.
+concept improvisation    [+Abstract]
+
+// A three-sided relation whose tensions arise from the impossibility of all three holding.
+// The triangle is structure as predicament — three pulls that cannot all be satisfied.
+concept triangle         [%Interpersonal] [+Abstract] [+Fragile]
+
+// A bond whose ending is written into its beginning; love bent toward loss.
+// Doomed love draws its force from the certainty of its ruin.
+concept doomed_love      [%Interpersonal] [+Abstract] [+Inevitable]
+
+// The return of a broken order to wholeness; a prior positive state regained.
+// Restoration undoes a fall — it carries the memory of what was lost in the having-back.
+concept restoration      [%Narrative] [+Abstract]
+
+// The dynamic by which a belief, once held, brings about the very thing it expected.
+// The self-fulfilling outcome is caused by the prediction of it — expectation made real.
+concept self_fulfilling  [+Abstract] [+Paradoxical]
+
+
+// =============================================================================
+// NAMED PATTERNS — base concepts that the trope registry also tag-mutates
+// =============================================================================
+// These name a dynamic in its own right AND have a formalized trope. The base
+// concept lives here; trl/tropes/index.trl applies [+Trope] provenance to it
+// (a tag-mutation, not a redeclaration — the registry's DRY convention). Edges
+// across modules and tropes reference the bare concept, founded via this library.
+
+// The decisive ending blow that converts an advantage into a settled defeat.
+// A finishing move closes a contest — it is the strike that makes the win final.
+concept finishing_move   [%Interpersonal] [+Abstract]
+
+// A defense held to the end against hopeless odds, ground bought with everything left.
+// The last stand wins time or meaning, not survival — it succeeds by not yielding.
+concept last_stand       [%Interpersonal] [+Abstract]
+
+// The turning of an attacker's own committed force back against them.
+// A counter answers aggression by using its momentum — defense that becomes the blow.
+concept counter          [%Interpersonal] [+Abstract]
+
+// The breaking of a united adversary into parts too weak to resist apart.
+// Divide and conquer defeats coordination — it wins the pieces it could not win whole.
+concept divide_and_conquer  [%Political] [+Abstract]
+
+// The summons that opens a journey; the disturbance that asks the ordinary to leave it.
+// A call to adventure names the threshold offered — the world's invitation to change.
+concept call_to_adventure   [%Narrative] [+Abstract]
+
+// The hesitation or rejection that meets the summons; the pull of the world left behind.
+// Refusal of the call is the journey deferred — fear, duty, or comfort holding the line.
+concept refusal_of_the_call [%Narrative] [+Abstract]
+
+// The withholding of resolution at a height of tension, suspending the outcome.
+// A cliffhanger spends suspense as a hook — it ends by refusing to end.
+concept cliffhanger      [%Narrative] [+Abstract]
+
+// The guilt of the spared toward those who were not; survival felt as debt.
+// Survivor's guilt turns deliverance into burden — to have lived where others did not.
+concept survivors_guilt  [%Psychological] [+Abstract]
+
+// The earlier planting of what a later payoff redeems; the promise a story makes to itself.
+// A setup is meaning deferred — significance placed now to be collected later.
+concept setup            [%Narrative] [+Abstract]

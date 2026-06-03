@@ -1,5 +1,5 @@
 // @title   TropeLang Concept Library — Index
-// @version 1.3
+// @version 1.4
 // @note    Imports all concept libraries in dependency order.
 //          Import this file to bring all base concepts into scope.
 //          To import selectively, import individual files instead.
@@ -13,3 +13,4 @@ import "trl/concepts/social.trl"
 import "trl/concepts/narrative.trl"
 import "trl/concepts/emotional.trl"
 import "trl/concepts/registers.trl"
+import "trl/concepts/dynamics.trl"

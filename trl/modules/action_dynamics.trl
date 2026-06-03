@@ -13,6 +13,8 @@
 // Import: import "trl/modules/action_dynamics.trl"
 
 import "trl/concepts/index.trl"            // conflict, …
+import "trl/modules/five_stages_of_grief.trl"   // founds edge targets
+import "trl/modules/propp.trl"   // founds edge targets
 
 concept action_dynamics [+System] [%Interpersonal]
 

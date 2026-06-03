@@ -1,3 +1,4 @@
+import "trl/concepts/index.trl"   // founds edge targets
 // @title   TropeLang Module — Philosophy
 // @version 0.1
 // @depends trl/concepts/index.trl  (references existential + emotional concepts)

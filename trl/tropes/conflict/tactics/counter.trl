@@ -4,6 +4,7 @@
 // @source   https://allthetropes.org/wiki/Counter_Attack
 // @version  1.3
 // @domain    Interpersonal
+// @registry reuse   // title maps to an existing concept; no own registry entry
 //
 // Laconic (per the wiki): the patient warrior waits until the opponent commits to an attack, then
 // turns that very force back on them — and the reward for the timing is a blow far more decisive

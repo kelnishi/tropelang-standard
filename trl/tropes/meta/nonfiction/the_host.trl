@@ -10,6 +10,7 @@
 // trusted voice. The non-fiction cousin of the Narrator and the audience-surrogate Everyman.
 
 import "trl/modules/non_fiction.trl"        // Hosts / the guiding voice
+import "trl/modules/propp.trl"   // founds edge targets
 
 assoc the_host -> [
   non_fiction : "the guiding voice of",

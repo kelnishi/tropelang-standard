@@ -4,6 +4,7 @@
 // @source   https://allthetropes.org/wiki/Divide_and_Conquer
 // @version  1.3
 // @domain    Political
+// @registry reuse   // title maps to an existing concept; no own registry entry
 //
 // Laconic (per the wiki): keep your enemies from uniting — set them against each other so no
 // coalition forms against you. The mechanical INVERSE of the common-knowledge flip and of

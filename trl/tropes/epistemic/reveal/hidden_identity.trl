@@ -36,6 +36,7 @@ rule Hidden_Identity {
 // glasses, the cape an arm's length away — the godlike true self carried, deliberately, under the
 // most ordinary guise imaginable.
 char clark [+Protagonist] [+TrueSelf(is=superman)]
+char superman   // the godlike true self carried under the mild-mannered guise
 
 scene the_daily_planet {
   beat 1 {

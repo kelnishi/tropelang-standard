@@ -33,6 +33,7 @@ rule The_Everyman {
 // to him and shouldn't — and precisely because he is as baffled as we would be, he is the door we
 // walk through into the absurd.
 char arthur [+Protagonist] [+Ordinary]
+set earth   // the ordinary world the everyman stands for — here, the demolished planet
 
 scene the_demolition {
   beat 1 {

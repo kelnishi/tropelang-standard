@@ -27,7 +27,7 @@ rule Enemies_To_Lovers {
   then:
     $a [~Loves(target=$b)]
     $thaw [+EnemiesToLovers]
-    $a -- thaw
+    $a -- $thaw
 }
 
 // === CONCRETE VIGNETTE: Much Ado About Nothing — Beatrice and Benedick (play, ~1599) ===

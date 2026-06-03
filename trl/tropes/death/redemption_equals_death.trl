@@ -17,6 +17,7 @@
 // === IMPORTS & ASSOCIATIONS ===
 import "trl/tropes/arc/redemption/redemption_arc.trl"     // the costly atonement — this is its death-sealed limit
 import "trl/tropes/death/heroic_sacrifice.trl"   // the Sacrifice that makes the wrongdoer [+Fallen]
+import "trl/modules/heros_journey.trl"   // founds edge targets
 
 assoc redemption_equals_death -> [
   redemption_arc  : "is the death-sealed limit of",

@@ -4,6 +4,7 @@
 // @source   https://allthetropes.org/wiki/Call_to_Adventure
 // @version  1.3
 // @domain    Narrative
+// @registry reuse   // title maps to an existing concept; no own registry entry
 //
 // Laconic: the inciting event that disrupts the protagonist's ordinary world and summons
 // them to the quest — the first beat of the Hero's Journey, often delivered by a herald.

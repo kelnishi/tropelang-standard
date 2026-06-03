@@ -20,6 +20,7 @@
 // === IMPORTS & ASSOCIATIONS ===
 import "trl/tropes/conflict/war/the_cavalry.trl"        // Reinforcement -> [+Relieved]; the turn it stages
 import "trl/modules/rhetoric.trl"          // the audience the spectacle turns: despair -> awe
+import "trl/modules/propp.trl"   // founds edge targets
 
 // Lateral thematic links (optional, machine-followable — for discovery / embeddings).
 assoc big_damn_heroes -> [
