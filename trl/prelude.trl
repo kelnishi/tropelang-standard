@@ -267,15 +267,15 @@ state Pending      [+Social]
 // Family structure and lineage. Relationships: structural, long-lived bonds.
 // =============================================================================
 
-rel Parent_Of(child)       [+Kinship]
-rel Child_Of(parent)       [+Kinship]
-rel Sibling_Of(other)      [+Kinship]
-rel Spouse_Of(other)       [+Kinship]
-rel Ancestor_Of(desc)      [+Kinship]
-rel Descendant_Of(anc)     [+Kinship]
-rel Guardian_Of(ward)      [+Kinship]
-rel Ward_Of(guardian)      [+Kinship]
-rel Kin_Of(other)          [+Kinship]    // family — lineage unspecified
+rel Parent_Of(child: char)       [+Kinship]
+rel Child_Of(parent: char)       [+Kinship]
+rel Sibling_Of(other: char)      [+Kinship]
+rel Spouse_Of(other: char)       [+Kinship]
+rel Ancestor_Of(desc: char)      [+Kinship]
+rel Descendant_Of(anc: char)     [+Kinship]
+rel Guardian_Of(ward: char)      [+Kinship]
+rel Ward_Of(guardian: char)      [+Kinship]
+rel Kin_Of(other: char)          [+Kinship]    // family — lineage unspecified
 
 
 // =============================================================================
@@ -283,21 +283,21 @@ rel Kin_Of(other)          [+Kinship]    // family — lineage unspecified
 // Non-familial relationships between individuals or groups.
 // =============================================================================
 
-rel Ally_Of(other)         [+Social]
-rel Rival_Of(other)        [+Social]
-rel Adversary_Of(other)    [+Social]
-rel Patron_Of(client)      [+Social]
-rel Client_Of(patron)      [+Social]
-rel Mentor_Of(student)     [+Social]
-rel Student_Of(mentor)     [+Social]
-rel Confidant_Of(other)    [+Social]
-rel Beloved_Of(other)      [+Social]
+rel Ally_Of(other: char)         [+Social]
+rel Rival_Of(other: char)        [+Social]
+rel Adversary_Of(other: char)    [+Social]
+rel Patron_Of(client: char)      [+Social]
+rel Client_Of(patron: char)      [+Social]
+rel Mentor_Of(student: char)     [+Social]
+rel Student_Of(mentor: char)     [+Social]
+rel Confidant_Of(other: char)    [+Social]
+rel Beloved_Of(other: char)      [+Social]
 rel Witness_To(event: evt)  [+Social]
-rel Bound_To(force)        [+Social]
-rel Indebted_To(other)     [+Social]
-rel LoyalTo(side)          [+Social]    // allegiance to a side, faction, or cause
-rel Avenges(subject)       [+Social]    // bound to right a wrong done to the subject — the vengeance tie
-rel Foils(other)           [+Narrative]  // a contrast tie — one character throws another into relief
+rel Bound_To(force: char|concept)        [+Social]
+rel Indebted_To(other: char)     [+Social]
+rel LoyalTo(side: char|set|concept)          [+Social]    // allegiance to a side, faction, or cause
+rel Avenges(subject: char)       [+Social]    // bound to right a wrong done to the subject — the vengeance tie
+rel Foils(other: char)           [+Narrative]  // a contrast tie — one character throws another into relief
 
 
 // =============================================================================
@@ -507,11 +507,11 @@ verb Allies_With(other)        [+Political]
 verb Prosecutes(other)         [+Political]
 verb Pardons(other)            [+Political]
 
-rel Vassal_Of(liege)           [+Political]
-rel Liege_Of(vassal)           [+Political]
-rel Successor_Of(predecessor)  [+Political]
-rel Contemporary_Of(other)     [+Political]
-rel Member_Of(group)           [+Political]
+rel Vassal_Of(liege: char)           [+Political]
+rel Liege_Of(vassal: char)           [+Political]
+rel Successor_Of(predecessor: char)  [+Political]
+rel Contemporary_Of(other: char)     [+Political]
+rel Member_Of(group: char|set)           [+Political]
 
 
 // =============================================================================
@@ -536,13 +536,13 @@ verb Sacrificed(for)          [+Mythological]
 verb Created(entity)          [+Mythological]
 verb Destroyed(entity)        [+Mythological]
 
-rel Worships(deity)           [+Mythological]
-rel Emanation_Of(source)      [+Mythological]
-rel Prophet_Of(deity)         [+Mythological]
-rel Cursed_By(agent)          [+Mythological]
-rel Blessed_By(agent)         [+Mythological]
-rel Created_By(creator)       [+Mythological]
-rel MadeBy(by)                [+Social]         // mundane provenance — an object's maker (cf. mythological Created_By)
+rel Worships(deity: char)           [+Mythological]
+rel Emanation_Of(source: char|concept)      [+Mythological]
+rel Prophet_Of(deity: char)         [+Mythological]
+rel Cursed_By(agent: char)          [+Mythological]
+rel Blessed_By(agent: char)         [+Mythological]
+rel Created_By(creator: char)       [+Mythological]
+rel MadeBy(by: char|set)                [+Social]         // mundane provenance — an object's maker (cf. mythological Created_By)
 
 
 // =============================================================================

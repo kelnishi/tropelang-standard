@@ -27,7 +27,7 @@ state Mistaken(subject)               // a belief that diverges from the world
 state Mindblind                       // fails to attribute mind to others at all
 
 // Agent-to-agent structure — genuine relations between minds ([@…]).
-rel  Models(other)                    // A maintains a running model of B's mind
+rel  Models(other: char)                    // A maintains a running model of B's mind
 // (Witness_To(event) is provided by the prelude and reused below.)
 
 verb Relocated(subject, from, to)     // an object is moved between two sites
