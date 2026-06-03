@@ -92,12 +92,12 @@ scene the_poem {
   beat 2 { daughters -- sho : "The elder daughter is sixteen, the younger fourteen" }
   beat 3 {
     evt the_battlefield [&Juxtaposes(agent=poet, established=daughters, new=the_warriors)]
-        : "Down the ages, warriors have felled the enemy with bow and arrow"
+        dialog(text="Down the ages, warriors have felled the enemy with bow and arrow")
     // The_Turn -> audience [#Surprised(by=the_warriors)] -- contrast
   }
   beat 4 {
     evt the_glance [&Reconciles(agent=poet, established=daughters, new=the_warriors)]
-        : "The daughters of Itoya fell their men with their eyes"
+        dialog(text="The daughters of Itoya fell their men with their eyes")
     // The_Reconciliation -> audience [#Delighted(by=connection)] -- harmony
   }
 }
