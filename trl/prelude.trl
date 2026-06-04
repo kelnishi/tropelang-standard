@@ -334,7 +334,7 @@ verb Abdicated(to)         [+Political]
 
 verb Confessed(to)         [+Interpersonal]
 verb Forgave(other)        [+Interpersonal]
-verb Betrays(other)       [+Interpersonal]
+verb Betrays(target: char) [+Interpersonal]   // the betrayed party is required (param aligned to corpus `target=` usage)
 verb Sacrificed_For(other) [+Interpersonal]
 verb Protected(other)      [+Interpersonal]
 verb Abandoned(other)      [+Interpersonal]
