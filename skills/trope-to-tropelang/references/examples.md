@@ -384,3 +384,49 @@ scene death_star_duel {
   }
 }
 ```
+
+## Stats & a combat round (`^`) — Game-Master mode
+
+Stat declarations, a logged roll, a harness-computed check outcome, a threshold
+rule, and — deliberately — a canonical out-of-range value (goblin HP driven to
+`-2`, below the implicit `min` of `0`; the engine accepts it and `DropsAtZero`
+fires, no clamping).
+
+```trl
+// @title   Goblin Ambush — combat round
+// @version 1.3
+
+stat HP [+Vital]
+stat AC [+Defense]
+verb Rolled(dice, result)     [+Mechanical]
+verb Check(stat, dc, outcome) [+Mechanical]
+
+char tharion [+Protagonist] [+Fighter]
+tharion [^HP(cur=24, max=30)]
+tharion [^AC=18]
+
+char goblin [+Antagonist] [+Minion]
+goblin [^HP(cur=7, max=7)]
+goblin [^AC=15]
+
+// a combatant brought to 0 or below drops — stat-vs-literal threshold
+rule DropsAtZero {
+  when:
+    char $c [^HP <= 0]
+  then:
+    $c [#Downed]
+    surface(target=$c, message="goes down")
+}
+
+scene round_1 {
+  beat 1 {
+    // harness rolled the attack, compared total vs goblin AC 15 -> hit
+    evt swing -> tharion >< goblin : "Greataxe"
+    swing [&Rolled(dice="1d20", result=17)]
+    swing [&Check(stat="attack", dc=15, outcome="hit")]
+    // harness computed 7 - 9 = -2 and wrote the concrete value; -2 is below
+    // min=0 but canonical — the engine does not clamp; DropsAtZero then matches
+    goblin [^HP = -2]
+  }
+}
+```

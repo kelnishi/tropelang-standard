@@ -134,7 +134,7 @@ rel Parent_Of(child)      [+Kinship]
 
 Tags attach attributes to entities, events, or edges. The sigil encodes the **ontological domain** of the attribute — what kind of thing it is — so the reader knows immediately without consulting the declaration.
 
-### The seven sigils
+### The eight sigils
 
 | Sigil | Domain | Used for |
 |---|---|---|
@@ -145,6 +145,7 @@ Tags attach attributes to entities, events, or edges. The sigil encodes the **on
 | `[@Name]` | Rel / Structural | bilateral bond between two graph nodes |
 | `[&Name]` | Verb / Action | descriptor on event nodes — what this event does |
 | `[+Name]` | Prop / Generic | narrative, social, spatial attributes that don't fit body/mind/essence |
+| `[^Name]` | Stat / Numeric | a measured quantity (HP, AC, score) — current value + advisory range |
 
 ```trl
 char eleanor [+Elder] [%Mortal]               // generic prop; essence prop
@@ -184,6 +185,26 @@ frodo [-Alive]          // remove Alive — type inferred: body
 frodo [?Knows]          // test: does frodo have Knows?
 frodo [!Dead]           // assert frodo does not have Dead
 ```
+
+### Stats (`^`) ✓
+
+A stat is a numeric quantity (HP, AC, score) declared like other vocabulary
+(`stat HP [+Vital]`) and carried on an entity via `^`. It holds a current value
+plus an advisory `min`/`max` range. Mechanical state for a Game-Master mode.
+
+```trl
+stat HP [+Vital]
+fighter [^HP(cur=24, max=30)]   // structured (min defaults to 0)
+fighter [^STR=16]               // scalar sugar — cur=16
+fighter [^HP = 17]              // then: discrete assignment (no += / -= / ~)
+char $c [^HP <= 0]              // when: stat-vs-literal guard (< <= > >= == !=)
+```
+
+Rules: stats change **only** by discrete assignment; a stat's value never binds
+a `$var`; the range is a **harness hint**, not enforced — an out-of-range value
+in the log is canonical (the engine reads `cur` only and never clamps). Dice and
+checks enter the log as concrete events (`evt swing [&Rolled(dice="1d20", result=17)]`,
+`evt save [&Check(stat="DEX", outcome="success")]`) — the harness owns all arithmetic.
 
 ### Parameters (✓)
 

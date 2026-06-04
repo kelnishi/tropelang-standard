@@ -99,6 +99,9 @@ If search is unreachable, fall back to general narrative knowledge, but say so.
 | Counting occurrences | `count(...) >= N` |
 | Historical state | `past scene $s { }` |
 | Ontological cluster | `imply TropeName -> [Tag1, Tag2]` |
+| Numeric attribute (HP, AC, score) | `stat Name [+Group]`; on an entity `$e [^Stat(cur=…, max=…)]` |
+| Threshold trigger | comparison in `when:` — `char $c [^Stat <= N]` |
+| Dice roll / check | concrete logged event — `evt $e [&Rolled(dice="…", result=N)]` / `[&Check(stat="…", outcome="…")]` |
 
 ### 3. Structure the output file
 
