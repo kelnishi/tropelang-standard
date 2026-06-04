@@ -130,7 +130,7 @@ A tag's **domain facet is canonical**: a name denotes exactly one facet, so it m
 domain sigil. `Timeless` is always `%`, `Painful` always `#`. Using two *different* facet sigils for one
 name (`[#Pain]` and `[=Pain]`) is a **consistency error**, not two tags — the eval fact base keys on the
 *name* alone (`Fact::Tag(e, "Pain", …)`), so the two silently collapse into one and the facet is thrown
-away. The `corpus_facet_consistency` test (`tests/facets.rs`, via `tropelang::tag_facets`) enforces this;
+away. The `corpus_facet_consistency` test (`tests/corpus_facets.rs`, via `tropelang::tag_facets`) enforces this;
 the fix is to pick one facet or **split the name**. (`+` is the unmarked default — write it explicitly, no
 naked tags; it is *not* a facet and never conflicts with one.)
 
