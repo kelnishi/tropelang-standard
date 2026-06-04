@@ -1,5 +1,5 @@
 // @title   TropeLang Prelude — Standard Library
-// @version 1.5
+// @version 1.6
 //
 // Automatically in scope for every .trl file.
 // Do not import manually. Override with // @no-prelude for a clean slate.
@@ -304,10 +304,17 @@ rel Foils(other: char)           [+Narrative]  // a contrast tie — one charact
 // TIER 8 — LIFE EVENTS
 // Universal punctuation marks of a life. Verbs: appear on evt nodes.
 // =============================================================================
+//
+// REQUIRED-ROLE CONVENTION (S12 recognition): a verb param TYPED without `null`
+// is a REQUIRED role — recognition won't match an event that omits it (a bare
+// [&Reveals] is not a recognition). An UNTYPED param stays flexible: present for
+// authoring/binding, but never gated on. Type a role only when the corpus uses
+// it consistently (one dominant key, ~no bare usages); leave loaded-but-rare or
+// mixed-key verbs flexible until usage stabilizes (noted inline below).
 
 verb Born                  [+Vital]
 verb Dies                  [+Vital]
-verb Wounds(by)           [+Vital]
+verb Wounds(by)           [+Vital]   // role flexible: corpus mixes subject=/by= — no single required role yet
 verb Healed(by)            [+Vital]
 
 verb Married(partner)      [+Interpersonal]
@@ -335,7 +342,7 @@ verb Abdicated(to)         [+Political]
 verb Confessed(to)         [+Interpersonal]
 verb Forgave(other)        [+Interpersonal]
 verb Betrays(target: char) [+Interpersonal]   // the betrayed party is required (param aligned to corpus `target=` usage)
-verb Sacrificed_For(other) [+Interpersonal]
+verb Sacrificed_For(other) [+Interpersonal]   // role flexible: too few corpus usages to require
 verb Protected(other)      [+Interpersonal]
 verb Abandoned(other)      [+Interpersonal]
 verb Pursued(other)        [+Interpersonal]
@@ -439,7 +446,7 @@ prop PendingPayoff    [+Narrative]    // Chekhov tracker — parameterize with i
 
 // Story-level verbs — what events do at the narrative level
 verb Foreshadows(event: evt) [+Narrative]
-verb Resolves(tension)     [+Narrative]
+verb Resolves(tension)     [+Narrative]   // role flexible: param vs corpus subject= mismatch, too rare to align
 verb Reverses(subject: entity) [+Narrative] // peripeteia — the one whose fortune inverts (param off the `state` keyword)
 verb Reveals(fact: concept) [+Narrative]   // anagnorisis — recognition; the disclosed fact is required (a contentless reveal is not a recognition)
 verb Crosses(threshold: entity)    [+Narrative]
@@ -497,13 +504,13 @@ state Future       [+Temporal]    // anticipated — not yet manifest
 // Power, governance, faction. Covers historical, political, and social drama.
 // =============================================================================
 
-verb Commands(other)           [+Political]
+verb Commands(other)           [+Political]   // role flexible: too few corpus usages to require
 verb Represents(group)         [+Political]
 verb Opposes(other)            [+Political]
 verb Legislates(domain)        [+Political]
 verb Dissolves(institution)    [+Political]
 verb Negotiates(with)          [+Political]
-verb Allies_With(other)        [+Political]
+verb Allies_With(other)        [+Political]   // role flexible: too few corpus usages to require
 verb Prosecutes(other)         [+Political]
 verb Pardons(other)            [+Political]
 
@@ -534,7 +541,7 @@ verb Transformed_Into(form)   [+Mythological]    // metamorphosis
 verb Ordained(by)             [+Mythological]    // appointed by higher force
 verb Sacrificed(for)          [+Mythological]
 verb Created(entity)          [+Mythological]
-verb Destroyed(entity)        [+Mythological]
+verb Destroyed(entity)        [+Mythological]   // role flexible: too few corpus usages to require
 
 rel Worships(deity: char)           [+Mythological]
 rel Emanation_Of(source: char|concept)      [+Mythological]
