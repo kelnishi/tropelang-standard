@@ -347,11 +347,11 @@ verb Surrenders(to)       [+Interpersonal]
 verb Aided(other)          [+Interpersonal]
 verb Mourned(other)        [+Interpersonal]
 verb Celebrated(with)      [+Interpersonal]
-verb Confronted(other)     [+Interpersonal]
+verb Confronted(other: char)     [+Interpersonal]
 verb Consoled(other)       [+Interpersonal]
 verb Silenced(other)       [+Interpersonal]
-verb Threatens(target)     [+Interpersonal]    // menaces — promises harm to coerce
-verb Attains(object)       [+Interpersonal]    // reaches / wins a goal or object
+verb Threatens(target: entity)     [+Interpersonal]    // menaces — promises harm to coerce
+verb Attains(object: entity)       [+Interpersonal]    // reaches / wins a goal or object
 verb Refuses               [+Interpersonal]    // declines — the no (the call, the terms, the demand)
 verb Acts                  [+Interpersonal]    // exercises agency — takes the decisive action
 
@@ -442,7 +442,7 @@ verb Foreshadows(event: evt) [+Narrative]
 verb Resolves(tension)     [+Narrative]
 verb Reverses(subject: entity) [+Narrative] // peripeteia — the one whose fortune inverts (param off the `state` keyword)
 verb Reveals(fact: concept) [+Narrative]   // anagnorisis — recognition; the disclosed fact is required (a contentless reveal is not a recognition)
-verb Crosses(threshold)    [+Narrative]
+verb Crosses(threshold: entity)    [+Narrative]
 verb Transforms(entity)    [+Narrative]
 verb Initiates(thread: arc) [+Narrative]   // begins a narrative arc (param renamed off the `arc` keyword)
 verb Concludes(thread: arc) [+Narrative]   // closes a narrative arc
