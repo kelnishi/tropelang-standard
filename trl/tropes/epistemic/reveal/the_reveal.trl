@@ -99,7 +99,7 @@ scene the_revelation {
     *(vader [+Slew_Lukes_Father] | vader [+Is_Lukes_Father] | ...)* as vaders_identity
   }
   beat 2 {
-    evt disclosure [&Reveals]
+    evt disclosure [&Reveals(fact=vaders_identity)]
         dialog(inject=[speaker=vader], inline="""
                speaker: "{speaker}"
                cue: "the mechanical breath, then the words that split a galaxy"

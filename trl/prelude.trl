@@ -441,7 +441,7 @@ prop PendingPayoff    [+Narrative]    // Chekhov tracker — parameterize with i
 verb Foreshadows(event: evt) [+Narrative]
 verb Resolves(tension)     [+Narrative]
 verb Reverses(subject: entity) [+Narrative] // peripeteia — the one whose fortune inverts (param off the `state` keyword)
-verb Reveals(truth)        [+Narrative]    // anagnorisis — recognition
+verb Reveals(fact: concept) [+Narrative]   // anagnorisis — recognition; the disclosed fact is required (a contentless reveal is not a recognition)
 verb Crosses(threshold)    [+Narrative]
 verb Transforms(entity)    [+Narrative]
 verb Initiates(thread: arc) [+Narrative]   // begins a narrative arc (param renamed off the `arc` keyword)
