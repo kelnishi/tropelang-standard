@@ -35,8 +35,16 @@ imply Sacrifices   -> [Slay, Rescue]
 imply Reveals      -> [Reveal]
 imply Exposes      -> [Reveal]
 imply Admits       -> [Reveal]
-imply Debunks      -> [Reveal]
 imply Demonstrates -> [Reveal]
+
+// — Refute (a SPECIFIC reveal: disproving a claim, not mere disclosure) —
+// Refute is-a Reveal, so `[&Reveal]`-broad shapes still catch a debunking, but `[&Debunks]` shapes
+// match only refutations — not any/all reveals. (Class hierarchy + is-a matching; see shape.rs
+// class_closure: events carry the transitive closure, shape patterns keep the direct class.)
+imply Refute       -> [Reveal]
+imply Debunks      -> [Refute]
+imply Refutes      -> [Refute]
+imply Disproves    -> [Refute]
 
 // — Rescue (relief) —
 imply Relieves     -> [Rescue]
