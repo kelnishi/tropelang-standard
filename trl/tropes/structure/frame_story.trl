@@ -30,7 +30,8 @@ imply FrameStory -> [Nested, Narration, Narrative]
 // Naming rule: when one teller wraps another's tale, that wrapping IS a Frame Story (tags it).
 rule Frame_Story {
   when:
-    evt $f [&Frames(agent=$teller, tale=$inner)]
+    char $teller [+Narrator]                       // a STORYTELLER wraps a tale — not a schemer framing a person
+    evt  $f [&Frames(agent=$teller, tale=$inner)]
   then:
     $f [+FrameStory]
 }
