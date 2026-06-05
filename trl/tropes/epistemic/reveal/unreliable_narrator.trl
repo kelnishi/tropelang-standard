@@ -33,7 +33,8 @@ imply UnreliableNarrator -> [Deceptive, Epistemic, Narrative]
 // Naming rule: the moment a witness catches the teller out, the narration is exposed as unreliable.
 rule Unreliable_Narration {
   when:
-    evt $reveal [&Exposes(agent=$witness, target=$teller)]
+    char $teller [+Narrator]
+    evt $reveal [&Exposes(agent=$witness, target=$teller)]   // the exposed party is the NARRATOR (binds $teller → [+Narrator] gates)
   then:
     $reveal [+UnreliableNarrator]
 }
@@ -43,7 +44,7 @@ rule Unreliable_Narration {
 
 // The interrogation room — the reality plane, where the truth lives (and can be absolute).
 <<reality>>
-char verbal [+Protagonist]
+char verbal [+Protagonist] [+Narrator]
 char kujan  [+Detective]
 !verbal [+KeyserSoze]!                          // the immutable truth: the cripple IS the kingpin
 

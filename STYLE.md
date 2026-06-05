@@ -210,6 +210,36 @@ fires — and a hardcoded output can even *block* the rule (a `[+Resolved]` fail
 a `[+Pivotal]` failing a `not(Pivotal)`). **Show the cause; let the engine prove the effect** — then
 `cargo run --example eval -- <file>` shows the recognition firing.
 
+### Make the discriminator BIND — firing is not enough
+
+A rule that fires on its own vignette can still fire at 1.00 on every cousin in its family (the reveal
+cluster did exactly this). The shape recognizer keeps only the `when:` **event** patterns for phase-1
+recall; it drops static tags and re-checks them in phase-2 **coverage** — *but only on entities that an
+event role bound* (`specs/15`). An unbound var's tags are invisible: phase-2 skips them and the trope
+matches anything. So the feature that *distinguishes* this trope must ride the event, not float beside it.
+
+- **Tie the discriminator to an event role.** Name it on a verb — `[&Reveals(subject=$self …)]`,
+  `[&Reveals(to=$audience …)]`, `[&Reveals(agent=$mentor …)]` — so it binds and its tag is re-checked.
+  Naming an `agent`/patient role (`target`/`subject`/`to`/`of`/…) also makes the matched event *required*
+  to fill that slot (slot-, not exact-key-, presence — so `ally=`/`target=` role-name variation is fine).
+- **Put the distinguishing tag on the bound entity, overtly.** Coverage re-checks tags literally:
+  `$self [+Protagonist] [#Mistaken]` only gates if the bound `oedipus` actually carries both in the
+  encoded story — not merely "implied", nor asserted only by the rule's own `then:` (it reads the
+  trigger state, before firing).
+- **Choose a CONTRASTIVE discriminator.** `[+Protagonist]` separates nothing where everyone is one;
+  reach for the tag the siblings lack (`[+Collective]` audience vs lone `[+Protagonist]`; `[+Mentor]`
+  revealer; `[+Concealed]` subject; `[+Narrator]` teller).
+- **One event per beat, named once.** Distinct event vars bind **distinct** story events
+  (`evt $truth … evt $disclosure …` needs two); reuse the same `$var` for one event carrying several
+  verbs (`evt $line [&Asserts] … evt $line [&Reveals]`). Splitting one beat across two vars silently
+  demands a second event that never comes.
+- **Name the participants that DEFINE a verb**, matching the prelude signature key (`fact`, not `truth`).
+
+**Spot-check specificity, not just firing**: `cargo run --example shape -- <file> --why` shows which event
+satisfied each clause and the coverage re-checks behind the confidence; your discriminator should appear as
+a *satisfied* coverage line on the bound entity. If the trope has a family, confirm a sibling's vignette
+does **not** confirm yours at 1.00 (a down-ranked Possible ≤0.75 on a genuine cousin is fine).
+
 ## 9. S14 levels: home plane, loud crossings
 
 - Declare a node on its **home plane** (the cast lives on the canon mainline, e.g. `<<heist>>`).
@@ -220,7 +250,9 @@ a `[+Pivotal]` failing a `not(Pivotal)`). **Show the cause; let the engine prove
 
 Every file should:
 - `gate` clean — preamble ✓, validates ✓, round-trips ✓ (`skills/trope-to-tropelang/scripts/gate.sh`);
-- carry no undeclared referents (front-load — §1); and, for a story,
-- fire the recognitions it means to (`cargo run --quiet --example eval -- <file>`).
+- carry no undeclared referents (front-load — §1);
+- fire the recognitions it means to (`cargo run --quiet --example eval -- <file>`); and, for a trope,
+- fire them *specifically* — its discriminator binds and a sibling's vignette doesn't confirm it at 1.00
+  (`cargo run --quiet --example shape -- <file> --why`; §8).
 
 The two master narratives in `narratives/` are the worked references — read them alongside this guide.

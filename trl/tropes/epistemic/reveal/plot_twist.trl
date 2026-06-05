@@ -41,8 +41,8 @@ imply PlotTwist -> [Reversal, Recontextualization, Narrative]
 // Plot Twist from a plain Reveal.
 rule Plot_Twist {
   when:
-    char $audience [#Believes(claim=$p)]
-    evt  $reveal [&Reveals(fact=$not_p)]
+    char $audience [+Collective] [#Believes(claim=$p)]   // the AUDIENCE (a collective), not a single protagonist — distinguishes from Tomato-in-the-Mirror
+    evt  $reveal [&Reveals(to=$audience, fact=$not_p)]   // the reveal lands ON the audience (binds $audience → coverage gates)
     $p >< $not_p
   then:
     $audience [-Believes(claim=$p)]
@@ -75,7 +75,7 @@ scene the_recognition {
     audience [#Believes(claim=crowe_is_alive)]
   }
   beat 2 {
-    evt the_wedding_ring [&Reveals(fact=crowe_is_dead)]
+    evt the_wedding_ring [&Reveals(to=audience, fact=crowe_is_dead)]
     // The held belief and the disclosed truth are contraries — the reveal inverts, not fills.
     crowe_is_alive >< crowe_is_dead
     // Plot_Twist fires here, deriving audience [-Believes] [#Mistaken] and

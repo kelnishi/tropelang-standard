@@ -32,7 +32,8 @@ imply TomatoSurprise -> [Withholding, Twist, Narrative]
 // Naming rule: disclosing a deliberately-withheld fact that recolours the whole story IS the trope.
 rule Tomato_Surprise {
   when:
-    evt $reveal [&Reveals(agent=$x, fact=$truth)]
+    char $thing [+Concealed]
+    evt $reveal [&Reveals(agent=$x, subject=$thing, fact=$truth)]   // the subject was concealed from the audience (binds $thing → [+Concealed] gates)
   then:
     $reveal [+TomatoSurprise]
 }
@@ -42,12 +43,12 @@ rule Tomato_Surprise {
 // Kinbote annotates a dead poet's work, forever steering it toward the exiled king of Zembla.
 // The detail withheld from the reader, true from the first gloss: Kinbote IS that king.
 
-char kinbote [+Narrator]
+char kinbote [+Narrator] [+Concealed]
 ?kinbote [+ExiledKingOfZembla]?              // true from the opening page — but unsurfaced to the reader
 
 scene the_commentary {
   beat 1 {
-    evt the_dawning [&Reveals(agent=kinbote, fact=his_own_identity)]
+    evt the_dawning [&Reveals(agent=kinbote, subject=kinbote, fact=his_own_identity)]
     !kinbote [+ExiledKingOfZembla]!           // surfaced — and every annotation behind it re-reads
     // Tomato_Surprise -> the_dawning [+TomatoSurprise]
   }

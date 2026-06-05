@@ -53,7 +53,7 @@ rule TheReveal_Disclosed {
     char $subject [+Alias(name=$cover)]
     char $observer [+Perceives(target=$subject, as=$cover)]
     obj  $evidence [+revelation]
-    evt  $disclosure [&Reveals(fact=$truth)]
+    evt  $disclosure [&Reveals(agent=$subject, to=$observer, fact=$truth)]   // subject & observer bound → [+Alias]/[+Perceives] coverage gates
     $disclosure -> $observer
   then:
     $observer [-Perceives(target=$subject, as=$cover)]
@@ -99,7 +99,7 @@ scene the_revelation {
     *(vader [+Slew_Lukes_Father] | vader [+Is_Lukes_Father] | ...)* as vaders_identity
   }
   beat 2 {
-    evt disclosure [&Reveals]
+    evt disclosure [&Reveals(agent=vader, to=luke, fact=vaders_identity)]
         dialog(inject=[speaker=vader], inline="""
                speaker: "{speaker}"
                cue: "the mechanical breath, then the words that split a galaxy"

@@ -42,6 +42,11 @@ Checks preamble completeness (`@trope/@category/@source/@domain`), validator (no
 the prose claims — the sim has caught real logic bugs (self-vengeance; a coup deposing itself; a
 two-phase arc collapsing into one). Run it AD HOC (load the rule file + a minimal scenario inline); do NOT edit the shared `tools/sim.py`.
 
+**Make the discriminator bind (recognition fidelity).** The feature that separates a trope from its
+family must ride an EVENT role (`subject=`/`to=`/`agent=`/`target=`) so the recognizer binds it and
+re-checks its tag; a distinguishing tag on an unbound var is invisible and the trope over-fires on every
+cousin at 1.00. Sim-test for SPECIFICITY with `--why`, not just "does it fire". Full detail in §4b.
+
 **Never edit the registry.** `trl/tropes/index.trl` is rebuilt deterministically. Write ONE
 self-contained trope file; do NOT touch `index.trl` (parallel agents collide on it). The coordinator
 runs `cargo run --quiet --example assemble -- trl/tropes/corpus.toml` to regenerate imports and mint the concept entry — so carry full
@@ -207,6 +212,50 @@ If the trope has a meaningful subversion, add `rule TropeName_Subverted` or use 
 
 TropeLang is not strictly hierarchical — bidirectional/lateral links are encouraged. See `the_mentor.trl` as the worked example.
 
+### 4b. Recognition fidelity — make the discriminator BIND, and the vignette EARN it
+
+Canonical statement: **`STYLE.md` §8 "Make the discriminator BIND"** — this section is the operational
+detail. This is the level of detail that separates a trope from its siblings under recognition. Get it wrong
+and the trope still validates, sim-tests green, and fires on its own vignette — but it ALSO fires at
+1.00 on every cousin in its family (the whole reveal cluster did exactly this). The recognizer keeps
+only the `when:` EVENT patterns for phase-1 recall; it drops static tags and re-checks them in phase-2
+COVERAGE **but only on entities an event role bound**. So:
+
+- **Tie the discriminator to an event role.** Whatever distinguishes THIS trope from its neighbours —
+  the protagonist learns about *themselves*, the believer is *the audience*, the revealer is *a mentor* —
+  must ride a role on an event verb so it BINDS: `[&Reveals(subject=$self …)]`, `[&Reveals(to=$audience …)]`,
+  `[&Reveals(agent=$mentor …)]`. A distinguishing tag on a var that no event names is **invisible** to
+  recognition: phase-2 skips it and the trope fires on anything in its family. Naming an `agent`/patient
+  role (`target`/`subject`/`to`/…) also makes the matched event *required* to fill that slot.
+- **Put the distinguishing tag on the BOUND entity, overtly, in the vignette.** Recognition re-checks
+  tags literally — `$self [+Protagonist] [#Mistaken]` only gates if the bound `oedipus` actually carries
+  `[+Protagonist]` and `[#Mistaken]` in the encoded story. Don't rely on it being "implied" or only
+  asserted by the rule's own `then:`. Under-specifying the vignette silently tanks confidence.
+- **Pick discriminators your siblings DON'T share.** `[+Protagonist]` distinguishes nothing in a family
+  where everyone is a protagonist; reach for the contrastive tag (`[+Collective]` audience vs a single
+  `[+Protagonist]`; `[+Mentor]` revealer; `[+Concealed]` subject; `[+Narrator]` teller).
+- **Distinct events get distinct event vars; one event with several verbs reuses the var.** Two patterns
+  on different vars (`evt $truth …  evt $disclosure …`) now require TWO story events; the same var twice
+  (`evt $line [&Asserts] … evt $line [&Reveals]`) is one event carrying both verbs. Don't split one
+  beat across two vars or you demand a second event that never comes.
+- **Name the participants that DEFINE a verb.** A reveal discloses a fact → `[&Reveals(fact=…)]`; a
+  betrayal has a betrayed party → `[&Betrays(target=…)]`. The prelude's `verb` signatures mark required
+  roles (typed-without-`null`); match their key names (`fact`, not `truth`).
+
+**Sim-test for SPECIFICITY, not just firing.** It is not enough that the rule fires on its own vignette.
+Run the provenance trace and confirm the discriminator actually gated:
+
+```bash
+cargo run --quiet --example shape -- <file.trl> --why   # recognition: clause ⇐ event + coverage re-checks
+cargo run --quiet --example eval  -- <file.trl> --why   # eval: each firing and the facts it rested on
+```
+
+In the `--why` output the trope's distinguishing tag should appear as a satisfied coverage line on the
+bound entity. If your trope shares a family (reveals, betrayals, sacrifices, recognitions), spot-check
+that a SIBLING trope's vignette does NOT confirm yours at 1.00 — if it does, your discriminator isn't
+binding (see the four bullets above). A down-ranked Possible (≤0.75) on a genuine cousin is fine; a
+second Confirmed at 1.00 is an over-match to fix.
+
 ### 5. Format the output
 
 Return a `.trl` fenced code block with a brief annotation:
@@ -303,6 +352,8 @@ the time to review what has earned promotion:
 - No fractional numbers in identifiers — use `[+Mod(factor=0.5)]`
 - String literals always double-quoted
 - `imply` used when the trope introduces an ontological cluster
+- The trope's discriminator rides an event role (binds), and the vignette's bound entity overtly carries every tag the rule checks (§4b)
+- `--why` spot-check: the trope confirms on its own vignette and a sibling trope's vignette does NOT confirm it at 1.00 (§4b)
 
 ---
 
@@ -342,3 +393,5 @@ node; `event=`/`site=` must match entity type). Then consolidate (see above).
 - `examples/report.rs` (`cargo run --example report [-- --reuse [--json]]`) — tag origins + consolidation assist
 - `scripts/dialog_context.py` — interrogates `dialog(...)` annotations (preconditions / motivations / postconditions / context)
 - `cargo run --example drams -- <file>` — the exact (S3) coverage metric, `density over coverage` (specs/00 §6.7); a SIGNAL not a gate; the gap list is the conversion worklist
+- `cargo run --example shape -- <file> --why` — recognition provenance: which event satisfied each clause + the coverage re-checks behind the confidence (the specificity spot-check, §4b)
+- `cargo run --example eval -- <file> --why` — eval provenance: each rule firing and the facts its `when:` clauses bound
