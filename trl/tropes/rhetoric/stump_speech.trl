@@ -1,0 +1,92 @@
+// === PREAMBLE ===
+// @trope    The Stump Speech
+// @category Oratory / Persuasion
+// @source   https://en.wikipedia.org/wiki/Stump_speech
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the source): a candidate's set-piece campaign address — repeated town to town from
+// atop a tree stump — that pitches who they are, names a grievance the crowd already feels, paints a
+// vision, and asks the electorate for their allegiance and their VOTE. FRONTIER: the ELECTORAL
+// sibling of the rhetoric/persuasion cluster, and the one whose speaker is a SEEKER OF ALLEGIANCE,
+// not a holder of it. Where the Rousing Speech is a [+Leader] turning a [#Disheartened] BAND's fear
+// to resolve mid-crisis, and the Breaking Speech walks ONE [+Vulnerable] hero down into despair, the
+// Stump Speech is an [+Aspirational] CANDIDATE working a [+Collective] crowd they do not yet command:
+// pathos over a shared grievance moves the room toward ALLEGIANCE, and the call is specifically to
+// BACK them — to vote. The discriminator rides the Exhorts event's target= role (a collective crowd,
+// not a lone listener) and the aspirant candidate at agent=, and the payoff is the room aligned to
+// the candidate and committed to the vote — won, not rallied, not broken.
+
+import "trl/modules/persuasion.trl"          // pathos -> belief-change -> the call to act (Exhorts)
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc stump_speech -> [
+  persuasion     : "is the electoral set-piece of (pathos over a grievance, then the call to vote)",
+  rousing_speech : "the campaign-trail cousin of (a candidate courting a crowd, not a leader rallying a band)",
+  the_debate     : "the un-opposed half of (one candidate working the room, no rebutter on the floor)",
+  propaganda     : "the honest electoral form near (a real grievance courted, not a scapegoat stoked)"
+]
+
+imply StumpSpeech -> [Pathos, Conviction, Narrative]
+
+// === ABSTRACT RULE ===
+// Naming rule: an [+Aspirational] candidate addresses a [+Collective] crowd they do not yet command,
+// naming a grievance the crowd already holds ([#Resentful]) and calling them to back the candidacy.
+// The DISCRIMINATOR binds on the Exhorts event: agent= is the aspirant candidate, target= is the
+// collective crowd (NOT a lone hero, NOT a band already led), and action= is the vote. The payoff is
+// DERIVED — the moved room aligns to the candidate and commits to the vote (allegiance won, not a
+// band rallied or a hero broken).
+rule Stump_Speech {
+  when:
+    char $cand [+Speaker] [+Aspirational]
+    set  $crowd [+Collective] [#Resentful]
+    evt  $stump [&Exhorts(agent=$cand, target=$crowd, action=$vote)]
+  then:
+    $crowd [+Moved]
+    $crowd [+Aligned(to=$cand)]
+    $crowd [+Committed(to=$vote)]
+    $crowd -- commitment
+}
+
+// === CONCRETE VIGNETTE: Shirley Chisholm — "Unbought and Unbossed" campaign (US primary trail, 1972) ===
+// The first Black woman to seek a major party's presidential nomination took her stump speech to halls
+// that had never been asked for their vote by someone who looked like the room. She did not argue
+// odds or rebut a rival on a stage; she stood before crowds long shut out of the count and named the
+// grievance they already carried — that the system was unbought and unbossed by no one but its
+// brokers — painted a country that could be theirs, and asked plainly for their backing at the booth.
+// She did not win the nomination; she moved the room, and the room came with her to the vote.
+
+// SHIRLEY CHISHOLM — the aspirant; a candidate courting a crowd she does not yet command
+char chisholm [+Speaker] [+Aspirational]
+chisholm [+MotivatedBy(reason="Representation")]
+
+// THE OVERLOOKED ELECTORATE — a collective long shut out of the count, carrying the grievance already
+set the_electorate [+Collective] [#Resentful]
+the_electorate [+Crowded]
+
+// THE BALLOT — what she asks the room for: their vote, their backing at the booth
+obj the_ballot [+Coveted]
+
+// INT. CAMPAIGN HALL — the set-piece address, the stump
+set the_hall [+Interior] [+Day]
+the_hall [+Crowded]
+
+scene unbought_and_unbossed {
+  beat 1 {
+    chisholm @ the_hall
+    the_electorate @ the_hall
+    // The set-piece: she names the grievance the room already holds and calls them, by it, to back
+    // her at the booth. The call is aimed at the COLLECTIVE crowd (target=the_electorate) and asks
+    // for the vote (action=the_ballot) — a candidate courting allegiance, not a leader rallying a band.
+    evt the_stump [&Exhorts(agent=chisholm, target=the_electorate, action=the_ballot)]
+        dialog(inject=[speaker=chisholm], inline="""
+               speaker: "{speaker}"
+               cue: "Chisholm before a hall of voters the system has never courted; she names the grievance and asks for the vote"
+               tone: plainspoken, fearless, exhorting
+               text: "I stand before you unbought and unbossed. They have not asked you for your vote because they never thought it was worth the asking. I am asking. Bring it to the booth, and bring this country with you."
+               """)
+    // Stump_Speech fires here: the [+Aspirational] candidate exhorts the [+Collective] [#Resentful]
+    // crowd to the vote. The room is DERIVED [+Moved], [+Aligned(to=chisholm)], [+Committed(to=the_ballot)]
+    // -- commitment — the allegiance is the rule's payoff, not hand-asserted.
+  }
+}
