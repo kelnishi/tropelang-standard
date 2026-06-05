@@ -56,7 +56,7 @@ rule DisneyDeath {
     char $hero [+Dead]
     audience [#Grieving]
     ?$hero [+Deceptive]?
-    evt $disclosure [&Reveals(fact=$alive)]
+    evt $disclosure [&Reveals(subject=$hero, fact=$alive)]
     not ( $disclosure [+Resolved] )
   then:
     $disclosure [+Resolved] [+TheReveal]
@@ -125,7 +125,7 @@ scene the_sacrifice {
 scene the_coda {
   beat 1 {
     stray_bolt @ iceland
-    evt reassembly [&Reveals(fact=alive)]
+    evt reassembly [&Reveals(subject=giant, fact=alive)]
         dialog(kind=narration, inline="""
                cue: "a lone bolt, far from the wreckage, clicks and turns itself toward home"
                tone: quietly triumphant
