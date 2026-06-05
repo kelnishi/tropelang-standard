@@ -241,6 +241,11 @@ COVERAGE **but only on entities an event role bound**. So:
 - **Name the participants that DEFINE a verb.** A reveal discloses a fact → `[&Reveals(fact=…)]`; a
   betrayal has a betrayed party → `[&Betrays(target=…)]`. The prelude's `verb` signatures mark required
   roles (typed-without-`null`); match their key names (`fact`, not `truth`).
+- **Discriminate by positive evidence — never `not([+Tag])` or a `^` stat** (STYLE §8). `not(...)` is
+  closed-world: it fires on every unwritten entity, and it's dropped in recognition. A `^` stat is the
+  games arena, not qualitative character. An "Anti-X / Un-X" trope is a *positive constellation in
+  tension* (e.g. `Anti_Hero` = `[+Sympathetic_Focus]` + `[+Unscrupulous]` + a shown `[&Crosses]`), not the
+  absence of X or a low score on X.
 
 **Sim-test for SPECIFICITY, not just firing.** It is not enough that the rule fires on its own vignette.
 Run the provenance trace and confirm the discriminator actually gated:
@@ -353,6 +358,7 @@ the time to review what has earned promotion:
 - String literals always double-quoted
 - `imply` used when the trope introduces an ontological cluster
 - The trope's discriminator rides an event role (binds), and the vignette's bound entity overtly carries every tag the rule checks (§4b)
+- The discriminator is POSITIVE evidence — no `not([+Tag])` and no `^` stat standing in for a qualitative property (STYLE §8)
 - `--why` spot-check: the trope confirms on its own vignette and a sibling trope's vignette does NOT confirm it at 1.00 (§4b)
 
 ---

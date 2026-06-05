@@ -1,0 +1,100 @@
+// === PREAMBLE ===
+// @trope    Gaslighting
+// @category Epistemic / Psychological Torture
+// @source   https://allthetropes.org/wiki/Gaslighting
+// @domain   Epistemic
+// @version  1.3
+//
+// Laconic (per the wiki): a manipulator systematically denies and contradicts a victim's TRUE
+// perceptions and memories — until the victim doubts their own sanity. Named for the 1944 film
+// Gaslight (a husband dims the gaslights, then insists to his wife she is imagining it), it is a
+// subtrope of Driven to Madness: psychological torture worked entirely through the epistemic gap.
+// FRONTIER: the in-world INVERSION of Cassandra Truth — there a TRUE warning cannot get IN past a
+// crowd's disbelief; here a manipulator repeatedly forces a FALSE denial IN until the victim's own
+// true belief is dislodged. The discriminator that separates it from a plain lie or Dramatic Irony:
+// the contradicted fact is true and the victim KNOWS it, the denial is aimed directly AT the victim
+// (`to=$victim`) and REPEATED (the systematic campaign, count >= 3, not one untruth), and the
+// damage lands on the bound victim as doubt of their own correct perception ([-Certain] [+Paranoid]).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/theory_of_mind.trl"    // Asserts / Believes / Knows / Mistaken, deception + false_belief
+
+assoc gaslighting -> [
+  theory_of_mind  : "weaponizes the false-belief machinery of",
+  deception       : "is the sustained, sanity-targeting form of",
+  cassandra_truth : "is the manipulator's-eye inverse of",
+  dramatic_irony  : "collapses the audience's knowing gap onto the victim as"
+]
+
+
+// === ONTOLOGY ===
+// Driven to Madness, worked through induced false belief — the denial of a true perception held.
+imply Gaslighting -> [deception, false_belief, Narrative]
+
+
+// === ABSTRACT RULE ===
+// A victim holds a belief that is TRUE — the perception $p is asserted absolute (!…!) and the victim
+// is [+Certain] of it. A manipulator REPEATEDLY (count >= 3 — the campaign, not a single lie)
+// Asserts the CONTRARY $not_p ($p >< $not_p) directly TO the victim, untruthfully (truthful=false).
+// The discriminator binds on the denial event's `to=$victim` role, so coverage re-checks the
+// victim's tags: the bound victim is the [+Victim] who was [+Certain] of the truth. The campaign
+// dislodges that certainty — the victim is driven to doubt their own correct perception ([-Certain])
+// and into chronic self-distrust ([+Paranoid]) — Driven to Madness through the epistemic seam.
+rule Gaslighting {
+  when:
+    char $victim [+Victim] [+Certain]
+    count( evt $denial [&Asserts(agent=$manipulator, to=$victim, claim=$not_p, truthful=false)] ) >= 3
+    char $victim [#Knows(target=$p)]
+    $p >< $not_p
+    not ( $victim [+Paranoid] )
+  then:
+    $victim [-Certain]
+    $victim [#Mistaken(subject=$not_p)]   // the manufactured doubt: she now half-credits the false claim
+    $victim [+Paranoid]                   // driven to distrust her own true perception — sanity in question
+    $victim -- deception
+}
+
+
+// === CONCRETE VIGNETTE: The Invisible Man (film, 2020) ===
+// Cecilia escapes her abuser, the optics genius Adrian Griffin, who then fakes his suicide and stalks
+// her in a perfected invisibility suit. She KNOWS the true thing — he is alive, present in the room.
+// But he works the campaign: he moves her things, deletes her job, emails cruelty from her account,
+// then is never there when anyone looks — so to everyone, and at last to herself, the woman insisting
+// "he's here" is the one coming apart. The truth she holds is exactly right; the systematic denial of
+// it is engineered to make her, and the world, read her as insane.
+
+// CECILIA KASS — she perceives the truth, and is made to doubt it
+char cecilia [+Victim] [+Certain]
+
+// ADRIAN GRIFFIN — the invisible abuser running the campaign
+char adrian [+Antagonist] [+Deceptive] [+Cunning]
+
+// INT. JAMES'S HOUSE — the safe house that stops feeling safe
+set the_house [+Interior] [+Night]
+
+scene the_campaign {
+  beat 1 {
+    cecilia @ the_house
+    adrian  @ the_house
+    // The perception she holds is, in fact, ABSOLUTE — Adrian IS alive and in the room with her.
+    !cecilia [#Knows(target=adrian_is_present)]!
+    cecilia [#Believes(claim=adrian_is_present)]
+  }
+  beat 2 {
+    // The campaign — the SAME denial, aimed AT her, repeated (count >= 3 binds the systematic pattern).
+    evt deny_1 [&Asserts(agent=adrian, to=cecilia, claim=adrian_is_dead, truthful=false)]
+    evt deny_2 [&Asserts(agent=adrian, to=cecilia, claim=adrian_is_dead, truthful=false)]
+        dialog(inject=[speaker=adrian], inline="""
+               speaker: "{speaker}"
+               cue: "a voice from empty air as she spins, finding no one"
+               tone: flat, patient
+               text: "There's no one here, Cecilia. You buried me."
+               """)
+    evt deny_3 [&Asserts(agent=adrian, to=cecilia, claim=adrian_is_dead, truthful=false)]
+    // the held truth and the forced denial are contraries — denial does not fill a gap, it overwrites
+    adrian_is_present >< adrian_is_dead
+    // Gaslighting fires: count(&Asserts to=cecilia truthful=false) >= 3 against her KNOWN truth,
+    // deriving cecilia [-Certain] [#Mistaken] [+Paranoid] -- deception. NOT hand-asserted.
+  }
+}

@@ -1,0 +1,103 @@
+// === PREAMBLE ===
+// @trope    The Summation
+// @category Mystery Tropes
+// @source   https://allthetropes.org/wiki/The_Summation
+// @domain   Epistemic
+// @version  1.3
+//
+// Laconic (per the wiki): the climactic "parlor scene" of a mystery — the detective ASSEMBLES
+// the suspects in one room and walks the deduction aloud, clearing the innocent one by one until,
+// at the end, NAMING THE GUILTY PARTY and explaining how and why the crime was done. The wiki notes
+// it is "a form that The Reveal takes" — so it rides the same [&Reveals] disclosure machinery, but
+// its signature is the unique conjunction of THREE bound roles on the disclosing event: the revealer
+// is an INVESTIGATOR ([+Detective]), the audience is the ASSEMBLED suspects (a [+Collective]), and
+// the disclosed subject is the CULPRIT ([+Guilty]) — the reveal is an ACCUSATION delivered to a
+// gathered group. FRONTIER: separates the accusatory parlor-scene reveal from the rest of the reveal
+// cluster by gating all three roles (detective agent / collective audience / guilty subject) at once,
+// where The Reveal binds only agent+observer, Plot Twist only a collective audience, Tomato Surprise
+// only a concealed subject, and Secret Legacy only a mentor agent.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // revelation, secret, identity
+import "trl/modules/theory_of_mind.trl"    // Reveals / Knows — the disclosure machinery this rides
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc the_summation -> [
+  revelation     : "delivers the accusation as a",
+  the_reveal     : "is the gathered-parlor, culprit-naming form of",
+  plot_twist     : "shares a collective audience with, but differs by NAMING a guilty subject",
+  tomato_surprise: "differs by aiming the disclosure AT an assembled group, not at the viewer"
+]
+
+
+// === ONTOLOGY ===
+// The Summation is a Disclosure aimed at an Accusation: it subsumes the reveal's Disclosure with the
+// gathering of suspects (Assembly) and the act of naming the guilty (Accusation).
+imply TheSummation -> [Disclosure, Assembly, Accusation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition: a detective $sleuth, before the GATHERED suspects ($assembly, a [+Collective]), discloses
+// the solution and NAMES the culprit ($culprit, [+Guilty]). The discriminator rides three roles on the
+// single [&Reveals] event so all three bind and re-check in coverage: agent=$sleuth ([+Detective]),
+// to=$assembly ([+Collective]), subject=$culprit ([+Guilty]). This three-way conjunction is what no
+// sibling reveal shares — The Reveal binds agent+observer (no guilty subject, no collective), Plot Twist
+// a collective audience alone (no detective, no guilty subject), Tomato Surprise a concealed subject
+// (no collective, no detective), Secret Legacy a mentor agent (no guilty subject). Naming the culprit TO
+// the assembled suspects, by the investigator, is the parlor-scene signature.
+rule The_Summation {
+  when:
+    char $sleuth   [+Detective]
+    char $assembly [+Collective]
+    char $culprit  [+Guilty]
+    evt  $accusation [&Reveals(agent=$sleuth, to=$assembly, subject=$culprit, fact=$solution)]
+  then:
+    $assembly [#Knows(target=$culprit)]
+    !$culprit [+Revealed(truth=$solution)]!
+    $accusation -- revelation : "Is"
+    !$accusation [+TheSummation]!
+    surface_global(title="The Summation", description="The detective gathers the suspects and names the guilty party.")
+}
+
+
+// === CONCRETE VIGNETTE: Knives Out — Benoit Blanc names the killer (film, 2019) ===
+// After the death of crime novelist Harlan Thrombey, the Southern-drawled "last of the gentleman
+// sleuths," Benoit Blanc, assembles the whole grasping Thrombey clan in Harlan's study and walks the
+// case aloud — the staged suicide, the swapped medications, the burned evidence — clearing each
+// relative in turn until he arrives at the one who engineered it all: Ransom Drysdale. The reveal is
+// delivered TO the gathered family, by the detective, and it NAMES the guilty heir.
+
+// BENOIT BLANC — the courtly private investigator hired to untangle the death
+char blanc [+Detective] [+Protagonist]
+
+// THE GATHERED THROMBEY FAMILY — the assembled suspects, every one a beneficiary
+char family [+Collective] [+Suspicious]
+
+// RANSOM DRYSDALE — the disinherited grandson who staged it all
+char ransom [+Antagonist]
+ransom [+Guilty]                             // overtly carried, before the rule fires — coverage re-checks it
+
+// INT. HARLAN THROMBEY'S STUDY - NIGHT
+set study [+Interior] [+Night]
+
+scene the_parlor_scene {
+  beat 1 {
+    blanc @ study
+    family @ study
+    ransom @ study
+    family [+Suspicious]                      // each relative still a suspect, none yet cleared
+  }
+  beat 2 {
+    // The detective, before the gathered family, discloses the solution and names the culprit.
+    evt the_accusation [&Reveals(agent=blanc, to=family, subject=ransom, fact=the_solution)]
+        dialog(inject=[speaker=blanc], inline="""
+               speaker: "{speaker}"
+               cue: "the drawl unhurried, the whole family watching, the last card turned"
+               tone: courtly, inexorable
+               text: "It was you, Ransom. The blood on your shoe. The morphine you switched. You did all of it."
+               """)
+    // The_Summation fires here, deriving family [#Knows(ransom)], !ransom [+Revealed]!,
+    // and !the_accusation [+TheSummation]! — the rule's payoff, not asserted.
+  }
+}

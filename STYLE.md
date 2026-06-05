@@ -240,6 +240,32 @@ satisfied each clause and the coverage re-checks behind the confidence; your dis
 a *satisfied* coverage line on the bound entity. If the trope has a family, confirm a sibling's vignette
 does **not** confirm yours at 1.00 (a down-ranked Possible ≤0.75 on a genuine cousin is fine).
 
+### Discriminate by positive evidence — never by negation or magnitude
+
+Define a character TYPE — or any trope — by the **positive constellation of acts and traits that
+constitute it**, not by what it lacks or by a number.
+
+- **Never `not([+Tag])` as a discriminator.** `not(...)` is closed-world negation-as-failure: it is true
+  for everything not *proven* to carry the tag — i.e. the entire **unwritten majority**. So `Anti_Hero`
+  keyed on `not(char $c [+Virtuous])` fired on every protagonist nobody happened to mark virtuous. (It is
+  also **dropped in recognition** — §8 — and a static-only rule with no event compiles to no shape at all,
+  so the negation does nothing for the pills and runs greedy in eval.) Absence of a flag is not evidence
+  of its opposite.
+- **Don't reach for a `^` stat for a qualitative property.** Morality, loyalty, heroism have **no unit**;
+  `[^Virtue = 0]` is false precision, and the `^` arena is the *simulated/quantitative* one (HP, AC, dice
+  — §5, the game bridge), not narrative character. A magnitude flattens "both at once" into a meaningless
+  middle.
+- **Model the tension as a conjunction of positives.** "Anti-X" is not "not-X" and not "low X" — it is a
+  specific **co-presence**. `Anti_Hero` = a protagonist we root for (`[+Sympathetic_Focus]`) who is
+  `[+Unscrupulous]` AND is *shown* crossing a line (`[&Crosses]` — the deed gives it a bindable shape).
+  The positive trait is the discriminator: **present, not merely un-negated**, so the unwritten never
+  match. Sub-types are *which* and *how many* compromised acts against how strong a sympathetic claim — a
+  qualitative profile, never a dial.
+
+This is the same trap behind every **Un-X / Not-X / Anti-X** archetype (Nominal Hero, Villain Protagonist,
+the un-reliable, the un-witnessed): the name is a negation, but the *trope* is a positive thing. Encode the
+positive thing.
+
 ## 9. S14 levels: home plane, loud crossings
 
 - Declare a node on its **home plane** (the cast lives on the canon mainline, e.g. `<<heist>>`).

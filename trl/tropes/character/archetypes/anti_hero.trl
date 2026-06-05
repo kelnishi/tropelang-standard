@@ -6,79 +6,82 @@
 // @version  1.3
 //
 // Laconic (per the wiki): the central character who lacks the conventional attributes of a hero —
-// selfish, ruthless, cynical, or morally grey — yet remains the one we follow and root for. The
-// classical sense: a protagonist who is no moral paragon, almost never possessing both the physical
-// AND the moral capabilities of a true hero. FRONTIER: the role/virtue split. The Protagonist gives
-// the role (Central, Sympathetic_Focus) and The Paragon gives incorruptible virtue; the Anti-Hero is
-// the deliberate GAP between them — a protagonist who KEEPS the audience's allegiance while FAILING
-// the virtue axis. Not a Villain Protagonist (whom we watch, but do not root for) and not a Fall From
-// Grace (a trajectory); the Anti-Hero is a stable cast position: un-heroic methods, heroic standing.
+// selfish, ruthless, cynical, or morally grey — yet remains the one we follow and root for.
+// FRONTIER: model the grey by POSITIVE EVIDENCE, not by negation. The Anti-Hero is not "a protagonist
+// who lacks [+Virtuous]" (closed-world absence fires on every unwritten protagonist, and morality has
+// no scale to sit below). It is the CO-PRESENCE of two positives in tension — an allegiance we keep
+// ([+Sympathetic_Focus]) AND un-heroic conduct we witness (an un-scrupulous character shown crossing a
+// line). "Grey" is the conjunction, not a missing flag or a low score. Not a Villain Protagonist (whom
+// we watch but do not root for) and not a Fall From Grace (a trajectory); the Anti-Hero is a stable
+// cast position — un-heroic means, kept standing.
 
 
 // === IMPORTS & ASSOCIATIONS ===
-import "trl/concepts/index.trl"            // virtues — the axis the anti-hero fails
+import "trl/concepts/index.trl"            // virtues — the register the anti-hero compromises
 
 assoc anti_hero -> [
   the_protagonist : "is a kind of",
   the_paragon     : "is the protagonist who is NOT a",
-  the_hero        : "withholds the virtue of",
-  integrity       : "is sympathetic despite lacking",
+  the_hero        : "keeps the standing of, by un-heroic means",
+  integrity       : "is rooted for despite compromising",
   fall_from_grace : "is a standing state, not the slope of"
 ]
 
 
 // === ONTOLOGY ===
-// The archetype subsumes: a protagonist's sympathetic focus, plus the morally-grey path, MINUS the
-// paragon's virtue. The signature is the co-presence of allegiance and un-heroic morality.
+// The archetype subsumes: a protagonist's sympathetic focus, plus the morally-grey path and un-heroic
+// conduct. The signature is the co-presence of allegiance and witnessed un-heroic action.
 imply AntiHero -> [Protagonist, Sympathetic_Focus, Path_Ambiguous, Unheroic, Narrative]
 
 
 // === ABSTRACT RULE ===
-// A protagonist who holds the audience's sympathy (Sympathetic_Focus) yet is NOT virtuous — no
-// paragon's incorruptibility — IS the Anti-Hero. The not(... [+Virtuous]) clause is load-bearing: it
-// is the gap from The Paragon, and the [+Sympathetic_Focus] is the allegiance The Villain Protagonist
-// lacks (we watch the villain protagonist but do not root for them).
+// POSITIVE evidence, no negation: a protagonist we root for ([+Sympathetic_Focus]) who is un-scrupulous
+// ([+Unscrupulous] — a standing characterization, asserted, not assumed from a missing virtue) AND is
+// SHOWN crossing a line (the deed — an [&Crosses] event, which also gives the trope a recognizable
+// shape). The [+Unscrupulous] coverage is the discriminator: it separates the Anti-Hero from a clean
+// protagonist who merely crosses a journey threshold, and it never fires on the unwritten — because the
+// trait must be present, not merely un-negated.
 rule Anti_Hero {
   when:
-    char $c [+Protagonist] [+Sympathetic_Focus]
-    not( char $c [+Virtuous] )
+    char $c [+Protagonist] [+Sympathetic_Focus] [+Unscrupulous]
+    evt  $e [&Crosses(agent=$c, threshold=$line)]
   then:
     $c [+Unheroic]
     $c [+Path_Ambiguous]
     $c [+AntiHero]
-    $c -- integrity : "rooted for in spite of the lack"
+    $c -- integrity : "rooted for despite the means, not for any lack of virtue"
 }
 
 
-// === CONCRETE VIGNETTE: A Fistful of Dollars — the Man with No Name (Spaghetti Western, 1964) ===
-// A nameless drifting gunslinger rides into a town held by two warring smuggler clans and hires
-// himself out to both, pocketing money from each while playing them toward mutual ruin — mercenary,
-// cynical, no paragon. Yet he is the one we follow, and when he finds a family the clans have torn
-// apart, he frees them and guns down the worse of the two houses. Un-heroic methods, heroic standing:
-// the morality is grey, the allegiance never wavers.
+// === CONCRETE VIGNETTE: Breaking Bad — Walter White (TV, 2008–2013) ===
+// A dying, broke, humiliated chemistry teacher cooks meth to leave his family money before the cancer
+// takes him — and we follow the underdog, rooting for him. But the means curdle the man: he lies, he
+// poisons a child to manipulate, he lets Jane choke, he kills. The line is crossed long before he
+// admits the goal was never the family at all — "I did it for me. I liked it. I was good at it." Kept
+// allegiance, un-heroic methods: the grey is the co-presence, not a missing virtue.
 
-// THE MAN WITH NO NAME (Joe)
-char stranger [+Protagonist] [+Sympathetic_Focus]
-// non-virtuous by ABSENCE — he carries no [+Virtuous], which is exactly what `not([+Virtuous])` keys on
-stranger [+Cunning] [+Mercenary]
+// WALTER WHITE (Heisenberg)
+char walter [+Protagonist] [+Sympathetic_Focus]
+walter [+Unscrupulous] [+Prideful]               // un-heroic conduct, asserted — the positive marker
+walter [~Pursues(goal=provide_for_family)]        // the sympathetic claim that keeps us with him
 
-// THE TWO CLANS (Rojos & Baxters)
-char clans [+Antagonist] [+Faction]
+// THE GOAL we are given to endorse, and THE LINE he crosses to serve it
+concept provide_for_family
+concept the_line [%Essence]                        // teacher → killer: the moral threshold, not a place
 
-// THE CAPTIVE FAMILY
-char family [+Victim]
+// JESSE — partner and, by turns, what the means consume
+char jesse [+Partner] [+Victim]
 
-// EXT. SAN MIGUEL — A DUSTY BORDER TOWN — DAY
-set san_miguel [+Exterior] [+Day] [+Contested]
+// INT. THE SUPERLAB — NIGHT
+set superlab [+Interior] [+Night] [+Hidden]
 
-scene the_two_paymasters {
+scene the_crossing {
   beat 1 {
-    stranger @ san_miguel
-    stranger -> clans : "hires himself to both houses for coin"
-    clans -- stranger : "Each thinks they bought him"
+    walter @ superlab
+    walter -- jesse : "Partners, after a fashion"
   }
   beat 2 {
-    stranger -> family : "frees the family the clans had torn apart"
-    // Anti_Hero -> stranger [+Unheroic] [+Path_Ambiguous] [+AntiHero] -- integrity
+    evt the_rubicon [&Crosses(agent=walter, threshold=the_line)]
+    // Anti_Hero -> walter [+Unheroic] [+Path_Ambiguous] [+AntiHero] -- integrity (DERIVED, not asserted)
   }
 }
