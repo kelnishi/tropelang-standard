@@ -124,6 +124,7 @@ import "trl/tropes/death/senseless_sacrifice.trl"
 import "trl/tropes/death/survivors_guilt.trl"
 import "trl/tropes/death/taking_you_with_me.trl"
 import "trl/tropes/death/together_in_death.trl"
+import "trl/tropes/epistemic/foreshadowing/chekhovs_boomerang.trl"
 import "trl/tropes/epistemic/foreshadowing/chekhovs_gun.trl"
 import "trl/tropes/epistemic/foreshadowing/chekhovs_gunman.trl"
 import "trl/tropes/epistemic/foreshadowing/chekhovs_skill.trl"
@@ -133,6 +134,7 @@ import "trl/tropes/epistemic/foreshadowing/red_herring.trl"
 import "trl/tropes/epistemic/irony/be_careful_what_you_wish_for.trl"
 import "trl/tropes/epistemic/irony/cassandra_truth.trl"
 import "trl/tropes/epistemic/irony/dramatic_irony.trl"
+import "trl/tropes/epistemic/irony/gaslighting.trl"
 import "trl/tropes/epistemic/irony/prophecy_twist.trl"
 import "trl/tropes/epistemic/irony/self_fulfilling_prophecy.trl"
 import "trl/tropes/epistemic/reveal/anagnorisis.trl"
@@ -169,6 +171,7 @@ import "trl/tropes/power/the_coup.trl"
 import "trl/tropes/power/the_starscream.trl"
 import "trl/tropes/rhetoric/breaking_speech.trl"
 import "trl/tropes/rhetoric/moment_of_awesome.trl"
+import "trl/tropes/rhetoric/motive_rant.trl"
 import "trl/tropes/rhetoric/pratfall.trl"
 import "trl/tropes/rhetoric/propaganda.trl"
 import "trl/tropes/rhetoric/rogue_juror.trl"
@@ -435,6 +438,7 @@ concept bread_and_circuses [+Trope(category="Political", source="https://allthet
 concept break_the_cutie [+Trope(category="Tragedy", source="https://allthetropes.org/wiki/Break_the_Cutie")] [%Narrative]
 concept break_the_haughty [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Break_the_Haughty")] [%Narrative]
 concept breaking_speech [+Trope(category="Oratory", source="https://allthetropes.org/wiki/%22The_Reason_You_Suck%22_Speech")] [%Narrative]
+concept chekhovs_boomerang [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Boomerang")] [%Narrative]
 concept chekhovs_gunman [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Gunman")] [%Narrative]
 concept chekhovs_skill [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Skill")] [%Narrative]
 concept combat_pragmatist [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Combat_Pragmatist")] [%Interpersonal]
@@ -454,6 +458,7 @@ concept even_evil_has_standards [+Trope(category="Characterization", source="htt
 concept famous_last_words [+Trope(category="Death", source="https://allthetropes.org/wiki/Famous_Last_Words")] [%Narrative]
 concept fatal_flaw [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Fatal_Flaw")] [%Mind]
 concept flashback [+Trope(category="Flashbacks and Chronology", source="https://allthetropes.org/wiki/Flashback_(trope)")] [%Narrative]
+concept gaslighting [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Gaslighting")] [%Epistemic]
 concept heel_face_door_slam [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Heel_Face_Door-Slam")] [%Narrative]
 concept heel_realization [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Heel_Realization")] [%Mind]
 concept heist [+Trope(category="Crime", source="https://allthetropes.org/wiki/The_Caper")] [%Social]
@@ -475,6 +480,7 @@ concept mama_bear [+Trope(category="Character Tropes", source="https://allthetro
 concept mexican_standoff [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Mexican_Standoff")] [%Interpersonal]
 concept mockumentary [+Trope(category="Non-Fiction", source="https://allthetropes.org/wiki/Mockumentary")] [%Narrative]
 concept moment_of_awesome [+Trope(category="Audience Reactions", source="https://allthetropes.org/wiki/Moment_of_Awesome_(Sugar_Wiki)")] [%Narrative]
+concept motive_rant [+Trope(category="Oratory", source="https://allthetropes.org/wiki/Motive_Rant")] [%Narrative]
 concept not_so_different [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Not_So_Different")] [%Interpersonal]
 concept pet_the_dog [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Pet_the_Dog")] [%Narrative]
 concept plot_armor [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Plot_Armor")] [%Narrative]

@@ -1,0 +1,137 @@
+// === PREAMBLE ===
+// @trope    Chekhov's Boomerang
+// @category Foreshadowing
+// @source   https://allthetropes.org/wiki/Chekhov's_Boomerang
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a Chekhov's Gun that has ALREADY been used once, then unexpectedly turns
+// up and pays off AGAIN — the writer relies on the Law of Conservation of Detail to make you forget
+// the planted element after its first use, then brings the SAME element back, recontextualized, to
+// surprise you. FRONTIER: the MULTI-FIRE variant of chekhovs_gun. Where a plain Chekhov's Gun fires
+// exactly once and the debt is settled, the Boomerang's signature is that the IDENTICAL planted
+// object returns to fire two or more times — each return a new payoff. The discriminator is therefore
+// a COUNT, not a single firing: count(&Uses object=$item) >= 2 over the one bound, planted item.
+// Distinct from chekhovs_gun (fires once), chekhovs_armoury (MANY guns each fired once), and
+// chekhovs_skill / chekhovs_gunman (the ABILITY / PERSON variants). Rides the same foreshadowing
+// setup/payoff layer as chekhovs_gun.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/narrative.trl"    // foreshadowing, revelation, consequence
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc chekhovs_boomerang -> [
+  chekhovs_gun  : "the multi-fire form of",
+  foreshadowing : "an honest kind of",
+  revelation    : "can deliver",
+  consequence   : "pays off (repeatedly) in",
+  red_herring   : "contrasts with"
+]
+
+
+// === ONTOLOGY ===
+// A planted object that does not settle its debt on first use: a Chekhov's Gun whose payoff RECURS,
+// the same plant returning Recontextualized each time.
+
+imply ChekhovsBoomerang -> [Foreshadowing, Object, Planted, Recurring]
+
+
+// === ABSTRACT RULES ===
+
+// SETUP — a conspicuous object is introduced but not yet used; a payoff is now owed (the same honest
+// plant as chekhovs_gun).
+rule ChekhovsBoomerang_Setup {
+  when:
+    obj $item [+Conspicuous]
+    evt $intro [&Introduces(object=$item)]
+    not ( $item [+Fired] )
+  then:
+    $item [+PendingPayoff]
+}
+
+// FIRED — the DISCRIMINATOR. The planted object is used at a decisive moment AND that same object is
+// used not once but at least TWICE across the story: count(&Uses object=$item) >= 2. The repeated
+// payoff is the whole signature — a single use is plain chekhovs_gun, not a Boomerang. The first use
+// clause binds $item via the &Uses object role so recognition re-checks its plant; the count clause
+// keys on that same item. The recurrence is made ABSOLUTE — once shown to keep returning, the plant
+// is confirmed a Boomerang and cannot be re-read as a one-shot.
+rule ChekhovsBoomerang_Fired {
+  when:
+    obj $item [+PendingPayoff] [+Conspicuous]
+    count( evt $payoff [&Uses(object=$item, target=$item, agent=$user)] ) >= 2
+  then:
+    $item [-PendingPayoff]
+    !$item [+ChekhovsBoomerang]!
+    !$item [+Fired]!
+    $payoff [+Payoff(item=$item)]
+    $item -- consequence
+}
+
+
+// === CONCRETE VIGNETTE: Indiana Jones and the Last Crusade — the Grail Diary (film, 1989) ===
+// Henry Jones Sr.'s little leather notebook is introduced as a conspicuous object: a lifetime of grail
+// research, posted to Indy for safekeeping. It does not fire once and retire. The SAME diary is used
+// again and again across the Canyon of the Crescent Moon — its sketches and warnings carrying Indy
+// past the three lethal trials guarding the Grail (the Breath of God, the Word of God, the Path of
+// God). One planted object, used over and over; the Law of Conservation of Detail let the audience
+// file it away as backstory, and it keeps coming back. That repeated payoff — not a single firing —
+// is the Boomerang.
+
+// THE GRAIL DIARY — Henry Sr.'s notebook; mailed to Indy, then the key to every trap
+obj grail_diary [+Conspicuous] [+MacGuffin]
+
+// INDIANA JONES
+char indy [+Protagonist]
+
+// INT. VENICE LIBRARY / BARNETT COLLEGE - DAY (the diary arrives, pure backstory)
+set college [+Interior] [+Day]
+
+// EXT. CANYON OF THE CRESCENT MOON - DAY (the three trials guarding the Grail)
+set canyon [+Exterior] [+Day]
+
+// ===== the planting — a conspicuous notebook, registered as backstory, not yet load-bearing =====
+scene the_diary_arrives {
+  beat 1 {
+    indy @ college
+    evt mailed [&Introduces(object=grail_diary)]
+        dialog(inject=[speaker=indy], inline="""
+               speaker: "{speaker}"
+               cue: "turning the worn notebook over, puzzled it was sent at all"
+               tone: wary
+               text: "He didn't want it in a museum. He sent it to me."
+               """)
+    // ChekhovsBoomerang_Setup fires here, deriving grail_diary [+PendingPayoff].
+  }
+}
+
+// ===== first payoff — the diary clears the Breath of God (the first trial) =====
+scene the_first_trial {
+  beat 1 {
+    indy @ canyon
+    evt the_breath [&Uses(object=grail_diary, target=grail_diary, agent=indy)]
+        dialog(inject=[speaker=indy], inline="""
+               speaker: "{speaker}"
+               cue: "reading the sketch a half-second before the blades, dropping to his knees"
+               tone: breathless
+               text: "The penitent man... the penitent man kneels before God!"
+               """)
+  }
+}
+
+// ===== second payoff — the SAME diary clears the next trial; the plant boomerangs back =====
+scene the_second_trial {
+  beat 1 {
+    indy @ canyon
+    evt the_word [&Uses(object=grail_diary, target=grail_diary, agent=indy)]
+        dialog(inject=[speaker=indy], inline="""
+               speaker: "{speaker}"
+               cue: "tracing the diary's tile-grid by hand, spelling the Name across the void"
+               tone: urgent
+               text: "The Word of God... not the Latin J. In Latin, Jehovah begins with an I."
+               """)
+    // ChekhovsBoomerang_Fired fires on a decisive use AND count(&Uses object=grail_diary) >= 2 across
+    // the two trials. It derives [-PendingPayoff], !ChekhovsBoomerang!, !Fired!, the payoff, and the
+    // edge to consequence — all DERIVED, never hand-asserted.
+  }
+}

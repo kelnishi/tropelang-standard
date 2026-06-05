@@ -1,0 +1,107 @@
+// === PREAMBLE ===
+// @trope    Motive Rant
+// @category Oratory / Villainy
+// @source   https://allthetropes.org/wiki/Motive_Rant
+// @domain    Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): the villain, believing the hero is at their mercy, stops to deliver a long,
+// self-righteous monologue explaining their motive and plan — and the delay is the opening the hero
+// needed. FRONTIER: the THIRD rhetoric sibling, and the one whose payoff is TACTICAL, not affective.
+// The Rousing Speech rallies a [#Disheartened] BAND to resolve; the Breaking Speech walks one
+// [#Resolute] hero down into despair (a MIND-change, keyed on a [+Vulnerable] target and a weakness=).
+// The Motive Rant keys on the SPEAKER, not the listener: an [+Antagonist] who is WINNING — [#Proud],
+// gloating, the hero already [+Imperiled] in their grip — pauses to explain themselves (plan=, not
+// weakness=). Where Breaking Speech spends words to demoralize, the Motive Rant spends TIME, and the
+// cost is positional: the rant is itself a delay, so the engine DERIVES the hero a reprieve ([+Saved])
+// and the gloating villain an opening against them ([+Exposed]). The discriminator is the proud,
+// ascendant SPEAKER addressing an imperiled hero — the cousins both run &Addresses, but only here is
+// the agent the one who carries the contrastive tags, and only here is the outcome a turned table.
+
+import "trl/modules/rhetoric.trl"            // &Addresses — apostrophe, speaking TO the hero directly
+import "trl/modules/action_dynamics.trl"     // the positional layer: the costly delay -> [+Exposed] / reprieve
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc motive_rant -> [
+  breaking_speech : "the gloating mirror of (the speaker is winning and proud, not aiming at a soft point)",
+  rousing_speech  : "the villain's solo answer to (one proud boaster, not a leader rallying a band)",
+  rhetoric        : "spends &Addresses on a monologue that costs TIME, not on appraising the audience",
+  action_dynamics : "the rant is a self-inflicted delay that exposes the boaster and relieves the held"
+]
+
+imply MotiveRant -> [Pathos, Hubris, Narrative]
+
+// === ABSTRACT RULE ===
+// Naming rule: a [+Antagonist] who is winning — [#Proud], the hero already [+Imperiled] in their grip —
+// stops to monologue their PLAN at the hero. The DISCRIMINATOR rides the agent= role (the proud,
+// ascendant speaker) and the target= role (the imperiled hero), and the address carries plan=, not the
+// Breaking Speech's weakness=. The payoff is positional and DERIVED: the boasting delay is the opening,
+// so the held hero gets a reprieve ([+Saved]) and the gloating villain is left [+Exposed].
+rule Motive_Rant {
+  when:
+    char $villain [+Antagonist] [#Proud]
+    char $hero [+Imperiled]
+    evt  $rant [&Addresses(agent=$villain, target=$hero, plan=$scheme)]
+  then:
+    $hero [+Saved]
+    $villain [+Exposed]
+    $villain -- gloating
+}
+
+// === SUBVERSION: the villain who waits until it is too late to monologue ===
+// "I'm not a comic-book villain. Do you seriously think I'd explain my master-stroke if there
+// remained the slightest chance of you affecting its outcome? I did it thirty-five minutes ago."
+// When the rant comes AFTER the plan is irreversible, the monologue costs the villain nothing — there
+// is no opening to give. The hero, no longer the one with leverage, takes no reprieve.
+rule Motive_Rant_Subverted {
+  when:
+    char $villain [+Antagonist] [#Proud] [+Triumphant]   // already won: the plan is done, so the rant costs nothing
+    evt  $rant [&Addresses(agent=$villain, target=$hero, plan=$scheme)]
+  then:
+    $hero [#Despairing]
+    $villain -- foregone
+}
+
+// === CONCRETE VIGNETTE: Flash Gordon — Ming explains the conquest of Earth (movie serial, 1936) ===
+// Ming the Merciless has Flash strapped to the dais of his throne room, the death-ray primed, the
+// court watching. He has won — and, winning, he cannot resist. He turns from the lever to the helpless
+// Earthman and unspools the whole design: the planet Mongo flung into Earth's orbit, the kingdoms
+// already cowed, the throne from which he will rule two worlds. While the Emperor savors the telling,
+// Flash works the strap loose against the dais edge — the gloat is the only minute he needed. By the
+// last boast the table has turned: the prisoner is free and the Emperor, mid-flourish, is the one open.
+
+// MING THE MERCILESS — Emperor of Mongo; winning, and far too pleased about it
+char ming [+Antagonist] [+Tyrant]
+ming [#Proud]
+ming [~Pursues(target=conquest)]
+
+// FLASH GORDON — strapped to the dais, the death-ray primed; imperiled, not yet beaten
+char flash [+Protagonist] [+Imperiled]
+flash [+Resourceful]
+
+// THE CONQUEST OF EARTH — the plan Ming cannot resist narrating
+concept conquest [%Political]
+
+// INT. THRONE ROOM OF MONGO - (timeless pulp interior)
+set throne_room [+Interior] [+Night]
+throne_room [+Oppressive]
+
+scene the_death_ray {
+  beat 1 {
+    flash @ throne_room
+    ming @ throne_room
+    ming -- flash : "Holds At Mercy"
+    // Ming, ascendant, turns from the lever to gloat the whole scheme at his captive — the address
+    // is aimed at flash by name and carries the PLAN (plan=conquest), not a probe at a weakness.
+    evt the_gloat [&Addresses(agent=ming, target=flash, plan=conquest)]
+        dialog(inject=[speaker=ming], inline="""
+               speaker: "{speaker}"
+               cue: "Ming has Flash helpless on the dais; instead of pulling the lever, he turns to explain"
+               tone: grandiose, savoring, imperial
+               text: "Behold, Earthman, the engine of your world's ruin — Mongo wrenched from its course, your petty kingdoms made to kneel, and Ming, Emperor of two worlds! You will live just long enough to comprehend the scale of it."
+               """)
+    // Motive_Rant fires here: the proud, winning [+Antagonist] spends the moment monologuing his plan
+    // at the [+Imperiled] hero. The costly delay is DERIVED, not hand-asserted — flash [+Saved] (the
+    // strap worked loose during the boast) and ming [+Exposed] (left open, mid-flourish).
+  }
+}
