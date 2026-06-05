@@ -1,0 +1,82 @@
+// === PREAMBLE ===
+// @trope    Trojan Horse
+// @category Conflict / Tactics
+// @source   https://allthetropes.org/wiki/Trojan_Horse
+// @domain   Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): a hostile force gets inside the enemy's defenses by subterfuge —
+// disguised as something irresistible (a gift, a tribute, an ally) so the defender WELCOMES it
+// across the walls — then, once inside, strikes from within (sabotage, open the gate, kill the
+// leader). FRONTIER: the discriminator is the ADMISSION. Unlike a feint (the foe is openly present
+// and lured forward) or a plain ambush (the foe lies hidden OUTSIDE and is never let in), here the
+// concealed, trusted intruder is carried PAST a [+Threshold] defense by the defender's own hand —
+// `Crosses(threshold=$wall)` — and only THEN does the strike issue from within. The gift is the
+// horse; the welcome is the breach.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict, deception
+import "trl/modules/action_dynamics.trl"   // [&Strikes] — the blow that issues from within
+import "trl/modules/theory_of_mind.trl"    // deception — a false belief planted so the gift is welcomed
+
+assoc trojan_horse -> [
+  action_dynamics : "the from-within strike of",
+  theory_of_mind  : "plants the harmless-gift false belief via",
+  conflict        : "breaches a defended position without a siege in"
+]
+
+
+// === ONTOLOGY ===
+// A Trojan Horse is a concealed, trusted intruder (the Vessel that carries the hidden force) which
+// crosses a Threshold defense by deception, then strikes — deception + the breach of a guarded line.
+imply TrojanHorse -> [deception, Tactic, Concealed, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: the binding event is the ADMISSION. A [+Concealed] [+Trusted] intruder — disguised as
+// a harmless gift so the defender lets it in — CROSSES the defender's [+Threshold] (the welcome that
+// is the breach), and FROM that same admitted intruder a strike issues against the defender. THAT is
+// a Trojan Horse. The discriminator rides the Crosses event's agent role: the thing that crosses the
+// wall is the concealed force, and it is the SAME entity that then strikes. A plain ambush never
+// crosses the line (the foe stays outside, hidden); a feint never conceals (the foe is openly there).
+rule TrojanHorse {
+  when:
+    char $intruder [+Concealed] [+Trusted]
+    set  $wall [+Threshold]
+    evt  $admit  [&Crosses(agent=$intruder, threshold=$wall)]
+    evt  $strike [&Strikes(agent=$intruder, target=$defender)]
+  then:
+    $admit [+TrojanHorse]
+    $defender [+Compromised]
+}
+
+
+// === CONCRETE VIGNETTE: White Heat — the tanker truck into the chemical plant (film noir, 1949) ===
+// Cody Jarrett's gang can't shoot their way into the Garrod Chemical plant payroll office, so they
+// don't. They roll up in an empty fuel tanker with the gang folded inside the tank — a routine
+// delivery, waved through the gate by guards who have no reason to look twice. Once past the fence,
+// the men climb out and take the office from within. The welcome at the gate IS the heist; the truck
+// is the horse.
+
+// CODY JARRETT'S GANG — folded inside the empty tank, a delivery no one inspects
+char gang [+Antagonist] [+Collective]
+gang [+Concealed] [+Trusted]                // hidden in the tank; waved through as a routine delivery
+// THE PLANT GUARDS — the defenders manning the gate
+char guards [+Authority]
+// EXT. GARROD CHEMICAL PLANT GATE - DAY  (the defended perimeter that crossing breaches)
+set plant_gate [+Exterior] [+Day] [+Threshold]
+
+scene the_delivery {
+  beat 1 {
+    gang @ plant_gate
+    guards @ plant_gate
+    // the welcome that is the breach: the "delivery" is waved across the fence
+    evt wave_through [&Crosses(agent=gang, threshold=plant_gate)]
+  }
+  beat 2 {
+    // and from the same admitted truck, the strike issues — from WITHIN the defenses
+    evt break_out [&Strikes(agent=gang, target=guards)]
+    // TrojanHorse -> wave_through [+TrojanHorse];  guards [+Compromised]
+  }
+}

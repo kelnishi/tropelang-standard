@@ -64,6 +64,7 @@ import "trl/tropes/character/roles/praetorian_guard.trl"
 import "trl/tropes/character/roles/the_antagonist.trl"
 import "trl/tropes/character/roles/the_big_bad.trl"
 import "trl/tropes/character/roles/the_deuteragonist.trl"
+import "trl/tropes/character/roles/the_dragon.trl"
 import "trl/tropes/character/roles/the_everyman.trl"
 import "trl/tropes/character/roles/the_foil.trl"
 import "trl/tropes/character/roles/the_hero.trl"
@@ -97,6 +98,7 @@ import "trl/tropes/conflict/tactics/pyrrhic_victory.trl"
 import "trl/tropes/conflict/tactics/spanner_in_the_works.trl"
 import "trl/tropes/conflict/tactics/the_gambit.trl"
 import "trl/tropes/conflict/tactics/the_trap.trl"
+import "trl/tropes/conflict/tactics/trojan_horse.trl"
 import "trl/tropes/conflict/tactics/wounded_gazelle_gambit.trl"
 import "trl/tropes/conflict/tactics/xanatos_gambit.trl"
 import "trl/tropes/conflict/war/big_damn_heroes.trl"
@@ -162,6 +164,7 @@ import "trl/tropes/power/klingon_promotion.trl"
 import "trl/tropes/power/rightful_king_returns.trl"
 import "trl/tropes/power/smear_campaign.trl"
 import "trl/tropes/power/the_coup.trl"
+import "trl/tropes/rhetoric/breaking_speech.trl"
 import "trl/tropes/rhetoric/moment_of_awesome.trl"
 import "trl/tropes/rhetoric/pratfall.trl"
 import "trl/tropes/rhetoric/propaganda.trl"
@@ -427,6 +430,7 @@ concept beware_the_nice_ones [+Trope(category="Character Tropes", source="https:
 concept big_damn_heroes [+Trope(category="Heroism", source="https://allthetropes.org/wiki/Big_Damn_Heroes")] [%Narrative]
 concept break_the_cutie [+Trope(category="Tragedy", source="https://allthetropes.org/wiki/Break_the_Cutie")] [%Narrative]
 concept break_the_haughty [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Break_the_Haughty")] [%Narrative]
+concept breaking_speech [+Trope(category="Oratory", source="https://allthetropes.org/wiki/%22The_Reason_You_Suck%22_Speech")] [%Narrative]
 concept chekhovs_gunman [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Gunman")] [%Narrative]
 concept chekhovs_skill [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Skill")] [%Narrative]
 concept combat_pragmatist [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Combat_Pragmatist")] [%Interpersonal]
@@ -491,6 +495,7 @@ concept tear_jerker [+Trope(category="Rhetoric", source="https://allthetropes.or
 concept the_climax [+Trope(category="Story Structure", source="https://allthetropes.org/wiki/Climax")] [%Narrative]
 concept the_dilemma [+Trope(category="Drama", source="https://allthetropes.org/wiki/Sadistic_Choice")] [%Mind]
 concept the_dog_bites_back [+Trope(category="Character Tropes", source="https://allthetropes.org/wiki/The_Dog_Bites_Back")] [%Interpersonal]
+concept the_dragon [+Trope(category="Characterization", source="https://allthetropes.org/wiki/The_Dragon")] [%Interpersonal]
 concept the_lancer [+Trope(category="Characterization", source="https://allthetropes.org/wiki/The_Lancer")] [%Interpersonal]
 concept the_love_interest [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Love_Interest")] [%Interpersonal]
 concept the_mole [+Trope(category="Spy Fiction", source="https://allthetropes.org/wiki/The_Mole")] [%Mind]
@@ -501,6 +506,7 @@ concept tomato_in_the_mirror [+Trope(category="Epistemic", source="https://allth
 concept took_a_level_in_badass [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Took_a_Level_in_Badass")] [%Mind]
 concept tragic_hero [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Tragic_Hero")] [%Narrative]
 concept trauma_conga_line [+Trope(category="Tragedy", source="https://allthetropes.org/wiki/Trauma_Conga_Line")] [%Narrative]
+concept trojan_horse [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Trojan_Horse")] [%Interpersonal]
 concept villainous_breakdown [+Trope(category="Villains", source="https://allthetropes.org/wiki/Villainous_Breakdown")] [%Narrative]
 concept wham_line [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Wham!_Line")] [%Narrative]
 concept worthy_opponent [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Worthy_Opponent")] [%Interpersonal]
