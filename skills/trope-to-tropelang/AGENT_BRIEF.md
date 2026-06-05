@@ -19,8 +19,11 @@ Read `SKILL.md` first — this is the operational checklist.
    `concept`/`verb`/`state` — that's a module's job (a trope that does is in the wrong register).
 3. **Draft** the file: full preamble (`@trope/@category/@source/@domain/@version 1.3` + laconic),
    imports, `assoc` lateral links, `imply Title -> [...]`, the recognition `rule`, and a CONCRETE
-   VIGNETTE from a real story. Vary story/medium/era/stakes — do not reuse a franchise already common
-   in the corpus (check existing vignettes; e.g. avoid stacking LotR). Follow **`STYLE.md`** —
+   VIGNETTE from a real story. Tie the trope's DISCRIMINATOR (what sets it apart from its family) to an
+   EVENT role so recognition binds it, and have the vignette's bound entity overtly carry the tag the
+   rule checks — SKILL.md §4b (otherwise it over-fires on every cousin). Vary story/medium/era/stakes —
+   do not reuse a franchise already common in the corpus (check existing vignettes; e.g. avoid stacking
+   LotR). Follow **`STYLE.md`** —
    especially: **(§1) declare the vignette cast ahead of use** (char/obj/set/evt in a block before the
    scenes), and **(§8) the vignette TRIGGERS the rule, it does not hardcode its conclusions** — assert
    only the `when` trigger facts and let the engine DERIVE the `then` outputs. Hand-asserting an output
@@ -35,6 +38,13 @@ Read `SKILL.md` first — this is the operational checklist.
      `cargo run --quiet --example eval -- trl/tropes/<bucket>/<name>.trl` → your rule appears under "rules fired"
      and its outputs under "derived facts" (NOT hand-asserted in the vignette). If it doesn't fire, the
      vignette isn't triggering the rule — fix the triggers, don't paper over it by asserting the output.
+   - **The recognition must be SPECIFIC, not just fire** (SKILL.md §4b):
+     `cargo run --quiet --example shape -- trl/tropes/<bucket>/<name>.trl --why` → your trope confirms, and
+     its distinguishing tag shows as a satisfied COVERAGE line on the bound entity. The discriminator that
+     separates this trope from its family must ride an EVENT role (`subject=`/`to=`/`agent=`/`target=`) so it
+     binds — a distinguishing tag on an unbound var is invisible and the trope over-fires on every cousin at
+     1.00. If your trope has siblings (reveals, betrayals, recognitions), confirm a sibling's vignette does
+     NOT confirm yours at 1.00.
    - **Sim the rule AD HOC — do NOT edit `tools/sim.py`** (shared file; parallel agents collide). Run an
      inline check that loads your trope's own rule file and a minimal scenario, e.g.:
      ```bash
