@@ -32,7 +32,7 @@ imply TomatoSurprise -> [Withholding, Twist, Narrative]
 // Naming rule: disclosing a deliberately-withheld fact that recolours the whole story IS the trope.
 rule Tomato_Surprise {
   when:
-    char $thing [+Concealed]
+    $thing [+Concealed]
     evt $reveal [&Reveals(agent=$x, subject=$thing, fact=$truth)]   // the subject was concealed from the audience (binds $thing → [+Concealed] gates)
   then:
     $reveal [+TomatoSurprise]

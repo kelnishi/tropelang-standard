@@ -32,7 +32,8 @@ imply FourthWall -> [Metafictional, Extradiegetic, Narrative]
 // Naming rule: a character addressing the audience plane IS Breaking the Fourth Wall (tags it).
 rule Fourth_Wall {
   when:
-    evt $a [&Addresses(agent=$x, target=$y)]
+    char $y [+Spectator]                          // the addressee is the AUDIENCE, not an in-story character
+    evt  $a [&Addresses(agent=$x, target=$y)]     // binds $y → [+Spectator] coverage gates (not any address)
   then:
     $a [+FourthWall]
 }

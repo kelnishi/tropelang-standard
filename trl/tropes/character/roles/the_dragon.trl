@@ -1,0 +1,79 @@
+// === PREAMBLE ===
+// @trope    The Dragon
+// @category Characterization / Villains
+// @source   https://allthetropes.org/wiki/The_Dragon
+// @domain   Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): the Big Bad's top enforcer — the most powerful and loyal lieutenant,
+// the final obstacle the hero must overcome BEFORE reaching the true villain. FRONTIER: not a
+// generic henchman but a RELATIONAL role pinned by two ties at once — subordinate-loyal to a Big
+// Bad (the principal, distinct from this character) AND the hero's penultimate confrontation, the
+// muscle fought first so the throne room can be reached. Neither tie alone is a Dragon: a loyal
+// servant the hero never fights is just a minion; a foe the hero confronts who answers to no one
+// is a Big Bad. The capability is recognizing the conjunction — loyalty UP to a master, violence
+// DOWN at the hero — on the second-in-command.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // loyalty, conflict
+
+assoc the_dragon -> [
+  the_big_bad : "is the loyal enforcer of a",
+  loyalty     : "points up to the master, the half of",
+  conflict    : "is the hero's penultimate"
+]
+
+
+// === ONTOLOGY ===
+
+imply Dragon -> [Antagonist, loyalty, Subordinate, Narrative]
+
+
+// === ABSTRACT RULE ===
+// The conjunction: a SKILLED subordinate, loyal to a Big Bad who is a DIFFERENT character, whom
+// the hero CONFRONTS — the enforcer fought on the way in. The loyalty rides up to $bigbad and the
+// confrontation rides down from $hero, both binding $dragon. Strictly narrower than The_Big_Bad
+// (the principal, loyal to no one) and Praetorian_Guard (a kingmaker faction that UNMAKES its
+// ruler, not a loyal lieutenant the hero duels).
+rule The_Dragon {
+  when:
+    char $bigbad [+BigBad]
+    char $hero   [+Protagonist]
+    char $dragon [+Skilled] [@LoyalTo(faction=$bigbad)]
+    $dragon != $bigbad
+    evt  $clash [&Confronted(agent=$hero, other=$dragon)]
+  then:
+    $dragon [+Dragon]
+    $dragon [+Obstacle(before=$bigbad)]
+    $bigbad [+Served_By(enforcer=$dragon)]
+    $dragon -- loyalty
+    $clash -- conflict
+}
+
+
+// === CONCRETE VIGNETTE: Harry Potter and the Deathly Hallows — Bellatrix Lestrange (novel, 2007) ===
+// Voldemort's most fanatical lieutenant, the Death Eater who worships him and kills for him without
+// question. In the Battle of Hogwarts she duels and falls to Molly Weasley — the last enforcer cut
+// down moments before the hall is cleared for Harry's final reckoning with the Dark Lord himself.
+// Loyalty up to her master, lethal violence down at the heroes: the second-in-command, not the
+// throne.
+
+// VOLDEMORT — the Dark Lord, the true Big Bad
+char voldemort [+BigBad] [+Antagonist]
+
+// MOLLY WEASLEY — the mother who steps into the duel
+char molly [+Protagonist] [+Courageous]
+
+// BELLATRIX LESTRANGE — Voldemort's most devoted enforcer
+char bellatrix [+Skilled] [+Antagonist]
+bellatrix [@LoyalTo(faction=voldemort)]
+
+scene the_battle_of_hogwarts {
+  beat 1 {
+    bellatrix -- voldemort : "the most faithful, the one who never doubted"
+    evt the_duel [&Confronted(agent=molly, other=bellatrix)]
+    // The_Dragon -> bellatrix [+Dragon] [+Obstacle(before=voldemort)],
+    //               voldemort [+Served_By(enforcer=bellatrix)]
+  }
+}

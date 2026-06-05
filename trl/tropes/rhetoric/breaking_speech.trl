@@ -1,0 +1,90 @@
+// === PREAMBLE ===
+// @trope    Breaking Speech
+// @category Oratory / Persuasion
+// @source   https://allthetropes.org/wiki/%22The_Reason_You_Suck%22_Speech
+// @domain    Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): "The Reason You Suck" Speech / Break Them by Talking — a villain, in an
+// otherwise superior position, delivers a precisely-aimed speech that lists the reasons the hero is
+// a poor excuse for a hero, naming the very insecurities the hero cannot argue with, to demoralise
+// and break their will. FRONTIER: the DARK MIRROR of the Rousing Speech (and the inverse of the Hope
+// Bringer). Both are pathos with the logos starved — you cannot ARGUE someone out of their resolve
+// any more than you can argue an army into courage — but where the Rousing Speech rallies a
+// [#Disheartened] BAND toward a shared cause and the Hope Bringer turns the [#Despairing] back to
+// hope, the Breaking Speech runs the machinery in REVERSE: it ADDRESSES one named, still-Resolute
+// listener directly (apostrophe, not oration to a crowd), aims at a [+Vulnerable] soft point, and
+// drives them OUT of resolve and INTO despair. The discriminator is the direction and the target:
+// a single [+Vulnerable] hero, addressed by name, walked from [#Resolute] down to [#Despairing].
+
+import "trl/modules/persuasion.trl"          // the machinery it perverts; brings rhetoric's &Addresses
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc breaking_speech -> [
+  rousing_speech : "the dark mirror of (despair where it rallies, one target where it rallies a band)",
+  hope_bringer   : "the inverse of (drives to despair where the beacon turns it to hope)",
+  propaganda     : "the one-on-one cousin of (a person's worth as the lie, not a scapegoat)",
+  persuasion     : "is the logos-starved, demoralising end of"
+]
+
+imply BreakingSpeech -> [Pathos, Manipulation, Narrative]
+
+// === ABSTRACT RULE ===
+// Naming rule (the reverse of Rousing/Hope): a villain ADDRESSES one named [+Vulnerable] hero
+// directly, aiming the speech at the hero's soft point; the still-[#Resolute] hero is walked out of
+// resolve and into despair. The DISCRIMINATOR binds on the event's target= role (a single hero, not
+// a band/cause) and on the [+Vulnerable] soft point the speech is aimed at — and the OUTPUT is
+// despair, the opposite of the rallying siblings.
+rule Breaking_Speech {
+  when:
+    char $v [+Antagonist]
+    char $hero [+Vulnerable] [#Resolute]
+    evt  $break [&Addresses(agent=$v, target=$hero, weakness=$flaw)]
+  then:
+    $hero [-Resolute]
+    $hero [#Despairing]
+    $hero -- despair
+}
+
+// === CONCRETE VIGNETTE: It's a Wonderful Life — Potter's offer on the bridge (film, 1946) ===
+// George Bailey has just learned the Building & Loan is ruined and he faces scandal and arrest. He
+// goes, hat in hand, to the one man who could save him — Henry F. Potter, the slumlord who has spent
+// the picture trying to break him. Potter does not threaten; he diagnoses. He names George's every
+// private failure back to him — no money, no resources, no prospects, a frightened ungrateful rabble
+// for friends — and lands the cut George cannot answer: "You're worth more dead than alive." The
+// life-insurance policy in George's pocket becomes, in Potter's mouth, the proof. The resolute man
+// who has carried Bedford Falls his whole life walks out toward the bridge to throw himself off it.
+
+// HENRY F. POTTER — the slumlord; the meanest man in the county
+char potter [+Antagonist]
+potter [+Wealthy] [+Cruel]
+
+// GEORGE BAILEY — resolute, but bankrupt, scandal-bound, and at the end of his rope
+char george [+Protagonist] [+Vulnerable] [#Resolute]
+george [+MotivatedBy(reason="Duty")]
+
+// THE LIFE-INSURANCE POLICY — the soft point Potter turns into the knife
+obj the_policy [+Coveted]
+
+// INT. POTTER'S OFFICE - DAY
+set potters_office [+Interior] [+Day]
+potters_office [+Oppressive]
+
+scene the_bridge {
+  beat 1 {
+    george @ potters_office
+    potter @ potters_office
+    george > the_policy
+    // The speech: addressed to George by name, aimed at the worth-nothing flaw — "worth more dead."
+    evt worth_more_dead [&Addresses(agent=potter, target=george, weakness=the_policy)]
+        dialog(inject=[speaker=potter], inline="""
+               speaker: "{speaker}"
+               cue: "George, ruined, asks the slumlord for help; the slumlord smiles"
+               tone: cold, clinical, delighted
+               text: "You're worth more dead than alive. Why don't you go to the riffraff you love so much and ask THEM to let you have eight thousand dollars?"
+               """)
+    // Breaking_Speech fires here (the dark mirror of the Rousing Speech): george is walked
+    // [-Resolute] [#Despairing] -- despair. The trigger is potter's address aimed at george's
+    // [+Vulnerable] soft point; the turn to despair is the rule's payoff, not hand-asserted.
+  }
+}

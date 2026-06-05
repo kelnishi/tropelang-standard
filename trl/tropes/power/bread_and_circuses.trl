@@ -1,0 +1,79 @@
+// === PREAMBLE ===
+// @trope    Bread and Circuses
+// @category Political / Power
+// @source   https://allthetropes.org/wiki/Bread_and_Circuses
+// @domain   Political
+// @version  1.3
+//
+// Laconic (per the wiki): when the people are well-fed and entertained they are not likely to
+// protest those in charge — Juvenal's panem et circenses, civic responsibility traded for a stable
+// status quo. FRONTIER: not the awe of Spectacle nor the installed belief of Propaganda, but a
+// POLITICAL-PACIFICATION transaction: a RULER/regime PROVIDES real food and real diversion TO a
+// restless populace, and the EFFECT is that the populace, bound as the recipient, goes CONTENT
+// instead of revolting. The discriminator is the provision-to-pacify aimed at a [+Collective] — for
+// the trope to qualify the food and the fun must be real (it is not a Lotus-Eater illusion). Rides
+// needs.trl's &Provides (the same verb that meets a deficit) read at the COLLECTIVE, political scale:
+// what the regime sates is not one belly but a body politic's will to dissent.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/power_dynamics.trl"    // Ruler — the regime that buys quiet; Revolution it forestalls
+import "trl/modules/needs.trl"             // &Provides — the provision that sates, here aimed at a populace
+
+assoc bread_and_circuses -> [
+  power_dynamics : "buys passivity inside, and forestalls the Revolution of",
+  needs          : "is the collective, political reading of the &Provides of",
+  spectacle      : "deploys, but for pacification not awe — the politicized sibling of",
+  propaganda     : "the distraction-not-deception cousin of (here the comfort is real)"
+]
+
+
+// === ONTOLOGY ===
+
+imply BreadAndCircuses -> [Power, Distraction, Political]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a RULER who PROVIDES to a restless [+Collective] populace, pacifying it, IS
+// Bread and Circuses. The discriminator rides the &Provides event's target= role so the populace
+// BINDS and its [+Collective]/[+Restless] tags are re-checked; the rule derives the pacified state.
+// not(Content) keeps it from re-firing on an already-placated crowd.
+rule Bread_And_Circuses {
+  when:
+    char $regime [+Ruler]
+    char $populace [+Collective] [+Restless]
+    evt  $largesse [&Provides(agent=$regime, target=$populace)]
+    not( $populace [+Content] )
+  then:
+    $populace [-Restless]
+    $populace [+Content]
+    $largesse [+BreadAndCircuses]
+    $regime -- bread_and_circuses
+}
+
+
+// === CONCRETE VIGNETTE: Brave New World — soma and the feelies (Huxley, novel, 1932) ===
+// The World State never has to fire on a crowd. Its rulers keep ten billion citizens content with
+// real comfort and real diversion: a gramme of soma to dissolve any pang, the feelies' sensory
+// spectacle, obstacle golf and the scent-organ — pleasures engineered so no one ever wants what they
+// cannot have, and so no one ever rises. Mustapha Mond provides; the masses, who might have been
+// restless, are perfectly, terminally happy instead. The food and the fun are real — that is the
+// point — and they are the regime's cheapest garrison.
+
+// MUSTAPHA MOND — World Controller, the regime that buys quiet
+char mond [+Ruler]
+
+// THE MASSES — ten billion conditioned citizens, the body politic
+char masses [+Collective] [+Restless]   // restless only as latent will-to-dissent; the State pre-empts it
+
+// THE SOMA RATION + THE FEELIES — real comfort, real spectacle, handed down
+obj soma_ration [+MacGuffin]
+
+scene the_soma_ration {
+  beat 1 {
+    mond > soma_ration
+    evt the_distribution [&Provides(agent=mond, target=masses)]
+    // Bread_And_Circuses: masses bound as [+Collective] [+Restless] recipient ->
+    //   masses [-Restless] [+Content]; the_distribution [+BreadAndCircuses]
+  }
+}
