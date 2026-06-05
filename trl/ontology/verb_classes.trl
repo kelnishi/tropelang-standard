@@ -12,8 +12,13 @@ imply Defects      -> [Betray]
 imply Betrays     -> [Betray]
 imply Forsakes     -> [Betray]
 imply Undermines   -> [Betray]
-imply Usurps       -> [Betray]
 imply Transgresses -> [Betray]
+
+// Usurp is a SPECIFIC betrayal: seizing the position itself. Its own niche class (is-a Betray) so a
+// `[&Usurps]` shape (Klingon Promotion) matches only seizures, not any/all betrayals — while a broad
+// `[&Betray]` shape still catches a usurpation. (Niche-class discipline; see Refute under Reveal.)
+imply Usurps       -> [Usurp]
+imply Usurp        -> [Betray]
 imply Slanders     -> [Betray, Smear]
 
 // — Plant (foreshadow) —
