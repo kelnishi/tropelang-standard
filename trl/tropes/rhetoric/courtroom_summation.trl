@@ -1,0 +1,106 @@
+// === PREAMBLE ===
+// @trope    The Courtroom Summation
+// @category Oratory / Persuasion
+// @source   https://allthetropes.org/wiki/Simple_Country_Lawyer
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): the closing argument — an advocate's final address to the jury before they
+// deliberate, marshalling the already-entered EVIDENCE (logos) and the emotional case (pathos) and
+// asking, under the burden of proof, for a VERDICT. FRONTIER: the persuasion machinery turned on a
+// VERDICT-GIVER. The sibling rhetoric tropes either contend for a crowd (the_debate's two speakers),
+// rally a band by pathos alone (rousing_speech), or run the defensive move of withholding belief
+// (rogue_juror's reasonable doubt). The Courtroom Summation is the AFFIRMATIVE advocate's turn: one
+// speaker, addressing a sworn [+Jury] whose assent IS the outcome, recapitulating the record that was
+// entered into evidence and exhorting them to the verdict it compels. The discriminator is the
+// addressee and the ask: a [+Jury] [+Arbiter] is exhorted toward a verdict, not a crowd toward a side
+// (debate) or a band toward a cause (rousing). It rides persuasion's logos + pathos + call-to-action
+// in one set piece — the call's target is the arbiter, and its action is the verdict.
+
+import "trl/modules/persuasion.trl"          // logos (Argues/Cites) + pathos + the call-to-action to a verdict
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc courtroom_summation -> [
+  persuasion   : "stages all three appeals of, aimed at a verdict-giver",
+  rogue_juror  : "is the advocate's affirmative turn against the defensive doubt of",
+  the_debate   : "is the one-sided, jury-bound cousin of (an arbiter, not a contested crowd)",
+  rousing_speech : "marries the evidence-marshalling logos that rallying skips to its pathos"
+]
+
+imply CourtroomSummation -> [Pathos, Conviction, Truth_Claim, Narrative]
+
+// === ABSTRACT RULE ===
+// Naming rule: an advocate with standing marshals the entered RECORD (Cites the support) and exhorts
+// a sworn [+Jury] toward the VERDICT it compels. The DISCRIMINATOR rides the call's target= role — the
+// addressee is an [+Arbiter] [+Jury], not a crowd or a band — and the action= is the verdict, so both
+// bind. The payoff is persuasion's COMMITMENT, derived here as the jury committed to the verdict; the
+// burden-of-proof gate (a single doubt unseating it) is rogue_juror's defensive mirror, not this rule.
+rule Courtroom_Summation {
+  when:
+    char $advocate [+Speaker] [+Credible]
+    char $jury [+Jury] [+Arbiter]
+    evt  $marshalling [&Cites(agent=$advocate, support=$record)]
+    evt  $summation [&Exhorts(agent=$advocate, target=$jury, action=$verdict)]
+  then:
+    $jury [+Committed(to=$verdict)]
+    $jury -- conviction
+}
+
+// === CONCRETE VIGNETTE: To Kill a Mockingbird — Atticus Finch's closing argument (film, 1962) ===
+// Tom Robinson, a Black man in Depression-era Alabama, is on trial for a rape the physical record makes
+// impossible: Mayella Ewell's bruises are on the RIGHT side of her face — the blow of a left-handed man
+// — and Tom's left arm was crippled in a cotton-gin years ago. Atticus rises for the summation. He does
+// not call a new witness; he MARSHALS the record already entered — the handedness, the maimed arm, the
+// absence of a doctor — then turns the logos to pathos: a court is the one place a poor man and a rich
+// man, an ignorant man and a learned one, are equal. He asks the twelve, in the name of God, to do
+// their duty. The ask is theirs to answer; the verdict is the whole of it.
+
+// ATTICUS FINCH — the advocate; a country lawyer the town credits even as it disagrees with him
+char atticus [+Speaker] [+Credible]
+atticus [+Principled]
+
+// THE JURY — twelve men of Maycomb County, the sworn arbiters whose assent is the verdict
+char the_jury [+Jury] [+Arbiter]
+the_jury [+Sworn]
+
+// THE TRIAL RECORD — the evidence already entered: handedness, the crippled arm, no doctor called
+obj the_record [+Evidence]
+the_record [+Truth_Claim]
+
+// THE VERDICT — acquittal; the one thing the summation is for
+concept acquittal [%Narrative]
+
+// INT. MAYCOMB COUNTY COURTHOUSE - DAY
+set the_courthouse [+Interior] [+Day]
+the_courthouse [+Crowded] [+Oppressive]
+
+scene the_closing_argument {
+  beat 1 {
+    atticus @ the_courthouse
+    the_jury @ the_courthouse
+    // Marshal the already-entered record — the left-handed blow, the maimed arm. (logos: Cites)
+    evt the_marshalling [&Cites(agent=atticus, support=the_record)]
+        dialog(inject=[speaker=atticus], inline="""
+               speaker: "{speaker}"
+               cue: "Atticus, in summation, walks the jury back through the evidence already before them"
+               tone: measured, grave, unhurried
+               text: "The state has not produced one iota of medical evidence that the crime Tom Robinson is charged with ever took place. This case is as simple as black and white."
+               """)
+  }
+  beat 2 {
+    // The call: addressed to the twelve by their office, asking the verdict the record compels.
+    // The discriminator binds here — target=the_jury (an [+Arbiter] [+Jury]), action=acquittal.
+    evt the_appeal [&Exhorts(agent=atticus, target=the_jury, action=acquittal)]
+        dialog(inject=[speaker=atticus], inline="""
+               speaker: "{speaker}"
+               cue: "Atticus turns from the evidence to the jury itself, the pathos under the logos"
+               tone: imploring, solemn
+               text: "In the name of God, do your duty. In the name of God, believe Tom Robinson."
+               """)
+    // Courtroom_Summation fires here: the credited advocate has marshalled the entered record (Cites)
+    // and exhorted the sworn [+Jury] [+Arbiter] toward the verdict (Exhorts, target=the_jury,
+    // action=acquittal). The engine DERIVES the_jury [+Committed(to=acquittal)] -- conviction; it is
+    // the rule's payoff, not hand-asserted. (History, and Maycomb's prejudice, are the burden the
+    // record could not carry past — rogue_juror's defensive gate, not this affirmative turn.)
+  }
+}

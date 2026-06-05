@@ -1,5 +1,5 @@
 // @title   TropeLang Prelude — Standard Library
-// @version 1.6
+// @version 1.7
 //
 // Automatically in scope for every .trl file.
 // Do not import manually. Override with // @no-prelude for a clean slate.
@@ -63,6 +63,97 @@ attr Trope         [+Narrative]
 attr System        [+Narrative]    // a dynamics module — a simulated arena (action, power, reputation, …)
 attr Structure     [+Narrative]    // a structural / framework pattern — the shape a story takes
 attr Tactic        [+Narrative]    // a single tactical move within a system (a strike, a feint, a gambit)
+
+
+// — Abstract trope categories ————————————————————————————————————————————————
+// Founded homes for the recurring super-types that tropes name in `imply Trope -> [...]`.
+// These are RATIFIED abstractions: a category earns a declaration here once it is reused
+// across several tropes (the std-lib promotion model — a one-trope category stays an inline
+// detail; reuse promotes it to a founded node). Each hangs under its domain so the type
+// system is whole — no stranded super-types (STYLE §5, "declare it, don't strand it").
+
+// knowledge, belief, perception
+attr Irony                [+Epistemic]      // a gap between what is believed and what is true
+attr Disclosure           [+Epistemic]      // the surfacing of a withheld fact
+attr Asymmetric_Knowledge [+Epistemic]      // uneven knowing across parties (one knows, one does not)
+attr Knowledge            [+Epistemic]      // what is held as known in the world
+attr Truth_Claim          [+Epistemic]      // an assertion staked on factual standing
+attr Reality_Bound        [+Epistemic]      // anchored to the actual — the non-fiction register
+
+// acts between individuals
+attr Manipulation         [+Interpersonal]  // covertly steering another toward one's own end
+attr Retribution          [+Interpersonal]  // a wrong returned upon its author — justice or payback
+attr Strategy             [+Interpersonal]  // a calculated, multi-move plan against an opponent
+
+// inner life, emotion, cognition
+attr Resolve              [+Psychological]  // hardened will to press on against cost
+attr Pathos               [+Psychological]  // an appeal pitched at feeling
+attr Investment           [+Psychological]  // a stake — what an audience or character has riding on it
+
+// story structure and function
+attr Override             [+Narrative]      // an external force overruling the story's own causality
+attr Transformation       [+Narrative]      // a character's arc of change across the story
+attr Nested               [+Narrative]      // a tale embedded within a tale
+attr Contrast             [+Narrative]      // meaning struck by juxtaposition
+attr Heroic               [+Narrative]      // the protagonal register of valor and call
+attr Final                [+Narrative]      // terminal — the last of its kind in the telling
+attr Dramatization        [+Narrative]      // staging the real as story
+attr Metafictional        [+Narrative]      // the work made aware of its own fiction
+attr Oneiric              [+Narrative]      // the dream register
+attr Combat               [+Narrative]      // a fight taken as a narrative unit
+attr Attrition            [+Narrative]      // a contest decided by grinding the other side down
+attr Costly               [+Narrative]      // bearing a real, paid cost — the stakes are met
+
+// fundamental nature; fate
+attr Object               [+Ontological]    // a thing that carries plot weight
+attr Destined             [+Mythological]   // marked by fate — the arc is foretold
+
+// power, institution, governance
+attr Royalty              [+Political]      // sovereign rank and lineage
+
+// — further ratified categories (reused across two tropes — the promotion floor) —
+// epistemic / reveal
+attr Twist                [+Epistemic]      // a turn that recontextualizes what came before
+attr Withholding          [+Epistemic]      // a fact deliberately denied to the audience
+attr Audience_Aware       [+Epistemic]      // the audience knows what the characters do not
+attr Pretense             [+Epistemic]      // a maintained false front
+attr Recontextualization  [+Epistemic]      // old facts reread under new light
+attr Reveal_Pending       [+Epistemic]      // a concealment planted to be broken later
+attr Misdirection         [+Epistemic]      // attention steered away from the truth
+attr Foreknowledge        [+Epistemic]      // the outcome known in advance
+attr Falsehood            [+Epistemic]      // an asserted untruth
+// inner life
+attr Integrity            [+Psychological]  // holding to one's principles under pressure
+attr Relentless           [+Psychological]  // unceasing, undeterrable pursuit
+attr Reluctance           [+Psychological]  // drawn in against one's own will
+attr Hamartia             [+Psychological]  // the tragic flaw that undoes its bearer
+attr Trauma               [+Psychological]  // a wounding that persists past its cause
+attr Compassion           [+Psychological]  // feeling-with another in their suffering
+attr Sympathy             [+Psychological]  // alignment of feeling toward another
+attr Sympathetic_Focus    [+Psychological]  // the telling's pull toward a character's interiority
+attr Conviction           [+Psychological]  // a held belief firm enough to drive action
+attr Awe                  [+Psychological]  // overwhelmed wonder
+attr Redemption           [+Psychological]  // a moral turn back toward the good
+// acts between individuals; rank
+attr Protection           [+Interpersonal]  // shielding another from harm
+attr Opposition           [+Interpersonal]  // set in contest against another
+attr Coerced              [+Interpersonal]  // acting under duress, not free choice
+attr Subordinate          [+Social]         // ranked below — the second to a greater power
+attr Usurpation           [+Political]      // the seizing of rank or position
+// story structure and function
+attr Planted              [+Narrative]      // an element set early to pay off later
+attr Repeated             [+Narrative]      // recurrence used for narrative effect
+attr Recurring            [+Narrative]      // a motif that returns across the telling
+attr Utterance            [+Narrative]      // a charged line that lands as an event
+attr Inversion            [+Narrative]      // a reversal of what was set up
+attr Narration            [+Narrative]      // the telling voice itself
+attr Central              [+Narrative]      // occupying the story's focus
+attr Anachronic           [+Narrative]      // told out of chronological order
+attr Suspense             [+Narrative]      // an outcome withheld to hold tension
+attr Threat               [+Narrative]      // a looming, not-yet-realized danger
+attr Timing               [+Narrative]      // arrival at the decisive moment
+attr Relief               [+Narrative]      // rescue or reprieve arriving
+attr Rout                 [+Narrative]      // a one-sided collapse of the other side
 
 
 // =============================================================================

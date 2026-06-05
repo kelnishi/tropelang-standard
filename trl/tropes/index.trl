@@ -172,6 +172,7 @@ import "trl/tropes/power/smear_campaign.trl"
 import "trl/tropes/power/the_coup.trl"
 import "trl/tropes/power/the_starscream.trl"
 import "trl/tropes/rhetoric/breaking_speech.trl"
+import "trl/tropes/rhetoric/courtroom_summation.trl"
 import "trl/tropes/rhetoric/moment_of_awesome.trl"
 import "trl/tropes/rhetoric/motive_rant.trl"
 import "trl/tropes/rhetoric/pratfall.trl"
@@ -182,6 +183,7 @@ import "trl/tropes/rhetoric/rule_of_cool.trl"
 import "trl/tropes/rhetoric/rule_of_drama.trl"
 import "trl/tropes/rhetoric/rule_of_funny.trl"
 import "trl/tropes/rhetoric/spectacle.trl"
+import "trl/tropes/rhetoric/stump_speech.trl"
 import "trl/tropes/rhetoric/tear_jerker.trl"
 import "trl/tropes/rhetoric/the_debate.trl"
 import "trl/tropes/rhetoric/the_dilemma.trl"
@@ -447,6 +449,7 @@ concept chekhovs_gunman [+Trope(category="Foreshadowing", source="https://allthe
 concept chekhovs_skill [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Skill")] [%Narrative]
 concept combat_pragmatist [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Combat_Pragmatist")] [%Interpersonal]
 concept conflicting_loyalty [+Trope(category="Internal Conflict", source="https://allthetropes.org/wiki/Conflicting_Loyalty")] [%Interpersonal]
+concept courtroom_summation [+Trope(category="Oratory", source="https://allthetropes.org/wiki/Simple_Country_Lawyer")] [%Narrative]
 concept curb_stomp_battle [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Curb_Stomp_Battle")] [%Interpersonal]
 concept david_versus_goliath [+Trope(category="Combat Tropes", source="https://allthetropes.org/wiki/David_Versus_Goliath")] [%Interpersonal]
 concept deal_with_the_devil [+Trope(category="Drama", source="https://allthetropes.org/wiki/Deal_with_the_Devil")] [%Mind]
@@ -505,6 +508,7 @@ concept sibling_rivalry [+Trope(category="Relationships", source="https://allthe
 concept siege [+Trope(category="Military and Warfare Tropes", source="https://allthetropes.org/wiki/The_Siege")] [%Political]
 concept spanner_in_the_works [+Trope(category="Plot", source="https://allthetropes.org/wiki/Spanner_in_the_Works")] [%Epistemic]
 concept spectacle [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Visual_Effects_of_Awesome_(Sugar_Wiki)")] [%Narrative]
+concept stump_speech [+Trope(category="Oratory", source="https://en.wikipedia.org/wiki/Stump_speech")] [%Narrative]
 concept taking_you_with_me [+Trope(category="Combat", source="https://allthetropes.org/wiki/Taking_You_with_Me")] [%Interpersonal]
 concept talking_head [+Trope(category="Non-Fiction", source="https://allthetropes.org/wiki/Talking_Heads")] [%Narrative]
 concept tear_jerker [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Tear_Jerker")] [%Narrative]
