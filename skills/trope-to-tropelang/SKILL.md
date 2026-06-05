@@ -214,7 +214,8 @@ TropeLang is not strictly hierarchical — bidirectional/lateral links are encou
 
 ### 4b. Recognition fidelity — make the discriminator BIND, and the vignette EARN it
 
-This is the level of detail that separates a trope from its siblings under recognition. Get it wrong
+Canonical statement: **`STYLE.md` §8 "Make the discriminator BIND"** — this section is the operational
+detail. This is the level of detail that separates a trope from its siblings under recognition. Get it wrong
 and the trope still validates, sim-tests green, and fires on its own vignette — but it ALSO fires at
 1.00 on every cousin in its family (the whole reveal cluster did exactly this). The recognizer keeps
 only the `when:` EVENT patterns for phase-1 recall; it drops static tags and re-checks them in phase-2
