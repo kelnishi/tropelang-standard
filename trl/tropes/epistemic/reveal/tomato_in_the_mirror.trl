@@ -46,7 +46,7 @@ imply TomatoInTheMirror -> [Reflexive_Recognition, Twist, Narrative]
 rule Tomato_In_The_Mirror {
   when:
     char $self [+Protagonist] [#Believes(claim=$cover)] [#Mistaken(subject=$self)]
-    evt  $mirror [&Reveals(fact=$truth)]
+    evt  $mirror [&Reveals(subject=$self, fact=$truth)]   // the protagonist IS the subject (binds $self → coverage gates)
     $cover != $truth
   then:
     $self [-Believes(claim=$cover)]
@@ -86,7 +86,7 @@ scene the_investigation {
     !oedipus [#Mistaken(subject=oedipus)]!
   }
   beat 2 {
-    evt the_testimony [&Reveals(fact=he_is_the_son_and_slayer)]
+    evt the_testimony [&Reveals(subject=oedipus, fact=he_is_the_son_and_slayer)]
         dialog(inject=[speaker=shepherd], inline="""
                speaker: "{speaker}"
                cue: "wrung from him under threat, the last thread of the riddle"
