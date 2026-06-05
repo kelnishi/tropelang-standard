@@ -110,10 +110,11 @@ Rhetoric holds attention; persuasion goes for CONVICTION. The speaker collapses 
 (direct address — the Host, persuading), and the goal is belief-change + a call to action. One
 module unlocks a whole category of real-world forms:
 - [x] the Persuasive Speech / TED Talk (the ethos/logos/pathos spine + call to action) — `persuasion`
-- [ ] the Courtroom Summation (logos + pathos before a jury; the burden of proof)
+- [x] the Courtroom Summation (logos + pathos before a jury; the burden of proof) — `courtroom_summation` (Atticus Finch)
 - [x] the Rousing Speech (St. Crispin's Day — honest pathos-only, fear→resolve) — `rousing_speech`
 - [x] the Reasonable-Doubt gate / Rogue Juror (burden of proof defeats persuasion) — `rogue_juror`
-- [ ] the Stump Speech · the Sales Pitch (persuasion for a vote / a sale)
+- [x] the Stump Speech (campaign address; a candidate wins a crowd's allegiance + vote) — `stump_speech` (Chisholm '72)
+- [ ] the Sales Pitch (persuasion for a sale)
 - [x] the Debate (adversarial persuasion; rebuttal unseats, the audience swings) — `the_debate`
 - [x] Propaganda / the Big Lie (ethos & pathos + repetition vs logos; entrenchment) — `propaganda`
 
