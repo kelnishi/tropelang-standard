@@ -1,0 +1,75 @@
+// === PREAMBLE ===
+// @trope    Puppet King
+// @category Political / Power
+// @source   https://allthetropes.org/wiki/Puppet_King
+// @domain   Political
+// @version  1.3
+//
+// Laconic (per the wiki): the nominal leader of a nation — most often royalty — is secretly a
+// figurehead, while the real decisions are made by elements within the government (a Regent for
+// Life, a Government Conspiracy, an Evil Chancellor — "The Man Behind the Man"). The crown holds
+// the AUTHORITY; another holds the CONTROL. Distinct from its power-scale cousins by WHERE the will
+// lives: the Rightful King Returns is a LEGITIMATE ruler reclaiming the throne; the Coup SEIZES the
+// apparatus outright and the seizer becomes Ruler; the Decadent Court isolates the ruler from
+// truth but leaves the will on the throne. The Puppet King leaves the title in place and moves the
+// will OFF it — the figurehead reigns, the power-behind rules.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict, authority
+import "trl/modules/power_dynamics.trl"    // Ruler, Authority, Commands — and the legitimacy it nominally wears
+
+assoc puppet_king -> [
+  power_dynamics : "the will-off-the-throne variant of",
+  the_coup       : "a quieter cousin of",
+  decadent_court : "the court that has captured the crown becomes a"
+]
+
+
+// === ONTOLOGY ===
+// The figurehead bears the trappings of rule (Royalty, Authority, a Crown) but not the will of it;
+// the trope NAMES the hollow between title and command.
+imply PuppetKing -> [Royalty, Authority, Figurehead, Power, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a crowned figurehead whose orders are issued by another — the power behind the
+// throne commanding the one who wears it — IS a Puppet King. The discriminator binds on $puppet
+// (the Commands subject): it must overtly be a [+Figurehead], not merely a [+Ruler], or the
+// pattern would fire on any ruler who is ever given counsel.
+rule Puppet_King {
+  when:
+    char $puppet [+Ruler] [+Figurehead]
+    evt  $control [&Commands(agent=$power, subject=$puppet)]
+    $power != $puppet                        // the will rests with ANOTHER, not the one on the throne
+  then:
+    $puppet [-Agency]                         // the figurehead reigns but does not decide
+    $power [+PowerBehindThrone]
+    $control [+PuppetKing]
+}
+
+
+// === CONCRETE VIGNETTE: the rois fainéants — Childeric III & Pepin the Short (history, 8c) ===
+// The last Merovingian "do-nothing kings" kept the long hair and the throne while the Mayors of
+// the Palace ran Francia. Childeric III wore the crown; Pepin the Short gave the orders, mustered
+// the armies, and kept the realm — until 751, when Pepin simply asked the Pope who SHOULD be king,
+// got the answer he wanted, and shaved the figurehead's head into a monastery. Here, the years
+// before the asking: the crown reigns, the Mayor rules.
+
+// CHILDERIC III — the do-nothing king, crowned and hollow
+char childeric [+Ruler] [+Royalty] [+Figurehead]
+
+// PEPIN THE SHORT — Mayor of the Palace, the power behind the throne
+char pepin [+Protagonist]
+
+// THE PALACE AT COMPIÈGNE — where the orders are actually given
+set compiegne [+Interior] [+Day]
+
+scene the_mayors_palace {
+  beat 1 {
+    childeric @ compiegne
+    pepin @ compiegne
+    evt the_writ [&Commands(agent=pepin, subject=childeric)]   // the Mayor's word, in the King's name
+    // Puppet_King -> childeric [-Agency], pepin [+PowerBehindThrone], the_writ [+PuppetKing]
+  }
+}

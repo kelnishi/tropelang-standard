@@ -158,12 +158,15 @@ import "trl/tropes/meta/nonfiction/putting_it_to_the_test.trl"
 import "trl/tropes/meta/nonfiction/reenactment.trl"
 import "trl/tropes/meta/nonfiction/talking_head.trl"
 import "trl/tropes/meta/nonfiction/the_host.trl"
+import "trl/tropes/power/bread_and_circuses.trl"
 import "trl/tropes/power/decadent_court.trl"
 import "trl/tropes/power/full_circle_revolution.trl"
 import "trl/tropes/power/klingon_promotion.trl"
+import "trl/tropes/power/puppet_king.trl"
 import "trl/tropes/power/rightful_king_returns.trl"
 import "trl/tropes/power/smear_campaign.trl"
 import "trl/tropes/power/the_coup.trl"
+import "trl/tropes/power/the_starscream.trl"
 import "trl/tropes/rhetoric/breaking_speech.trl"
 import "trl/tropes/rhetoric/moment_of_awesome.trl"
 import "trl/tropes/rhetoric/pratfall.trl"
@@ -428,6 +431,7 @@ concept batman_gambit [+Trope(category="Epistemic", source="https://allthetropes
 concept be_careful_what_you_wish_for [+Trope(category="Wishplots", source="https://allthetropes.org/wiki/Be_Careful_What_You_Wish_For")] [%Narrative]
 concept beware_the_nice_ones [+Trope(category="Character Tropes", source="https://allthetropes.org/wiki/Beware_the_Nice_Ones")] [%Interpersonal]
 concept big_damn_heroes [+Trope(category="Heroism", source="https://allthetropes.org/wiki/Big_Damn_Heroes")] [%Narrative]
+concept bread_and_circuses [+Trope(category="Political", source="https://allthetropes.org/wiki/Bread_and_Circuses")] [%Political]
 concept break_the_cutie [+Trope(category="Tragedy", source="https://allthetropes.org/wiki/Break_the_Cutie")] [%Narrative]
 concept break_the_haughty [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Break_the_Haughty")] [%Narrative]
 concept breaking_speech [+Trope(category="Oratory", source="https://allthetropes.org/wiki/%22The_Reason_You_Suck%22_Speech")] [%Narrative]
@@ -477,6 +481,7 @@ concept plot_armor [+Trope(category="Rhetoric", source="https://allthetropes.org
 concept plot_twist [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Plot_Twist")] [%Narrative]
 concept power_of_friendship [+Trope(category="Friendship Tropes", source="https://allthetropes.org/wiki/The_Power_of_Friendship")] [%Interpersonal]
 concept pratfall [+Trope(category="Slapstick", source="https://allthetropes.org/wiki/The_Pratfall")] [%Narrative]
+concept puppet_king [+Trope(category="Political", source="https://allthetropes.org/wiki/Puppet_King")] [%Political]
 concept reality_bleed [+Trope(category="Metafiction", source="https://allthetropes.org/wiki/Reality_Bleed")] [%Narrative]
 concept redemption_equals_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Redemption_Equals_Death")] [%Narrative]
 concept redemption_rejection [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Redemption_Rejection")] [%Mind]
@@ -499,6 +504,7 @@ concept the_dragon [+Trope(category="Characterization", source="https://allthetr
 concept the_lancer [+Trope(category="Characterization", source="https://allthetropes.org/wiki/The_Lancer")] [%Interpersonal]
 concept the_love_interest [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Love_Interest")] [%Interpersonal]
 concept the_mole [+Trope(category="Spy Fiction", source="https://allthetropes.org/wiki/The_Mole")] [%Mind]
+concept the_starscream [+Trope(category="Political", source="https://allthetropes.org/wiki/The_Starscream")] [%Political]
 concept the_trickster [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/The_Trickster")] [%Narrative]
 concept the_worf_effect [+Trope(category="Combat", source="https://allthetropes.org/wiki/The_Worf_Effect")] [%Narrative]
 concept together_in_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Together_in_Death")] [%Interpersonal]

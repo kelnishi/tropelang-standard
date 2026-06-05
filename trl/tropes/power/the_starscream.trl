@@ -1,0 +1,88 @@
+// === PREAMBLE ===
+// @trope    The Starscream
+// @category Political / Power
+// @source   https://allthetropes.org/wiki/The_Starscream
+// @domain   Political
+// @version  1.3
+//
+// Laconic (per the wiki): the ambitious, treacherous lieutenant who serves the Big Bad only as a
+// stepping-stone — secretly scheming to overthrow his own leader and take the throne, ready to kick
+// him out of the Astrotrain the instant he shows weakness. FRONTIER: the EXACT INVERSE of The Dragon
+// pinned by the same two ties, both flipped. The Dragon is loyalty UP to a master and violence DOWN
+// at the hero; the Starscream is a subordinate of the same master whose loyalty points NOWHERE but at
+// the throne and whose violence aims UP, at the leader he nominally serves. The recognized
+// conjunction: a SKILLED subordinate who (a) covets the leader's position and (b) actually MOVES on it
+// — betrays the very Big Bad he answers to. Neither half alone is a Starscream: an ambitious villain
+// outside the hierarchy is just a rival Big Bad; a lieutenant who covets but never strikes is a
+// grumbling minion. The capability is recognizing disloyalty aimed UPWARD on the second-in-command —
+// the mirror The Dragon must never cross-confirm.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"               // ambition, loyalty, conflict
+import "trl/modules/power_dynamics.trl"       // Usurp -> holder [+Deposed]; the political arena
+import "trl/modules/motivation_dynamics.trl"  // Form_Goal rides [~Desires] -> the coveted throne
+
+assoc the_starscream -> [
+  the_dragon     : "the loyal inverse of",
+  ambition       : "disloyalty aimed up the hierarchy, the engine being",
+  power_dynamics : "a subordinate's bid within",
+  loyalty        : "points at the throne, not the master — the absence of"
+]
+
+
+// === ONTOLOGY ===
+
+imply Starscream -> [Antagonist, ambition, Subordinate, Political, Narrative]
+
+
+// === ABSTRACT RULE ===
+// The conjunction, mirrored from The_Dragon and contrastive at every tie: a SKILLED subordinate who
+// COVETS the throne ([~Desires] the leader's seat) AND betrays the very Big Bad he serves. The
+// discriminator rides the betrayal EVENT — $treason [&Betrays(agent=$schemer, target=$leader)] —
+// so $schemer binds and its covetous-intent tag is re-checked on the bound entity. The leader is the
+// target of the schemer's own treachery; $schemer != $leader keeps it disloyalty UPWARD, not a coup
+// against a stranger. Strictly distinct from The_Dragon (loyal, fights the HERO not the master) and
+// from Klingon_Promotion / The_Coup (which name the SEIZURE; this names the treacherous SUBORDINATE).
+rule The_Starscream {
+  when:
+    char $leader  [+BigBad]
+    char $schemer [+Skilled] [+Subordinate] [~Desires(target=$throne)]
+    $schemer != $leader
+    evt  $treason [&Betrays(agent=$schemer, target=$leader)]
+  then:
+    $schemer [+Starscream]
+    $schemer [+Treacherous(toward=$leader)]
+    $leader  [#Betrayed]
+    $schemer -- ambition
+    $treason -- conflict
+}
+
+
+// === CONCRETE VIGNETTE: I, Claudius — Sejanus and Tiberius (TV, BBC 1976) ===
+// Lucius Aelius Sejanus, the brilliant Praetorian Prefect, is the emperor Tiberius' indispensable
+// right hand — and covets the principate itself. From Capri he runs Rome in the old man's name while
+// quietly purging rivals and angling to supplant him; his loyalty was always to the throne, never to
+// Tiberius. The plot is exposed and the Senate turns on him, but the recognized beat is the lieutenant
+// who served only to climb: ambition aimed straight up at the master he nominally obeyed.
+
+// TIBERIUS — the aging emperor on Capri, the Big Bad Sejanus answers to
+char tiberius [+BigBad] [+Ruler]
+
+// THE THRONE — the principate itself, the seat Sejanus covets
+obj the_principate [+Coveted]
+
+// SEJANUS — the Praetorian Prefect: skilled, the second-in-command, secretly grasping for the purple
+char sejanus [+Skilled] [+Subordinate] [+Antagonist]
+sejanus [~Desires(target=the_principate)]
+
+scene the_praetorian {
+  beat 1 {
+    sejanus -- tiberius : "the indispensable deputy who ran Rome in the emperor's name"
+    // Form_Goal -> sejanus [~Pursues(target=the_principate)] [#Determined] -- ambition
+  }
+  beat 2 {
+    evt the_conspiracy [&Betrays(agent=sejanus, target=tiberius)]
+    // The_Starscream -> sejanus [+Starscream] [+Treacherous(toward=tiberius)], tiberius [#Betrayed]
+  }
+}
