@@ -52,6 +52,7 @@ import "trl/tropes/character/archetypes/anti_hero.trl"
 import "trl/tropes/character/archetypes/beware_the_nice_ones.trl"
 import "trl/tropes/character/archetypes/determinator.trl"
 import "trl/tropes/character/archetypes/fatal_flaw.trl"
+import "trl/tropes/character/archetypes/femme_fatale.trl"
 import "trl/tropes/character/archetypes/hope_bringer.trl"
 import "trl/tropes/character/archetypes/jerk_with_a_heart_of_gold.trl"
 import "trl/tropes/character/archetypes/magnificent_bastard.trl"
@@ -146,6 +147,7 @@ import "trl/tropes/epistemic/reveal/plot_twist.trl"
 import "trl/tropes/epistemic/reveal/secret_legacy.trl"
 import "trl/tropes/epistemic/reveal/the_mole.trl"
 import "trl/tropes/epistemic/reveal/the_reveal.trl"
+import "trl/tropes/epistemic/reveal/the_summation.trl"
 import "trl/tropes/epistemic/reveal/tomato_in_the_mirror.trl"
 import "trl/tropes/epistemic/reveal/tomato_surprise.trl"
 import "trl/tropes/epistemic/reveal/unreliable_narrator.trl"
@@ -183,6 +185,7 @@ import "trl/tropes/rhetoric/spectacle.trl"
 import "trl/tropes/rhetoric/tear_jerker.trl"
 import "trl/tropes/rhetoric/the_debate.trl"
 import "trl/tropes/rhetoric/the_dilemma.trl"
+import "trl/tropes/structure/bookends.trl"
 import "trl/tropes/structure/cliffhanger.trl"
 import "trl/tropes/structure/conflict.trl"
 import "trl/tropes/structure/deus_ex_machina.trl"
@@ -434,6 +437,7 @@ concept batman_gambit [+Trope(category="Epistemic", source="https://allthetropes
 concept be_careful_what_you_wish_for [+Trope(category="Wishplots", source="https://allthetropes.org/wiki/Be_Careful_What_You_Wish_For")] [%Narrative]
 concept beware_the_nice_ones [+Trope(category="Character Tropes", source="https://allthetropes.org/wiki/Beware_the_Nice_Ones")] [%Interpersonal]
 concept big_damn_heroes [+Trope(category="Heroism", source="https://allthetropes.org/wiki/Big_Damn_Heroes")] [%Narrative]
+concept bookends [+Trope(category="Narrative Devices", source="https://allthetropes.org/wiki/Book_Ends")] [%Narrative]
 concept bread_and_circuses [+Trope(category="Political", source="https://allthetropes.org/wiki/Bread_and_Circuses")] [%Political]
 concept break_the_cutie [+Trope(category="Tragedy", source="https://allthetropes.org/wiki/Break_the_Cutie")] [%Narrative]
 concept break_the_haughty [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Break_the_Haughty")] [%Narrative]
@@ -457,6 +461,7 @@ concept eucatastrophe [+Trope(category="Happy Endings", source="https://allthetr
 concept even_evil_has_standards [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Even_Evil_Has_Standards")] [%Psychological]
 concept famous_last_words [+Trope(category="Death", source="https://allthetropes.org/wiki/Famous_Last_Words")] [%Narrative]
 concept fatal_flaw [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Fatal_Flaw")] [%Mind]
+concept femme_fatale [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Femme_Fatale")] [%Interpersonal]
 concept flashback [+Trope(category="Flashbacks and Chronology", source="https://allthetropes.org/wiki/Flashback_(trope)")] [%Narrative]
 concept gaslighting [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Gaslighting")] [%Epistemic]
 concept heel_face_door_slam [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Heel_Face_Door-Slam")] [%Narrative]
@@ -511,6 +516,7 @@ concept the_lancer [+Trope(category="Characterization", source="https://allthetr
 concept the_love_interest [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Love_Interest")] [%Interpersonal]
 concept the_mole [+Trope(category="Spy Fiction", source="https://allthetropes.org/wiki/The_Mole")] [%Mind]
 concept the_starscream [+Trope(category="Political", source="https://allthetropes.org/wiki/The_Starscream")] [%Political]
+concept the_summation [+Trope(category="Mystery Tropes", source="https://allthetropes.org/wiki/The_Summation")] [%Epistemic]
 concept the_trickster [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/The_Trickster")] [%Narrative]
 concept the_worf_effect [+Trope(category="Combat", source="https://allthetropes.org/wiki/The_Worf_Effect")] [%Narrative]
 concept together_in_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Together_in_Death")] [%Interpersonal]

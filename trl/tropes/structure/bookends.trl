@@ -1,0 +1,115 @@
+// === PREAMBLE ===
+// @trope    Book Ends
+// @category Narrative Devices / Structure
+// @source   https://allthetropes.org/wiki/Book_Ends
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): matching scenes — the same or a deliberately mirrored image, line, or
+// object — at the BEGINNING and the END of a story, framing the whole. The recurrence is the point:
+// set against the opening, the closing shows whether things have CHANGED (character development) or
+// pointedly have NOT (the wheel comes round). FRONTIER: a POSITIONAL / structural trope — its
+// discriminator is not WHAT the motif is but WHERE it lands. The signature is one conspicuous motif
+// that returns at BOTH structural extremes: it is named by an opening event (&Opens) AND by a closing
+// event (&Closes). A motif that appears only ONCE — an arresting image with no answering reprise — is
+// NOT Book Ends; the rule will not confirm without the second, closing occurrence. Treated as a pure
+// SCAFFOLD: only a private base imply, never overlaid onto Mentor / Reveal / archetype clusters
+// (drams-framework-scaffold-rule) — framing is a shape stories take, not a tag on their cast.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/universal.trl"    // beginning, ending, change
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc bookends -> [
+  beginning : "plants the motif at the",
+  ending    : "answers the motif at the",
+  change    : "measures (or denies) the",
+  frame_story : "a level-crossing cousin, not a positional one"
+]
+
+
+// === ONTOLOGY ===
+// A structural framing device: one motif recurring at the two extremes, closing the loop. Private base
+// imply only — a SCAFFOLD (never imply [+BookEnds] onto archetypes; it pollutes their density).
+
+imply BookEnds -> [Structure, Recurring, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: when ONE conspicuous motif is named by the story's OPENING event (&Opens) and the SAME
+// motif is named again by its CLOSING event (&Closes), that bracketing return IS Book Ends. The motif
+// binds through the `motif=` role on BOTH events, so recognition re-checks that it is the identical,
+// conspicuous element at each extreme — the recurrence at two BOUNDED positions, not a tag floating
+// beside the scene. A story whose motif fires only at the open (no answering &Closes on the same motif)
+// fails the second clause and does NOT confirm: the discriminator is the closing reprise. The framing
+// is made ABSOLUTE — once the loop is shown to close, it cannot be re-read as a one-off image.
+rule BookEnds {
+  when:
+    obj $motif [+Conspicuous]
+    evt $opening [&Opens(motif=$motif)]
+    evt $closing [&Closes(motif=$motif)]
+  then:
+    !$motif [+BookEnds]!
+    $opening [+Frame(pole=beginning)]
+    $closing [+Frame(pole=ending)]
+    surface_global(title="Book Ends", description="The story closes on the image it opened with; the frame shuts.")
+}
+
+
+// === CONCRETE VIGNETTE: Watchmen — the blood-flecked smiley badge (comic, 1986-87) ===
+// The first page descends from the Comedian's blood-spattered smiley-face button lying in the gutter;
+// the final page rhymes it exactly — the same yellow circle struck by a diagonal smear (a ketchup
+// stain on a teenager's shirt in the New Frontiersman office) as Seymour's hand drifts toward the
+// crank file that holds Rorschach's journal. One conspicuous motif, planted at the open and answered
+// at the close, brackets the whole book. The badge appears ONCE here at each pole — and it is the
+// second, closing occurrence that earns Book Ends; a single arresting smiley would not.
+
+// THE SMILEY BADGE — the Comedian's button; yellow circle, one diagonal blood-smear, the framing motif
+obj smiley [+Conspicuous] [+Remnant]
+
+// THE COMEDIAN (Edward Blake) — murdered in the opening; his fall starts the descent shot
+char comedian [+Catalyst]
+
+// SEYMOUR — the New Frontiersman intern whose hand reaches for the journal on the last page
+char seymour [+Survivor]
+
+// EXT. NEW YORK STREET / GUTTER - DAY (the opening descent; blood on the pavement)
+set gutter [+Exterior] [+Day]
+
+// INT. NEW FRONTIERSMAN OFFICE - DAY (the closing page; the crank file, the stained shirt)
+set newsroom [+Interior] [+Day]
+
+// ===== the open — page one descends onto the badge in the gutter =====
+scene the_first_page {
+  beat 1 {
+    comedian @ gutter
+    smiley @ gutter
+    // The story OPENS on the motif — named via the motif= role so recognition binds it.
+    evt page_one [&Opens(motif=smiley)]
+        dialog(inject=[speaker=comedian], inline="""
+               speaker: "RORSCHACH (journal V.O.)"
+               cue: "camera rising from the blood-smeared button in the gutter"
+               tone: grim
+               text: "The streets are extended gutters and the gutters are full of blood."
+               """)
+  }
+}
+
+// ===== the close — the last page rhymes the badge exactly; the frame shuts =====
+scene the_last_page {
+  beat 1 {
+    seymour @ newsroom
+    smiley @ newsroom
+    // The SAME motif returns at the CLOSE — &Closes(motif=smiley). BookEnds fires HERE, binding the
+    // one conspicuous motif across both extremes and deriving !smiley [+BookEnds]!, the two Frame
+    // poles, and the surface — all DERIVED, never hand-asserted.
+    evt last_panel [&Closes(motif=smiley)]
+        dialog(inject=[speaker=seymour], inline="""
+               speaker: "EDITOR"
+               cue: "Seymour's hand hovering over the crank file, ketchup smear cutting the smiley on his shirt"
+               tone: idle
+               text: "I leave it entirely in your hands."
+               """)
+  }
+}

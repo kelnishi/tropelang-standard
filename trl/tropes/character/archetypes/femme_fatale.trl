@@ -1,0 +1,101 @@
+// === PREAMBLE ===
+// @trope    Femme Fatale
+// @category Character Archetypes
+// @source   https://allthetropes.org/wiki/Femme_Fatale
+// @domain   Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): a mysterious, seductive woman who exploits everything she's got to wrap a
+// man around her finger — femininity and sensuality over upfront advances, with wiles that play on
+// his desire, greed, or gullibility and the implication of possible romance. The discriminator this
+// file recognizes — what separates her from a merely beautiful or charming woman — is that the
+// seduction is a WEAPON aimed at a target's RUIN: she runs a scheme ON a specific mark, the mark is
+// rendered [#Infatuated], and that infatuation is the lever by which he is led to betrayal, ruin, or
+// death. The downfall is DERIVED from the bound mark's smitten state, not hand-asserted. Rides the
+// motivation_dynamics scheming verb ([&Schemes]) and the prelude's betrayal verb ([&Betrays]); the
+// theory_of_mind machinery is what a seduction-as-manipulation models (she reads the mark to choose
+// the bait). What is NOT a Femme Fatale: a seductress with no target, or charm that buys no ruin.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/motivation_dynamics.trl"   // [&Schemes] — the manipulation aimed at the mark; the pursued goal
+import "trl/modules/theory_of_mind.trl"        // deception — she models the mark to choose the bait he'll swallow
+
+assoc femme_fatale -> [
+  motivation_dynamics : "aims a scheme at the mark via",
+  deception           : "induces the mark's infatuation as a false promise, per",
+  the_vamp            : "is the seductive-weapon sibling of",
+  manipulative_bastard : "is the gendered, allure-borne form of"
+]
+
+
+// === ONTOLOGY ===
+// A seductress whose allure is a manipulation aimed at a man's ruin. (Antagonist a prelude role,
+// Manipulation a corpus tag, deception a theory_of_mind concept; Seductive/Manipulative are the
+// bespoke discriminators that mark allure-as-weapon, reused-not-redefined where the corpus has them.)
+imply FemmeFatale -> [Antagonist, Manipulation, deception, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition: a [+Seductive] [+Manipulative] woman runs a scheme ([&Schemes]) ON a specific mark —
+// the mark binds on the scheme's `target=` role — and that bound mark overtly carries [#Infatuated]
+// (the allure has landed). The discriminator binds on the scheme's target, so coverage re-checks the
+// mark's tags: she is the seductive manipulator, HE is the smitten mark. From the smitten mark the
+// downfall is DERIVED — the infatuation is the lever, so the mark is led to [#Betrayed] ruin and
+// [+Doomed]; she is named [+FemmeFatale]. (Distinguished from a generic Seductress, whose charm has
+// no target and no ruin: no bound, infatuated mark -> no derivation.)
+rule Femme_Fatale {
+  when:
+    char $femme [+Seductive] [+Manipulative]
+    char $mark  [#Infatuated]
+    evt  $lure  [&Schemes(agent=$femme, target=$mark)]
+    evt  $turn  [&Betrays(agent=$femme, target=$mark)]
+    not ( $mark [+Doomed] )
+  then:
+    $femme [+FemmeFatale]
+    $mark  [#Betrayed]      // the infatuation cashed in: the mark is led to betrayal
+    $mark  [+Doomed]        // ... and to ruin — the fall the allure was always aimed at
+    $mark  -- deception
+}
+
+
+// === CONCRETE VIGNETTE: The Three Musketeers — Milady de Winter & Felton (novel, 1844) ===
+// Imprisoned and watched by John Felton, the rigid Puritan officer who despises her, Milady de
+// Winter does not try to overpower him — she works him. Feigning shared faith and martyrdom, she
+// plays on his zealotry and his pity until the guard who guards her is hers entirely: smitten,
+// converted, ready to call her wronged and holy. Then she spends that infatuation as a weapon — she
+// sets him to assassinate the Duke of Buckingham and to free her. Felton does it: he stabs
+// Buckingham, is taken, and goes to the scaffold for a murder her allure scripted. The seduction was
+// never desire for its own sake; it was a blade pointed at his ruin from the first soft word.
+
+// MILADY DE WINTER — the agent; allure is her instrument, not her appetite
+char milady [+Antagonist] [+Seductive] [+Manipulative] [+Deceptive] [+Cunning] [+Lethal]
+
+// JOHN FELTON — the jailer she turns into the murder weapon, undone by his own infatuation
+char felton [+Victim]
+
+// INT. PORTSMOUTH CELL - NIGHT — the prison where the guard becomes the guarded
+set the_cell [+Interior] [+Night]
+
+// THE DUKE OF BUCKINGHAM — the third party the smitten mark is aimed at
+char buckingham [+Authority]
+
+scene the_conversion {
+  beat 1 {
+    milady @ the_cell
+    felton @ the_cell
+    // She works the lever, not the lock: feigned faith and martyrdom, aimed squarely AT Felton.
+    evt the_seduction [&Schemes(agent=milady, target=felton)]
+    // The allure lands — the jailer is smitten, converted, hers. (The bound mark overtly carries it.)
+    felton [#Infatuated]
+    felton -- milady : "Devoted To"
+  }
+  beat 2 {
+    // She spends the infatuation: she turns the smitten man against the one he served, to his ruin.
+    evt the_betrayal [&Betrays(agent=milady, target=felton)]
+    felton -- buckingham : "Sent To Kill"
+    // Femme_Fatale fires: [+Seductive][+Manipulative] milady schemes on + betrays the [#Infatuated]
+    // felton -> DERIVES milady [+FemmeFatale]; felton [#Betrayed] [+Doomed] -- deception.
+    // NOT hand-asserted — Felton's doom is derived from his bound, smitten state.
+  }
+}
