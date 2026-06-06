@@ -23,9 +23,11 @@ imply FoundFamily -> [Bond, Belonging, Narrative]
 rule Found_Family {
   when:
     char $a [+Misfit] [@Bonded_To(other=$b)]
-    char $b [+Misfit]
+    char $b [+Misfit] [@Bonded_To(other=$a)]           // mutual: each RECOGNIZES the other as their own
+    evt  $accept [&Accepts(agent=$a, other=$b)]         // taken in and ACCEPTED as kin — belonging, more than protection
   then:
     $a [+Family(with=$b)]
+    $accept [+FoundFamily]
     $a -- belonging
 }
 
@@ -33,11 +35,12 @@ rule Found_Family {
 // An orphaned thief, an assassin without a people, a literal-minded brawler, a bounty-hunting
 // raccoon and a walking tree — each alone and broken — become, against every odd, a family.
 char quill  [+Protagonist]  [+Misfit] [@Bonded_To(other=gamora)]
-char gamora [+LoveInterest] [+Misfit]
+char gamora [+LoveInterest] [+Misfit] [@Bonded_To(other=quill)]
 
 scene the_misfits {
   beat 1 {
     quill -- gamora : "we are the freakin' Guardians of the Galaxy"
-    // Found_Family -> quill [+Family(with=gamora)]
+    evt taken_in [&Accepts(agent=quill, other=gamora)]   // each broken outsider taken in, recognized as one of their own
+    // Found_Family -> quill [+Family(with=gamora)]; taken_in [+FoundFamily]
   }
 }
