@@ -19,12 +19,17 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 
 ### Fixed
 - Self-recognition (§4b): anchored 5 `bonds` tropes' recognition on an EVENT role so they confirm their
-  own vignette — `found_family` (Protected), `love_triangle` / `star_crossed_lovers` / `unrequited_love`
+  own vignette — `found_family` (Accepts), `love_triangle` / `star_crossed_lovers` / `unrequited_love`
   (Loves), `sibling_rivalry` (Challenged). Replaced `unrequited_love`'s closed-world `not([~Loves])`
   with positive evidence (the beloved loves a third + the lover shown `[+Pining]`), which also removed an
-  over-match on `star_crossed_lovers`. Corpus self-recognition **147 → 152/194 (76% → 78%)**.
+  over-match on `star_crossed_lovers`. Per review: `found_family` now models **acceptance + recognition**
+  (mutual `[@Bonded_To]` + an `Accepts` event, not mere protection), and `sibling_rivalry` keeps the
+  **bidirectional** kin+rival bond (both siblings) alongside the event anchor. Corpus self-recognition
+  **147 → 152/194 (76% → 78%)**.
 
 ### Changed
+- Founded `verb Accepts(other)` (taking another in as one's own — belonging) in `prelude.trl` (→ **1.11**),
+  for found-family-style bonds where acceptance, not protection, is the defining act.
 - Founded the remaining unfounded tail in `prelude.trl` (→ **1.10**): props `Betrayer(of)`, `Leader`,
   `Sympathetic`, `TrueRescue`, `RealPerson`, `Pass`, `Battlefield`, `City`; states `Triumphant`, `Refused`,
   `Reluctant`, `Corrupted`, `CrossedTheHorizon`, `Status_Numb`; verbs `Recalls`, `Predicts`, `Atones`.

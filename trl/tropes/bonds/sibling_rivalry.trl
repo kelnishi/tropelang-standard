@@ -34,6 +34,7 @@ imply SiblingRivalry -> [TheRival, Kinship, Narrative]
 rule Sibling_Rivalry {
   when:
     char $a [@Sibling_Of(other=$b)] [@Rival_Of(other=$b)]
+    char $b [@Sibling_Of(other=$a)] [@Rival_Of(other=$a)]   // bidirectional: the kinship AND the rivalry are mutual
     evt  $contest [&Challenged(agent=$a, other=$b)]     // the kin-rival presses the contest (binds the dyad)
   then:
     $a [+SiblingRivalry]
