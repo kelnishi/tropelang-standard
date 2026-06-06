@@ -1,5 +1,5 @@
 // @title   TropeLang Prelude — Standard Library
-// @version 1.12
+// @version 1.13
 //
 // Automatically in scope for every .trl file.
 // Do not import manually. Override with // @no-prelude for a clean slate.
@@ -401,6 +401,46 @@ imply Grandmother_Of(desc)   -> [Ancestor_Of(desc), Feminine]
 imply Uncle_Of(other)        -> [Kin_Of(other), Masculine]
 imply Aunt_Of(other)         -> [Kin_Of(other), Feminine]
 
+// Extended lattice — same threading pattern, conservative bases (no blood-parentage claimed where
+// there is none). Nieces/nephews/cousins are blood kin of unspecified lineage (→ Kin_Of); in-laws are
+// kin by marriage (→ Kin_Of); godparents and step-parents stand in a guardian role, not biological
+// parentage (→ Guardian_Of / Ward_Of); step-siblings are kin by marriage (→ Kin_Of).
+rel Nephew_Of(other: char)       [+Kinship]
+rel Niece_Of(other: char)        [+Kinship]
+rel Cousin_Of(other: char)       [+Kinship]    // ungendered — single threaded component, no gender stamp
+rel Father_In_Law_Of(other: char)  [+Kinship]
+rel Mother_In_Law_Of(other: char)  [+Kinship]
+rel Son_In_Law_Of(other: char)     [+Kinship]
+rel Daughter_In_Law_Of(other: char) [+Kinship]
+rel Brother_In_Law_Of(other: char) [+Kinship]
+rel Sister_In_Law_Of(other: char)  [+Kinship]
+rel Godfather_Of(godchild: char) [+Kinship]
+rel Godmother_Of(godchild: char) [+Kinship]
+rel Stepfather_Of(child: char)   [+Kinship]
+rel Stepmother_Of(child: char)   [+Kinship]
+rel Stepson_Of(parent: char)     [+Kinship]
+rel Stepdaughter_Of(parent: char) [+Kinship]
+rel Stepbrother_Of(other: char)  [+Kinship]
+rel Stepsister_Of(other: char)   [+Kinship]
+
+imply Nephew_Of(other)         -> [Kin_Of(other), Masculine]
+imply Niece_Of(other)          -> [Kin_Of(other), Feminine]
+imply Cousin_Of(other)         -> [Kin_Of(other)]
+imply Father_In_Law_Of(other)  -> [Kin_Of(other), Masculine]
+imply Mother_In_Law_Of(other)  -> [Kin_Of(other), Feminine]
+imply Son_In_Law_Of(other)     -> [Kin_Of(other), Masculine]
+imply Daughter_In_Law_Of(other) -> [Kin_Of(other), Feminine]
+imply Brother_In_Law_Of(other) -> [Kin_Of(other), Masculine]
+imply Sister_In_Law_Of(other)  -> [Kin_Of(other), Feminine]
+imply Godfather_Of(godchild)   -> [Guardian_Of(ward=godchild), Masculine]
+imply Godmother_Of(godchild)   -> [Guardian_Of(ward=godchild), Feminine]
+imply Stepfather_Of(child)     -> [Guardian_Of(ward=child), Masculine]
+imply Stepmother_Of(child)     -> [Guardian_Of(ward=child), Feminine]
+imply Stepson_Of(parent)       -> [Ward_Of(guardian=parent), Masculine]
+imply Stepdaughter_Of(parent)  -> [Ward_Of(guardian=parent), Feminine]
+imply Stepbrother_Of(other)    -> [Kin_Of(other), Masculine]
+imply Stepsister_Of(other)     -> [Kin_Of(other), Feminine]
+
 
 // =============================================================================
 // TIER 7 — SOCIAL BONDS
@@ -724,6 +764,18 @@ rel Prophet_Of(deity: char)         [+Mythological]
 rel Cursed_By(agent: char)          [+Mythological]
 rel Blessed_By(agent: char)         [+Mythological]
 rel Created_By(creator: char)       [+Mythological]
+
+// Divine parentage / status — the kinship threading pattern applied to myth (engine_min 0.4.1). A
+// specialized mythic relation threads its bound entity into a weaker base relation AND stamps a divine
+// property: a demigod is the (mortal-born) child of a god; a scion carries a divine bloodline; an avatar
+// is a god's incarnation. Heracles/Perseus/Cú Chulainn, etc. See engine specs 01 §6.1 / 06 §5.1.
+rel Demigod_Of(parent: char)        [+Mythological]
+rel Scion_Of(ancestor: char)        [+Mythological]
+rel Avatar_Of(deity: char)          [+Mythological]
+
+imply Demigod_Of(parent)     -> [Child_Of(parent), Divine, Mortal_Born]
+imply Scion_Of(ancestor)     -> [Descendant_Of(anc=ancestor), Divine]
+imply Avatar_Of(deity)       -> [Emanation_Of(source=deity), Divine]
 rel MadeBy(by: char|set)                [+Social]         // mundane provenance — an object's maker (cf. mythological Created_By)
 
 

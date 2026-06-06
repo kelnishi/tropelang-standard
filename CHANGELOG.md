@@ -18,6 +18,17 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 ## [Unreleased]
 
 ### Changed
+- **Prelude kinship lattice + divine parentage** (TIER 6 / TIER 17, prelude `@version 1.13`) — extend
+  the threading pattern to the rest of the kin lattice and to myth, all single parameterized `imply`s:
+  - Kinship (→ conservative bases, no blood-parentage claimed where there is none): Nephew/Niece (→
+    `Kin_Of` + gender), Cousin (→ `Kin_Of`, ungendered), the six in-laws (→ `Kin_Of` + gender),
+    Godfather/Godmother and Stepfather/Stepmother (→ `Guardian_Of` + gender), Stepson/Stepdaughter (→
+    `Ward_Of` + gender), Stepbrother/Stepsister (→ `Kin_Of` + gender). +17 relations.
+  - Mythological: Demigod_Of (→ `Child_Of` + `Divine` + `Mortal_Born`), Scion_Of (→ `Descendant_Of` +
+    `Divine`), Avatar_Of (→ `Emanation_Of` + `Divine`). +3 relations. The divine entity threads into the
+    base relation; the holder is stamped divine. (Heracles, Perseus, an avatar of a god, …)
+  - Exercises the renamed-slot thread form (`Guardian_Of(ward=godchild)`, `Descendant_Of(anc=ancestor)`,
+    `Emanation_Of(source=deity)`) where a base relation's param name differs from the head param.
 - **Prelude gendered kinship** (TIER 6) — Father/Mother, Son/Daughter, Brother/Sister, Husband/Wife,
   Grandfather/Grandmother, Uncle/Aunt: each one parameterized `imply` (threading) that refines its base
   relation (the bound `other`/`child`/… flows through) and tags the holder's gender
