@@ -55,7 +55,7 @@ rule Curb_Stomp_Battle {
 
 char yellow_jackets [+Protagonist] [+Collective]   // John Heisman's Georgia Tech, merciless
 char bulldogs       [+Antagonist]  [+Collective] [+Outmatched]   // Cumberland's scratch eleven
-set  grant_field [+Exterior] [+Day] [+Field]
+set  grant_field [+Exterior] [+Day] [+Battlefield]
 
 scene the_rout {
   beat 1 {
