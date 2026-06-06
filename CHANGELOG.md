@@ -17,6 +17,42 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 
 ## [Unreleased]
 
+### Changed
+- **Prelude opposition/alliance valence** (TIER 7, prelude `@version 1.15`) — sharpened-bond relations now
+  thread the counterparty into the weaker base relation AND stamp the affective charge: `Adversary_Of`,
+  `Enemy_Of`, `Nemesis_Of` → `[Rival_Of(other), Hostile]`; `Ally_Of` → `[Friendly]`. +2 relations
+  (`Enemy_Of`, `Nemesis_Of`), +2 valence props (`Hostile`, `Friendly`). The three hostile relations are
+  connotation-distinct author-facing names that normalize to the same core (a generic `Rival_Of` rule
+  fires off any of them); a bare `[+Hostile]`/`[+Friendly]` still works when the counterparty is unnamed.
+  `Adversary_Of` (previously a bare base, unused in the corpus) gains the imply with no behavior change.
+  **Requires engine ≥ 0.4.1.**
+- **Prelude royalty & rank** (TIER 16, prelude `@version 1.14`) — promote sovereign/noble rank from flat
+  monadic props to **relations over a realm**, the threading pattern applied to governance. New base
+  relations `Rules(realm)` and `Heir_To(realm)` bridge to the monadic standing (`Rules ⟹ [+Ruler]`,
+  `Heir_To ⟹ [+Heir]`), so a generic ruler/heir rule fires off any rank. Rank relations thread the realm
+  into the base relation and stamp standing + gender: King/Queen, Emperor/Empress, Lord/Lady, Duke/Duchess
+  (→ `Rules` + `Royalty`/`Noble` + gender) and Prince/Princess (→ `Heir_To` + `Royalty` + gender — royal by
+  birth, not ruling). +12 relations, +2 props (`Ruler`, `Noble`; founds the heavily-used inline `[+Ruler]`).
+  `realm` is `char|set|concept` (a territory, a personified throne/empire, or an abstract polity/cause). A
+  bare `[+Ruler] [+Royalty]` still works when the realm is unnamed (the corpus default, incl. collective
+  rulers). **Requires engine ≥ 0.4.1.**
+- **Prelude kinship lattice + divine parentage** (TIER 6 / TIER 17, prelude `@version 1.13`) — extend
+  the threading pattern to the rest of the kin lattice and to myth, all single parameterized `imply`s:
+  - Kinship (→ conservative bases, no blood-parentage claimed where there is none): Nephew/Niece (→
+    `Kin_Of` + gender), Cousin (→ `Kin_Of`, ungendered), the six in-laws (→ `Kin_Of` + gender),
+    Godfather/Godmother and Stepfather/Stepmother (→ `Guardian_Of` + gender), Stepson/Stepdaughter (→
+    `Ward_Of` + gender), Stepbrother/Stepsister (→ `Kin_Of` + gender). +17 relations.
+  - Mythological: Demigod_Of (→ `Child_Of` + `Divine` + `Mortal_Born`), Scion_Of (→ `Descendant_Of` +
+    `Divine`), Avatar_Of (→ `Emanation_Of` + `Divine`). +3 relations. The divine entity threads into the
+    base relation; the holder is stamped divine. (Heracles, Perseus, an avatar of a god, …)
+  - Exercises the renamed-slot thread form (`Guardian_Of(ward=godchild)`, `Descendant_Of(anc=ancestor)`,
+    `Emanation_Of(source=deity)`) where a base relation's param name differs from the head param.
+- **Prelude gendered kinship** (TIER 6) — Father/Mother, Son/Daughter, Brother/Sister, Husband/Wife,
+  Grandfather/Grandmother, Uncle/Aunt: each one parameterized `imply` (threading) that refines its base
+  relation (the bound `other`/`child`/… flows through) and tags the holder's gender
+  (`Masculine`/`Feminine`). Replaces a derivation rule per refinement. **Requires engine ≥ 0.4.1**
+  (`engine_min` bumped; prelude `@version 1.12`).
+
 ### Fixed
 - Self-recognition (§4b): anchored 5 `bonds` tropes' recognition on an EVENT role so they confirm their
   own vignette — `found_family` (Accepts), `love_triangle` / `star_crossed_lovers` / `unrequited_love`

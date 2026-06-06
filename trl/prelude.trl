@@ -1,5 +1,5 @@
 // @title   TropeLang Prelude — Standard Library
-// @version 1.11
+// @version 1.15
 //
 // Automatically in scope for every .trl file.
 // Do not import manually. Override with // @no-prelude for a clean slate.
@@ -166,6 +166,8 @@ prop Immortal      [+Ontological]
 prop Sentient      [+Ontological]
 prop Animate       [+Ontological]
 prop Inanimate     [+Ontological]
+prop Masculine     [+Ontological]    // gender — the monadic holder property of a gendered relation (TIER 6)
+prop Feminine      [+Ontological]
 prop Vehicle       [+Ontological]    // a conveyance — car, ship, mount; an inanimate thing that carries
 prop Singular      [+Ontological]    // unique — only one can exist
 prop Collective    [+Ontological]    // a group, institution, or people
@@ -369,15 +371,90 @@ rel Guardian_Of(ward: char)      [+Kinship]
 rel Ward_Of(guardian: char)      [+Kinship]
 rel Kin_Of(other: char)          [+Kinship]    // family — lineage unspecified
 
+// Gendered refinements. A gendered relation refines a base relation AND tags the holder's gender. Each
+// is ONE parameterized `imply` (v0.4.1, engine_min 0.4.1): the named-param component threads the bound
+// `other`/`child`/… into the base relation; the bare gender component is monadic on the holder. No
+// derivation rule per relation. See engine specs 01 §6.1 / 06 §5.1.
+rel Father_Of(child: char)       [+Kinship]
+rel Mother_Of(child: char)       [+Kinship]
+rel Son_Of(parent: char)         [+Kinship]
+rel Daughter_Of(parent: char)    [+Kinship]
+rel Brother_Of(other: char)      [+Kinship]
+rel Sister_Of(other: char)       [+Kinship]
+rel Husband_Of(other: char)      [+Kinship]
+rel Wife_Of(other: char)         [+Kinship]
+rel Grandfather_Of(desc: char)   [+Kinship]
+rel Grandmother_Of(desc: char)   [+Kinship]
+rel Uncle_Of(other: char)        [+Kinship]
+rel Aunt_Of(other: char)         [+Kinship]
+
+imply Father_Of(child)       -> [Parent_Of(child), Masculine]
+imply Mother_Of(child)       -> [Parent_Of(child), Feminine]
+imply Son_Of(parent)         -> [Child_Of(parent), Masculine]
+imply Daughter_Of(parent)    -> [Child_Of(parent), Feminine]
+imply Brother_Of(other)      -> [Sibling_Of(other), Masculine]
+imply Sister_Of(other)       -> [Sibling_Of(other), Feminine]
+imply Husband_Of(other)      -> [Spouse_Of(other), Masculine]
+imply Wife_Of(other)         -> [Spouse_Of(other), Feminine]
+imply Grandfather_Of(desc)   -> [Ancestor_Of(desc), Masculine]
+imply Grandmother_Of(desc)   -> [Ancestor_Of(desc), Feminine]
+imply Uncle_Of(other)        -> [Kin_Of(other), Masculine]
+imply Aunt_Of(other)         -> [Kin_Of(other), Feminine]
+
+// Extended lattice — same threading pattern, conservative bases (no blood-parentage claimed where
+// there is none). Nieces/nephews/cousins are blood kin of unspecified lineage (→ Kin_Of); in-laws are
+// kin by marriage (→ Kin_Of); godparents and step-parents stand in a guardian role, not biological
+// parentage (→ Guardian_Of / Ward_Of); step-siblings are kin by marriage (→ Kin_Of).
+rel Nephew_Of(other: char)       [+Kinship]
+rel Niece_Of(other: char)        [+Kinship]
+rel Cousin_Of(other: char)       [+Kinship]    // ungendered — single threaded component, no gender stamp
+rel Father_In_Law_Of(other: char)  [+Kinship]
+rel Mother_In_Law_Of(other: char)  [+Kinship]
+rel Son_In_Law_Of(other: char)     [+Kinship]
+rel Daughter_In_Law_Of(other: char) [+Kinship]
+rel Brother_In_Law_Of(other: char) [+Kinship]
+rel Sister_In_Law_Of(other: char)  [+Kinship]
+rel Godfather_Of(godchild: char) [+Kinship]
+rel Godmother_Of(godchild: char) [+Kinship]
+rel Stepfather_Of(child: char)   [+Kinship]
+rel Stepmother_Of(child: char)   [+Kinship]
+rel Stepson_Of(parent: char)     [+Kinship]
+rel Stepdaughter_Of(parent: char) [+Kinship]
+rel Stepbrother_Of(other: char)  [+Kinship]
+rel Stepsister_Of(other: char)   [+Kinship]
+
+imply Nephew_Of(other)         -> [Kin_Of(other), Masculine]
+imply Niece_Of(other)          -> [Kin_Of(other), Feminine]
+imply Cousin_Of(other)         -> [Kin_Of(other)]
+imply Father_In_Law_Of(other)  -> [Kin_Of(other), Masculine]
+imply Mother_In_Law_Of(other)  -> [Kin_Of(other), Feminine]
+imply Son_In_Law_Of(other)     -> [Kin_Of(other), Masculine]
+imply Daughter_In_Law_Of(other) -> [Kin_Of(other), Feminine]
+imply Brother_In_Law_Of(other) -> [Kin_Of(other), Masculine]
+imply Sister_In_Law_Of(other)  -> [Kin_Of(other), Feminine]
+imply Godfather_Of(godchild)   -> [Guardian_Of(ward=godchild), Masculine]
+imply Godmother_Of(godchild)   -> [Guardian_Of(ward=godchild), Feminine]
+imply Stepfather_Of(child)     -> [Guardian_Of(ward=child), Masculine]
+imply Stepmother_Of(child)     -> [Guardian_Of(ward=child), Feminine]
+imply Stepson_Of(parent)       -> [Ward_Of(guardian=parent), Masculine]
+imply Stepdaughter_Of(parent)  -> [Ward_Of(guardian=parent), Feminine]
+imply Stepbrother_Of(other)    -> [Kin_Of(other), Masculine]
+imply Stepsister_Of(other)     -> [Kin_Of(other), Feminine]
+
 
 // =============================================================================
 // TIER 7 — SOCIAL BONDS
 // Non-familial relationships between individuals or groups.
 // =============================================================================
 
+prop Hostile       [+Social]         // antagonistic valence — active enmity (the charge of an opposition bond)
+prop Friendly      [+Social]         // amicable valence — goodwill (the charge of an alliance bond)
+
 rel Ally_Of(other: char)         [+Social]
 rel Rival_Of(other: char)        [+Social]
 rel Adversary_Of(other: char)    [+Social]
+rel Enemy_Of(other: char)        [+Social]     // a hostile opponent (general)
+rel Nemesis_Of(other: char)      [+Social]     // the personal archenemy
 rel Patron_Of(client: char)      [+Social]
 rel Client_Of(patron: char)      [+Social]
 rel Mentor_Of(student: char)     [+Social]
@@ -392,6 +469,16 @@ rel Avenges(subject: char)       [+Social]    // bound to right a wrong done to 
 rel Foils(other: char)           [+Narrative]  // a contrast tie — one character throws another into relief
 rel Bonded_To(other: char)       [+Social]    // a chosen close bond — found family, sworn friendship (mutual)
 rel Sundered_From(other: char)   [+Social]    // parted from — the bond broken or the two kept apart
+
+// Opposition / alliance valence (engine_min 0.4.1). A sharpened bond threads the other party into the
+// weaker base relation AND stamps the affective charge — one parameterized `imply` each. Adversary/Enemy/
+// Nemesis all ground out on Rival_Of + Hostile (near-synonyms an author picks by connotation; the engine
+// treats them identically, so a generic Rival_Of rule fires off any of them). Ally_Of carries the
+// Friendly charge. A bare [+Hostile]/[+Friendly] still works when the counterparty is unnamed.
+imply Adversary_Of(other)    -> [Rival_Of(other), Hostile]
+imply Enemy_Of(other)        -> [Rival_Of(other), Hostile]
+imply Nemesis_Of(other)      -> [Rival_Of(other), Hostile]
+imply Ally_Of(other)         -> [Friendly]
 
 
 // =============================================================================
@@ -657,11 +744,47 @@ verb Allies_With(other)        [+Political]   // role flexible: too few corpus u
 verb Prosecutes(other)         [+Political]
 verb Pardons(other)            [+Political]
 
+prop Ruler         [+Political]      // holds sovereign authority — monadic, realm may be unnamed (cf. rel Rules)
+prop Noble         [+Political]      // aristocratic rank below the sovereign
+
 rel Vassal_Of(liege: char)           [+Political]
 rel Liege_Of(vassal: char)           [+Political]
 rel Successor_Of(predecessor: char)  [+Political]
 rel Contemporary_Of(other: char)     [+Political]
 rel Member_Of(group: char|set)           [+Political]
+
+// Sovereign authority & rank (promoted to relations — engine_min 0.4.1). The relational form names the
+// realm; each rank relation threads it into the base Rules/Heir_To relation AND stamps standing
+// (Royalty/Noble) + gender as one parameterized `imply`. The base relations bridge to the monadic
+// standing — Rules(realm) ⟹ [+Ruler], Heir_To(realm) ⟹ [+Heir] — so a generic ruler/heir rule fires off
+// any rank. A bare [+Ruler]/[+Royalty]/[+Masculine] still works when the realm is unnamed (corpus default,
+// incl. collective/faction rulers). `realm` is char|set|concept: a territory (set), a personified
+// throne/empire (char), or an abstract polity/cause (concept).
+rel Rules(realm: char|set|concept)       [+Political]   // exercises sovereign authority over a realm
+rel Heir_To(realm: char|set|concept)     [+Political]   // next in line to a realm (royal by birth, not yet ruling)
+rel King_Of(realm: char|set|concept)     [+Political]
+rel Queen_Of(realm: char|set|concept)    [+Political]
+rel Emperor_Of(realm: char|set|concept)  [+Political]
+rel Empress_Of(realm: char|set|concept)  [+Political]
+rel Lord_Of(realm: char|set|concept)     [+Political]
+rel Lady_Of(realm: char|set|concept)     [+Political]
+rel Duke_Of(realm: char|set|concept)     [+Political]
+rel Duchess_Of(realm: char|set|concept)  [+Political]
+rel Prince_Of(realm: char|set|concept)   [+Political]
+rel Princess_Of(realm: char|set|concept) [+Political]
+
+imply Rules(realm)        -> [Ruler]
+imply Heir_To(realm)      -> [Heir]
+imply King_Of(realm)      -> [Rules(realm), Royalty, Masculine]
+imply Queen_Of(realm)     -> [Rules(realm), Royalty, Feminine]
+imply Emperor_Of(realm)   -> [Rules(realm), Royalty, Masculine]
+imply Empress_Of(realm)   -> [Rules(realm), Royalty, Feminine]
+imply Lord_Of(realm)      -> [Rules(realm), Noble, Masculine]
+imply Lady_Of(realm)      -> [Rules(realm), Noble, Feminine]
+imply Duke_Of(realm)      -> [Rules(realm), Noble, Masculine]
+imply Duchess_Of(realm)   -> [Rules(realm), Noble, Feminine]
+imply Prince_Of(realm)    -> [Heir_To(realm), Royalty, Masculine]
+imply Princess_Of(realm)  -> [Heir_To(realm), Royalty, Feminine]
 
 
 // =============================================================================
@@ -692,6 +815,18 @@ rel Prophet_Of(deity: char)         [+Mythological]
 rel Cursed_By(agent: char)          [+Mythological]
 rel Blessed_By(agent: char)         [+Mythological]
 rel Created_By(creator: char)       [+Mythological]
+
+// Divine parentage / status — the kinship threading pattern applied to myth (engine_min 0.4.1). A
+// specialized mythic relation threads its bound entity into a weaker base relation AND stamps a divine
+// property: a demigod is the (mortal-born) child of a god; a scion carries a divine bloodline; an avatar
+// is a god's incarnation. Heracles/Perseus/Cú Chulainn, etc. See engine specs 01 §6.1 / 06 §5.1.
+rel Demigod_Of(parent: char)        [+Mythological]
+rel Scion_Of(ancestor: char)        [+Mythological]
+rel Avatar_Of(deity: char)          [+Mythological]
+
+imply Demigod_Of(parent)     -> [Child_Of(parent), Divine, Mortal_Born]
+imply Scion_Of(ancestor)     -> [Descendant_Of(anc=ancestor), Divine]
+imply Avatar_Of(deity)       -> [Emanation_Of(source=deity), Divine]
 rel MadeBy(by: char|set)                [+Social]         // mundane provenance — an object's maker (cf. mythological Created_By)
 
 
