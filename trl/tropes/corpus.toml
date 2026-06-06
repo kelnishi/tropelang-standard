@@ -18,5 +18,7 @@ version      = "1.7.0"
 engine_min   = "0.4.0"
 author       = "tropelang"
 homepage     = "https://tropelang.com"
-license      = "CC-BY-4.0"
+# CC0 — the tropes are original encodings; the underlying source material is public. Public-domain
+# dedication keeps the corpus maximally forkable.
+license      = "CC0-1.0"
 tags         = ["canonical"]
