@@ -18,6 +18,13 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 ## [Unreleased]
 
 ### Changed
+- Founded the remaining unfounded tail in `prelude.trl` (→ **1.10**): props `Betrayer`, `Leader`,
+  `Sympathetic`, `TrueRescue`, `RealPerson`, `Pass`, `Field`, `City`; states `Triumphant`, `Refused`,
+  `Reluctant`, `Corrupted`, `CrossedTheHorizon`, `Status_Numb`; verbs `Recalls`, `Predicts`, `Atones`.
+  Resolves ~35 more inline-invented refs across the arc, conflict, epistemic, non-fiction & character
+  tropes (corpus inline total now 204, down from 291 at the start of the drive-down). What remains is the
+  ambiguous pair `Plain`/`Faithful` (double meanings, left inline) plus a tail of genuinely one-off
+  flavor tags. No trope changed; selfcheck steady at 147/194.
 - Founded the diegetic / narration / narrative-role vocabulary in `prelude.trl` (→ **1.9**): props
   `Narrator`, `Spectator`, `Canon`, `RealEvent`, `Detective`, `Invincible`, `Oppressive`, `Vehicle`,
   `Treacherous(toward)`, `Family(with)`; relations `Bonded_To`/`Sundered_From`; verb `Wakes`. Resolves
