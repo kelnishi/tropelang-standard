@@ -18,6 +18,11 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 ## [Unreleased]
 
 ### Changed
+- Founded the diegetic / narration / narrative-role vocabulary in `prelude.trl` (→ **1.9**): props
+  `Narrator`, `Spectator`, `Canon`, `RealEvent`, `Detective`, `Invincible`, `Oppressive`, `Vehicle`,
+  `Treacherous(toward)`, `Family(with)`; relations `Bonded_To`/`Sundered_From`; verb `Wakes`. Resolves
+  ~32 previously inline-invented refs across the diegetic, non-fiction, epistemic, and bonds tropes. No
+  trope changed; selfcheck steady at 147/194.
 - Founded the Chekhov's-Gun planting/payoff vocabulary in `prelude.trl` (→ **1.8**): `Payoff(item)`,
   `Introduces`, `Uses`, `Fired`, `Pivotal`, `Mundane`, `Endgame`. Resolves ~20 previously inline-invented
   refs across the `chekhovs_*` family and `foreshadowing`/`the_reveal`/`karma_houdini`. No trope changed;
