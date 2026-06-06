@@ -1,7 +1,7 @@
 # The standard TropeLang corpus — the root layer (no base). Assembled by the engine CLI:
 #   tropelang assemble trl/tropes/corpus.toml
 # To build your own corpus, copy this manifest, set `base = "trl/tropes/corpus.toml"`, point `tropes`
-# at your own tree, and add `strike = [...]`. Then publish with `tropelang bundle` (see CDN_RUNBOOK.md).
+# at your own tree, and add `strike = [...]`. Then publish with `tropelang bundle` (see PUBLISHING.md).
 name   = "standard"
 tropes = "trl/tropes"
 index  = "trl/tropes/index.trl"

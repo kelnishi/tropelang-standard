@@ -50,7 +50,24 @@ with no secrets; see `skills/trope-to-tropelang/SKILL.md` for the full conversio
 - `skills/trope-to-tropelang/` — the conversion skill: an **authoring helper**, *not* part of the
   publishable corpus.
 - `STYLE.md` · `trl/tropes/BACKLOG.md` — authoring conventions + the trope worklist.
-- `worker/` · `.github/workflows/` · `CDN_RUNBOOK.md` — the upstream's Cloudflare publish path; forks
-  ignore these and use `pages.yml` (§2).
+- `worker/` · `.github/workflows/{publish,promote}.yml` — the upstream's Cloudflare publish path (see
+  *Maintaining*, below); forks ignore these and use `pages.yml` (§2).
 
 The override/strike fork model is in engine spec `19`; the repo cleave is spec `22`.
+
+## Maintaining the standard corpus (upstream only)
+This repo publishes to **corpus.tropelang.com** (Cloudflare R2 + the Worker in `worker/`). Forks need
+none of this — they use `pages.yml` (§2).
+
+- **Publish a version:** bump `version` in `trl/tropes/corpus.toml`, merge, then
+  `git tag corpus-v<version> && git push origin corpus-v<version>` → approve the `production` deployment.
+  `publish.yml` bundles, refuses to overwrite an existing version, uploads the immutable bundle, and
+  regenerates the registry (it does **not** move `stable`).
+- **Promote / rollback:** edit `channels/standard.stable.json` to an already-published version → merge.
+  `promote.yml` repoints within ~30 s (the channel TTL); rollback points back at a prior, still-immutable
+  version.
+- **Verify:** `curl -i https://corpus.tropelang.com/registry.json` (and `/standard/resolve?channel=stable`).
+- **Infra:** R2 bucket `tropelang-corpus`; deploy the Worker with `cd worker && npx wrangler deploy`. The
+  `production` environment (required reviewer) holds `CLOUDFLARE_ACCOUNT_ID` + `R2_ACCESS_KEY_ID` +
+  `R2_SECRET_ACCESS_KEY` — a bucket-scoped R2 token used over the S3 API. The `publish.yml` / `promote.yml`
+  headers document the security model.
