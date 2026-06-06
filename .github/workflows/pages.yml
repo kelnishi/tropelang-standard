@@ -1,0 +1,71 @@
+# Zero-infra publishing for a FORK — build the corpus bundle and serve it from GitHub Pages. No
+# Cloudflare, no secrets (uses GITHUB_TOKEN). Runs ONLY in forks; the upstream repo publishes to
+# corpus.tropelang.com via publish.yml.
+#
+# One-time setup in your fork:  Settings → Actions → enable workflows, and Settings → Pages → Source =
+# "GitHub Actions".  Then edit trl/ (corpus.toml + tropes) and push to main — your corpus goes live at
+# https://<you>.github.io/<repo>/ . The channel + registry are derived from corpus.toml automatically;
+# you don't hand-edit channels/.
+name: pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  publish-pages:
+    if: github.repository != 'kelnishi/tropelang-standard'   # upstream uses the Cloudflare pipeline
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    env:
+      CLI_TAG: cli-v0.4.0
+      BASE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install the tropelang CLI (from upstream releases)
+        run: |
+          mkdir -p "$HOME/.local/bin"
+          curl -fSL "https://github.com/kelnishi/tropelang-standard/releases/download/${CLI_TAG}/tropelang-x86_64-linux" -o "$HOME/.local/bin/tropelang"
+          chmod +x "$HOME/.local/bin/tropelang"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          tropelang version
+
+      - name: bundle → _site (channel + registry auto-derived from corpus.toml)
+        run: |
+          ID=$(grep -E '^id\s*=' trl/tropes/corpus.toml | head -1 | cut -d'"' -f2)
+          VER=$(grep -E '^version\s*=' trl/tropes/corpus.toml | head -1 | cut -d'"' -f2)
+          [ -n "$ID" ] && [ -n "$VER" ] || { echo "::error::set both id and version in trl/tropes/corpus.toml"; exit 1; }
+          BUILT_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+
+          tropelang assemble trl/tropes/corpus.toml                                   # refresh the index
+          tropelang bundle   trl/tropes/corpus.toml --out "_site/$ID/$VER" --built-at "$BUILT_AT"
+
+          # Derive the stable channel pointer (absolute manifest URL — correct under a Pages subpath).
+          mkdir -p _site/channels
+          printf '{\n  "schema": 1,\n  "id": "%s",\n  "channel": "stable",\n  "version": "%s",\n  "manifest": "%s/%s/%s/manifest.json",\n  "updatedAt": "%s"\n}\n' \
+            "$ID" "$VER" "$BASE_URL" "$ID" "$VER" "$BUILT_AT" > "_site/channels/$ID.stable.json"
+
+          BUILT_AT="$BUILT_AT" CORPUS_BASE_URL="$BASE_URL" node scripts/gen-registry.mjs _site/channels _site _site/registry.json
+
+          echo "### Published \`$ID@$VER\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- registry: \`$BASE_URL/registry.json\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- bundle:   \`$BASE_URL/$ID/$VER/corpus.json\`" >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deploy
+        uses: actions/deploy-pages@v4

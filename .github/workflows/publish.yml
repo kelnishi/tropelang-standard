@@ -16,6 +16,7 @@ concurrency: publish
 
 jobs:
   publish:
+    if: github.repository == 'kelnishi/tropelang-standard'   # the Cloudflare CDN is upstream-only; forks use pages.yml
     runs-on: ubuntu-latest
     environment: production          # holds CLOUDFLARE_* ; gated by a required reviewer
     env:
