@@ -17,6 +17,13 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 
 ## [Unreleased]
 
+### Changed
+- **Prelude gendered kinship** (TIER 6) — Father/Mother, Son/Daughter, Brother/Sister, Husband/Wife,
+  Grandfather/Grandmother, Uncle/Aunt: each one parameterized `imply` (threading) that refines its base
+  relation (the bound `other`/`child`/… flows through) and tags the holder's gender
+  (`Masculine`/`Feminine`). Replaces a derivation rule per refinement. **Requires engine ≥ 0.4.1**
+  (`engine_min` bumped; prelude `@version 1.12`).
+
 ### Fixed
 - Self-recognition (§4b): anchored 5 `bonds` tropes' recognition on an EVENT role so they confirm their
   own vignette — `found_family` (Accepts), `love_triangle` / `star_crossed_lovers` / `unrequited_love`

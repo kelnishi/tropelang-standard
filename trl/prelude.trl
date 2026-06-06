@@ -1,5 +1,5 @@
 // @title   TropeLang Prelude — Standard Library
-// @version 1.11
+// @version 1.12
 //
 // Automatically in scope for every .trl file.
 // Do not import manually. Override with // @no-prelude for a clean slate.
@@ -166,6 +166,8 @@ prop Immortal      [+Ontological]
 prop Sentient      [+Ontological]
 prop Animate       [+Ontological]
 prop Inanimate     [+Ontological]
+prop Masculine     [+Ontological]    // gender — the monadic holder property of a gendered relation (TIER 6)
+prop Feminine      [+Ontological]
 prop Vehicle       [+Ontological]    // a conveyance — car, ship, mount; an inanimate thing that carries
 prop Singular      [+Ontological]    // unique — only one can exist
 prop Collective    [+Ontological]    // a group, institution, or people
@@ -368,6 +370,36 @@ rel Descendant_Of(anc: char)     [+Kinship]
 rel Guardian_Of(ward: char)      [+Kinship]
 rel Ward_Of(guardian: char)      [+Kinship]
 rel Kin_Of(other: char)          [+Kinship]    // family — lineage unspecified
+
+// Gendered refinements. A gendered relation refines a base relation AND tags the holder's gender. Each
+// is ONE parameterized `imply` (v0.4.1, engine_min 0.4.1): the named-param component threads the bound
+// `other`/`child`/… into the base relation; the bare gender component is monadic on the holder. No
+// derivation rule per relation. See engine specs 01 §6.1 / 06 §5.1.
+rel Father_Of(child: char)       [+Kinship]
+rel Mother_Of(child: char)       [+Kinship]
+rel Son_Of(parent: char)         [+Kinship]
+rel Daughter_Of(parent: char)    [+Kinship]
+rel Brother_Of(other: char)      [+Kinship]
+rel Sister_Of(other: char)       [+Kinship]
+rel Husband_Of(other: char)      [+Kinship]
+rel Wife_Of(other: char)         [+Kinship]
+rel Grandfather_Of(desc: char)   [+Kinship]
+rel Grandmother_Of(desc: char)   [+Kinship]
+rel Uncle_Of(other: char)        [+Kinship]
+rel Aunt_Of(other: char)         [+Kinship]
+
+imply Father_Of(child)       -> [Parent_Of(child), Masculine]
+imply Mother_Of(child)       -> [Parent_Of(child), Feminine]
+imply Son_Of(parent)         -> [Child_Of(parent), Masculine]
+imply Daughter_Of(parent)    -> [Child_Of(parent), Feminine]
+imply Brother_Of(other)      -> [Sibling_Of(other), Masculine]
+imply Sister_Of(other)       -> [Sibling_Of(other), Feminine]
+imply Husband_Of(other)      -> [Spouse_Of(other), Masculine]
+imply Wife_Of(other)         -> [Spouse_Of(other), Feminine]
+imply Grandfather_Of(desc)   -> [Ancestor_Of(desc), Masculine]
+imply Grandmother_Of(desc)   -> [Ancestor_Of(desc), Feminine]
+imply Uncle_Of(other)        -> [Kin_Of(other), Masculine]
+imply Aunt_Of(other)         -> [Kin_Of(other), Feminine]
 
 
 // =============================================================================
