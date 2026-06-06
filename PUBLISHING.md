@@ -83,6 +83,9 @@ Notes:
 - The editor reconstructs the `trl/…` tree from the `path` fields in every form, and can **export back**
   to a directory or tarball for archival.
 
+The consumer side of this — how the editor resolves and loads each form — is specced in
+**[LOADING.md](LOADING.md)** (Phase C).
+
 ---
 
 ## Versioning
