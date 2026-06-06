@@ -36,7 +36,7 @@ The corpus is a two-layer model; a converting agent must respect both.
 bash skills/trope-to-tropelang/scripts/gate.sh <file.trl>     # must print "── GATE PASS ──"
 ```
 Checks preamble completeness (`@trope/@category/@source/@domain`), validator (no errors), round-trip
-(`cargo run --quiet --example fidelity -- <file>` → `ok` for tropes), DRY, drams.
+(`tropelang fidelity <file>` → `ok` for tropes), DRY, drams.
 
 **Sim-test any recognition rule.** Forward-chain it on a concrete scenario and confirm it fires as
 the prose claims — the sim has caught real logic bugs (self-vengeance; a coup deposing itself; a
@@ -49,7 +49,7 @@ cousin at 1.00. Sim-test for SPECIFICITY with `--why`, not just "does it fire". 
 
 **Never edit the registry.** `trl/tropes/index.trl` is rebuilt deterministically. Write ONE
 self-contained trope file; do NOT touch `index.trl` (parallel agents collide on it). The coordinator
-runs `cargo run --quiet --example assemble -- trl/tropes/corpus.toml` to regenerate imports and mint the concept entry — so carry full
+runs `tropelang assemble trl/tropes/corpus.toml` to regenerate imports and mint the concept entry — so carry full
 preamble metadata, including `@domain` — the registry domain LABEL (one of those in use: `Narrative Mind Interpersonal Epistemic Political Social Psychological`; match the nearest cluster, e.g. relationships -> Interpersonal).
 
 **Sourcing.** `https://allthetropes.org/wiki/<Trope>` via **WebSearch** — direct WebFetch 403s here,
@@ -251,8 +251,8 @@ COVERAGE **but only on entities an event role bound**. So:
 Run the provenance trace and confirm the discriminator actually gated:
 
 ```bash
-cargo run --quiet --example shape -- <file.trl> --why   # recognition: clause ⇐ event + coverage re-checks
-cargo run --quiet --example eval  -- <file.trl> --why   # eval: each firing and the facts it rested on
+tropelang shape <file.trl> --why   # recognition: clause ⇐ event + coverage re-checks
+tropelang eval <file.trl> --why   # eval: each firing and the facts it rested on
 ```
 
 In the `--why` output the trope's distinguishing tag should appear as a satisfied coverage line on the
@@ -285,7 +285,7 @@ drafting, run the reuse assist and consolidate.
 
 **See where every tag comes from:**
 ```bash
-cargo run --quiet --example report -- <file>.trl
+tropelang report <file>.trl
 ```
 Resolves each tag across the whole corpus (prelude + concepts + modules + tropes) into:
 declared here / defined by imply / **reused from the corpus** / **inline — invented here**.
@@ -294,8 +294,8 @@ report's "corpus node references" section is where concept reuse shows up.
 
 **Get reuse candidates for the inline tags:**
 ```bash
-cargo run --quiet --example report -- <file>.trl --reuse          # deterministic name shortlist
-cargo run --quiet --example report -- <file>.trl --reuse --json   # inline tags + corpus vocab, for an agent
+tropelang report <file>.trl --reuse          # deterministic name shortlist
+tropelang report <file>.trl --reuse --json   # inline tags + corpus vocab, for an agent
 ```
 Name-matching is precision-only — it misses meaning (`[+Imperiled]`, `[&OffersEscape]`).
 Hand the `--json` task to an agent for meaning-level matches.
@@ -381,8 +381,8 @@ print `── GATE PASS ──`:
 
 ```bash
 bash skills/trope-to-tropelang/scripts/gate.sh output.trl   # the gate (preamble/validate/round-trip/DRY/drams)
-cargo run --quiet --example report -- output.trl   # tag origins (reuse vs inline) — DRY worklist
-cargo run --quiet --example fidelity -- output.trl          # round-trip alone (ok | library-register | FAIL)
+tropelang report output.trl   # tag origins (reuse vs inline) — DRY worklist
+tropelang fidelity output.trl          # round-trip alone (ok | library-register | FAIL)
 ```
 
 Checks: balanced braces, tag syntax, no fractional identifiers, `when:`/`then:` in every
@@ -395,9 +395,9 @@ node; `event=`/`site=` must match entity type). Then consolidate (see above).
 
 - `references/grammar.md` — complete syntax reference (✓ = in the Rust parser, ◎ = validator-only)
 - `references/examples.md` — worked trope mappings
-- `examples/validate.rs` (`cargo run --example validate`) — structural validator (Rust reference / LSP backend)
-- `examples/report.rs` (`cargo run --example report [-- --reuse [--json]]`) — tag origins + consolidation assist
+- `examples/validate.rs` (`tropelang validate`) — structural validator (Rust reference / LSP backend)
+- `examples/report.rs` (`tropelang report [-- --reuse [--json]]`) — tag origins + consolidation assist
 - `scripts/dialog_context.py` — interrogates `dialog(...)` annotations (preconditions / motivations / postconditions / context)
-- `cargo run --example drams -- <file>` — the exact (S3) coverage metric, `density over coverage` (specs/00 §6.7); a SIGNAL not a gate; the gap list is the conversion worklist
-- `cargo run --example shape -- <file> --why` — recognition provenance: which event satisfied each clause + the coverage re-checks behind the confidence (the specificity spot-check, §4b)
-- `cargo run --example eval -- <file> --why` — eval provenance: each rule firing and the facts its `when:` clauses bound
+- `tropelang drams <file>` — the exact (S3) coverage metric, `density over coverage` (specs/00 §6.7); a SIGNAL not a gate; the gap list is the conversion worklist
+- `tropelang shape <file> --why` — recognition provenance: which event satisfied each clause + the coverage re-checks behind the confidence (the specificity spot-check, §4b)
+- `tropelang eval <file> --why` — eval provenance: each rule firing and the facts its `when:` clauses bound

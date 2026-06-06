@@ -3,9 +3,9 @@ TropeLang shared lexer (Python) — DEPRECATED, lexer-only.
 
 The structural validator and the tag-origin / corpus-reuse reports have moved to the Rust reference
 implementation (the LSP backend):
-  - validator   →  `cargo run --example validate -- <file.trl>`   (src/validate.rs)
-  - tag origins →  `cargo run --example report   -- <file.trl>`   (src/report.rs)
-  - DRY assist  →  `cargo run --example report   -- <file.trl> --reuse`
+  - validator   →  `tropelang validate <file.trl>`   (src/validate.rs)
+  - tag origins →  `tropelang report <file.trl>`   (src/report.rs)
+  - DRY assist  →  `tropelang report <file.trl> --reuse`
 
 This file now retains ONLY the `lex` tokenizer, because `dialog_context.py` still imports it. When
 `dialog_context.py` is ported to Rust, delete this file too. Do not re-add validation logic here —
@@ -129,4 +129,4 @@ def lex(src, label=""):
 
 if __name__ == "__main__":
     print(__doc__.strip())
-    raise SystemExit("validate_tropelang.py is lexer-only now; use `cargo run --example validate -- <file>`")
+    raise SystemExit("validate_tropelang.py is lexer-only now; use `tropelang validate <file>`")
