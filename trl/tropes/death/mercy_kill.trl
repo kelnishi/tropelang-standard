@@ -1,0 +1,113 @@
+// === PREAMBLE ===
+// @trope    Mercy Kill
+// @category Death Tropes
+// @source   https://allthetropes.org/wiki/Mercy_Kill
+// @domain   Interpersonal
+// @version  1.3
+//
+// Laconic (per the wiki): one character ends another's life out of SYMPATHY for them — the victim is
+// mortally hurt, in unbearable pain, or doomed to a fate worse than death, and the killing is the only
+// kindness left. FRONTIER: the COMPASSION read of the action-dynamics death-blow (&Slays). Where
+// Revenge keys on a [#Vengeful] hand striking a wrongdoer, and Karmic Death on a [+Guilty] villain
+// felled in the manner of his sin, the Mercy Kill inverts the moral colour of the same &Slays: the
+// slain is LOVED, not hated — an [+Ally] who is [+Doomed] — and the slayer is moved by [+Compassion],
+// not hatred. The discriminator binds on the &Slays event: agent= carries [+Compassion] and target=
+// is the [+Ally] [+Doomed] one, so the deed reads as the killing that spares a worse end, not a
+// vengeance and not a judgement. (Distinct from Put Them All Out of My Misery, where the motive is the
+// killer's own desire, not sympathy for the killed; the [+Compassion] on the bound agent is the line.)
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"                  // mercy, compassion, suffering, death
+import "trl/modules/action_dynamics.trl"         // &Slays — the death-blow, here turned to mercy
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc mercy_kill -> [
+  action_dynamics : "the &Slays death-blow of, its moral colour inverted to mercy",
+  revenge         : "the compassionate inverse of — the slain is loved, not hated",
+  mercy           : "the hardest form of",
+  compassion      : "moved by",
+  suffering       : "ends the unbearable"
+]
+
+
+// === ONTOLOGY ===
+// The killing that is a kindness: a loved one past saving, released from a worse end by a hand that
+// acts out of compassion. Not retribution, not judgement — the mercy that has only one form left.
+imply MercyKill -> [Compassion, Doomed, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Recognition: a slayer moved by [+Compassion] lands a &Slays on a victim who is both [+Ally] (loved,
+// not an enemy) and [+Doomed] (past saving, bound for a worse end). The signature that separates this
+// from its &Slays cousins binds on the event: the AGENT carries [+Compassion] (not [#Vengeful], not a
+// judge) and the TARGET carries [+Ally] [+Doomed] (not a [+Guilty] villain, not a hated wrongdoer) —
+// so the death reads as the kindness that spares a worse end. The victim falls [+Dead]; the deed is
+// tagged [+MercyKill]; the slayer touches the mercy and compassion they act from, and the victim the
+// suffering they are spared.
+rule MercyKill {
+  when:
+    char $killer [+Compassion]
+    char $victim [+Ally] [+Doomed]
+    evt  $deed [&Slays(agent=$killer, target=$victim)]
+  then:
+    $victim [+Dead]
+    $deed [+MercyKill]
+    $killer -- mercy : "Acts Out Of"
+    $killer -- compassion : "Moved By"
+    $victim -- suffering : "Spared The Worse End"
+}
+
+
+// === CONCRETE VIGNETTE: Of Mice and Men — George and Lennie by the river (novella, 1937) ===
+// Lennie has killed Curley's wife — not from malice, he never understood his own strength — and now
+// Curley's mob is coming with a rope and a shotgun, meaning to take him slow. George finds him first
+// at their meeting place in the brush by the Salinas. He cannot save Lennie, and he will not let the
+// mob have him. So he keeps Lennie's eyes on the river and the dream they shared — the little farm, the
+// rabbits Lennie would tend — and, talking gently of it, raises Carlson's Luger and gives his friend
+// the only mercy left, a quick and painless end instead of the mob's. The killing is the love.
+
+// GEORGE MILTON — the friend who cannot save him, and so spares him the worse end
+char george [+Protagonist] [+Compassion]
+george -- lennie : "Loves Like A Brother"
+
+// LENNIE SMALL — the doomed friend; the mob is coming for him with a rope
+char lennie [+Ally] [+Doomed]
+
+// CURLEY — the husband leading the mob, meaning to take Lennie slow
+char curley [+Antagonist]
+
+// THE DREAM FARM — the rabbits and the little place; what George keeps before Lennie's eyes at the end
+obj the_dream [+Coveted]
+
+// EXT. THE BRUSH BY THE SALINAS RIVER - DUSK
+set the_riverbank [+Exterior] [+Dusk]
+
+scene the_rivers_edge {
+  beat 1 {
+    george @ the_riverbank
+    lennie @ the_riverbank
+    // the mob is closing in; there is no saving him, only the manner of his death left to choose
+    curley -- lennie : "Comes With A Rope To Take Him Slow"
+    lennie [+Doomed]
+  }
+  beat 2 {
+    lennie > the_dream : "Looks Across The River At It"
+    // talking gently of the farm and the rabbits, George gives him the only kindness left
+    evt the_shot [&Slays(agent=george, target=lennie)]
+        dialog(inject=[speaker=george], inline="""
+               speaker: "{speaker}"
+               cue: "the Luger behind Lennie's head, his voice steady on the dream so the end is gentle"
+               tone: breaking, tender, resolved
+               text: "Look across the river, Lennie, an' I'll tell you so you can almost see it. We gonna get that little place an' you'll tend the rabbits. Ever'body gonna be nice to you. No more trouble now."
+               """)
+    // MercyKill fires here: the [+Compassion] slayer lands a &Slays on the [+Ally] [+Doomed] friend.
+    // lennie is DERIVED [+Dead]; the_shot [+MercyKill]; george -- mercy / -- compassion; lennie spared
+    // the mob's worse end. Not revenge (no [#Vengeful]), not karmic (no [+Guilty]/Frames) — a kindness.
+    lennie [+Dead]
+    the_shot [+MercyKill]
+    george -- mercy : "Acts Out Of"
+    george -- compassion : "Moved By"
+    lennie -- suffering : "Spared The Worse End"
+  }
+}
