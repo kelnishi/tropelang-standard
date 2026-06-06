@@ -37,3 +37,12 @@
               [ -f "$f" ] || continue
               echo "── $f"; tropelang gate "$f" || exit 1
             done
+        - name: changelog reminder (soft)
+          if: github.event_name == 'pull_request'
+          run: |
+            base="${{ github.event.pull_request.base.sha }}"
+            tropes=$(git diff --name-only "$base"... -- 'trl/tropes/**/*.trl' | grep -v '/index\.trl$' || true)
+            cl=$(git diff --name-only "$base"... -- CHANGELOG.md || true)
+            if [ -n "$tropes" ] && [ -z "$cl" ]; then
+              echo "::warning title=Changelog::Tropes changed but CHANGELOG.md wasn't — add a line per trope under '## [Unreleased]' (- **Name** (category) — source)."
+            fi

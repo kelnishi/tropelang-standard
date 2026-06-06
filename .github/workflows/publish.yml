@@ -10,7 +10,7 @@ on:
 
 # Least privilege: the job reads the repo and reaches Cloudflare only via the environment secret.
 permissions:
-  contents: read
+  contents: write   # create/update the GitHub Release for the corpus-v* tag (auto-diff notes)
 
 concurrency: publish
 
@@ -84,7 +84,32 @@ jobs:
           BUILT_AT: ${{ steps.bundle.outputs.built_at }}
         run: bash scripts/sync-registry.sh
 
-      - name: summary
+      # Auto-diff the trope set vs the previous version (fetched from R2) → GitHub Release notes + the
+      # run summary. Complements the curated CHANGELOG.md: guaranteed mechanical record even if a
+      # CHANGELOG line was missed.
+      - name: release notes (auto-diff vs previous version)
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          echo "### Published \`${{ steps.bundle.outputs.id }}@${{ steps.bundle.outputs.ver }}\`" >> "$GITHUB_STEP_SUMMARY"
-          echo "Immutable bundle uploaded; registry regenerated. **Channel \`stable\` was not moved** — run \`promote\` to point users at this version." >> "$GITHUB_STEP_SUMMARY"
+          ID=${{ steps.bundle.outputs.id }}; VER=${{ steps.bundle.outputs.ver }}
+          stems() { jq -r '.[].path | select(contains("/tropes/")) | split("/") | last | sub("\\.trl$";"")' "$1" | sort; }
+          stems "dist/$ID/$VER/corpus.json" > /tmp/new
+          notes=/tmp/notes.md
+          printf 'Corpus `%s` **%s** — %s tropes.\n\n' "$ID" "$VER" "$(wc -l < /tmp/new)" > "$notes"
+          PREV=$(jq -r .version "channels/$ID.stable.json" 2>/dev/null || echo "")
+          if [ -n "$PREV" ] && [ "$PREV" != "$VER" ] && \
+             aws s3api get-object --endpoint-url "$R2_S3_ENDPOINT" --bucket "$R2_BUCKET" --key "$ID/$PREV/corpus.json" /tmp/prev.json >/dev/null 2>&1; then
+            stems /tmp/prev.json > /tmp/old
+            {
+              printf 'Changes since **%s**:\n' "$PREV"
+              if [ -n "$(comm -13 /tmp/old /tmp/new)" ]; then printf '\n**Added**\n'; comm -13 /tmp/old /tmp/new | sed 's/^/- /'; fi
+              if [ -n "$(comm -23 /tmp/old /tmp/new)" ]; then printf '\n**Removed**\n'; comm -23 /tmp/old /tmp/new | sed 's/^/- /'; fi
+              [ -z "$(comm -3 /tmp/old /tmp/new)" ] && printf '_Edits only — no tropes added or removed._\n'
+            } >> "$notes"
+          else
+            printf '_First published version (no predecessor to diff)._\n' >> "$notes"
+          fi
+          printf '\nSee `CHANGELOG.md` for the curated notes. Channel `stable` was **not** moved — run `promote` to point users here.\n' >> "$notes"
+          cat "$notes" >> "$GITHUB_STEP_SUMMARY"
+          gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --verify-tag --title "$ID $VER" --notes-file "$notes" 2>/dev/null \
+            || gh release edit "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --notes-file "$notes"
