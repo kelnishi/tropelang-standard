@@ -1,7 +1,22 @@
-# The standard TropeLang corpus — the root layer (no base). Assembled by the same tool as any fork:
-#   python3 tools/assemble_corpus.py trl/tropes/corpus.toml
+# The standard TropeLang corpus — the root layer (no base). Assembled by the engine CLI:
+#   tropelang assemble trl/tropes/corpus.toml
 # To build your own corpus, copy this manifest, set `base = "trl/tropes/corpus.toml"`, point `tropes`
-# at your own tree, and add `strike = [...]`. See corpora/ for a worked fork.
+# at your own tree, and add `strike = [...]`. Then publish with `tropelang bundle` (see CDN_RUNBOOK.md).
 name   = "standard"
 tropes = "trl/tropes"
 index  = "trl/tropes/index.trl"
+
+# --- spec-19 distribution metadata (read by `tropelang bundle` → manifest.json / registry.json) ---
+id           = "standard"
+display_name = "TropeLang Standard Corpus"
+description  = "The canonical TropeLang trope corpus."
+# Corpus version — its own number, distinct from the engine version. Bump per content change (point),
+# new arena/capability (minor), structural break (major). The publish tag is `corpus-v<version>`.
+version      = "1.7.0"
+# Minimum engine that can parse this corpus (the compatibility gate). Conservative floor = the engine
+# this corpus is built/tested against; lower it only once older engines are verified to parse the grammar.
+engine_min   = "0.4.0"
+author       = "tropelang"
+homepage     = "https://tropelang.com"
+license      = "CC-BY-4.0"
+tags         = ["canonical"]
