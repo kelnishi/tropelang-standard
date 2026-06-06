@@ -30,16 +30,16 @@ Read `SKILL.md` first — this is the operational checklist.
    (`$x [+TheTrope]`, a `[+Resolved]`/`[+Pivotal]`) makes the example look right while the rule never
    fires — and often *blocks* it (a `not(Resolved)` clause fails).
 4. **DRY.** Reuse existing corpus tags/concepts rather than reinvent. Run
-   `cargo run --quiet --example report -- <file> --reuse` and consolidate genuine duplicates
+   `tropelang report <file> --reuse` and consolidate genuine duplicates
    (keep distinct specificity).
 5. **Self-check — both must pass:**
    - `bash skills/trope-to-tropelang/scripts/gate.sh <file>` → `── GATE PASS ──`
    - **The recognition must FIRE on your vignette under the real engine:**
-     `cargo run --quiet --example eval -- trl/tropes/<bucket>/<name>.trl` → your rule appears under "rules fired"
+     `tropelang eval trl/tropes/<bucket>/<name>.trl` → your rule appears under "rules fired"
      and its outputs under "derived facts" (NOT hand-asserted in the vignette). If it doesn't fire, the
      vignette isn't triggering the rule — fix the triggers, don't paper over it by asserting the output.
    - **The recognition must be SPECIFIC, not just fire** (SKILL.md §4b):
-     `cargo run --quiet --example shape -- trl/tropes/<bucket>/<name>.trl --why` → your trope confirms, and
+     `tropelang shape trl/tropes/<bucket>/<name>.trl --why` → your trope confirms, and
      its distinguishing tag shows as a satisfied COVERAGE line on the bound entity. The discriminator that
      separates this trope from its family must ride an EVENT role (`subject=`/`to=`/`agent=`/`target=`) so it
      binds — a distinguishing tag on an unbound var is invisible and the trope over-fires on every cousin at
@@ -60,8 +60,8 @@ Read `SKILL.md` first — this is the operational checklist.
 ## Hard rules
 - **Write exactly ONE new file: `trl/tropes/<bucket>/<name>.trl`.** Do NOT edit `index.trl`, `tools/sim.py`,
   or any other shared file — parallel agents must not collide. The coordinator runs the corpus assembler
-  (`cargo run --quiet --example assemble -- trl/tropes/corpus.toml`).
-- A trope is **log register** and MUST round-trip (`cargo run --quiet --example fidelity -- <file>` → `ok`).
+  (`tropelang assemble trl/tropes/corpus.toml`).
+- A trope is **log register** and MUST round-trip (`tropelang fidelity <file>` → `ok`).
 - Don't use `: "label"` on a tag statement — labels are only for edges (`a -> b : "x"`). Use `//` comments.
 - **Stop and return WITHOUT finishing** (flag it to the coordinator) if: the trope needs a NEW module
   (a new simulated dynamic); it changes category/register; or its semantics don't fit the grammar.
