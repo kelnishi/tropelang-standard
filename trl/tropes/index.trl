@@ -59,6 +59,7 @@ import "trl/tropes/character/archetypes/magnificent_bastard.trl"
 import "trl/tropes/character/archetypes/mama_bear.trl"
 import "trl/tropes/character/archetypes/reluctant_hero.trl"
 import "trl/tropes/character/archetypes/the_chosen_one.trl"
+import "trl/tropes/character/archetypes/the_drifter.trl"
 import "trl/tropes/character/archetypes/the_trickster.trl"
 import "trl/tropes/character/archetypes/tragic_hero.trl"
 import "trl/tropes/character/roles/praetorian_guard.trl"
@@ -182,6 +183,7 @@ import "trl/tropes/rhetoric/rousing_speech.trl"
 import "trl/tropes/rhetoric/rule_of_cool.trl"
 import "trl/tropes/rhetoric/rule_of_drama.trl"
 import "trl/tropes/rhetoric/rule_of_funny.trl"
+import "trl/tropes/rhetoric/sales_pitch.trl"
 import "trl/tropes/rhetoric/spectacle.trl"
 import "trl/tropes/rhetoric/stump_speech.trl"
 import "trl/tropes/rhetoric/tear_jerker.trl"
@@ -502,6 +504,7 @@ concept redemption_rejection [+Trope(category="Character Development", source="h
 concept reenactment [+Trope(category="Non-Fiction", source="https://allthetropes.org/wiki/Dramatization")] [%Narrative]
 concept reluctant_hero [+Trope(category="Character Tropes", source="https://allthetropes.org/wiki/Reluctant_Hero")] [%Narrative]
 concept rule_of_drama [+Trope(category="Drama", source="https://allthetropes.org/wiki/Rule_of_Drama")] [%Narrative]
+concept sales_pitch [+Trope(category="Oratory", source="https://en.wikipedia.org/wiki/Sales_pitch")] [%Narrative]
 concept secret_legacy [+Trope(category="Heritage", source="https://allthetropes.org/wiki/Secret_Legacy")] [%Epistemic]
 concept senseless_sacrifice [+Trope(category="Heroic Sacrifice Tropes", source="https://allthetropes.org/wiki/Senseless_Sacrifice")] [%Interpersonal]
 concept sibling_rivalry [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Sibling_Rivalry")] [%Interpersonal]
@@ -516,6 +519,7 @@ concept the_climax [+Trope(category="Story Structure", source="https://allthetro
 concept the_dilemma [+Trope(category="Drama", source="https://allthetropes.org/wiki/Sadistic_Choice")] [%Mind]
 concept the_dog_bites_back [+Trope(category="Character Tropes", source="https://allthetropes.org/wiki/The_Dog_Bites_Back")] [%Interpersonal]
 concept the_dragon [+Trope(category="Characterization", source="https://allthetropes.org/wiki/The_Dragon")] [%Interpersonal]
+concept the_drifter [+Trope(category="Character Tropes", source="https://allthetropes.org/wiki/The_Drifter")] [%Narrative]
 concept the_lancer [+Trope(category="Characterization", source="https://allthetropes.org/wiki/The_Lancer")] [%Interpersonal]
 concept the_love_interest [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Love_Interest")] [%Interpersonal]
 concept the_mole [+Trope(category="Spy Fiction", source="https://allthetropes.org/wiki/The_Mole")] [%Mind]

@@ -1,0 +1,93 @@
+// === PREAMBLE ===
+// @trope    The Drifter
+// @category Character Tropes
+// @source   https://allthetropes.org/wiki/The_Drifter
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a rootless protagonist who blows into a troubled place a stranger, helps it
+// for a time, and always leaves in the end — Campbell's Stranger archetype. The defining shape is the
+// constellation of three: he arrives UNATTACHED ([+Stranger], belonging nowhere), he PROTECTS the
+// locals against the thing draining their town, and then he DEPARTS — he does not stay, does not
+// integrate, does not collect the reward. The discriminator is positive and event-bound: the SAME
+// figure is the agent of both the Protecting and the Departing, and he carries [+Stranger]. That
+// separates the Drifter from his neighbours — from The Mentor (who is [+Wise], bonds, and stays), from
+// Found Family (who integrates rather than leaves), and from The Cavalry (who rescues but is no
+// stranger). The leaving is the trope: help that arrives from outside and returns to it.
+
+import "trl/tropes/character/roles/the_mentor.trl"   // the figure who STAYS and bonds — the Drifter's foil
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc drifter -> [
+  mentor : "is the leaving foil of (a stranger who departs, not a teacher who stays)"
+]
+
+// === ONTOLOGY ===
+// The rootless helper: an outsider who protects and then withdraws, belonging nowhere.
+imply Drifter -> [Stranger, Ally, Narrative]
+
+// === ABSTRACT RULE ===
+// A [+Stranger] who PROTECTS a community and then DEPARTS from the place is The Drifter. The
+// DISCRIMINATOR binds twice on the same figure: he is the agent of the Protecting AND the agent of the
+// Departing, and he overtly carries [+Stranger] (the rootlessness that separates him from the mentor
+// who stays). The leaving is required and positive — a Departs event, not the absence of a bond.
+rule TheDrifter {
+  when:
+    char $drifter [+Stranger]
+    set  $town [+Collective]
+    evt  $aid [&Protected(agent=$drifter, other=$town)]
+    evt  $leaving [&Departs(agent=$drifter, from=$place)]
+  then:
+    $drifter [+Drifter]
+    $leaving [+Drifter]
+}
+
+// === CONCRETE VIGNETTE: Shane — the gunfighter who rides on (Western film, 1953) ===
+// A lone rider drifts into a Wyoming valley a stranger and takes a hand's work on the Starrett
+// homestead. When the cattle baron Ryker sets his hired gun on the homesteaders to drive them off
+// their claims, Shane — who wanted only to hang up his guns — straps them on one last time, kills the
+// gunslinger Wilson, and breaks the baron's grip on the valley. Then, wounded and unwilling to stay
+// among the families he saved, he turns his horse back toward the mountains while the boy Joey cries
+// after him. He protected them; he could not remain one of them. He rides on.
+
+// SHANE — the lone rider; a stranger who belongs to no town
+char shane [+Stranger] [+Protagonist]
+shane [+Skilled]
+
+// THE HOMESTEADERS — the troubled community he takes a hand to defend
+set the_homesteaders [+Collective]
+
+// RUFUS RYKER & HIS HIRED GUN — the cattle baron draining the valley, and the gunslinger Wilson
+char ryker [+Antagonist] [+Authority]
+char wilson [+Antagonist]
+
+// THE VALLEY — the place he blows into and rides back out of
+set the_valley [+Exterior] [+Day]
+
+scene the_rider_passes {
+  beat 1 {
+    shane @ the_valley
+    the_homesteaders @ the_valley
+    // the threat: the baron sets his gun on the homesteaders
+    ryker -- the_homesteaders : "Drives Them Off Their Claims"
+    wilson -- the_homesteaders : "The Hired Gun"
+  }
+  beat 2 {
+    // he protects them — straps the guns on one last time and breaks the baron's grip
+    shane > wilson : "Outdraws The Gunslinger"
+    evt the_stand [&Protected(agent=shane, other=the_homesteaders)]
+    wilson [+Dead]
+  }
+  beat 3 {
+    // and then he leaves — wounded, unwilling to stay among the families he saved, he rides on
+    evt rides_on [&Departs(agent=shane, from=the_valley)]
+        dialog(inject=[speaker=joey], inline="""
+               speaker: "Joey"
+               cue: "the boy running after the rider, the mountains ahead, the valley safe behind"
+               tone: pleading, breaking
+               text: "Shane! Come back!"
+               """)
+    // TheDrifter fires here: the [+Stranger] who Protected the [+Collective] town now Departs the
+    // place. shane is DERIVED [+Drifter] and rides_on [+Drifter] — the leaving is the trope's payoff.
+  }
+}
