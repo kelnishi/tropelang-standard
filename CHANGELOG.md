@@ -20,6 +20,7 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 ### Added
 - **The Drifter** (Character Tropes) — https://allthetropes.org/wiki/The_Drifter
 - **The Sales Pitch** (Oratory / Persuasion) — https://en.wikipedia.org/wiki/Sales_pitch
+- **Mercy Kill** (Death Tropes) — https://allthetropes.org/wiki/Mercy_Kill
 
 ## [1.7.0] — 2026-06-06
 ### Added

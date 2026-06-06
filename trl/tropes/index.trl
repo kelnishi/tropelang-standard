@@ -120,6 +120,7 @@ import "trl/tropes/death/heroic_sacrifice.trl"
 import "trl/tropes/death/hoist_by_his_own_petard.trl"
 import "trl/tropes/death/karma_houdini.trl"
 import "trl/tropes/death/karmic_death.trl"
+import "trl/tropes/death/mercy_kill.trl"
 import "trl/tropes/death/redemption_equals_death.trl"
 import "trl/tropes/death/revenge.trl"
 import "trl/tropes/death/senseless_sacrifice.trl"
@@ -487,6 +488,7 @@ concept like_brother_and_sister [+Trope(category="Relationships", source="https:
 concept macguffin [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/MacGuffin")] [%Narrative]
 concept magnificent_bastard [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Magnificent_Bastard")] [%Narrative]
 concept mama_bear [+Trope(category="Character Tropes", source="https://allthetropes.org/wiki/Mama_Bear")] [%Interpersonal]
+concept mercy_kill [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Mercy_Kill")] [%Interpersonal]
 concept mexican_standoff [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Mexican_Standoff")] [%Interpersonal]
 concept mockumentary [+Trope(category="Non-Fiction", source="https://allthetropes.org/wiki/Mockumentary")] [%Narrative]
 concept moment_of_awesome [+Trope(category="Audience Reactions", source="https://allthetropes.org/wiki/Moment_of_Awesome_(Sugar_Wiki)")] [%Narrative]
