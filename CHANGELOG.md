@@ -18,6 +18,14 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 ## [Unreleased]
 
 ### Changed
+- **Prelude opposition/alliance valence** (TIER 7, prelude `@version 1.15`) — sharpened-bond relations now
+  thread the counterparty into the weaker base relation AND stamp the affective charge: `Adversary_Of`,
+  `Enemy_Of`, `Nemesis_Of` → `[Rival_Of(other), Hostile]`; `Ally_Of` → `[Friendly]`. +2 relations
+  (`Enemy_Of`, `Nemesis_Of`), +2 valence props (`Hostile`, `Friendly`). The three hostile relations are
+  connotation-distinct author-facing names that normalize to the same core (a generic `Rival_Of` rule
+  fires off any of them); a bare `[+Hostile]`/`[+Friendly]` still works when the counterparty is unnamed.
+  `Adversary_Of` (previously a bare base, unused in the corpus) gains the imply with no behavior change.
+  **Requires engine ≥ 0.4.1.**
 - **Prelude royalty & rank** (TIER 16, prelude `@version 1.14`) — promote sovereign/noble rank from flat
   monadic props to **relations over a realm**, the threading pattern applied to governance. New base
   relations `Rules(realm)` and `Heir_To(realm)` bridge to the monadic standing (`Rules ⟹ [+Ruler]`,

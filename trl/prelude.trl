@@ -1,5 +1,5 @@
 // @title   TropeLang Prelude — Standard Library
-// @version 1.14
+// @version 1.15
 //
 // Automatically in scope for every .trl file.
 // Do not import manually. Override with // @no-prelude for a clean slate.
@@ -447,9 +447,14 @@ imply Stepsister_Of(other)     -> [Kin_Of(other), Feminine]
 // Non-familial relationships between individuals or groups.
 // =============================================================================
 
+prop Hostile       [+Social]         // antagonistic valence — active enmity (the charge of an opposition bond)
+prop Friendly      [+Social]         // amicable valence — goodwill (the charge of an alliance bond)
+
 rel Ally_Of(other: char)         [+Social]
 rel Rival_Of(other: char)        [+Social]
 rel Adversary_Of(other: char)    [+Social]
+rel Enemy_Of(other: char)        [+Social]     // a hostile opponent (general)
+rel Nemesis_Of(other: char)      [+Social]     // the personal archenemy
 rel Patron_Of(client: char)      [+Social]
 rel Client_Of(patron: char)      [+Social]
 rel Mentor_Of(student: char)     [+Social]
@@ -464,6 +469,16 @@ rel Avenges(subject: char)       [+Social]    // bound to right a wrong done to 
 rel Foils(other: char)           [+Narrative]  // a contrast tie — one character throws another into relief
 rel Bonded_To(other: char)       [+Social]    // a chosen close bond — found family, sworn friendship (mutual)
 rel Sundered_From(other: char)   [+Social]    // parted from — the bond broken or the two kept apart
+
+// Opposition / alliance valence (engine_min 0.4.1). A sharpened bond threads the other party into the
+// weaker base relation AND stamps the affective charge — one parameterized `imply` each. Adversary/Enemy/
+// Nemesis all ground out on Rival_Of + Hostile (near-synonyms an author picks by connotation; the engine
+// treats them identically, so a generic Rival_Of rule fires off any of them). Ally_Of carries the
+// Friendly charge. A bare [+Hostile]/[+Friendly] still works when the counterparty is unnamed.
+imply Adversary_Of(other)    -> [Rival_Of(other), Hostile]
+imply Enemy_Of(other)        -> [Rival_Of(other), Hostile]
+imply Nemesis_Of(other)      -> [Rival_Of(other), Hostile]
+imply Ally_Of(other)         -> [Friendly]
 
 
 // =============================================================================
