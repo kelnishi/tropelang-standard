@@ -164,16 +164,20 @@ planting/payoff** cluster (`Payoff(item)`, `Introduces`, `Uses`, `Fired`, `Pivot
 — ~32 occurrences turned green across the diegetic, non-fiction, epistemic, and bonds tropes. (Rules
 stay in the tropes; only vocabulary founded — no new module.)
 
-**Next unfounded clusters (live count after 1.9 — re-measure with the command above before picking).**
-No dense clusters remain; the tail is mostly 2–3× terms. Priority = frequency × cross-trope reusability:
-- `Pass` (3: last_stand, pyrrhic_victory, you_shall_not_pass) — likely a held passage/chokepoint; check
-  the sense before founding (vs. the verb "to pass").
-- 2× terms to weigh per-term: `Betrayer`, `TrueRescue`, `Recalls`/`Predicts` (verbs), `Field`, `Leader`,
-  `Plain` and `Faithful` (both **ambiguous** — double meanings; left inline deliberately until split).
-- The rest is a long tail of genuinely bespoke one-off flavor tags — keep broken per the closed-
-  vocabulary decision unless they recur and earn promotion.
+The **1.10** round ground down the remaining 2–3× tail: props `Betrayer`, `Leader`, `Sympathetic`,
+`TrueRescue`, `RealPerson`, `Pass`, `Field`, `City`; states `Triumphant`, `Refused`, `Reluctant`,
+`Corrupted`, `CrossedTheHorizon`, `Status_Numb`; verbs `Recalls`, `Predicts`, `Atones`.
 
-Keep genuinely bespoke flavor tags (one-off character descriptors) broken unless they recur and earn it.
+**The drive-down is essentially complete** — corpus inline (unfounded) total is now **204**, down from
+**291** at the start. Re-measure with the command above before any further founding; what remains is:
+- `Plain` and `Faithful` (2× each) — **ambiguous** (plain truth vs. open plain; loyal vs. accurate).
+  Left inline deliberately; found them only by *splitting* the two senses into distinct names.
+- A long tail of genuinely one-off bespoke flavor tags (`KeyserSoze`, `Pawn`, `Phantom`, `Unmasked`, …)
+  — keep broken per the closed-vocabulary decision unless one recurs and earns promotion.
+
+With founding exhausted, the forward target shifts back to **converting new tropes** and lifting the
+**self-recognition** rate (147/194 = 76%; 47 tropes don't yet confirm their own vignette — a §4b
+discriminator-binding worklist).
 
 ### Domain libraries & structural tropes (done — kept for provenance)
 - **P2 domain vocab:** `modules/siege.trl` + `modules/heist.trl` declare the siege/military and
