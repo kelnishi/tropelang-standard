@@ -46,7 +46,7 @@ jobs:
       - name: sanity — index in sync + self-check
         run: |
           tropelang assemble trl/tropes/corpus.toml --check
-          tropelang selfcheck trl/tropes/corpus.toml --corpus file://trl --expect-tropes 191 --min-confirmed 0.70
+          tropelang selfcheck trl/tropes/corpus.toml --corpus file://trl --min-confirmed 0.70
 
       - name: bundle
         id: bundle

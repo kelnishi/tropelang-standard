@@ -60,8 +60,8 @@ This repo publishes to **corpus.tropelang.com** (Cloudflare R2 + the Worker in `
 none of this — they use `pages.yml` (§2).
 
 - **Publish a version:** run the **Release** action (Actions → *Release* → `point`/`minor`/`major`). It
-  opens a bot-authored PR that bumps `version`, syncs `--expect-tropes` to the live count, and rolls up
-  `CHANGELOG [Unreleased]`. **Approve + merge** → `auto-tag.yml` tags `corpus-v<version>` → `publish.yml`
+  opens a bot-authored PR that bumps `version` and rolls up `CHANGELOG [Unreleased]`. **Approve + merge**
+  → `auto-tag.yml` tags `corpus-v<version>` → `publish.yml`
   bundles + uploads the immutable version + regenerates the registry → **approve the `production`
   deployment**. (It does **not** move `stable`.) Manual fallback: bump `corpus.toml` + `--expect-tropes`,
   merge, then `git tag corpus-v<version> && git push origin corpus-v<version>`.
