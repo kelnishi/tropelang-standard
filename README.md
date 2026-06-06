@@ -59,10 +59,12 @@ The override/strike fork model is in engine spec `19`; the repo cleave is spec `
 This repo publishes to **corpus.tropelang.com** (Cloudflare R2 + the Worker in `worker/`). Forks need
 none of this — they use `pages.yml` (§2).
 
-- **Publish a version:** bump `version` in `trl/tropes/corpus.toml`, merge, then
-  `git tag corpus-v<version> && git push origin corpus-v<version>` → approve the `production` deployment.
-  `publish.yml` bundles, refuses to overwrite an existing version, uploads the immutable bundle, and
-  regenerates the registry (it does **not** move `stable`).
+- **Publish a version:** run the **Release** action (Actions → *Release* → `point`/`minor`/`major`). It
+  opens a bot-authored PR that bumps `version`, syncs `--expect-tropes` to the live count, and rolls up
+  `CHANGELOG [Unreleased]`. **Approve + merge** → `auto-tag.yml` tags `corpus-v<version>` → `publish.yml`
+  bundles + uploads the immutable version + regenerates the registry → **approve the `production`
+  deployment**. (It does **not** move `stable`.) Manual fallback: bump `corpus.toml` + `--expect-tropes`,
+  merge, then `git tag corpus-v<version> && git push origin corpus-v<version>`.
 - **Promote / rollback:** edit `channels/standard.stable.json` to an already-published version → merge.
   `promote.yml` repoints within ~30 s (the channel TTL); rollback points back at a prior, still-immutable
   version.

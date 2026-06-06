@@ -1,0 +1,40 @@
+# Auto-tag a corpus release: when corpus.toml's version changes on main and no matching tag exists yet,
+# create corpus-v<version> → which triggers publish.yml. The tag is pushed with the conversion-bot App
+# token, NOT GITHUB_TOKEN — a GITHUB_TOKEN-pushed tag does not trigger other workflows. Upstream-only.
+name: auto-tag
+on:
+  push:
+    branches: [main]
+    paths: ['trl/tropes/corpus.toml']
+
+permissions:
+  contents: read
+
+jobs:
+  tag:
+    if: github.repository == 'kelnishi/tropelang-standard'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: mint conversion-bot token
+        id: token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.CONVERSION_APP_ID }}
+          private-key: ${{ secrets.CONVERSION_APP_PRIVATE_KEY }}
+
+      - name: tag the version (if new)
+        env:
+          GH_TOKEN: ${{ steps.token.outputs.token }}
+        run: |
+          VER=$(grep -E '^version' trl/tropes/corpus.toml | head -1 | cut -d'"' -f2)
+          TAG="corpus-v$VER"
+          if git ls-remote --exit-code --tags origin "refs/tags/$TAG" >/dev/null 2>&1; then
+            echo "$TAG already exists — nothing to tag"; exit 0
+          fi
+          git tag "$TAG"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" "$TAG"
+          echo "### Tagged \`$TAG\` → publish.yml will run." >> "$GITHUB_STEP_SUMMARY"
