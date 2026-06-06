@@ -1,0 +1,83 @@
+# Publish an immutable corpus bundle to R2 (spec 19 Phase B.2 / spec 22 §6.4 — the TRUSTED, privileged
+# pipeline). Triggered only by a maintainer pushing a `corpus-v<version>` tag. The Cloudflare credential
+# lives in the `production` environment (required reviewer + fail-closed); this job is the only thing that
+# writes the immutable bundle. NEVER add `pull_request`/`pull_request_target` here, and never share a job
+# with the no-secret gate.
+name: publish
+on:
+  push:
+    tags: ['corpus-v*']
+
+# Least privilege: the job reads the repo and reaches Cloudflare only via the environment secret.
+permissions:
+  contents: read
+
+concurrency: publish
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: production          # holds CLOUDFLARE_* ; gated by a required reviewer
+    env:
+      CLI_TAG: cli-v0.4.0            # the engine CLI release whose `bundle` emits the spec-19 manifest
+      R2_BUCKET: tropelang-corpus
+      CORPUS_BASE_URL: https://corpus.tropelang.com
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+
+      - name: install pinned tropelang CLI
+        run: |
+          mkdir -p "$HOME/.local/bin"
+          curl -fSL "https://github.com/kelnishi/tropelang-standard/releases/download/${CLI_TAG}/tropelang-x86_64-linux" -o "$HOME/.local/bin/tropelang"
+          chmod +x "$HOME/.local/bin/tropelang"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          tropelang version
+
+      - name: sanity — index in sync + self-check
+        run: |
+          tropelang assemble trl/tropes/corpus.toml --check
+          tropelang selfcheck trl/tropes/corpus.toml --corpus file://trl --expect-tropes 191 --min-confirmed 0.70
+
+      - name: bundle
+        id: bundle
+        run: |
+          ID=$(grep -E '^id\s*=' trl/tropes/corpus.toml | head -1 | cut -d'"' -f2)
+          VER=$(grep -E '^version\s*=' trl/tropes/corpus.toml | head -1 | cut -d'"' -f2)
+          TAGVER="${GITHUB_REF_NAME#corpus-v}"
+          if [ "$VER" != "$TAGVER" ]; then
+            echo "::error::corpus.toml version ($VER) != tag ($TAGVER) — they must match"; exit 1
+          fi
+          BUILT_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          tropelang bundle trl/tropes/corpus.toml --out "dist/$ID/$VER" --built-at "$BUILT_AT"
+          {
+            echo "id=$ID"; echo "ver=$VER"; echo "built_at=$BUILT_AT";
+          } >> "$GITHUB_OUTPUT"
+
+      - name: immutability guard — refuse to overwrite a published version
+        run: |
+          ID=${{ steps.bundle.outputs.id }}; VER=${{ steps.bundle.outputs.ver }}
+          if npx --yes wrangler@3 r2 object get "$R2_BUCKET/$ID/$VER/manifest.json" --file /dev/null 2>/dev/null; then
+            echo "::error::$ID/$VER is already published (immutable) — bump the corpus version"; exit 1
+          fi
+          echo "ok: $ID/$VER is new"
+
+      - name: upload immutable bundle
+        run: |
+          ID=${{ steps.bundle.outputs.id }}; VER=${{ steps.bundle.outputs.ver }}
+          npx --yes wrangler@3 r2 object put "$R2_BUCKET/$ID/$VER/corpus.json"   --file "dist/$ID/$VER/corpus.json"   --content-type application/json
+          npx --yes wrangler@3 r2 object put "$R2_BUCKET/$ID/$VER/manifest.json" --file "dist/$ID/$VER/manifest.json" --content-type application/json
+
+      # Mirror channel pointers + regenerate the discovery index. Does NOT auto-promote: publishing a new
+      # version leaves `stable` where it was. Promotion is a deliberate, separate step (promote.yml).
+      - name: mirror channels + regenerate registry
+        env:
+          BUILT_AT: ${{ steps.bundle.outputs.built_at }}
+        run: bash scripts/sync-registry.sh
+
+      - name: summary
+        run: |
+          echo "### Published \`${{ steps.bundle.outputs.id }}@${{ steps.bundle.outputs.ver }}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "Immutable bundle uploaded; registry regenerated. **Channel \`stable\` was not moved** — run \`promote\` to point users at this version." >> "$GITHUB_STEP_SUMMARY"
