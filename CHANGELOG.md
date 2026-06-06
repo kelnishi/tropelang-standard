@@ -18,8 +18,8 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 ## [Unreleased]
 
 ### Changed
-- Founded the remaining unfounded tail in `prelude.trl` (→ **1.10**): props `Betrayer`, `Leader`,
-  `Sympathetic`, `TrueRescue`, `RealPerson`, `Pass`, `Field`, `City`; states `Triumphant`, `Refused`,
+- Founded the remaining unfounded tail in `prelude.trl` (→ **1.10**): props `Betrayer(of)`, `Leader`,
+  `Sympathetic`, `TrueRescue`, `RealPerson`, `Pass`, `Battlefield`, `City`; states `Triumphant`, `Refused`,
   `Reluctant`, `Corrupted`, `CrossedTheHorizon`, `Status_Numb`; verbs `Recalls`, `Predicts`, `Atones`.
   Resolves ~35 more inline-invented refs across the arc, conflict, epistemic, non-fiction & character
   tropes (corpus inline total now 204, down from 291 at the start of the drive-down). What remains is the

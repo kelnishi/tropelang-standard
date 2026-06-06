@@ -70,7 +70,7 @@ char swarm   [+Antagonist] [+Collective] [+Horde] [+Expendable]
 char garrison [+Protagonist] [+Collective] [+Outnumbered]
 garrison [+Stronger]                        // per-unit superior — and precisely what gets overrun
 // EXT. THE OUTPOST CHOKEPOINT — THE RAMP — DAY
-set  chokepoint [+Exterior] [+Day] [+Field]
+set  chokepoint [+Exterior] [+Day] [+Battlefield]
 
 scene the_rush {
   beat 1 {

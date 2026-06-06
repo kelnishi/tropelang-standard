@@ -80,7 +80,7 @@ sayaka [+Idealistic] [+SelfSacrificing]
 char kyosuke [+LoveInterest]
 
 // KYUBEY — the smiling contractor who never mentioned the cost
-char kyubey [+Betrayer]
+char kyubey [+Betrayer(of=sayaka)]
 
 // INT. MITAKIHARA — the bright ordinary city that becomes her battlefield
 set mitakihara [+Interior] [+Liminal]
