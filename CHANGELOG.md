@@ -17,6 +17,8 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 
 ## [Unreleased]
 
+## [1.7.1] — 2026-06-06
+
 ### Added
 - **The Drifter** (Character Tropes) — https://allthetropes.org/wiki/The_Drifter
 - **The Sales Pitch** (Oratory / Persuasion) — https://en.wikipedia.org/wiki/Sales_pitch
