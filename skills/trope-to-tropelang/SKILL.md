@@ -391,6 +391,21 @@ node; `event=`/`site=` must match entity type). Then consolidate (see above).
 
 ---
 
+## Changelog entry
+
+Every conversion PR records its tropes in `CHANGELOG.md`. After converting, append one line per trope
+under `## [Unreleased] → ### Added`, generated from the trope's own preamble:
+
+```
+- **<TropeName>** (<category>) — <source>
+```
+
+(`Changed` for a re-founding/edit, `Removed` for a strike.) This is the corpus's human-readable record;
+the release also auto-diffs the trope set, but the curated line is yours to write. Do this alongside the
+final `tropelang assemble` (index regen) before opening the PR.
+
+---
+
 ## Reference files
 
 - `references/grammar.md` — complete syntax reference (✓ = in the Rust parser, ◎ = validator-only)
