@@ -1,5 +1,5 @@
 // @title   TropeLang Prelude — Standard Library
-// @version 1.10
+// @version 1.11
 //
 // Automatically in scope for every .trl file.
 // Do not import manually. Override with // @no-prelude for a clean slate.
@@ -446,6 +446,7 @@ verb Witnessed(event: evt)  [+Interpersonal]
 verb Challenged(other)     [+Interpersonal]
 verb Surrenders(to)       [+Interpersonal]
 verb Aided(other)          [+Interpersonal]
+verb Accepts(other)        [+Interpersonal]   // takes another in as one's own — the act of belonging (found family, adoption-in-spirit)
 verb Mourned(other)        [+Interpersonal]
 verb Celebrated(with)      [+Interpersonal]
 verb Confronted(other: char)     [+Interpersonal]
