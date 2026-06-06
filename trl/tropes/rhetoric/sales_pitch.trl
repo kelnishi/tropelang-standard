@@ -1,0 +1,105 @@
+// === PREAMBLE ===
+// @trope    The Sales Pitch
+// @category Oratory / Persuasion
+// @source   https://en.wikipedia.org/wiki/Sales_pitch
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the source): a set-piece persuasive address whose speaker stands to GAIN from the
+// room's compliance — the pitch that moves a customer to acquire a specific product. FRONTIER: the
+// COMMERCIAL sibling of the rhetoric/persuasion cluster, and the one whose speaker is SELF-INTERESTED
+// (they profit from the very acquisition they urge), not a disinterested advocate. Where the Stump
+// Speech asks a [+Collective] crowd for the VOTE and the Courtroom Summation asks a jury for a VERDICT,
+// the Sales Pitch asks a [+Collective] customer for the SALE: pathos over a desire moves the room to
+// WANT the thing, and the call is specifically to BUY it. The discriminator rides the Exhorts event —
+// agent= is a [+Speaker] [+MotivatedBy(reason="Profit")] seller, action= is a [+Coveted] PRODUCT (a
+// commodity acquired for value, not a ballot or a cause), target= is the customer — and the payoff is
+// the room committed to the product: the sale, derived, not hand-asserted. The dishonest extreme (the
+// Snake Oil Salesman) is to this what propaganda is to honest persuasion: logos starved while the
+// product is worthless.
+
+// NOTE on the inline tags [+Commodity] (product) and [+Customer] (buyer): these are deliberate. The
+// corpus has no commerce vocabulary, and WITHOUT a positive tag the customer/electorate and product/
+// ballot do not share, this trope is recognition-indistinguishable from the Stump Speech — both reduce
+// to "a [+Speaker] [+MotivatedBy] exhorts a [+Collective] to a [+Coveted] obj" (recognition re-checks a
+// tag's PRESENCE, not its param value, so [+MotivatedBy(reason="Profit")] alone does not discriminate).
+// These two tags drop the Stump-Speech cousin from 1.00 to 0.75 (a Possible, per SKILL §4b). They are
+// promotion CANDIDATES for a small commerce concept cluster (Commodity / Customer / Merchant), but on a
+// single trope's evidence the skill says leave them inline rather than promote — revisit when more
+// commerce tropes (the Snake Oil Salesman, the Con) accumulate. (DRY flags them by design.)
+
+import "trl/modules/persuasion.trl"          // pathos -> belief-change -> the call to act (Exhorts)
+
+// Lateral thematic links (optional, machine-followable — for discovery / embeddings).
+assoc sales_pitch -> [
+  persuasion     : "is the commercial set-piece of (pathos over a desire, then the call to buy)",
+  stump_speech   : "the marketplace cousin of (a seller courting a customer, not a candidate courting a voter)",
+  propaganda     : "the honest commercial form near (a real desire courted, not a worthless thing oversold)"
+]
+
+imply SalesPitch -> [Pathos, Conviction, Narrative]
+
+// === ABSTRACT RULE ===
+// Naming rule: a self-interested [+Speaker] — one [+MotivatedBy(reason="Profit")] — addresses a customer
+// they do not yet hold, and calls them to acquire a [+Coveted] product. The DISCRIMINATOR binds on the
+// Exhorts event: agent= is the profit-motivated seller, action= is the PRODUCT (an obj, a commodity to
+// be bought — not a vote, not a verdict, not a cause), target= is the customer. The payoff is DERIVED —
+// the moved room commits to the product (the sale won, not a band rallied or an electorate aligned).
+rule Sales_Pitch {
+  when:
+    char $seller [+Speaker] [+MotivatedBy(reason="Profit")]
+    obj  $product [+Coveted] [+Commodity]
+    set  $buyer [+Collective] [+Customer]
+    evt  $pitch [&Exhorts(agent=$seller, target=$buyer, action=$product)]
+  then:
+    $buyer [+Moved]
+    $buyer [+Persuaded(of=$product)]
+    $buyer [+Committed(to=$product)]
+    $buyer -- commitment
+    $pitch [+SalesPitch]
+}
+
+// === CONCRETE VIGNETTE: Mad Men — Don Draper's "The Carousel" Kodak pitch (TV, set 1960) ===
+// The most celebrated sales pitch in fiction. Sterling Cooper is pitching Kodak's slide projector, and
+// the engineers want it sold as "the wheel" — a feat of technology. Draper kills the lights and sells
+// nostalgia instead: the device is not a wheel but a Carousel, a time machine that travels not forward
+// but "around and around, and back home again, to a place where we know we are loved." The Kodak men,
+// who came to hear about a product, leave having bought a feeling — and the account. Pure pathos over a
+// desire the room already carried, then the close. The seller profits from the very thing he urges them
+// to want: the discriminator that separates the pitch from the disinterested oratory of its siblings.
+
+// DON DRAPER — the adman; a speaker who profits from the room's wanting
+char draper [+Speaker]
+draper [+MotivatedBy(reason="Profit")]
+
+// THE CAROUSEL — the product, reframed from a wheel into a way home; the prize the room is moved to want
+obj the_carousel [+Coveted] [+Commodity]
+the_carousel [+MacGuffin]
+
+// THE KODAK CLIENTS — the customer: a room that came for a machine and is sold a feeling
+set the_clients [+Collective] [+Customer]
+the_clients [+Crowded]
+
+// INT. STERLING COOPER CONFERENCE ROOM — NIGHT — the darkened room, the slides on the wall
+set the_pitch_room [+Interior] [+Night]
+
+scene the_carousel_pitch {
+  beat 1 {
+    draper @ the_pitch_room
+    the_clients @ the_pitch_room
+    draper > the_carousel : "Offers What He Profits From Selling"
+    // The set-piece: he reframes the product as a way home and calls the room to take it. The call is
+    // aimed at the customer (target=the_clients) and asks for the PRODUCT (action=the_carousel) from a
+    // seller who profits by it — a merchant courting a sale, not a candidate courting a vote.
+    evt the_close [&Exhorts(agent=draper, target=the_clients, action=the_carousel)]
+        dialog(inject=[speaker=draper], inline="""
+               speaker: "{speaker}"
+               cue: "Draper kills the lights; the family slides cycle on the wall; he names the desire the room already carries"
+               tone: low, unhurried, aching with nostalgia
+               text: "This device isn't a spaceship. It's a time machine. It goes backwards, forwards. It takes us to a place where we ache to go again. It lets us travel the way a child travels — around and around, and back home again, to a place where we know we are loved."
+               """)
+    // Sales_Pitch fires here: the [+MotivatedBy(reason="Profit")] [+Speaker] exhorts the [+Collective]
+    // customer to the [+Coveted] product. The room is DERIVED [+Moved], [+Persuaded(of=the_carousel)],
+    // [+Committed(to=the_carousel)] -- commitment — the sale is the rule's payoff, not hand-asserted.
+  }
+}
