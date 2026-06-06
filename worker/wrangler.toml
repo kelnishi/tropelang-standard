@@ -1,5 +1,5 @@
 # Cloudflare Worker that fronts the R2 corpus bucket (spec 19 §6.2): cache headers, CORS, channel
-# resolve. Deploy:  cd worker && npx wrangler deploy   (see ../CDN_RUNBOOK.md for one-time provisioning).
+# resolve. Deploy:  cd worker && npx wrangler deploy   (see README "Maintaining the standard corpus").
 name = "tropelang-corpus"
 main = "src/index.js"
 compatibility_date = "2026-06-05"
@@ -11,8 +11,8 @@ routes = [
   { pattern = "corpus.tropelang.com", custom_domain = true },
 ]
 
-# The R2 bucket holding the published bundles. Create it first (CDN_RUNBOOK.md §1); the binding name
-# `CORPUS` is what src/index.js reads.
+# The R2 bucket holding the published bundles (create it first); the binding name `CORPUS` is what
+# src/index.js reads.
 [[r2_buckets]]
 binding = "CORPUS"
 bucket_name = "tropelang-corpus"

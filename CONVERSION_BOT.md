@@ -19,40 +19,15 @@ The automated quality bar is the **`gate` workflow** (`.github/workflows/gate.ym
 `tropelang gate` on every changed `.trl` with no secrets and a read-only token. The human approval
 on top is an editorial spot-check, not a line-by-line validation.
 
-## One-time setup
+## Credentials
 
-### 1. Create the App (account owner, in the browser — once)
+The **`TropeLang Conversion Bot`** GitHub App is already created and installed on this repo — a
+dedicated, least-privilege App (Contents + Pull requests read/write only; no Workflows / Admin / Secrets;
+installed on `tropelang-standard` only), kept **separate from the release App** so neither can do the
+other's job. To rotate its key or recreate it: **Settings → Developer settings → GitHub Apps**.
 
-**Settings → Developer settings → GitHub Apps → New GitHub App**
-
-| Field | Value |
-| --- | --- |
-| **Name** | `TropeLang Conversion Bot` (App names are globally unique; adjust if taken) |
-| **Homepage URL** | `https://github.com/kelnishi/tropelang-standard` |
-| **Webhook → Active** | **unchecked** (this App only mints tokens; it receives no events) |
-| **Repository permissions → Contents** | **Read and write** (push the conversion branch) |
-| **Repository permissions → Pull requests** | **Read and write** (open the PR) |
-| **Repository permissions → Metadata** | Read-only (mandatory, auto-selected) |
-| *(everything else)* | **No access** — do **not** grant Workflows, Administration, or Secrets |
-| **Where can this App be installed?** | **Only on this account** |
-
-Keep this App **separate from the release App** (`RELEASE_APP_ID`): least privilege — the
-conversion bot can open PRs but cannot publish releases, and the release App cannot push branches
-or open PRs.
-
-After **Create GitHub App**:
-- note the **App ID** (top of the App's settings page);
-- **Generate a private key** → downloads a `.pem`. Store it as a secret; **never commit it.**
-
-### 2. Install it on the corpus repo (once)
-
-On the App page → **Install App** → install on `kelnishi` → **Only select repositories** →
-`tropelang-standard`. That single install is what `bot-token.sh` looks up.
-
-### 3. Give the workspace its credentials
-
-The Claude Code workspace that runs conversion needs these in its environment (workspace secret
-store / env — **not** in git):
+The Claude Code workspace that runs conversion needs the App's credentials in its environment (workspace
+secret store / env — **not** in git):
 
 ```sh
 export CONVERSION_APP_ID="<the App ID>"
