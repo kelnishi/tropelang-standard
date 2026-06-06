@@ -31,12 +31,13 @@ imply StarCrossedLovers -> [Romance, fate, Narrative]
 // Naming rule: mutual love across an unbridgeable sundering IS the star-crossed pattern (tags both).
 rule Star_Crossed_Lovers {
   when:
-    char $a [~Loves(target=$b)]
-    char $b [~Loves(target=$a)]
-    char $a [@Sundered_From(other=$b)]
+    evt  $love [&Loves(agent=$a, target=$b)]           // mutual love (both love-events present) ...
+    evt  $back [&Loves(agent=$b, target=$a)]
+    char $a [@Sundered_From(other=$b)]                  // ... across an unbridgeable sundering
   then:
     $a [+StarCrossed]
     $b [+StarCrossed]
+    $love [+StarCrossed]
     $a -- doomed_love
 }
 
@@ -52,6 +53,8 @@ char thisbe  [+LoveInterest]  [~Loves(target=pyramus)]
 scene the_wall {
   beat 1 {
     pyramus -- thisbe : "love whispered through a crack their families built"
-    // Star_Crossed_Lovers -> pyramus [+StarCrossed], thisbe [+StarCrossed] -- doomed_love
+    evt he_loves  [&Loves(agent=pyramus, target=thisbe)]
+    evt she_loves [&Loves(agent=thisbe, target=pyramus)]
+    // Star_Crossed_Lovers -> pyramus/thisbe [+StarCrossed]; he_loves [+StarCrossed] -- doomed_love
   }
 }

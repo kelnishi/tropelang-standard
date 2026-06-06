@@ -21,12 +21,13 @@ imply LoveTriangle -> [Romance, Conflict, Narrative]
 // Naming rule: two who love the same third are made rivals by it — the love triangle's tension.
 rule Love_Triangle {
   when:
-    char $a [~Loves(target=$c)]
-    char $b [~Loves(target=$c)]
+    evt  $love_a [&Loves(agent=$a, target=$c)]         // two distinct suitors, each loving the same third
+    evt  $love_b [&Loves(agent=$b, target=$c)]
     $a != $b
   then:
     $a [@Rival_Of(other=$b)]
     $c [+Sought(by=$a)]
+    $love_a [+LoveTriangle]
     $a -- triangle
 }
 
@@ -40,6 +41,8 @@ char guinevere [+LoveInterest]  [~Loves(target=lancelot)]
 scene camelot {
   beat 1 {
     guinevere -- lancelot : "the love that undoes the round table"
-    // Love_Triangle -> arthur [@Rival_Of(other=lancelot)], guinevere [+Sought(by=arthur)]
+    evt arthur_loves   [&Loves(agent=arthur, target=guinevere)]
+    evt lancelot_loves [&Loves(agent=lancelot, target=guinevere)]
+    // Love_Triangle -> arthur [@Rival_Of(other=lancelot)], guinevere [+Sought(by=arthur)]; arthur_loves [+LoveTriangle]
   }
 }

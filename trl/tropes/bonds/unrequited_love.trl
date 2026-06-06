@@ -18,26 +18,33 @@ assoc unrequited_love -> [
 
 imply UnrequitedLove -> [love, Sorrow, Narrative]
 
-// Naming rule: loving one who does not love back leaves the lover pining — that is Unrequited Love.
+// Naming rule: one loves another whose heart is elsewhere — the lover is left pining. The non-
+// reciprocation is POSITIVE evidence (the beloved loves a THIRD party, $c != $a), not a closed-world
+// not(): the lover's love-event and the beloved's love-event-elsewhere both bind, so recall fires.
 rule Unrequited_Love {
   when:
-    char $a [~Loves(target=$b)]
-    not ( $b [~Loves(target=$a)] )
+    char $a [+Pining(for=$b)]                          // the lover, shown pining — the asymmetric ache (the
+                                                       //   discriminator vs mutual/star-crossed love, which is not pining)
+    evt  $love [&Loves(agent=$a, target=$b)]           // loves the beloved ...
+    evt  $elsewhere [&Loves(agent=$b, target=$c)]       // ... whose heart is given to a third, not back
+    $c != $a
   then:
-    $a [+Pining(for=$b)]
+    $love [+UnrequitedLove]
     $a -- longing
 }
 
 // === CONCRETE VIGNETTE: Cyrano de Bergerac — the balcony (play, 1897) ===
 // Cyrano loves Roxane, who loves the handsome Christian; ashamed of his nose, Cyrano lends his own
 // words to woo her for his rival, and goes to his grave with the truth — wanting only her joy.
-char cyrano    [+Protagonist]  [~Loves(target=roxane)]
+char cyrano    [+Protagonist]  [~Loves(target=roxane)] [+Pining(for=roxane)]
 char roxane    [+LoveInterest] [~Loves(target=christian)]
 char christian [+Ally]
 
 scene under_the_balcony {
   beat 1 {
     cyrano -- roxane : "his words in another man's mouth"
-    // Unrequited_Love -> cyrano [+Pining(for=roxane)]
+    evt cyrano_loves [&Loves(agent=cyrano, target=roxane)]
+    evt roxane_loves [&Loves(agent=roxane, target=christian)]   // her heart is elsewhere (positive non-reciprocation)
+    // Unrequited_Love -> cyrano [+Pining(for=roxane)]; cyrano_loves [+UnrequitedLove]
   }
 }

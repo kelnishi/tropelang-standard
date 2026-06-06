@@ -34,11 +34,12 @@ imply SiblingRivalry -> [TheRival, Kinship, Narrative]
 rule Sibling_Rivalry {
   when:
     char $a [@Sibling_Of(other=$b)] [@Rival_Of(other=$b)]
-    char $b [@Sibling_Of(other=$a)] [@Rival_Of(other=$a)]
+    evt  $contest [&Challenged(agent=$a, other=$b)]     // the kin-rival presses the contest (binds the dyad)
   then:
     $a [+SiblingRivalry]
     $a [~Envies(target=$b)]
     $a [#Resentful]
+    $contest [+SiblingRivalry]
     $a -- envy
 }
 
@@ -67,6 +68,7 @@ scene the_second_son {
     mufasa @ pride_rock
     scar @ pride_rock
     scar -- mufasa : "born first, and so born king — while I am left the throne's shadow"
-    // Sibling_Rivalry -> scar [+SiblingRivalry] [~Envies(mufasa)] [#Resentful] -- envy
+    evt the_gorge [&Challenged(agent=scar, other=mufasa)]   // the kin-rival presses the contest to its end
+    // Sibling_Rivalry -> scar [+SiblingRivalry] [~Envies(mufasa)] [#Resentful] -- envy; the_gorge [+SiblingRivalry]
   }
 }

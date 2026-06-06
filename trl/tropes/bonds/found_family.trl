@@ -24,8 +24,10 @@ rule Found_Family {
   when:
     char $a [+Misfit] [@Bonded_To(other=$b)]
     char $b [+Misfit]
+    evt  $forged [&Protected(agent=$a, other=$b)]      // the bond is forged in shared adversity (binds the pair)
   then:
     $a [+Family(with=$b)]
+    $forged [+FoundFamily]
     $a -- belonging
 }
 
@@ -38,6 +40,7 @@ char gamora [+LoveInterest] [+Misfit]
 scene the_misfits {
   beat 1 {
     quill -- gamora : "we are the freakin' Guardians of the Galaxy"
-    // Found_Family -> quill [+Family(with=gamora)]
+    evt stand_together [&Protected(agent=quill, other=gamora)]   // they fight for each other — the bond forged
+    // Found_Family -> quill [+Family(with=gamora)]; stand_together [+FoundFamily]
   }
 }

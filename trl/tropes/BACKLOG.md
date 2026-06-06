@@ -22,6 +22,46 @@ of systems (modules that *simulate* a dynamic) with tropes riding on top (named 
 
 ---
 
+## Corpus metrics & self-recognition audit (2026-06 — re-measure before acting)
+
+Snapshot at 194 tropes (prelude 1.10, 481 declarations: 87 attr · 141 prop · 115 state · 100 verb · 38 rel).
+
+- **Founding / unfounded nodes:** inline (unfounded) tags down to **204** (from 291 at the start of the
+  drive-down). Only `Plain`/`Faithful` recur (2× each, ambiguous — split before founding); the rest is
+  one-off bespoke flavor. **Founding is effectively complete.**
+- **drams (per-trope coverage × density):** coverage mean **22%** / median 19%; density mean **0.26×**;
+  497 rule firings (mean 2.56/trope); only 2 zero-firing tropes (`dramatic_irony`, `fourth_wall`).
+- **Self-recognition (the quality target): `147/194` (76%) confirm their own vignette — 47 do NOT.**
+
+**Why they fail (the §4b worklist).** Recall keeps only `when:` EVENT patterns; a rule whose `when:`
+is pure static tags / `@rel` edges (no `evt … [&Verb]`) is never recalled → conf 0.00 on its own
+vignette. The failures are concentrated in the **role & relationship** tropes, which recognize on a
+standing state rather than an establishing EVENT. Fix = anchor the discriminator on an event role and
+make the vignette carry it (STYLE §8 / SKILL §4b), without over-firing siblings.
+
+Re-measure self-recognition deterministically:
+```sh
+tropelang selfcheck trl/tropes/corpus.toml --corpus file://trl     # ratio + count
+# per-trope: shape each file, check its own rule name confirms at 1.00 (loop over trl/tropes/**/*.trl)
+```
+
+**Failures by arena (47):** bonds **9/13** · character **13/30** · conflict **10/34** · structure 5/17 ·
+epistemic 4/27 · death 3/15 · power 2/9 · arc 1/22.
+- **bonds:** ✅ fixed (event-anchored) `found_family` `love_triangle` `unrequited_love`
+  `star_crossed_lovers` `sibling_rivalry`. ⏳ remaining (harder — needs-numeric / `not()`-based):
+  `conflicting_loyalty` `i_gave_my_word` `like_brother_and_sister` `power_of_friendship`.
+- **character roles:** `the_protagonist` `the_antagonist` `the_mentor` `the_foil` `the_lancer`
+  `the_sidekick` `the_deuteragonist` `the_everyman` `the_paragon` `the_love_interest` `the_big_bad`
+  `the_trickster`(0.81) `determinator`.
+- **conflict:** `finishing_move` `feint` `the_trap` `the_duel` `heroic_second_wind` `decapitated_army`
+  `achilles_heel`(0.81) `david_versus_goliath`(0.75) `combat_pragmatist`(0.62) `pyrrhic_victory`(0.62).
+- **structure/epistemic/death/power/arc:** `cliffhanger` `conflict` `macguffin` `the_climax`
+  `three_act_structure` · `dramatic_irony` (**no rule at all** — recognizes nothing) `hidden_identity`
+  `open_secret` `the_mole`(0.50) · `defiant_to_the_end` `together_in_death` `redemption_equals_death`(0.75)
+  · `full_circle_revolution` `smear_campaign` · `face_heel_turn`.
+
+---
+
 ## Systems (the modules in `trl/modules/`)
 Each is a forward-chaining dynamic that tropes ride on.
 

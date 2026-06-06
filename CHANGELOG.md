@@ -17,6 +17,13 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 
 ## [Unreleased]
 
+### Fixed
+- Self-recognition (§4b): anchored 5 `bonds` tropes' recognition on an EVENT role so they confirm their
+  own vignette — `found_family` (Protected), `love_triangle` / `star_crossed_lovers` / `unrequited_love`
+  (Loves), `sibling_rivalry` (Challenged). Replaced `unrequited_love`'s closed-world `not([~Loves])`
+  with positive evidence (the beloved loves a third + the lover shown `[+Pining]`), which also removed an
+  over-match on `star_crossed_lovers`. Corpus self-recognition **147 → 152/194 (76% → 78%)**.
+
 ### Changed
 - Founded the remaining unfounded tail in `prelude.trl` (→ **1.10**): props `Betrayer`, `Leader`,
   `Sympathetic`, `TrueRescue`, `RealPerson`, `Pass`, `Field`, `City`; states `Triumphant`, `Refused`,
