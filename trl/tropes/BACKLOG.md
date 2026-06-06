@@ -54,18 +54,20 @@ Paragon · Everyman.
 - [x] The Narrator — `the_narrator` (S14, agent-converted)
 - [x] Anti-Hero — `anti_hero` (Man with No Name)
 - [x] The Trickster — `the_trickster` (Anansi)
+- [x] The Drifter — `the_drifter` (Shane; the rootless [+Stranger] who Protects a town then Departs)
 
 ### Character relationships (the dyad/triad)
 Done: The Rival · Unrequited Love · Found Family · Enemies to Lovers · Love Triangle ·
 Star-Crossed Lovers · Mentor & Student.
 - [ ] The Love Triangle's darker forms (Love Dodecahedron, Triang Relations variants)
-- [x] Sibling Rivalry — `sibling_rivalry` (Mufasa/Scar)  ·  [ ] Like Brother and Sister
+- [x] Sibling Rivalry — `sibling_rivalry` (Mufasa/Scar)  ·  [x] Like Brother and Sister — `like_brother_and_sister`
 
 ### Character change & arcs
 Done (psychology arena): Heel/Face Turn · Revenge · Despair Event Horizon · Survivor's Guilt.
 - [x] Redemption Arc (The Atoner — guilt discharged by costly amends) — `redemption_arc`
 - [x] Fall From Grace (Start of Darkness — the two-phase slide) — `fall_from_grace`
 - [x] Coming of Age (Bildungsroman — innocence traded for maturity) — `coming_of_age`
+- [x] Mercy Kill (the [+Compassion] read of &Slays — a loved one spared a worse end) — `mercy_kill` (Of Mice and Men)
 
 ### Identity / worldbuilding (drams-flagged)
 Done: Hidden Identity · Rightful King Returns · The Chosen One · Unreliable Narrator.
@@ -103,7 +105,7 @@ Guard · Decadent Court · We Have Reserves · The Duel.
 Done: Rule of Funny · Rule of Cool · Deus Ex Machina · Cliffhanger · Foregone Conclusion ·
 Human Interest Story (the investment capability).
 - [x] Rule of Drama — `rule_of_drama`
-- [x] The Pratfall — `pratfall` · [x] Tear Jerker — `tear_jerker`  ·  [ ] crafted Spectacle
+- [x] The Pratfall — `pratfall` · [x] Tear Jerker — `tear_jerker`  ·  [x] crafted Spectacle — `spectacle`
 
 ### Oratory / persuasion (the speaker↔audience arena — opened by `persuasion`)
 Rhetoric holds attention; persuasion goes for CONVICTION. The speaker collapses author-and-figure
@@ -114,14 +116,14 @@ module unlocks a whole category of real-world forms:
 - [x] the Rousing Speech (St. Crispin's Day — honest pathos-only, fear→resolve) — `rousing_speech`
 - [x] the Reasonable-Doubt gate / Rogue Juror (burden of proof defeats persuasion) — `rogue_juror`
 - [x] the Stump Speech (campaign address; a candidate wins a crowd's allegiance + vote) — `stump_speech` (Chisholm '72)
-- [ ] the Sales Pitch (persuasion for a sale)
+- [x] the Sales Pitch (persuasion for a sale) — `sales_pitch` (Mad Men's 'Carousel'; self-interested seller, the call to BUY)
 - [x] the Debate (adversarial persuasion; rebuttal unseats, the audience swings) — `the_debate`
 - [x] Propaganda / the Big Lie (ethos & pathos + repetition vs logos; entrenchment) — `propaganda`
 
 ### Non-fiction storytelling (the corpus handles it at ~71%)
 Reality narrativized with the same grammar; the gap is the non-fiction *forms*.
 Done: The Host / Presenter · Putting It to the Test · Based on a True Story.
-- [x] Talking Head — `talking_head`  ·  [ ] Reenactment
+- [x] Talking Head — `talking_head`  ·  [x] Reenactment — `reenactment`
 - [x] Mockumentary — `mockumentary` (the form's fiction inversion)
 
 ### Storytelling frameworks
@@ -141,36 +143,42 @@ moves coverage:
 - **non-fiction** (`mythbusters`): `Host`, `Experiments`, `Escalates`, `Confirmed` — the non-fiction
   forms above.
 
-## Broken-ref drive-down — current masters (links-first)
+## Unfounded-node drive-down — measured from the committed corpus
 
-Driven by what the master narratives actually reference but the corpus does not yet declare (scan:
-`links().tags` with `known=false` over `narratives/` + corpus). Resolving these is what turns red tags
-green in the IDE. Two masters, two domains. Priority order = frequency × reusability.
+The forward target = the highest-frequency **inline-invented tags** across `trl/tropes/**` — the red
+tags the corpus references but does not declare. **Measure it deterministically** (not from the stale
+notes below) by aggregating `tropelang report <file> --json` → `inline_tags` over every trope:
 
-**P1 — generic vocabulary (prelude candidates).** Universal, not domain-specific; belong in `prelude.trl`:
-- `Pursues` (82, intent), `Avenges` (rel), `Trusts`/`Trusted`, `LoyalTo`, `Exposed`, `Redeemed`,
-  `Coveted`, `Secured`, `Lifted`, `Authentic`, `Overcommitted`, `Demands`, `Opens`, `Held`, `Burns`,
-  `Withdraws`. Decide prelude vs. concept per term; `Pursues` is the single biggest win.
+```sh
+for f in $(git ls-files 'trl/tropes/**/*.trl' | grep -v index.trl); do tropelang report "$f" --json; done \
+  | jq -r '.inline_tags[]' | sort | uniq -c | sort -rn   # frequency-ranked unfounded nodes
+```
 
-**P2 — domain vocabulary libraries (declare, not convert).** Reusable across any story in the domain:
-- **Siege / military** (`the_salt_gate`): `Besieger`/`Besieged`/`Besieging`, `Siege`, `Fortress`,
-  `Rampart`, `Chokepoint`, `Inner_Gate`, `Sally_Door`, `Belfry`, `Salt_Rich`, roles `Warlord`/`Soldier`/
-  `Sergeant`/`Veteran`/`Quartermaster`/`Commander`/`ReliefCommander`/`Champion`/`Defender`/`Army`, verbs
-  `Encircles`/`Bombards`/`Breaches`/`Sallies`/`Battered`/`Stunned`/`Steadfast`/`Galled`. → a
-  `concepts/`+`modules/` military set.
-- **Heist / crime** (`the_lacquer_nightingale`): roles `Grifter`/`Hacker`/`Collector`/`InsideOperator`/
-  `Mark`, `RealTarget`/`Counterfeit`/`Offstage`/`Artisan`/`Wronged`, verbs `Swaps`/`Disables`/`Feints`/
-  `Endears`. → a crime/caper set.
+**Founded so far.** The 1.7.0 founding sweep declared most of the old P1 list as prelude TIER-0 nodes:
+`Pursues`, `Trusted`, `Exposed`, `Redeemed`, `Survivor`, `Coveted` are all declared now. The 1.8 round
+founded the **Chekhov's-Gun planting/payoff** cluster in `prelude.trl` (the densest remaining cluster):
+`Payoff(item)`, `Introduces`, `Uses`, `Fired`, `Pivotal`, `Mundane`, `Endgame` — turning ~20
+occurrences across `chekhovs_*` + `foreshadowing`/`the_reveal`/`karma_houdini` green. (The rules stay in
+the tropes; only the shared vocabulary was founded — no new module.)
 
-**P3 — structural tropes (convert).** The masters *demonstrate* these tropes, yet they don't exist:
-- [x] **Heist** — `tropes/conflict/tactics/heist.trl` riding `modules/heist.trl` (Antwerp 2003 vignette).
-- [x] **Siege** — `tropes/conflict/war/siege.trl` riding `modules/siege.trl` (Orléans 1429 vignette).
-      NOTE: a thin pre-existing `the_siege.trl` (`imply TheSiege`, Masada) now coexists — coordinator
-      to decide coexist vs. fold/`alias TheSiege -> Siege`.
-
-P2 progress: `modules/siege.trl` + `modules/heist.trl` declare the bulk of each master's domain
-vocabulary (Besieger/Rampart/…; Grifter/Counterfeit/…). Remaining P1 prelude candidates still broken:
-`Pursues` (biggest), `Avenges`, `LoyalTo`, `Trusted`, `Exposed`, `Redeemed`, `MadeBy`, `Survivor`.
+**Next unfounded clusters (live count, 2026-06 — re-measure before picking).** Priority = frequency ×
+cross-trope reusability:
+- **Diegetic / narration & audience** — `Narrator` (4: frame_story, the_narrator, tomato_surprise,
+  unreliable_narrator), `Spectator` (3: fourth_wall, reality_bleed, talking_head). The S14 layer's
+  audience/narrator roles — a coherent prelude or concept founding.
+- **Non-fiction** — `RealEvent` (3: based_on_a_true_story, reenactment, talking_head). The reality-vs-
+  dramatization marker; founds with the non-fiction forms.
+- **Loose universals** — `Vehicle` (3), `Oppressive` (3), `Pass` (3), `Plain`/`Detective`/`Invincible`/
+  `Faithful`/`Treacherous`/`Leader` (2 each). Decide prelude prop vs. concept per term.
+- **Still-undeclared relations/verbs** — `LoyalTo` (4 files, a `[@rel]`), `Avenges`, `MadeBy`. These are
+  relations, not `+` tags, so they need `rel`/`verb` founding, not a prop.
 
 Keep genuinely bespoke flavor tags (one-off character descriptors) broken per the closed-vocabulary
-decision unless promoted here.
+decision unless they recur and earn promotion.
+
+### Domain libraries & structural tropes (done — kept for provenance)
+- **P2 domain vocab:** `modules/siege.trl` + `modules/heist.trl` declare the siege/military and
+  heist/crime sets (Besieger/Rampart/…; Grifter/Counterfeit/…).
+- **P3 structural tropes:** [x] **Heist** (`conflict/tactics/heist.trl`, Antwerp 2003) · [x] **Siege**
+  (`conflict/war/siege.trl`, Orléans 1429). NOTE: a thin pre-existing `the_siege.trl` (Masada) coexists
+  — coordinator to decide coexist vs. fold/`alias TheSiege -> Siege`.
