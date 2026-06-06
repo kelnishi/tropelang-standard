@@ -17,6 +17,10 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 
 ## [Unreleased]
 
+### Added
+- **The Drifter** (Character Tropes) — https://allthetropes.org/wiki/The_Drifter
+- **The Sales Pitch** (Oratory / Persuasion) — https://en.wikipedia.org/wiki/Sales_pitch
+
 ## [1.7.0] — 2026-06-06
 ### Added
 - Initial published corpus — **191 tropes** across the character, conflict, epistemic, structure,

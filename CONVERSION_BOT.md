@@ -14,8 +14,16 @@ let an account approve its own PR. Therefore:
 
 - ❌ Bot authenticates as a person → that person can never approve → every merge needs an admin
   *bypass*, so the review gate never actually runs.
-- ✅ Bot authors PRs under a **non-approver identity** (a GitHub App `…[bot]`, or a Claude Code web
-  session that isn't the maintainer) → a human maintainer approves and merges normally, gate intact.
+- ✅ Bot authors PRs under the **GitHub App `…[bot]`** identity → a human maintainer approves and
+  merges normally, gate intact.
+
+> **The PR *author* is what matters — and it follows the token that calls the create-PR API, not the
+> git commit author.** A Claude Code *web* session is **not** a separate identity: its GitHub token
+> (the `mcp__github__*` tools) is the **maintainer's own account** — `mcp__github__get_me` returns the
+> maintainer. So a PR opened with the MCP is *maintainer-authored* and hits the self-approval wall, even
+> if the commits are authored by `claude`/the bot. **Never open a conversion PR with the MCP token.**
+> Author it with the App instead (the CI workflow below, or a minted App token). Corollary: **don't
+> push commits to a PR you intend to approve** — some rulesets also bar the last pusher from approving.
 
 The automated quality bar is the **`gate` workflow** (`.github/workflows/gate.yml`): it runs
 `tropelang gate` on every changed `.trl` with no secrets and a read-only token. The human approval
@@ -47,26 +55,43 @@ Run the gate from the corpus root (so `--corpus file://trl` resolves):
 
 ---
 
-## Mode A — Claude Code on the web (interactive, the default today)
+## Finalize the batch (coordinator step — do this before the PR, both modes)
 
-This is how an interactive web session actually ships work, and it needs **no App credentials**: the
-session has its own git remote (a local proxy) and its own GitHub identity via the GitHub MCP. `gh` is
-**not** available — use the `mcp__github__*` tools for every GitHub action.
+After all tropes for the batch are added and each passes the gate, run the coordinator finalize once,
+then commit everything together. The `gate` workflow enforces both of these on the PR.
 
 ```sh
-# 1. Work on the session's development branch (do NOT commit to main).
-#    ...install the CLI (above), run the trope-to-tropelang skill, add/edit trl/ tropes...
-bash skills/trope-to-tropelang/scripts/gate.sh trl/tropes/<path>/<new_trope>.trl   # local pre-flight
+# 1. Rebuild the registry from the new tropes (the gate's "index in sync" check = assemble --check).
+tropelang assemble trl/tropes/corpus.toml          # regenerates trl/tropes/index.trl
 
-# 2. Commit + push to the session branch over the session's remote.
-git add trl/tropes/<path>/<new_trope>.trl
-git commit -m "Convert <batch-name>"
-git push -u origin <session-branch>
+# 2. Append the changelog delta — one line per trope, from each trope's preamble, under
+#    `## [Unreleased]` → `### Added` in CHANGELOG.md:  - **<TropeName>** (<category>) — <source>
+
+# 3. Stage the tropes + the regenerated index + the changelog in ONE commit.
+git add trl/tropes/<path>/*.trl trl/tropes/index.trl CHANGELOG.md
 ```
 
-Then open the PR to `main` with the **GitHub MCP** (`mcp__github__create_pull_request`, base `main`,
-head `<session-branch>`). The PR is authored under the session identity — which is **not** the
-maintainer — so the human can approve it and the review gate holds. The `gate` workflow runs on the PR.
+> Why `index.trl` is committed here and not during conversion: the "never touch `index.trl`" guardrail
+> is for *parallel* conversion agents (they'd collide on it). The coordinator assembles it **once**, at
+> the end — a stale index fails the gate's `assemble --check`.
+
+## Mode A — Claude Code on the web (interactive, the default today)
+
+An interactive web session works on its own development branch over the session's git remote (a local
+proxy). It **cannot author the PR itself** — its `mcp__github__*` token is the maintainer's account
+(see the identity rule above). So it pushes a **`convert/**` branch** and lets CI open the PR as the
+bot. `gh` is not available in-session; use `mcp__github__*` for *reads* (CI status, comments) only.
+
+```sh
+# Finalize the batch (above), commit, and push a convert/** branch over the session remote.
+git commit -m "Convert <batch-name>"
+git push -u origin convert/<batch-name>
+```
+
+The push triggers **`.github/workflows/open-conversion-pr.yml`**, which mints a conversion-App token
+and opens the PR to `main` authored by `tropelang-conversion-bot[bot]` — so you, the maintainer, can
+approve it. Then the `gate` workflow runs on the PR. (One-time setup: add the repo secrets
+`CONVERSION_APP_ID` and `CONVERSION_APP_PRIVATE_KEY`; see the workflow header.)
 
 ## Mode B — headless CI runner (GitHub App identity)
 
@@ -87,7 +112,7 @@ recreate the key: **Settings → Developer settings → GitHub Apps**.
 # 0. Mint a short-lived, repo-scoped token (contents+PR write only; auto-expires within the hour).
 export GH_TOKEN="$(skills/trope-to-tropelang/scripts/bot-token.sh)"
 
-# 1. Branch off main, convert, gate locally (install the CLI as above).
+# 1. Branch off main, convert, gate locally, finalize the batch (assemble + changelog, above).
 git switch -c convert/<batch-name> --no-track origin/main
 bash skills/trope-to-tropelang/scripts/gate.sh trl/tropes/<path>/<new_trope>.trl
 
@@ -106,15 +131,19 @@ gh pr create --repo kelnishi/tropelang-standard --base main \
 The PR *author* follows the token that calls the create-PR API (the installation token → the bot).
 Setting the commit `user.name/email` to the bot is cosmetic but keeps history attributed; find
 `<bot-user-id>` once via `gh api users/tropelang-conversion-bot[bot] --jq .id` (the `[bot]` suffix is
-literal).
+literal). (In Mode A the same App opens the PR, just from CI instead of from a minted token.)
 
 ---
 
 ## Guardrails (both modes)
 
-- **Never touch `trl/tropes/index.trl`.** It is rebuilt deterministically by the coordinator
-  (`tropelang assemble trl/tropes/corpus.toml`), which also mints the concept entry from your
-  preamble metadata (carry full `@trope/@category/@source/@domain`). Parallel agents collide on it.
+- **Conversion agents never hand-edit `trl/tropes/index.trl`.** It's rebuilt deterministically by the
+  coordinator's single `tropelang assemble trl/tropes/corpus.toml` at the **end** of the batch (the
+  "Finalize" step), which also mints the concept entry from your preamble metadata (carry full
+  `@trope/@category/@source/@domain`). During conversion it's hands-off (parallel agents collide on it);
+  the finalized index **is** committed in the PR — a stale one fails the gate's `assemble --check`.
+- **Append the changelog delta in the finalize step** — one line per trope in `CHANGELOG.md`, so each
+  batch carries its own `### Added` entries.
 - **Cross-check `BACKLOG.md` against the tree before converting** — it can lag reality (done items may
   still read `[ ]`). Don't re-convert work that already exists.
 - **One batch per PR.** Keep PRs reviewable; the gate runs per changed `.trl`.

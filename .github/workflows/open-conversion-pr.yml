@@ -1,0 +1,50 @@
+name: open-conversion-pr
+# Open a PR for a pushed conversion batch under the CONVERSION BOT identity (a GitHub App), NOT the
+# maintainer. The review ruleset on main requires 1 human approval, and GitHub forbids approving your
+# own PR — so the PR must be AUTHORED by a non-approver. An interactive Claude Code (web) session can't
+# do this itself: its GitHub token is the maintainer's, so any PR it opens is maintainer-authored and
+# self-approval-blocked. This workflow closes that gap — the session just pushes a `convert/**` branch,
+# and CI opens the PR as the bot. See CONVERSION_BOT.md.
+#
+# Prerequisite repo secrets (Settings → Secrets and variables → Actions):
+#   CONVERSION_APP_ID           the conversion App's numeric App ID
+#   CONVERSION_APP_PRIVATE_KEY  the conversion App's PEM private key
+# This is a DEDICATED workflow: never fold the App key into gate.yml or the publish pipeline.
+
+on:
+  push:
+    branches:
+      - 'convert/**'
+
+permissions:
+  contents: read        # the job's own GITHUB_TOKEN stays read-only; the App token does the PR write
+
+jobs:
+  open-pr:
+    # Upstream only — forks can't push convert/** here and never see these secrets.
+    if: github.repository == 'kelnishi/tropelang-standard'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mint conversion-bot App token
+        id: app
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.CONVERSION_APP_ID }}
+          private-key: ${{ secrets.CONVERSION_APP_PRIVATE_KEY }}
+
+      - name: Open the PR as the conversion bot
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}   # author = the App, so a human can approve
+          BRANCH: ${{ github.ref_name }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          # Idempotent: don't duplicate a PR that already exists for this branch.
+          if gh pr view "$BRANCH" --repo "$REPO" >/dev/null 2>&1; then
+            echo "PR already open for $BRANCH — nothing to do."
+            exit 0
+          fi
+          title="Convert ${BRANCH#convert/}"
+          gh pr create --repo "$REPO" --base main --head "$BRANCH" \
+            --title "$title" \
+            --body "Automated conversion batch from \`$BRANCH\`. The \`gate\` workflow runs \`tropelang gate\` on each changed trope; \`index.trl\` is regenerated and committed by the run. Authored by the conversion bot so a human maintainer can approve (the review gate stays intact)."
