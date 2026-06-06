@@ -96,7 +96,7 @@ char woody [+Protagonist] [#Imperiled]
 char buzz [+Protagonist] [#Imperiled]
 
 // LOTSO
-char lotso [+Betrayer]
+char lotso [+Betrayer(of=woody)]
 
 // INT. THE DUMP INCINERATOR - DAY
 set incinerator [+Interior] [+Inferno] [+Liminal]

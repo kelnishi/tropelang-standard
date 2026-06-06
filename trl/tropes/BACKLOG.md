@@ -204,8 +204,8 @@ planting/payoff** cluster (`Payoff(item)`, `Introduces`, `Uses`, `Fired`, `Pivot
 — ~32 occurrences turned green across the diegetic, non-fiction, epistemic, and bonds tropes. (Rules
 stay in the tropes; only vocabulary founded — no new module.)
 
-The **1.10** round ground down the remaining 2–3× tail: props `Betrayer`, `Leader`, `Sympathetic`,
-`TrueRescue`, `RealPerson`, `Pass`, `Field`, `City`; states `Triumphant`, `Refused`, `Reluctant`,
+The **1.10** round ground down the remaining 2–3× tail: props `Betrayer(of)`, `Leader`, `Sympathetic`,
+`TrueRescue`, `RealPerson`, `Pass`, `Battlefield`, `City`; states `Triumphant`, `Refused`, `Reluctant`,
 `Corrupted`, `CrossedTheHorizon`, `Status_Numb`; verbs `Recalls`, `Predicts`, `Atones`.
 
 **The drive-down is essentially complete** — corpus inline (unfounded) total is now **204**, down from

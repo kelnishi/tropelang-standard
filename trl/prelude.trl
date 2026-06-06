@@ -563,19 +563,22 @@ state Oppressive      [+Social]       // a force, regime, or atmosphere that bea
 
 // Founded tail vocabulary — recurring inline refs across the arc, conflict, epistemic, non-fiction &
 // character tropes (the rules stay in those tropes; only the shared nouns/qualities are founded here).
-prop Betrayer         [+Social]       // the one who betrays — interpersonal (cf. Traitor, the factional sense)
-prop Leader           [+Social]       // the one who leads — commands or rallies those who follow
-prop Sympathetic      [+Narrative]    // a character the telling earns the audience's sympathy for
+prop Betrayer(of)     [+Social]       // betrays a TRUSTING party — of= names the betrayed; interpersonal
+                                      //   trust broken (cf. Traitor, the flat factional role: betrays a SIDE)
+prop Leader           [+Social]       // the one who leads — its relational structure rides the Leads(other=) rel
+prop Sympathetic      [+Narrative]    // the character earns the audience's sympathy (a quality OF the figure;
+                                      //   cf. attr Sympathetic_Focus, the telling's *pull toward* a character)
 prop TrueRescue       [+Narrative]    // a genuine rescue — the real reprieve, not a false Hope Spot
 prop RealPerson       [+Narrative]    // a real, non-fictional person (pairs with RealEvent in non-fiction)
 state Triumphant      [+Narrative]    // victorious and exultant — carrying the day
-state Refused         [+Narrative]    // has declined the call (pairs with the Refuses verb; can be lifted)
-state Reluctant       [+Narrative]    // hesitant, unwilling — holding back from the task
-state Corrupted       [+Narrative]    // fallen to corruption — the turn to the worse completed
+state Refused         [+Narrative]    // has declined the call — a completed act (cf. Reluctant, the disposition)
+state Reluctant       [+Narrative]    // hesitant, unwilling — the disposition that holds one back from the task
+state Corrupted       [+Narrative]    // fallen to corruption — the completed turn (cf. Path_Corruption, the trajectory)
 state CrossedTheHorizon [+Psychological] // past the despair event horizon — beyond reach of hope
 state Status_Numb     [+Psychological] // emotionally numb — feeling shut down after the break
-prop Pass             [+Ontological]  // a held passage or line — the narrow ground a stand is made on
-prop Field            [+Ontological]  // the open ground of battle — the field where forces meet
+prop Pass             [+Ontological]  // a held passage of terrain — the narrow ground a stand is made on
+                                      //   (physical place; cf. Threshold, the *transformative* crossing)
+prop Battlefield      [+Ontological]  // the open ground where forces meet — the field of battle
 prop City             [+Ontological]  // a city — the settled place left behind or defended
 
 // Story-level verbs — what events do at the narrative level
