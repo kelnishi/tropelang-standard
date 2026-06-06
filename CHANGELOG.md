@@ -18,20 +18,22 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 ## [Unreleased]
 
 ### Fixed
-- Self-recognition (§4b): anchored 5 `bonds` tropes' recognition on an EVENT role so they confirm their
-  own vignette — `found_family` (Accepts), `love_triangle` / `star_crossed_lovers` / `unrequited_love`
-  (Loves), `sibling_rivalry` (Challenged). Replaced `unrequited_love`'s closed-world `not([~Loves])`
-  with positive evidence (the beloved loves a third + the lover shown `[+Pining]`), which also removed an
-  over-match on `star_crossed_lovers`. Per review: `found_family` now models **acceptance + recognition**
-  (mutual `[@Bonded_To]` + an `Accepts` event, not mere protection), and `sibling_rivalry` keeps the
-  **bidirectional** kin+rival bond (both siblings) alongside the event anchor. Corpus self-recognition
-  **147 → 152/194 (76% → 78%)**.
+- Self-recognition (§4b): event-anchored the recognition of **all 9 failing `bonds` tropes** so each
+  confirms its own vignette — `found_family` (Accepts) · `love_triangle` / `star_crossed_lovers` /
+  `unrequited_love` (Loves) · `sibling_rivalry` (Challenged) · `power_of_friendship` (Aids) ·
+  `i_gave_my_word` (Honors) · `like_brother_and_sister` (Aided) · `conflicting_loyalty` (Commands).
+  Replaced two closed-world `not()` spines with positive evidence: `unrequited_love` (beloved loves a
+  third + lover shown `[+Pining]`, which also removed an over-match on `star_crossed_lovers`) and
+  `like_brother_and_sister` (the positive `[+Family(with)]` chosen-kin marker). Per review: `found_family`
+  models **acceptance + recognition** (mutual `[@Bonded_To]` + an `Accepts` event, not mere protection)
+  and `sibling_rivalry` keeps the **bidirectional** kin+rival bond. Corpus self-recognition
+  **147 → 156/194 (76% → 80%)**; the `bonds` arena is now fully self-recognizing.
 
 ### Changed
 - Founded `verb Accepts(other)` (taking another in as one's own — belonging) in `prelude.trl` (→ **1.11**),
   for found-family-style bonds where acceptance, not protection, is the defining act.
-- Founded the remaining unfounded tail in `prelude.trl` (→ **1.10**): props `Betrayer`, `Leader`,
-  `Sympathetic`, `TrueRescue`, `RealPerson`, `Pass`, `Field`, `City`; states `Triumphant`, `Refused`,
+- Founded the remaining unfounded tail in `prelude.trl` (→ **1.10**): props `Betrayer(of)`, `Leader`,
+  `Sympathetic`, `TrueRescue`, `RealPerson`, `Pass`, `Battlefield`, `City`; states `Triumphant`, `Refused`,
   `Reluctant`, `Corrupted`, `CrossedTheHorizon`, `Status_Numb`; verbs `Recalls`, `Predicts`, `Atones`.
   Resolves ~35 more inline-invented refs across the arc, conflict, epistemic, non-fiction & character
   tropes (corpus inline total now 204, down from 291 at the start of the drive-down). What remains is the

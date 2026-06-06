@@ -54,11 +54,10 @@ imply TornBetween         -> [ConflictingLoyalty, Conflicted, Costly]
 // is [@LoyalTo], not mere outcomes — that is what makes each option a betrayal of someone.
 rule Conflicting_Loyalty {
   when:
-    char $c
+    char $c [@LoyalTo(faction=$a)] [@LoyalTo(faction=$b)]
     char $a [+Faction]
     char $b [+Faction]
-    $c [@LoyalTo(faction=$a)]
-    $c [@LoyalTo(faction=$b)]
+    evt  $demand [&Commands(agent=$b, other=$c)]   // one bound party commands $c — the bind is forced (→ recall)
     $c [~Committed_To(target=$a)]
     $c [~Committed_To(target=$b)]
     $a != $b
@@ -119,6 +118,7 @@ scene the_edict {
     antigone [~Committed_To(target=thebes)]
     // the two she is bound to have come into open opposition — kin-law against city-law
     polynices >< thebes : "The Buried Brother Against The King's Edict"
+    evt the_edict [&Commands(agent=thebes, other=antigone)]   // Creon's edict commands her — forcing the bind
     // Conflicting_Loyalty fires: antigone [+Torn(between=polynices)]; [#Conflicted]
     antigone [+Torn(between=polynices)]
     antigone [#Conflicted]

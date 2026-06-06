@@ -49,6 +49,7 @@ imply HonorBeforeReason -> [GivenWord, Inversion, Costly]
 rule I_Gave_My_Word {
   when:
     char $c [~Committed_To(target=honor)]
+    evt  $kept [&Honors(agent=$c, target=$word)]   // the word kept in public view — the act that binds $c (→ recall)
     char $c [~Pursues(rank=$hr, salience=$hs)]
     char $c [#Lacks(rank=$lr, salience=$ls)]
     $lr < $hr
@@ -117,6 +118,7 @@ scene the_parole {
     regulus !@ the_curia
     regulus @ carthage_walls
     carthage @ carthage_walls
+    evt the_return [&Honors(agent=regulus, target=honor)]   // returning to captivity keeps the given word
     // the standing is maintained by the very choice that destroyed him
     !regulus [+Honored]!
     regulus -- integrity : "Upholds"

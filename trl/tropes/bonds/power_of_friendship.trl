@@ -47,6 +47,7 @@ rule PowerOfFriendship {
   when:
     char $c [+Exposed]
     char $c [@Bonded_To(other=$ally)]
+    evt  $rise [&Aids(agent=$c, other=$ally)]      // the bonded pair fight side by side (binds the dyad → recall)
     char $c [~Pursues(rank=3, salience=$bs)]
     char $c [#Lacks(rank=$bl, salience=$ls)]
     $bl < 3
@@ -57,7 +58,7 @@ rule PowerOfFriendship {
     $c [#Driven(rank=3)]
     $c [+Empowered]
     $c [+Transcendent]
-    $c [&Aids(other=$ally)]
+    $rise [+PowerOfFriendship]
     $c -- solidarity
 }
 
@@ -93,6 +94,7 @@ scene the_bond_holds {
     // PowerOfFriendship (1 < 3, 10 > 6) -> naruto [-Exposed] [#Driven(rank=3)] [+Empowered] [+Transcendent] [&Aids(iruka)] -- solidarity
   }
   beat 3 {
+    evt naruto_rises [&Aids(agent=naruto, other=iruka)]   // rises FOR the bond — fights at the ally's side
     naruto -- pain : "Rises — for the ones he is bonded to"
     // the connection, not solitary will, turns the fight
   }

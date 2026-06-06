@@ -45,12 +45,15 @@ tropelang selfcheck trl/tropes/corpus.toml --corpus file://trl     # ratio + cou
 # per-trope: shape each file, check its own rule name confirms at 1.00 (loop over trl/tropes/**/*.trl)
 ```
 
-**Failures by arena (47):** bonds **9/13** · character **13/30** · conflict **10/34** · structure 5/17 ·
-epistemic 4/27 · death 3/15 · power 2/9 · arc 1/22.
-- **bonds:** ✅ fixed (event-anchored) `found_family` `love_triangle` `unrequited_love`
-  `star_crossed_lovers` `sibling_rivalry`. ⏳ remaining (harder — needs-numeric / `not()`-based):
-  `conflicting_loyalty` `i_gave_my_word` `like_brother_and_sister` `power_of_friendship`.
-- **character roles:** `the_protagonist` `the_antagonist` `the_mentor` `the_foil` `the_lancer`
+**Progress: self-recognition `147 → 156/194` (76% → 80%).** Failures were (47): bonds 9/13 · character
+**13/30** · conflict **10/34** · structure 5/17 · epistemic 4/27 · death 3/15 · power 2/9 · arc 1/22.
+- **bonds:** ✅ **DONE — all 9 fixed** (event-anchored). `found_family` (Protected) · `love_triangle` /
+  `star_crossed_lovers` / `unrequited_love` (Loves; unrequited swapped `not()`→positive `[+Pining]`) ·
+  `sibling_rivalry` (Challenged) · `power_of_friendship` (Aids) · `i_gave_my_word` (Honors) ·
+  `like_brother_and_sister` (Aided + positive `[+Family(with)]`, dropped the `not()` spine) ·
+  `conflicting_loyalty` (Commands). NOTE: power_of_friendship's Aids event also lets the broad
+  `The_Cavalry`/`Relief` recognizers fire on that scene — a looseness in *those* rules, not this one.
+- **character roles (NEXT — 13):** `the_protagonist` `the_antagonist` `the_mentor` `the_foil` `the_lancer`
   `the_sidekick` `the_deuteragonist` `the_everyman` `the_paragon` `the_love_interest` `the_big_bad`
   `the_trickster`(0.81) `determinator`.
 - **conflict:** `finishing_move` `feint` `the_trap` `the_duel` `heroic_second_wind` `decapitated_army`
