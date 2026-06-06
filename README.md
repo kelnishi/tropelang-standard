@@ -62,12 +62,11 @@ none of this — they use `pages.yml` (§2).
 - **Publish a version:** run the **Release** action (Actions → *Release* → `point`/`minor`/`major`). It
   opens a bot-authored PR that bumps `version` and rolls up `CHANGELOG [Unreleased]`. **Approve + merge**
   → `auto-tag.yml` tags `corpus-v<version>` → `publish.yml`
-  bundles + uploads the immutable version + regenerates the registry → **approve the `production`
-  deployment**. (It does **not** move `stable`.) Manual fallback: bump `corpus.toml` + `--expect-tropes`,
-  merge, then `git tag corpus-v<version> && git push origin corpus-v<version>`.
-- **Promote / rollback:** edit `channels/standard.stable.json` to an already-published version → merge.
-  `promote.yml` repoints within ~30 s (the channel TTL); rollback points back at a prior, still-immutable
-  version.
+  bundles + uploads the immutable version + regenerates the registry + **auto-promotes `stable`** to it →
+  **approve the `production` deployment** and it's live (within ~30 s). Manual fallback: bump
+  `corpus.toml`, merge, then `git tag corpus-v<version> && git push origin corpus-v<version>`.
+- **Rollback:** edit `channels/standard.stable.json` to a prior (still-immutable) version → merge.
+  `promote.yml` repoints `stable` within ~30 s. (This is also how you'd pin `stable` behind the latest.)
 - **Verify:** `curl -i https://corpus.tropelang.com/registry.json` (and `/standard/resolve?channel=stable`).
 - **Infra:** R2 bucket `tropelang-corpus`; deploy the Worker with `cd worker && npx wrangler deploy`. The
   `production` environment (required reviewer) holds `CLOUDFLARE_ACCOUNT_ID` + `R2_ACCESS_KEY_ID` +
