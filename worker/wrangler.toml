@@ -4,14 +4,15 @@ name = "tropelang-corpus"
 main = "src/index.js"
 compatibility_date = "2026-06-05"
 
+# Serve at corpus.tropelang.com. Requires the tropelang.com zone in this Cloudflare account; wrangler
+# creates the DNS record for the custom domain on deploy. NOTE: top-level keys must precede the first
+# table header ([[r2_buckets]]) — otherwise TOML nests `routes` under it and wrangler ignores it.
+routes = [
+  { pattern = "corpus.tropelang.com", custom_domain = true },
+]
+
 # The R2 bucket holding the published bundles. Create it first (CDN_RUNBOOK.md §1); the binding name
 # `CORPUS` is what src/index.js reads.
 [[r2_buckets]]
 binding = "CORPUS"
 bucket_name = "tropelang-corpus"
-
-# Serve at corpus.tropelang.com. Requires the tropelang.com zone in this Cloudflare account; wrangler
-# creates the DNS record for a custom domain on deploy.
-routes = [
-  { pattern = "corpus.tropelang.com", custom_domain = true },
-]
