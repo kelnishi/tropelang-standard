@@ -18,6 +18,16 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 ## [Unreleased]
 
 ### Changed
+- **Prelude royalty & rank** (TIER 16, prelude `@version 1.14`) — promote sovereign/noble rank from flat
+  monadic props to **relations over a realm**, the threading pattern applied to governance. New base
+  relations `Rules(realm)` and `Heir_To(realm)` bridge to the monadic standing (`Rules ⟹ [+Ruler]`,
+  `Heir_To ⟹ [+Heir]`), so a generic ruler/heir rule fires off any rank. Rank relations thread the realm
+  into the base relation and stamp standing + gender: King/Queen, Emperor/Empress, Lord/Lady, Duke/Duchess
+  (→ `Rules` + `Royalty`/`Noble` + gender) and Prince/Princess (→ `Heir_To` + `Royalty` + gender — royal by
+  birth, not ruling). +12 relations, +2 props (`Ruler`, `Noble`; founds the heavily-used inline `[+Ruler]`).
+  `realm` is `char|set|concept` (a territory, a personified throne/empire, or an abstract polity/cause). A
+  bare `[+Ruler] [+Royalty]` still works when the realm is unnamed (the corpus default, incl. collective
+  rulers). **Requires engine ≥ 0.4.1.**
 - **Prelude kinship lattice + divine parentage** (TIER 6 / TIER 17, prelude `@version 1.13`) — extend
   the threading pattern to the rest of the kin lattice and to myth, all single parameterized `imply`s:
   - Kinship (→ conservative bases, no blood-parentage claimed where there is none): Nephew/Niece (→

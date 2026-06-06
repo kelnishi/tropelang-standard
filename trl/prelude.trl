@@ -1,5 +1,5 @@
 // @title   TropeLang Prelude — Standard Library
-// @version 1.13
+// @version 1.14
 //
 // Automatically in scope for every .trl file.
 // Do not import manually. Override with // @no-prelude for a clean slate.
@@ -729,11 +729,47 @@ verb Allies_With(other)        [+Political]   // role flexible: too few corpus u
 verb Prosecutes(other)         [+Political]
 verb Pardons(other)            [+Political]
 
+prop Ruler         [+Political]      // holds sovereign authority — monadic, realm may be unnamed (cf. rel Rules)
+prop Noble         [+Political]      // aristocratic rank below the sovereign
+
 rel Vassal_Of(liege: char)           [+Political]
 rel Liege_Of(vassal: char)           [+Political]
 rel Successor_Of(predecessor: char)  [+Political]
 rel Contemporary_Of(other: char)     [+Political]
 rel Member_Of(group: char|set)           [+Political]
+
+// Sovereign authority & rank (promoted to relations — engine_min 0.4.1). The relational form names the
+// realm; each rank relation threads it into the base Rules/Heir_To relation AND stamps standing
+// (Royalty/Noble) + gender as one parameterized `imply`. The base relations bridge to the monadic
+// standing — Rules(realm) ⟹ [+Ruler], Heir_To(realm) ⟹ [+Heir] — so a generic ruler/heir rule fires off
+// any rank. A bare [+Ruler]/[+Royalty]/[+Masculine] still works when the realm is unnamed (corpus default,
+// incl. collective/faction rulers). `realm` is char|set|concept: a territory (set), a personified
+// throne/empire (char), or an abstract polity/cause (concept).
+rel Rules(realm: char|set|concept)       [+Political]   // exercises sovereign authority over a realm
+rel Heir_To(realm: char|set|concept)     [+Political]   // next in line to a realm (royal by birth, not yet ruling)
+rel King_Of(realm: char|set|concept)     [+Political]
+rel Queen_Of(realm: char|set|concept)    [+Political]
+rel Emperor_Of(realm: char|set|concept)  [+Political]
+rel Empress_Of(realm: char|set|concept)  [+Political]
+rel Lord_Of(realm: char|set|concept)     [+Political]
+rel Lady_Of(realm: char|set|concept)     [+Political]
+rel Duke_Of(realm: char|set|concept)     [+Political]
+rel Duchess_Of(realm: char|set|concept)  [+Political]
+rel Prince_Of(realm: char|set|concept)   [+Political]
+rel Princess_Of(realm: char|set|concept) [+Political]
+
+imply Rules(realm)        -> [Ruler]
+imply Heir_To(realm)      -> [Heir]
+imply King_Of(realm)      -> [Rules(realm), Royalty, Masculine]
+imply Queen_Of(realm)     -> [Rules(realm), Royalty, Feminine]
+imply Emperor_Of(realm)   -> [Rules(realm), Royalty, Masculine]
+imply Empress_Of(realm)   -> [Rules(realm), Royalty, Feminine]
+imply Lord_Of(realm)      -> [Rules(realm), Noble, Masculine]
+imply Lady_Of(realm)      -> [Rules(realm), Noble, Feminine]
+imply Duke_Of(realm)      -> [Rules(realm), Noble, Masculine]
+imply Duchess_Of(realm)   -> [Rules(realm), Noble, Feminine]
+imply Prince_Of(realm)    -> [Heir_To(realm), Royalty, Masculine]
+imply Princess_Of(realm)  -> [Heir_To(realm), Royalty, Feminine]
 
 
 // =============================================================================
