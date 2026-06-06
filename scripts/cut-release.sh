@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-# Prepare a corpus release: bump the version, sync the publish self-check count to the live trope count,
-# and roll up the changelog. Used by .github/workflows/release.yml; runnable locally too. Prints the new
-# version to stdout (nothing else goes to stdout). Requires the `tropelang` CLI on PATH.
+# Prepare a corpus release: bump the version and roll up the changelog (after checking the index is in
+# sync). Used by .github/workflows/release.yml; runnable locally too. Prints the new version to stdout
+# (nothing else goes to stdout). Requires the `tropelang` CLI on PATH. Deliberately touches NO workflow
+# file, so the conversion-bot App (no `workflows` permission) can push the resulting commit.
 #
 # Usage: scripts/cut-release.sh <point|minor|major|X.Y.Z>
 set -euo pipefail
@@ -9,7 +10,6 @@ set -euo pipefail
 arg="${1:?usage: cut-release.sh <point|minor|major|X.Y.Z>}"
 toml="trl/tropes/corpus.toml"
 changelog="CHANGELOG.md"
-publish=".github/workflows/publish.yml"
 
 cur=$(grep -E '^version' "$toml" | head -1 | cut -d'"' -f2)
 [ -n "$cur" ] || { echo "cut-release: no version in $toml" >&2; exit 1; }
@@ -32,10 +32,10 @@ esac
 # 1. bump corpus.toml version
 sed -i.bak -E "s/^(version[[:space:]]*=[[:space:]]*\").*(\")/\1${new}\2/" "$toml" && rm -f "$toml.bak"
 
-# 2. sync --expect-tropes to the live effective count (assemble also refreshes the index; a no-op if in sync)
-count=$(tropelang assemble "$toml" | sed -nE 's/.* ([0-9]+) effective tropes.*/\1/p' | head -1)
-[ -n "$count" ] || { echo "cut-release: could not read the effective trope count" >&2; exit 1; }
-sed -i.bak -E "s/--expect-tropes [0-9]+/--expect-tropes ${count}/" "$publish" && rm -f "$publish.bak"
+# 2. sanity: refuse to release on a stale index (don't edit any workflow file — a GitHub App can't push
+#    .github/workflows/* without the workflows permission, which the bot intentionally lacks).
+tropelang assemble "$toml" --check >/dev/null \
+  || { echo "cut-release: index.trl is stale — run 'tropelang assemble $toml' and commit it first" >&2; exit 1; }
 
 # 3. roll up CHANGELOG: insert a dated heading right after [Unreleased] (its current body rolls under it)
 if ! grep -q '^## \[Unreleased\]' "$changelog"; then
@@ -47,5 +47,5 @@ awk -v ver="$new" -v d="$date" '
   { print }
 ' "$changelog" > "$changelog.tmp" && mv "$changelog.tmp" "$changelog"
 
-echo "cut-release: $cur → $new (expect-tropes $count, changelog rolled up)" >&2
+echo "cut-release: $cur → $new (changelog rolled up)" >&2
 echo "$new"
