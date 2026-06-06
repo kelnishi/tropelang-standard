@@ -20,8 +20,6 @@ jobs:
   prep:
     if: github.repository == 'kelnishi/tropelang-standard'
     runs-on: ubuntu-latest
-    env:
-      CLI_TAG: cli-v0.4.0
     steps:
       # Mint the bot token FIRST and check out WITH it, so the remote is authed as the bot — otherwise
       # checkout pins an http.extraheader for GITHUB_TOKEN (read-only) that overrides any push-URL token.
@@ -37,10 +35,16 @@ jobs:
           ref: main
           token: ${{ steps.token.outputs.token }}
 
-      - name: install pinned tropelang CLI
+      - name: install the latest tropelang CLI
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p "$HOME/.local/bin"
-          curl -fSL "https://github.com/kelnishi/tropelang-standard/releases/download/${CLI_TAG}/tropelang-x86_64-linux" -o "$HOME/.local/bin/tropelang"
+          # Resolve the latest cli-v* release (NOT releases/latest — that can be a corpus-v* release).
+          TAG=$(gh release list --repo kelnishi/tropelang-standard --limit 100 --json tagName \
+                  --jq '[.[] | select(.tagName | startswith("cli-v"))][0].tagName')
+          [ -n "$TAG" ] || { echo "::error::no cli-v* release found"; exit 1; }
+          curl -fSL "https://github.com/kelnishi/tropelang-standard/releases/download/$TAG/tropelang-x86_64-linux" -o "$HOME/.local/bin/tropelang"
           chmod +x "$HOME/.local/bin/tropelang"
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
