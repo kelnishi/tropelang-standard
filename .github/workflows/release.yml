@@ -23,9 +23,19 @@ jobs:
     env:
       CLI_TAG: cli-v0.4.0
     steps:
+      # Mint the bot token FIRST and check out WITH it, so the remote is authed as the bot — otherwise
+      # checkout pins an http.extraheader for GITHUB_TOKEN (read-only) that overrides any push-URL token.
+      - name: mint conversion-bot token
+        id: token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.CONVERSION_APP_ID }}
+          private-key: ${{ secrets.CONVERSION_APP_PRIVATE_KEY }}
+
       - uses: actions/checkout@v4
         with:
           ref: main
+          token: ${{ steps.token.outputs.token }}
 
       - name: install pinned tropelang CLI
         run: |
@@ -40,13 +50,6 @@ jobs:
           NEW=$(bash scripts/cut-release.sh "${{ inputs.bump }}")
           echo "version=$NEW" >> "$GITHUB_OUTPUT"
 
-      - name: mint conversion-bot token
-        id: token
-        uses: actions/create-github-app-token@v1
-        with:
-          app-id: ${{ secrets.CONVERSION_APP_ID }}
-          private-key: ${{ secrets.CONVERSION_APP_PRIVATE_KEY }}
-
       - name: open the release PR as the bot
         env:
           GH_TOKEN: ${{ steps.token.outputs.token }}
@@ -57,7 +60,7 @@ jobs:
           BR="release/$VER"
           git checkout -b "$BR"
           git commit -am "Release $VER"
-          git push "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" "$BR"
+          git push origin "$BR"        # remote is authed with the App token (checkout above)
           gh pr create --repo "${{ github.repository }}" --base main --head "$BR" \
             --title "Release $VER" \
             --body "Automated release prep for \`$VER\`: version bumped, \`--expect-tropes\` synced to the live count, CHANGELOG \`[Unreleased]\` rolled up. **Merge** to auto-tag \`corpus-v$VER\` → publish (then approve the \`production\` deployment). Promote by editing \`channels/standard.stable.json\`."
