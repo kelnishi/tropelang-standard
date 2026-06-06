@@ -1,39 +1,37 @@
 # Untrusted PR gate — NO secrets, read-only token. Validates/gates the corpus against the pinned engine
 # CLI. The publish pipeline (with the CF deploy credential) is a SEPARATE, environment-gated workflow
 # (spec 22 §6.4) — never share a job with this one, and never use pull_request_target here.
-name: gate
-on:
-  pull_request:
-  push:
-    branches: [main]
-permissions:
-  contents: read
-concurrency:
-  group: gate-${{ github.ref }}
-  cancel-in-progress: true
-jobs:
-  gate:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # need the base for the changed-files diff
-      - uses: dtolnay/rust-toolchain@stable
-      # Pin the engine CLI = the engineMin floor (spec 19). Pre-publish: install from the engine repo;
-      # post-publish: `cargo install tropelang-cli@<pinned>`.
-      - name: install tropelang-cli
-        run: cargo install --git https://github.com/kelnishi/TropeLang tropelang-cli --locked
-      - name: index in sync
-        run: tropelang assemble trl/tropes/corpus.toml --check
-      - name: gate changed tropes
-        run: |
-          base="${{ github.event.pull_request.base.sha || 'HEAD~1' }}"
-          changed=$(git diff --name-only "$base"... -- 'trl/**/*.trl' || true)
-          [ -z "$changed" ] && echo "no .trl changes" && exit 0
-          for f in $changed; do
-            [ -f "$f" ] || continue            # skip deletions
-            echo "── $f"
-            tropelang gate "$f" || exit 1
-          done
-      # TODO (handoff with Phase 3b): a `tropelang selfcheck` verb runs the full-corpus count tripwire +
-      # the per-trope recognition self-test here — the coverage that relocates from the engine repo.
+  name: gate
+  on:
+    pull_request:
+    push:
+      branches: [main]
+  permissions:
+    contents: read
+  jobs:
+    gate:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
+        - name: install pinned tropelang CLI
+          env:
+            CLI_TAG: cli-v0.3.0
+          run: |
+            mkdir -p "$HOME/.local/bin"
+            curl -fSL "https://github.com/kelnishi/tropelang-standard/releases/download/${CLI_TAG}/tropelang-x86_64-linux" -o "$HOME/.local/bin/tropelang"
+            chmod +x "$HOME/.local/bin/tropelang"
+            echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+            "$HOME/.local/bin/tropelang" version
+        - name: index in sync
+          run: tropelang assemble trl/tropes/corpus.toml --check
+        - name: gate changed tropes
+          run: |
+            base="${{ github.event.pull_request.base.sha || 'HEAD~1' }}"
+            changed=$(git diff --name-only "$base"... -- 'trl/**/*.trl' || true)
+            [ -z "$changed" ] && echo "no .trl changes" && exit 0
+            for f in $changed; do
+              [ -f "$f" ] || continue
+              echo "── $f"; tropelang gate "$f" || exit 1
+            done
