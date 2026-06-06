@@ -29,15 +29,20 @@ jobs:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
     env:
-      CLI_TAG: cli-v0.4.0
       BASE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: install the tropelang CLI (from upstream releases)
+      - name: install the latest tropelang CLI (from upstream releases)
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p "$HOME/.local/bin"
-          curl -fSL "https://github.com/kelnishi/tropelang-standard/releases/download/${CLI_TAG}/tropelang-x86_64-linux" -o "$HOME/.local/bin/tropelang"
+          # Resolve the latest cli-v* release (NOT releases/latest — that can be a corpus-v* release).
+          TAG=$(gh release list --repo kelnishi/tropelang-standard --limit 100 --json tagName \
+                  --jq '[.[] | select(.tagName | startswith("cli-v"))][0].tagName')
+          [ -n "$TAG" ] || { echo "::error::no cli-v* release found"; exit 1; }
+          curl -fSL "https://github.com/kelnishi/tropelang-standard/releases/download/$TAG/tropelang-x86_64-linux" -o "$HOME/.local/bin/tropelang"
           chmod +x "$HOME/.local/bin/tropelang"
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
           tropelang version
