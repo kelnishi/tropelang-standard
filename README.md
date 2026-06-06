@@ -71,3 +71,11 @@ none of this — they use `pages.yml` (§2).
   `production` environment (required reviewer) holds `CLOUDFLARE_ACCOUNT_ID` + `R2_ACCESS_KEY_ID` +
   `R2_SECRET_ACCESS_KEY` — a bucket-scoped R2 token used over the S3 API. The `publish.yml` / `promote.yml`
   headers document the security model.
+
+## License
+Dual-licensed:
+- **Corpus content** — everything under `trl/` — is dedicated to the public domain under **CC0-1.0**
+  (see [`trl/LICENSE`](trl/LICENSE)). The published bundle's `manifest.license` reflects this, so a fork
+  or downstream consumer can reuse the tropes freely.
+- **Tooling** — the Worker, scripts, workflows, the conversion skill, and docs — is **MIT**
+  (see [`LICENSE`](LICENSE)).
