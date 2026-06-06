@@ -26,14 +26,16 @@ redeploying the site.
 Cloudflare dashboard → R2 → **Create bucket** → name **`tropelang-corpus`** (matches `worker/wrangler.toml`
 and `R2_BUCKET` in the workflows). No public access — the Worker is the only read path.
 
-### 2. Create a least-privilege API token
-R2 → **Manage API Tokens** (or My Profile → API Tokens → Create Token). Scope it to **just what publish
-needs** (spec 22 §6.4):
-- **Workers R2 Storage** → **Edit**, restricted to the **`tropelang-corpus`** bucket — object read/write.
-- **Workers Scripts** → **Edit** (so `wrangler deploy` can publish the Worker).
-- Account → **Workers Routes / DNS Edit** for the `tropelang.com` zone (custom-domain route).
+### 2. Create a least-privilege R2 token (S3 credentials)
+R2 → **Manage R2 API Tokens** → **Create API Token**: permission **Object Read & Write**, scoped to the
+**`tropelang-corpus`** bucket only. CI drives R2 over the **S3-compatible API** (not `wrangler r2 object`,
+which rejects bucket-scoped tokens), so what you need from this screen is the pair it generates:
+- **Access Key ID** → GitHub secret `R2_ACCESS_KEY_ID`
+- **Secret Access Key** → GitHub secret `R2_SECRET_ACCESS_KEY`
 
-Record the token value and your **Account ID** (R2 sidebar / dashboard URL).
+Also record your **Account ID** (the S3 endpoint is `https://<account-id>.r2.cloudflarestorage.com`).
+The Worker is deployed separately by you (`wrangler login` — step 5), so this token needs **no** Workers
+Scripts / DNS permissions: it's R2-object-only on the one bucket.
 
 ### 3. DNS / zone
 The `tropelang.com` zone must be in this Cloudflare account. `worker/wrangler.toml` declares a
@@ -50,8 +52,9 @@ Repo → Settings → Environments → **New environment** → **`production`**:
   even though the trigger is a tag/merge, the Cloudflare credential is unreachable until you approve.
 - **Deployment branches:** limit to `main` + tags if desired.
 - **Environment secrets:**
-  - `CLOUDFLARE_ACCOUNT_ID` — your account ID.
-  - `CLOUDFLARE_API_TOKEN` — the token from step 2.
+  - `CLOUDFLARE_ACCOUNT_ID` — your account ID (used to build the R2 S3 endpoint URL).
+  - `R2_ACCESS_KEY_ID` — the R2 token's Access Key ID (step 2).
+  - `R2_SECRET_ACCESS_KEY` — the R2 token's Secret Access Key (step 2).
 
 > These live in the **environment**, not repo-wide, so no other workflow (and no fork PR) can reach them.
 

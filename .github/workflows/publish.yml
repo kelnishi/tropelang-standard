@@ -22,8 +22,14 @@ jobs:
       CLI_TAG: cli-v0.4.0            # the engine CLI release whose `bundle` emits the spec-19 manifest
       R2_BUCKET: tropelang-corpus
       CORPUS_BASE_URL: https://corpus.tropelang.com
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      # R2 object I/O over the S3-compatible API (honors a bucket-scoped R2 token). The R2 token's S3
+      # credentials go in R2_ACCESS_KEY_ID / R2_SECRET_ACCESS_KEY; the endpoint is derived from the account.
+      AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: auto
+      AWS_REQUEST_CHECKSUM_CALCULATION: when_required   # aws-cli v2 default checksums break R2
+      AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
+      R2_S3_ENDPOINT: https://${{ secrets.CLOUDFLARE_ACCOUNT_ID }}.r2.cloudflarestorage.com
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
@@ -59,7 +65,7 @@ jobs:
       - name: immutability guard — refuse to overwrite a published version
         run: |
           ID=${{ steps.bundle.outputs.id }}; VER=${{ steps.bundle.outputs.ver }}
-          if npx --yes wrangler@3 r2 object get "$R2_BUCKET/$ID/$VER/manifest.json" --file /dev/null 2>/dev/null; then
+          if aws s3api head-object --endpoint-url "$R2_S3_ENDPOINT" --bucket "$R2_BUCKET" --key "$ID/$VER/manifest.json" >/dev/null 2>&1; then
             echo "::error::$ID/$VER is already published (immutable) — bump the corpus version"; exit 1
           fi
           echo "ok: $ID/$VER is new"
@@ -67,8 +73,8 @@ jobs:
       - name: upload immutable bundle
         run: |
           ID=${{ steps.bundle.outputs.id }}; VER=${{ steps.bundle.outputs.ver }}
-          npx --yes wrangler@3 r2 object put "$R2_BUCKET/$ID/$VER/corpus.json"   --file "dist/$ID/$VER/corpus.json"   --content-type application/json
-          npx --yes wrangler@3 r2 object put "$R2_BUCKET/$ID/$VER/manifest.json" --file "dist/$ID/$VER/manifest.json" --content-type application/json
+          aws s3api put-object --endpoint-url "$R2_S3_ENDPOINT" --bucket "$R2_BUCKET" --key "$ID/$VER/corpus.json"   --body "dist/$ID/$VER/corpus.json"   --content-type application/json
+          aws s3api put-object --endpoint-url "$R2_S3_ENDPOINT" --bucket "$R2_BUCKET" --key "$ID/$VER/manifest.json" --body "dist/$ID/$VER/manifest.json" --content-type application/json
 
       # Mirror channel pointers + regenerate the discovery index. Does NOT auto-promote: publishing a new
       # version leaves `stable` where it was. Promotion is a deliberate, separate step (promote.yml).
