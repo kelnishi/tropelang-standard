@@ -1,5 +1,5 @@
 // @title   TropeLang Prelude — Standard Library
-// @version 1.8
+// @version 1.9
 //
 // Automatically in scope for every .trl file.
 // Do not import manually. Override with // @no-prelude for a clean slate.
@@ -166,6 +166,7 @@ prop Immortal      [+Ontological]
 prop Sentient      [+Ontological]
 prop Animate       [+Ontological]
 prop Inanimate     [+Ontological]
+prop Vehicle       [+Ontological]    // a conveyance — car, ship, mount; an inanimate thing that carries
 prop Singular      [+Ontological]    // unique — only one can exist
 prop Collective    [+Ontological]    // a group, institution, or people
 prop Primordial    [+Ontological]    // existed before the current order
@@ -389,6 +390,8 @@ rel Indebted_To(other: char)     [+Social]
 rel LoyalTo(side: char|set|concept)          [+Social]    // allegiance to a side, faction, or cause
 rel Avenges(subject: char)       [+Social]    // bound to right a wrong done to the subject — the vengeance tie
 rel Foils(other: char)           [+Narrative]  // a contrast tie — one character throws another into relief
+rel Bonded_To(other: char)       [+Social]    // a chosen close bond — found family, sworn friendship (mutual)
+rel Sundered_From(other: char)   [+Social]    // parted from — the bond broken or the two kept apart
 
 
 // =============================================================================
@@ -545,6 +548,18 @@ prop Pivotal          [+Narrative]    // decisive to the outcome — the hinge a
 state Mundane         [+Narrative]    // unremarkable on its face — the disguise a planted element hides behind (contrast Conspicuous)
 prop Endgame          [+Narrative]    // the story's late, decisive phase — where the planted debts come due
 
+// Diegetic, narration & narrative-role vocabulary (founded from recurring inline refs across the
+// diegetic-level, non-fiction, epistemic & character tropes — the rules stay in those tropes).
+prop Narrator         [+Narrative]    // the narrating voice — tells the story from within or above it
+prop Spectator        [+Narrative]    // the audience-figure who watches — whom a fourth-wall break addresses
+prop Canon            [+Narrative]    // canonically real within the diegesis (vs. a dream / show-within)
+prop RealEvent        [+Narrative]    // a real, non-fictional event — the reality behind a dramatization
+prop Detective        [+Narrative]    // the investigator role — gathers the clues toward the solution
+state Invincible      [+Narrative]    // cannot be harmed — plot-armored against the outcome
+prop Treacherous(toward) [+Social]    // disloyal to the one served — the betrayer-in-waiting (param: toward=)
+prop Family(with)     [+Kinship]      // bound as family — kin by choice, not only blood (param: with=)
+state Oppressive      [+Social]       // a force, regime, or atmosphere that bears down on those under it
+
 // Story-level verbs — what events do at the narrative level
 verb Foreshadows(event: evt) [+Narrative]
 verb Resolves(tension)     [+Narrative]   // role flexible: param vs corpus subject= mismatch, too rare to align
@@ -557,6 +572,7 @@ verb Concludes(thread: arc) [+Narrative]   // closes a narrative arc
 verb Catalyzes(change)     [+Narrative]
 verb Introduces(object)    [+Narrative]   // plants an element into the story — role flexible: object=/person=
 verb Uses(object)          [+Narrative]   // brings a planted element to bear — role flexible: object=/skill=, with agent=/target=
+verb Wakes(agent)          [+Narrative]   // exits a dream / inner diegetic level — the level-pop back to the frame
 
 
 // =============================================================================

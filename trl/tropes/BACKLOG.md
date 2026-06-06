@@ -154,27 +154,26 @@ for f in $(git ls-files 'trl/tropes/**/*.trl' | grep -v index.trl); do tropelang
   | jq -r '.inline_tags[]' | sort | uniq -c | sort -rn   # frequency-ranked unfounded nodes
 ```
 
-**Founded so far.** The 1.7.0 founding sweep declared most of the old P1 list as prelude TIER-0 nodes:
-`Pursues`, `Trusted`, `Exposed`, `Redeemed`, `Survivor`, `Coveted` are all declared now. The 1.8 round
-founded the **Chekhov's-Gun planting/payoff** cluster in `prelude.trl` (the densest remaining cluster):
-`Payoff(item)`, `Introduces`, `Uses`, `Fired`, `Pivotal`, `Mundane`, `Endgame` — turning ~20
-occurrences across `chekhovs_*` + `foreshadowing`/`the_reveal`/`karma_houdini` green. (The rules stay in
-the tropes; only the shared vocabulary was founded — no new module.)
+**Founded so far.** The 1.7.0 sweep declared most of the old P1 list (`Pursues`, `Trusted`, `Exposed`,
+`Redeemed`, `Survivor`, `Coveted`), and `LoyalTo` + `Avenges` are already `rel`s in the prelude (the
+corpus just uses different param keys — tolerated). The **1.8** round founded the **Chekhov's-Gun
+planting/payoff** cluster (`Payoff(item)`, `Introduces`, `Uses`, `Fired`, `Pivotal`, `Mundane`,
+`Endgame`). The **1.9** round founded the **diegetic / narration / role cluster** (the next densest):
+`Narrator`, `Spectator`, `Canon`, `RealEvent`, `Detective`, `Invincible`, `Oppressive`, `Vehicle`,
+`Treacherous(toward)`, `Family(with)`, and the relations `Bonded_To`/`Sundered_From` + the verb `Wakes`
+— ~32 occurrences turned green across the diegetic, non-fiction, epistemic, and bonds tropes. (Rules
+stay in the tropes; only vocabulary founded — no new module.)
 
-**Next unfounded clusters (live count, 2026-06 — re-measure before picking).** Priority = frequency ×
-cross-trope reusability:
-- **Diegetic / narration & audience** — `Narrator` (4: frame_story, the_narrator, tomato_surprise,
-  unreliable_narrator), `Spectator` (3: fourth_wall, reality_bleed, talking_head). The S14 layer's
-  audience/narrator roles — a coherent prelude or concept founding.
-- **Non-fiction** — `RealEvent` (3: based_on_a_true_story, reenactment, talking_head). The reality-vs-
-  dramatization marker; founds with the non-fiction forms.
-- **Loose universals** — `Vehicle` (3), `Oppressive` (3), `Pass` (3), `Plain`/`Detective`/`Invincible`/
-  `Faithful`/`Treacherous`/`Leader` (2 each). Decide prelude prop vs. concept per term.
-- **Still-undeclared relations/verbs** — `LoyalTo` (4 files, a `[@rel]`), `Avenges`, `MadeBy`. These are
-  relations, not `+` tags, so they need `rel`/`verb` founding, not a prop.
+**Next unfounded clusters (live count after 1.9 — re-measure with the command above before picking).**
+No dense clusters remain; the tail is mostly 2–3× terms. Priority = frequency × cross-trope reusability:
+- `Pass` (3: last_stand, pyrrhic_victory, you_shall_not_pass) — likely a held passage/chokepoint; check
+  the sense before founding (vs. the verb "to pass").
+- 2× terms to weigh per-term: `Betrayer`, `TrueRescue`, `Recalls`/`Predicts` (verbs), `Field`, `Leader`,
+  `Plain` and `Faithful` (both **ambiguous** — double meanings; left inline deliberately until split).
+- The rest is a long tail of genuinely bespoke one-off flavor tags — keep broken per the closed-
+  vocabulary decision unless they recur and earn promotion.
 
-Keep genuinely bespoke flavor tags (one-off character descriptors) broken per the closed-vocabulary
-decision unless they recur and earn promotion.
+Keep genuinely bespoke flavor tags (one-off character descriptors) broken unless they recur and earn it.
 
 ### Domain libraries & structural tropes (done — kept for provenance)
 - **P2 domain vocab:** `modules/siege.trl` + `modules/heist.trl` declare the siege/military and
