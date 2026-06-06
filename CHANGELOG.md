@@ -17,6 +17,8 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 
 ## [Unreleased]
 
+## [1.7.2] — 2026-06-06
+
 ### Changed
 - **Prelude opposition/alliance valence** (TIER 7, prelude `@version 1.15`) — sharpened-bond relations now
   thread the counterparty into the weaker base relation AND stamp the affective charge: `Adversary_Of`,
