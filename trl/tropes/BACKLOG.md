@@ -188,9 +188,14 @@ Done: Hero's Journey · Freytag · Story Circle · Save the Cat · Booker's Seve
 ---
 
 ## drams gap (the measured forward target)
-NOTE: the eval-story fixtures (`examples/aragorn_fotr.trl`, `examples/mythbusters_water_heater.trl`)
-live **engine-side, not in this repo** — so the eval-side fixes below are a cross-repo task (run
-`tropelang drams <story>` where the fixtures live). The remaining uncovered facts, in priority order:
+NOTE: the eval-story fixtures live **engine-side, not in this repo**, and use the contingency/`resolve`
+grammar (`*(…|…) as x*`, `resolve … -> …`) that the **shipped CLI `drams`/`eval` cannot parse** (only
+the engine-internal `drams` example handles them; the latent `?(…)?` form does parse) — so measuring and
+verifying these is a cross-repo, engine-internal task. PREPARED FIX for the Aragorn kingship facts (the
+"cover for free via Royalty" one-liner): add to `examples/aragorn_fotr.trl`'s ontology —
+`imply Rightful_King_of_Gondor -> [Heir_of_Isildur]` and `imply Exile_Who_Refuses_Crown -> [Heir_of_Isildur]`
+(`Heir_of_Isildur` already implies `Royalty`, so both reach it transitively). The remaining uncovered
+facts, in priority order:
 - **fantasy** (`aragorn_fotr`): `Hobbit`, `Chieftain_of_the_Dunedain`, `Dangerous`, `Kingly_Bearing`,
   `Ranger`, `Dunedain`, `Wizard`, `Maiar`, `Elf`, `Halfelven` — mostly fantastic species/roles (low
   general value); `Rightful_King_of_Gondor`/`Exile_Who_Refuses_Crown` would cover *for free* if the
