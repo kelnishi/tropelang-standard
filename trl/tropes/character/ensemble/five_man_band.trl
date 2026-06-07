@@ -1,0 +1,105 @@
+// === PREAMBLE ===
+// @trope    Five-Man Band
+// @category Cast / Ensemble
+// @source   https://allthetropes.org/wiki/Category:Five-Man_Band
+// @version  1.3
+// @domain    Narrative
+//
+// Laconic (per the wiki): a team whose members fall into five complementary archetypes — The Hero
+// (leader), The Lancer (his foil and second), The Smart Guy (brains), The Big Guy (muscle), and The
+// Chick (the heart) — each contributing a distinct skill to the group. "It's the roles more than the
+// numbers that matter." FRONTIER: the first ENSEMBLE-structure trope — recognition rides not on one
+// character but on the CO-PRESENCE of five distinct complementary roles bound to one shared mission.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+import "trl/tropes/character/roles/the_lancer.trl"   // the band reuses the [+Lancer] role it rides on
+
+assoc five_man_band -> [
+  the_hero   : "is led by",
+  the_lancer : "pairs the hero with",
+  conflict   : "a complementary team formed to win a"
+]
+
+
+// === ONTOLOGY ===
+
+// — founded here (ensemble-cast vocabulary; promotion model, cf. the_wizard — seeds future team tropes) —
+prop Ensemble [+Social]      // a cast that functions as one complementary unit
+prop SmartGuy [+Narrative]   // the brains — clever, the plans and the tech, brawn-light
+prop BigGuy   [+Narrative]   // the muscle — the strongman of the team
+prop TheChick [+Narrative]   // the heart — the peacekeeping centre that holds the band together
+
+imply FiveManBand -> [Ensemble, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: five DISTINCT characters filling the five complementary roles — Hero, Lancer, Smart Guy,
+// Big Guy, Chick — all bound to one shared mission, is the Five-Man Band. The Hero anchors the mission
+// ([&Initiates], thread=$mission); the other four back him ([&Aided], other=$hero). Every member is the
+// agent of an event, so phase-2 coverage re-checks each role tag on its bound entity (STYLE §8); the
+// ten distinctness clauses force five different people (enforced at recognition on engine ≥ 0.4.3). The
+// discriminator is the conjunction of all five distinct roles — no smaller team carries it.
+rule Five_Man_Band {
+  when:
+    arc  $mission
+    char $hero   [+Hero]
+    char $lancer [+Lancer]
+    char $smart  [+SmartGuy]
+    char $big    [+BigGuy]
+    char $chick  [+TheChick]
+    evt  $lead  [&Initiates(agent=$hero,   thread=$mission)]
+    evt  $back  [&Aided(agent=$lancer, other=$hero)]
+    evt  $solve [&Aided(agent=$smart,  other=$hero)]
+    evt  $smash [&Aided(agent=$big,    other=$hero)]
+    evt  $heal  [&Aided(agent=$chick,  other=$hero)]
+    $hero   != $lancer
+    $hero   != $smart
+    $hero   != $big
+    $hero   != $chick
+    $lancer != $smart
+    $lancer != $big
+    $lancer != $chick
+    $smart  != $big
+    $smart  != $chick
+    $big    != $chick
+  then:
+    $hero [+Leader]
+    $lead [+FiveManBand]
+    $hero -- conflict
+}
+
+
+// === CONCRETE VIGNETTE: Science Ninja Team Gatchaman — G-Force (anime, 1972) ===
+// The ur-example, and the page's own illustration: five ninja in bird motifs, each a distinct skill.
+// Ken the Eagle leads; Joe the Condor is the loner second who foils his discipline; Jinpei the Swallow
+// is the clever kid; Ryu the Owl is the big pilot at the God Phoenix's controls; Jun the Swan is the
+// team's heart. One team, five complementary roles, one war against Galactor.
+
+// KEN THE EAGLE — Gatchaman No. 1, the leader
+char ken    [+Hero]
+// JOE THE CONDOR — the rival second, the Lancer's foil to Ken's discipline
+char joe    [+Lancer]
+// JINPEI THE SWALLOW — the clever kid, the Smart Guy
+char jinpei [+SmartGuy]
+// RYU THE OWL — the big pilot of the God Phoenix, the muscle
+char ryu    [+BigGuy]
+// JUN THE SWAN — the heart of the team, the Chick
+char jun    [+TheChick]
+
+// THE WAR ON GALACTOR — the shared mission the band is formed to win
+arc the_mission
+
+scene a_galactor_raid {
+  beat 1 {
+    // Ken leads the team into the mission — the Hero anchors the band
+    evt the_call [&Initiates(agent=ken, thread=the_mission)]
+    // the other four back the leader, each with their distinct skill
+    evt covering_fire [&Aided(agent=joe,    other=ken)]   // the Lancer's guns
+    evt the_intel     [&Aided(agent=jinpei, other=ken)]   // the Smart Guy's read of the mech
+    evt the_phoenix   [&Aided(agent=ryu,    other=ken)]   // the Big Guy at the controls
+    evt the_rescue    [&Aided(agent=jun,    other=ken)]   // the Chick pulls a civilian clear
+    // Five_Man_Band derives: ken [+Leader]; the_call [+FiveManBand]; ken -- conflict
+  }
+}

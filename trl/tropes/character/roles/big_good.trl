@@ -1,0 +1,66 @@
+// === PREAMBLE ===
+// @trope    Big Good
+// @category Relationships / Cast
+// @source   https://allthetropes.org/wiki/Big_Good
+// @version  1.3
+// @domain    Interpersonal
+//
+// Laconic (per the wiki): the counterpart to the Big Bad — the cornerstone of the heroic movement,
+// at its most general "the leader of the largest group opposing the Big Bad." Need not be the
+// protagonist (often the mentor or commander the hero works up toward). The discriminator is LEADERSHIP
+// of the opposition: not merely a good or brave figure, but the one who marshals the force arrayed
+// against the dark pole. The mirror image of `the_big_bad`.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+
+assoc big_good -> [
+  the_big_bad : "the bright pole opposite a",
+  conflict    : "anchors the heroic side of a",
+  the_mentor  : "when not the hero, is usually the"
+]
+
+
+// === ONTOLOGY ===
+
+imply BigGood -> [Leader, Heroic, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a [+Heroic] [+Leader] who OPPOSES the Big Bad — marshalling the largest force against
+// the principal scheming foe — IS the Big Good. The opposition rides an EVENT ([&Opposes], the stand
+// against the dark pole) so the rule is recalled and phase-2 coverage re-checks [+Leader] [+Heroic] on
+// the bound $g and [+Antagonist] [+Mastermind] on the Big Bad (STYLE §8). [+Leader] is the positive
+// discriminator over a plain hero: the cornerstone who leads the movement, not merely a brave fighter.
+rule Big_Good {
+  when:
+    char $v [+Antagonist] [+Mastermind]            // the Big Bad pole
+    char $g [+Leader] [+Heroic]                     // cornerstone of the heroic movement
+    evt  $stand [&Opposes(agent=$g, other=$v)]      // marshals the resistance against the dark pole
+  then:
+    $g [+BigGood]
+    $g [+Opposed_To(villain=$v)]
+    $g -- conflict
+}
+
+
+// === CONCRETE VIGNETTE: The Transformers — Optimus Prime vs. Megatron (animation, 1984) ===
+// The Autobot leader is the bright mirror of the Decepticon warlord: where Megatron schemes to seize
+// the AllSpark and rule, Optimus is the cornerstone the heroes rally to — the highest in rank, the
+// most trusted, the one who stands between Megatron and a conquered Earth. Not the rookie the audience
+// rides along with, but the leader that rookie works up toward.
+
+// OPTIMUS PRIME — leader of the Autobots, the cornerstone of the resistance
+char optimus  [+Leader] [+Heroic]
+
+// MEGATRON — the Decepticon warlord, the scheming dark pole
+char megatron [+Antagonist] [+Mastermind]
+
+scene the_stand {
+  beat 1 {
+    // Optimus marshals the Autobots against the warlord — the leader of the force opposing the Big Bad
+    evt hold_the_line [&Opposes(agent=optimus, other=megatron)]
+    // Big_Good derives: optimus [+BigGood] [+Opposed_To(villain=megatron)] -- conflict
+  }
+}

@@ -24,14 +24,14 @@ of systems (modules that *simulate* a dynamic) with tropes riding on top (named 
 
 ## Corpus metrics & self-recognition audit (2026-06 — re-measure before acting)
 
-Snapshot at **196 tropes** (re-measure declaration counts before acting; the self-recognition drive added `verb Forsakes` to the prelude, and `the_wizard` founds `prop Arcane` + `verb Casts` locally).
+Snapshot at **204 tropes** (re-measure declaration counts before acting; the self-recognition drive added `verb Forsakes` to the prelude, `the_wizard` founds `prop Arcane` + `verb Casts` locally, and the `convert/high-profile-gaps` branch founds — all locally — `prop Lesson`/`state Edified` (an_aesop), `prop Villainous` (villain_protagonist), `prop Ensemble`/`SmartGuy`/`BigGuy`/`TheChick` (five_man_band), `prop Baseline`/`state Restored` (status_quo_is_god), `prop SeriesGoal`/`state Thwarted` (failure_is_the_only_option), `prop Clever`/`verb Blunders` (idiot_ball), and `prop Binary`/`verb Forges` (take_a_third_option)).
 
 - **Founding / unfounded nodes:** inline (unfounded) tags down to **204** (from 291 at the start of the
   drive-down). Only `Plain`/`Faithful` recur (2× each, ambiguous — split before founding); the rest is
   one-off bespoke flavor. **Founding is effectively complete.**
 - **drams (per-trope coverage × density):** coverage mean **22%** / median 19%; density mean **0.26×**;
   497 rule firings (mean 2.56/trope); only 2 zero-firing tropes (`dramatic_irony`, `fourth_wall`).
-- **Self-recognition (the quality target): `195/195` (100%) — ✅ COMPLETE.** Every trope confirms its
+- **Self-recognition (the quality target): `204/204` (100%) — ✅ COMPLETE.** Every trope confirms its
   own vignette (started at 147/194). The §4b discriminator-binding worklist below is DONE — kept for
   provenance. Re-measure: `tropelang selfcheck trl/tropes/corpus.toml --corpus file://trl`.
 
@@ -236,12 +236,14 @@ The **1.10** round ground down the remaining 2–3× tail: props `Betrayer(of)`,
 - A long tail of genuinely one-off bespoke flavor tags (`KeyserSoze`, `Pawn`, `Phantom`, `Unmasked`, …)
   — keep broken per the closed-vocabulary decision unless one recurs and earns promotion.
 
-With founding exhausted **and self-recognition complete (`196/196`, 100%)**, the forward target is
+With founding exhausted **and self-recognition complete (`204/204`, 100%)**, the forward target is
 **converting new tropes**. The richest vein is the **allthetropes high-profile coverage gaps** — see
 the coverage-review recipe and the current gap list in **`CONVERSION_BOT.md` → "Sourcing & coverage
-review"** (top candidates: An Aesop, Big Good, Villain Protagonist, Five-Man Band). Smaller leftovers:
-further Love Triangle variants, "Within a Frame Story", the cross-repo eval-side drams gap above, and
-the low-value fantastic-species framing.
+review"**. Done on the `convert/high-profile-gaps` branch: An Aesop, Big Good, Villain Protagonist,
+Five-Man Band, Status Quo Is God, Failure Is the Only Option, Idiot Ball, Take a Third Option. Next
+candidates: Character Development, Title Drop, Genre Savvy (+ re-run the coverage review for fresh
+ones). Smaller leftovers: further Love Triangle variants, "Within a Frame Story", the cross-repo
+eval-side drams gap above, and the low-value fantastic-species framing.
 
 ### Domain libraries & structural tropes (done — kept for provenance)
 - **P2 domain vocab:** `modules/siege.trl` + `modules/heist.trl` declare the siege/military and

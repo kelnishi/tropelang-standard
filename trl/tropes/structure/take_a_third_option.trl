@@ -1,0 +1,76 @@
+// === PREAMBLE ===
+// @trope    Take a Third Option
+// @category Plotting Devices
+// @source   https://allthetropes.org/wiki/Take_a_Third_Option
+// @version  1.3
+// @domain    Narrative
+//
+// Laconic (per the wiki): faced with an agonizing binary — two terrible choices, a Sadistic Choice or
+// Morton's Fork — the hero rejects BOTH and forges an unorthodox third, which typically turns out best.
+// FRONTIER: a resolution recognized by the REFUSAL of the offered frame plus the creation of a new
+// option — "there's always a third way, and it's not a combination of the other two." Distinct from The
+// Dilemma (which is the binary itself, taken on its terms) by cutting the knot rather than choosing.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc take_a_third_option -> [
+  the_dilemma : "the knot-cutting escape from",
+  conflict    : "resolves, by refusing its terms, a"
+]
+
+
+// === ONTOLOGY ===
+
+// — founded here (the third-path creation is the trope's discriminator; promotion model, cf. the_wizard) —
+prop Binary       [+Narrative]   // a forced choice framed as exactly two (both bad) options
+verb Forges(option) [+Narrative] // creates an unorthodox new path — the third way, not on the menu
+
+imply TakeAThirdOption -> [Binary, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: the hero REJECTS the binary itself and FORGES a third option not on offer. The rejection
+// must be OF the dilemma — `[&Rejected(agent=$h, other=$dilemma)]` binds the [+Binary] dilemma on an
+// event role so phase-2 re-checks it on the bound entity (STYLE §8); an object-less refusal would leave
+// the [+Binary] free-floating and the rule would fire on any unrelated refuse-plus-forge. The forging
+// ([&Forges], agent=$h) makes the new path. The discriminator is the pairing tied to the SAME dilemma —
+// rejecting the two AND making a third — parting it from The Dilemma (choosing within the binary) and
+// from a mere stall (refusing with nothing forged in its place).
+rule Take_A_Third_Option {
+  when:
+    char $h [+Protagonist]
+    obj  $dilemma [+Binary]
+    evt  $reject [&Rejected(agent=$h, other=$dilemma)]
+    evt  $third  [&Forges(agent=$h, option=$way)]
+  then:
+    $h [+TookThirdOption]
+    $third [+TakeAThirdOption]
+}
+
+
+// === CONCRETE VIGNETTE: Star Trek II — Kirk and the Kobayashi Maru (film, 1982) ===
+// The Academy's no-win test offers cadets two ends: charge in to rescue the freighter and be destroyed,
+// or hold back and let it die. Kirk accepts neither. The night before, he reprograms the simulator so a
+// rescue becomes possible — and passes a test designed to be unpassable. "I don't believe in the no-win
+// scenario." He refused the binary and forged a third way out of it.
+
+// JAMES T. KIRK — the cadet who will not accept a no-win frame
+char kirk [+Protagonist]
+
+// THE NO-WIN SCENARIO — rescue and die, or hold back and let them die: a forced binary
+obj the_kobayashi_maru [+Binary]
+
+// THE REWRITE — the unorthodox third way: a simulation in which a rescue is possible at all
+obj the_rewrite [+Unorthodox]
+
+scene the_simulator {
+  beat 1 {
+    // he rejects the no-win test itself — not one of its ends, but its terms
+    evt no_win_refused [&Rejected(agent=kirk, other=the_kobayashi_maru)]
+    // and forges a third: reprogram the simulation so a win exists at all
+    evt reprogram [&Forges(agent=kirk, option=the_rewrite)]
+    // Take_A_Third_Option derives: kirk [+TookThirdOption]; reprogram [+TakeAThirdOption]
+  }
+}
