@@ -236,10 +236,12 @@ The **1.10** round ground down the remaining 2–3× tail: props `Betrayer(of)`,
 - A long tail of genuinely one-off bespoke flavor tags (`KeyserSoze`, `Pawn`, `Phantom`, `Unmasked`, …)
   — keep broken per the closed-vocabulary decision unless one recurs and earns promotion.
 
-With founding exhausted **and self-recognition complete (`195/195`, 100%)**, the forward target is
-**converting new tropes** (and the cross-repo eval-side drams gap above). The remaining `[ ]` items are
-small: further Love Triangle variants, the Wanderer/Ranger & Mage/Wizard role archetypes (close the
-fantasy drams facts), "Within a Frame Story", and the low-value fantastic-species framing.
+With founding exhausted **and self-recognition complete (`196/196`, 100%)**, the forward target is
+**converting new tropes**. The richest vein is the **allthetropes high-profile coverage gaps** — see
+the coverage-review recipe and the current gap list in **`CONVERSION_BOT.md` → "Sourcing & coverage
+review"** (top candidates: An Aesop, Big Good, Villain Protagonist, Five-Man Band). Smaller leftovers:
+further Love Triangle variants, "Within a Frame Story", the cross-repo eval-side drams gap above, and
+the low-value fantastic-species framing.
 
 ### Domain libraries & structural tropes (done — kept for provenance)
 - **P2 domain vocab:** `modules/siege.trl` + `modules/heist.trl` declare the siege/military and

@@ -5,6 +5,71 @@ How an automated [`trope-to-tropelang`](skills/trope-to-tropelang/) run submits 
 interactive *Claude Code on the web* session, and a headless *CI runner* under a GitHub App identity —
 and they share the same quality bar (`tropelang gate`) and the same identity rule.
 
+## Quickstart — launching a fresh session (minimal prompt)
+
+A new session can run the whole loop from a one-line prompt; everything it needs is **this file** plus
+`skills/trope-to-tropelang/SKILL.md` (authoring) and `STYLE.md` (conventions).
+
+**Minimal prompt to paste into a new session:**
+> Convert the next batch of high-profile tropes into the TropeLang corpus. Follow `CONVERSION_BOT.md`
+> and `skills/trope-to-tropelang/SKILL.md`. Install the CLI, pick targets from the coverage gaps in
+> CONVERSION_BOT.md (or `trl/tropes/BACKLOG.md`), author each with a self-confirming vignette, keep
+> `tropelang selfcheck` at 100%, finalize (assemble + CHANGELOG), and push a `convert/<batch>` branch
+> for CI to open the PR.
+
+**Run checklist (the order that works):**
+1. **Install the CLI** — the latest `cli-*` release binary (see "The `tropelang` CLI" below); confirm `tropelang version`.
+2. **Read** `skills/trope-to-tropelang/SKILL.md` (§1 acquire → §4b recognition fidelity) and `STYLE.md` §8.
+3. **Pick targets** — the coverage gaps (next section) or `BACKLOG.md` (cross-check against the tree; it lags reality).
+4. **Author** each trope: preamble → imports/assoc/imply → an **agent-named `[&Verb]` event rule** → a
+   concrete vignette that CARRIES the discriminator (SKILL §4b). Vary story / medium / era / scale of stakes.
+5. **Self-recognize** (the bar below). Per file: `tropelang gate <f>` prints `GATE PASS`, and
+   `tropelang shape <f>` confirms the file's own rule at **conf 1.00**.
+6. **Finalize once** — `tropelang assemble trl/tropes/corpus.toml` (regen `index.trl`) + CHANGELOG
+   `### Added` lines; confirm `tropelang selfcheck trl/tropes/corpus.toml --corpus file://trl` is **N/N (100%)**.
+7. **Push** a `convert/<batch>` branch (Mode A) — CI opens the bot-authored PR to `main`. **Never** open
+   the PR with the MCP token (the identity rule below).
+
+### The recognition bar (keep selfcheck at 100%)
+
+Every trope must confirm its OWN vignette — corpus `selfcheck` self-recognition stays at **N/N**. Full
+detail is in SKILL §4b / STYLE §8; the load-bearing mechanics learned the hard way:
+- **Recall keys on the event's `agent`.** A rule whose `when:` is only static tags / `@rel` edges /
+  `count(...)` is never recalled (conf 0.00 on its own vignette). Anchor on an `evt … [&Verb(agent=…, …)]`;
+  a *patient-only* event (`[&Strikes(target=$c)]`) is **not** recalled — name an agent (add the striker).
+- **Coverage re-checks tags LITERALLY, on event-bound entities only.** Assert the discriminating tags in
+  the vignette where the prose already states them — don't leave them to be derived by another rule's `then:`.
+- **Engine version matters.** Use the latest `cli-*` (currently ≥ 0.4.3). ≥ 0.4.2 expands coverage over the
+  `imply` closure (refined relations confirm via their base class); **≥ 0.4.3 enforces binding-inequality
+  (`$x != $y`) at recognition** — older builds honored it only at eval, so distinctness-based rules
+  (Pincer, Love Dodecahedron) over-fired in `shape`.
+- **Found genre vocabulary locally** (promotion model): a trope needing a new `prop`/`verb` (e.g. magic)
+  declares it in its own file (cf. `the_wizard.trl`'s `prop Arcane`/`verb Casts`, `siege.trl`'s `verb
+  Undermines`), not in the realist prelude.
+
+### Sourcing & coverage review (archive-access environments)
+
+This sandbox **firewalls `allthetropes.org`** (curl/WebFetch → 403; WebSearch snippets are the only
+channel). **In an environment WITH archive access, fetch the wiki directly** — for each trope's
+definition (record the URL in `@source`) and for the high-profile index pages. Never tvtropes.org.
+
+To (re-)run the coverage review — corpus vs the canonical lists:
+```sh
+# Corpus inventory (trope titles):
+for f in $(git ls-files 'trl/tropes/**/*.trl' | grep -v index.trl); do
+  grep -m1 '@trope' "$f" | sed 's/.*@trope[[:space:]]*//'; done | sort -u
+```
+Diff that against the allthetropes high-profile indexes:
+- **Category:Omnipresent Tropes** — https://allthetropes.org/wiki/Category:Omnipresent_Tropes
+- **Omnipresent Tropes** (curated) — https://allthetropes.org/wiki/Omnipresent_Tropes
+- **Universal Tropes** and the cast / plot-structure indexes.
+
+**Known high-profile gaps (2026-06 review — verify against the live lists):** An Aesop · Big Good ·
+Villain Protagonist · Five-Man Band · Status Quo Is God · Failure Is the Only Option · Character
+Development (the general trope; instances like Coming of Age / Redemption Arc exist) · Title Drop ·
+Idiot Ball · Genre Savvy · Take a Third Option. Suggested first batch: An Aesop, Big Good,
+Villain Protagonist, Five-Man Band.
+
 ## The identity rule (why this exists)
 
 `main` is protected by a ruleset requiring **1 approving review** before merge. GitHub will not
