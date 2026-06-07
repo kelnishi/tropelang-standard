@@ -44,6 +44,30 @@ obj the_ledger      [+MacGuffin]               // the real prize
 obj the_forgery     [+Counterfeit]             // the decoy that takes the bird's place at the swap
 ```
 
+### Choosing the entity kind — agency, membership, or inertness
+
+The keyword is not cosmetic: the recognizer **type-checks role bindings by kind** (a `mark` bound to a
+`set`, not a `char`, tanks the match — §8, `specs/15`). Pick by what the entity *does*, not what it is:
+
+- **`char`** — anything with **agency**: it acts, is acted upon, holds intent. This includes **collective
+  agents** — an army, a senate, a guild, a country *that declares war*. Tag the collectiveness
+  (`char thebes [+Faction]`, `char senate [+Collective]`, `char france [+Nation]`); do **not** reach for a
+  new entity kind. Composition over classification — an organization is a `char` that *has* collectiveness,
+  the same way a Spacedog is a `char` with `[+Alien] [+Canine]` (`specs/06 §2`).
+- **`set`** — a **membership collection or place** you reason about as a container: what a `Member_Of`
+  points at, a region a scene happens in. Use it when you care about extension, not agency.
+- **`obj`** — an **inert** thing (no agency): the MacGuffin, the weapon, the letter.
+- **`concept`** — an **idea, cause, or value**: a doctrine, a movement-as-idea, "the Republic" people die for.
+
+**What is a country?** Multi-faceted — choose the facet the scene needs, the same way `realm` is typed
+`char|set|concept`: the acting polity is `char … [+Nation]`; the territory you cross is a `set`; the cause
+you swear to is a `concept`. One country may appear as different kinds in different files.
+
+The collective-agent tags form a small ontology — `Faction`, `Institution`, `Nation` all imply
+`[+Collective]` — so a rule keyed on the broad `[+Collective]` recognizes any of them (engine ≥ 0.4.2 for
+the recognition coverage). Reach for `[+Collective]` as the base; specialize only when the *kind* of
+collective drives the match.
+
 ## 2. Write accretively — build the palette early, even loosely
 
 Don't declare only what the next beat needs. **Lay out the whole table of pieces before you play.**

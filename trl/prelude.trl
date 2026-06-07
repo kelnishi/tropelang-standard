@@ -1,5 +1,5 @@
 // @title   TropeLang Prelude — Standard Library
-// @version 1.15
+// @version 1.16
 //
 // Automatically in scope for every .trl file.
 // Do not import manually. Override with // @no-prelude for a clean slate.
@@ -170,7 +170,7 @@ prop Masculine     [+Ontological]    // gender — the monadic holder property o
 prop Feminine      [+Ontological]
 prop Vehicle       [+Ontological]    // a conveyance — car, ship, mount; an inanimate thing that carries
 prop Singular      [+Ontological]    // unique — only one can exist
-prop Collective    [+Ontological]    // a group, institution, or people
+prop Collective    [+Ontological]    // a group acting as one — the base of the collective-agent ontology (TIER 5/16)
 prop Primordial    [+Ontological]    // existed before the current order
 prop Liminal       [+Ontological]    // threshold — between states, worlds, identities
 
@@ -331,9 +331,17 @@ prop Speaker       [+Social]         // the one addressing an audience — the r
 // Institutional props
 prop Authority     [+Social]
 prop Subject       [+Social]
-prop Faction       [+Social]         // a group with shared interests
+prop Faction       [+Social]         // a partisan bloc — a group with shared interests, taking a side
 prop Institution   [+Social]         // persistent structure: law, guild, church
 prop Bond          [+Social]         // a tie between entities — the relationship itself, as a thing
+
+// Collective-agent ontology — a Faction/Institution/Nation IS a Collective (a group acting as one), so a
+// rule keyed on the broad [+Collective] fires for any of them (recognition coverage honors the imply in
+// engine >= 0.4.2). An organization/faction/country is a `char` carrying one of these tags — never a new
+// entity kind (composition over classification; see STYLE §1). [+Authority] is orthogonal — an individual
+// holds it too — so it is NOT implied here. (Nation is declared in TIER 16; wired with the rest below.)
+imply Faction      -> [Collective]
+imply Institution  -> [Collective]
 prop Romance       [+Social]         // a romantic bond — the love-tie, as element and as register
 
 // Mutable position states
@@ -746,6 +754,9 @@ verb Pardons(other)            [+Political]
 
 prop Ruler         [+Political]      // holds sovereign authority — monadic, realm may be unnamed (cf. rel Rules)
 prop Noble         [+Political]      // aristocratic rank below the sovereign
+prop Nation        [+Political]      // a polity / country acting as one — a sovereign collective agent
+
+imply Nation       -> [Collective, Authority]   // a nation IS a collective that holds authority (TIER 5 ontology)
 
 rel Vassal_Of(liege: char)           [+Political]
 rel Liege_Of(vassal: char)           [+Political]

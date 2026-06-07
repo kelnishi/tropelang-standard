@@ -17,6 +17,20 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 
 ## [Unreleased]
 
+### Changed
+- **Prelude collective-agent ontology** (TIER 5/16, prelude `@version 1.16`) — wire the already-ratified
+  collective vocabulary into a hierarchy: `imply Faction -> [Collective]`, `imply Institution -> [Collective]`,
+  and a new `prop Nation` → `[Collective, Authority]` (the "what is a country" case). So a rule keyed on the
+  broad `[+Collective]` now recognizes any `[+Faction]`/`[+Institution]`/`[+Nation]` entity (recognition
+  coverage honors the imply on **engine ≥ 0.4.2**; parses fine on 0.4.1, so `engine_min` is unchanged).
+  `Nation` only; `Movement`/`Organization` left unfounded until a trope reaches for them (promotion model).
+  `[+Authority]` stays orthogonal (an individual holds it too). No trope changed; selfcheck steady 152/194.
+- **STYLE §1 — "Choosing the entity kind"** — new guidance: pick `char`/`set`/`obj`/`concept` by what the
+  entity *does* (agency / membership / inertness / idea). Organizations, factions, and countries are a
+  `char` carrying `[+Collective]`/`[+Faction]`/`[+Nation]` — never a new entity kind (composition over
+  classification). "What is a country?" → choose the facet (`char [+Nation]` / `set` / `concept`), mirroring
+  the `realm: char|set|concept` typing.
+
 ## [1.7.2] — 2026-06-06
 
 ### Changed
