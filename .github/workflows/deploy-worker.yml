@@ -1,0 +1,53 @@
+# Deploy the corpus CDN Worker (worker/) to Cloudflare when it changes — so a routing/serving change ships
+# with the merge instead of waiting on a manual `wrangler deploy`. (The versions.json route lagged behind
+# its R2 object exactly because the Worker was deploy-by-hand; this closes that loop.) Upstream-only and
+# production-gated: the Worker fronts the entire live CDN, so a deploy goes through the same required-reviewer
+# environment as the R2 publish/promote pipeline.
+name: deploy-worker
+on:
+  push:
+    branches: [main]
+    paths: ['worker/**']
+  workflow_dispatch: {}            # manual re-deploy / re-sync
+
+permissions:
+  contents: read
+
+concurrency: deploy-worker         # serialize Worker deploys (independent of the R2 `publish` group)
+
+jobs:
+  deploy:
+    if: github.repository == 'kelnishi/tropelang-standard'
+    runs-on: ubuntu-latest
+    environment: production          # required reviewer; holds CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # Hand-rolled (no third-party action): wrangler reads CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID
+      # from the environment. Pin the major so a wrangler release can't shift deploy behavior under us.
+      - name: deploy the Worker
+        working-directory: worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx --yes wrangler@3 deploy
+
+      # Post-deploy smoke: the live routes resolve. This is exactly the check that would have caught the
+      # versions.json 404 — keep it. Retry to ride out edge propagation + the <=10s negative-cache on a new
+      # route (the catalog/channel objects already exist for the live corpus).
+      - name: smoke — CDN routes resolve
+        run: |
+          base="https://corpus.tropelang.com"
+          for p in "registry.json" "standard/versions.json" "channels/standard.stable.json"; do
+            ok=""
+            for i in 1 2 3 4 5; do
+              code=$(curl -s -o /dev/null -w "%{http_code}" "$base/$p")
+              if [ "$code" = "200" ]; then ok=1; echo "  /$p → 200"; break; fi
+              echo "  /$p → $code (attempt $i) — retrying"; sleep 6
+            done
+            [ -n "$ok" ] || { echo "::error::/$p never returned 200 after the deploy"; exit 1; }
+          done
+          echo "### Worker deployed — registry.json / versions.json / channel routes all 200" >> "$GITHUB_STEP_SUMMARY"
