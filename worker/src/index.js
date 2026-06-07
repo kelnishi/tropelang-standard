@@ -8,6 +8,7 @@
 //   GET /:id/:version/corpus.json     immutable bundle      Cache-Control: public, max-age=1y, immutable
 //   GET /:id/:version/manifest.json   immutable manifest    (same)
 //   GET /channels/:id.:channel.json   mutable pointer       public, max-age=30, must-revalidate
+//   GET /:id/versions.json            version catalog       public, max-age=30, must-revalidate
 //   GET /:id/resolve?channel=stable   → that channel's manifest JSON   public, max-age=30
 //   GET /registry.json                discovery index       public, max-age=60
 
@@ -64,6 +65,11 @@ export default {
     // GET /channels/:id.:channel.json
     if (parts[0] === "channels" && parts.length === 2 && parts[1].endsWith(".json")) {
       return serve(env, `channels/${parts[1]}`, SHORT, request);
+    }
+
+    // GET /:id/versions.json   → engine-aware version catalog (mutable: grows on deploy, yanks on demand)
+    if (parts.length === 2 && parts[1] === "versions.json") {
+      return serve(env, `${parts[0]}/versions.json`, SHORT, request);
     }
 
     // GET /:id/resolve?channel=stable  → return the channel's pinned manifest JSON
