@@ -28,8 +28,11 @@ imply Cliffhanger -> [Suspense, Attention, Narrative]
 
 // === ABSTRACT RULE ===
 // Naming rule: an open curiosity gap left unpaid hooks the audience — that hook IS a Cliffhanger.
+// The gap rides an EVENT (the question posed, [&Poses]) so the rule is recalled (STYLE §8); the
+// unpaid curiosity (curious, not satisfied) is the discriminator over a question that gets answered.
 rule Cliffhanger {
   when:
+    evt $hook [&Poses(agent=$author, question=$g)]
     audience [#Curious(about=$g)]
     not ( audience [+Satisfied] )
   then:
@@ -47,6 +50,7 @@ char jr [+Antagonist]
 scene the_season_finale {
   beat 1 {
     evt the_gunshots [&Poses(agent=author, question=who_shot_jr)]
+    audience [#Curious(about=who_shot_jr)]   // the question hangs, unpaid — stated literally so coverage re-checks it (Open_Gap also derives it)
     // Open_Gap (rhetoric) -> audience [#Curious(about=who_shot_jr)] [+Attentive]
     // ...and the credits roll with no Payoff — Cliffhanger -> audience [+Hooked] for a summer
   }
