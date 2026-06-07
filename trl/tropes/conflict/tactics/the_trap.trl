@@ -59,14 +59,14 @@ scene the_ambush_at_endor {
   beat 1 {
     // the bait: a defenseless station and a reachable shield generator draw the fleet in
     evt the_lure [&Feints(agent=empire, target=ackbar)]
-    // Bait -> ackbar [+Overcommitted]   (the whole fleet is committed to the attack run)
+    ackbar [+Overcommitted]   // the whole fleet committed to the attack run — stated literally so coverage re-checks it (Bait also derives it)
   }
   beat 2 {
     ackbar @ endor_orbit
     empire @ endor_orbit
     // the jaws close: Star Destroyers seal the only way out
     evt close_the_jaws [&Bars(agent=empire, against=ackbar)]
-    // Bar_Access -> ackbar [+Blocked]   ("It's a trap!")
+    ackbar [+Blocked]   // "It's a trap!" — the only way out sealed; stated literally so coverage re-checks it (Bar_Access also derives it)
   }
   beat 3 {
     // the spring: the fully operational Death Star opens fire on the trapped fleet

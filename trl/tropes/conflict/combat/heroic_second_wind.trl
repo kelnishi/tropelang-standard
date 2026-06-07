@@ -39,12 +39,14 @@ imply HeroicSecondWind -> [Resolve, Comeback, Narrative]
 // Inversion mechanism): will overrides the flesh. The hero sheds the exposure, rallies with renewed
 // resolve, and turns the fight. Not a deus ex machina dangled by the author — a surge earned from
 // within. ($hr is the higher rung — esteem/becoming; $br the bodily/safety lack pulling against it.)
+// The nadir rides an EVENT (the blow that puts the hero down, [&Finishes]) so the rule is recalled;
+// phase-2 coverage re-checks the Inversion — Exposed, Despairing, the [~Pursues] drive and [#Lacks]
+// toll — on the struck hero (STYLE §8: discriminate by the positive Inversion held under the blow).
 rule HeroicSecondWind {
   when:
-    char $c [+Exposed]
-    char $c [#Despairing]
-    char $c [~Pursues(rank=$hr, salience=$hs)]
-    char $c [#Lacks(rank=$br, salience=$bs)]
+    char $c [+Exposed] [#Despairing] [~Pursues(rank=$hr, salience=$hs)] [#Lacks(rank=$br, salience=$bs)]
+    char $foe
+    evt  $blow [&Finishes(agent=$foe, target=$c)]
     $br < $hr
     $hs > $bs
     not ( $c [+Rallied] )

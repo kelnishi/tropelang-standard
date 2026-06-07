@@ -56,6 +56,7 @@ scene the_field_at_asculum {
   }
   beat 2 {
     pyrrhus [+Fallen]                        // his veterans and officers are spent in the breaking
+    rome [+Defeated]                         // the Roman line is broken and the field lost — stated literally so coverage re-checks it (Finisher also derives it)
     evt the_breaking [&Finishes(agent=pyrrhus, target=rome)]
         dialog(inject=[speaker=pyrrhus], inline="""
                speaker: "{speaker}"

@@ -48,7 +48,7 @@ char burr     [+Antagonist]
 scene weehawken {
   beat 1 {
     evt the_attacks [&Slanders(agent=hamilton, target=burr)]      // a career of public injury
-    // Disgrace (reputation) -> burr [+Disgraced]
+    burr [+Disgraced]   // his honor in tatters — stated literally so coverage re-checks it (Disgrace also derives it)
   }
   beat 2 {
     evt the_challenge [&Challenges(agent=burr, target=hamilton)]
