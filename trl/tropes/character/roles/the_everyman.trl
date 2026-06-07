@@ -19,10 +19,15 @@ assoc the_everyman -> [
 // Archetype tags subsume the ordinariness/mortality facts stories give their surrogate figures.
 imply Everyman -> [Ordinary, Relatable, Mortal, Audience_Surrogate, Narrative]
 
-// Naming rule: an ordinary protagonist who is the audience's way in IS the Everyman (tags them).
+// Naming rule: an ordinary protagonist who WITNESSES the extraordinary is the Everyman — the
+// audience's way in. The surrogacy rides an EVENT ([&Witnessed], the plain eyes the story is seen
+// through) so the rule is recalled; phase-2 coverage re-checks [+Ordinary] [+Protagonist] on the
+// bound witness — normalcy is the positive discriminator (STYLE §8).
 rule The_Everyman {
   when:
     char $c [+Protagonist] [+Ordinary]
+    evt  $wonder
+    evt  $seeing [&Witnessed(agent=$c, event=$wonder)]
   then:
     $c [+Everyman]
     $c -- identity
@@ -37,7 +42,9 @@ set earth   // the ordinary world the everyman stands for — here, the demolish
 
 scene the_demolition {
   beat 1 {
-    arthur -- earth : "still in his dressing gown when the planet is demolished"
-    // The_Everyman -> arthur [+Everyman]
+    // The extraordinary — Earth demolished for a hyperspace bypass — seen through his plain, baffled eyes.
+    evt demolition [&Destroyed(entity=earth)]
+    evt seeing [&Witnessed(agent=arthur, event=demolition)]   // still in his dressing gown when the planet goes
+    // The_Everyman derives: arthur [+Everyman] -- identity
   }
 }

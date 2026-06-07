@@ -30,12 +30,17 @@ imply Foil -> [Contrast, Characterization, Narrative]
 // === ABSTRACT RULE ===
 // The capability: two characters set on a shared AXIS with opposite VALUES throw each other into
 // relief. The contrast itself is the characterization — neither trait reads as sharply alone.
+// The contrast is re-checked only if BOTH characters are event-bound (an unbound var's tags are
+// invisible to coverage; STYLE §8). So the juxtaposition rides two event roles: $a ACTS on their
+// trait and $b WITNESSES the deed through theirs — the shared moment that throws the difference into
+// relief. Recall keys on the named agents; coverage then re-checks each Trait on its bound owner.
 rule Foil {
   when:
-    char $a [@Foils(other=$b)]
-    char $a [+Trait(axis=$d, value=$va)]
+    char $a [@Foils(other=$b)] [+Trait(axis=$d, value=$va)]
     char $b [+Trait(axis=$d, value=$vb)]
     $va != $vb
+    evt  $deed [&Acts(agent=$a)]
+    evt  $seen [&Witnessed(agent=$b, event=$deed)]
   then:
     $a [+Illuminated(by=$b)]
     $b [+Illuminated(by=$a)]
@@ -53,7 +58,9 @@ char sancho  [+Deuteragonist] [+Trait(axis=worldview, value=pragmatism)]
 
 scene the_windmills {
   beat 1 {
-    quixote -- sancho : "giants, says the knight; windmills, says the squire"
-    // Foil -> quixote [+Illuminated(by=sancho)], sancho [+Illuminated(by=quixote)]
+    // Quixote charges on his idealism; Sancho watches through his pragmatism — each makes the other vivid.
+    evt the_charge [&Acts(agent=quixote)]   // "Giants!" — he tilts at the windmills
+    evt the_seeing [&Witnessed(agent=sancho, event=the_charge)]   // "Windmills," says the squire
+    // Foil derives: quixote [+Illuminated(by=sancho)], sancho [+Illuminated(by=quixote)]
   }
 }
