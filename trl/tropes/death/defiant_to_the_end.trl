@@ -52,11 +52,14 @@ imply DefiantToTheEnd -> [Defiance, Inversion, Final]
 // fires AT THE EDGE: the dignity displaces the survival drive even though no survival is on offer.
 // The body is left Fallen, but the self is Defiant, Unbroken, and Transcendent — the dignity is
 // held PAST the body's death, which is the whole inversion. Nothing is bought; that is the point.
+// The doom rides an EVENT (the killers closing in, [&Threatens]) so the rule is recalled; phase-2
+// coverage re-checks the Inversion — [+Doomed], the [~Pursues] dignity and [#Lacks] life — on the
+// threatened character (STYLE §8: discriminate by the positive Inversion held at the edge).
 rule Defiant_To_The_End {
   when:
-    char $c [+Doomed]
-    char $c [~Pursues(rank=$hr, salience=$hs)]
-    char $c [#Lacks(rank=$lr, salience=$ls)]
+    char $c [+Doomed] [~Pursues(rank=$hr, salience=$hs)] [#Lacks(rank=$lr, salience=$ls)]
+    char $killers
+    evt  $doom [&Threatens(agent=$killers, target=$c)]
     $lr < $hr
     $hr == 4
     $hs > $ls

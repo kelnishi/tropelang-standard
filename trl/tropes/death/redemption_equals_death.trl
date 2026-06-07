@@ -71,6 +71,7 @@ scene the_throne_room {
   }
   beat 2 {
     evt the_throw [&Sacrifices(agent=vader, ally=luke)]
+    vader [+Fallen]   // the lightning and the failing suit kill him — stated literally so coverage re-checks it (Sacrifice also derives it)
         dialog(inject=[speaker=luke], inline="""
                speaker: "{speaker}"
                cue: "cradling the dying man whose mask he has just removed"

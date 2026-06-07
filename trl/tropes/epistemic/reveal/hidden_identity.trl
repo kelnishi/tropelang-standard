@@ -22,9 +22,14 @@ assoc hidden_identity -> [
 imply HiddenIdentity -> [Concealed, Disguise, TrueSelf, Royalty, Destined, Reveal_Pending, Narrative]
 
 // Naming rule: a true self carried under a humbler guise IS a Hidden Identity (tags the bearer).
+// The guise rides an EVENT (the bearer passing himself off as the lesser self, [&Deceives]) so the
+// rule is recalled and phase-2 re-checks [+TrueSelf] on the bound bearer (STYLE §8). [+Unmasked]
+// must NOT yet hold — the identity is still hidden, the reveal still pending.
 rule Hidden_Identity {
   when:
     char $c [+TrueSelf(is=$truth)]
+    char $world
+    evt  $guise [&Deceives(agent=$c, other=$world)]
     not ( $c [+Unmasked] )
   then:
     $c [+HiddenIdentity]
@@ -37,10 +42,13 @@ rule Hidden_Identity {
 // most ordinary guise imaginable.
 char clark [+Protagonist] [+TrueSelf(is=superman)]
 char superman   // the godlike true self carried under the mild-mannered guise
+char metropolis [+Collective]   // the city he files copy for, who take him for an ordinary reporter
 
 scene the_daily_planet {
   beat 1 {
     clark -- superman : "mild-mannered, an arm's length from the cape"
+    // the deliberate guise — he passes himself off as the lesser self, the cape an arm's length away
+    evt the_guise [&Deceives(agent=clark, other=metropolis)]
     // Hidden_Identity -> clark [+HiddenIdentity]
   }
 }

@@ -76,7 +76,7 @@ scene the_valley {
     david > sling
     // David refuses Saul's armor and meets the giant at range — the unconventional approach
     evt the_stone [&Strikes(agent=david, target=goliath, kind="Forehead")]
-    // Exploit_Weakness -> goliath [+Exposed]   (the stone finds the bare forehead; the giant falls stunned)
+    goliath [+Exposed]   // the stone finds the bare forehead; the giant falls stunned — stated literally so coverage re-checks it
   }
   beat 2 {
     // the finish: with the giant down and exposed, David ends it with Goliath's own sword

@@ -28,17 +28,17 @@ imply Deuteragonist -> [Secondary_Focus, Central]
 
 
 // === ABSTRACT RULE ===
-// The most-present character after the protagonist, tied to them (ally or foil), who is
-// neither the protagonist nor the antagonist.
+// The second focus of the story, tied to the protagonist at their side. Defined POSITIVELY by
+// [+Secondary_Focus] (the tag the siblings lack — the protagonist is Central/Sympathetic, the
+// sidekick is loyalty/Support), not by a count of mentions or a pair of negations. The bond rides
+// an EVENT ([&Allies_With], standing with the lead) so the rule is recalled and coverage re-checks
+// [+Secondary_Focus] on the bound second (STYLE §8).
 rule TheDeuteragonist {
   when:
     char $protagonist [+Protagonist]
-    char $c
+    char $c [+Secondary_Focus]
     $c != $protagonist
-    not ( $c [+Protagonist] )
-    not ( $c [+Antagonist] )
-    count( evt $e -> $c ) >= 2
-    $c -- $protagonist
+    evt  $shared [&Allies_With(agent=$c, other=$protagonist)]
   then:
     $c [+Deuteragonist]
 }
@@ -49,14 +49,13 @@ rule TheDeuteragonist {
 // SHERLOCK HOLMES
 char holmes [+Protagonist]
 
-// DR. JOHN WATSON
-char watson [+Ally] [+Chronicler]
+// DR. JOHN WATSON — the second the story is also about: joins the cases, chronicles them
+char watson [+Secondary_Focus] [+Ally] [+Chronicler]
 
 scene the_partnership {
   beat 1 {
-    watson -- holmes : "Partners With"
-    evt accompany -> watson @ holmes : "Joins The Investigation"
-    evt narrate   -> watson > holmes : "Chronicles His Cases"
-    watson [+Deuteragonist]
+    // Partners with Holmes — joins every investigation at his side.
+    evt the_cases [&Allies_With(agent=watson, other=holmes)]
+    // TheDeuteragonist derives: watson [+Deuteragonist]
   }
 }

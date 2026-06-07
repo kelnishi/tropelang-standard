@@ -36,13 +36,16 @@ imply Lancer -> [Foil, loyalty, Contrast, Narrative]
 // Seconds bond is the sidekick half, and the Lancer is the one character carrying both. This is
 // strictly narrower than rule Foil (which needs no loyalty) and rule The_Sidekick (which needs no
 // contrast).
+// The loyalty rides an EVENT ([&Aided], the second backing the lead) so the rule is recalled and
+// phase-2 coverage re-checks BOTH traits on the bound pair (agent=$l, other=$h) — the contrast can
+// only re-check if both are event-bound (STYLE §8) — plus the @Foils/@Seconds bonds on $l. The
+// conjunction is the discriminator: a sidekick's aid ACROSS a foil's difference.
 rule The_Lancer {
   when:
-    char $h [+Protagonist]
-    char $l [@Foils(other=$h)] [@Seconds(leader=$h)]
-    char $h [+Trait(axis=$d, value=$vh)]
-    char $l [+Trait(axis=$d, value=$vl)]
+    char $h [+Protagonist] [+Trait(axis=$d, value=$vh)]
+    char $l [@Foils(other=$h)] [@Seconds(leader=$h)] [+Trait(axis=$d, value=$vl)]
     $vh != $vl
+    evt  $backup [&Aided(agent=$l, other=$h)]
   then:
     $l [+Lancer]
     $l [+Illuminated(by=$h)]
@@ -68,7 +71,8 @@ han [@Foils(other=luke)] [@Seconds(leader=luke)]
 
 scene the_trench_run {
   beat 1 {
-    han -- luke : "you're all clear, kid — now blow this thing and go home"
-    // The_Lancer -> han [+Lancer] [+Illuminated(by=luke)], luke [+Challenged(by=han)]
+    // The smuggler comes back for the trench run anyway — loyal aid across the difference.
+    evt the_rescue [&Aided(agent=han, other=luke)]   // "you're all clear, kid — now blow this thing and go home"
+    // The_Lancer derives: han [+Lancer] [+Illuminated(by=luke)], luke [+Challenged(by=han)]
   }
 }

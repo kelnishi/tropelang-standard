@@ -33,13 +33,14 @@ imply Mentor -> [Ally, Authority, Wise]
 
 
 // === ABSTRACT RULE ===
-// A wise ally bound to a protagonist by the mentor/student relation is The Mentor; the
-// bond is made reciprocal. (Reuses the prelude Mentor_Of / Student_Of rels.)
+// A wise figure who TEACHES a protagonist is The Mentor; the bond is made reciprocal. The
+// guidance rides an EVENT ([&Taught], the act of training) so the rule is recalled and phase-2
+// coverage re-checks [+Wise] on the teacher and [+Protagonist] on the student (STYLE §8).
 rule TheMentor {
   when:
     char $mentor [+Wise]
     char $student [+Protagonist]
-    $mentor [@Mentor_Of(student=$student)]
+    evt  $lesson [&Taught(agent=$mentor, to=$student)]
   then:
     $mentor  [+Mentor]
     $student [@Student_Of(mentor=$mentor)]
@@ -53,13 +54,11 @@ char daniel [+Protagonist] [+Untrained]
 
 // MR. MIYAGI
 char miyagi [+Wise] [+Elder]
-miyagi [@Mentor_Of(student=daniel)]
 
 scene the_lessons {
   beat 1 {
-    evt discipline -> miyagi > daniel : "Wax On, Wax Off"
-    evt reveal     -> daniel @ miyagi : "The Chores Were The Training"
-    miyagi [+Mentor]
-    daniel [@Student_Of(mentor=miyagi)]
+    // "Wax on, wax off" — the chores were the training; the act of teaching is the discriminator.
+    evt discipline [&Taught(agent=miyagi, to=daniel)]
+    // TheMentor derives: miyagi [+Mentor], daniel [@Student_Of(mentor=miyagi)]
   }
 }

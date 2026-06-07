@@ -38,12 +38,15 @@ imply DecapitatedArmy -> [Rout, Collapse, Narrative]
 // === ABSTRACT RULE ===
 // Naming rule: a force whose cohesion ran through one commander, that commander now [+Fallen],
 // has nothing to hold it — it is left [+Leaderless] and breaks ([+Routed]), and its prior
-// cohesion is gone ([-Cohesive]). One death, and the mass is moot.
+// cohesion is gone ([-Cohesive]). One death, and the mass is moot. The removal rides an EVENT (the
+// blow that fells the head, [&Finishes]) so the rule is recalled; phase-2 coverage re-checks
+// [+Leader] [@Leads] [+Fallen] on the bound commander, whose @Leads edge ties the force (STYLE §8).
 rule Decapitated_Army {
   when:
     char $force  [+Collective] [+Cohesive]
-    char $leader [+Leader] [@Leads(other=$force)]
-    $leader [+Fallen]
+    char $leader [+Leader] [@Leads(other=$force)] [+Fallen]
+    char $slayer
+    evt  $f [&Finishes(agent=$slayer, target=$leader)]
   then:
     $force [+Leaderless]
     $force [+Routed]

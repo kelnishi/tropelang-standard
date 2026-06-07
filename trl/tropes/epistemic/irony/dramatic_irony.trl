@@ -23,6 +23,23 @@ assoc dramatic_irony -> [
 ]
 
 
+// === ABSTRACT RULE ===
+// The module DramaticIrony rule (theory_of_mind.trl) keys on [&Reveals(fact=$p)] with no agent role,
+// so the shape recognizer cannot index it (recall keys on the agent; eval still fires it, which the
+// reveal-cluster dependents rely on). This trope, promoted to first-class, carries its own recall
+// rule: an agent-named disclosure of $p to the audience while a character believes the opposite
+// ($not_p >< $p) and never witnessed the disclosure — the gap the audience holds and the hero acts on.
+rule Dramatic_Irony {
+  when:
+    evt  $truth [&Reveals(agent=$teller, fact=$p)]
+    char $c [#Believes(claim=$not_p)]
+    $not_p >< $p
+    not ( $c [@Witness_To(event=$truth)] )
+  then:
+    $c [+Dramatic_Irony(over=$p, hidden=true)]
+}
+
+
 // === CONCRETE VIGNETTE: Othello — "honest Iago" (play, ~1603) ===
 // Iago tells the audience his whole treachery in soliloquy, then plays the loyal friend. We watch
 // Othello trust the one man set on destroying him, and doubt the one woman who is true — knowing
@@ -34,8 +51,12 @@ char desdemona [+LoveInterest]
 
 scene the_handkerchief {
   beat 1 {
+    // the soliloquy establishes the truth in the world — to the audience, not to Othello
+    evt the_asides [&Reveals(agent=iago, fact=iago_treacherous)]
     !iago [+Treacherous]!                            // the audience has heard the asides — we KNOW
-    othello [#Believes(claim=iago_is_honest)]         // Othello trusts "honest Iago"
+    othello [#Believes(claim=iago_loyal)]             // Othello trusts "honest Iago" — the opposite of the truth
+    iago_loyal >< iago_treacherous                    // the believed claim stands against the revealed fact
+    // Othello never witnessed the asides — DramaticIrony (theory_of_mind.trl): he acts on the gap
   }
   beat 2 {
     !desdemona [+Faithful]!                           // and we know she is true

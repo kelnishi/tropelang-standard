@@ -34,13 +34,17 @@ imply Conflict_vs_Fate    -> [Conflict, Cosmic]
 
 
 // === ABSTRACT RULE ===
-// A conflict exists wherever two forces stand opposed. The >< edge is the canonical form;
-// the protagonist–antagonist opposition is its interpersonal case. Reuses `conflict`.
+// A conflict exists wherever two forces stand opposed. The >< edge is the canonical form; the
+// opposition rides an EVENT (the forces meeting, [&Confronted]) so the rule is recalled and both
+// sides are event-bound (STYLE §8). The protagonist–antagonist case is its interpersonal form;
+// here it is Man vs Nature. Reuses `conflict`.
 rule Conflict_Exists {
   when:
     char $a
-    $a >< $b
+    char $b
     $a != $b
+    $a >< $b
+    evt  $clash [&Confronted(agent=$a, other=$b)]
   then:
     $a -- conflict
     $b -- conflict
@@ -62,8 +66,9 @@ set sea [+Exterior] [+Vast] [+Indifferent]
 scene the_struggle {
   beat 1 {
     santiago @ sea
-    evt hook -> santiago > marlin : "Hooks The Great Fish"
     santiago >< marlin
+    // the old man and the great fish, matched against each other on the open sea
+    evt the_contest [&Confronted(agent=santiago, other=marlin)]
     // Not enmity but elemental struggle — the marlin is nature's adversary, admired.
     santiago [+Conflict_vs_Nature]
     santiago -- conflict

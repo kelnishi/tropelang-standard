@@ -77,7 +77,7 @@ scene the_marketplace {
   }
   beat 2 {
     evt the_draw [&Strikes(agent=indy, target=swordsman, kind=Gunfire)]
-    // Exploit_Weakness (action_dynamics) -> swordsman [+Exposed]; the blade never had an answer
+    swordsman [+Exposed]   // the blade never had an answer — stated literally so coverage re-checks it (Exploit_Weakness also derives it)
   }
   beat 3 {
     evt the_shot [&Finishes(agent=indy, target=swordsman)]

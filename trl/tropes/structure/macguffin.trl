@@ -37,9 +37,11 @@ imply MacGuffin -> [Object, Contested]
 rule MacGuffin_Driver {
   when:
     obj  $item
-    char $a [~Pursues(target=$item)]
-    char $b [~Pursues(target=$item)]
+    char $a
+    char $b
     $a != $b
+    evt  $chase_a [&Pursued(agent=$a, other=$item)]
+    evt  $chase_b [&Pursued(agent=$b, other=$item)]
     not ( $item [+MacGuffin] )
   then:
     $item [+MacGuffin]
@@ -63,9 +65,9 @@ obj the_falcon
 
 scene the_chase {
   beat 1 {
-    spade [~Pursues(target=the_falcon)]
-    gutman [~Pursues(target=the_falcon)]
-    // both parties converge on one object
+    evt spade_hunt  [&Pursued(agent=spade, other=the_falcon)]
+    evt gutman_hunt [&Pursued(agent=gutman, other=the_falcon)]
+    // two distinct parties converge on one object — the convergence of wanting is the trope
   }
   beat 2 {
     spade -- gutman : "Rivals For The Bird"

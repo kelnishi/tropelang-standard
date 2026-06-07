@@ -74,7 +74,7 @@ scene the_measuring {
     anansi > bamboo
     // the goad: "you cannot be as long as this pole" — flattery dressed as doubt draws him in
     evt the_taunt [&Feints(agent=anansi, target=onini)]
-    // Bait -> onini [+Overcommitted]   (he stretches out full length to prove his size)
+    onini [+Overcommitted]   // he stretches out full length to prove his size (the bait taken — stated literally, so coverage re-checks it)
   }
   beat 2 {
     // the spring: while the python is extended and helpless, Anansi binds him to the bamboo

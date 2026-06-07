@@ -33,10 +33,14 @@ imply Act_Resolution    -> [ending, Denouement]
 
 
 // === ABSTRACT RULE ===
-// A story arc that has passed through all three phases exhibits Three-Act Structure.
+// A story arc that has passed through all three phases exhibits Three-Act Structure. The closing of
+// the arc rides an EVENT ([&Concludes], whose thread role binds the arc) so the rule is recalled and
+// phase-2 re-checks [+Act_Setup] [+Act_Confrontation] [+Act_Resolution] on the bound arc (STYLE §8).
 rule ThreeActStructure {
   when:
-    arc $story [+Act_Setup] [+Act_Confrontation] [+Act_Resolution]
+    arc  $story [+Act_Setup] [+Act_Confrontation] [+Act_Resolution]
+    char $teller
+    evt  $close [&Concludes(agent=$teller, thread=$story)]
   then:
     $story [+ThreeActStructure]
 }
@@ -54,7 +58,7 @@ char prince [+LoveInterest]
 obj slipper [+Token]
 
 // THE TALE
-arc the_tale [+ThreeActStructure]
+arc the_tale
 
 act setup {
   beat 1 {
@@ -78,5 +82,8 @@ act resolution {
     evt fit    -> slipper @ cinderella : "The Slipper Fits"
     cinderella -- prince : "Married"
     the_tale [+Act_Resolution]
+    // the third act closes the arc — the event whose thread role binds the tale for recognition
+    evt the_ending [&Concludes(agent=cinderella, thread=the_tale)]
+    // ThreeActStructure -> the_tale [+ThreeActStructure]
   }
 }
