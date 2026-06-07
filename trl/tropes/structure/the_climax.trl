@@ -54,6 +54,7 @@ rule The_Climax {
     char $hero -- climax
     char $foe
     $hero >< $foe
+    evt  $crest [&Confronted(agent=$hero, other=$foe)]
     past scene $earlier {
       char $hero -- rising_action
     }
@@ -110,6 +111,7 @@ scene the_fencing_match {
     hamlet > poisoned_foil
     // the central conflict comes to its decisive head — the >< opposition the rule keys on
     hamlet >< laertes : "The Rigged Duel — Envenomed Blades Exchanged"
+    evt the_crest [&Confronted(agent=hamlet, other=laertes)]   // the decisive confrontation at the peak — the event recall keys on
         dialog(inject=[speaker=hamlet], inline="""
                speaker: "{speaker}"
                cue: "the queen fallen, the plot bared, the blade turned on its maker"

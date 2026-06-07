@@ -34,6 +34,10 @@ assoc face_heel_turn -> [
 // The crossing is itself a Reversal — the mirror of the redemptive one, bending toward Corruption.
 imply FaceHeelTurn -> [Reversal, corruption, Narrative]
 
+// `&Forsakes` (abandon the cause) is in the Betray class (ontology/verb_classes.trl) but was never
+// declared as a verb; declared here so the shape recognizer indexes the deed this trope keys on.
+verb Forsakes [+Interpersonal]
+
 
 // === ABSTRACT RULE ===
 // A trusted, heroic figure, wounded into resentment by a betrayal or an attack on what he loves
@@ -78,9 +82,9 @@ scene the_crossing {
   beat 1 {
     michael @ louis_restaurant
     mccluskey @ louis_restaurant
-    evt the_shooting [&Betrays(agent=mccluskey, target=vito)]   // the attack on what he loves
+    evt the_shooting [&Strikes(agent=mccluskey, target=vito)]   // the attack on what he loves — the men gun Vito down, the captain breaks his jaw
     michael [~Attached_To(target=vito)]
-    michael [#Resentful]                 // the wound curdles — Appraise_Betrayal's blame, turned hard
+    michael [#Resentful]                 // the wound curdles into resentment — the catalyst that turns him
   }
   beat 2 {
     evt the_hit [&Forsakes(agent=michael)]   // he takes up the gun he swore he never would

@@ -27,11 +27,19 @@ imply FullCircleRevolution -> [Cyclical, Power, Narrative]
 
 
 // === ABSTRACT RULE ===
-// Naming rule: a revolution's victor who becomes the tyrant they deposed closes the circle.
+// Naming rule: a revolution's victor who becomes the tyrant they deposed closes the circle. Both
+// poles ride events so the rule is recalled and BOTH are event-bound for coverage (STYLE §8): the
+// deposing ([&Defects] from the old ruler) and the new tyranny ([&Commands] over the same subjects).
+// Phase-2 re-checks [+Deposed] on the old and [+Ruler] [+Tyrant] on the new — the new boss, same as
+// the old.
 rule Full_Circle_Revolution {
   when:
     char $old [+Deposed]
     char $new [+Ruler] [+Tyrant]
+    char $rebels
+    char $subjects
+    evt  $revolt [&Defects(agent=$rebels, from=$old)]
+    evt  $reign  [&Commands(agent=$new, other=$subjects)]
   then:
     $new [+FullCircleRevolution]
 }
@@ -53,6 +61,7 @@ scene the_farm {
   }
   beat 2 {
     napoleon [+Ruler] [+Tyrant]               // the pig in the farmhouse, walking on two legs
+    evt the_new_order [&Commands(agent=napoleon, other=animals)]   // the new boss rules the same beasts — same as the old
     // Full_Circle_Revolution -> napoleon [+FullCircleRevolution]
   }
 }

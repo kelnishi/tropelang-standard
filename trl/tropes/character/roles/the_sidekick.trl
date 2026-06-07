@@ -19,11 +19,15 @@ assoc the_sidekick -> [
 
 imply Sidekick -> [loyalty, Support, Narrative]
 
-// Naming rule: one who loyally supports the protagonist IS a Sidekick (tags the bond).
+// Naming rule: a loyal helper who AIDS the protagonist IS a Sidekick. The support rides an
+// EVENT ([&Aided], the act of helping) so the rule is recalled and phase-2 coverage re-checks
+// [+Loyal] on the helper and [+Protagonist] on the lead (STYLE §8). Loyalty is the positive
+// discriminator the laconic names — what separates the Sidekick from a one-off helping hand.
 rule The_Sidekick {
   when:
     char $h [+Protagonist]
-    char $s [@Supports(hero=$h)]
+    char $s [+Loyal]
+    evt  $help [&Aided(agent=$s, other=$h)]
   then:
     $h [+Accompanied(by=$s)]
     $s [+Sidekick]
@@ -34,11 +38,12 @@ rule The_Sidekick {
 // The ogre wants only to be left alone; the donkey will not be left, and his relentless, loyal,
 // motor-mouthed company is what drags Shrek into the world — and into being a hero at all.
 char shrek  [+Protagonist]
-char donkey [+Deuteragonist] [@Supports(hero=shrek)]
+char donkey [+Deuteragonist] [+Loyal]
 
 scene the_swamp_road {
   beat 1 {
-    donkey -- shrek : "you've got a friend, whether you want one or not"
-    // The_Sidekick -> shrek [+Accompanied(by=donkey)], donkey [+Sidekick]
+    // Relentless, loyal company — the donkey will not be left; his help is the act that defines him.
+    evt the_company [&Aided(agent=donkey, other=shrek)]
+    // The_Sidekick derives: shrek [+Accompanied(by=donkey)], donkey [+Sidekick] -- loyalty
   }
 }

@@ -47,7 +47,7 @@ char rome     [+Antagonist] [+Collective]   // the largest army Rome ever fielde
 scene cannae {
   beat 1 {
     evt give_way [&Feints(agent=hannibal, target=rome)]   // the centre yields on purpose
-    // Bait -> rome [+Overcommitted]
+    rome [+Overcommitted]   // the Romans pour into the pocket — stated literally so coverage re-checks it (Bait also derives it)
   }
   beat 2 {
     evt envelop [&Strikes(agent=hannibal, target=rome)]   // the wings close

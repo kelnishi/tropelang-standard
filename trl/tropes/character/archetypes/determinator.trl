@@ -36,21 +36,21 @@ imply Determinator -> [Resolve, Relentless, Narrative]
 
 
 // === ABSTRACT RULE ===
-// The signature: blow after blow lands ([+Hit] from action_dynamics) — three or more that would
-// each be enough to stop an ordinary pursuer — and the pursuit STILL continues. The mechanism is
-// the needs Inversion sustained: a higher drive ($hr — esteem/becoming) held HARDER than the body's
-// mounting lack ($br — life and limb) outpulls it every time, so the will overrides the flesh
-// rather than the flesh ending the will. Unlike Heroic Second Wind (one rally), this fires on the
-// COUNT of damage that fails to stop them: the relentlessness is the count itself. The pursuit is
-// NOT cleared — that is the whole point; they are still coming.
+// The signature: a blow lands ([&Strikes] from action_dynamics) — one that would be enough to stop
+// an ordinary pursuer — and the pursuit STILL continues. The mechanism is the needs Inversion: a
+// higher drive ($hr — esteem/becoming) held HARDER than the body's mounting lack ($br — life and
+// limb) outpulls it, so the will overrides the flesh rather than the flesh ending the will. The
+// blow rides an event role so the rule is recalled, and phase-2 coverage re-checks the Inversion —
+// the [~Pursues] drive and [#Lacks] toll — on the struck pursuer (STYLE §8: discriminate by the
+// positive Inversion, not by a count of blows). The relentlessness is shown in the vignette as the
+// blows that keep coming; the pursuit is NOT cleared — that is the whole point.
 rule Determinator {
   when:
-    char $c [~Pursues(rank=$hr, salience=$hs)]
-    char $c [#Lacks(rank=$br, salience=$bs)]
-    count( evt $blow [&Strikes(target=$c)] ) >= 3
+    char $c [~Pursues(rank=$hr, salience=$hs)] [#Lacks(rank=$br, salience=$bs)]
+    char $attacker
+    evt  $blow [&Strikes(agent=$attacker, target=$c)]
     $br < $hr
     $hs > $bs
-    not ( $c [+Determinator] )
   then:
     $c [#Driven(rank=$hr)]
     $c [+Determinator]

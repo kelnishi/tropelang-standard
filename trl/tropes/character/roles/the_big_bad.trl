@@ -18,11 +18,16 @@ assoc the_big_bad -> [
 
 imply BigBad -> [Antagonist, Mastermind, Narrative]
 
-// Naming rule: an antagonist set as the hero's nemesis IS the Big Bad (binds the central enmity).
+// Naming rule: a MASTERMIND antagonist whose schemes menace the hero IS the Big Bad. The driving
+// scheme rides an EVENT ([&Threatens], the menace that powers the central conflict) so the rule is
+// recalled and phase-2 coverage re-checks [+Antagonist] [+Mastermind] on the villain and
+// [+Protagonist] on the hero (STYLE §8). [+Mastermind] is the positive discriminator over a plain
+// antagonist — the principal scheming foe, not merely an opposer.
 rule The_Big_Bad {
   when:
     char $h [+Protagonist]
-    char $v [+Antagonist] [@Nemesis_Of(other=$h)]
+    char $v [+Antagonist] [+Mastermind]
+    evt  $scheme [&Threatens(agent=$v, target=$h)]
   then:
     $v [+BigBad]
     $h [+Opposed_By(villain=$v)]
@@ -33,11 +38,12 @@ rule The_Big_Bad {
 // The Napoleon of Crime, the spider at the centre of London's web — the one mind Holmes reckons
 // his equal, and the only foe worth his own destruction at the Reichenbach Falls.
 char holmes   [+Protagonist]
-char moriarty [+Antagonist] [@Nemesis_Of(other=holmes)]
+char moriarty [+Antagonist] [+Mastermind] [@Nemesis_Of(other=holmes)]
 
 scene reichenbach {
   beat 1 {
-    moriarty -- holmes : "the equal and opposite of the great detective"
-    // The_Big_Bad -> moriarty [+BigBad], holmes [+Opposed_By(villain=moriarty)]
+    // The spider's web of schemes closes on the detective — the menace that drives the central conflict.
+    evt the_web [&Threatens(agent=moriarty, target=holmes)]
+    // The_Big_Bad derives: moriarty [+BigBad], holmes [+Opposed_By(villain=moriarty)]
   }
 }

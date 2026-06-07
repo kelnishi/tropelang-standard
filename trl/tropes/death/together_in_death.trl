@@ -41,10 +41,10 @@ imply TogetherInDeath -> [Romance, Sacrifice, Narrative]
 // sundered pair both fall does death close what life could not.
 rule Together_In_Death {
   when:
-    char $a [~Loves(target=$b)] [@Sundered_From(other=$b)]
-    char $b [~Loves(target=$a)]
-    $a [+Fallen]
-    $b [+Fallen]
+    char $a [~Loves(target=$b)] [@Sundered_From(other=$b)] [+Fallen]
+    char $b [~Loves(target=$a)] [+Fallen]
+    evt  $da [&Dies(subject=$a)]
+    evt  $db [&Dies(subject=$b)]
   then:
     $a [-Sundered_From(other=$b)]
     $a [@Joined_In_Death(other=$b)]

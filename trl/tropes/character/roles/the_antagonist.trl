@@ -28,14 +28,16 @@ imply Antagonist -> [Opposition, Obstacle]
 
 
 // === ABSTRACT RULE ===
-// The antagonist is defined RELATIONALLY: whoever opposes the protagonist. (Reuses the
-// prelude Opposes verb; the central conflict is the mutual-conflict edge between them.)
+// The antagonist is defined RELATIONALLY: whoever opposes the protagonist. The opposition
+// rides an EVENT ([&Opposes], the act of standing against them) so the rule is recalled and
+// phase-2 coverage re-checks [+Protagonist] on the bound target (STYLE §8); the central
+// conflict is the mutual-conflict edge between them.
 rule TheAntagonist {
   when:
     char $protagonist [+Protagonist]
     char $c
     $c != $protagonist
-    $c [~Opposes(target=$protagonist)]
+    evt  $clash [&Opposes(agent=$c, other=$protagonist)]
   then:
     $c [+Antagonist]
     $c >< $protagonist
@@ -52,9 +54,8 @@ char javert [+Lawman] [+Righteous]
 
 scene the_pursuit {
   beat 1 {
-    javert [~Opposes(target=valjean)]
-    javert >< valjean
-    javert [+Antagonist]
-    // His opposition is lawful conviction, not malice — an antagonist who is no villain.
+    // The lifelong pursuit is the act of opposition — lawful conviction, not malice.
+    evt manhunt [&Opposes(agent=javert, other=valjean)]
+    // TheAntagonist derives: javert [+Antagonist] >< valjean — an antagonist who is no villain.
   }
 }

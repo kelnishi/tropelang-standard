@@ -48,7 +48,7 @@ char hidan     [+Antagonist] [+Immortal]   // can't be killed by ordinary means 
 scene the_combination {
   beat 1 {
     evt shadow_bind [&Pins(agent=shikamaru, target=hidan)]
-    // Assist_Pin -> hidan [+Exposed]   (cooperation: the setup)
+    hidan [+Exposed]   // the setup holds him open — stated literally so coverage re-checks it (Assist_Pin also derives it)
   }
   beat 2 {
     evt rasenshuriken [&Finishes(agent=naruto, target=hidan)]

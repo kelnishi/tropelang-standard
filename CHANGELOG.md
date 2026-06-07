@@ -17,6 +17,13 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 
 ## [Unreleased]
 
+### Fixed
+- Self-recognition (§4b): event-anchored the last 4 `bonds` tropes so they confirm their own vignette,
+  completing the arena (all 9) — `power_of_friendship` (Aids), `i_gave_my_word` (Honors),
+  `conflicting_loyalty` (Commands), `like_brother_and_sister` (Aided + positive `[+Family(with)]`,
+  dropping the closed-world `not()` spine). Corpus self-recognition **152 → 156/194 (78% → 80%)**.
+  (Redo of the closed #26 on the v0.4.1 engine; recall still rides an event, with imply param threading
+  generalizing the relation/role coverage.)
 ## [1.7.3] — 2026-06-07
 
 ### Changed

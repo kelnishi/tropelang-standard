@@ -20,10 +20,14 @@ assoc the_paragon -> [
 // Archetype tags subsume the virtue facts real stories use on their upright characters.
 imply Paragon -> [Virtuous, Trustworthy, Loyal, Honorable, Incorruptible, Narrative]
 
-// Naming rule: a character of unbending, incorruptible virtue IS the Paragon (tags them).
+// Naming rule: incorruptible virtue SHOWN in a deed — standing up for the wronged when it costs —
+// IS the Paragon. The virtue rides an EVENT ([&Protected], doing right at cost) so the rule is
+// recalled; phase-2 coverage re-checks [+Virtuous] [+Incorruptible] on the bound doer — the
+// positive constellation, present and acted, not merely asserted (STYLE §8).
 rule The_Paragon {
   when:
     char $c [+Virtuous] [+Incorruptible]
+    evt  $stand [&Protected(agent=$c, other=$wronged)]
   then:
     $c [+Paragon]
     $c -- honor
@@ -34,10 +38,12 @@ rule The_Paragon {
 // right — and does it with a courtesy and steadiness that make him the moral centre the whole book
 // is measured against.
 char atticus [+Protagonist] [+Virtuous] [+Incorruptible]
+char tom     [+Accused]   // the man the town will convict regardless
 
 scene the_courthouse {
   beat 1 {
-    atticus -- justice : "does right when right cannot win"
-    // The_Paragon -> atticus [+Paragon]
+    // Does right when right cannot win — defends the man the town has already condemned.
+    evt the_defense [&Protected(agent=atticus, other=tom)]
+    // The_Paragon derives: atticus [+Paragon] -- honor
   }
 }

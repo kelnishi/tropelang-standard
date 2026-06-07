@@ -35,12 +35,16 @@ imply LoveInterest -> [Romance, Bond, Narrative]
 // occupies the Love Interest role and is the protagonist's beloved (the dyad partner). Distinct
 // from Unrequited (which requires the love unanswered) and Star-Crossed (which requires sundering):
 // this is the bare role, the rung sought.
+// The romantic thread rides an EVENT ([&Pursued], the protagonist's courtship of the beloved) so
+// the rule is recalled; phase-2 coverage re-checks the [~Loves] intent on the bound protagonist —
+// the positive discriminator that makes the pursuit ROMANTIC, not a manhunt (STYLE §8).
 rule The_Love_Interest {
   when:
     char $protagonist [+Protagonist]
     char $beloved
     $beloved != $protagonist
     $protagonist [~Loves(target=$beloved)]
+    evt  $courtship [&Pursued(agent=$protagonist, other=$beloved)]
   then:
     $beloved [+LoveInterest]
     $protagonist [@Beloved_Of(other=$beloved)]
@@ -60,7 +64,7 @@ rule The_Love_Interest {
 char genji [+Protagonist] [~Loves(target=murasaki)]
 
 // MURASAKI NO UE — the lady of the spring quarter
-char murasaki [+LoveInterest]
+char murasaki
 
 // INT. THE SPRING QUARTER OF THE ROKUJO ESTATE - NIGHT
 set spring_quarter [+Interior] [+Night]
@@ -69,7 +73,8 @@ scene the_one_he_returns_to {
   beat 1 {
     genji @ spring_quarter
     murasaki @ spring_quarter
-    genji -- murasaki : "the one his heart returns to, of all the court"
-    // The_Love_Interest -> murasaki [+LoveInterest], genji [@Beloved_Of(other=murasaki)] -- belonging
+    // The romance is built around her — the one his heart returns to, of all the court.
+    evt the_courtship [&Pursued(agent=genji, other=murasaki)]
+    // The_Love_Interest derives: murasaki [+LoveInterest], genji [@Beloved_Of(other=murasaki)] -- belonging
   }
 }

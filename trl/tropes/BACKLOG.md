@@ -47,9 +47,14 @@ tropelang selfcheck trl/tropes/corpus.toml --corpus file://trl     # ratio + cou
 
 **Failures by arena (47):** bonds **9/13** · character **13/30** · conflict **10/34** · structure 5/17 ·
 epistemic 4/27 · death 3/15 · power 2/9 · arc 1/22.
-- **bonds:** ✅ fixed (event-anchored) `found_family` `love_triangle` `unrequited_love`
-  `star_crossed_lovers` `sibling_rivalry`. ⏳ remaining (harder — needs-numeric / `not()`-based):
-  `conflicting_loyalty` `i_gave_my_word` `like_brother_and_sister` `power_of_friendship`.
+- **bonds:** ✅ **DONE — all 9** (event-anchored recall + relation/positive coverage). `found_family`
+  (Accepts) · `love_triangle`/`star_crossed_lovers`/`unrequited_love` (Loves) · `sibling_rivalry`
+  (Challenged) · `power_of_friendship` (Aids) · `i_gave_my_word` (Honors) · `conflicting_loyalty`
+  (Commands) · `like_brother_and_sister` (Aided + positive `[+Family(with)]`).
+  NOTE (v0.4.1 imply param threading): recall threads refined relations into their base class
+  (`Brother_Of`→`Sibling_Of`), so a rule keyed on the base fires across gendered variants — but the
+  phase-2 **coverage re-check is literal**, so a refined-only vignette confirms at ~0.62 (a "relevant"
+  Possible) unless it also carries the base tag. This is the lever for the role archetypes next.
 - **character roles:** `the_protagonist` `the_antagonist` `the_mentor` `the_foil` `the_lancer`
   `the_sidekick` `the_deuteragonist` `the_everyman` `the_paragon` `the_love_interest` `the_big_bad`
   `the_trickster`(0.81) `determinator`.

@@ -29,14 +29,19 @@ imply Protagonist -> [Central, Sympathetic_Focus, Agent]
 
 
 // === ABSTRACT RULE ===
-// Heuristic recognition: the character at the centre of the most turning points of the
-// central arc is its protagonist. (Centrality is ultimately authorial; agency is the
-// structural signal we can see.)
+// Recognition: the central figure of a story (the one it is ABOUT) whose CHOICE drives the
+// central arc is its protagonist. Two positive signals in concert — focus ([+Central], the
+// story centers on them) and agency ([&Initiates], an action that sets the central arc in
+// motion) — not a count of turns (a magnitude flattens "drives the story" into a number;
+// STYLE §8). The act binds BOTH $c (agent) and the arc (thread=$story) on event roles, so
+// the agency rides the arc and phase-2 coverage re-checks the [+Central] focus tag literally.
+// `&Initiates` is contrastive: narrative-specific, so it won't recall on a bare `&Acts` deed
+// the way a generic agency verb does (which over-fires the gambit cluster).
 rule TheProtagonist {
   when:
     arc  $story
-    char $c
-    count( evt $turn -> $c ) >= 3
+    char $c [+Central]
+    evt  $turn [&Initiates(agent=$c, thread=$story)]
   then:
     $c [+Protagonist]
     $c -- $story
@@ -46,20 +51,20 @@ rule TheProtagonist {
 
 // === CONCRETE VIGNETTE: Breaking Bad — Walter White (TV; a villain protagonist) ===
 
-// WALTER WHITE
-char walter [+ChemistryTeacher]
+// WALTER WHITE — the story is ABOUT him: the central figure ([+Central], the focus signal)
+char walter [+Central] [+ChemistryTeacher]
 
-// THE METH EMPIRE
+// THE METH EMPIRE — the central arc his choices drive
 arc the_empire
 
 scene the_turn {
   beat 1 {
     walter -- the_empire
-    evt cook   -> walter > the_empire : "Builds The Operation"
-    evt expand -> walter @ the_empire : "Seizes Control"
-    evt fall   -> walter @ the_empire : "Brings It All Down"
-    walter [+Protagonist]
-    // The story centers on him even as he turns monstrous — a villain protagonist.
+    // The decisive choice that sets the central arc in motion ([&Initiates], the agency signal,
+    // tied to the_empire arc via thread=).
+    evt cook [&Initiates(agent=walter, thread=the_empire)]   // cooks the first batch — the choice that builds the empire
+    // TheProtagonist derives: walter [+Protagonist] -- the_empire -- conflict (show the cause; let the rule prove it).
+    // The story centers on him even as he turns monstrous — a villain protagonist, not a hero.
     walter [+Villain_Protagonist]
   }
 }

@@ -87,6 +87,7 @@ scene the_red_weed {
     // action_dynamics' Exploit_Weakness fires (kind="Microbes" matches Vulnerable(to="Microbes")),
     // deriving martians [+Exposed] — the invulnerability beaten at its single weak point.
     evt the_infection [&Strikes(agent=bacteria, target=martians, kind="Microbes")]
+    martians [+Exposed]   // the one gap opened — stated literally so coverage re-checks it (Exploit_Weakness also derives it)
   }
   beat 2 {
     // the finish: the conquerors die in their machines — the tripods stand silent over a saved Earth.

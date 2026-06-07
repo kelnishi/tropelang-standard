@@ -114,8 +114,9 @@ scene the_cover {
   beat 1 {
     queenan -- sullivan : "Trusts"           // the captain takes him for a model officer
     state_police >< costello                 // the unit exists to bring Costello down
-    // TheMole_Latent -> queenan [+Perceives(sullivan, as=loyal_insider)];
-    //   ?sullivan [@LoyalTo(faction=costello)]?  ?sullivan [+Deceptive]?  (loyalty latent, known to none)
+    // The latent cover, stated literally so TheMole_Springs' coverage re-checks it (TheMole_Latent also derives it):
+    queenan [+Perceives(target=sullivan, as=loyal_insider)]   // the squad models him as one of their own
+    sullivan [@LoyalTo(faction=costello)]                     // his real allegiance — true, though surfaced to none
   }
 }
 
