@@ -36,10 +36,12 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   scene/event name collisions (`the_edict`, `the_struggle`). Precision: tightened `Finishing_Move` to
   the combination finisher (now requires the ally's `[&Pins]` setup, per its own title/laconic),
   clearing its ≥0.9 co-fires on solo-kill vignettes (David Versus Goliath, Achilles' Heel, Combat
-  Pragmatist: **1.00 → 0.50**). Remaining residue (not gated by selfcheck): `Pincer_Attack` co-fires on
-  single-attacker multi-strike vignettes — a shape recognition-time artifact (`$x != $z` is honored at
-  eval, FIRED 0%, but not at recall; fixing it needs the recognizer to enforce binding-inequality).
-  Other ≥0.9 overlaps are defensible kindred tropes (foil/gambit, lancer/sidekick, trap/feint,
+  Pragmatist: **1.00 → 0.50**). The `Pincer_Attack` over-fire — a recognition-time gap where `$x != $z`
+  was honored at eval but not at shape recall — is resolved by **engine cli-v0.4.3**, which enforces
+  binding-inequality at recognition: its ≥0.9 co-fires on single-attacker vignettes (David Versus
+  Goliath, Achilles' Heel, Combat Pragmatist, Determinator, You Shall Not Pass, Last Stand, Zerg Rush)
+  are gone, while it still self-confirms its own two-attacker vignette and selfcheck holds 194/194. Any
+  remaining ≥0.9 overlaps are defensible kindred tropes (foil/gambit, lancer/sidekick, trap/feint,
   redemption/sacrifice, last-stand/you-shall-not-pass).
 
 ### Changed
