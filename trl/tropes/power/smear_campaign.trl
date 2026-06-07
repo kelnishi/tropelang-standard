@@ -32,14 +32,17 @@ imply SmearCampaign -> [Disgrace, Slander, Coordinated, Repeated, Narrative]
 
 
 // === ABSTRACT RULE ===
-// Naming rule: a claim against one target, slandered NOT once but REPEATEDLY (count >= 2) by an
-// attacker, is a Smear Campaign — the repetition is the signature. The serialised slander brands the
-// claim into common belief (it doesn't matter whether it is true) and the target's standing falls.
+// Naming rule: a claim against one target, slandered NOT once but REPEATEDLY by an attacker, is a
+// Smear Campaign — the repetition is the signature. Expressed as two distinct slander EVENTS by the
+// same attacker on the same target (not a count aggregate, so phase-1 recall indexes it; STYLE §8);
+// phase-2 re-checks [+Disgraced] on the target. The serialised slander brands the claim into common
+// belief (it doesn't matter whether it is true) and the target's standing falls.
 rule SmearCampaign {
   when:
     char $target [+Disgraced]
-    evt  $s [&Slanders(agent=$attacker, target=$target)]
-    count( evt $smear [&Slanders(agent=$attacker, target=$target)] ) >= 2
+    evt  $s     [&Slanders(agent=$attacker, target=$target)]
+    evt  $again [&Slanders(agent=$attacker, target=$target)]
+    $s != $again
   then:
     !$target [+Branded]!                     // the cloud of nastiness sticks; hard to dispel
     $s [+SmearCampaign]
@@ -66,6 +69,7 @@ obj the_handkerchief [+MacGuffin]
 scene the_poison {
   beat 1 {
     evt the_first_hint [&Slanders(agent=iago, target=desdemona)]   // "I like not that..."
+    desdemona [+Disgraced]   // her standing falls under the drip of insinuation — stated literally so coverage re-checks it
     // Disgrace (reputation) -> desdemona [+Disgraced]
   }
   beat 2 {

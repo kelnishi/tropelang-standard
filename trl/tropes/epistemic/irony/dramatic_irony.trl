@@ -34,8 +34,12 @@ char desdemona [+LoveInterest]
 
 scene the_handkerchief {
   beat 1 {
+    // the soliloquy establishes the truth in the world — to the audience, not to Othello
+    evt the_asides [&Reveals(fact=iago_treacherous)]
     !iago [+Treacherous]!                            // the audience has heard the asides — we KNOW
-    othello [#Believes(claim=iago_is_honest)]         // Othello trusts "honest Iago"
+    othello [#Believes(claim=iago_loyal)]             // Othello trusts "honest Iago" — the opposite of the truth
+    iago_loyal >< iago_treacherous                    // the believed claim stands against the revealed fact
+    // Othello never witnessed the asides — DramaticIrony (theory_of_mind.trl): he acts on the gap
   }
   beat 2 {
     !desdemona [+Faithful]!                           // and we know she is true
