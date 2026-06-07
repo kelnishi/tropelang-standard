@@ -1,0 +1,78 @@
+// === PREAMBLE ===
+// @trope    Genre Savvy
+// @category Metafiction / Genre Awareness
+// @source   https://allthetropes.org/wiki/Genre_Savvy
+// @domain   Epistemic
+// @version  1.3
+//
+// Laconic (per the wiki): the opposite of Genre Blindness — a character who doesn't necessarily know
+// they're in a story, but DOES know stories like their own and what worked in them, and acts on it:
+// they see the doomed Simple Plan coming and sit it out, avoid the lollipop-offering stranger, refuse
+// to split up when there's an axe murderer about. FRONTIER: a foreknowledge trope sourced not from
+// prophecy but from GENRE familiarity. The discriminator is a [+GenreSavvy] character anticipating a
+// [+Convention] on an event role — distinct from Breaking the Fourth Wall (no audience address; they
+// don't know they're fiction) and from Dramatic Irony (here the character KNOWS, and acts on knowing).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/modules/theory_of_mind.trl"      // the convention-modeling this trope runs on
+
+assoc genre_savvy -> [
+  fourth_wall    : "story-aware like, but inward (no audience address) unlike",
+  dramatic_irony : "the knowing inverse of",
+  foreshadowing  : "reads the genre's setup as"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (genre foreknowledge is the discriminator; promotion model, cf. the_wizard) —
+prop GenreLiterate        [+Epistemic]   // versed in stories like one's own — knows the conventions and acts on them
+prop Convention           [+Narrative]   // a genre's stock pattern — the trope a savvy character sees coming
+verb Anticipates(convention) [+Epistemic] // reads the genre's script ahead — foresees the pattern and pre-empts it
+
+imply GenreSavvy -> [Foreknowledge, Metafictional, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a [+GenreLiterate] character ANTICIPATES a [+Convention] — both bound on a [&Anticipates]
+// event (agent=$c, convention=$trope), so phase-2 re-checks [+GenreLiterate] on the agent and
+// [+Convention] on the bound pattern (STYLE §8). Binding the literacy on the agent role is what parts
+// this from a lucky guess or plain foreshadowing: the foreknowledge is the character's, and it is
+// genre-sourced. They do not address an audience (not Fourth Wall) and they are not the ignorant party
+// (not Dramatic Irony).
+rule Genre_Savvy {
+  when:
+    char $c [+GenreLiterate]
+    obj  $trope [+Convention]
+    evt  $foresee [&Anticipates(agent=$c, convention=$trope)]
+  then:
+    $foresee [+GenreSavvy]
+}
+
+
+// === CONCRETE VIGNETTE: Scream — Randy's rules (Craven, film, 1996) ===
+// Holed up at the party while a masked killer works through their town, the video-store clerk Randy
+// has seen every slasher ever made, and he knows exactly how this goes. He lays out the rules to
+// survive a horror movie — never have sex, never drink or do drugs, never say "I'll be right back" —
+// because the genre has taught him what gets you killed. He isn't talking to us and he doesn't think
+// he's in a film; he just knows the script of films like this one, and is trying to live by it. That
+// is genre savvy: the convention seen coming and named before it can spring.
+
+// RANDY MEEKS — the horror-buff who knows the rulebook
+char randy [+GenreLiterate]
+
+// THE RULES OF A HORROR MOVIE — the slasher genre's stock pattern, seen coming
+obj the_slasher_rules [+Convention]
+
+// INT. STU'S HOUSE - NIGHT (the party, as the killings close in)
+set the_party [+Interior] [+Night] [+Crowded]
+
+scene the_rules_speech {
+  beat 1 {
+    randy @ the_party
+    // he names the slasher conventions before they can claim anyone in the room
+    evt the_rules [&Anticipates(agent=randy, convention=the_slasher_rules)]
+    // Genre_Savvy -> the_rules [+GenreSavvy]
+  }
+}

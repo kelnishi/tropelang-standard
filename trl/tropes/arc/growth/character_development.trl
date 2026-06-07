@@ -1,0 +1,82 @@
+// === PREAMBLE ===
+// @trope    Character Development
+// @category Characterization Tropes / Mechanics of Writing
+// @source   https://allthetropes.org/wiki/Character_Development
+// @domain   Mind
+// @version  1.3
+//
+// Laconic (per the wiki): the change in characterization of a Dynamic Character — one who changes
+// over the course of a narrative. At its core it shows a character changing; its opposite is the
+// Static Character. FRONTIER: the UMBRELLA of the transformation arena — the general case the three
+// specific arcs specialize. Coming of Age is development along the maturity axis, Took a Level in
+// Badass along capability, Redemption/Fall along virtue. This trope keys on the development itself,
+// AXIS-FREE: a [+Dynamic] character (one the telling marks as able to change) altered by experience.
+// The contrastive discriminator is [+Dynamic] — the siblings tag their subject [+Innocent]/[+Weak],
+// never [+Dynamic], so the umbrella and its instances stay distinct under recognition.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/needs.trl"                              // change is often a climb between rungs
+import "trl/tropes/arc/growth/coming_of_age.trl"           // the maturity-axis specialization
+import "trl/tropes/arc/growth/took_a_level_in_badass.trl"  // the capability-axis specialization
+
+assoc character_development -> [
+  coming_of_age            : "is the maturity-axis specialization of",
+  took_a_level_in_badass   : "is the capability-axis specialization of",
+  redemption_arc           : "is the virtue-axis specialization of",
+  fall_from_grace          : "is the virtue-axis (descending) specialization of"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the Dynamic Character is the trope's discriminator; promotion model, cf. the_wizard) —
+prop Dynamic       [+Psychological]   // a Dynamic Character — one the telling marks as able to change (vs. Static)
+verb Changes(by)   [+Narrative]       // the general development shift — characterization altered by experience
+
+imply CharacterDevelopment -> [Transformation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// A character the telling marks [+Dynamic] who is altered by an experience develops. The discriminator
+// is [+Dynamic] bound on the subject of a [&Changes] event so phase-2 re-checks it on the bound entity
+// (STYLE §8) — the specific arcs key on a contrastive starting tag ([+Innocent] / [+Weak]) instead, so
+// this umbrella does not collapse onto them nor they onto it. The change is EARNED through experience
+// (the `by=` role): a character who merely is different at the end without a shown cause is not it.
+rule Character_Development {
+  when:
+    char $c [+Dynamic]
+    evt  $arc [&Changes(subject=$c, by=$experience)]
+  then:
+    $c [+Developed]
+}
+
+
+// === CONCRETE VIGNETTE: Pride and Prejudice — Elizabeth Bennet (Austen, novel, 1813) ===
+// Elizabeth Bennet's first reading of the world is quick and proud of itself: she takes Wickham's
+// charm for honesty and Darcy's reserve for contempt, and is certain she has both men placed. Darcy's
+// letter — laying out Wickham's real history and her own family's part in her sister's near-ruin —
+// undoes that certainty. "Till this moment I never knew myself." She is not a different person after,
+// but she has changed: the prejudice that named the book is traded for a judgment that has been tested.
+// Not a coming of age (she is grown), not a level in badass, not a fall or a redemption — just a
+// dynamic character developed by experience.
+
+// ELIZABETH BENNET — quick to judge, and proud of the judgment
+char elizabeth [+Protagonist] [+Dynamic]
+elizabeth [+Prejudiced]
+
+// FITZWILLIAM DARCY — the man she has badly misread
+char darcy [+Deuteragonist]
+
+// THE LETTER — Darcy's account that overturns what she was sure of
+obj darcys_letter [+Pivotal]
+
+arc elizabeths_arc [+CharacterDevelopment]
+
+scene the_letter_at_hunsford {
+  beat 1 { elizabeth -> darcy : "certain she has him placed — the proud, contemptuous suitor" }
+  beat 2 {
+    elizabeth > darcys_letter
+    evt the_reckoning [&Changes(subject=elizabeth, by=darcys_letter)]
+    // Character_Development -> elizabeth [+Developed]
+  }
+}
