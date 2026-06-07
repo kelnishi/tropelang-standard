@@ -31,17 +31,19 @@ imply TakeAThirdOption -> [Binary, Narrative]
 
 
 // === ABSTRACT RULE ===
-// Naming rule: the hero REFUSES the binary and FORGES a third option not on offer. Two events bind the
-// hero: the refusal of the framed choice ([&Refuses], agent=$h) and the creation of the new path
-// ([&Forges], agent=$h, option=$third). The discriminator is the pairing on the bound [+Binary] dilemma
-// — rejecting the two AND making a third — which parts it from The Dilemma (choosing within the binary)
-// and from a mere stall (refusing with nothing forged in its place).
+// Naming rule: the hero REJECTS the binary itself and FORGES a third option not on offer. The rejection
+// must be OF the dilemma — `[&Rejected(agent=$h, other=$dilemma)]` binds the [+Binary] dilemma on an
+// event role so phase-2 re-checks it on the bound entity (STYLE §8); an object-less refusal would leave
+// the [+Binary] free-floating and the rule would fire on any unrelated refuse-plus-forge. The forging
+// ([&Forges], agent=$h) makes the new path. The discriminator is the pairing tied to the SAME dilemma —
+// rejecting the two AND making a third — parting it from The Dilemma (choosing within the binary) and
+// from a mere stall (refusing with nothing forged in its place).
 rule Take_A_Third_Option {
   when:
-    obj  $fork [+Binary]
     char $h [+Protagonist]
-    evt  $reject [&Refuses(agent=$h)]
-    evt  $third [&Forges(agent=$h, option=$way)]
+    obj  $dilemma [+Binary]
+    evt  $reject [&Rejected(agent=$h, other=$dilemma)]
+    evt  $third  [&Forges(agent=$h, option=$way)]
   then:
     $h [+TookThirdOption]
     $third [+TakeAThirdOption]
@@ -65,8 +67,8 @@ obj the_rewrite [+Unorthodox]
 
 scene the_simulator {
   beat 1 {
-    // he rejects the two ends the test offers
-    evt no_win_refused [&Refuses(agent=kirk)]
+    // he rejects the no-win test itself — not one of its ends, but its terms
+    evt no_win_refused [&Rejected(agent=kirk, other=the_kobayashi_maru)]
     // and forges a third: reprogram the simulation so a win exists at all
     evt reprogram [&Forges(agent=kirk, option=the_rewrite)]
     // Take_A_Third_Option derives: kirk [+TookThirdOption]; reprogram [+TakeAThirdOption]
