@@ -531,6 +531,7 @@ verb Abdicated(to)         [+Political]
 verb Confessed(to)         [+Interpersonal]
 verb Forgave(other)        [+Interpersonal]
 verb Betrays(target: char) [+Interpersonal]   // the betrayed party is required (param aligned to corpus `target=` usage)
+verb Forsakes              [+Interpersonal]   // abandon the cause — Betray-class (ontology/verb_classes.trl); the Face Heel Turn deed
 verb Sacrificed_For(other) [+Interpersonal]   // role flexible: too few corpus usages to require
 verb Protected(other)      [+Interpersonal]
 verb Abandoned(other)      [+Interpersonal]

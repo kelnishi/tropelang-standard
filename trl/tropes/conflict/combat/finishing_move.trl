@@ -27,11 +27,19 @@ imply FinishingMove -> [Decisive, Technique, Narrative]
 
 
 // === ABSTRACT RULE ===
-// Naming rule: a finisher landed on an exposed foe IS a Finishing Move (tags the deed).
+// Naming rule: the COMBINATION finisher — a teammate's setup ([&Pins], opening the foe to [+Exposed])
+// lets a second hand land the finisher. The setup is the discriminator: it scopes the trope to the
+// two-man combo (this file's title and laconic), so a SOLO kill of a foe weakened by its own weak
+// point (David Versus Goliath, Achilles' Heel, Combat Pragmatist) no longer trips this — those have a
+// finisher on an exposed foe but no allied setup. (Setup agent distinct from the finisher.)
 rule Finishing_Move {
   when:
     char $y [+Exposed]
-    evt  $f [&Finishes(agent=$x, target=$y)]
+    char $ally
+    char $x
+    $ally != $x
+    evt  $setup [&Pins(agent=$ally, target=$y)]
+    evt  $f     [&Finishes(agent=$x, target=$y)]
   then:
     $f [+FinishingMove]
 }
