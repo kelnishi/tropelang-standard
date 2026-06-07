@@ -1,0 +1,68 @@
+// === PREAMBLE ===
+// @trope    Idiot Ball
+// @category Plotting Devices
+// @source   https://allthetropes.org/wiki/Idiot_Ball
+// @version  1.3
+// @domain    Narrative
+//
+// Laconic (per the wiki): a moment where a normally-competent character's stupidity fuels the plot —
+// acting Out of Character, missing what one reasonable question would clear up, "willfully stupid"
+// because the writers need it. FRONTIER: plot-induced characterization recognized by CONTRAST — the
+// blunderer is established as [+Clever], so the foolish act reads as a borrowed lapse, not the person.
+// A genuinely foolish character is not holding the Idiot Ball; an established-smart one is.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc idiot_ball -> [
+  plot_armor : "the cousin of — the plot warps a character, not their safety, in",
+  conflict   : "manufactures, from a needless blunder, a"
+]
+
+
+// === ONTOLOGY ===
+
+// — founded here (the lapse is the trope's discriminator; promotion model, cf. the_wizard) —
+prop Clever   [+Ontological]   // established competence — sharp, capable, normally not fooled
+verb Blunders [+Narrative]     // commits an uncharacteristic lapse — the foolish act the plot needs
+
+imply IdiotBall -> [Override, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a [+Clever] character who BLUNDERS — commits a foolish act the plot needs, for its sake —
+// is holding the Idiot Ball. The lapse rides an event ([&Blunders], recall keys on agent=$c); the
+// discriminator is the CONTRAST re-checked on the bound blunderer: [+Clever] AND a shown foolish act
+// (STYLE §8). Established competence is the positive discriminator — a character who is merely foolish
+// throughout is not holding the ball, because there is no competence for the lapse to betray.
+rule Idiot_Ball {
+  when:
+    char $c [+Clever]
+    evt  $lapse [&Blunders(agent=$c, for=plot)]
+  then:
+    $c [+IdiotBall]
+    $lapse [+IdiotBall]
+}
+
+
+// === CONCRETE VIGNETTE: Prometheus — the biologist and the alien "snake" (film, 2012) ===
+// Millburn is a trained xenobiologist — the very person who should know better. Yet faced with an
+// unknown organism rearing up in a vault of black goo, he coos at it and reaches out a bare hand to pet
+// it, as if to a kitten. No expert would; the script needs a death, so the competent man is handed the
+// Idiot Ball for exactly one fatal beat.
+
+// MILLBURN — the xenobiologist; trained, capable, and about to act like neither
+char millburn [+Clever]
+
+// THE AMPULE CHAMBER — the alien vault, where the "hammerpede" rears up
+set the_chamber [+Interior] [+Remote]
+
+scene the_petting {
+  beat 1 {
+    millburn @ the_chamber
+    // the expert reaches a bare hand toward the rearing organism — the lapse the plot requires
+    evt pet_the_snake [&Blunders(agent=millburn, for=plot)]
+    // Idiot_Ball derives: millburn [+IdiotBall]; pet_the_snake [+IdiotBall]
+  }
+}

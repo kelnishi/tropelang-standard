@@ -41,6 +41,19 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   distinct complementary roles bound to one mission, with ten distinctness clauses enforced at
   recognition on engine ≥ 0.4.3. Founds the cast vocabulary `prop Ensemble`/`SmartGuy`/`BigGuy`/`TheChick`.)
   Corpus **196 → 200 tropes**; self-recognition steady at **200/200 (100%)**.
+- **Status Quo Is God** (Narrative Devices) — https://allthetropes.org/wiki/Status_Quo_Is_God
+  (Seinfeld, "no hugging, no learning" — the author imposes a return to the [+Baseline] premise, the Snap
+  Back, so nothing carries over. Founds `prop Baseline` + `state Restored`.)
+- **Failure Is the Only Option** (Narrative Devices) — https://allthetropes.org/wiki/Failure_Is_the_Only_Option
+  (Wile E. Coyote vs. the Road Runner — the hero pursues a [+SeriesGoal] the author denies for the
+  premise's sake; the win that can never land. Founds `prop SeriesGoal` + `state Thwarted`.)
+- **Idiot Ball** (Plotting Devices) — https://allthetropes.org/wiki/Idiot_Ball
+  (Prometheus, the biologist petting the alien — a [+Clever] character handed a plot-driven `[&Blunders]`
+  lapse; recognized by the competence/foolishness contrast. Founds `prop Clever` + `verb Blunders`.)
+- **Take a Third Option** (Plotting Devices) — https://allthetropes.org/wiki/Take_a_Third_Option
+  (Kirk and the Kobayashi Maru — the hero `[&Refuses]` the [+Binary] dilemma and `[&Forges]` an
+  unorthodox third way. Founds `prop Binary` + `verb Forges(option)`.)
+  Corpus **200 → 204 tropes**; self-recognition steady at **204/204 (100%)**.
 
 ### Fixed
 - Self-recognition (§4b): event-anchored the last 4 `bonds` tropes so they confirm their own vignette,

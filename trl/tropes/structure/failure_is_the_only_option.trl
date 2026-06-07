@@ -1,0 +1,73 @@
+// === PREAMBLE ===
+// @trope    Failure Is the Only Option
+// @category Narrative Devices
+// @source   https://allthetropes.org/wiki/Failure_Is_the_Only_Option
+// @version  1.3
+// @domain    Narrative
+//
+// Laconic (per the wiki): a series premise lets the cast win minor battles but never the war — the
+// overall Series Goal can never be reached, because reaching it would end the show. FRONTIER: the win
+// is denied not by in-world logic but by AUTHORIAL fiat for the sake of the premise — the hero genuinely
+// pursues the goal and is genuinely thwarted, again and again. Status Quo Is God is its total-reset
+// extreme; this one denies the GOAL specifically.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/rhetoric.trl"          // the author imposes the outcome over in-world logic (Imposes)
+
+assoc failure_is_the_only_option -> [
+  status_quo_is_god : "the goal-specific case of",
+  rhetoric          : "the series' win denied by the authorial fiat of"
+]
+
+
+// === ONTOLOGY ===
+
+// — founded here (serial-premise vocabulary; promotion model, cf. the_wizard) —
+prop  SeriesGoal [+Narrative]   // the overall "war" the premise is built around — the win that would end the show
+state Thwarted   [+Narrative]   // denied the win — turned back short of the goal, by the premise's need
+
+imply FailureIsTheOnlyOption -> [SeriesGoal, Override, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: the hero PURSUES the Series Goal and the AUTHOR imposes its denial — for the premise's
+// sake, not by any in-world cause. Two events bind the trope: the genuine attempt ([&Pursues], agent=$c,
+// goal=the [+SeriesGoal]) and the fiat that turns it back ([&Imposes], agent=author, outcome=that same
+// goal, for=premise). The discriminator is the [+SeriesGoal] under both the pursuit and the imposed
+// denial — the win that can never land — parting it from a hero who simply loses a fight.
+rule Failure_Is_The_Only_Option {
+  when:
+    char $c [+Protagonist]
+    obj  $goal [+SeriesGoal]
+    evt  $attempt [&Pursues(agent=$c, goal=$goal)]
+    evt  $deny [&Imposes(agent=author, outcome=$goal, for=premise)]
+  then:
+    $c [+Thwarted]
+    $deny [+FailureIsTheOnlyOption]
+}
+
+
+// === CONCRETE VIGNETTE: Looney Tunes — Wile E. Coyote vs. the Road Runner (animated shorts, 1949–) ===
+// The whole premise is a goal that must never be reached: the Coyote chases the Road Runner with ever
+// more elaborate Acme schemes, and the bird must always escape — because the day the Coyote catches him
+// is the day the cartoon is over. He genuinely pursues; the author genuinely denies him, every short,
+// usually off a cliff.
+
+// WILE E. COYOTE — pursues the one goal the show can never grant him
+char coyote [+Protagonist]
+
+// CATCHING THE ROAD RUNNER — the Series Goal whose attainment would end the cartoon
+obj catch_the_road_runner [+SeriesGoal]
+
+scene the_chase {
+  beat 1 {
+    // the genuine attempt — another Acme contraption, another sprint after the bird
+    evt acme_scheme [&Pursues(agent=coyote, goal=catch_the_road_runner)]
+  }
+  beat 2 {
+    // the author denies the win to keep the premise alive — beep beep, and the Coyote drops off the mesa
+    evt beep_beep [&Imposes(agent=author, outcome=catch_the_road_runner, for=premise)]
+    // Failure_Is_The_Only_Option derives: coyote [+Thwarted]; beep_beep [+FailureIsTheOnlyOption]
+  }
+}

@@ -1,0 +1,69 @@
+// === PREAMBLE ===
+// @trope    Status Quo Is God
+// @category Narrative Devices
+// @source   https://allthetropes.org/wiki/Status_Quo_Is_God
+// @version  1.3
+// @domain    Narrative
+//
+// Laconic (per the wiki): the extreme of Failure Is the Only Option — almost NOTHING changes; each
+// installment opens under virtually identical circumstances, and any change at all is undone by a Snap
+// Back / Reset Button. FRONTIER: the reset rides authorial fiat — the change is real within the episode,
+// but the AUTHOR imposes a return to the baseline (for continuity), so the end-state equals the start-
+// state. Distinct from Failure Is the Only Option (which denies the GOAL specifically) by resetting
+// EVERYTHING to the premise.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/rhetoric.trl"          // the author imposes an outcome over in-world logic (Imposes)
+
+assoc status_quo_is_god -> [
+  failure_is_the_only_option : "the total-reset extreme of",
+  rhetoric                   : "the serial author's reset, an authorial-fiat rule of"
+]
+
+
+// === ONTOLOGY ===
+
+// — founded here (serial-structure vocabulary; promotion model, cf. the_wizard) —
+prop  Baseline [+Narrative]   // the unchanging premise an installment must open and close on
+state Restored [+Narrative]   // snapped back — returned to the baseline as if the change never happened
+
+imply StatusQuoIsGod -> [Baseline, Override, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a change happens, then the AUTHOR imposes a return to the [+Baseline] premise — the Snap
+// Back — so nothing carries over. The reset rides an event ([&Imposes], recall keys on agent=author, as
+// the rhetoric siblings do); the discriminator is that the imposed `outcome=` is the [+Baseline] itself
+// (re-checked on the bound $premise), not a novel turn. That return-to-premise is what parts it from a
+// plain authorial fiat and from Failure Is the Only Option (whose fiat denies a [+SeriesGoal]).
+rule Status_Quo_Is_God {
+  when:
+    char $c [+Changed]
+    obj  $premise [+Baseline]
+    evt  $reset [&Imposes(agent=author, outcome=$premise, for=continuity)]
+  then:
+    $c [+Restored]
+    $reset [+StatusQuoIsGod]
+}
+
+
+// === CONCRETE VIGNETTE: Seinfeld — "no hugging, no learning" (TV sitcom, 1990s) ===
+// The show's iron rule: the four may stumble into change within an episode — a romance, a windfall, a
+// flash of growth — but the series will not let any of it stick. George resolves to become a better
+// man; by the next cold open he is exactly the George he always was. The premise is sacred, and the
+// author hits the reset every week.
+
+// GEORGE — seems to change this episode (he swears he'll turn his life around)
+char george [+Changed]
+
+// THE PREMISE — four New Yorkers who never grow; the baseline every episode opens on
+obj the_premise [+Baseline]
+
+scene the_reset {
+  beat 1 {
+    // the author imposes the return to the premise — the Snap Back, "no hugging, no learning"
+    evt no_learning [&Imposes(agent=author, outcome=the_premise, for=continuity)]
+    // Status_Quo_Is_God derives: george [+Restored]; no_learning [+StatusQuoIsGod]
+  }
+}
