@@ -17,6 +17,8 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 
 ## [Unreleased]
 
+## [1.7.3] — 2026-06-07
+
 ### Changed
 - **Prelude collective-agent ontology** (TIER 5/16, prelude `@version 1.16`) — wire the already-ratified
   collective vocabulary into a hierarchy: `imply Faction -> [Collective]`, `imply Institution -> [Collective]`,
