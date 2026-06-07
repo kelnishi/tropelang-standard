@@ -50,8 +50,9 @@ for (const [id, chans] of Object.entries(channels)) {
     author: m?.author ?? null,
     tags: m?.tags || [],
     homepage: m?.homepage ?? null,
-    channels: chans,
-    engineMin: m?.engineMin || null,
+    channels: chans,                                 // curated live pointer(s) — the recommended default
+    engineMin: m?.engineMin || null,                 // the stable channel's engine floor
+    versions: `${BASE_URL}/${id}/versions.json`,     // full catalog for engine-aware version selection
     base: m?.base ?? null,
     url: `${BASE_URL}/${id}/`,
   });

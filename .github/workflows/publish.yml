@@ -77,6 +77,34 @@ jobs:
           aws s3api put-object --endpoint-url "$R2_S3_ENDPOINT" --bucket "$R2_BUCKET" --key "$ID/$VER/corpus.json"   --body "dist/$ID/$VER/corpus.json"   --content-type application/json
           aws s3api put-object --endpoint-url "$R2_S3_ENDPOINT" --bucket "$R2_BUCKET" --key "$ID/$VER/manifest.json" --body "dist/$ID/$VER/manifest.json" --content-type application/json
 
+      # Add this version to the engine-aware discovery catalog (/<id>/versions.json) — every PUBLISHED
+      # (available) version + its engineMin, so a client can pick the newest version its engine supports
+      # without relying on release ordering. Append-only RMW: fetch the current catalog (empty on first
+      # publish), upsert this version (preserving any prior `yanked` flag), upload. Independent of promotion
+      # — `stable` is moved later by the Promote action; the catalog tracks availability, not the live pick.
+      - name: update version catalog (/<id>/versions.json)
+        run: |
+          ID=${{ steps.bundle.outputs.id }}; VER=${{ steps.bundle.outputs.ver }}
+          mkdir -p cat man
+          if aws s3api get-object --endpoint-url "$R2_S3_ENDPOINT" --bucket "$R2_BUCKET" --key "$ID/versions.json" cat/cur.json >/dev/null 2>&1; then
+            echo "catalog exists — incremental add"
+          else
+            # First run for this corpus: bootstrap the catalog from every already-published corpus-v* tag
+            # (their immutable manifests are in R2). Self-healing — runs once, then the branch above takes over.
+            : > cat/cur.json
+            for t in $(git tag -l 'corpus-v*'); do
+              v="${t#corpus-v}"
+              [ "$v" = "$VER" ] && continue
+              if aws s3api get-object --endpoint-url "$R2_S3_ENDPOINT" --bucket "$R2_BUCKET" --key "$ID/$v/manifest.json" "man/$v.json" >/dev/null 2>&1; then
+                node scripts/catalog-add.mjs "man/$v.json" cat/cur.json cat/cur.json
+                echo "  backfilled $ID@$v"
+              fi
+            done
+          fi
+          node scripts/catalog-add.mjs "dist/$ID/$VER/manifest.json" cat/cur.json cat/versions.json
+          aws s3api put-object --endpoint-url "$R2_S3_ENDPOINT" --bucket "$R2_BUCKET" --key "$ID/versions.json" --body "cat/versions.json" --content-type application/json --cache-control "no-cache"
+          echo "### Cataloged \`$ID@$VER\` (engineMin $(jq -r '.versions[0].engineMin' cat/versions.json)) — $(jq '.versions|length' cat/versions.json) versions in \`/$ID/versions.json\`" >> "$GITHUB_STEP_SUMMARY"
+
       # Auto-diff the trope set vs the currently-live version (R2's stable pointer, read BEFORE we promote)
       # → GitHub Release notes + run summary. Complements the curated CHANGELOG.md.
       - name: release notes (auto-diff vs the live version)
