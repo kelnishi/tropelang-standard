@@ -39,7 +39,7 @@ or `cargo install --git …/TropeLang` (private repo; the clone prompts for cred
 ```sh
 # Resolve the latest CLI release asset. The tag is cli-vX.Y.Z; the Linux asset is tropelang-x86_64-linux.
 # (Via the GitHub MCP: mcp__github__get_latest_release, or the API below.)
-REL="cli-v0.4.0"   # ← use the latest cli-* release tag
+REL="cli-v0.4.3"   # ← use the latest cli-* release tag
 curl -fsSL -o /tmp/tropelang \
   "https://github.com/kelnishi/tropelang-standard/releases/download/${REL}/tropelang-x86_64-linux"
 
