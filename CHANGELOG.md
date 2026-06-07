@@ -18,10 +18,14 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 ## [Unreleased]
 
 ### Added
+- **The Wizard** (Character Archetypes) — https://allthetropes.org/wiki/Wizard_Classic
+  (The Tempest, Prospero — the wielder of arcane power, distinct from the Mentor by the casting itself.
+  Founds the genre seed-vocabulary it reaches for, locally per the promotion model: `prop Arcane` and
+  `verb Casts(spell)`.)
 - **Love Dodecahedron** (Relationships / Romance) — https://allthetropes.org/wiki/Love_Dodecahedron
   (A Midsummer Night's Dream — the four-heart chain that does not close; strictly more tangled than the
   Love Triangle, with the four-distinct constraint enforced at recognition on engine ≥ 0.4.3). Corpus
-  **194 → 195 tropes**; self-recognition steady at **195/195 (100%)**.
+  **194 → 196 tropes**; self-recognition steady at **196/196 (100%)**.
 
 ### Fixed
 - Self-recognition (§4b): event-anchored the last 4 `bonds` tropes so they confirm their own vignette,

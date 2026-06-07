@@ -24,7 +24,7 @@ of systems (modules that *simulate* a dynamic) with tropes riding on top (named 
 
 ## Corpus metrics & self-recognition audit (2026-06 — re-measure before acting)
 
-Snapshot at **195 tropes** (re-measure declaration counts before acting; `verb Forsakes` was added to the prelude during the self-recognition drive).
+Snapshot at **196 tropes** (re-measure declaration counts before acting; the self-recognition drive added `verb Forsakes` to the prelude, and `the_wizard` founds `prop Arcane` + `verb Casts` locally).
 
 - **Founding / unfounded nodes:** inline (unfounded) tags down to **204** (from 291 at the start of the
   drive-down). Only `Plain`/`Faithful` recur (2× each, ambiguous — split before founding); the rest is
@@ -126,7 +126,8 @@ Done (psychology arena): Heel/Face Turn · Revenge · Despair Event Horizon · S
 ### Identity / worldbuilding (drams-flagged)
 Done: Hidden Identity · Rightful King Returns · The Chosen One · Unreliable Narrator.
 - [x] Secret Legacy — `secret_legacy` (Percy Jackson)
-- [ ] role archetypes: the Wanderer/Ranger, the Mage/Wizard (covers `Ranger`,`Wizard` gap facts)
+- [x] the Mage/Wizard — `the_wizard` (Prospero; founds the [+Arcane] + [&Casts] magic seed-vocabulary, locally)
+- [~] the Wanderer/Ranger — covered in spirit by `the_drifter` (Shane: [+Stranger] who Protects then Departs)
 - [ ] fantastic-species framing (`Hobbit`,`Elf`,`Dunedain` — low general value; consider eval re-encode instead)
 
 ### Plot structure & devices

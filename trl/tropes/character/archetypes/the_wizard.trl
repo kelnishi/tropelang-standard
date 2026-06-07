@@ -1,0 +1,57 @@
+// === PREAMBLE ===
+// @trope    The Wizard
+// @category Character Archetypes
+// @source   https://allthetropes.org/wiki/Wizard_Classic
+// @version  1.3
+// @domain    Narrative
+//
+// Laconic: the wielder of arcane power — a learned figure whose mastery is MAGIC itself, not merely
+// wisdom or station. The discriminator is the casting: a Mentor is wise and may guide, but the Wizard
+// WORKS the arcane upon the world. (Promotion model: magic is genre-specific, so the two nodes this
+// trope needs — the [+Arcane] nature and the [&Casts] deed — are founded HERE, in the trope that
+// reaches for them, not in the realist prelude. They become the seed vocabulary for future magic tropes.)
+
+import "trl/concepts/index.trl"
+
+assoc the_wizard -> [
+  the_mentor : "wise like, but defined by power not counsel —",
+  prophecy   : "often the keeper or speaker of a"
+]
+
+// — founded here (genre vocabulary, promotion model; cf. siege.trl's local `verb Undermines`) —
+prop Arcane       [+Ontological]    // wields esoteric, studied magic — a nature, not a station
+verb Casts(spell) [+Narrative]      // works a spell upon the world — the wizard's defining deed
+
+imply Wizard -> [Arcane, Wise, Narrative]
+
+// Naming rule: a [+Wise] wielder of the [+Arcane] who CASTS — works magic on the world — is the Wizard.
+// The casting deed rides an event (recall keys on the agent); phase-2 coverage re-checks the learned,
+// arcane nature on the caster (STYLE §8). The casting is what parts the Wizard from the plain Mentor.
+rule The_Wizard {
+  when:
+    char $c [+Arcane] [+Wise]
+    evt  $feat [&Casts(agent=$c, spell=$s)]
+  then:
+    $c [+Wizard]
+}
+
+// === CONCRETE VIGNETTE: The Tempest — Prospero raises the storm (play, c. 1611) ===
+// The deposed Duke of Milan, twelve years exiled on his island with his books, is no mere scholar: he
+// commands the spirit Ariel and the elements themselves. To bring his usurpers within reach he raises a
+// tempest that wrecks their ship on his shore — "I have bedimmed the noontide sun, and 'twixt the green
+// sea and the azured vault set roaring war." Learning turned to power: the magus, not the counsellor.
+
+// PROSPERO — the exiled duke, master of the secret arts
+char prospero [+Arcane] [+Wise]
+
+// EXT. THE ENCHANTED ISLE — A TEMPEST
+set the_isle [+Exterior] [+Remote]
+
+scene the_raising {
+  beat 1 {
+    prospero @ the_isle
+    // learning turned to power — he raises the storm that brings his enemies within his reach
+    evt the_tempest [&Casts(agent=prospero, spell="tempest")]
+    // The_Wizard -> prospero [+Wizard]
+  }
+}
