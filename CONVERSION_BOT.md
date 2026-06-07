@@ -152,7 +152,9 @@ git add trl/tropes/<path>/*.trl trl/tropes/index.trl CHANGELOG.md
 An interactive web session works on its own development branch over the session's git remote (a local
 proxy). It **cannot author the PR itself** — its `mcp__github__*` token is the maintainer's account
 (see the identity rule above). So it pushes a **`convert/**` branch** and lets CI open the PR as the
-bot. `gh` is not available in-session; use `mcp__github__*` for *reads* (CI status, comments) only.
+bot. `gh` is not available in-session; use `mcp__github__*` for *reads* (CI status, comments) only — to
+**post** a comment under the bot identity (not the maintainer's account), use the `bot-comment.yml`
+push-payload path described in "Commenting on a PR as the bot" below, never the MCP.
 
 ```sh
 # Finalize the batch (above), commit, and push a convert/** branch over the session remote.
@@ -204,6 +206,39 @@ The PR *author* follows the token that calls the create-PR API (the installation
 Setting the commit `user.name/email` to the bot is cosmetic but keeps history attributed; find
 `<bot-user-id>` once via `gh api users/tropelang-conversion-bot[bot] --jq .id` (the `[bot]` suffix is
 literal). (In Mode A the same App opens the PR, just from CI instead of from a minted token.)
+
+---
+
+## Commenting on a PR as the bot (`bot-comment.yml`)
+
+To post a PR comment under the **`tropelang-conversion-bot[bot]`** headline (not the maintainer's
+account), use **`.github/workflows/bot-comment.yml`**. It uses the same server-side App-token model as
+`open-conversion-pr.yml` — the App key lives only in repo secrets and is minted in-CI — so it behaves
+identically whether the branch came from a local or a cloud session; **no session ever holds the key.**
+Needs the App's **Pull requests: write** (inline review replies) and **Issues: write** (PR conversation
+comments). The bot may **comment** but must **never approve** its own PR — approval stays with a human
+(the identity rule above).
+
+Two ways to drive it — both keep the App key server-side:
+
+```sh
+# A) Anywhere with gh (local Mode B, or any session that has gh) — your token only DISPATCHES the
+#    workflow; the App does the write. Comment posts as tropelang-conversion-bot[bot].
+gh workflow run bot-comment.yml -f pr=<N> -f body='<markdown>'
+gh workflow run bot-comment.yml -f pr=<N> -f reply_to=<review_comment_id> -f body='<markdown>'  # in-thread reply
+
+# B) Cloud session (Mode A; no gh, only git push) — queue a JSON payload and push it on the convert/**
+#    branch. bot-comment.yml posts each NEWLY-ADDED .github/pr-comments/*.json once, then keeps it as a log.
+cat > .github/pr-comments/pr<N>-<slug>.json <<'JSON'
+{ "pr": <N>, "body": "<markdown>", "reply_to": null }
+JSON
+git add .github/pr-comments/ && git commit -m "bot-comment: <slug>" && git push origin convert/<batch-name>
+```
+
+`reply_to` is a review-comment id (from `GET /repos/<owner>/<repo>/pulls/<N>/comments`); omit it for a
+top-level PR conversation comment. Payload shape: `.github/pr-comments/README.md`. Like the conversion
+App generally, this is a **dedicated** workflow — never fold its App key into `gate.yml` or the publish
+pipeline.
 
 ---
 
