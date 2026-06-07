@@ -18,7 +18,7 @@ A new session can run the whole loop from a one-line prompt; everything it needs
 > for CI to open the PR.
 
 **Run checklist (the order that works):**
-1. **Install the CLI** — the latest `cli-*` release binary (see "The `tropelang` CLI" below); confirm `tropelang version`.
+1. **Install the CLI (REQUIRED — not pre-installed)** — the latest `cli-*` release binary (see "The `tropelang` CLI" below); confirm `tropelang version`. The container is ephemeral, so this must be done every session.
 2. **Read** `skills/trope-to-tropelang/SKILL.md` (§1 acquire → §4b recognition fidelity) and `STYLE.md` §8.
 3. **Pick targets** — the coverage gaps (next section) or `BACKLOG.md` (cross-check against the tree; it lags reality).
 4. **Author** each trope: preamble → imports/assoc/imply → an **agent-named `[&Verb]` event rule** → a
@@ -39,7 +39,7 @@ detail is in SKILL §4b / STYLE §8; the load-bearing mechanics learned the hard
   a *patient-only* event (`[&Strikes(target=$c)]`) is **not** recalled — name an agent (add the striker).
 - **Coverage re-checks tags LITERALLY, on event-bound entities only.** Assert the discriminating tags in
   the vignette where the prose already states them — don't leave them to be derived by another rule's `then:`.
-- **Engine version matters.** Use the latest `cli-*` (currently ≥ 0.4.3). ≥ 0.4.2 expands coverage over the
+- **Engine version matters.** Use the latest `cli-*` (currently ≥ 0.4.4). ≥ 0.4.2 expands coverage over the
   `imply` closure (refined relations confirm via their base class); **≥ 0.4.3 enforces binding-inequality
   (`$x != $y`) at recognition** — older builds honored it only at eval, so distinctness-based rules
   (Pincer, Love Dodecahedron) over-fired in `shape`.
@@ -97,6 +97,12 @@ on top is an editorial spot-check, not a line-by-line validation.
 
 ## The `tropelang` CLI (required for the gate, both modes)
 
+> **The CLI is NOT pre-installed — install it first thing, every session.** The remote execution
+> environment is ephemeral (the container is reclaimed after inactivity and re-cloned fresh), so the
+> `tropelang` binary never persists between sessions. `tropelang gate`, `shape`, `assemble`, and
+> `selfcheck` — the whole loop — depend on it, so install it before anything else and confirm
+> `tropelang version` prints the expected engine version.
+
 The gate (`skills/trope-to-tropelang/scripts/gate.sh` → `tropelang gate`) needs the **`tropelang`
 engine CLI** on `PATH`. The engine source is private, so install the **prebuilt binary attached to this
 repo's own GitHub release** — do **not** use `cargo install tropelang-cli` (not published on crates.io)
@@ -105,7 +111,7 @@ or `cargo install --git …/TropeLang` (private repo; the clone prompts for cred
 ```sh
 # Resolve the latest CLI release asset. The tag is cli-vX.Y.Z; the Linux asset is tropelang-x86_64-linux.
 # (Via the GitHub MCP: mcp__github__get_latest_release, or the API below.)
-REL="cli-v0.4.3"   # ← use the latest cli-* release tag
+REL="cli-v0.4.4"   # ← use the latest cli-* release tag (resolve it, don't hardcode this one)
 curl -fsSL -o /tmp/tropelang \
   "https://github.com/kelnishi/tropelang-standard/releases/download/${REL}/tropelang-x86_64-linux"
 
