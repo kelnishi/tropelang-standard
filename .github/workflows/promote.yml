@@ -1,28 +1,30 @@
-# Promote / rollback a channel (spec 19 §7.3). The channel pointers in `channels/` are the committed
-# source of truth; this mirrors them to R2 and regenerates the discovery index — no rebuild, no immutable
-# write. Promotion = edit `channels/<id>.<channel>.json` to a NEW (already-published) version via PR, and
-# merge it; rollback = point it back at a prior version (still immutable in R2). Within the channel TTL
-# (~30 s) every consumer serves the new version.
+# Move the stable channel pointer to an already-published version, and keep the repo in sync with R2
+# (spec 19 §7.3). This is the ONLY promotion path: pick a version in the Actions UI → the action writes
+# the pointer to R2, regenerates the discovery registry, and commits channels/<id>.stable.json back to
+# main so git and R2 never drift. Deploy ("Rollup Version and Deploy") makes a version AVAILABLE; this
+# makes it LIVE. Rollback = run it again naming a prior (still-immutable) version. Upstream-only.
 #
 # Same `production` environment + `concurrency` group as publish.yml, so R2 writes are serialized and a
 # maintainer must approve.
-name: promote
+name: Promote Stable and Sync
 on:
-  push:
-    branches: [main]
-    paths: ['channels/**']
-  workflow_dispatch: {}            # manual re-sync of the committed channels → R2 + registry
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to promote stable to (must already be published). Blank = corpus.toml's current version."
+        required: false
+        default: ""
 
 permissions:
   contents: read
 
-concurrency: publish
+concurrency: publish          # serialize with publish.yml's R2 writes
 
 jobs:
   promote:
     if: github.repository == 'kelnishi/tropelang-standard'   # Cloudflare channel mirror is upstream-only; forks use pages.yml
     runs-on: ubuntu-latest
-    environment: production
+    environment: production     # holds R2_*/CLOUDFLARE_* ; gated by a required reviewer
     env:
       R2_BUCKET: tropelang-corpus
       CORPUS_BASE_URL: https://corpus.tropelang.com
@@ -34,17 +36,49 @@ jobs:
       AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
       R2_S3_ENDPOINT: https://${{ secrets.CLOUDFLARE_ACCOUNT_ID }}.r2.cloudflarestorage.com
     steps:
-      - uses: actions/checkout@v4
+      # Mint the bot token FIRST and check out WITH it, so the commit-back at the end pushes as the App.
+      - name: mint conversion-bot token
+        id: token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.CONVERSION_APP_ID }}
+          private-key: ${{ secrets.CONVERSION_APP_PRIVATE_KEY }}
 
-      # Mirrors channels/ → R2 and regenerates registry.json. sync-registry pulls each channel-pointed
-      # manifest from R2; a pointer ahead of its bundle (e.g. first-publish bootstrap) is warned + skipped,
-      # so the registry's metadata reflects the version a channel actually serves.
-      - name: mirror channels + regenerate registry
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ steps.token.outputs.token }}
+
+      - name: resolve version + repoint the committed pointer
+        id: tgt
+        run: |
+          ID=$(grep -E '^id[[:space:]]*=' trl/tropes/corpus.toml | head -1 | cut -d'"' -f2)
+          VER='${{ inputs.version }}'
+          [ -n "$VER" ] || VER=$(grep -E '^version[[:space:]]*=' trl/tropes/corpus.toml | head -1 | cut -d'"' -f2)
+          echo "id=$ID" >> "$GITHUB_OUTPUT"; echo "ver=$VER" >> "$GITHUB_OUTPUT"
+          # Refuse to promote a version whose immutable bundle isn't published — it would 404 the channel.
+          if ! aws s3api head-object --endpoint-url "$R2_S3_ENDPOINT" --bucket "$R2_BUCKET" --key "$ID/$VER/manifest.json" >/dev/null 2>&1; then
+            echo "::error::$ID@$VER is not published to R2 — run the 'Rollup Version and Deploy' action first"; exit 1
+          fi
+          ts=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          tmp=$(mktemp)
+          jq --arg v "$VER" --arg m "/$ID/$VER/manifest.json" --arg t "$ts" \
+             '.version=$v | .manifest=$m | .updatedAt=$t' "channels/$ID.stable.json" > "$tmp" \
+             && mv "$tmp" "channels/$ID.stable.json"
+
+      # Mirror the updated pointer → R2 and regenerate registry.json (existing script; the bundle is
+      # verified-published above, so its manifest is pulled and the registry entry is fully populated).
+      - name: mirror pointer + registry to R2
         run: bash scripts/sync-registry.sh
 
-      - name: summary
+      - name: commit the pointer back to main (git ⇄ R2 in sync)
         run: |
-          echo "### Channels mirrored + registry regenerated" >> "$GITHUB_STEP_SUMMARY"
-          for f in channels/*.json; do
-            echo "- \`$(jq -r .id "$f")\` / \`$(jq -r .channel "$f")\` → \`$(jq -r .version "$f")\`" >> "$GITHUB_STEP_SUMMARY"
-          done
+          ID=${{ steps.tgt.outputs.id }}; VER=${{ steps.tgt.outputs.ver }}
+          if git diff --quiet -- "channels/$ID.stable.json"; then
+            echo "### \`stable\` already at \`$ID@$VER\` — R2 re-synced, nothing to commit" >> "$GITHUB_STEP_SUMMARY"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Promote stable → $ID $VER" -- "channels/$ID.stable.json"
+          git push origin HEAD:main
+          echo "### Promoted \`stable\` → \`$ID@$VER\` (live within ~30 s; repo + R2 in sync)" >> "$GITHUB_STEP_SUMMARY"

@@ -1,7 +1,7 @@
 # Auto-tag a corpus release: when corpus.toml's version changes on main and no matching tag exists yet,
 # create corpus-v<version> → which triggers publish.yml. The tag is pushed with the conversion-bot App
 # token, NOT GITHUB_TOKEN — a GITHUB_TOKEN-pushed tag does not trigger other workflows. Upstream-only.
-name: auto-tag
+name: Rollup Version and Deploy · tag
 on:
   push:
     branches: [main]

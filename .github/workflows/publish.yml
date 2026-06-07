@@ -3,7 +3,7 @@
 # lives in the `production` environment (required reviewer + fail-closed); this job is the only thing that
 # writes the immutable bundle. NEVER add `pull_request`/`pull_request_target` here, and never share a job
 # with the no-secret gate.
-name: publish
+name: Rollup Version and Deploy · publish
 on:
   push:
     tags: ['corpus-v*']
@@ -77,6 +77,34 @@ jobs:
           aws s3api put-object --endpoint-url "$R2_S3_ENDPOINT" --bucket "$R2_BUCKET" --key "$ID/$VER/corpus.json"   --body "dist/$ID/$VER/corpus.json"   --content-type application/json
           aws s3api put-object --endpoint-url "$R2_S3_ENDPOINT" --bucket "$R2_BUCKET" --key "$ID/$VER/manifest.json" --body "dist/$ID/$VER/manifest.json" --content-type application/json
 
+      # Add this version to the engine-aware discovery catalog (/<id>/versions.json) — every PUBLISHED
+      # (available) version + its engineMin, so a client can pick the newest version its engine supports
+      # without relying on release ordering. Append-only RMW: fetch the current catalog (empty on first
+      # publish), upsert this version (preserving any prior `yanked` flag), upload. Independent of promotion
+      # — `stable` is moved later by the Promote action; the catalog tracks availability, not the live pick.
+      - name: update version catalog (/<id>/versions.json)
+        run: |
+          ID=${{ steps.bundle.outputs.id }}; VER=${{ steps.bundle.outputs.ver }}
+          mkdir -p cat man
+          if aws s3api get-object --endpoint-url "$R2_S3_ENDPOINT" --bucket "$R2_BUCKET" --key "$ID/versions.json" cat/cur.json >/dev/null 2>&1; then
+            echo "catalog exists — incremental add"
+          else
+            # First run for this corpus: bootstrap the catalog from every already-published corpus-v* tag
+            # (their immutable manifests are in R2). Self-healing — runs once, then the branch above takes over.
+            : > cat/cur.json
+            for t in $(git tag -l 'corpus-v*'); do
+              v="${t#corpus-v}"
+              [ "$v" = "$VER" ] && continue
+              if aws s3api get-object --endpoint-url "$R2_S3_ENDPOINT" --bucket "$R2_BUCKET" --key "$ID/$v/manifest.json" "man/$v.json" >/dev/null 2>&1; then
+                node scripts/catalog-add.mjs "man/$v.json" cat/cur.json cat/cur.json
+                echo "  backfilled $ID@$v"
+              fi
+            done
+          fi
+          node scripts/catalog-add.mjs "dist/$ID/$VER/manifest.json" cat/cur.json cat/versions.json
+          aws s3api put-object --endpoint-url "$R2_S3_ENDPOINT" --bucket "$R2_BUCKET" --key "$ID/versions.json" --body "cat/versions.json" --content-type application/json --cache-control "no-cache"
+          echo "### Cataloged \`$ID@$VER\` (engineMin $(jq -r '.versions[0].engineMin' cat/versions.json)) — $(jq '.versions|length' cat/versions.json) versions in \`/$ID/versions.json\`" >> "$GITHUB_STEP_SUMMARY"
+
       # Auto-diff the trope set vs the currently-live version (R2's stable pointer, read BEFORE we promote)
       # → GitHub Release notes + run summary. Complements the curated CHANGELOG.md.
       - name: release notes (auto-diff vs the live version)
@@ -101,23 +129,12 @@ jobs:
           else
             printf '_First published version (no predecessor to diff)._\n' >> "$notes"
           fi
-          printf '\nSee `CHANGELOG.md` for the curated notes. Channel `stable` is auto-promoted to this version.\n' >> "$notes"
+          printf '\nSee `CHANGELOG.md` for the curated notes. Deployed (immutable) but NOT yet live — run the **Promote Stable and Sync** action to move `stable` to this version.\n' >> "$notes"
           cat "$notes" >> "$GITHUB_STEP_SUMMARY"
           gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --verify-tag --title "$ID $VER" --notes-file "$notes" 2>/dev/null \
             || gh release edit "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --notes-file "$notes"
 
-      # Auto-promote: move `stable` to the version just published (write the pointer to R2 + regenerate the
-      # registry from it). Rollback = edit channels/<id>.stable.json to a prior version → promote.yml.
-      # (Single stable channel; a multi-channel setup would regenerate from all of R2's channels instead.)
-      - name: auto-promote stable + regenerate registry
-        env:
-          BUILT_AT: ${{ steps.bundle.outputs.built_at }}
-        run: |
-          ID=${{ steps.bundle.outputs.id }}; VER=${{ steps.bundle.outputs.ver }}
-          mkdir -p live/channels
-          printf '{\n  "schema": 1,\n  "id": "%s",\n  "channel": "stable",\n  "version": "%s",\n  "manifest": "/%s/%s/manifest.json",\n  "updatedAt": "%s"\n}\n' \
-            "$ID" "$VER" "$ID" "$VER" "$BUILT_AT" > "live/channels/$ID.stable.json"
-          aws s3api put-object --endpoint-url "$R2_S3_ENDPOINT" --bucket "$R2_BUCKET" --key "channels/$ID.stable.json" --body "live/channels/$ID.stable.json" --content-type application/json
-          BUILT_AT="$BUILT_AT" CORPUS_BASE_URL="$CORPUS_BASE_URL" node scripts/gen-registry.mjs live/channels dist live/registry.json
-          aws s3api put-object --endpoint-url "$R2_S3_ENDPOINT" --bucket "$R2_BUCKET" --key "registry.json" --body "live/registry.json" --content-type application/json
-          echo "### Promoted \`stable\` → \`$ID@$VER\` (live within ~30 s)" >> "$GITHUB_STEP_SUMMARY"
+      # NOTE: deploy stops here — it publishes the immutable bundle but does NOT move the `stable` channel.
+      # Promotion is a separate, human-triggered step: run the "Promote Stable and Sync" action (promote.yml)
+      # to point `stable` at this version (writes the pointer to R2, regenerates the registry, and commits
+      # the pointer back to the repo so git and R2 stay in sync).

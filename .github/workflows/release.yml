@@ -1,7 +1,10 @@
 # Prepare a corpus release as a PR (manual trigger). Bumps the version, syncs the publish self-check
 # count, and rolls up the changelog (scripts/cut-release.sh), then opens a bot-authored "Release vX.Y.Z"
 # PR — so you can approve it. Merging it triggers auto-tag.yml → publish.yml. Upstream-only.
-name: release
+#
+# Dispatch entry point of the "Rollup Version and Deploy" action. auto-tag.yml and publish.yml are its
+# automatic continuation; they carry the "Rollup Version and Deploy ·" name prefix so the UI groups them.
+name: Rollup Version and Deploy
 on:
   workflow_dispatch:
     inputs:
@@ -67,4 +70,4 @@ jobs:
           git push origin "$BR"        # remote is authed with the App token (checkout above)
           gh pr create --repo "${{ github.repository }}" --base main --head "$BR" \
             --title "Release $VER" \
-            --body "Automated release prep for \`$VER\`: version bumped, \`--expect-tropes\` synced to the live count, CHANGELOG \`[Unreleased]\` rolled up. **Merge** to auto-tag \`corpus-v$VER\` → publish (then approve the \`production\` deployment). Promote by editing \`channels/standard.stable.json\`."
+            --body "Automated release prep for \`$VER\`: version bumped, \`--expect-tropes\` synced to the live count, CHANGELOG \`[Unreleased]\` rolled up. **Merge** to auto-tag \`corpus-v$VER\` → publish the immutable bundle (then approve the \`production\` deployment). This deploys but does NOT move \`stable\` — run the **Promote Stable and Sync** action to make \`$VER\` live."
