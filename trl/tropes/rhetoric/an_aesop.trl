@@ -1,0 +1,75 @@
+// === PREAMBLE ===
+// @trope    An Aesop
+// @category Morality / Audience Reactions
+// @source   https://allthetropes.org/wiki/An_Aesop
+// @version  1.3
+// @domain    Narrative
+//
+// Laconic (per the wiki): the story ends with a moral — the lesson the work exists to impart, named
+// outright so the audience comes away taught (the "You See, Timmy"). FRONTIER: a rhetoric-layer
+// payoff distinct from pathos and laughter — the author frames the tale's events AS a lesson and the
+// audience is EDIFIED (carries the moral away), not merely moved or amused. The sibling of Rule of
+// Drama / Tear Jerker (which frame for feeling); An Aesop frames for INSTRUCTION.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/rhetoric.trl"          // author frames an event in a register; audience takes the effect
+
+assoc an_aesop -> [
+  rhetoric : "the moral-framing rule of",
+  audience : "is taught, not merely moved, by the"
+]
+
+
+// === ONTOLOGY ===
+
+// — founded here (the explicit moral is genre vocabulary; promotion model, cf. the_wizard's [+Arcane]) —
+prop  Lesson  [+Narrative]    // an explicit moral takeaway — the thing the story exists to impart
+state Edified [+Narrative]    // the audience has taken the lesson to heart — instructed, not just moved
+
+imply Aesop -> [Lesson, Effect, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: the author frames the tale's events AS a moral — pointing at an explicit [+Lesson] —
+// and the audience is EDIFIED. The framing rides an event (recall keys on agent=author, as the rhetoric
+// siblings do); the discriminator is the `as=moral` register plus the [+Lesson] takeaway, re-checked on
+// the bound $moral (target=). This parts it from Tear Jerker (`as=earnest`, a [+Hurt] target) and Rule of
+// Drama (`as=dramatic`): An Aesop frames for instruction, not feeling.
+rule An_Aesop {
+  when:
+    obj $moral [+Lesson]
+    evt $envoi [&Frames(agent=author, target=$moral, as=moral)]
+  then:
+    audience [+Edified]
+    audience -- $moral
+    $envoi [+Aesop]
+}
+
+
+// === CONCRETE VIGNETTE: Aesop's Fables — "The Tortoise and the Hare" (fable, ancient Greece) ===
+// The overconfident hare sprints ahead and lies down to nap; the plodding tortoise never stops and
+// crosses the line first. Then the fable does what fables do — it states its point in a closing line,
+// the envoi, so no listener can miss it: slow and steady wins the race. The events were only ever the
+// delivery vehicle for the lesson.
+
+// THE TORTOISE — slow, steady, unrelenting
+char tortoise [+Determined]
+
+// THE HARE — swift and overconfident
+char hare [+Proud]
+
+// THE MORAL — "slow and steady wins the race" (the explicit takeaway, stated outright)
+obj the_moral [+Lesson]
+
+scene the_race {
+  beat 1 {
+    // the hare naps on his lead; the tortoise plods past to the line — the events that carry the point
+    hare >< tortoise : "Races"
+  }
+  beat 2 {
+    // the closing line names the lesson outright — the fable frames its own events as a moral
+    evt the_envoi [&Frames(agent=author, target=the_moral, as=moral)]
+    // An_Aesop derives: audience [+Edified] -- the_moral; the_envoi [+Aesop]
+  }
+}

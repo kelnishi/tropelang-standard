@@ -1,0 +1,81 @@
+// === PREAMBLE ===
+// @trope    Villain Protagonist
+// @category Character Roles / Villains
+// @source   https://allthetropes.org/wiki/Villain_Protagonist
+// @version  1.3
+// @domain    Narrative
+//
+// Laconic (per the wiki): the bad guy IS the star — the central figure the story is about is a genuine
+// Villain, not merely a rough Anti-Hero. The discriminator is the conjunction on ONE character: the
+// focus of the story ([+Central], whose choice drives the central arc) AND the commission of real
+// villainy. Distinct from the Anti-Hero (sympathetic, unscrupulous, but not the antagonal evil) and
+// from a story whose villain is merely a side character: here the protagonist and the villain are the
+// same person. Builds on `the_protagonist`.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"            // conflict
+
+assoc villain_protagonist -> [
+  the_protagonist : "the villainous form of",
+  the_big_bad     : "is the dark pole AND the focus at once, unlike a",
+  conflict        : "drives, from the wrong side of, a"
+]
+
+
+// === ONTOLOGY ===
+
+// — founded here (the villainous nature is the trope's discriminator; promotion model, cf. the_wizard) —
+prop Villainous [+Narrative]    // genuinely the bad guy — the antagonal evil, not a rough Anti-Hero
+
+imply VillainProtagonist -> [Villainous, Protagonist, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: the story's CENTRAL figure who DRIVES the central arc and yet commits genuine villainy
+// is the Villain Protagonist. Two events bind $p: the agency that makes them the protagonist
+// ([&Initiates], thread=$story) and the villainy that makes them the villain ([&Betrays], target=the
+// one wronged). Both name $p as agent, so phase-2 coverage re-checks [+Central] [+Villainous] on the
+// one bound character (STYLE §8). The positive discriminator is [+Villainous] + a shown betrayal, not
+// the mere absence of heroism — and not the [+Unscrupulous] roughness of an Anti-Hero.
+rule Villain_Protagonist {
+  when:
+    arc  $story
+    char $p [+Central] [+Villainous]
+    evt  $turn [&Initiates(agent=$p, thread=$story)]
+    evt  $deed [&Betrays(agent=$p, target=$victim)]
+  then:
+    $p [+Protagonist]
+    $p [+VillainProtagonist]
+    $p -- $story
+    $p -- conflict
+}
+
+
+// === CONCRETE VIGNETTE: Macbeth — the Thane who would be king (stage play, Jacobean) ===
+// The play is unmistakably ABOUT Macbeth — his ambition is the engine of every act. And what that
+// ambition drives him to is no roguish misdeed but the blackest villainy: he murders Duncan, his king
+// and his guest, asleep under his own roof, and climbs the corpse to the throne. The protagonist and
+// the villain are one man.
+
+// MACBETH — the central figure; the story is his, and so is the crime
+char macbeth [+Central] [+Villainous]
+
+// KING DUNCAN — his king and his guest, murdered in his sleep
+char duncan [+Sovereign]
+
+// THE RISE TO THE THRONE — the central arc Macbeth's choice sets in motion
+arc the_usurpation
+
+scene dunsinane {
+  beat 1 {
+    macbeth -- the_usurpation
+    // ambition sets the whole tragedy in motion — the protagonist's driving choice
+    evt the_resolve [&Initiates(agent=macbeth, thread=the_usurpation)]   // "I am settled" — he commits to the deed
+  }
+  beat 2 {
+    // the villainy itself: he betrays king and host at once, murdering Duncan in his sleep
+    evt the_murder [&Betrays(agent=macbeth, target=duncan)]
+    // Villain_Protagonist derives: macbeth [+Protagonist] [+VillainProtagonist] -- the_usurpation -- conflict
+  }
+}

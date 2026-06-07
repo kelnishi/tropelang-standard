@@ -4,3 +4,6 @@ dist/
 # wrangler / node
 worker/node_modules/
 .wrangler/
+
+# local conversion binaries (built from the engine; never commit a platform binary)
+/bin/

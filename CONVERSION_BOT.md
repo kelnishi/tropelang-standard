@@ -64,11 +64,11 @@ Diff that against the allthetropes high-profile indexes:
 - **Omnipresent Tropes** (curated) — https://allthetropes.org/wiki/Omnipresent_Tropes
 - **Universal Tropes** and the cast / plot-structure indexes.
 
-**Known high-profile gaps (2026-06 review — verify against the live lists):** An Aesop · Big Good ·
-Villain Protagonist · Five-Man Band · Status Quo Is God · Failure Is the Only Option · Character
-Development (the general trope; instances like Coming of Age / Redemption Arc exist) · Title Drop ·
-Idiot Ball · Genre Savvy · Take a Third Option. Suggested first batch: An Aesop, Big Good,
-Villain Protagonist, Five-Man Band.
+**Known high-profile gaps (2026-06 review — verify against the live lists):** ~~An Aesop · Big Good ·
+Villain Protagonist · Five-Man Band~~ (✅ done, the `convert/high-profile-gaps` batch) · Status Quo Is
+God · Failure Is the Only Option · Character Development (the general trope; instances like Coming of
+Age / Redemption Arc exist) · Title Drop · Idiot Ball · Genre Savvy · Take a Third Option. Suggested
+next batch: Status Quo Is God, Failure Is the Only Option, Idiot Ball, Take a Third Option.
 
 ## The identity rule (why this exists)
 

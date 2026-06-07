@@ -26,6 +26,21 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   (A Midsummer Night's Dream — the four-heart chain that does not close; strictly more tangled than the
   Love Triangle, with the four-distinct constraint enforced at recognition on engine ≥ 0.4.3). Corpus
   **194 → 196 tropes**; self-recognition steady at **196/196 (100%)**.
+- **An Aesop** (Morality / Audience Reactions) — https://allthetropes.org/wiki/An_Aesop
+  (Aesop's "The Tortoise and the Hare" — the author frames the tale's events `as=moral` and the audience
+  is EDIFIED; a rhetoric-layer payoff distinct from Tear Jerker's pathos. Founds `prop Lesson` and
+  `state Edified` locally per the promotion model.)
+- **Big Good** (Relationships / Cast) — https://allthetropes.org/wiki/Big_Good
+  (Transformers, Optimus Prime vs. Megatron — the bright mirror of the Big Bad; the `[+Leader]` who
+  `[&Opposes]` the `[+Mastermind]`, the leadership discriminator parting it from a plain brave hero.)
+- **Villain Protagonist** (Character Roles / Villains) — https://allthetropes.org/wiki/Villain_Protagonist
+  (Macbeth — the story's `[+Central]` driver who commits genuine villainy; the conjunction on one
+  character, distinct from the rough Anti-Hero. Founds `prop Villainous` locally.)
+- **Five-Man Band** (Cast / Ensemble) — https://allthetropes.org/wiki/Category:Five-Man_Band
+  (Gatchaman / G-Force — the first ENSEMBLE-structure trope: recognition rides the co-presence of five
+  distinct complementary roles bound to one mission, with ten distinctness clauses enforced at
+  recognition on engine ≥ 0.4.3. Founds the cast vocabulary `prop Ensemble`/`SmartGuy`/`BigGuy`/`TheChick`.)
+  Corpus **196 → 200 tropes**; self-recognition steady at **200/200 (100%)**.
 
 ### Fixed
 - Self-recognition (§4b): event-anchored the last 4 `bonds` tropes so they confirm their own vignette,
