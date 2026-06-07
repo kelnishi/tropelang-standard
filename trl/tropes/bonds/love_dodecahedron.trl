@@ -1,0 +1,68 @@
+// === PREAMBLE ===
+// @trope    Love Dodecahedron
+// @category Relationships / Romance
+// @source   https://allthetropes.org/wiki/Love_Dodecahedron
+// @version  1.3
+// @domain    Interpersonal
+//
+// Laconic: the Love Triangle escalated past all geometry — a tangle of desire too snarled to draw,
+// where each lover yearns for someone who yearns for someone else. Where the triangle is two suitors
+// converging on one beloved, the dodecahedron is a CHAIN that does not close: A loves B, who loves C,
+// who loves D — four (or more) distinct hearts, none of the longing returned down the line. The drama
+// is the open chain itself; resolving any one edge only re-tangles the rest.
+
+import "trl/concepts/index.trl"            // love, conflict
+
+assoc love_dodecahedron -> [
+  love_triangle : "the tangled escalation of",
+  conflict      : "a geometry too snarled to resolve —",
+  love          : "an open chain of unreturned"
+]
+
+imply LoveDodecahedron -> [Romance, Conflict, Narrative]
+
+// Naming rule: a CHAIN of love across four distinct hearts — a loves b, b loves c, c loves d — none of
+// it reciprocated down the line. The four-distinct constraint is the discriminator: it is strictly more
+// tangled than the Love Triangle (two suitors, one beloved), and the open chain (a != d) is what makes
+// it a dodecahedron rather than a closed pair. (Inequalities enforced at recognition on engine ≥ 0.4.3.)
+rule Love_Dodecahedron {
+  when:
+    evt $l1 [&Loves(agent=$a, target=$b)]
+    evt $l2 [&Loves(agent=$b, target=$c)]
+    evt $l3 [&Loves(agent=$c, target=$d)]
+    $a != $b
+    $b != $c
+    $c != $d
+    $a != $c
+    $a != $d
+    $b != $d
+  then:
+    $b [+Sought(by=$a)]
+    $c [+Sought(by=$b)]
+    $d [+Sought(by=$c)]
+    $l1 [+LoveDodecahedron]
+}
+
+// === CONCRETE VIGNETTE: A Midsummer Night's Dream — the four Athenian lovers (play, c. 1595) ===
+// The tangle Puck only makes worse: Helena dotes on Demetrius, who is set on Hermia, who loves
+// Lysander — a chain of four hearts strung end to end, the longing never returned down the line until
+// a flower's juice is needed to knot the ends back together. The textbook web that is past a triangle.
+
+// HELENA — pines after Demetrius, who will not have her
+char helena    [+Protagonist]
+// DEMETRIUS — set on Hermia, blind to Helena
+char demetrius [+Deuteragonist]
+// HERMIA — loves Lysander, pursued by Demetrius
+char hermia    [+LoveInterest]
+// LYSANDER — Hermia's true love (the one returned edge, closing nothing)
+char lysander  [+Deuteragonist]
+
+scene the_wood_near_athens {
+  beat 1 {
+    evt helena_pines     [&Loves(agent=helena,    target=demetrius)]   // A loves B
+    evt demetrius_wants  [&Loves(agent=demetrius, target=hermia)]      // B loves C
+    evt hermia_loves     [&Loves(agent=hermia,    target=lysander)]    // C loves D
+    evt lysander_returns [&Loves(agent=lysander,  target=hermia)]      // the one mutual edge — the chain still does not close
+    // Love_Dodecahedron -> helena_pines [+LoveDodecahedron]; demetrius/hermia/lysander each [+Sought(by=…)]
+  }
+}

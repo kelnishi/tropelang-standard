@@ -24,20 +24,28 @@ of systems (modules that *simulate* a dynamic) with tropes riding on top (named 
 
 ## Corpus metrics & self-recognition audit (2026-06 — re-measure before acting)
 
-Snapshot at 194 tropes (prelude 1.10, 481 declarations: 87 attr · 141 prop · 115 state · 100 verb · 38 rel).
+Snapshot at **196 tropes** (re-measure declaration counts before acting; the self-recognition drive added `verb Forsakes` to the prelude, and `the_wizard` founds `prop Arcane` + `verb Casts` locally).
 
 - **Founding / unfounded nodes:** inline (unfounded) tags down to **204** (from 291 at the start of the
   drive-down). Only `Plain`/`Faithful` recur (2× each, ambiguous — split before founding); the rest is
   one-off bespoke flavor. **Founding is effectively complete.**
 - **drams (per-trope coverage × density):** coverage mean **22%** / median 19%; density mean **0.26×**;
   497 rule firings (mean 2.56/trope); only 2 zero-firing tropes (`dramatic_irony`, `fourth_wall`).
-- **Self-recognition (the quality target): `147/194` (76%) confirm their own vignette — 47 do NOT.**
+- **Self-recognition (the quality target): `195/195` (100%) — ✅ COMPLETE.** Every trope confirms its
+  own vignette (started at 147/194). The §4b discriminator-binding worklist below is DONE — kept for
+  provenance. Re-measure: `tropelang selfcheck trl/tropes/corpus.toml --corpus file://trl`.
 
-**Why they fail (the §4b worklist).** Recall keeps only `when:` EVENT patterns; a rule whose `when:`
-is pure static tags / `@rel` edges (no `evt … [&Verb]`) is never recalled → conf 0.00 on its own
-vignette. The failures are concentrated in the **role & relationship** tropes, which recognize on a
-standing state rather than an establishing EVENT. Fix = anchor the discriminator on an event role and
-make the vignette carry it (STYLE §8 / SKILL §4b), without over-firing siblings.
+**§4b worklist — ✅ DONE (provenance).** Recall keeps only `when:` EVENT patterns that name an `agent`;
+a rule whose `when:` was pure static tags / `@rel` edges / `count()` (no agent-named `evt … [&Verb]`)
+was never recalled → conf 0.00 on its own vignette. Fixed across every arena by anchoring the
+discriminator on a narrative event and asserting the discriminating tags literally where the vignette
+prose already states them (coverage re-checks literally), without over-firing siblings. Engine bumps
+that mattered: **v0.4.2** coverage imply-closure (refined-relation coverage); **v0.4.3** enforces
+binding-inequality at recognition (cleared the `Pincer_Attack` over-fire). Precision: `Finishing_Move`
+tightened to the combination finisher (`&Pins` setup); remaining kindred overlaps (foil/gambit,
+lancer/sidekick, trap/feint, redemption/sacrifice) left as defensible. Structural fixes: de-duplicated
+the `FaceHeelTurn` rule, promoted `verb Forsakes` to the prelude, fixed scene/event name collisions.
+See CHANGELOG `[Unreleased]` for the per-trope list.
 
 Re-measure self-recognition deterministically:
 ```sh
@@ -45,8 +53,8 @@ tropelang selfcheck trl/tropes/corpus.toml --corpus file://trl     # ratio + cou
 # per-trope: shape each file, check its own rule name confirms at 1.00 (loop over trl/tropes/**/*.trl)
 ```
 
-**Failures by arena (47):** bonds **9/13** · character **13/30** · conflict **10/34** · structure 5/17 ·
-epistemic 4/27 · death 3/15 · power 2/9 · arc 1/22.
+**Failures by arena — ✅ ALL 47 CLEARED** (the snapshot that was, kept for provenance): bonds 9/13 ·
+character 13/30 · conflict 10/34 · structure 5/17 · epistemic 4/27 · death 3/15 · power 2/9 · arc 1/22.
 - **bonds:** ✅ **DONE — all 9** (event-anchored recall + relation/positive coverage). `found_family`
   (Accepts) · `love_triangle`/`star_crossed_lovers`/`unrequited_love` (Loves) · `sibling_rivalry`
   (Challenged) · `power_of_friendship` (Aids) · `i_gave_my_word` (Honors) · `conflicting_loyalty`
@@ -104,7 +112,8 @@ Paragon · Everyman.
 ### Character relationships (the dyad/triad)
 Done: The Rival · Unrequited Love · Found Family · Enemies to Lovers · Love Triangle ·
 Star-Crossed Lovers · Mentor & Student.
-- [ ] The Love Triangle's darker forms (Love Dodecahedron, Triang Relations variants)
+- [x] Love Dodecahedron — `love_dodecahedron` (A Midsummer Night's Dream; the open four-heart chain)
+- [ ] further Love Triangle variants (Love Pentagon, Triang Relations)
 - [x] Sibling Rivalry — `sibling_rivalry` (Mufasa/Scar)  ·  [x] Like Brother and Sister — `like_brother_and_sister`
 
 ### Character change & arcs
@@ -117,7 +126,8 @@ Done (psychology arena): Heel/Face Turn · Revenge · Despair Event Horizon · S
 ### Identity / worldbuilding (drams-flagged)
 Done: Hidden Identity · Rightful King Returns · The Chosen One · Unreliable Narrator.
 - [x] Secret Legacy — `secret_legacy` (Percy Jackson)
-- [ ] role archetypes: the Wanderer/Ranger, the Mage/Wizard (covers `Ranger`,`Wizard` gap facts)
+- [x] the Mage/Wizard — `the_wizard` (Prospero; founds the [+Arcane] + [&Casts] magic seed-vocabulary, locally)
+- [~] the Wanderer/Ranger — covered in spirit by `the_drifter` (Shane: [+Stranger] who Protects then Departs)
 - [ ] fantastic-species framing (`Hobbit`,`Elf`,`Dunedain` — low general value; consider eval re-encode instead)
 
 ### Plot structure & devices
@@ -179,8 +189,14 @@ Done: Hero's Journey · Freytag · Story Circle · Save the Cat · Booker's Seve
 ---
 
 ## drams gap (the measured forward target)
-The remaining uncovered facts on the eval stories, in priority order — the worklist that actually
-moves coverage:
+NOTE: the eval-story fixtures live **engine-side, not in this repo**, and use the contingency/`resolve`
+grammar (`*(…|…) as x*`, `resolve … -> …`) that the **shipped CLI `drams`/`eval` cannot parse** (only
+the engine-internal `drams` example handles them; the latent `?(…)?` form does parse) — so measuring and
+verifying these is a cross-repo, engine-internal task. PREPARED FIX for the Aragorn kingship facts (the
+"cover for free via Royalty" one-liner): add to `examples/aragorn_fotr.trl`'s ontology —
+`imply Rightful_King_of_Gondor -> [Heir_of_Isildur]` and `imply Exile_Who_Refuses_Crown -> [Heir_of_Isildur]`
+(`Heir_of_Isildur` already implies `Royalty`, so both reach it transitively). The remaining uncovered
+facts, in priority order:
 - **fantasy** (`aragorn_fotr`): `Hobbit`, `Chieftain_of_the_Dunedain`, `Dangerous`, `Kingly_Bearing`,
   `Ranger`, `Dunedain`, `Wizard`, `Maiar`, `Elf`, `Halfelven` — mostly fantastic species/roles (low
   general value); `Rightful_King_of_Gondor`/`Exile_Who_Refuses_Crown` would cover *for free* if the
@@ -220,9 +236,12 @@ The **1.10** round ground down the remaining 2–3× tail: props `Betrayer(of)`,
 - A long tail of genuinely one-off bespoke flavor tags (`KeyserSoze`, `Pawn`, `Phantom`, `Unmasked`, …)
   — keep broken per the closed-vocabulary decision unless one recurs and earns promotion.
 
-With founding exhausted, the forward target shifts back to **converting new tropes** and lifting the
-**self-recognition** rate (147/194 = 76%; 47 tropes don't yet confirm their own vignette — a §4b
-discriminator-binding worklist).
+With founding exhausted **and self-recognition complete (`196/196`, 100%)**, the forward target is
+**converting new tropes**. The richest vein is the **allthetropes high-profile coverage gaps** — see
+the coverage-review recipe and the current gap list in **`CONVERSION_BOT.md` → "Sourcing & coverage
+review"** (top candidates: An Aesop, Big Good, Villain Protagonist, Five-Man Band). Smaller leftovers:
+further Love Triangle variants, "Within a Frame Story", the cross-repo eval-side drams gap above, and
+the low-value fantastic-species framing.
 
 ### Domain libraries & structural tropes (done — kept for provenance)
 - **P2 domain vocab:** `modules/siege.trl` + `modules/heist.trl` declare the siege/military and

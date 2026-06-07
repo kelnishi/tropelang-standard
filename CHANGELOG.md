@@ -17,6 +17,16 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 
 ## [Unreleased]
 
+### Added
+- **The Wizard** (Character Archetypes) — https://allthetropes.org/wiki/Wizard_Classic
+  (The Tempest, Prospero — the wielder of arcane power, distinct from the Mentor by the casting itself.
+  Founds the genre seed-vocabulary it reaches for, locally per the promotion model: `prop Arcane` and
+  `verb Casts(spell)`.)
+- **Love Dodecahedron** (Relationships / Romance) — https://allthetropes.org/wiki/Love_Dodecahedron
+  (A Midsummer Night's Dream — the four-heart chain that does not close; strictly more tangled than the
+  Love Triangle, with the four-distinct constraint enforced at recognition on engine ≥ 0.4.3). Corpus
+  **194 → 196 tropes**; self-recognition steady at **196/196 (100%)**.
+
 ### Fixed
 - Self-recognition (§4b): event-anchored the last 4 `bonds` tropes so they confirm their own vignette,
   completing the arena (all 9) — `power_of_friendship` (Aids), `i_gave_my_word` (Honors),
@@ -24,6 +34,66 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   dropping the closed-world `not()` spine). Corpus self-recognition **152 → 156/194 (78% → 80%)**.
   (Redo of the closed #26 on the v0.4.1 engine; recall still rides an event, with imply param threading
   generalizing the relation/role coverage.)
+- Self-recognition (§4b): event-anchored recall + literal phase-2 coverage (STYLE §8) carried the
+  remaining arenas — character roles, conflict, epistemic, death, power, structure — to full coverage:
+  corpus self-recognition **156 → 194/194 (80% → 100%)** on the v0.4.2 engine. Each trope re-founded
+  below now recalls and confirms its own vignette. Pattern: anchor the rule on a narrative `[&Verb]`
+  event that names an `agent` (recall keys on the agent), and assert the discriminating tags literally
+  where the vignette prose already states them (coverage re-checks literally, not via derivation).
+  Incidental fixes: de-duplicated the `FaceHeelTurn` rule (it had been defined in both `face_heel_turn`
+  and `heel_face_turn`); promoted `verb Forsakes` to the prelude (`ontology/verb_classes.trl` already
+  classed it Betray); named the `agent` on `Reveals`/`Strikes` where a rule keyed on them; fixed
+  scene/event name collisions (`the_edict`, `the_struggle`). Precision: tightened `Finishing_Move` to
+  the combination finisher (now requires the ally's `[&Pins]` setup, per its own title/laconic),
+  clearing its ≥0.9 co-fires on solo-kill vignettes (David Versus Goliath, Achilles' Heel, Combat
+  Pragmatist: **1.00 → 0.50**). The `Pincer_Attack` over-fire — a recognition-time gap where `$x != $z`
+  was honored at eval but not at shape recall — is resolved by **engine cli-v0.4.3**, which enforces
+  binding-inequality at recognition: its ≥0.9 co-fires on single-attacker vignettes (David Versus
+  Goliath, Achilles' Heel, Combat Pragmatist, Determinator, You Shall Not Pass, Last Stand, Zerg Rush)
+  are gone, while it still self-confirms its own two-attacker vignette and selfcheck holds 194/194. Any
+  remaining ≥0.9 overlaps are defensible kindred tropes (foil/gambit, lancer/sidekick, trap/feint,
+  redemption/sacrifice, last-stand/you-shall-not-pass).
+
+### Changed
+- **The Protagonist** (Universal Tropes) — https://allthetropes.org/wiki/The_Protagonist
+- **The Antagonist** (Universal Tropes) — https://allthetropes.org/wiki/The_Antagonist
+- **The Deuteragonist** (Universal Tropes) — https://allthetropes.org/wiki/Deuteragonist
+- **The Mentor** (Universal Tropes) — https://allthetropes.org/wiki/Mentors
+- **The Sidekick** (Relationships / Cast) — https://allthetropes.org/wiki/Sidekick
+- **The Big Bad** (Relationships / Cast) — https://allthetropes.org/wiki/Big_Bad
+- **The Love Interest** (Relationships / Romance) — https://allthetropes.org/wiki/Love_Interest
+- **The Everyman** (Cast / Character) — https://allthetropes.org/wiki/Everyman
+- **The Paragon** (Cast / Character) — https://allthetropes.org/wiki/The_Paragon
+- **The Foil** (Characterization / Relationships) — https://allthetropes.org/wiki/Foil
+- **The Lancer** (Characterization / Relationships) — https://allthetropes.org/wiki/The_Lancer
+- **The Trickster** (Character Archetypes) — https://allthetropes.org/wiki/The_Trickster
+- **Determinator** (Heroic Spirit / Willpower) — https://allthetropes.org/wiki/Determinator
+- **Achilles' Heel** (Combat Tropes) — https://allthetropes.org/wiki/Achilles%27_Heel
+- **David Versus Goliath** (Combat Tropes) — https://allthetropes.org/wiki/David_Versus_Goliath
+- **Finishing Move (Combination Finisher)** (Combat / Action) — https://allthetropes.org/wiki/Finishing_Move
+- **Heroic Second Wind** (Heroic Spirit / Comeback) — https://allthetropes.org/wiki/Heroic_Second_Wind
+- **The Duel (Duel to the Death · Affair of Honor)** (Social / Conflict) — https://allthetropes.org/wiki/Duel_to_the_Death
+- **Combat Pragmatist (Dirty Fighting · Anti-Honor Fighter)** (Conflict / Tactics) — https://allthetropes.org/wiki/Combat_Pragmatist
+- **Feint (Defensive Feint Trap)** (Conflict / Tactics) — https://allthetropes.org/wiki/Defensive_Feint_Trap
+- **Pyrrhic Victory** (Conflict / Tactics) — https://allthetropes.org/wiki/Pyrrhic_Victory
+- **The Trap (Lured into a Trap)** (Conflict / Tactics) — https://allthetropes.org/wiki/Lured_into_a_Trap
+- **Decapitated Army** (Military and Warfare) — https://allthetropes.org/wiki/Decapitated_Army
+- **Dramatic Irony** (Epistemic / Narrative Devices) — https://allthetropes.org/wiki/Dramatic_Irony
+- **Hidden Identity (Secret Identity)** (Identity / Epistemic) — https://allthetropes.org/wiki/Secret_Identity
+- **Open Secret** (Epistemic / Social) — https://allthetropes.org/wiki/Open_Secret
+- **The Mole** (Spy Fiction / Betrayal) — https://allthetropes.org/wiki/The_Mole
+- **Defiant to the End** (Characterization / Death) — https://allthetropes.org/wiki/Defiant_to_the_End
+- **Redemption Equals Death** (Death Tropes) — https://allthetropes.org/wiki/Redemption_Equals_Death
+- **Together in Death** (Death Tropes) — https://allthetropes.org/wiki/Together_in_Death
+- **Full-Circle Revolution** (Political / Power) — https://allthetropes.org/wiki/Full-Circle_Revolution
+- **Smear Campaign (Malicious Slander)** (Social / Reputation) — https://allthetropes.org/wiki/Malicious_Slander
+- **Cliffhanger** (Rhetoric / Suspense) — https://allthetropes.org/wiki/Cliff_Hanger
+- **Conflict** (Omnipresent Tropes) — https://allthetropes.org/wiki/Conflict
+- **MacGuffin** (Plot Devices) — https://allthetropes.org/wiki/MacGuffin
+- **The Climax** (Story Structure) — https://allthetropes.org/wiki/Climax
+- **Three-Act Structure** (Universal Tropes) — https://allthetropes.org/wiki/Three_Act_Structure
+- **Face Heel Turn** (Character Development / Alignment) — https://allthetropes.org/wiki/Face_Heel_Turn
+- **Heel Face Turn** (Character Development / Alignment) — https://allthetropes.org/wiki/Heel_Face_Turn
 ## [1.7.3] — 2026-06-07
 
 ### Changed

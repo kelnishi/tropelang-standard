@@ -34,10 +34,6 @@ assoc face_heel_turn -> [
 // The crossing is itself a Reversal — the mirror of the redemptive one, bending toward Corruption.
 imply FaceHeelTurn -> [Reversal, corruption, Narrative]
 
-// `&Forsakes` (abandon the cause) is in the Betray class (ontology/verb_classes.trl) but was never
-// declared as a verb; declared here so the shape recognizer indexes the deed this trope keys on.
-verb Forsakes [+Interpersonal]
-
 
 // === ABSTRACT RULE ===
 // A trusted, heroic figure, wounded into resentment by a betrayal or an attack on what he loves

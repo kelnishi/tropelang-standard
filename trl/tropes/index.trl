@@ -40,6 +40,7 @@ import "trl/tropes/bonds/enemies_to_lovers.trl"
 import "trl/tropes/bonds/found_family.trl"
 import "trl/tropes/bonds/i_gave_my_word.trl"
 import "trl/tropes/bonds/like_brother_and_sister.trl"
+import "trl/tropes/bonds/love_dodecahedron.trl"
 import "trl/tropes/bonds/love_triangle.trl"
 import "trl/tropes/bonds/mentor_and_student.trl"
 import "trl/tropes/bonds/not_so_different.trl"
@@ -61,6 +62,7 @@ import "trl/tropes/character/archetypes/reluctant_hero.trl"
 import "trl/tropes/character/archetypes/the_chosen_one.trl"
 import "trl/tropes/character/archetypes/the_drifter.trl"
 import "trl/tropes/character/archetypes/the_trickster.trl"
+import "trl/tropes/character/archetypes/the_wizard.trl"
 import "trl/tropes/character/archetypes/tragic_hero.trl"
 import "trl/tropes/character/roles/praetorian_guard.trl"
 import "trl/tropes/character/roles/the_antagonist.trl"
@@ -485,6 +487,7 @@ concept karma_houdini [+Trope(category="Karma Tropes", source="https://allthetro
 concept karmic_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Karmic_Death")] [%Narrative]
 concept kick_the_dog [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Kick_the_Dog")] [%Narrative]
 concept like_brother_and_sister [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Like_Brother_and_Sister")] [%Interpersonal]
+concept love_dodecahedron [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Love_Dodecahedron")] [%Interpersonal]
 concept macguffin [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/MacGuffin")] [%Narrative]
 concept magnificent_bastard [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Magnificent_Bastard")] [%Narrative]
 concept mama_bear [+Trope(category="Character Tropes", source="https://allthetropes.org/wiki/Mama_Bear")] [%Interpersonal]
@@ -528,6 +531,7 @@ concept the_mole [+Trope(category="Spy Fiction", source="https://allthetropes.or
 concept the_starscream [+Trope(category="Political", source="https://allthetropes.org/wiki/The_Starscream")] [%Political]
 concept the_summation [+Trope(category="Mystery Tropes", source="https://allthetropes.org/wiki/The_Summation")] [%Epistemic]
 concept the_trickster [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/The_Trickster")] [%Narrative]
+concept the_wizard [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Wizard_Classic")] [%Narrative]
 concept the_worf_effect [+Trope(category="Combat", source="https://allthetropes.org/wiki/The_Worf_Effect")] [%Narrative]
 concept together_in_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Together_in_Death")] [%Interpersonal]
 concept tomato_in_the_mirror [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Tomato_in_the_Mirror")] [%Mind]
