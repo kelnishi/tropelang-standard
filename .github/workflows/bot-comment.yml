@@ -1,0 +1,129 @@
+# Post a PR comment under the CONVERSION BOT identity (the GitHub App), NOT the maintainer.
+#
+# Companion to open-conversion-pr.yml — SAME App, SAME server-side token model: the App private key
+# lives ONLY in repo secrets and is minted in-CI, so the comment posts as `tropelang-conversion-bot[bot]`
+# regardless of whether the branch was pushed from a LOCAL or a CLOUD (Claude Code web) session. No
+# session ever holds the key.
+#
+# Prerequisite repo secrets (already present for open-conversion-pr.yml):
+#   CONVERSION_APP_ID           the conversion App's numeric App ID
+#   CONVERSION_APP_PRIVATE_KEY  the conversion App's PEM private key
+# Permissions: the conversion App needs **Pull requests: write** (it has it). PR *conversation* comments
+# are "issue comments" — if the issues endpoint 403s, also grant the App **Issues: write**.
+# DEDICATED workflow: never fold the App key into gate.yml or the publish pipeline.
+#
+# The bot may COMMENT but must never APPROVE its own PR (the identity rule in CONVERSION_BOT.md) —
+# approval stays with a human maintainer.
+#
+# ── Two ways to drive it ──────────────────────────────────────────────────────────────────────────
+#  A) Local / anywhere with `gh` (token = maintainer; it only DISPATCHES, the App does the write):
+#       gh workflow run bot-comment.yml -f pr=38 -f body='…markdown…'
+#       gh workflow run bot-comment.yml -f pr=38 -f body='…' -f reply_to=<review_comment_id>   # in-thread reply
+#  B) Cloud session (no `gh`; reaches GitHub via git push): commit a JSON payload under
+#     `.github/pr-comments/` and push to a `convert/**` branch. Each NEWLY-ADDED payload is posted once
+#     and left in place as an audit log. Payload shape (see .github/pr-comments/README.md):
+#       { "pr": 38, "body": "…markdown…", "reply_to": null }
+
+name: bot-comment
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: PR number to comment on
+        required: true
+        type: string
+      body:
+        description: Comment body (Markdown)
+        required: true
+        type: string
+      reply_to:
+        description: (optional) review-comment id to reply to in-thread; omit for a PR conversation comment
+        required: false
+        type: string
+  push:
+    branches:
+      - 'convert/**'
+    paths:
+      - '.github/pr-comments/**'
+
+permissions:
+  contents: read        # the job's own GITHUB_TOKEN stays read-only; the App token does the comment write
+
+concurrency:
+  group: bot-comment-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  comment:
+    # upstream only — forks never see the secrets, and can't push convert/** here
+    if: github.repository == 'kelnishi/tropelang-standard'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mint conversion-bot App token
+        id: app
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.CONVERSION_APP_ID }}
+          private-key: ${{ secrets.CONVERSION_APP_PRIVATE_KEY }}
+
+      # ── Path A: manual dispatch → one comment ──────────────────────────────────────────────────
+      - name: Post dispatched comment
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ inputs.pr }}
+          BODY: ${{ inputs.body }}
+          REPLY_TO: ${{ inputs.reply_to }}
+        run: |
+          set -euo pipefail
+          if [ -n "${REPLY_TO}" ]; then
+            # threaded reply to an inline review comment
+            gh api "repos/${REPO}/pulls/${PR}/comments" \
+              -F in_reply_to="${REPLY_TO}" -f body="${BODY}" -q '.html_url'
+          else
+            # PR conversation (issue) comment
+            gh api "repos/${REPO}/issues/${PR}/comments" \
+              -f body="${BODY}" -q '.html_url'
+          fi
+
+      # ── Path B: cloud push → post each NEWLY-ADDED payload once ────────────────────────────────
+      - name: Checkout (need history to diff added payloads)
+        if: github.event_name == 'push'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0      # full history so merge-base works for a brand-new branch push
+
+      - name: Post newly-added payloads
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+          REPO: ${{ github.repository }}
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          # On a brand-new branch the push 'before' is all-zeros — diff against the merge-base with main.
+          if [ "${BEFORE}" = "0000000000000000000000000000000000000000" ]; then
+            base=$(git merge-base origin/main "${AFTER}" 2>/dev/null || echo "${AFTER}^")
+          else
+            base="${BEFORE}"
+          fi
+          added=$(git diff --name-only --diff-filter=A "${base}" "${AFTER}" -- '.github/pr-comments/' | grep -E '\.json$' || true)
+          if [ -z "${added}" ]; then echo "no new comment payloads in this push"; exit 0; fi
+          echo "${added}" | while IFS= read -r f; do
+            [ -f "${f}" ] || continue
+            echo "::group::posting ${f}"
+            pr=$(jq -r '.pr' "${f}")
+            body=$(jq -r '.body' "${f}")
+            reply_to=$(jq -r '.reply_to // empty' "${f}")
+            if [ -n "${reply_to}" ]; then
+              gh api "repos/${REPO}/pulls/${pr}/comments" \
+                -F in_reply_to="${reply_to}" -f body="${body}" -q '.html_url'
+            else
+              gh api "repos/${REPO}/issues/${pr}/comments" \
+                -f body="${body}" -q '.html_url'
+            fi
+            echo "::endgroup::"
+          done
