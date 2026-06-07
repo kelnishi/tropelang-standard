@@ -1,0 +1,70 @@
+// === PREAMBLE ===
+// @trope    Title Drop
+// @category Title Tropes
+// @source   https://allthetropes.org/wiki/Title_Drop
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a character speaks the title of the work in dialogue — when the audience
+// hears the title said aloud, the scriptwriter has planted a neon sign that flashes "THIS CONVERSATION
+// IS IMPORTANT." FRONTIER: a metafictional Utterance trope keyed on a line whose content IS the work's
+// own title. The discriminator is a [+Titular] phrase bound on a spoken event — a character utters the
+// title — which separates it from any other charged line (Wham Line, Famous Last Words). If the title
+// is only the name of a character/place and never said for effect, or is shown rather than spoken
+// (The Namesake), it is not a Title Drop; the phrase must be uttered.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc title_drop -> [
+  fourth_wall   : "a self-aware flourish beside",
+  wham_line     : "a charged spoken line like",
+  foreshadowing : "the title said aloud often pays off"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the work's-own-title phrase is the discriminator; promotion model, cf. the_wizard) —
+prop Titular        [+Narrative]   // a phrase that IS the work's own title
+verb Utters(phrase) [+Narrative]   // a character speaks a charged line aloud in dialogue
+
+imply TitleDrop -> [Utterance, Metafictional, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a character UTTERS a phrase that is the work's own title — the [+Titular] phrase bound
+// on the `phrase=` role of a [&Utters] event (agent=$speaker), so phase-2 re-checks [+Titular] on the
+// bound entity (STYLE §8). Binding the phrase on the event role is what parts this from any other
+// notable line: it is not "a significant utterance" but specifically "the utterance of the title."
+rule Title_Drop {
+  when:
+    obj  $phrase [+Titular]
+    evt  $line [&Utters(agent=$speaker, phrase=$phrase)]
+  then:
+    $line [+TitleDrop]
+}
+
+
+// === CONCRETE VIGNETTE: A Streetcar Named Desire — Blanche DuBois (Williams, stage play, 1947) ===
+// Blanche arrives at her sister's cramped New Orleans flat, undone and pretending otherwise, and
+// explains how she got there: "They told me to take a streetcar named Desire, and then transfer to
+// one called Cemeteries, and ride six blocks and get off at — Elysian Fields." The play's title falls
+// out of her own mouth as a literal set of directions, and the route doubles as the shape of her life
+// — Desire to Cemeteries to a last, ironic Elysian Fields. The audience hears the title said aloud and
+// sits up: this line carries the whole work.
+
+// BLANCHE DUBOIS — the faded Southern belle, narrating her own arrival
+char blanche [+Protagonist]
+
+// THE TITLE LINE — "a streetcar named Desire": the work's own name, spoken as directions
+obj the_title_phrase [+Titular]
+
+scene arrival_at_elysian_fields {
+  beat 1 {
+    // BLANCHE: "They told me to take a streetcar named Desire, and then transfer to one called
+    //           Cemeteries, and ride six blocks and get off at — Elysian Fields."
+    evt the_directions [&Utters(agent=blanche, phrase=the_title_phrase)]
+    // Title_Drop -> the_directions [+TitleDrop]
+  }
+}

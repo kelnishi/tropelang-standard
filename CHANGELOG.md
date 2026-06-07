@@ -55,6 +55,20 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   unorthodox third way; the rejection binds the fork on an event role so the discriminator can't float
   free. Founds `prop Binary` + `verb Forges(option)`.)
   Corpus **200 → 204 tropes**; self-recognition steady at **204/204 (100%)**.
+- **Character Development** (Characterization Tropes / Mechanics of Writing) — https://allthetropes.org/wiki/Character_Development
+  (Pride and Prejudice, Elizabeth Bennet — the UMBRELLA transformation trope: a [+Dynamic] character
+  `[&Changes]` by experience. The contrastive [+Dynamic] discriminator keeps the umbrella distinct from
+  its axis-specific instances (Coming of Age / Took a Level in Badass / Redemption), which tag
+  [+Innocent]/[+Weak] instead — verified non-over-firing both ways. Founds `prop Dynamic` + `verb Changes`.)
+- **Title Drop** (Title Tropes) — https://allthetropes.org/wiki/Title_Drop
+  (A Streetcar Named Desire, Blanche DuBois — a character `[&Utters]` a [+Titular] phrase that is the
+  work's own title; the title bound on the event role parts it from any other charged line. Founds
+  `prop Titular` + `verb Utters(phrase)`.)
+- **Genre Savvy** (Metafiction / Genre Awareness) — https://allthetropes.org/wiki/Genre_Savvy
+  (Scream, Randy's rules — a [+GenreLiterate] character `[&Anticipates]` a [+Convention], genre-sourced
+  foreknowledge; distinct from Breaking the Fourth Wall (no audience address) and Dramatic Irony (here
+  the character knows). Founds `prop GenreLiterate`/`prop Convention` + `verb Anticipates(convention)`.)
+  Corpus **204 → 207 tropes**; self-recognition steady at **207/207 (100%)**.
 
 ### Fixed
 - Self-recognition (§4b): event-anchored the last 4 `bonds` tropes so they confirm their own vignette,
