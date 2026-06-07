@@ -12,7 +12,7 @@ display_name = "TropeLang Standard Corpus"
 description  = "The canonical TropeLang trope corpus."
 # Corpus version — its own number, distinct from the engine version. Bump per content change (point),
 # new arena/capability (minor), structural break (major). The publish tag is `corpus-v<version>`.
-version      = "1.7.2"
+version      = "1.7.3"
 # Minimum engine that can parse this corpus (the compatibility gate). Conservative floor = the engine
 # this corpus is built/tested against; lower it only once older engines are verified to parse the grammar.
 engine_min   = "0.4.1"   # the prelude's gendered kinship uses parameterized `imply` (threading), an 0.4.1 feature
