@@ -33,15 +33,13 @@ imply LikeBrotherAndSister -> [Bond, Kinship, Narrative]
 // strip it and this collapses into a romance. Each is tagged as the other's like-sibling.
 rule Like_Brother_And_Sister {
   when:
-    char $a [~Devoted_To(target=$b)]
-    char $b [~Devoted_To(target=$a)]
-    not ( $a [@Sibling_Of(other=$b)] )
-    not ( $a [~Loves(target=$b)] )
-    not ( $b [~Loves(target=$a)] )
+    char $a [+Family(with=$b)] [~Devoted_To(target=$b)]   // chosen kin, devoted — POSITIVE: they ARE family,
+    char $b [~Devoted_To(target=$a)]                       //   not a courting pair (the expected romance is absent)
+    evt  $stand [&Aided(agent=$a, other=$b)]               // they stand for each other (binds the pair → recall)
   then:
     $a [+LikeBrotherAndSister]
     $a [@Kin_Of(other=$b)]
-    $a [+Family(with=$b)]
+    $stand [+LikeBrotherAndSister]
     $a -- belonging
 }
 
@@ -52,7 +50,7 @@ rule Like_Brother_And_Sister {
 // to her, and the story is at pains to keep the line drawn. Coming-of-age stakes; literary.
 
 // HARRY POTTER
-char harry    [+Protagonist]   [~Devoted_To(target=hermione)]
+char harry    [+Protagonist]   [~Devoted_To(target=hermione)] [+Family(with=hermione)]
 
 // HERMIONE GRANGER
 char hermione [+Deuteragonist] [~Devoted_To(target=harry)]
@@ -65,6 +63,7 @@ scene the_tent_in_the_woods {
     harry @ the_burrow
     hermione @ the_burrow
     harry -- hermione : "like a brother and sister — never once like that"
-    // Like_Brother_And_Sister -> harry [+LikeBrotherAndSister] [@Kin_Of(hermione)] [+Family(with=hermione)] -- belonging
+    evt they_stand [&Aided(agent=harry, other=hermione)]   // fight and grieve for each other across seven years
+    // Like_Brother_And_Sister -> harry [+LikeBrotherAndSister] [@Kin_Of(hermione)]; they_stand [+LikeBrotherAndSister]
   }
 }
