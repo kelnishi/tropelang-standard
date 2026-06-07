@@ -17,6 +17,12 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 
 ## [Unreleased]
 
+### Added
+- **Love Dodecahedron** (Relationships / Romance) — https://allthetropes.org/wiki/Love_Dodecahedron
+  (A Midsummer Night's Dream — the four-heart chain that does not close; strictly more tangled than the
+  Love Triangle, with the four-distinct constraint enforced at recognition on engine ≥ 0.4.3). Corpus
+  **194 → 195 tropes**; self-recognition steady at **195/195 (100%)**.
+
 ### Fixed
 - Self-recognition (§4b): event-anchored the last 4 `bonds` tropes so they confirm their own vignette,
   completing the arena (all 9) — `power_of_friendship` (Aids), `i_gave_my_word` (Honors),

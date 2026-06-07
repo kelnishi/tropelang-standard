@@ -40,6 +40,7 @@ import "trl/tropes/bonds/enemies_to_lovers.trl"
 import "trl/tropes/bonds/found_family.trl"
 import "trl/tropes/bonds/i_gave_my_word.trl"
 import "trl/tropes/bonds/like_brother_and_sister.trl"
+import "trl/tropes/bonds/love_dodecahedron.trl"
 import "trl/tropes/bonds/love_triangle.trl"
 import "trl/tropes/bonds/mentor_and_student.trl"
 import "trl/tropes/bonds/not_so_different.trl"
@@ -485,6 +486,7 @@ concept karma_houdini [+Trope(category="Karma Tropes", source="https://allthetro
 concept karmic_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Karmic_Death")] [%Narrative]
 concept kick_the_dog [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Kick_the_Dog")] [%Narrative]
 concept like_brother_and_sister [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Like_Brother_and_Sister")] [%Interpersonal]
+concept love_dodecahedron [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Love_Dodecahedron")] [%Interpersonal]
 concept macguffin [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/MacGuffin")] [%Narrative]
 concept magnificent_bastard [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Magnificent_Bastard")] [%Narrative]
 concept mama_bear [+Trope(category="Character Tropes", source="https://allthetropes.org/wiki/Mama_Bear")] [%Interpersonal]
