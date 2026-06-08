@@ -32,13 +32,15 @@ imply DisposableWoman -> [Final, Narrative]
 
 
 // === ABSTRACT RULE ===
-// Naming rule (scene scale): a [+Disposable] character is the TARGET of a [&Slays] event (agent=$killer),
-// so phase-2 re-checks [+Disposable] on the slain (STYLE §8). Binding fuel-status on the victim is the
-// discriminator: she dies to power the hero's revenge and is then dropped, parting it from the
-// Sacrificial Lion/Lamb (narrative-weight tiers) and the Lost Lenore (who keeps mattering). Reuses [&Slays].
+// Naming rule (scene scale): a [+Disposable] character who is the love [@Beloved_Of] a [+Protagonist] is the
+// TARGET of a [&Slays] event (agent=$killer), so phase-2 re-checks [+Disposable] on the slain AND the
+// relative relationship to the hero (STYLE §8). The bond is the point: binding the love-of-the-hero on the
+// victim is what makes her death FUEL — she dies to power his revenge and is then dropped, parting it from
+// the Sacrificial Lion/Lamb (narrative-weight tiers) and the Lost Lenore (who keeps mattering). Reuses [&Slays].
 rule Disposable_Woman {
   when:
-    char $woman [+Disposable]
+    char $hero  [+Protagonist]
+    char $woman [+Disposable] [@Beloved_Of(other=$hero)]
     evt  $death [&Slays(agent=$killer, target=$woman)]
   then:
     $death [+DisposableWoman]
@@ -52,15 +54,18 @@ rule Disposable_Woman {
 // The death named the whole pattern — "Women in Refrigerators" — the love interest disposed of to fuel
 // the hero.
 
-// ALEXANDRA DeWITT — present in the story only to be killed for Kyle's arc
-char alex [+Disposable]
+// KYLE RAYNER — the new Green Lantern; the hero whose arc her death fuels
+char kyle [+Protagonist]
+
+// ALEXANDRA DeWITT — Kyle's girlfriend, present only to be killed for his arc (the relative relationship)
+char alex [+Disposable] [@Beloved_Of(other=kyle)]
 
 // MAJOR FORCE — the villain who kills her to devastate the hero
 char major_force [+Antagonist]
 
 scene the_refrigerator {
   beat 1 {
-    // killed and discarded purely to set the hero on his path
+    // the hero's love, killed and discarded purely to set him on his path
     evt the_murder [&Slays(agent=major_force, target=alex)]
     // Disposable_Woman -> the_murder [+DisposableWoman]
   }
