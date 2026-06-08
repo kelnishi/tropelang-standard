@@ -12,15 +12,15 @@ A new session can run the whole loop from a one-line prompt; everything it needs
 
 **Minimal prompt to paste into a new session:**
 > Convert the next batch of high-profile tropes into the TropeLang corpus. Follow `CONVERSION_BOT.md`
-> and `skills/trope-to-tropelang/SKILL.md`. Install the CLI, pick targets from the coverage gaps in
-> CONVERSION_BOT.md (or `trl/tropes/BACKLOG.md`), author each with a self-confirming vignette, keep
-> `tropelang selfcheck` at 100%, finalize (assemble + CHANGELOG), and push a `convert/<batch>` branch
-> for CI to open the PR.
+> and `skills/trope-to-tropelang/SKILL.md`. Install the CLI, pick targets from the coverage worklist in
+> `trl/tropes/BACKLOG.md`, author each with a self-confirming vignette, keep `tropelang selfcheck` at
+> 100%, finalize (assemble + CHANGELOG + BACKLOG), and push a `convert/<batch>` branch for CI to open
+> the PR.
 
 **Run checklist (the order that works):**
 1. **Install the CLI (REQUIRED — not pre-installed)** — the latest `cli-*` release binary (see "The `tropelang` CLI" below); confirm `tropelang version`. The container is ephemeral, so this must be done every session.
 2. **Read** `skills/trope-to-tropelang/SKILL.md` (§1 acquire → §4b recognition fidelity) and `STYLE.md` §8.
-3. **Pick targets** — the coverage gaps (next section) or `BACKLOG.md` (cross-check against the tree; it lags reality).
+3. **Pick targets** — the coverage worklist in `trl/tropes/BACKLOG.md` → "High-profile coverage" (cross-check against the tree; re-run the review recipe below for fresh candidates).
 4. **Author** each trope: preamble → imports/assoc/imply → an **agent-named `[&Verb]` event rule** → a
    concrete vignette that CARRIES the discriminator (SKILL §4b). Vary story / medium / era / scale of stakes.
 5. **Self-recognize** (the bar below). Per file: `tropelang gate <f>` prints `GATE PASS`, and
@@ -49,9 +49,14 @@ detail is in SKILL §4b / STYLE §8; the load-bearing mechanics learned the hard
 
 ### Sourcing & coverage review (archive-access environments)
 
-This sandbox **firewalls `allthetropes.org`** (curl/WebFetch → 403; WebSearch snippets are the only
-channel). **In an environment WITH archive access, fetch the wiki directly** — for each trope's
-definition (record the URL in `@source`) and for the high-profile index pages. Never tvtropes.org.
+**Source from the AllTheTropes archive dump** when it is configured (the default now): a local mirror
+at `$ATT_BASE_URL` (e.g. `attdump.tropelang.com`), reached with the Cloudflare-Access headers
+`CF-Access-Client-Id` / `CF-Access-Client-Secret` (both in the session env). Endpoints:
+`/page/<Title>` (raw wikitext; `?format=json` for metadata), `/exists?title=`, `/search?q=`,
+`/titles?prefix=`, `/stats`. Titles URL-encode; spaces/underscores interchangeable. Pull each trope's
+definition (record the canonical `https://allthetropes.org/wiki/<Title>` in `@source`, not the dump URL)
+and use `/exists` to confirm candidates. If no archive is configured, the sandbox firewalls
+`allthetropes.org` (curl/WebFetch → 403) and WebSearch snippets are the only channel. **Never tvtropes.org.**
 
 To (re-)run the coverage review — corpus vs the canonical lists:
 ```sh
@@ -64,12 +69,10 @@ Diff that against the allthetropes high-profile indexes:
 - **Omnipresent Tropes** (curated) — https://allthetropes.org/wiki/Omnipresent_Tropes
 - **Universal Tropes** and the cast / plot-structure indexes.
 
-**Known high-profile gaps (2026-06 review — verify against the live lists):** ~~An Aesop · Big Good ·
-Villain Protagonist · Five-Man Band · Status Quo Is God · Failure Is the Only Option · Idiot Ball ·
-Take a Third Option~~ (✅ done, the `convert/high-profile-gaps` branch) · Character Development (the
-general trope; instances like Coming of Age / Redemption Arc exist) · Title Drop · Genre Savvy.
-Suggested next batch: Character Development, Title Drop, Genre Savvy (+ re-run the coverage review
-against the live lists for fresh candidates).
+> **The live gap list, the suggested next batch, and what's already been converted live in
+> `trl/tropes/BACKLOG.md` → "High-profile coverage", NOT here.** This file is the *recipe* (how to run
+> the review and author a batch); BACKLOG is the *worklist and progress ledger*, updated in every
+> conversion PR (the finalize step below). Don't track coverage state in this file.
 
 ## The identity rule (why this exists)
 
@@ -139,8 +142,12 @@ tropelang assemble trl/tropes/corpus.toml          # regenerates trl/tropes/inde
 # 2. Append the changelog delta — one line per trope, from each trope's preamble, under
 #    `## [Unreleased]` → `### Added` in CHANGELOG.md:  - **<TropeName>** (<category>) — <source>
 
-# 3. Stage the tropes + the regenerated index + the changelog in ONE commit.
-git add trl/tropes/<path>/*.trl trl/tropes/index.trl CHANGELOG.md
+# 3. Update the coverage ledger in trl/tropes/BACKLOG.md → "High-profile coverage": move this batch's
+#    tropes to the done list (with the PR/batch name), bump the corpus count + selfcheck ratio, and
+#    refresh the remaining-gaps / suggested-next-batch lines. Progress is tracked HERE, every PR.
+
+# 4. Stage the tropes + the regenerated index + the changelog + the backlog in ONE commit.
+git add trl/tropes/<path>/*.trl trl/tropes/index.trl CHANGELOG.md trl/tropes/BACKLOG.md
 ```
 
 > Why `index.trl` is committed here and not during conversion: the "never touch `index.trl`" guardrail
@@ -263,6 +270,9 @@ workflow — never fold its App key into `gate.yml` or the publish pipeline.
   the finalized index **is** committed in the PR — a stale one fails the gate's `assemble --check`.
 - **Append the changelog delta in the finalize step** — one line per trope in `CHANGELOG.md`, so each
   batch carries its own `### Added` entries.
+- **Update `trl/tropes/BACKLOG.md` in every conversion PR** — the coverage ledger and progress live
+  there (not in this runbook). Each batch moves its tropes to done, bumps the count/selfcheck, and
+  refreshes the remaining gaps. This file stays instructions-only.
 - **Cross-check `BACKLOG.md` against the tree before converting** — it can lag reality (done items may
   still read `[ ]`). Don't re-convert work that already exists.
 - **One batch per PR.** Keep PRs reviewable; the gate runs per changed `.trl`.

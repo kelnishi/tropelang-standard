@@ -1,0 +1,75 @@
+// === PREAMBLE ===
+// @trope    Disney Villain Death
+// @category Death Tropes / Evil Tropes
+// @source   https://allthetropes.org/wiki/Disney_Villain_Death
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): the villain exits by FALLING — off a cliff, a tower, a waterfall — rather than
+// at the hero's hand; gravity, not the protagonist, does the killing, conveniently keeping the hero's
+// hands clean (often after a refused "Take my hand!"). FRONTIER: a death recognized by its MANNER and
+// its AGENT. The villain is the agent of their own fatal fall ([&Plummets(agent=$villain)]) — distinct
+// from the kill-tropes where a slayer fells the victim (&Slays(agent=$killer)); the hero does not strike
+// the blow. Parts from Karmic Death (deserved, any manner) and Hoist by His Own Petard (own scheme) by
+// the specific shape: a great height, a fall, the hero's hands bloodless.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc disney_villain_death -> [
+  karmic_death       : "a clean-handed manner of",
+  hoist_by_his_own_petard : "gravity standing in for",
+  redemption_equals_death : "the unredeemed mirror of a fatal fall"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the fatal fall is the trope's discriminator; promotion model, cf. the_wizard) —
+verb Plummets(from) [+Vital]   // falls to one's death from a height — gravity as executioner
+
+imply DisneyVillainDeath -> [Final, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: an [+Antagonist] is the AGENT of a [&Plummets] event (from=$height) — they fall to their
+// own death. Binding the villain on the agent role of a self-fall (not the target of a slaying) is the
+// discriminator: the hero never strikes, so this is recognized where the death-by-a-killer tropes are
+// not. The fall is the death (tags the event; the villain ends [+Dead]).
+rule Disney_Villain_Death {
+  when:
+    char $villain [+Antagonist]
+    evt  $fall [&Plummets(agent=$villain, from=$height)]
+  then:
+    $villain [+Dead]
+    $fall [+DisneyVillainDeath]
+}
+
+
+// === CONCRETE VIGNETTE: Beauty and the Beast — Gaston (Disney film, 1991) ===
+// On the rain-slick rooftop of the Beast's castle, Gaston stabs the Beast in the back, then loses his
+// footing on the crumbling parapet. The Beast — who moments before had him by the throat and chose to
+// spare him, growling only "Get out" — does not push him. Gaston's own weight and the broken stone take
+// him: he screams and drops into the chasm far below. The hero's hands stay clean; gravity collects the
+// villain. The trope's poster child, falling off a ledge like no one else.
+
+// GASTON — the vain hunter-villain, stabbing from behind on the high parapet
+char gaston [+Antagonist]
+
+// THE BEAST — the hero, who had spared him moments earlier and does not strike
+char the_beast [+Protagonist]
+
+// EXT. CASTLE ROOFTOP - NIGHT (rain, crumbling stone, a long drop)
+set the_castle_rooftop [+Exterior] [+Night] [+Raining]
+
+scene the_rooftop_fall {
+  beat 1 {
+    the_beast @ the_castle_rooftop
+    gaston @ the_castle_rooftop
+    the_beast -> gaston : "had him by the throat, chose to spare him — hands clean"
+  }
+  beat 2 {
+    evt the_drop [&Plummets(agent=gaston, from=the_castle_rooftop)]
+    // Disney_Villain_Death -> gaston [+Dead]; the_drop [+DisneyVillainDeath]
+  }
+}
