@@ -221,23 +221,14 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 - **Death Seeker** (Death Tropes / Character) — https://allthetropes.org/wiki/Death_Seeker
   (Logan — a [+DeathWish] character `[&CourtsDeath]`, fighting to die; the inverted will of a Determinator.
   Founds `prop DeathWish` + `verb CourtsDeath`.)
-- **Painting the Medium** (Metafiction) — https://allthetropes.org/wiki/Painting_the_Medium
-  (Schindler's List, the red coat — the author `[&Employs]` a [+MediumArtifact] to convey story; the
-  author-side counterpart to Medium Awareness. Founds `verb Employs(artifact)`; reuses `[+MediumArtifact]`.)
-- **Mood Whiplash** (Rhetoric / Tone) — https://allthetropes.org/wiki/Mood_Whiplash *(hard recognition
-  shape)* — (Up's opening — a [&Shatters] event breaks a [+Levity] moment; the second beat links to the
-  first's tone, binding the juxtaposition. Founds `prop Levity` + `verb Shatters(mood)`.)
-- **Cerebus Syndrome** (Plot Devices / Tone) — https://allthetropes.org/wiki/Cerebus_Syndrome
-  (M*A*S*H — a [+Lighthearted] work `[&Darkens]` across its run; the slow-arc counterpart to Mood
-  Whiplash's spike. Founds `prop Lighthearted` + `verb Darkens(subject)`.)
 - **Crapsack World** (Settings / Worldbuilding) — https://allthetropes.org/wiki/Crapsack_World *(hard
-  recognition shape)* — (Warhammer 40,000 — in a [+Crapsack] world an [+Unremarked] [&Brutalizes] cruelty
-  passes normalized; bleakness shown by atrocity met with a shrug. Founds `prop Crapsack`/`prop Unremarked`
-  + `verb Brutalizes(target)`.)
-  Corpus **270 → 277 tropes**; self-recognition steady at **277/277 (100%)**. (Capability-gap batch 3/5:
-  cracked the **hard recognition shapes** — tonal juxtaposition (Mood Whiplash), tonal arc (Cerebus
-  Syndrome), and setting-as-property (Crapsack World) — each via a linked-event discriminator. Power → 19,
-  Death → 23, Meta → 20.)
+  recognition shape)* — (Warhammer 40,000 — in a [+Crapsack] world (a `set`) an [+Unremarked] [&Brutalizes]
+  cruelty passes normalized; bleakness shown by atrocity met with a shrug. Founds `prop Crapsack`/`prop
+  Unremarked` + `verb Brutalizes(target)`.)
+  Corpus **270 → 274 tropes**; self-recognition steady at **274/274 (100%)**. (Capability-gap batch 3/5:
+  Crapsack World lands the **setting-as-property** recognition shape via a linked-event discriminator.
+  Painting the Medium, Mood Whiplash, and Cerebus Syndrome were **demoted from this batch** — deferred
+  pending the Medium/work-skeleton + Tone-promotion design pass. Power → 19, Death → 23.)
 
 ## [1.7.4] — 2026-06-08
 

@@ -82,7 +82,7 @@ Universal + the cast & plot-structure indexes). This is the live ledger — **ev
 it** (the finalize step in `CONVERSION_BOT.md`). The *recipe* for re-running the review (corpus inventory
 vs. the indexes, archive access) lives in `CONVERSION_BOT.md`; the *state* lives here.
 
-**Corpus: 277 tropes · self-recognition 277/277 (100%).** (Re-measure: `tropelang selfcheck
+**Corpus: 274 tropes · self-recognition 274/274 (100%).** (Re-measure: `tropelang selfcheck
 trl/tropes/corpus.toml --corpus file://trl`.)
 
 **Converted batches (done):**
@@ -103,7 +103,15 @@ trl/tropes/corpus.toml --corpus file://trl`.)
 - `convert/loaded-meaning-batch` (#55, 7) — **ground-level loaded-meaning tropes** (object/action/behavior gets meaning from legend/religion/anime/chivalry/comedy/myth/ritual): Only the Chosen May Wield · Holy Halo · Tsundere · Throwing Down the Gauntlet · Spit Take · Red String of Fate · Pinky Swear.
 - `convert/power-meta-balance-1` (#56, 7) — **capability-gap batch 1/5 (Power+4, Meta+2)**: Kingmaker Scenario · La Resistance · Government Conspiracy · The Quisling · The Stinger · Medium Awareness · Sequel Hook.
 - `convert/power-meta-balance-2` (#57, 7) — **batch 2/5**: Asskicking Equals Authority · Police State · A House Divided · Author Avatar · Literary Agent Hypothesis · Trapped in TV Land · Disposable Woman.
-- `convert/power-meta-balance-3` (this PR, 7) — **batch 3/5, cracked the hard recognition shapes**: Enemy Civil War (power) · Dropped a Bridge on Him · Death Seeker (death) · Painting the Medium (meta) · Mood Whiplash · Cerebus Syndrome · Crapsack World (tonal-juxtaposition / tonal-arc / setting-property, via linked-event discriminators).
+- `convert/power-meta-balance-3` (this PR, 4) — **batch 3/5**: Enemy Civil War (power) · Dropped a Bridge on Him · Death Seeker (death) · Crapsack World (setting-as-property, via a linked-event discriminator). **Demoted from this batch** (deferred pending the Medium/work-skeleton + Tone-promotion design pass): Painting the Medium, Mood Whiplash, Cerebus Syndrome — see the design note below.
+
+**Deferred — pending the Medium/work-skeleton + Tone-promotion design pass.** Three tropes were demoted
+from batch 3 because they depend on features that aren't built yet (see `STYLE.md §10` and the *Medium &
+Work Skeletons* design memo). They are recoverable from this branch's git history when the features land:
+- **Painting the Medium**, **The Stinger** *(already merged via #56 — revisit)* — need the **medium / work
+  skeleton** (format slots as Structure scaffolds; medium as a `%` essence), not a `[+Credits]`-style prop.
+- **Mood Whiplash**, **Cerebus Syndrome** — need **structural recognition** (tonal juxtaposition / arc by
+  position, not a single linked event) and a first-class **`Tone`** concept promoted into the prelude.
 
 **Remaining gaps (archive-verified; the next-batch candidates):**
 - [ ] Mood Whiplash · [ ] Idiot Plot · [ ] Crapsack World (each harder to event-anchor —
