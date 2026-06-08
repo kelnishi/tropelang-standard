@@ -9,6 +9,10 @@
 // violent shortcut up the hierarchy. Rides the power-dynamics Usurp rule: the holder is
 // [+Deposed] and the killer takes the throne. (Shakespeare's favourite engine of plot —
 // Macbeth, Richard III, Claudius all came by their crowns this way.)
+//
+// REFINEMENT: [&Usurps] is the general "seize a position by force" (lethal or not). Klingon Promotion is
+// the LETHAL case — the claimant [&Usurps] the holder AND [&Slays] them — which is what parts it from a
+// bloodless usurpation (e.g. The Evil Prince's Ozai, who supplants the line without a kill).
 
 
 // === IMPORTS & ASSOCIATIONS ===
@@ -27,11 +31,14 @@ imply KlingonPromotion -> [Usurpation, Power, Narrative]
 
 
 // === ABSTRACT RULE ===
-// Naming rule: killing the holder of a rank to take it IS a Klingon Promotion (tags the deed).
+// Naming rule: seizing a rank by force AND killing its holder to take it IS a Klingon Promotion — the
+// [&Usurps] (seize by force) and a [&Slays] of the same holder, by the same claimant, bound together. The
+// kill is the discriminator that parts it from a bloodless usurpation (The Evil Prince).
 rule Klingon_Promotion {
   when:
     char $holder [+Ruler]
     evt  $kill [&Usurps(agent=$claimant, target=$holder)]
+    evt  $death [&Slays(agent=$claimant, target=$holder)]
   then:
     $kill [+KlingonPromotion]
 }
@@ -46,7 +53,9 @@ char marcus_aurelius [+Ruler]
 
 scene the_tent {
   beat 1 {
+    // he smothers his father (the kill) and takes the purple by force (the seizure) — the lethal usurpation
+    evt the_murder  [&Slays(agent=commodus, target=marcus_aurelius)]
     evt the_embrace [&Usurps(agent=commodus, target=marcus_aurelius)]
-    // Usurp -> marcus_aurelius [+Deposed], commodus [+Ruler];  Klingon_Promotion tags it
+    // Usurp -> marcus_aurelius [+Deposed], commodus [+Ruler];  Klingon_Promotion tags the lethal seizure
   }
 }
