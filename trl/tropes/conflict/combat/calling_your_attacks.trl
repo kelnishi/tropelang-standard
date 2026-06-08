@@ -1,0 +1,71 @@
+// === PREAMBLE ===
+// @trope    Calling Your Attacks
+// @category Combat Tropes
+// @source   https://allthetropes.org/wiki/Calling_Your_Attacks
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a fighter shouts the NAME of their special move as they launch it — the staple
+// of martial-arts, magical-girl, and high-fantasy action. FRONTIER: the named technique announced at the
+// strike. The discriminator is a [+Technique] (a named special move) bound on the `move=` role of a
+// [&Announces] event tied to the fighter's [&Strikes] — so it fires on the call-out that accompanies a
+// named attack, not on any silent blow.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc calling_your_attacks -> [
+  finishing_move : "names the move of a",
+  pre_mortem_one_liner : "a combat call-out beside the lethal"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the named technique announced at the blow is the discriminator; promotion model) —
+prop Technique     [+Narrative]      // a named special move — the attack worth shouting
+verb Announces(move) [+Interpersonal] // calls out the attack's name as it launches
+
+imply CallingYourAttacks -> [Utterance, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a fighter ANNOUNCES a [+Technique] and STRIKES — the named move bound on the `move=` role
+// of a [&Announces] event (agent=$fighter) and the blow on a [&Strikes] by the same fighter, so phase-2
+// re-checks [+Technique] on the called move (STYLE §8). Binding the named technique to the announced strike
+// is the discriminator: the move is shouted as it lands, parting it from a silent attack (no announce).
+// Reuses [&Strikes].
+rule Calling_Your_Attacks {
+  when:
+    char $fighter [+Protagonist]
+    obj  $technique [+Technique]
+    evt  $call [&Announces(agent=$fighter, move=$technique)]
+    evt  $hit  [&Strikes(agent=$fighter, target=$foe)]
+  then:
+    $call [+CallingYourAttacks]
+}
+
+
+// === CONCRETE VIGNETTE: Street Fighter — Ryu's Hadouken (video game, 1987) ===
+// Ryu cups his hands at his hip, gathers his ki, and thrusts them forward — and as the blue fireball
+// erupts from his palms he shouts the name that every player learns first: "Hadouken!" The move and its
+// call are inseparable; you do not throw the fireball silently. The attack is announced at the instant it
+// flies, the spoken name part of the technique itself.
+
+// RYU — the wandering martial artist, ki gathered
+char ryu [+Protagonist]
+
+// THE HADOUKEN — the named surge-fist fireball, shouted as it flies
+obj the_hadouken [+Technique]
+
+// THE OPPONENT — across the stage, about to eat the fireball
+char the_opponent [+Antagonist]
+
+scene the_fireball {
+  beat 1 {
+    // RYU: "Hadouken!" — the name shouted as the blast launches
+    evt the_call [&Announces(agent=ryu, move=the_hadouken)]
+    evt the_blast [&Strikes(agent=ryu, target=the_opponent)]
+    // Calling_Your_Attacks -> the_call [+CallingYourAttacks]
+  }
+}

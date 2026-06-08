@@ -1,0 +1,73 @@
+// === PREAMBLE ===
+// @trope    Lovable Rogue
+// @category Character Archetypes
+// @source   https://allthetropes.org/wiki/Lovable_Rogue
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a LAWBREAKER who breaks the law for personal profit — theft, smuggling,
+// conning, piracy — but is charming and honorable enough (victims who are jerks or strangers) that the
+// audience roots for them. FRONTIER: the charming criminal we forgive. The discriminator is a [+Roguish]
+// [+Sympathetic] character bound on the agent of a [&Transgresses] event (ANY crime for gain, not theft
+// specifically) — parting it from the rough Anti-Hero (defined by a crossed line, [&Crosses]) and a plain
+// villain (not [+Sympathetic]).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/character/archetypes/anti_hero.trl"   // a click up the idealism scale from the rough anti-hero
+
+assoc lovable_rogue -> [
+  anti_hero   : "a lighter, code-bound cousin of",
+  the_trickster : "the law-bending kin of"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the charming-criminal-we-root-for is the discriminator; promotion model) —
+prop Roguish      [+Social]          // a charming lawbreaker with a code — the rascal the audience forgives
+verb Transgresses [+Interpersonal]   // breaks the law for personal gain — theft, smuggling, conning, piracy
+
+imply LovableRogue -> [Contrast, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a [+Roguish] [+Sympathetic] character TRANSGRESSES — the charming rogue bound on the agent
+// role of a [&Transgresses] event, so phase-2 re-checks both tags on the rogue (STYLE §8). The verb is the
+// GENERAL crime-for-gain (not theft specifically: a smuggler, pirate, or con artist qualifies as readily
+// as a thief); the discriminator is the charm-plus-sympathy of the lawbreaker, which is what makes us root
+// for them — parting it from the Anti-Hero (a crossed line) and a plain criminal (not sympathetic).
+rule Lovable_Rogue {
+  when:
+    char $rogue [+Roguish] [+Sympathetic]
+    evt  $caper [&Transgresses(agent=$rogue)]
+  then:
+    $caper [+LovableRogue]
+}
+
+
+// === CONCRETE VIGNETTE: Robin Hood — the greenwood outlaw (English legend, medieval) ===
+// Robin Hood robs the roads of Sherwood, but never a poor traveller — only the fat purses of the corrupt:
+// the Sheriff of Nottingham's tax gold, wrung from the people and now lifted right back off him on the
+// king's highway. He is an outlaw by the letter of the law, and the audience cheers every job, because the
+// victims are tyrants and the loot goes to the hungry. The original lovable rogue. (Robbery is just one
+// form the trope takes — the rule keys on the lawbreaking, not the theft: a smuggler or pirate fits too.)
+
+// ROBIN HOOD — the charming outlaw of Sherwood, robbing only the wicked
+char robin_hood [+Roguish] [+Sympathetic]
+
+// THE SHERIFF'S TAX GOLD — wrung from the poor, and lifted right back
+obj the_tax_gold [+Prize]
+
+// EXT. SHERWOOD FOREST - DAY (the king's road through the greenwood)
+set sherwood [+Exterior] [+Day]
+
+scene the_road_robbery {
+  beat 1 {
+    robin_hood @ sherwood
+    robin_hood > the_tax_gold : "lifts the Sheriff's ill-gotten gold"
+    // his outlawry on the king's highway — a crime we cheer (here a robbery; the rule accepts any)
+    evt the_caper [&Transgresses(agent=robin_hood)]
+    // Lovable_Rogue -> the_caper [+LovableRogue]
+  }
+}
