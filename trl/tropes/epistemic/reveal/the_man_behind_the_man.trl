@@ -1,0 +1,73 @@
+// === PREAMBLE ===
+// @trope    The Man Behind the Man
+// @category Reveal / Villains
+// @source   https://allthetropes.org/wiki/The_Man_Behind_the_Man
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): the apparent villain turns out to be the puppet of a hidden greater power — the
+// real schemer manipulating events from behind the scenes. FRONTIER: the concealed controller above the
+// visible villain. The discriminator is a [+Mastermind] (the hidden true power) bound on the agent of a
+// [&Manipulates] event whose `puppet=` is the apparent [+Antagonist] — so it fires on the hidden hand
+// steering the seeming villain, parting it from the Evil Chancellor (a trusted advisor betraying his own
+// lawful ruler) and The Starscream (a subordinate coveting his master's seat).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc the_man_behind_the_man -> [
+  the_reveal     : "surfaces as a",
+  evil_chancellor : "the hidden-master counterpart to the treacherous advisor",
+  the_big_bad    : "often unmasks the true"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the concealed controller is the discriminator; reuses [+Mastermind]) —
+verb Manipulates(puppet) [+Interpersonal]   // covertly controls another from behind the scenes
+
+imply TheManBehindTheMan -> [Twist, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a [+Mastermind] MANIPULATES an [+Antagonist] puppet — the hidden power bound on the agent
+// role and the apparent villain on the `puppet=` role of a [&Manipulates] event, so phase-2 re-checks
+// [+Mastermind] on the controller and [+Antagonist] on the puppet (STYLE §8); $mastermind != $puppet keeps
+// the control flowing from a SEPARATE hidden hand. The concealed-controller-above-the-visible-villain
+// pairing is the discriminator. Reuses [+Mastermind].
+rule The_Man_Behind_The_Man {
+  when:
+    char $puppet [+Antagonist]
+    char $mastermind [+Mastermind]
+    $mastermind != $puppet
+    evt  $reveal [&Manipulates(agent=$mastermind, puppet=$puppet)]
+  then:
+    $reveal [+TheManBehindTheMan]
+}
+
+
+// === CONCRETE VIGNETTE: Harry Potter and the Philosopher's Stone — Quirrell and Voldemort (novel/film, 1997/2001) ===
+// All year the stammering, nervous Professor Quirrell seems at worst a coward — and Snape the suspect.
+// Then, in the chamber beneath the school, Quirrell unwinds his turban: on the back of his head is the
+// face of Voldemort, who has been there the whole time, drinking unicorn blood, whispering every order.
+// The apparent villain was never the villain; he was the vessel of the hidden one. "There is no good and
+// evil, there is only power" — spoken by the man behind the man, on the back of the man.
+
+// PROFESSOR QUIRRELL — the apparent villain, all along a puppet
+char quirrell [+Antagonist]
+
+// LORD VOLDEMORT — the hidden power on the back of his head, steering everything
+char voldemort [+Mastermind]
+
+// INT. THE CHAMBER OF THE STONE - the mirror, the turban unwound
+set the_chamber [+Interior]
+
+scene behind_the_turban {
+  beat 1 {
+    quirrell @ the_chamber
+    // the turban comes off: the hidden hand that has steered the puppet all year is revealed
+    evt the_unmasking [&Manipulates(agent=voldemort, puppet=quirrell)]
+    // The_Man_Behind_The_Man -> the_unmasking [+TheManBehindTheMan]
+  }
+}

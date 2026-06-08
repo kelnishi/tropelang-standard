@@ -1,0 +1,71 @@
+// === PREAMBLE ===
+// @trope    Mook
+// @category Combat / Cast
+// @source   https://allthetropes.org/wiki/Mooks
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): the faceless, disposable henchman — set filler for the villain's side, there to
+// be cut down en masse so the hero can show prowess without anyone important being at risk. FRONTIER: the
+// enemy's expendable. The discriminator is a [+Henchman] (a disposable footsoldier of the villain's side)
+// bound on the target of a [&Strikes] event by the hero — the Evil Counterpart of the Red Shirt (an
+// [+Expendable] on the HERO's side, killed by the threat). Same disposability, opposite side: the Mook is
+// mowed down BY the hero.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/death/red_shirt.trl"   // the hero's-side counterpart filler
+
+assoc mook -> [
+  red_shirt    : "the villain's-side counterpart of",
+  curb_stomp_battle : "the fodder of a",
+  the_dragon   : "the rank and file beneath"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the disposable enemy footsoldier is the discriminator; promotion model) —
+prop Henchman [+Social]   // a faceless, interchangeable footsoldier of the villain's side — set filler
+
+imply Mook -> [Object, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a hero STRIKES a [+Henchman] — the disposable footsoldier bound on the target role of a
+// [&Strikes] event (agent=$hero), so phase-2 re-checks [+Henchman] on the struck party (STYLE §8). Binding
+// the villain-side disposability on the struck target is the discriminator: the faceless enemy is cut
+// down by the hero, parting it from the Red Shirt (an [+Expendable] on the hero's own side, killed by the
+// threat). Reuses [&Strikes].
+rule Mook {
+  when:
+    char $mook [+Henchman]
+    evt  $rout [&Strikes(agent=$hero, target=$mook)]
+  then:
+    $rout [+Mook]
+}
+
+
+// === CONCRETE VIGNETTE: John Wick — the Continental's gunmen (film, 2014) ===
+// John Wick walks into the night club and the syndicate sends its men at him in waves — nameless suited
+// gunmen, interchangeable, there only to fall. He moves through them with brutal economy, a headshot per
+// man, dozens down before he reaches anyone who matters. Not one of them is a character; they are the
+// resistance the hero cuts through to show what he is. Pure Mook.
+
+// JOHN WICK — the hero cutting through the waves
+char john_wick [+Protagonist]
+
+// A SYNDICATE GUNMAN — one of the faceless interchangeable many
+char a_gunman [+Henchman]
+
+// INT. THE RED CIRCLE CLUB - NIGHT (strobe, the waves of men)
+set the_club [+Interior] [+Night] [+Crowded]
+
+scene the_club_shootout {
+  beat 1 {
+    john_wick @ the_club
+    // another of the nameless waves goes down — the hero's prowess shown on disposable fodder
+    evt the_takedown [&Strikes(agent=john_wick, target=a_gunman)]
+    // Mook -> the_takedown [+Mook]
+  }
+}
