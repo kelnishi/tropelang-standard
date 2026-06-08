@@ -296,7 +296,69 @@ positive thing.
 - Reference a node from another plane via a **loud crossing** `<<home|name>>` — never a bare silent
   reference. A plane change is always visible in the source (`specs/14 §7`).
 
-## 10. Validate
+## 10. Frameworks & medium — model the skeleton, don't tag the slot
+
+A structural framework — the dramatic arc (Freytag, Save the Cat), or the **format skeleton of a medium**
+(a film's cold open / credits / post-credits stinger; a novel's prologue / chapter titles; a comic's
+panels) — is a **scaffold, not a property**. Keep three orthogonal axes apart; never collapse them into one:
+
+1. **Reality plane** — S14 `<<level>>` (§9): *is this canon, who is the teller?* Pure reality-layering.
+2. **Story shape** — the `Structure` axis (`attr Structure`, prelude): the dramatic arc, named as concept
+   nodes and sequenced (`trl/modules/freytags_pyramid.trl`).
+3. **Medium / format** — the channel's positional conventions (credits, prologue, stinger). The
+   under-served third axis: there is no `Medium`/paratext vocabulary in the corpus yet.
+
+They vary independently — a post-credits scene is *diegetically canon* (axis 1) sitting in a *paratextual
+format slot* (axis 3) — so medium **cannot** be folded onto the plane system, and a format slot is **not**
+a prop.
+
+**❌ Don't found format slots as props.** `prop Credits`, `prop Prologue`, `prop PostCredits` is a category
+error: a slot is a *position in the work's skeleton*, not an adjective on an entity — "Credits" describes no
+character. It also throws away the order, the medium-binding, and the optionality that are the whole point,
+and it breaks the **scaffold rule**: a framework gets only PRIVATE base implies, never overlaid onto
+archetype clusters (Mentor / Reveal / …), or it pollutes drams density for every story using them
+(`SKILL.md` drams-framework-scaffold-rule; `trl/tropes/structure/bookends.trl`).
+
+**✓ Model the medium as a scaffold, exactly like Freytag** — three levels, all legal today, zero grammar
+change:
+
+- **Medium is an essence of the work** (`%` facet, §5), declared as a small family off `attr Ontological`:
+  ```trl
+  attr Medium     [+Ontological]      // the channel a work is realized in
+  prop Film       [%Medium]
+  prop Novel      [%Medium]            // … Television, Comic, Stage
+  ```
+- **Format is a Structure module** — name each slot a lowercase `concept … [+Structure]` and order them by
+  edge, the way `freytags_pyramid.trl` sequences `exposition -> rising_action -> …` (order is the `->` edge
+  + declaration order; there is no separate ordering construct):
+  ```trl
+  concept cold_open       [+Structure]   // optional
+  concept opening_credits [+Structure]
+  concept body            [+Structure]
+  concept end_credits     [+Structure]
+  concept post_credits    [+Structure]   // optional; Film/TV only
+  cold_open -> opening_credits -> body -> end_credits -> post_credits
+  ```
+- **A scene occupies a slot by an EDGE, not a tag and not `@`.** `@` is *presence at a location* (§-temporal,
+  `frodo @ prancing_pony`); a scene-to-slot binding is an association: `the_stinger -- post_credits :
+  "occupies"`. (Position via the slot edge; reality via the `<<level>>` it sits on — the two stay separate.)
+
+**The work itself is an entity — interim now, a `work` kind planned.** There is no `work` keyword today, so
+model it by §1: a work that *acts* (a film that `[&Appends]` a scene, a frame-tale that `[&Frames]`) is a
+`char` carrying its medium essence (`char the_film [%Film]`, as `the_stinger.trl` already does); a purely
+inert artifact is an `obj`. That is the interim, per composition-over-classification (§1). A first-class
+**`work` entity kind is a planned grammar addition** — the natural home for a work's medium essence and its
+format skeleton, distinct from an agent or a place; until it lands, use `char`/`obj` and bind the skeleton
+by edge as above. (The scaffold modelling itself stays zero-grammar-change either way — the `work` kind is
+ergonomics, not a prerequisite.)
+
+**Held — position-aware recognition is a grammar question; don't pre-build it.** Nothing today lets a
+matcher fire "this happens in the credits." If a concrete recognition need arises, make the slot a **scope
+on the Structure axis** (a paratextual container of — or deliberate absence of — events at a position),
+never a prop and never a flag bolted onto an S14 level (that re-conflates position with reality, the exact
+thing the post-credits case shows must stay apart). Until then, model the skeleton and stop there.
+
+## 11. Validate
 
 Every file should:
 - `gate` clean — preamble ✓, validates ✓, round-trips ✓ (`skills/trope-to-tropelang/scripts/gate.sh`);
