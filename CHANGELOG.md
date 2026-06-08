@@ -68,6 +68,32 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   formidability parts it from empty bragging (a weakling's boast, undercut). Founds `verb Boasts(prowess)`;
   reuses `[+Formidable]`.)
   Corpus **225 → 228 tropes**; self-recognition steady at **228/228 (100%)**.
+- **Well-Intentioned Extremist** (Villains) — https://allthetropes.org/wiki/Well-Intentioned_Extremist
+  (Watchmen, Ozymandias — an [+Antagonist] `[&Perpetrates]` an [+Atrocity] FOR a [+JustCause]; both halves
+  bound on one act, the good-end/evil-means conjunction. Founds `prop JustCause`/`prop Atrocity` + `verb
+  Perpetrates(atrocity)`.)
+- **Sacrificial Lion** (Death Tropes) — https://allthetropes.org/wiki/Sacrificial_Lion
+  (A Game of Thrones, Ned Stark — a [+Major] [+Sympathetic] character `[&Slays]`-ed to prove the stakes;
+  the weight of the victim parts it from the Red Shirt (an [+Expendable] nobody). Founds `prop Major`.)
+- **Evil Chancellor** (Villains / Politics) — https://allthetropes.org/wiki/Evil_Chancellor
+  (Aladdin, Jafar — a [#Trusted] advisor `[&Betrays]` a [+Royalty] ruler; the trusted-advisor-vs-lawful-
+  sovereign pairing parts it from The Starscream (an evil [+BigBad] master). Reuses existing vocab — no
+  new declarations.)
+- **Mook** (Combat / Cast) — https://allthetropes.org/wiki/Mooks
+  (John Wick, the club gunmen — a hero `[&Strikes]` a [+Henchman]; the villain-side disposability parts it
+  from the Red Shirt (hero-side filler killed by the threat). Founds `prop Henchman`; reuses `[&Strikes]`.)
+- **The Man Behind the Man** (Reveal / Villains) — https://allthetropes.org/wiki/The_Man_Behind_the_Man
+  (Harry Potter, Quirrell & Voldemort — a [+Mastermind] `[&Manipulates]` an [+Antagonist] puppet; the
+  concealed controller above the visible villain. Founds `verb Manipulates(puppet)`; reuses `[+Mastermind]`.)
+- **Fire-Forged Friends** (Friendship) — https://allthetropes.org/wiki/Fire-Forged_Friends
+  (Toy Story, Woody & Buzz — a [+Wary] character `[&FightsBeside]` another and bonds; the side-by-side
+  forging parts it from Defeat Means Friendship (a defeat first) and Enemy Mine (a cold truce). Founds
+  `prop Wary` + `verb FightsBeside(ally)`; reuses `Bonded_To`.)
+- **Trash Talk** (Combat / Rhetoric) — https://allthetropes.org/wiki/Trash_Talk
+  (Muhammad Ali, the pre-fight needle — a competitor `[&Taunts]` an [+Opponent]; the contest-foe jab parts
+  it from a Badass Boast (self-praise) and "The Reason You Suck" Speech. Founds `prop Opponent` + `verb
+  Taunts(target)`.)
+  Corpus **228 → 235 tropes**; self-recognition steady at **235/235 (100%)**.
 
 ## [1.7.4] — 2026-06-08
 

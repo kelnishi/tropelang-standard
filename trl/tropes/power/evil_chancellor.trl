@@ -1,0 +1,74 @@
+// === PREAMBLE ===
+// @trope    Evil Chancellor
+// @category Villains / Politics
+// @source   https://allthetropes.org/wiki/Evil_Chancellor
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): the ruler's trusted advisor/second — the Grand Vizier — who schemes to
+// discredit, usurp, or puppeteer the throne he is supposed to serve. FRONTIER: treachery from the seat
+// of trust beside a LEGITIMATE ruler. The discriminator binds a [#Trusted] advisor betraying a [+Royalty]
+// ruler on a [&Betrays] event — distinct from The Starscream (whose leader is a [+BigBad] he covets the
+// seat of) and a plain Face Heel Turn: here the betrayed is a lawful sovereign and the betrayer is his
+// own confidant. Reuses the prelude's [&Betrays], [#Trusted], and [+Royalty] — no new vocabulary.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/power/the_starscream.trl"   // the evil-overlord counterpart (covets an evil master's seat)
+
+assoc evil_chancellor -> [
+  the_starscream : "the legitimate-ruler counterpart to",
+  puppet_king    : "often aims to reduce the ruler to a",
+  smear_campaign : "a favoured tool of the"
+]
+
+
+// === ONTOLOGY ===
+// (no new vocabulary — reuses [#Trusted], [+Royalty], [&Betrays]; only the trope title node is minted)
+imply EvilChancellor -> [Usurpation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a [#Trusted] advisor BETRAYS a [+Royalty] ruler — the vizier bound on the agent role and
+// the sovereign on the target role of a [&Betrays] event, so phase-2 re-checks [#Trusted] on the betrayer
+// and [+Royalty] on the betrayed (STYLE §8); $vizier != $ruler keeps the treachery aimed upward at the
+// one he serves. The trusted-advisor-against-a-lawful-sovereign pairing is the discriminator, parting it
+// from The Starscream (an evil [+BigBad] master) and a generic betrayal (no throne, no trust).
+rule Evil_Chancellor {
+  when:
+    char $ruler  [+Royalty]
+    char $vizier [#Trusted]
+    $vizier != $ruler
+    evt  $plot [&Betrays(agent=$vizier, target=$ruler)]
+  then:
+    $plot [+EvilChancellor]
+    $ruler [#Betrayed]
+}
+
+
+// === CONCRETE VIGNETTE: Aladdin — Jafar (animated film, 1992) ===
+// Jafar is the Sultan of Agrabah's Grand Vizier — his most trusted counselor, the hand the doddering
+// ruler leans on for every decision. And the whole time he is working to take the throne for himself:
+// hypnotizing the Sultan with his serpent staff, hunting the lamp that will make him sultan and then
+// sorcerer, turning the seat of trust into the instrument of usurpation. The archetypal Evil Vizier, named
+// in the trope itself — the trusted advisor betraying the lawful ruler he serves.
+
+// THE SULTAN — the lawful ruler of Agrabah, who trusts his vizier utterly
+char the_sultan [+Royalty]
+
+// JAFAR — the Grand Vizier, most trusted, and scheming for the throne
+char jafar [#Trusted]
+
+// INT. THE PALACE - the throne room
+set the_palace [+Interior]
+
+scene the_grand_viziers_scheme {
+  beat 1 {
+    the_sultan @ the_palace
+    jafar @ the_palace
+    // the trusted counselor works against the throne he serves — hypnosis, the lamp, the usurpation
+    evt the_scheme [&Betrays(agent=jafar, target=the_sultan)]
+    // Evil_Chancellor -> the_scheme [+EvilChancellor]; the_sultan [#Betrayed]
+  }
+}

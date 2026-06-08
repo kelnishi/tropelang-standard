@@ -1,0 +1,72 @@
+// === PREAMBLE ===
+// @trope    Sacrificial Lion
+// @category Death Tropes
+// @source   https://allthetropes.org/wiki/Sacrificial_Lion
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a sympathetic, ESTABLISHED character (first- or second-tier, not a throwaway)
+// killed to prove the villain plays for keeps and the danger is real — their death sends a shockwave
+// through the story. FRONTIER: the death recognized by the WEIGHT of who dies. The discriminator is a
+// [+Major] [+Sympathetic] character bound on the target of a [&Slays] event — distinct from the Red
+// Shirt (an [+Expendable] nobody) and the Sacrificial Lamb (a throwaway made likable just to die): the
+// Lion is someone the audience knew and valued, so the loss lands.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/death/red_shirt.trl"   // the contrastive expendable death
+
+assoc sacrificial_lion -> [
+  red_shirt    : "the weighty inverse of the expendable",
+  the_worf_effect : "the stakes-proving death taken to the hilt of",
+  wham_line    : "the shockwave that often carries a"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the established, valued victim is the discriminator; promotion model) —
+prop Major [+Narrative]   // an established, important character — a name the audience knows (not filler)
+
+imply SacrificialLion -> [Final, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a [+Major] [+Sympathetic] character is the TARGET of a [&Slays] event (agent=$killer), so
+// phase-2 re-checks both weight tags on the slain (STYLE §8). Binding establishment AND sympathy on the
+// victim is the discriminator: an important, valued character is killed to prove the stakes — parting it
+// from the Red Shirt ([+Expendable]) and the Sacrificial Lamb (a throwaway). Reuses [&Slays].
+rule Sacrificial_Lion {
+  when:
+    char $lion [+Major] [+Sympathetic]
+    evt  $death [&Slays(agent=$killer, target=$lion)]
+  then:
+    $death [+SacrificialLion]
+}
+
+
+// === CONCRETE VIGNETTE: A Game of Thrones — Ned Stark (TV/novel, 2011/1996) ===
+// Eddard Stark is the closest thing the story has to a lead: honest, beloved, the moral center through
+// whose eyes we have watched the realm. Which is exactly why his public execution on Joffrey's whim lands
+// like a hammer — the audience assumed the honorable protagonist was safe, and the series answers by
+// taking his head in the square. The shock rewrites every expectation: in this story, being good and
+// important saves no one. The valued first-tier character, killed to prove the world plays for keeps.
+
+// EDDARD "NED" STARK — the honest, beloved moral center we followed
+char ned_stark [+Major] [+Sympathetic]
+
+// KING JOFFREY — who orders the head taken on a whim
+char joffrey [+Antagonist]
+
+// EXT. THE GREAT SEPT - DAY (the public square, the crowd)
+set the_square [+Exterior] [+Day] [+Crowded]
+
+scene the_execution {
+  beat 1 {
+    ned_stark @ the_square
+    joffrey @ the_square
+    // the beloved lead is beheaded in public — the shockwave that proves the stakes
+    evt the_beheading [&Slays(agent=joffrey, target=ned_stark)]
+    // Sacrificial_Lion -> the_beheading [+SacrificialLion]
+  }
+}

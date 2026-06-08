@@ -1,0 +1,75 @@
+// === PREAMBLE ===
+// @trope    Well-Intentioned Extremist
+// @category Villains
+// @source   https://allthetropes.org/wiki/Well-Intentioned_Extremist
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a villain whose overall GOAL the heroes can sympathize with, but whose METHODS
+// (mass murder) are monstrous — "Utopia Justifies the Means," "I did what I had to do." FRONTIER: the
+// good-end / evil-means conjunction. The discriminator binds BOTH halves on one act: a [&Perpetrates]
+// event whose `for=` role is a [+JustCause] (the sympathetic end) and whose `atrocity=` role is an
+// [+Atrocity] (the evil means). Parts it from a plain villain (no just cause) and from the Villain
+// Protagonist (genuine villainy without the redeeming goal): here the cause is one we almost share.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc well_intentioned_extremist -> [
+  villain_protagonist : "the sympathetic-goal counterpart to",
+  anti_hero           : "the dark mirror of",
+  take_a_third_option : "rejects the third way that would spare the"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the good end paired with evil means is the discriminator; promotion model) —
+prop JustCause   [+Political]      // an end the heroes can sympathize with — a genuinely good goal
+prop Atrocity    [+Narrative]      // an act of grave evil — the unacceptable means
+verb Perpetrates(atrocity) [+Interpersonal] // commits a grave evil in service of a cause
+
+imply WellIntentionedExtremist -> [Costly, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: an [+Antagonist] PERPETRATES an [+Atrocity] FOR a [+JustCause] — the evil means bound on
+// the `atrocity=` role and the good end on the `for=` role of one [&Perpetrates] event, so phase-2
+// re-checks [+Atrocity] on the means and [+JustCause] on the end (STYLE §8). Binding both halves on the
+// same act is the discriminator: the conjunction of a sympathetic goal and monstrous means is the trope,
+// parting it from a plain villain (no just cause) and a hero's hard choice (no atrocity).
+rule Well_Intentioned_Extremist {
+  when:
+    char $v [+Antagonist]
+    obj  $cause [+JustCause]
+    obj  $evil  [+Atrocity]
+    evt  $deed [&Perpetrates(agent=$v, atrocity=$evil, for=$cause)]
+  then:
+    $deed [+WellIntentionedExtremist]
+}
+
+
+// === CONCRETE VIGNETTE: Watchmen — Ozymandias (comic, 1986) ===
+// Adrian Veidt — Ozymandias, "the smartest man in the world" — looks at a world days from nuclear
+// annihilation and concludes the only way to save humanity is to unite it against a common horror. So he
+// engineers one: a staged catastrophe that kills millions in New York in an instant, scaring the
+// superpowers into peace. His end is the survival of the species, which even the heroes can't dismiss;
+// his means is the mass murder of a city. "I did the right thing, didn't I? It all worked out in the
+// end." The good cause and the unforgivable means, in one act.
+
+// ADRIAN VEIDT / OZYMANDIAS — the visionary who will pay any price for peace
+char ozymandias [+Antagonist]
+
+// WORLD PEACE — averting nuclear armageddon, uniting humanity: the end one can almost share
+obj world_peace [+JustCause]
+
+// THE STAGED CATASTROPHE — millions dead in New York to frighten the powers into peace: the means
+obj the_hoax [+Atrocity]
+
+scene the_smartest_man_in_the_world {
+  beat 1 {
+    // one act carries both halves: the atrocity, committed FOR the just cause
+    evt the_plan [&Perpetrates(agent=ozymandias, atrocity=the_hoax, for=world_peace)]
+    // Well_Intentioned_Extremist -> the_plan [+WellIntentionedExtremist]
+  }
+}

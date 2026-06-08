@@ -1,0 +1,72 @@
+// === PREAMBLE ===
+// @trope    Fire-Forged Friends
+// @category Friendship
+// @source   https://allthetropes.org/wiki/Fire-Forged_Friends
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): characters who were hostile, indifferent, or strangers are forced to fight on
+// the same side — and come out of it friends. FRONTIER: the bond forged BY shared battle. The
+// discriminator is a [+Wary] character (one who began at a guarded distance) bound on the agent of a
+// [&FightsBeside] event with another — so it fires when fighting shoulder to shoulder turns wariness into
+// a bond. Distinct from Defeat Means Friendship (one BESTS the other first) and Enemy Mine (a truce that
+// stays hostile): here they fight TOGETHER and the wariness is spent into trust.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc fire_forged_friends -> [
+  defeat_means_friendship : "the side-by-side counterpart to the beaten-then-joined",
+  enemy_mine  : "the lasting bond a mere truce of",
+  power_of_friendship : "the forged camaraderie that feeds"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the guarded start spent into a battle-bond is the discriminator; reuses Bonded_To) —
+prop Wary [+Psychological]   // holding another at a guarded distance — not (yet) a friend
+verb FightsBeside(ally) [+Interpersonal] // fights shoulder to shoulder against a common foe
+
+imply FireForgedFriends -> [Social, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a [+Wary] character FIGHTS BESIDE another — the guarded one bound on the agent role of a
+// [&FightsBeside] event (ally=$b), so phase-2 re-checks [+Wary] on the bound fighter (STYLE §8). Binding
+// the guarded start on the one who fights alongside is the discriminator: the shared battle spends the
+// wariness into a bond (the rule derives [@Bonded_To]), parting it from Defeat Means Friendship (a defeat
+// precedes) and Enemy Mine (a truce that stays cold).
+rule Fire_Forged_Friends {
+  when:
+    char $a [+Wary]
+    char $b
+    $a != $b
+    evt  $battle [&FightsBeside(agent=$a, ally=$b)]
+  then:
+    $a [-Wary]
+    $a [@Bonded_To(other=$b)]
+    $battle [+FireForgedFriends]
+}
+
+
+// === CONCRETE VIGNETTE: Toy Story — Woody and Buzz (animated film, 1995) ===
+// Woody and Buzz start as bitter rivals — Woody jealous of the flashy newcomer, Buzz dismissing the
+// cowboy — and the rivalry strands them both in Sid's house, far from Andy. To get home they have no
+// choice but to work as one: rigging the rescue, dodging the dog, and riding the rocket to catch the
+// moving truck shoulder to shoulder. By the time they make it, the wariness is gone; the shared ordeal
+// has forged them into best friends. Fire-forged.
+
+// WOODY — guarded and jealous of the newcomer at the start
+char woody [+Protagonist] [+Wary]
+
+// BUZZ LIGHTYEAR — the rival he must fight alongside to get home
+char buzz [+Deuteragonist]
+
+scene the_escape_from_sids {
+  beat 1 {
+    // stranded together, they fight as one to get home — the forging
+    evt the_rescue [&FightsBeside(agent=woody, ally=buzz)]
+    // Fire_Forged_Friends -> woody [-Wary] [@Bonded_To(buzz)]; the_rescue [+FireForgedFriends]
+  }
+}
