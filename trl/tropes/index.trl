@@ -207,7 +207,6 @@ import "trl/tropes/meta/metafiction/lampshade_hanging.trl"
 import "trl/tropes/meta/metafiction/literary_agent_hypothesis.trl"
 import "trl/tropes/meta/metafiction/medium_awareness.trl"
 import "trl/tropes/meta/metafiction/mockumentary.trl"
-import "trl/tropes/meta/metafiction/painting_the_medium.trl"
 import "trl/tropes/meta/metafiction/reality_bleed.trl"
 import "trl/tropes/meta/metafiction/recursive_canon.trl"
 import "trl/tropes/meta/metafiction/show_within_a_show.trl"
@@ -253,7 +252,6 @@ import "trl/tropes/rhetoric/courtroom_summation.trl"
 import "trl/tropes/rhetoric/hannibal_lecture.trl"
 import "trl/tropes/rhetoric/just_between_you_and_me.trl"
 import "trl/tropes/rhetoric/moment_of_awesome.trl"
-import "trl/tropes/rhetoric/mood_whiplash.trl"
 import "trl/tropes/rhetoric/motive_rant.trl"
 import "trl/tropes/rhetoric/patrick_stewart_speech.trl"
 import "trl/tropes/rhetoric/pratfall.trl"
@@ -276,7 +274,6 @@ import "trl/tropes/rhetoric/the_reason_you_suck_speech.trl"
 import "trl/tropes/rhetoric/trash_talk.trl"
 import "trl/tropes/structure/bittersweet_ending.trl"
 import "trl/tropes/structure/bookends.trl"
-import "trl/tropes/structure/cerebus_syndrome.trl"
 import "trl/tropes/structure/cliffhanger.trl"
 import "trl/tropes/structure/conflict.trl"
 import "trl/tropes/structure/crapsack_world.trl"
@@ -558,7 +555,6 @@ concept break_the_cutie [+Trope(category="Tragedy", source="https://allthetropes
 concept break_the_haughty [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Break_the_Haughty")] [%Narrative]
 concept breaking_speech [+Trope(category="Oratory", source="https://allthetropes.org/wiki/%22The_Reason_You_Suck%22_Speech")] [%Narrative]
 concept calling_your_attacks [+Trope(category="Combat Tropes", source="https://allthetropes.org/wiki/Calling_Your_Attacks")] [%Narrative]
-concept cerebus_syndrome [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/Cerebus_Syndrome")] [%Narrative]
 concept character_development [+Trope(category="Characterization Tropes", source="https://allthetropes.org/wiki/Character_Development")] [%Mind]
 concept chekhovs_boomerang [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Boomerang")] [%Narrative]
 concept chekhovs_gunman [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Gunman")] [%Narrative]
@@ -638,12 +634,10 @@ concept mercy_kill [+Trope(category="Death Tropes", source="https://allthetropes
 concept mexican_standoff [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Mexican_Standoff")] [%Interpersonal]
 concept mockumentary [+Trope(category="Non-Fiction", source="https://allthetropes.org/wiki/Mockumentary")] [%Narrative]
 concept moment_of_awesome [+Trope(category="Audience Reactions", source="https://allthetropes.org/wiki/Moment_of_Awesome_(Sugar_Wiki)")] [%Narrative]
-concept mood_whiplash [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Mood_Whiplash")] [%Narrative]
 concept mook [+Trope(category="Combat", source="https://allthetropes.org/wiki/Mooks")] [%Narrative]
 concept motive_rant [+Trope(category="Oratory", source="https://allthetropes.org/wiki/Motive_Rant")] [%Narrative]
 concept not_so_different [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Not_So_Different")] [%Interpersonal]
 concept only_the_chosen_may_wield [+Trope(category="Artifacts", source="https://allthetropes.org/wiki/Only_the_Chosen_May_Wield")] [%Narrative]
-concept painting_the_medium [+Trope(category="Metafiction", source="https://allthetropes.org/wiki/Painting_the_Medium")] [%Narrative]
 concept patrick_stewart_speech [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Patrick_Stewart_Speech")] [%Narrative]
 concept pet_the_dog [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Pet_the_Dog")] [%Narrative]
 concept pinky_swear [+Trope(category="Friendship", source="https://allthetropes.org/wiki/Pinky_Swear")] [%Narrative]

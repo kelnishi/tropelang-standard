@@ -221,23 +221,14 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 - **Death Seeker** (Death Tropes / Character) — https://allthetropes.org/wiki/Death_Seeker
   (Logan — a [+DeathWish] character `[&CourtsDeath]`, fighting to die; the inverted will of a Determinator.
   Founds `prop DeathWish` + `verb CourtsDeath`.)
-- **Painting the Medium** (Metafiction) — https://allthetropes.org/wiki/Painting_the_Medium
-  (Schindler's List, the red coat — the author `[&Employs]` a [+MediumArtifact] to convey story; the
-  author-side counterpart to Medium Awareness. Founds `verb Employs(artifact)`; reuses `[+MediumArtifact]`.)
-- **Mood Whiplash** (Rhetoric / Tone) — https://allthetropes.org/wiki/Mood_Whiplash *(hard recognition
-  shape)* — (Up's opening — a [&Shatters] event breaks a [+Levity] moment; the second beat links to the
-  first's tone, binding the juxtaposition. Founds `prop Levity` + `verb Shatters(mood)`.)
-- **Cerebus Syndrome** (Plot Devices / Tone) — https://allthetropes.org/wiki/Cerebus_Syndrome
-  (M*A*S*H — a [+Lighthearted] work `[&Darkens]` across its run; the slow-arc counterpart to Mood
-  Whiplash's spike. Founds `prop Lighthearted` + `verb Darkens(subject)`.)
 - **Crapsack World** (Settings / Worldbuilding) — https://allthetropes.org/wiki/Crapsack_World *(hard
-  recognition shape)* — (Warhammer 40,000 — in a [+Crapsack] world an [+Unremarked] [&Brutalizes] cruelty
-  passes normalized; bleakness shown by atrocity met with a shrug. Founds `prop Crapsack`/`prop Unremarked`
-  + `verb Brutalizes(target)`.)
-  Corpus **270 → 277 tropes**; self-recognition steady at **277/277 (100%)**. (Capability-gap batch 3/5:
-  cracked the **hard recognition shapes** — tonal juxtaposition (Mood Whiplash), tonal arc (Cerebus
-  Syndrome), and setting-as-property (Crapsack World) — each via a linked-event discriminator. Power → 19,
-  Death → 23, Meta → 20.)
+  recognition shape)* — (Warhammer 40,000 — in a [+Crapsack] world (a `set`) an [+Unremarked] [&Brutalizes]
+  cruelty passes normalized; bleakness shown by atrocity met with a shrug. Founds `prop Crapsack`/`prop
+  Unremarked` + `verb Brutalizes(target)`.)
+  Corpus **270 → 274 tropes**; self-recognition steady at **274/274 (100%)**. (Capability-gap batch 3/5:
+  Crapsack World lands the **setting-as-property** recognition shape via a linked-event discriminator.
+  Painting the Medium, Mood Whiplash, and Cerebus Syndrome were **demoted from this batch** — deferred
+  pending the Medium/work-skeleton + Tone-promotion design pass. Power → 19, Death → 23.)
 - **The Caligula** (Politics / Villains) — https://allthetropes.org/wiki/The_Caligula
   (Caligula, history — a [+Royalty][+Mad] ruler `[&Tyrannizes]`; the insane despot, vs a merely cruel
   tyrant, by the madness bound on the throne. Founds `prop Mad` + `verb Tyrannizes`.)
@@ -260,8 +251,8 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   (Supernatural, the "Supernatural" books — an in-world maker `[&Recasts]` the universe's real history into
   an [+InUniverseFiction] work, vs an unrelated Show Within a Show. Founds `prop InUniverseFiction` +
   `verb Recasts(target)`.)
-  Corpus **277 → 284 tropes**; self-recognition steady at **284/284 (100%)**. (Capability-gap batch 4/5:
-  balancing the frontier — Power → 22, Arc → 25, Bonds → 24, Meta → 21 — across the recognition scales.)
+  Corpus **274 → 281 tropes**; self-recognition steady at **281/281 (100%)**. (Capability-gap batch 4/5:
+  balancing the frontier — Power → 22, Arc → 25, Bonds → 24, Meta → 20 — across the recognition scales.)
 - **Deadly Decadent Court** (Politics / Settings) — https://allthetropes.org/wiki/Deadly_Decadent_Court
   (A Game of Thrones, King's Landing — a [+Courtier] `[&Intrigues]` against a rival in a [+Decadent] court
   (a `set`); the whole-court web of schemers, vs a lone Evil Chancellor. Founds `prop Courtier`/`prop
@@ -288,7 +279,7 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   (Red Dead Redemption, John Marston — a [+Penitent] character `[&Undertakes]` a [+Redemptive] task offered
   as his path back; the assigned redemptive quest, vs a gradual Redemption Arc. Founds `prop Penitent`/`prop
   Redemptive` + `verb Undertakes(quest)`.)
-  Corpus **284 → 291 tropes**; self-recognition steady at **291/291 (100%)**. (Capability-gap batch 5/5,
+  Corpus **281 → 288 tropes**; self-recognition steady at **288/288 (100%)**. (Capability-gap batch 5/5,
   final: lifting the thinnest spokes — Power → 24, Death → 25, Bonds → 26, Arc → 26. Killed Off for Real
   founds a fresh verb class to avoid a [&Slays] verb-class collision with Dropped a Bridge on Him.)
 
