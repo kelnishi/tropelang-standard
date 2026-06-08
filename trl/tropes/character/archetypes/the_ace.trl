@@ -1,0 +1,68 @@
+// === PREAMBLE ===
+// @trope    The Ace
+// @category Character Archetypes
+// @source   https://allthetropes.org/wiki/The_Ace
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): someone ridiculously good at what they do, and everyone knows it — a
+// reputation for doing the impossible, often Shrouded in Myth, the living embodiment of Always Someone
+// Better. FRONTIER: excellence as EFFORTLESS renown. The discriminator is a character tagged [+Ace] (the
+// standing reputation for effortless mastery) bound on the agent of an [&Excels] event — distinct from a
+// Determinator, who prevails by grinding will against the odds ([#Determined], a struggle). The Ace
+// makes the impossible look easy; the deed confirms the reputation.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/character/archetypes/determinator.trl"   // the effortful foil of effortless mastery
+
+assoc the_ace -> [
+  determinator : "the effortless mastery opposite the grinding will of",
+  the_rival    : "as a main character, usually",
+  the_mentor   : "or, inspiring the hero, the"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the reputation for effortless mastery is the discriminator; promotion model) —
+prop Ace        [+Social]      // renowned as effortlessly the best — a reputation for doing the impossible
+verb Excels(at) [+Narrative]   // performs a feat with effortless mastery, where others would struggle
+
+imply TheAce -> [Central, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: an [+Ace] EXCELS at a challenge — the renowned master bound on the agent role of an
+// [&Excels] event, so phase-2 re-checks [+Ace] on the doer (STYLE §8). Binding the standing reputation
+// on the effortless feat is the discriminator: the deed confirms what everyone already knows, parting it
+// from a Determinator (who wins by struggle, not by being effortlessly the best).
+rule The_Ace {
+  when:
+    char $ace [+Ace]
+    evt  $feat [&Excels(agent=$ace, at=$challenge)]
+  then:
+    $feat [+TheAce]
+}
+
+
+// === CONCRETE VIGNETTE: Sherlock Holmes — the consulting detective (Doyle, novel, 1887) ===
+// Holmes is the best there is at the one thing that defines him, and all London knows it: the only
+// consulting detective in the world, called in when Scotland Yard is utterly baffled. He reads a man's
+// trade, travels, and history off his cuffs and boots in a glance, names the solution while the
+// professionals are still gaping, and wears the reputation of doing the plainly impossible. The deduction
+// that stuns the room is just another morning's work — the effortless mastery that is his whole legend.
+
+// SHERLOCK HOLMES — the consulting detective, renowned as effortlessly the best
+char holmes [+Ace]
+
+// THE BAFFLING CASE — what stumps Scotland Yard entirely
+obj a_baffling_case [+Confounding]
+
+scene the_deduction {
+  beat 1 {
+    // he names the solution at a glance, where the professionals are lost
+    evt the_solving [&Excels(agent=holmes, at=a_baffling_case)]
+    // The_Ace -> the_solving [+TheAce]
+  }
+}
