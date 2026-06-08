@@ -25,19 +25,21 @@ assoc enemy_civil_war -> [
 
 
 // === ONTOLOGY ===
-// (no new vocabulary — reuses [&TurnsOn] and [+Antagonist])
+// (no new vocabulary — reuses [&TurnsOn] and [+Antagonist]; reuses prelude [+Faction] for the well-defined
+//  blocs, so the war is between two recognizable sides, not two lone villains)
 imply EnemyCivilWar -> [Opposition, Narrative]
 
 
 // === ABSTRACT RULE ===
-// Naming rule (act scale): one [+Antagonist] faction TURNS ON another — both bound on a [&TurnsOn] event
-// (agent + target), $a != $b, so phase-2 re-checks [+Antagonist] on BOTH (STYLE §8). Binding villainy on
-// both parties is the discriminator: the evil side fights itself, parting it from A House Divided (a
-// besieged group of allies) and The Starscream (a single ambitious subordinate).
+// Naming rule (act scale): one [+Antagonist] [+Faction] TURNS ON another — both bound on a [&TurnsOn] event
+// (agent + target), $a != $b, so phase-2 re-checks [+Antagonist] AND [+Faction] on BOTH (STYLE §8). Binding
+// villainy AND well-defined-bloc status on both parties is the discriminator: two recognizable evil sides go
+// to war, parting it from A House Divided (a besieged group of allies) and The Starscream (a single
+// ambitious subordinate, not a faction).
 rule Enemy_Civil_War {
   when:
-    char $faction_a [+Antagonist]
-    char $faction_b [+Antagonist]
+    char $faction_a [+Antagonist] [+Faction]
+    char $faction_b [+Antagonist] [+Faction]
     $faction_a != $faction_b
     evt  $war [&TurnsOn(agent=$faction_a, target=$faction_b)]
   then:
@@ -51,11 +53,11 @@ rule Enemy_Civil_War {
 // shared fortune, and turns the city's criminal underworld into a war zone of villain against villain.
 // The heroes don't have to break the alliance of their enemies — it devours itself.
 
-// THE JOKER — the agent of chaos who turns on his criminal "allies"
-char the_joker [+Antagonist]
+// THE JOKER'S CREW — the chaos faction, one of the two warring criminal blocs
+char the_joker [+Antagonist] [+Faction]
 
-// THE GOTHAM MOB — the rival criminal faction he wars against
-char the_mob [+Antagonist]
+// THE GOTHAM MOB — the rival criminal faction it wars against (organized crime, a well-defined bloc)
+char the_mob [+Antagonist] [+Faction]
 
 scene the_underworld_war {
   beat 1 {

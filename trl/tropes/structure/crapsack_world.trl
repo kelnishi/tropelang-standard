@@ -35,13 +35,13 @@ imply CrapsackWorld -> [Object, Narrative]
 
 // === ABSTRACT RULE ===
 // Naming rule (arc scale): in a [+Crapsack] world, an [+Unremarked] act of [&Brutalizes] cruelty occurs —
-// the world bound on the `setting=` role and the act marked [+Unremarked], so phase-2 re-checks [+Crapsack]
-// on the world and [+Unremarked] on the event (STYLE §8). Binding ambient bleakness to NORMALIZED cruelty
-// is the discriminator: horror that no one reacts to reveals the world's nature, parting it from a single
-// villain's atrocity (which the world would still condemn).
+// the world is a `set` (a place, not a thing) bound on the `setting=` role and the act marked [+Unremarked],
+// so phase-2 re-checks [+Crapsack] on the world and [+Unremarked] on the event (STYLE §8). Binding ambient
+// bleakness to NORMALIZED cruelty is the discriminator: horror that no one reacts to reveals the world's
+// nature, parting it from a single villain's atrocity (which the world would still condemn).
 rule Crapsack_World {
   when:
-    obj  $world [+Crapsack]
+    set  $world [+Crapsack]
     evt  $cruelty [+Unremarked] [&Brutalizes(agent=$x, target=$y, setting=$world)]
   then:
     $cruelty [+CrapsackWorld]
@@ -55,8 +55,8 @@ rule Crapsack_World {
 // simply Tuesday. The atrocity is doctrine, the horror ambient, the cruelty unremarked. The setting itself
 // is the antagonist.
 
-// THE IMPERIUM OF MAN — the relentlessly bleak galaxy where horror is routine
-obj the_imperium [+Crapsack]
+// THE IMPERIUM OF MAN — the relentlessly bleak galaxy where horror is routine (a place: a `set`)
+set the_imperium [+Crapsack]
 
 // THE INQUISITION — which incinerates a world without a second thought
 char the_inquisition [+Antagonist]
