@@ -1,0 +1,80 @@
+// === PREAMBLE ===
+// @trope    Damsel in Distress
+// @category Characters As Device / Love Interests
+// @source   https://allthetropes.org/wiki/Damsel_in_Distress
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a character — classically female — is portrayed as helpless and in danger,
+// captured, in order to put the cast in motion: the heroes unite to rescue her. FRONTIER: the captured
+// party as plot-motor, the bright counterpart to the rescue tropes that key on the RESCUERS. Big Damn
+// Heroes / The Cavalry recognize the arrival (timing, reinforcement); Damsel in Distress recognizes the
+// CAPTIVE — a [+Captive] [+Helpless] character who is the TARGET of a rescue. The discriminator is the
+// helpless-captive tag bound on the rescue's target role, so it can't fire on a rescue of an
+// able-bodied ally (a rescued soldier is not a damsel) nor on a reinforcement that saves no captive.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc damsel_in_distress -> [
+  big_damn_heroes : "the captive-side counterpart to",
+  the_cavalry     : "the one whose peril summons",
+  the_love_interest : "classically overlaps"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the helpless captive is the trope's discriminator; promotion model, cf. the_wizard) —
+prop Captive      [+Vital]          // held against one's will — captured, out of the hero's reach
+prop Helpless     [+Vital]          // unable to free oneself — the distress that needs a rescuer
+verb Rescues(target) [+Interpersonal] // frees another from peril — the act the captive's danger summons
+
+imply DamselInDistress -> [Object, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a [+Captive] [+Helpless] character is the TARGET of a [&Rescues] event (agent=$hero), so
+// phase-2 re-checks both distress tags on the bound captive (STYLE §8). Binding the helpless-captive on
+// the rescue's target is what parts this from the rescuer-side tropes (Big Damn Heroes / The Cavalry
+// recognize the arrival, not the captive) and from a rescue of an able ally (no [+Helpless] → no fire).
+rule Damsel_In_Distress {
+  when:
+    char $damsel [+Captive] [+Helpless]
+    evt  $rescue [&Rescues(agent=$hero, target=$damsel)]
+  then:
+    $damsel [+Rescued]
+    $rescue [+DamselInDistress]
+}
+
+
+// === CONCRETE VIGNETTE: Perseus and Andromeda (Greek myth) ===
+// Andromeda's mother boasted her more beautiful than the Nereids, so Poseidon sent the sea-monster
+// Cetus to ravage the coast; the oracle's price was Andromeda herself. They chain her naked to a sea
+// cliff to be devoured — the ur-image of the trope, helpless and waiting for the jaws. Perseus, flying
+// home with the Gorgon's head, sees her on the rock, strikes a bargain for her hand, and kills the
+// monster. The chained princess whose peril sets the hero in motion: the oldest damsel there is.
+
+// ANDROMEDA — chained to the sea cliff as a sacrifice, unable to free herself
+char andromeda [+Captive] [+Helpless]
+
+// PERSEUS — the hero who spots her on the rock and turns aside to save her
+char perseus [+Protagonist]
+
+// CETUS — the sea monster sent to devour the coast (and her)
+char cetus [+Monster]
+
+// EXT. SEA CLIFF - DAY (the rock of sacrifice, the tide rising)
+set the_sea_cliff [+Exterior] [+Day]
+
+scene the_rock_of_sacrifice {
+  beat 1 {
+    andromeda @ the_sea_cliff
+    cetus -> andromeda : "the monster surges in for the kill"
+  }
+  beat 2 {
+    perseus @ the_sea_cliff
+    evt the_saving [&Rescues(agent=perseus, target=andromeda)]
+    // Damsel_In_Distress -> andromeda [+Rescued]; the_saving [+DamselInDistress]
+  }
+}

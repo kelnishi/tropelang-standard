@@ -69,6 +69,20 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   foreknowledge; distinct from Breaking the Fourth Wall (no audience address) and Dramatic Irony (here
   the character knows). Founds `prop GenreLiterate`/`prop Convention` + `verb Anticipates(convention)`.)
   Corpus **204 → 207 tropes**; self-recognition steady at **207/207 (100%)**.
+- **Damsel in Distress** (Characters As Device / Love Interests) — https://allthetropes.org/wiki/Damsel_in_Distress
+  (Perseus and Andromeda — a [+Captive] [+Helpless] character is the TARGET of a `[&Rescues]`; the
+  distress tags bound on the rescue's target part it from the rescuer-side tropes (Big Damn Heroes /
+  The Cavalry recognize the arrival) and from a rescue of an able ally. Founds `prop Captive`/`prop
+  Helpless` + `verb Rescues(target)`.)
+- **Red Shirt** (Death Tropes / Cast Filler) — https://allthetropes.org/wiki/Red_Shirt
+  (Star Trek's landing party — an [+Expendable] nobody `[&Slays]`-ed to prove the menace; expendability
+  bound on the victim parts it from every significant-death trope (loved one / willing hero / main).
+  Founds `prop Expendable`/`prop Lethal`.)
+- **Deadpan Snarker** (Character Archetypes / Character Flaw Index) — https://allthetropes.org/wiki/Deadpan_Snarker
+  (The Big Sleep, Philip Marlowe — a [+Sardonic] character `[&Quips]` a deflating wisecrack; the standing
+  temperament anchored on the act of snarking (cf. Title Drop's act-by-utterance) parts it from a
+  villain's Motive Rant / Breaking Speech. Founds `prop Sardonic` + `verb Quips(at)`.)
+  Corpus **207 → 210 tropes**; self-recognition steady at **210/210 (100%)**.
 
 ### Fixed
 - Self-recognition (§4b): event-anchored the last 4 `bonds` tropes so they confirm their own vignette,
