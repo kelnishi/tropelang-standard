@@ -1,0 +1,78 @@
+// === PREAMBLE ===
+// @trope    Bittersweet Ending
+// @category Plot Devices / Endings
+// @source   https://allthetropes.org/wiki/Bittersweet_Ending
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): victory came at a harsh price — the day is won, but some irrevocable loss
+// taints it, and no one quite feels like cheering. Between Happily Ever After and the Downer Ending: it
+// ends on a high note mixed with sadness. FRONTIER: the win and the loss held together. The discriminator
+// is a [+Costly] victory ATTAINED in the presence of a [+Lost] entity — the triumph and the irrevocable
+// loss co-present — so it fires only when the win is bought with a real loss, not on a clean Happy Ending
+// (no [+Lost]) nor a Downer Ending (no victory attained).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc bittersweet_ending -> [
+  pyrrhic_victory  : "the emotional kin of a cost-heavy",
+  heroic_sacrifice : "often the [+Lost] is the price of a",
+  eucatastrophe    : "the shadowed counterpart to a pure"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the irrevocable loss beside the win is the discriminator; reuses [+Costly]/[&Attains]) —
+prop Lost [+Vital]   // irrevocably gone — the loss that taints the victory
+
+imply BittersweetEnding -> [Costly, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a hero ATTAINS a [+Costly] victory while a [+Lost] entity stands beside it — the win bound
+// on the `object=` role of an [&Attains] event (agent=$hero) and an irrevocable loss co-present, so
+// phase-2 re-checks [+Costly] on the won thing and [+Lost] on the cost (STYLE §8). Binding both the
+// triumph and the loss is the discriminator: the victory is real but bought, parting it from a clean
+// Happy Ending (nothing [+Lost]) and a Downer Ending (nothing [+Costly] attained). Reuses the prelude's
+// [&Attains] and [+Costly].
+rule Bittersweet_Ending {
+  when:
+    char $hero [+Protagonist]
+    obj  $victory [+Costly]
+    char $cost [+Lost]
+    evt  $win [&Attains(agent=$hero, object=$victory)]
+  then:
+    $win [+BittersweetEnding]
+}
+
+
+// === CONCRETE VIGNETTE: Casablanca — the airport (film, 1942) ===
+// On the foggy tarmac Rick makes the choice that wins everything that matters and costs him the one thing
+// he wants: he sends Ilsa onto the plane with Laszlo, so the Resistance leader lives to fight on and the
+// cause is served — and gives up, forever, the woman he loves. "We'll always have Paris." The Nazis are
+// foiled, the right thing is done, the future is saved — and Rick walks into the fog alone. Victory, and
+// an irrevocable loss, in the same breath.
+
+// RICK BLAINE — who secures the win at the cost of his own heart
+char rick [+Protagonist]
+
+// THE ESCAPE — Laszlo and Ilsa fly to freedom; the cause lives on (the victory, dearly bought)
+obj the_escape [+Costly]
+
+// ILSA LUND — the love Rick gives up forever to make it happen
+char ilsa [+Lost]
+
+// EXT. AIRPORT TARMAC - NIGHT (fog, the waiting plane)
+set the_tarmac [+Exterior] [+Night]
+
+scene the_letters_of_transit {
+  beat 1 {
+    rick @ the_tarmac
+    ilsa @ the_tarmac
+    // he puts her on the plane: the win secured, the love lost in the same act
+    evt the_choice [&Attains(agent=rick, object=the_escape)]
+    // Bittersweet_Ending -> the_choice [+BittersweetEnding]
+  }
+}

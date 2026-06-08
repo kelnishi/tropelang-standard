@@ -93,6 +93,7 @@ import "trl/tropes/conflict/combat/achilles_heel.trl"
 import "trl/tropes/conflict/combat/david_versus_goliath.trl"
 import "trl/tropes/conflict/combat/finishing_move.trl"
 import "trl/tropes/conflict/combat/heroic_second_wind.trl"
+import "trl/tropes/conflict/combat/pre_mortem_one_liner.trl"
 import "trl/tropes/conflict/combat/the_duel.trl"
 import "trl/tropes/conflict/combat/the_worf_effect.trl"
 import "trl/tropes/conflict/tactics/ambush.trl"
@@ -210,6 +211,8 @@ import "trl/tropes/rhetoric/stump_speech.trl"
 import "trl/tropes/rhetoric/tear_jerker.trl"
 import "trl/tropes/rhetoric/the_debate.trl"
 import "trl/tropes/rhetoric/the_dilemma.trl"
+import "trl/tropes/rhetoric/the_reason_you_suck_speech.trl"
+import "trl/tropes/structure/bittersweet_ending.trl"
 import "trl/tropes/structure/bookends.trl"
 import "trl/tropes/structure/cliffhanger.trl"
 import "trl/tropes/structure/conflict.trl"
@@ -473,6 +476,7 @@ concept be_careful_what_you_wish_for [+Trope(category="Wishplots", source="https
 concept beware_the_nice_ones [+Trope(category="Character Tropes", source="https://allthetropes.org/wiki/Beware_the_Nice_Ones")] [%Interpersonal]
 concept big_damn_heroes [+Trope(category="Heroism", source="https://allthetropes.org/wiki/Big_Damn_Heroes")] [%Narrative]
 concept big_good [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Big_Good")] [%Interpersonal]
+concept bittersweet_ending [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/Bittersweet_Ending")] [%Narrative]
 concept bond_villain_stupidity [+Trope(category="Villains", source="https://allthetropes.org/wiki/Bond_Villain_Stupidity")] [%Narrative]
 concept bookends [+Trope(category="Narrative Devices", source="https://allthetropes.org/wiki/Book_Ends")] [%Narrative]
 concept bread_and_circuses [+Trope(category="Political", source="https://allthetropes.org/wiki/Bread_and_Circuses")] [%Political]
@@ -543,6 +547,7 @@ concept plot_coupon [+Trope(category="Plot Devices", source="https://allthetrope
 concept plot_twist [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Plot_Twist")] [%Narrative]
 concept power_of_friendship [+Trope(category="Friendship Tropes", source="https://allthetropes.org/wiki/The_Power_of_Friendship")] [%Interpersonal]
 concept pratfall [+Trope(category="Slapstick", source="https://allthetropes.org/wiki/The_Pratfall")] [%Narrative]
+concept pre_mortem_one_liner [+Trope(category="Combat Tropes", source="https://allthetropes.org/wiki/Pre-Mortem_One-Liner")] [%Narrative]
 concept puppet_king [+Trope(category="Political", source="https://allthetropes.org/wiki/Puppet_King")] [%Political]
 concept race_against_the_clock [+Trope(category="Plots", source="https://allthetropes.org/wiki/Race_Against_the_Clock")] [%Narrative]
 concept reality_bleed [+Trope(category="Metafiction", source="https://allthetropes.org/wiki/Reality_Bleed")] [%Narrative]
@@ -576,6 +581,7 @@ concept the_lancer [+Trope(category="Characterization", source="https://allthetr
 concept the_love_interest [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Love_Interest")] [%Interpersonal]
 concept the_mole [+Trope(category="Spy Fiction", source="https://allthetropes.org/wiki/The_Mole")] [%Mind]
 concept the_quest [+Trope(category="Plots", source="https://allthetropes.org/wiki/The_Quest")] [%Narrative]
+concept the_reason_you_suck_speech [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/The_Reason_You_Suck_Speech")] [%Narrative]
 concept the_starscream [+Trope(category="Political", source="https://allthetropes.org/wiki/The_Starscream")] [%Political]
 concept the_summation [+Trope(category="Mystery Tropes", source="https://allthetropes.org/wiki/The_Summation")] [%Epistemic]
 concept the_trickster [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/The_Trickster")] [%Narrative]

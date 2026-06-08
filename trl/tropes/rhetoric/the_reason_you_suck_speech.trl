@@ -1,0 +1,76 @@
+// === PREAMBLE ===
+// @trope    The Reason You Suck Speech
+// @category Rhetoric / Speeches
+// @source   https://allthetropes.org/wiki/The_Reason_You_Suck_Speech
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a character lists, point by point, exactly why the other is a poor excuse —
+// cataloguing their faults and shortcomings to grind their self-worth into the asphalt (a villain over a
+// beaten hero, a hero over a defeated villain, or villain-on-villain). FRONTIER: the enumerated takedown.
+// The discriminator is a [+Culpable] target — one who actually carries the faults being named — bound on
+// the target role of a [&Excoriates] event. Distinct from a Breaking Speech (which aims a hero's
+// [+Vulnerable] soft point to walk them into despair): this catalogues real shortcomings, and the target
+// comes away [+Stung], not necessarily broken.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc the_reason_you_suck_speech -> [
+  breaking_speech : "a fault-cataloguing cousin of",
+  motive_rant     : "aimed outward at the target, unlike the inward",
+  not_so_different : "often lands the charge of"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the enumerated faults of a deserving target are the discriminator; promotion model) —
+prop Culpable      [+Psychological]   // carrying the faults being catalogued — the target who has it coming
+verb Excoriates(target) [+Interpersonal] // a withering, point-by-point denunciation of another's failings
+
+imply TheReasonYouSuckSpeech -> [Pathos, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a speaker EXCORIATES a [+Culpable] target — the target bound on the `target=` role of an
+// [&Excoriates] event (agent=$speaker), so phase-2 re-checks [+Culpable] on the bound target (STYLE §8).
+// Binding the catalogued faults on the target is the discriminator: the speech names what is really there
+// (the target had it coming), parting it from a Breaking Speech (aimed at a [+Vulnerable] soft point to
+// induce despair). The target comes away [+Stung].
+rule The_Reason_You_Suck_Speech {
+  when:
+    char $speaker
+    char $target [+Culpable]
+    evt  $speech [&Excoriates(agent=$speaker, target=$target)]
+  then:
+    $speech [+TheReasonYouSuckSpeech]
+    $target [+Stung]
+}
+
+
+// === CONCRETE VIGNETTE: The Social Network — Erica's breakup (film, 2010) ===
+// In the bar, Mark has condescended to Erica one too many times, and she ends it by laying out precisely
+// what is wrong with him: "You are probably going to be a very successful computer person. But you're
+// going to go through life thinking that girls don't like you because you're a nerd. And I want you to
+// know, from the bottom of my heart, that that won't be true. It'll be because you're an asshole." A
+// clean, point-by-point reason-you-suck — every charge true, and it lands.
+
+// ERICA ALBRIGHT — the one delivering the takedown
+char erica [+Protagonist]
+
+// MARK ZUCKERBERG — condescending, and called on exactly why he suffers for it
+char mark [+Culpable]
+
+// INT. BAR - NIGHT
+set the_bar [+Interior] [+Night]
+
+scene the_breakup {
+  beat 1 {
+    erica @ the_bar
+    mark @ the_bar
+    // ERICA: "...it'll be because you're an asshole." — the enumerated takedown
+    evt the_takedown [&Excoriates(agent=erica, target=mark)]
+    // The_Reason_You_Suck_Speech -> the_takedown [+TheReasonYouSuckSpeech]; mark [+Stung]
+  }
+}

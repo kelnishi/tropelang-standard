@@ -82,7 +82,7 @@ Universal + the cast & plot-structure indexes). This is the live ledger — **ev
 it** (the finalize step in `CONVERSION_BOT.md`). The *recipe* for re-running the review (corpus inventory
 vs. the indexes, archive access) lives in `CONVERSION_BOT.md`; the *state* lives here.
 
-**Corpus: 222 tropes · self-recognition 222/222 (100%).** (Re-measure: `tropelang selfcheck
+**Corpus: 225 tropes · self-recognition 225/225 (100%).** (Re-measure: `tropelang selfcheck
 trl/tropes/corpus.toml --corpus file://trl`.)
 
 **Converted batches (done):**
@@ -94,7 +94,8 @@ trl/tropes/corpus.toml --corpus file://trl`.)
 - `convert/bondvillain-raceclock-father` (#47) — Bond Villain Stupidity · Race Against the Clock ·
   I Am Your Father.
 - `convert/plotcoupon-jbyam-timebomb` (#48) — Plot Coupon · Just Between You and Me · Time Bomb.
-- `convert/backfromdead-bigkiss-ace` (this PR) — Back from the Dead · The Big Damn Kiss · The Ace.
+- `convert/backfromdead-bigkiss-ace` (#49) — Back from the Dead · The Big Damn Kiss · The Ace.
+- `convert/rysspeech-premortem-bittersweet` (this PR) — Pre-Mortem One-Liner · The Reason You Suck Speech · Bittersweet Ending.
 
 **Remaining gaps (archive-verified; the next-batch candidates):**
 - [ ] Mood Whiplash · [ ] Idiot Plot · [ ] Crapsack World (each harder to event-anchor —
