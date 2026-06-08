@@ -1,0 +1,73 @@
+// === PREAMBLE ===
+// @trope    Pinky Swear
+// @category Friendship / Rituals
+// @source   https://allthetropes.org/wiki/Pinky_Swear
+// @domain   Narrative
+// @scale    scene
+// @version  1.3
+//
+// Laconic (per the wiki): a pact sealed by interlocking little fingers — cutesy to adults, but to children
+// a binding oath taken with deadly seriousness, often with a spoken rhyme. FRONTIER: an ACTION loaded by
+// childhood tradition — the linked pinkies MEAN "unbreakable promise." The discriminator is a
+// [&PinkySwears] event between two distinct people (agent + with); the loaded ritual makes an ordinary
+// promise sacred. Distinct from a plain promise by the binding gesture itself.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/bonds/i_gave_my_word.trl"   // the grown-up gravity this childhood ritual mirrors
+
+assoc pinky_swear -> [
+  i_gave_my_word : "the childhood-ritual version of",
+  red_string_of_fate : "a little-finger pact beside the little-finger thread of"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the binding finger-pact is the discriminator; promotion model) —
+verb PinkySwears(with) [+Interpersonal]   // seals a promise by interlocking little fingers
+
+imply PinkySwear -> [Social, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (scene scale): two distinct people PINKY-SWEAR — the partner bound on the `with=` role of a
+// [&PinkySwears] event (agent=$a), with $a != $b so the pact is between two. One beat: the linked-finger
+// ritual that turns a promise into an oath. The dedicated finger-pact verb is the discriminator — the
+// gesture is what loads an ordinary promise with binding weight.
+rule Pinky_Swear {
+  when:
+    char $a
+    char $b
+    $a != $b
+    evt  $pact [&PinkySwears(agent=$a, with=$b)]
+  then:
+    $pact [+PinkySwear]
+}
+
+
+// === CONCRETE VIGNETTE: the treehouse — two best friends (childhood, contemporary) ===
+// Up in the treehouse, the secret just told, the two of them hold out their hands and hook little fingers,
+// solemn as a court oath: "Best friends forever — cross my heart and hope to die, stick a needle in my
+// eye." It is the smallest possible gesture and, to them, the most binding one in the world; the linked
+// pinkies make the promise unbreakable in a way no grown-up handshake ever could. A childhood vow, sealed
+// at the knuckle.
+
+// MAYA — one half of the pact
+char maya
+
+// SAM — the other, fingers hooked
+char sam
+
+// INT. BACKYARD TREEHOUSE - the sworn secret
+set the_treehouse [+Interior]
+
+scene the_oath {
+  beat 1 {
+    maya @ the_treehouse
+    sam @ the_treehouse
+    // little fingers hooked, the rhyme spoken — an unbreakable childhood oath
+    evt the_swear [&PinkySwears(agent=maya, with=sam)]
+    // Pinky_Swear -> the_swear [+PinkySwear]
+  }
+}

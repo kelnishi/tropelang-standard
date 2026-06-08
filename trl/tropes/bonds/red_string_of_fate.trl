@@ -1,0 +1,74 @@
+// === PREAMBLE ===
+// @trope    Red String of Fate
+// @category Romance / Destiny
+// @source   https://allthetropes.org/wiki/Red_String_of_Fate
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): an invisible red thread, from East Asian legend, binds two people destined to
+// be together — tied finger to finger, it may stretch or tangle but never break. FRONTIER: an OBJECT
+// loaded by myth — the thread MEANS "fated lovers." The discriminator is a [+RedThread] bound on a
+// [&Binds] event linking two distinct people: the loaded object makes the pair's union destiny, not
+// chance. Distinct from Star-Crossed Lovers (a sundering keeps them apart) — here the thread guarantees
+// they find each other.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc red_string_of_fate -> [
+  star_crossed_lovers : "the destined-to-meet inverse of",
+  the_big_damn_kiss : "the fate that pays off in",
+  the_chosen_one : "a romance-keyed kind of destiny like"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the destiny-thread is the discriminator; promotion model) —
+prop RedThread  [+Mythological]   // the invisible red string binding destined lovers (East Asian legend)
+verb Binds(pair) [+Mythological]  // fate ties two people together by the thread
+
+imply RedStringOfFate -> [Destined, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a [+RedThread] BINDS two distinct people — the thread bound on the `thread=`
+// role of a [&Binds] event tying $a and $b (with $a != $b), so phase-2 re-checks [+RedThread] on the bound
+// thread (STYLE §8). The loaded thread is the discriminator: it makes the pair's eventual union destiny
+// (an arc-scale promise paid off whenever they meet), not coincidence — parting it from a chance romance.
+rule Red_String_Of_Fate {
+  when:
+    char $a
+    char $b
+    $a != $b
+    obj  $thread [+RedThread]
+    evt  $tie [&Binds(agent=$fate, a=$a, b=$b, thread=$thread)]
+  then:
+    $tie [+RedStringOfFate]
+}
+
+
+// === CONCRETE VIGNETTE: Your Name — Taki and Mitsuha (anime film, 2016) ===
+// Years and miles apart, two strangers keep being pulled toward each other — swapping bodies across time,
+// forgetting names but never the feeling, drawn back again and again. The braided cord Mitsuha wears, and
+// gives, is the thread made visible: red, looping the two of them through catastrophe and amnesia, never
+// quite breaking. When at last they pass on a Tokyo stair and turn — "Haven't we met?" — it is the red
+// string drawing taut. Fate tied them; the cord only showed it.
+
+// TAKI — one end of the thread
+char taki [+Protagonist]
+
+// MITSUHA — the other, across time and distance
+char mitsuha [+Deuteragonist]
+
+// THE BRAIDED CORD — the red thread of fate made visible
+obj the_red_cord [+RedThread]
+
+scene the_thread_draws_taut {
+  beat 1 {
+    // fate loops the two of them through time and forgetting by the red thread
+    evt the_binding [&Binds(agent=fate, a=taki, b=mitsuha, thread=the_red_cord)]
+    // Red_String_Of_Fate -> the_binding [+RedStringOfFate]
+  }
+}

@@ -1,0 +1,74 @@
+// === PREAMBLE ===
+// @trope    Tsundere
+// @category Character Archetypes
+// @source   https://allthetropes.org/wiki/Tsundere
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): a character who runs hot and cold — alternating tsuntsun (aloof, irritable) and
+// deredere (lovestruck, sweet) toward the object of their affection. FRONTIER: a behavior loaded by anime
+// genre tradition — the meaning is the FLIP. The discriminator pairs, on one [+Smitten] character, a
+// [&Rebuffs] of the crush (the harsh face) AND a [&Softens] toward the same crush (the warmth slipping
+// out). Neither act alone is the trope; the hot-cold alternation toward one person, over a [+Smitten]
+// secret, is — an arc-scale pattern surfaced across the two beats.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc tsundere -> [
+  enemies_to_lovers : "the single-character version of",
+  jerk_with_a_heart_of_gold : "the romance-keyed cousin of"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the secret warmth under the harsh face is the discriminator; promotion model) —
+prop Smitten      [+Psychological]   // secretly lovestruck — the deredere hidden under the tsuntsun
+verb Rebuffs(target) [+Interpersonal] // pushes the loved one away coldly (the tsuntsun face)
+verb Softens(toward) [+Interpersonal] // lets the hidden warmth show (the deredere face)
+
+imply Tsundere -> [Contrast, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a [+Smitten] character both REBUFFS and SOFTENS toward the SAME crush — the
+// crush bound on the `target=` of a [&Rebuffs] event and the `toward=` of a [&Softens] event, both by the
+// agent, so phase-2 re-checks [+Smitten] on the agent (STYLE §8). The hot-cold pairing over a secret
+// fondness is the discriminator: one act alone is just coldness or just kindness; the FLIP is the tsundere.
+rule Tsundere {
+  when:
+    char $t [+Smitten]
+    char $crush
+    evt  $cold [&Rebuffs(agent=$t, target=$crush)]
+    evt  $warm [&Softens(agent=$t, toward=$crush)]
+  then:
+    $cold [+Tsundere]
+}
+
+
+// === CONCRETE VIGNETTE: Toradora! — Taiga Aisaka (anime, 2008) ===
+// Taiga is tiny, ferocious, and mortified by her own feelings, so she shoves Ryuuji away with both hands:
+// snapping at him, hurling insults, the "Palmtop Tiger" who bites first. And then — she's made him lunch,
+// or fixed his collar, or waited up worried, and mutters that it's "not like I did it for you, idiot" with
+// her ears gone red. The shove and the tenderness are the same feeling wearing two faces. The codifier of
+// the hot-cold tsundere.
+
+// TAIGA AISAKA — the "Palmtop Tiger," fierce outside, lovestruck within
+char taiga [+Protagonist] [+Smitten]
+
+// RYUUJI — the one she pushes away and dotes on by turns
+char ryuuji [+Deuteragonist]
+
+scene hot_and_cold {
+  beat 1 {
+    // the tsuntsun: she snaps and shoves him off
+    evt the_rebuff [&Rebuffs(agent=taiga, target=ryuuji)]
+  }
+  beat 2 {
+    // the deredere: the warmth slips out, ears red — "not like I did it for you, idiot"
+    evt the_softening [&Softens(agent=taiga, toward=ryuuji)]
+    // Tsundere -> the_rebuff [+Tsundere]
+  }
+}

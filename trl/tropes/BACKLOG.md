@@ -82,7 +82,7 @@ Universal + the cast & plot-structure indexes). This is the live ledger — **ev
 it** (the finalize step in `CONVERSION_BOT.md`). The *recipe* for re-running the review (corpus inventory
 vs. the indexes, archive access) lives in `CONVERSION_BOT.md`; the *state* lives here.
 
-**Corpus: 249 tropes · self-recognition 249/249 (100%).** (Re-measure: `tropelang selfcheck
+**Corpus: 256 tropes · self-recognition 256/256 (100%).** (Re-measure: `tropelang selfcheck
 trl/tropes/corpus.toml --corpus file://trl`.)
 
 **Converted batches (done):**
@@ -99,7 +99,8 @@ trl/tropes/corpus.toml --corpus file://trl`.)
 - `convert/berserkbutton-defeatfriend-boast` (#51) — Berserk Button · Defeat Means Friendship · Badass Boast.
 - `convert/seven-villainy-bonds-batch` (#52, 7) — Well-Intentioned Extremist · Sacrificial Lion · Evil Chancellor · Mook · The Man Behind the Man · Fire-Forged Friends · Trash Talk.
 - `convert/seven-archetypes-batch` (#53, 7) — Lovable Rogue · Sacrificial Lamb · Downer Ending · Calling Your Attacks · Cooldown Hug · The Purge · Hannibal Lecture.
-- `convert/rhetoric-scales-batch` (this PR, 7) — **Rhetoric push, scene/act/arc mix**: Armor-Piercing Question · Lampshade Hanging · Aside Glance (scene) · Talking the Monster to Death · Patrick Stewart Speech (act) · Strawman Political · Audience Surrogate (arc).
+- `convert/rhetoric-scales-batch` (#54, 7) — **Rhetoric push, scene/act/arc mix**: Armor-Piercing Question · Lampshade Hanging · Aside Glance (scene) · Talking the Monster to Death · Patrick Stewart Speech (act) · Strawman Political · Audience Surrogate (arc).
+- `convert/loaded-meaning-batch` (this PR, 7) — **ground-level loaded-meaning tropes** (object/action/behavior gets meaning from legend/religion/anime/chivalry/comedy/myth/ritual): Only the Chosen May Wield · Holy Halo · Tsundere · Throwing Down the Gauntlet · Spit Take · Red String of Fate · Pinky Swear.
 
 **Remaining gaps (archive-verified; the next-batch candidates):**
 - [ ] Mood Whiplash · [ ] Idiot Plot · [ ] Crapsack World (each harder to event-anchor —
