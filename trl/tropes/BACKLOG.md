@@ -115,6 +115,11 @@ Work Skeletons* design memo). They are recoverable from git history when the fea
 - **Mood Whiplash**, **Cerebus Syndrome** — need **structural recognition** (tonal juxtaposition / arc by
   position, not a single linked event) and a first-class **`Tone`** concept promoted into the prelude.
 
+**Known limitation (revisit later).** **Heterosexual Life Partners** keys on a same-gender pair
+([+Masculine]/[+Feminine] rules) + mutual [@Bonded_To] + [&Cherishes], with no romance-exclusion — so a
+same-gender *romantic* couple can over-match. Acceptable for now; if it starts firing on gay romance, add a
+negated romance guard (a [~Loves]/[~Devoted_To] between the pair, the way Like Brother and Sister does).
+
 **Remaining gaps (archive-verified; the next-batch candidates):**
 - [ ] Mood Whiplash · [ ] Idiot Plot · [ ] Crapsack World (each harder to event-anchor —
   tonal/structural/setting; design the discriminator carefully).
