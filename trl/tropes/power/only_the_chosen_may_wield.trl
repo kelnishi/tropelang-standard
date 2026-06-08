@@ -1,0 +1,76 @@
+// === PREAMBLE ===
+// @trope    Only the Chosen May Wield
+// @category Artifacts / Destiny
+// @source   https://allthetropes.org/wiki/Only_the_Chosen_May_Wield
+// @domain   Narrative
+// @scale    scene
+// @version  1.3
+//
+// Laconic (per the wiki): a special item only an attuned, destined person can use — the Sword in the
+// Stone proving the true king. FRONTIER: the OBJECT loaded by destiny — its meaning is "whoever wields it
+// is the chosen one." The discriminator pairs a [+ChosenLocked] item with a [+Destined] wielder on a
+// [&Wields] event: the artifact rejects all but the fated, so the act of wielding VALIDATES them. Distinct
+// from a plain Cool Sword (anyone can swing it) by the destiny-lock on the item AND the fate-mark on the
+// wielder, both bound and re-checked.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/character/archetypes/the_chosen_one.trl"   // the wielder this validates
+import "trl/tropes/power/rightful_king_returns.trl"           // the legitimacy it can confer
+
+assoc only_the_chosen_may_wield -> [
+  the_chosen_one : "the proof-by-artifact of",
+  rightful_king_returns : "the sword that confirms a",
+  macguffin : "a destiny-locked kind of"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the destiny-locked artifact is the discriminator; reuses [+Destined]) —
+prop ChosenLocked [+Mythological]   // an item only the destined may wield — it rejects the unworthy
+verb Wields(item)  [+Interpersonal] // takes up and uses a weapon or artifact
+
+imply OnlyTheChosenMayWield -> [Object, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (scene scale): a [+Destined] hero WIELDS a [+ChosenLocked] item — the artifact bound on the
+// `item=` role and the fate-mark on the wielder of a [&Wields] event, so phase-2 re-checks [+ChosenLocked]
+// on the item and [+Destined] on the wielder (STYLE §8). The pairing — only-the-fated AND the-fated-one —
+// is the discriminator: the wielding validates the hero, parting it from a Cool Sword anyone could lift.
+rule Only_The_Chosen_May_Wield {
+  when:
+    char $hero [+Destined]
+    obj  $item [+ChosenLocked]
+    evt  $claim [&Wields(agent=$hero, item=$item)]
+  then:
+    $claim [+OnlyTheChosenMayWield]
+    $hero [+Validated]
+}
+
+
+// === CONCRETE VIGNETTE: the Sword in the Stone — Arthur (Arthurian legend, medieval) ===
+// In the churchyard stands an anvil on a stone, a sword driven through both, and graven words: whoever
+// draws this sword is rightwise king of all England. Knights and kings have heaved at it for years and
+// not budged it an inch. Then a boy, sent to fetch a blade for his foster-brother, sets his hand to it
+// and draws it free as easily as from a scabbard. The stone chose; the drawing proved him. Arthur is
+// king — because only the chosen could wield it.
+
+// ARTHUR — the boy fate has marked for the throne
+char arthur [+Protagonist] [+Destined]
+
+// THE SWORD IN THE STONE — the blade that yields only to the rightful king
+obj the_sword_in_the_stone [+ChosenLocked]
+
+// EXT. CHURCHYARD - DAY (the anvil, the stone, the graven words)
+set the_churchyard [+Exterior] [+Day]
+
+scene the_drawing {
+  beat 1 {
+    arthur @ the_churchyard
+    // the blade that would not move for kings comes free in the destined hand
+    evt the_drawing_of_the_sword [&Wields(agent=arthur, item=the_sword_in_the_stone)]
+    // Only_The_Chosen_May_Wield -> the_drawing_of_the_sword [+OnlyTheChosenMayWield]; arthur [+Validated]
+  }
+}

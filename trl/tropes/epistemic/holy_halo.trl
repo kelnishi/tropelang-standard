@@ -1,0 +1,72 @@
+// === PREAMBLE ===
+// @trope    Holy Halo
+// @category Iconography / Signs
+// @source   https://allthetropes.org/wiki/Holy_Halo
+// @domain   Narrative
+// @scale    scene
+// @version  1.3
+//
+// Laconic (per the wiki): a ring of light around the head is, by religious-art convention, synonymous
+// with holiness — a god, an angel, a saint, the Messianic figure. FRONTIER: a SIGN whose meaning comes
+// purely from artistic-religious tradition. The discriminator pairs a [+Hallowed] halo with a [&Haloes]
+// event that bestows it on a figure, who is thereby read as [+Holy]. The meaning is in the loaded sign,
+// not the figure: anyone the tradition crowns with the halo is decoded as sacred.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc holy_halo -> [
+  the_chosen_one : "the visible mark often worn by",
+  big_good : "haloes the bright"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the sanctity-signing halo is the discriminator; promotion model) —
+prop Hallowed   [+Mythological]   // the visible sign of sanctity — meaning by religious-art tradition
+verb Haloes(sign) [+Mythological] // crowns a figure with the halo, reading them as holy
+
+imply HolyHalo -> [Epistemic, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (scene scale): a source HALOES a figure with a [+Hallowed] sign — the halo bound on the
+// `sign=` role of a [&Haloes] event (agent=$source, subject=$figure), so phase-2 re-checks [+Hallowed] on
+// the bound sign (STYLE §8). The figure is thereby read [+Holy]. Binding the sanctity-meaning on the halo
+// itself is the discriminator: the sign carries the meaning by tradition, conferring holiness on whoever
+// wears it.
+rule Holy_Halo {
+  when:
+    obj  $halo [+Hallowed]
+    char $figure
+    evt  $crown [&Haloes(agent=$source, subject=$figure, sign=$halo)]
+  then:
+    $figure [+Holy]
+    $crown [+HolyHalo]
+}
+
+
+// === CONCRETE VIGNETTE: a gilded altarpiece — the iconographer's halo (religious art, medieval) ===
+// The painter lays the figure's robes in lapis and madder, and then, behind the head, presses a disc of
+// gold leaf burnished to a mirror. No word on the panel says "saint"; the gold ring says it. Every
+// worshipper who kneels before the altarpiece reads the halo instantly — this one is holy, blessed,
+// touched by the divine — because centuries of tradition have made the ring of light mean exactly that.
+// The meaning is gilded into the sign.
+
+// THE SAINT — the figure the gold ring marks as holy
+char the_saint
+
+// THE GOLD-LEAF HALO — the ring of light that, by tradition, means sanctity
+obj the_gold_halo [+Hallowed]
+
+// THE ICONOGRAPHER — who confers the sign the worshipper will read
+char the_iconographer
+
+scene the_gilding {
+  beat 1 {
+    // the painter presses the gold ring behind the head — and the figure reads as holy
+    evt the_haloing [&Haloes(agent=the_iconographer, subject=the_saint, sign=the_gold_halo)]
+    // Holy_Halo -> the_saint [+Holy]; the_haloing [+HolyHalo]
+  }
+}

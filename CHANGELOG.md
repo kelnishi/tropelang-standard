@@ -140,6 +140,30 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   audience's question. Founds `prop Surrogate`; reuses `[&Asks]`.)
   Corpus **242 → 249 tropes**; self-recognition steady at **249/249 (100%)**. (Rhetoric arena 23 → 28; the
   batch spans recognition scales: 3 scene · 2 act · 2 arc.)
+- **Only the Chosen May Wield** (Artifacts / Destiny) — https://allthetropes.org/wiki/Only_the_Chosen_May_Wield
+  (the Sword in the Stone, Arthur — a [+Destined] hero `[&Wields]` a [+ChosenLocked] item; the artifact
+  validates the fated. Founds `prop ChosenLocked` + `verb Wields(item)`; reuses `[+Destined]`.)
+- **Holy Halo** (Iconography / Signs) — https://allthetropes.org/wiki/Holy_Halo
+  (a gilded altarpiece — a source `[&Haloes]` a figure with a [+Hallowed] sign, read as [+Holy]; meaning
+  by religious-art tradition. Founds `prop Hallowed` + `verb Haloes(sign)`.)
+- **Tsundere** (Character Archetypes) — https://allthetropes.org/wiki/Tsundere
+  (Toradora!, Taiga — a [+Smitten] character both `[&Rebuffs]` and `[&Softens]` toward the same crush; the
+  hot-cold flip is the trope. Founds `prop Smitten` + `verb Rebuffs(target)`/`verb Softens(toward)`.)
+- **Throwing Down the Gauntlet** (Combat / Challenges) — https://allthetropes.org/wiki/Throwing_Down_the_Gauntlet
+  (300, Leonidas — a challenger `[&ThrowsGauntlet]` at a foe; the open, ritual demand to fight. Founds
+  `verb ThrowsGauntlet(target)`.)
+- **Spit Take** (Comedy / Reactions) — https://allthetropes.org/wiki/Spit_Take
+  (Airplane! — a character `[&SpitTakes]` at a [+Shocking] revelation; the slapstick shock-spray. Founds
+  `prop Shocking` + `verb SpitTakes(at)`.)
+- **Red String of Fate** (Romance / Destiny) — https://allthetropes.org/wiki/Red_String_of_Fate
+  (Your Name — a [+RedThread] `[&Binds]` two destined people; the myth-loaded thread makes the union fate.
+  Founds `prop RedThread` + `verb Binds(pair)`.)
+- **Pinky Swear** (Friendship / Rituals) — https://allthetropes.org/wiki/Pinky_Swear
+  (a treehouse oath — two people `[&PinkySwears]`; the linked-finger ritual makes a promise unbreakable.
+  Founds `verb PinkySwears(with)`.)
+  Corpus **249 → 256 tropes**; self-recognition steady at **256/256 (100%)**. (Loaded-meaning batch:
+  objects/actions/behaviors whose sense comes from legend / religious art / anime / chivalry / slapstick /
+  myth / childhood ritual.)
 
 ## [1.7.4] — 2026-06-08
 

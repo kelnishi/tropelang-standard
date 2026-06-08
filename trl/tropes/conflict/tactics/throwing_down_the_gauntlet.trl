@@ -1,0 +1,67 @@
+// === PREAMBLE ===
+// @trope    Throwing Down the Gauntlet
+// @category Combat / Challenges
+// @source   https://allthetropes.org/wiki/Throwing_Down_the_Gauntlet
+// @domain   Narrative
+// @scale    scene
+// @version  1.3
+//
+// Laconic (per the wiki): not merely fighting but DEMANDING a fight — the confident, defiant act of
+// challenging someone to battle, named for the medieval practice of casting down one's gauntlet. FRONTIER:
+// an ACTION loaded by chivalric tradition — the formal challenge. The discriminator is a [&ThrowsGauntlet]
+// event (agent=$challenger, target=$foe): a public, deliberate demand to fight. Distinct from a Badass
+// Boast (self-praise) and an ambush (no declaration) — this is the open, ritual call-out that puts the
+// challenge on the record.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc throwing_down_the_gauntlet -> [
+  the_duel     : "the challenge that opens a",
+  badass_boast : "often delivered with a",
+  worthy_opponent : "names a"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the formal, defiant challenge is the discriminator; promotion model) —
+verb ThrowsGauntlet(target) [+Interpersonal]   // openly, defiantly demands that another fight
+
+imply ThrowingDownTheGauntlet -> [Opposition, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (scene scale): a challenger THROWS DOWN THE GAUNTLET at a foe — the challenged bound on the
+// target role of a [&ThrowsGauntlet] event (agent=$challenger), so the recall keys on the agent and the
+// challenge binds its foe (STYLE §8). One beat: the open, deliberate demand to fight. The dedicated
+// challenge verb is the discriminator — a declared call-out, not a Badass Boast or a silent ambush.
+rule Throwing_Down_The_Gauntlet {
+  when:
+    char $foe [+Antagonist]
+    evt  $challenge [&ThrowsGauntlet(agent=$challenger, target=$foe)]
+  then:
+    $challenge [+ThrowingDownTheGauntlet]
+}
+
+
+// === CONCRETE VIGNETTE: 300 — Leonidas defies Xerxes (film, 2006) ===
+// Xerxes rules the largest empire the world has seen, and demands only earth and water — submission — from
+// Sparta. Leonidas answers not with a fight but with a challenge to one: he and three hundred will hold
+// the Hot Gates against the god-king's millions, and he flings the defiance in Xerxes's face — "Spartans!
+// Tonight we dine in Hell!" The whole campaign is a gauntlet thrown at an empire, the few openly daring
+// the many.
+
+// LEONIDAS — who openly defies the god-king
+char leonidas [+Protagonist]
+
+// XERXES — the emperor challenged to his face
+char xerxes [+Antagonist]
+
+scene the_hot_gates {
+  beat 1 {
+    // not submission, not an ambush — an open, defiant demand to fight
+    evt the_defiance [&ThrowsGauntlet(agent=leonidas, target=xerxes)]
+    // Throwing_Down_The_Gauntlet -> the_defiance [+ThrowingDownTheGauntlet]
+  }
+}

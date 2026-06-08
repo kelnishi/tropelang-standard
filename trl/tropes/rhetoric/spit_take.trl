@@ -1,0 +1,70 @@
+// === PREAMBLE ===
+// @trope    Spit Take
+// @category Comedy / Reactions
+// @source   https://allthetropes.org/wiki/Spit_Take
+// @domain   Narrative
+// @scale    scene
+// @version  1.3
+//
+// Laconic (per the wiki): a character, mid-drink, hears something so shocking that they spray the mouthful
+// out — the stock comedic shock reaction. FRONTIER: an ACTION loaded by slapstick-comedy tradition; the
+// spray MEANS "that was outrageous." The discriminator is a [&SpitTakes] event whose `at=` role is a
+// [+Shocking] piece of news — the comedic spray triggered by a revelation. The loaded gag: the drink is
+// just the medium; the meaning is the recoil.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc spit_take -> [
+  pratfall  : "the liquid cousin of the",
+  rule_of_funny : "exists by the",
+  wham_line : "the comedic recoil to a"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the shock-triggered spray is the discriminator; promotion model) —
+prop Shocking     [+Narrative]       // a revelation outrageous enough to choke on
+verb SpitTakes(at) [+Interpersonal]  // sprays a mouthful of drink in comic shock
+
+imply SpitTake -> [Contrast, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (scene scale): a character SPIT-TAKES at a [+Shocking] revelation — the news bound on the
+// `at=` role of a [&SpitTakes] event (agent=$x), so phase-2 re-checks [+Shocking] on the bound trigger
+// (STYLE §8). One beat: the comic spray that means "outrageous." Binding the shock-trigger on the spit-take
+// is the discriminator (a spray with no shocking news is just a mess, not the gag).
+rule Spit_Take {
+  when:
+    obj  $news [+Shocking]
+    evt  $spray [&SpitTakes(agent=$x, at=$news)]
+  then:
+    $spray [+SpitTake]
+}
+
+
+// === CONCRETE VIGNETTE: Airplane! — the cockpit (film, 1980) ===
+// The gags come a mile a minute, and the spit take is one of the surest: a character lifts a cup, takes a
+// calm sip, and is told the next absurd, deadpan-delivered catastrophe — the autopilot's an inflatable
+// doll, everyone aboard had the fish — and instantly fountains the drink across the cabin in a wide comic
+// spray. The sip sets it up; the outrageous line pulls the trigger; the spray lands the joke.
+
+// THE STARTLED CREWMAN — mid-sip when the news lands
+char crewman
+
+// THE OUTRAGEOUS NEWS — the deadpan catastrophe that pulls the trigger
+obj the_absurd_news [+Shocking]
+
+// INT. AIRLINER CABIN - the cup halfway to the lips
+set the_cabin [+Interior]
+
+scene the_briefing {
+  beat 1 {
+    crewman @ the_cabin
+    // the calm sip meets the outrageous line — and out it sprays
+    evt the_spray [&SpitTakes(agent=crewman, at=the_absurd_news)]
+    // Spit_Take -> the_spray [+SpitTake]
+  }
+}

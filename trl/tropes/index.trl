@@ -49,7 +49,9 @@ import "trl/tropes/bonds/love_dodecahedron.trl"
 import "trl/tropes/bonds/love_triangle.trl"
 import "trl/tropes/bonds/mentor_and_student.trl"
 import "trl/tropes/bonds/not_so_different.trl"
+import "trl/tropes/bonds/pinky_swear.trl"
 import "trl/tropes/bonds/power_of_friendship.trl"
+import "trl/tropes/bonds/red_string_of_fate.trl"
 import "trl/tropes/bonds/sibling_rivalry.trl"
 import "trl/tropes/bonds/star_crossed_lovers.trl"
 import "trl/tropes/bonds/the_big_damn_kiss.trl"
@@ -75,6 +77,7 @@ import "trl/tropes/character/archetypes/the_drifter.trl"
 import "trl/tropes/character/archetypes/the_trickster.trl"
 import "trl/tropes/character/archetypes/the_wizard.trl"
 import "trl/tropes/character/archetypes/tragic_hero.trl"
+import "trl/tropes/character/archetypes/tsundere.trl"
 import "trl/tropes/character/archetypes/well_intentioned_extremist.trl"
 import "trl/tropes/character/ensemble/five_man_band.trl"
 import "trl/tropes/character/roles/big_good.trl"
@@ -121,6 +124,7 @@ import "trl/tropes/conflict/tactics/pyrrhic_victory.trl"
 import "trl/tropes/conflict/tactics/spanner_in_the_works.trl"
 import "trl/tropes/conflict/tactics/the_gambit.trl"
 import "trl/tropes/conflict/tactics/the_trap.trl"
+import "trl/tropes/conflict/tactics/throwing_down_the_gauntlet.trl"
 import "trl/tropes/conflict/tactics/trojan_horse.trl"
 import "trl/tropes/conflict/tactics/wounded_gazelle_gambit.trl"
 import "trl/tropes/conflict/tactics/xanatos_gambit.trl"
@@ -160,6 +164,7 @@ import "trl/tropes/epistemic/foreshadowing/chekhovs_skill.trl"
 import "trl/tropes/epistemic/foreshadowing/foregone_conclusion.trl"
 import "trl/tropes/epistemic/foreshadowing/foreshadowing.trl"
 import "trl/tropes/epistemic/foreshadowing/red_herring.trl"
+import "trl/tropes/epistemic/holy_halo.trl"
 import "trl/tropes/epistemic/irony/be_careful_what_you_wish_for.trl"
 import "trl/tropes/epistemic/irony/cassandra_truth.trl"
 import "trl/tropes/epistemic/irony/dramatic_irony.trl"
@@ -201,6 +206,7 @@ import "trl/tropes/power/decadent_court.trl"
 import "trl/tropes/power/evil_chancellor.trl"
 import "trl/tropes/power/full_circle_revolution.trl"
 import "trl/tropes/power/klingon_promotion.trl"
+import "trl/tropes/power/only_the_chosen_may_wield.trl"
 import "trl/tropes/power/puppet_king.trl"
 import "trl/tropes/power/rightful_king_returns.trl"
 import "trl/tropes/power/smear_campaign.trl"
@@ -227,6 +233,7 @@ import "trl/tropes/rhetoric/rule_of_drama.trl"
 import "trl/tropes/rhetoric/rule_of_funny.trl"
 import "trl/tropes/rhetoric/sales_pitch.trl"
 import "trl/tropes/rhetoric/spectacle.trl"
+import "trl/tropes/rhetoric/spit_take.trl"
 import "trl/tropes/rhetoric/strawman_political.trl"
 import "trl/tropes/rhetoric/stump_speech.trl"
 import "trl/tropes/rhetoric/talking_the_monster_to_death.trl"
@@ -555,6 +562,7 @@ concept heist [+Trope(category="Crime", source="https://allthetropes.org/wiki/Th
 concept heroic_bsod [+Trope(category="Trauma", source="https://allthetropes.org/wiki/Heroic_BSOD")] [%Psychological]
 concept heroic_second_wind [+Trope(category="Heroic Spirit", source="https://allthetropes.org/wiki/Heroic_Second_Wind")] [%Narrative]
 concept hoist_by_his_own_petard [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Hoist_by_His_Own_Petard")] [%Narrative]
+concept holy_halo [+Trope(category="Iconography", source="https://allthetropes.org/wiki/Holy_Halo")] [%Narrative]
 concept hope_bringer [+Trope(category="Heroes", source="https://allthetropes.org/wiki/Hope_Bringer")] [%Narrative]
 concept i_am_your_father [+Trope(category="Reveal", source="https://allthetropes.org/wiki/Luke,_I_Am_Your_Father")] [%Narrative]
 concept i_gave_my_word [+Trope(category="Characterization", source="https://allthetropes.org/wiki/I_Gave_My_Word")] [%Interpersonal]
@@ -580,8 +588,10 @@ concept moment_of_awesome [+Trope(category="Audience Reactions", source="https:/
 concept mook [+Trope(category="Combat", source="https://allthetropes.org/wiki/Mooks")] [%Narrative]
 concept motive_rant [+Trope(category="Oratory", source="https://allthetropes.org/wiki/Motive_Rant")] [%Narrative]
 concept not_so_different [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Not_So_Different")] [%Interpersonal]
+concept only_the_chosen_may_wield [+Trope(category="Artifacts", source="https://allthetropes.org/wiki/Only_the_Chosen_May_Wield")] [%Narrative]
 concept patrick_stewart_speech [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Patrick_Stewart_Speech")] [%Narrative]
 concept pet_the_dog [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Pet_the_Dog")] [%Narrative]
+concept pinky_swear [+Trope(category="Friendship", source="https://allthetropes.org/wiki/Pinky_Swear")] [%Narrative]
 concept plot_armor [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Plot_Armor")] [%Narrative]
 concept plot_coupon [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/Plot_Coupon")] [%Narrative]
 concept plot_twist [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Plot_Twist")] [%Narrative]
@@ -592,6 +602,7 @@ concept puppet_king [+Trope(category="Political", source="https://allthetropes.o
 concept race_against_the_clock [+Trope(category="Plots", source="https://allthetropes.org/wiki/Race_Against_the_Clock")] [%Narrative]
 concept reality_bleed [+Trope(category="Metafiction", source="https://allthetropes.org/wiki/Reality_Bleed")] [%Narrative]
 concept red_shirt [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Red_Shirt")] [%Narrative]
+concept red_string_of_fate [+Trope(category="Romance", source="https://allthetropes.org/wiki/Red_String_of_Fate")] [%Narrative]
 concept redemption_equals_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Redemption_Equals_Death")] [%Narrative]
 concept redemption_rejection [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Redemption_Rejection")] [%Mind]
 concept reenactment [+Trope(category="Non-Fiction", source="https://allthetropes.org/wiki/Dramatization")] [%Narrative]
@@ -606,6 +617,7 @@ concept sibling_rivalry [+Trope(category="Relationships", source="https://allthe
 concept siege [+Trope(category="Military and Warfare Tropes", source="https://allthetropes.org/wiki/The_Siege")] [%Political]
 concept spanner_in_the_works [+Trope(category="Plot", source="https://allthetropes.org/wiki/Spanner_in_the_Works")] [%Epistemic]
 concept spectacle [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Visual_Effects_of_Awesome_(Sugar_Wiki)")] [%Narrative]
+concept spit_take [+Trope(category="Comedy", source="https://allthetropes.org/wiki/Spit_Take")] [%Narrative]
 concept status_quo_is_god [+Trope(category="Narrative Devices", source="https://allthetropes.org/wiki/Status_Quo_Is_God")] [%Narrative]
 concept strawman_political [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Strawman_Political")] [%Narrative]
 concept stump_speech [+Trope(category="Oratory", source="https://en.wikipedia.org/wiki/Stump_speech")] [%Narrative]
@@ -633,6 +645,7 @@ concept the_summation [+Trope(category="Mystery Tropes", source="https://allthet
 concept the_trickster [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/The_Trickster")] [%Narrative]
 concept the_wizard [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Wizard_Classic")] [%Narrative]
 concept the_worf_effect [+Trope(category="Combat", source="https://allthetropes.org/wiki/The_Worf_Effect")] [%Narrative]
+concept throwing_down_the_gauntlet [+Trope(category="Combat", source="https://allthetropes.org/wiki/Throwing_Down_the_Gauntlet")] [%Narrative]
 concept time_bomb [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/Time_Bomb")] [%Narrative]
 concept title_drop [+Trope(category="Title Tropes", source="https://allthetropes.org/wiki/Title_Drop")] [%Narrative]
 concept together_in_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Together_in_Death")] [%Interpersonal]
@@ -642,6 +655,7 @@ concept tragic_hero [+Trope(category="Characterization", source="https://allthet
 concept trash_talk [+Trope(category="Combat", source="https://allthetropes.org/wiki/Trash_Talk")] [%Narrative]
 concept trauma_conga_line [+Trope(category="Tragedy", source="https://allthetropes.org/wiki/Trauma_Conga_Line")] [%Narrative]
 concept trojan_horse [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Trojan_Horse")] [%Interpersonal]
+concept tsundere [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Tsundere")] [%Narrative]
 concept villain_protagonist [+Trope(category="Character Roles", source="https://allthetropes.org/wiki/Villain_Protagonist")] [%Narrative]
 concept villainous_breakdown [+Trope(category="Villains", source="https://allthetropes.org/wiki/Villainous_Breakdown")] [%Narrative]
 concept well_intentioned_extremist [+Trope(category="Villains", source="https://allthetropes.org/wiki/Well-Intentioned_Extremist")] [%Narrative]
