@@ -207,6 +207,7 @@ import "trl/tropes/meta/metafiction/lampshade_hanging.trl"
 import "trl/tropes/meta/metafiction/literary_agent_hypothesis.trl"
 import "trl/tropes/meta/metafiction/medium_awareness.trl"
 import "trl/tropes/meta/metafiction/mockumentary.trl"
+import "trl/tropes/meta/metafiction/painting_the_medium.trl"
 import "trl/tropes/meta/metafiction/reality_bleed.trl"
 import "trl/tropes/meta/metafiction/recursive_canon.trl"
 import "trl/tropes/meta/metafiction/show_within_a_show.trl"
@@ -638,6 +639,7 @@ concept mook [+Trope(category="Combat", source="https://allthetropes.org/wiki/Mo
 concept motive_rant [+Trope(category="Oratory", source="https://allthetropes.org/wiki/Motive_Rant")] [%Narrative]
 concept not_so_different [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Not_So_Different")] [%Interpersonal]
 concept only_the_chosen_may_wield [+Trope(category="Artifacts", source="https://allthetropes.org/wiki/Only_the_Chosen_May_Wield")] [%Narrative]
+concept painting_the_medium [+Trope(category="Metafiction", source="https://allthetropes.org/wiki/Painting_the_Medium")] [%Narrative]
 concept patrick_stewart_speech [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Patrick_Stewart_Speech")] [%Narrative]
 concept pet_the_dog [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Pet_the_Dog")] [%Narrative]
 concept pinky_swear [+Trope(category="Friendship", source="https://allthetropes.org/wiki/Pinky_Swear")] [%Narrative]

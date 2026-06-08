@@ -82,7 +82,7 @@ Universal + the cast & plot-structure indexes). This is the live ledger — **ev
 it** (the finalize step in `CONVERSION_BOT.md`). The *recipe* for re-running the review (corpus inventory
 vs. the indexes, archive access) lives in `CONVERSION_BOT.md`; the *state* lives here.
 
-**Corpus: 288 tropes · self-recognition 288/288 (100%).** (Re-measure: `tropelang selfcheck
+**Corpus: 289 tropes · self-recognition 289/289 (100%).** (Re-measure: `tropelang selfcheck
 trl/tropes/corpus.toml --corpus file://trl`.)
 
 **Converted batches (done):**
@@ -107,13 +107,17 @@ trl/tropes/corpus.toml --corpus file://trl`.)
 - `convert/power-meta-balance-4` (#59, 7) — **batch 4/5, frontier-balancing across scales**: The Caligula · The Evil Prince · Vichy Earth (power) · Then Let Me Be Evil · Took a Level in Kindness (arc) · Childhood Friend Romance (bonds) · Recursive Canon (meta). Power → 22, Arc → 25, Bonds → 24, Meta → 20.
 - `convert/power-meta-balance-5` (this PR, 7) — **batch 5/5, final: lifting the thinnest spokes**: Deadly Decadent Court · Villain with Good Publicity (power) · Taking the Bullet · Killed Off for Real (death) · Undying Loyalty · Heterosexual Life Partners (bonds) · Redemption Quest (arc). Power → 24, Death → 25, Bonds → 26, Arc → 26. (Review: Killed Off for Real uses an absolute `![+Dead]!` epistemic discriminator over `[&Slays]` (no bespoke verb); Redemption Quest refines The Quest's `[&Quests]`; Heterosexual Life Partners matches gender via paired [+Masculine]/[+Feminine] rules.)
 
-**Deferred — pending the Medium/work-skeleton + Tone-promotion design pass.** Three tropes were demoted
-from batch 3 because they depend on features that aren't built yet (see `STYLE.md §10` and the *Medium &
-Work Skeletons* design memo). They are recoverable from git history when the features land:
-- **Painting the Medium**, **The Stinger** *(already merged via #56 — revisit)* — need the **medium / work
-  skeleton** (format slots as Structure scaffolds; medium as a `%` essence), not a `[+Credits]`-style prop.
-- **Mood Whiplash**, **Cerebus Syndrome** — need **structural recognition** (tonal juxtaposition / arc by
-  position, not a single linked event) and a first-class **`Tone`** concept promoted into the prelude.
+**Work-skeleton rollup (engine ≥ 0.6.0).** The 0.6.0 `work` entity + slot-edge desugar (`scene … @ slot`)
+landed; the deferred tropes are being un-deferred on it. **Recognition pattern (de-risked):** a scope
+occupies the slot (`scene … @ post_credits`) as the DISCRIMINATOR, plus a char-agent event as the RECALL
+ANCHOR — §4b still holds in 0.6.0, so a pure slot edge alone does not recall; and the event `agent` must be
+a `char`, not the `work` (kind type-check).
+- **The Stinger** — ✅ DONE (re-founded on the work skeleton: `work [%Film]` + `post_credits` slot).
+- **Painting the Medium** — ✅ DONE (un-deferred: medium as the work's `[%Film]` essence; author `[&Employs]`
+  a [+MediumArtifact]).
+- **Mood Whiplash**, **Cerebus Syndrome** — STILL DEFERRED (the **Tone cluster**, next PR): need **structural
+  recognition** (tonal juxtaposition / arc by position, not a single linked event) and a first-class **`Tone`**
+  concept promoted into the **prelude** — a foundational change, kept separate from the medium cluster.
 
 **Known limitation (revisit later).** **Heterosexual Life Partners** keys on a same-gender pair
 ([+Masculine]/[+Feminine] rules) + mutual [@Bonded_To] + [&Cherishes], with no romance-exclusion — so a
