@@ -152,9 +152,10 @@ git add trl/tropes/<path>/*.trl trl/tropes/index.trl CHANGELOG.md
 An interactive web session works on its own development branch over the session's git remote (a local
 proxy). It **cannot author the PR itself** — its `mcp__github__*` token is the maintainer's account
 (see the identity rule above). So it pushes a **`convert/**` branch** and lets CI open the PR as the
-bot. `gh` is not available in-session; use `mcp__github__*` for *reads* (CI status, comments) only — to
-**post** a comment under the bot identity (not the maintainer's account), use the `bot-comment.yml`
-push-payload path described in "Commenting on a PR as the bot" below, never the MCP.
+bot. `gh` is not available in-session; use `mcp__github__*` for *reads* (CI status, comments) and to
+**dispatch** `bot-comment.yml`. To **post** a comment under the bot identity (not the maintainer's
+account), DISPATCH that workflow with `mcp__github__actions_run_trigger` — see "Commenting on a PR as
+the bot" below. Never open the PR or `add_issue_comment` with the MCP directly (that posts as you).
 
 ```sh
 # Finalize the batch (above), commit, and push a convert/** branch over the session remote.
@@ -219,26 +220,37 @@ Needs the App's **Pull requests: write** (inline review replies) and **Issues: w
 comments). The bot may **comment** but must **never approve** its own PR — approval stays with a human
 (the identity rule above).
 
-Two ways to drive it — both keep the App key server-side:
+It is driven by **`workflow_dispatch` only** — whoever dispatches never holds the App key; the App does
+the write. Two equivalent entry points:
 
 ```sh
-# A) Anywhere with gh (local Mode B, or any session that has gh) — your token only DISPATCHES the
-#    workflow; the App does the write. Comment posts as tropelang-conversion-bot[bot].
+# A) Cloud session (Mode A; no gh) — DISPATCH via the GitHub MCP. This is the cloud path: NO payload
+#    file, NO commit, nothing rides into main. (Probed 2026-06: the session's MCP token has
+#    actions:write — run_workflow returns 204 and the run posts as the bot.)
+#    Tool: mcp__github__actions_run_trigger
+#      method=run_workflow  workflow_id=bot-comment.yml  ref=main  inputs={ pr: <N>, body: <markdown> }
+#      (add inputs.reply_to=<review_comment_id> for an in-thread reply)
+#    Confirm: mcp__github__actions_list (list_workflow_runs of bot-comment.yml) → conclusion=success,
+#    then mcp__github__issue_read (get_comments) → newest author = tropelang-conversion-bot[bot].
+
+# B) Anywhere with gh (local Mode B, or any session that has gh) — same dispatch, via gh.
 gh workflow run bot-comment.yml -f pr=<N> -f body='<markdown>'
 gh workflow run bot-comment.yml -f pr=<N> -f reply_to=<review_comment_id> -f body='<markdown>'  # in-thread reply
-
-# B) Cloud session (Mode A; no gh, only git push) — queue a JSON payload and push it on the convert/**
-#    branch. bot-comment.yml posts each NEWLY-ADDED .github/pr-comments/*.json once, then keeps it as a log.
-cat > .github/pr-comments/pr<N>-<slug>.json <<'JSON'
-{ "pr": <N>, "body": "<markdown>", "reply_to": null }
-JSON
-git add .github/pr-comments/ && git commit -m "bot-comment: <slug>" && git push origin convert/<batch-name>
 ```
 
-`reply_to` is a review-comment id (from `GET /repos/<owner>/<repo>/pulls/<N>/comments`); omit it for a
-top-level PR conversation comment. Payload shape: `.github/pr-comments/README.md`. Like the conversion
-App generally, this is a **dedicated** workflow — never fold its App key into `gate.yml` or the publish
-pipeline.
+`reply_to` is a review-comment id (from `GET /repos/<owner>/<repo>/pulls/<N>/comments`, or
+`mcp__github__pull_request_read` method=get_review_comments → the `r<id>` in the comment URL); omit it
+for a top-level PR conversation comment. Like the conversion App generally, this is a **dedicated**
+workflow — never fold its App key into `gate.yml` or the publish pipeline.
+
+> **Retired:** the old commit-a-payload path (`.github/pr-comments/*.json` pushed on `convert/**`) is
+> gone — dispatch from the MCP covers the cloud session, so there's no reason to ride a payload artifact
+> into `main`.
+
+> **Caveat — comments can't be retracted in-session.** The GitHub MCP exposes no delete-comment tool
+> (only add/reply; `pull_request_review_write` deletes *pending reviews*, not posted comments). So a
+> comment posted by any path above can't be removed from a cloud session — deletion needs a human (UI)
+> or the REST/`gh` path. Compose accordingly; don't rely on cleaning up after a mistaken post.
 
 ---
 
