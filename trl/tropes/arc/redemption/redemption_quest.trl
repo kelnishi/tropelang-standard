@@ -9,14 +9,15 @@
 // Laconic (per the wiki): a character who has fallen — a Fallen Hero, an Anti-Villain, a repentant Villain
 // Protagonist — is granted one final chance to do better, usually a grand, nearly impossible task by which
 // they may atone. FRONTIER: redemption as an undertaken quest. The discriminator is a [+Penitent] character
-// bound on the agent of an [&Undertakes] event whose object is the [+Redemptive] task offered to them.
-// Distinct from a Redemption Arc (the gradual inward turn) by the explicit assigned quest, and from Atonement
-// (the payment) by being the setting-out, the chance taken.
+// bound on the agent of a [&Quests] event (reused from The Quest) whose `for=` object is the [+Redemptive]
+// task offered to them — a refinement of The Quest with redemption stakes. Distinct from a Redemption Arc
+// (the gradual inward turn) by the explicit assigned quest, and from a plain Quest by the atonement at stake.
 
 
 // === IMPORTS & ASSOCIATIONS ===
 import "trl/concepts/index.trl"
 import "trl/tropes/arc/redemption/redemption_arc.trl"   // the gradual inward turn this externalizes as a task
+import "trl/tropes/structure/the_quest.trl"             // reuses [&Quests(for)] — this IS The Quest, with redemption stakes
 
 assoc redemption_quest -> [
   redemption_arc : "the assigned-task form of",
@@ -26,25 +27,26 @@ assoc redemption_quest -> [
 
 
 // === ONTOLOGY ===
-// — founded here (the penitent setting out on the offered task is the discriminator; promotion model) —
+// — founded here (the penitent setting out on the offered task is the discriminator; reuses [&Quests] from
+//   The Quest — a Redemption Quest IS a quest, with redemption stakes) —
 prop Penitent   [+Narrative]        // one with a stain to wipe clean — fallen, and seeking to atone
 prop Redemptive [+Narrative]        // (of a task) the grand chance offered to earn redemption
-verb Undertakes(quest) [+Intentional] // takes on the offered task as the path back to grace
 
 imply RedemptionQuest -> [Transformation, Narrative]
 
 
 // === ABSTRACT RULE ===
-// Naming rule (arc scale): a [+Penitent] character UNDERTAKES a [+Redemptive] task — the seeker bound on the
-// agent and the offered task on the `quest=` role of an [&Undertakes] event, so phase-2 re-checks [+Penitent]
-// on the seeker and [+Redemptive] on the task (STYLE §8). Binding the fallen-and-atoning status to the taking
-// of the grand offered task is the discriminator: the chance to earn one's way back, parting it from a
-// Redemption Arc (the gradual inward turn) and from a plain Quest (no redemption at stake).
+// Naming rule (arc scale): a [+Penitent] character QUESTS for a [+Redemptive] task — the seeker bound on the
+// agent and the offered task on the `for=` role of a [&Quests] event (reused from The Quest), so phase-2
+// re-checks [+Penitent] on the seeker and [+Redemptive] on the task (STYLE §8). It REFINES The Quest: the
+// redemption tags ([+Penitent] seeker, [+Redemptive] task) specialize the same [&Quests] journey — parting it
+// from a plain Quest ([+Protagonist] for an [+Objective], no redemption at stake) and from a Redemption Arc
+// (the gradual inward turn, no assigned task).
 rule Redemption_Quest {
   when:
     char $seeker [+Penitent]
     obj  $task [+Redemptive]
-    evt  $quest [&Undertakes(agent=$seeker, quest=$task)]
+    evt  $quest [&Quests(agent=$seeker, for=$task)]
   then:
     $quest [+RedemptionQuest]
 }
@@ -69,7 +71,7 @@ scene the_bargain {
   beat 1 {
     john @ the_frontier
     // he takes on the offered task — hunt down his own old gang — as the price of redemption
-    evt the_undertaking [&Undertakes(agent=john, quest=the_hunt)]
+    evt the_undertaking [&Quests(agent=john, for=the_hunt)]
     // Redemption_Quest -> the_undertaking [+RedemptionQuest]
   }
 }

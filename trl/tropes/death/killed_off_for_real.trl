@@ -8,10 +8,10 @@
 //
 // Laconic (per the wiki): a major character is killed and STAYS dead — no Reset Button, no "All Just a
 // Dream," no resurrection plot device. The death is permanent and counts. FRONTIER: the death with no
-// take-backs. The discriminator is a [+Major] character bound on the `victim=` role of a [&KillsForGood]
-// event — a permanent killing, founded as its own verb class so it does not collapse into the [&Slays]
-// death cluster. Distinct from a Disney Death / Back from the Dead (an apparent or undone death): here the
-// grave is final, the character gone for the rest of the work.
+// take-backs. The discriminator is a [+Major] character slain ([&Slays]) and left ABSOLUTELY dead —
+// `![+Dead]!`, the immutable epistemic status (spec 01 §11) that no `resolve`/`retcon` can collapse. Distinct
+// from a Disney Death / Back from the Dead (a defeasible or undone [+Dead]): here the grave is final, the
+// character gone for the rest of the work.
 
 
 // === IMPORTS & ASSOCIATIONS ===
@@ -26,24 +26,26 @@ assoc killed_off_for_real -> [
 
 
 // === ONTOLOGY ===
-// — founded here (irreversibility IS the discriminator; founds its own verb class so it does not share
-//   [&Slays] recall with the rest of the death cluster — the event-tag [+Permanent] alone is invisible to
-//   phase-2 coverage, which re-checks tags on event-bound ENTITIES, not on the event) —
-verb KillsForGood(victim) [+Interpersonal]   // kills permanently — a death no reset, dream, or resurrection undoes
+// — no new verb: the discriminator is the EPISTEMIC status of the death, not a bespoke kill verb. The killing
+//   rides the shared [&Slays] cluster (the recall anchor), and the irreversibility is carried by an absolute
+//   `![+Dead]!` on the victim — an immutable fact, re-checked literally on the slain entity in phase-2 — which
+//   a Disney Death / Back from the Dead (a defeasible [+Dead] that later flips) cannot satisfy. —
 
 imply KilledOffForReal -> [Final, Narrative]
 
 
 // === ABSTRACT RULE ===
-// Naming rule (arc scale): a [+Major] character is KILLED FOR GOOD — the established figure bound on the
-// `victim=` role of a [&KillsForGood] event, so phase-2 re-checks [+Major] on the slain (STYLE §8). The
-// discriminator is the verb itself: a permanent killing, a distinct verb class from the [&Slays] cluster, so
-// it does not co-fire Dropped a Bridge on Him (an [+Anticlimactic] [&Slays]) or the Sacrificial Lion — the
-// character is gone for good, parting it from a Disney Death / Back from the Dead (an apparent or undone death).
+// Naming rule (arc scale): a [+Major] character is SLAIN and left ABSOLUTELY dead — the established figure
+// bound on the `target=` role of a [&Slays] event (the recall anchor), with an immutable `![+Dead]!` on the
+// slain, so phase-2 re-checks [+Major] and the absolute death on the victim (STYLE §8). The discriminator is
+// the epistemic status: `![+Dead]!` is ground truth no `resolve`/`retcon` can undo, so a Disney Death / Back
+// from the Dead (a defeasible [+Dead] that later flips) cannot match — and the absolute wrapper keeps it from
+// collapsing into Dropped a Bridge on Him (an [+Anticlimactic] [&Slays]) or the Sacrificial Lion.
 rule Killed_Off_for_Real {
   when:
     char $character [+Major]
-    evt  $death [&KillsForGood(agent=$killer, victim=$character)]
+    evt  $death [&Slays(agent=$killer, target=$character)]
+    !$character [+Dead]!
   then:
     $death [+KilledOffForReal]
 }
@@ -59,6 +61,9 @@ rule Killed_Off_for_Real {
 // MARION CRANE — the apparent protagonist, killed a third of the way in and never restored
 char marion [+Major]
 
+// NORMAN BATES — the killer behind the curtain
+char norman [+Antagonist]
+
 // INT. THE BATES MOTEL - the shower, the curtain torn back
 set the_motel [+Interior]
 
@@ -66,7 +71,8 @@ scene the_shower {
   beat 1 {
     marion @ the_motel
     // the knife comes down and she is gone — no rescue, no reveal, no resurrection: killed for good
-    evt the_murder [&KillsForGood(agent=norman, victim=marion)]
+    evt the_murder [&Slays(agent=norman, target=marion)]
+    !marion [+Dead]!          // absolute, immutable — no resolve/retcon can bring her back
     // Killed_Off_for_Real -> the_murder [+KilledOffForReal]
   }
 }

@@ -268,24 +268,24 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   (The Bodyguard, Frank Farmer — a protector `[&Intercepts]` an attack for a beneficiary, taking the harm
   meant for them; the intercepted blow, vs a general Heroic Sacrifice. Founds `verb Intercepts(beneficiary)`.)
 - **Killed Off for Real** (Death Tropes) — https://allthetropes.org/wiki/Killed_Off_for_Real
-  (Psycho, Marion Crane — a [+Major] character `[&KillsForGood]`-ed; a permanent killing founded as its own
-  verb class (so it does not collapse into the [&Slays] death cluster), vs a Disney Death / Back from the
-  Dead. Founds `verb KillsForGood(victim)`; reuses `[+Major]`.)
+  (Psycho, Marion Crane — a [+Major] character `[&Slays]`-ed and left `![+Dead]!` (absolute, immutable); the
+  discriminator is the EPISTEMIC status — a death no `resolve`/`retcon` can undo — vs a Disney Death / Back
+  from the Dead (a defeasible [+Dead]). No new verb; reuses `[&Slays]`/`[+Major]`.)
 - **Undying Loyalty** (Friendship / Loyalty) — https://allthetropes.org/wiki/Undying_Loyalty
   (The Lord of the Rings, Samwise Gamgee — a [+Steadfast] character `[&StandsBy]` another through anything;
   loyalty as the unbreakable defining trait, vs an ally of convenience. Founds `prop Steadfast` + `verb
   StandsBy(other)`.)
 - **Heterosexual Life Partners** (Friendship / Bonds) — https://allthetropes.org/wiki/Heterosexual_Life_Partners
-  (Scrubs, J.D. & Turk — two [+Inseparable] friends mutually [@Bonded_To] who `[&Cherishes]` one another;
-  couple-level closeness, platonic, vs Childhood Friend Romance (love). Founds `prop Inseparable` + `verb
-  Cherishes(other)`; reuses `[@Bonded_To]`.)
+  (Scrubs, J.D. & Turk — two SAME-gender [+Inseparable] friends mutually [@Bonded_To] who `[&Cherishes]` one
+  another; the same-gender pairing parts it from Like Brother and Sister (opposite-gender), the platonic
+  intensity from Childhood Friend Romance (love). Split across a [+Masculine] and a [+Feminine] rule (no
+  single "same gender" predicate). Founds `prop Inseparable` + `verb Cherishes(other)`; reuses `[@Bonded_To]`.)
 - **Redemption Quest** (Character Development / Redemption) — https://allthetropes.org/wiki/Redemption_Quest
-  (Red Dead Redemption, John Marston — a [+Penitent] character `[&Undertakes]` a [+Redemptive] task offered
-  as his path back; the assigned redemptive quest, vs a gradual Redemption Arc. Founds `prop Penitent`/`prop
-  Redemptive` + `verb Undertakes(quest)`.)
+  (Red Dead Redemption, John Marston — a [+Penitent] character `[&Quests]` for a [+Redemptive] task offered as
+  his path back; REFINES The Quest (reuses `[&Quests(for)]`) by the redemption tags, vs a plain Quest (no
+  atonement) and a gradual Redemption Arc. Founds `prop Penitent`/`prop Redemptive`; reuses `[&Quests]`.)
   Corpus **281 → 288 tropes**; self-recognition steady at **288/288 (100%)**. (Capability-gap batch 5/5,
-  final: lifting the thinnest spokes — Power → 24, Death → 25, Bonds → 26, Arc → 26. Killed Off for Real
-  founds a fresh verb class to avoid a [&Slays] verb-class collision with Dropped a Bridge on Him.)
+  final: lifting the thinnest spokes — Power → 24, Death → 25, Bonds → 26, Arc → 26.)
 
 ### Changed
 - **Klingon Promotion** (Political / Power) — refined to the LETHAL usurpation. The rule now requires the
