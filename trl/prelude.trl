@@ -154,6 +154,10 @@ attr Threat               [+Narrative]      // a looming, not-yet-realized dange
 attr Timing               [+Narrative]      // arrival at the decisive moment
 attr Relief               [+Narrative]      // rescue or reprieve arriving
 attr Rout                 [+Narrative]      // a one-sided collapse of the other side
+// tone — the affective register (promotion floor: the shared concept of Mood Whiplash + Cerebus Syndrome)
+attr Tone                 [+Narrative]      // the affective register of a moment or a work — its emotional key
+attr Levity               [+Tone]           // the light pole — comedic, happy, warm
+attr Gravity              [+Tone]           // the heavy pole — serious, grim, grave
 
 
 // =============================================================================

@@ -82,7 +82,7 @@ Universal + the cast & plot-structure indexes). This is the live ledger — **ev
 it** (the finalize step in `CONVERSION_BOT.md`). The *recipe* for re-running the review (corpus inventory
 vs. the indexes, archive access) lives in `CONVERSION_BOT.md`; the *state* lives here.
 
-**Corpus: 289 tropes · self-recognition 289/289 (100%).** (Re-measure: `tropelang selfcheck
+**Corpus: 291 tropes · self-recognition 291/291 (100%).** (Re-measure: `tropelang selfcheck
 trl/tropes/corpus.toml --corpus file://trl`.)
 
 **Converted batches (done):**
@@ -112,12 +112,16 @@ landed; the deferred tropes are being un-deferred on it. **Recognition pattern (
 occupies the slot (`scene … @ post_credits`) as the DISCRIMINATOR, plus a char-agent event as the RECALL
 ANCHOR — §4b still holds in 0.6.0, so a pure slot edge alone does not recall; and the event `agent` must be
 a `char`, not the `work` (kind type-check).
-- **The Stinger** — ✅ DONE (re-founded on the work skeleton: `work [%Film]` + `post_credits` slot).
-- **Painting the Medium** — ✅ DONE (un-deferred: medium as the work's `[%Film]` essence; author `[&Employs]`
-  a [+MediumArtifact]).
-- **Mood Whiplash**, **Cerebus Syndrome** — STILL DEFERRED (the **Tone cluster**, next PR): need **structural
-  recognition** (tonal juxtaposition / arc by position, not a single linked event) and a first-class **`Tone`**
-  concept promoted into the **prelude** — a foundational change, kept separate from the medium cluster.
+- **The Stinger** — ✅ DONE (#62; re-founded on the work skeleton: `work [%Film]` + `post_credits` slot).
+- **Painting the Medium** — ✅ DONE (#62; un-deferred: medium as the work's `[%Film]` essence; author
+  `[&Employs]` a [+MediumArtifact]).
+- **Mood Whiplash**, **Cerebus Syndrome** — ✅ DONE (the **Tone cluster**): promoted a first-class **`Tone`**
+  into the prelude (`attr Tone` + poles `Levity`/`Gravity`). Mood Whiplash = the CO-PRESENCE of both poles
+  linked by `[&Shatters]` (juxtaposition); Cerebus Syndrome = a tonal ARC **by position** — `opening` slot
+  [+Levity], `finale` slot [+Gravity], with a `[&Darkens]` span (the work skeleton carrying the arc).
+
+**All four demoted batch-3 tropes are now recovered.** (`![+Dead]!`-style epistemic discriminators, the work
+skeleton, and the Tone promotion between them retired the "deferred" backlog.)
 
 **Known limitation (revisit later).** **Heterosexual Life Partners** keys on a same-gender pair
 ([+Masculine]/[+Feminine] rules) + mutual [@Bonded_To] + [&Cherishes], with no romance-exclusion — so a

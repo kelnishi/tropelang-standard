@@ -17,6 +17,23 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 
 ## [Unreleased]
 
+### Added
+- **Mood Whiplash** (Rhetoric / Tone) — https://allthetropes.org/wiki/Mood_Whiplash
+  (Up's opening montage — a [+Levity] moment `[&Shatters]`-ed beside a [+Gravity] one; the discriminator is
+  the CO-PRESENCE of both tonal poles (the juxtaposition), vs Cerebus Syndrome (a slow arc). Reuses the
+  promoted Tone poles; founds `verb Shatters(mood)`.)
+- **Cerebus Syndrome** (Plot Devices / Tone) — https://allthetropes.org/wiki/Cerebus_Syndrome
+  (M*A*S*H — a `work mash [%TV]` whose `opening` slot is [+Levity] and `finale` slot is [+Gravity], with a
+  `[&Darkens]` span; the tonal ARC **by position** on the work skeleton (engine ≥ 0.6.0), vs Mood Whiplash (a
+  single seam). Founds `concept opening`/`concept finale` + `verb Darkens(subject)`.)
+  Un-defers the **Tone cluster** — the last of the demoted batch-3 tropes. Corpus **289 → 291**; selfcheck **291/291 (100%)**.
+
+### Changed
+- **Prelude — promoted a first-class `Tone`.** Added `attr Tone [+Narrative]` with poles `attr Levity [+Tone]`
+  / `attr Gravity [+Tone]`, so a moment or a work carries a tone and rules key on the broad `[+Tone]` or a
+  specific pole. Mood Whiplash and Cerebus Syndrome are founded on it (replacing the old per-trope tonal props
+  `Levity`/`Lighthearted`). Foundational change — full-corpus selfcheck steady at **291/291**.
+
 ## [1.8.0] — 2026-06-08
 
 ### Added
