@@ -1,0 +1,68 @@
+// === PREAMBLE ===
+// @trope    Enemy Civil War
+// @category Politics / Villains
+// @source   https://allthetropes.org/wiki/Enemy_Civil_War
+// @domain   Narrative
+// @scale    act
+// @version  1.3
+//
+// Laconic (per the wiki): rather than wait for the Big Bad to fall, factions WITHIN the evil side break
+// off and fight each other for power — a breather (or an Enemy Mine) for the heroes. FRONTIER: the enemy
+// at war with itself. The discriminator is two [+Antagonist] factions on a [&TurnsOn] event ($a != $b):
+// villain-on-villain. Distinct from A House Divided (a [+Besieged] group of allies fracturing) and The
+// Starscream (a subordinate coveting his master's seat): here peer enemy factions go to war.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/bonds/a_house_divided.trl"   // reuses [&TurnsOn]; the allies-side counterpart
+
+assoc enemy_civil_war -> [
+  a_house_divided : "the villain-side counterpart of",
+  enemy_mine : "opens the door to an",
+  the_starscream : "writ large beyond a single"
+]
+
+
+// === ONTOLOGY ===
+// (no new vocabulary — reuses [&TurnsOn] and [+Antagonist]; reuses prelude [+Faction] for the well-defined
+//  blocs, so the war is between two recognizable sides, not two lone villains)
+imply EnemyCivilWar -> [Opposition, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (act scale): one [+Antagonist] [+Faction] TURNS ON another — both bound on a [&TurnsOn] event
+// (agent + target), $a != $b, so phase-2 re-checks [+Antagonist] AND [+Faction] on BOTH (STYLE §8). Binding
+// villainy AND well-defined-bloc status on both parties is the discriminator: two recognizable evil sides go
+// to war, parting it from A House Divided (a besieged group of allies) and The Starscream (a single
+// ambitious subordinate, not a faction).
+rule Enemy_Civil_War {
+  when:
+    char $faction_a [+Antagonist] [+Faction]
+    char $faction_b [+Antagonist] [+Faction]
+    $faction_a != $faction_b
+    evt  $war [&TurnsOn(agent=$faction_a, target=$faction_b)]
+  then:
+    $war [+EnemyCivilWar]
+}
+
+
+// === CONCRETE VIGNETTE: The Dark Knight — the Joker burns the mob (film, 2008) ===
+// Gotham's organized crime and the Joker begin as nominal allies against the Batman, but the Joker has no
+// interest in their money or their order. He robs them, murders their bosses, burns his own half of the
+// shared fortune, and turns the city's criminal underworld into a war zone of villain against villain.
+// The heroes don't have to break the alliance of their enemies — it devours itself.
+
+// THE JOKER'S CREW — the chaos faction, one of the two warring criminal blocs
+char the_joker [+Antagonist] [+Faction]
+
+// THE GOTHAM MOB — the rival criminal faction it wars against (organized crime, a well-defined bloc)
+char the_mob [+Antagonist] [+Faction]
+
+scene the_underworld_war {
+  beat 1 {
+    // not a Heel-Face Turn — one villain faction makes war on the other
+    evt the_betrayal [&TurnsOn(agent=the_joker, target=the_mob)]
+    // Enemy_Civil_War -> the_betrayal [+EnemyCivilWar]
+  }
+}

@@ -140,10 +140,12 @@ import "trl/tropes/conflict/war/you_shall_not_pass.trl"
 import "trl/tropes/conflict/war/zerg_rush.trl"
 import "trl/tropes/death/back_from_the_dead.trl"
 import "trl/tropes/death/death_by_origin_story.trl"
+import "trl/tropes/death/death_seeker.trl"
 import "trl/tropes/death/defiant_to_the_end.trl"
 import "trl/tropes/death/disney_death.trl"
 import "trl/tropes/death/disney_villain_death.trl"
 import "trl/tropes/death/disposable_woman.trl"
+import "trl/tropes/death/dropped_a_bridge_on_him.trl"
 import "trl/tropes/death/famous_last_words.trl"
 import "trl/tropes/death/heroic_sacrifice.trl"
 import "trl/tropes/death/hoist_by_his_own_petard.trl"
@@ -211,6 +213,7 @@ import "trl/tropes/meta/nonfiction/the_host.trl"
 import "trl/tropes/power/asskicking_equals_authority.trl"
 import "trl/tropes/power/bread_and_circuses.trl"
 import "trl/tropes/power/decadent_court.trl"
+import "trl/tropes/power/enemy_civil_war.trl"
 import "trl/tropes/power/evil_chancellor.trl"
 import "trl/tropes/power/full_circle_revolution.trl"
 import "trl/tropes/power/government_conspiracy.trl"
@@ -259,6 +262,7 @@ import "trl/tropes/structure/bittersweet_ending.trl"
 import "trl/tropes/structure/bookends.trl"
 import "trl/tropes/structure/cliffhanger.trl"
 import "trl/tropes/structure/conflict.trl"
+import "trl/tropes/structure/crapsack_world.trl"
 import "trl/tropes/structure/deus_ex_machina.trl"
 import "trl/tropes/structure/diabolus_ex_machina.trl"
 import "trl/tropes/structure/downer_ending.trl"
@@ -545,12 +549,14 @@ concept combat_pragmatist [+Trope(category="Conflict", source="https://allthetro
 concept conflicting_loyalty [+Trope(category="Internal Conflict", source="https://allthetropes.org/wiki/Conflicting_Loyalty")] [%Interpersonal]
 concept cooldown_hug [+Trope(category="Friendship", source="https://allthetropes.org/wiki/Cooldown_Hug")] [%Narrative]
 concept courtroom_summation [+Trope(category="Oratory", source="https://allthetropes.org/wiki/Simple_Country_Lawyer")] [%Narrative]
+concept crapsack_world [+Trope(category="Settings", source="https://allthetropes.org/wiki/Crapsack_World")] [%Narrative]
 concept curb_stomp_battle [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Curb_Stomp_Battle")] [%Interpersonal]
 concept damsel_in_distress [+Trope(category="Characters As Device", source="https://allthetropes.org/wiki/Damsel_in_Distress")] [%Narrative]
 concept david_versus_goliath [+Trope(category="Combat Tropes", source="https://allthetropes.org/wiki/David_Versus_Goliath")] [%Interpersonal]
 concept deadpan_snarker [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Deadpan_Snarker")] [%Narrative]
 concept deal_with_the_devil [+Trope(category="Drama", source="https://allthetropes.org/wiki/Deal_with_the_Devil")] [%Mind]
 concept death_by_origin_story [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Death_by_Origin_Story")] [%Narrative]
+concept death_seeker [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Death_Seeker")] [%Narrative]
 concept decapitated_army [+Trope(category="Military and Warfare", source="https://allthetropes.org/wiki/Decapitated_Army")] [%Political]
 concept defeat_means_friendship [+Trope(category="Combat", source="https://allthetropes.org/wiki/Defeat_Means_Friendship")] [%Narrative]
 concept defiant_to_the_end [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Defiant_to_the_End")] [%Narrative]
@@ -560,6 +566,8 @@ concept disney_death [+Trope(category="Death Tropes", source="https://allthetrop
 concept disney_villain_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Disney_Villain_Death")] [%Narrative]
 concept disposable_woman [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Disposable_Woman")] [%Narrative]
 concept downer_ending [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/Downer_Ending")] [%Narrative]
+concept dropped_a_bridge_on_him [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Dropped_a_Bridge_on_Him")] [%Narrative]
+concept enemy_civil_war [+Trope(category="Politics", source="https://allthetropes.org/wiki/Enemy_Civil_War")] [%Narrative]
 concept enemy_mine [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Enemy_Mine")] [%Interpersonal]
 concept eucatastrophe [+Trope(category="Happy Endings", source="https://allthetropes.org/wiki/Eucatastrophe")] [%Narrative]
 concept even_evil_has_standards [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Even_Evil_Has_Standards")] [%Psychological]

@@ -212,6 +212,23 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   outward leak. Founds `prop FictionalWorld` + `verb PulledInto(subject)`.)
   Corpus **263 → 270 tropes**; self-recognition steady at **270/270 (100%)**. (Capability-gap batch 2/5:
   Power → 18, Meta → 19, Bonds → 23, Death → 21 — balancing the bottom of the frontier.)
+- **Enemy Civil War** (Politics / Villains) — https://allthetropes.org/wiki/Enemy_Civil_War
+  (The Dark Knight, Joker vs the mob — one [+Antagonist] faction `[&TurnsOn]` another; villain-on-villain,
+  vs A House Divided (besieged allies). Reuses `[&TurnsOn]` — no new vocab.)
+- **Dropped a Bridge on Him** (Death Tropes) — https://allthetropes.org/wiki/Dropped_a_Bridge_on_Him
+  (Star Trek TNG, Tasha Yar — a [+Major] character [&Slays]-ed in an [+Anticlimactic] beat; withheld
+  drama, vs the Sacrificial Lion's weighty death. Founds `prop Anticlimactic`; reuses `[+Major]`/`[&Slays]`.)
+- **Death Seeker** (Death Tropes / Character) — https://allthetropes.org/wiki/Death_Seeker
+  (Logan — a [+DeathWish] character `[&CourtsDeath]`, fighting to die; the inverted will of a Determinator.
+  Founds `prop DeathWish` + `verb CourtsDeath`.)
+- **Crapsack World** (Settings / Worldbuilding) — https://allthetropes.org/wiki/Crapsack_World *(hard
+  recognition shape)* — (Warhammer 40,000 — in a [+Crapsack] world (a `set`) an [+Unremarked] [&Brutalizes]
+  cruelty passes normalized; bleakness shown by atrocity met with a shrug. Founds `prop Crapsack`/`prop
+  Unremarked` + `verb Brutalizes(target)`.)
+  Corpus **270 → 274 tropes**; self-recognition steady at **274/274 (100%)**. (Capability-gap batch 3/5:
+  Crapsack World lands the **setting-as-property** recognition shape via a linked-event discriminator.
+  Painting the Medium, Mood Whiplash, and Cerebus Syndrome were **demoted from this batch** — deferred
+  pending the Medium/work-skeleton + Tone-promotion design pass. Power → 19, Death → 23.)
 
 ## [1.7.4] — 2026-06-08
 

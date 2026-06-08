@@ -1,0 +1,68 @@
+// === PREAMBLE ===
+// @trope    Dropped a Bridge on Him
+// @category Death Tropes
+// @source   https://allthetropes.org/wiki/Dropped_a_Bridge_on_Him
+// @domain   Narrative
+// @scale    scene
+// @version  1.3
+//
+// Laconic (per the wiki): an established character is written out — usually killed — in a way that is
+// jarringly ANTI-climactic and mundane, where a story that does Death Is Dramatic would normally give
+// them a send-off. FRONTIER: the deliberately undramatic death. The discriminator is a [+Major]
+// (established) character bound on the target of an [+Anticlimactic] [&Slays] event. Distinct from the
+// Sacrificial Lion (a weighty, stakes-proving death): here the weight is conspicuously WITHHELD — a name
+// we knew, snuffed without ceremony.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/death/sacrificial_lion.trl"   // the dramatic-death counterpart (reuses [+Major])
+
+assoc dropped_a_bridge_on_him -> [
+  sacrificial_lion : "the ceremony-withheld inverse of",
+  red_shirt : "a named-character version of the casual"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the withheld-drama death is the discriminator; reuses [+Major]) —
+prop Anticlimactic [+Narrative]   // jarringly mundane / undramatic where a send-off was expected
+
+imply DroppedABridgeOnHim -> [Final, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (scene scale): a [+Major] character is SLAIN in an [+Anticlimactic] beat — the established
+// character bound on the target role and the death marked [+Anticlimactic], so phase-2 re-checks [+Major]
+// on the victim and [+Anticlimactic] on the event (STYLE §8). Binding withheld-drama on the death of a
+// known character is the discriminator, parting it from the Sacrificial Lion (whose death is given full
+// dramatic weight). Reuses [&Slays].
+rule Dropped_A_Bridge_On_Him {
+  when:
+    char $char [+Major]
+    evt  $death [+Anticlimactic] [&Slays(agent=$killer, target=$char)]
+  then:
+    $death [+DroppedABridgeOnHim]
+}
+
+
+// === CONCRETE VIGNETTE: Star Trek: The Next Generation — Tasha Yar (TV, 1988) ===
+// Lieutenant Tasha Yar is a main-cast officer, a series regular with a chair on the bridge — exactly the
+// kind of character a dramatic show kills with a Heroic Sacrifice and a tearful send-off. Instead, on a
+// routine away mission, a puddle of malevolent tar named Armus flicks her aside and kills her in an
+// instant, mid-scene, for nothing. No last stand, no meaning — a main character snuffed as casually as a
+// guest of the week. The bridge dropped on her.
+
+// TASHA YAR — an established main-cast officer
+char tasha [+Major]
+
+// ARMUS — the creature that kills her, pointlessly and at once
+char armus [+Antagonist]
+
+scene the_away_mission {
+  beat 1 {
+    // a series regular killed in an instant, with none of the drama the show usually affords
+    evt the_killing [+Anticlimactic] [&Slays(agent=armus, target=tasha)]
+    // Dropped_A_Bridge_On_Him -> the_killing [+DroppedABridgeOnHim]
+  }
+}
