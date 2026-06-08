@@ -1,0 +1,68 @@
+// === PREAMBLE ===
+// @trope    Police State
+// @category Politics / Dystopia
+// @source   https://allthetropes.org/wiki/Police_State
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): the dystopia's enforcement arm — total surveillance, secret police, brutality
+// as standard procedure — the stock enemy of La Résistance. FRONTIER: rule by repression. The
+// discriminator is an [+Authoritarian] regime bound on the agent of a [&Represses] event against its own
+// populace. Distinct from a single tyrant or a coup: the standing apparatus of control, grinding the
+// people across the work.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/power/la_resistance.trl"   // its stock enemy
+
+assoc police_state -> [
+  la_resistance : "the regime fought by",
+  government_conspiracy : "the overt face of a",
+  bread_and_circuses : "the stick to the carrot of"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the apparatus of total control is the discriminator; promotion model) —
+prop Authoritarian [+Political]   // a regime of surveillance and repression — the police state
+verb Represses(target) [+Political] // crushes dissent and controls the populace by force and surveillance
+
+imply PoliceState -> [Usurpation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): an [+Authoritarian] regime REPRESSES its populace — the regime bound on the
+// agent role of a [&Represses] event, so phase-2 re-checks [+Authoritarian] on the regime (STYLE §8).
+// Binding the surveillance-and-repression apparatus on the act is the discriminator: rule maintained by
+// crushing the people, parting it from a lone tyrant or a one-time seizure.
+rule Police_State {
+  when:
+    char $regime [+Authoritarian]
+    evt  $crush [&Represses(agent=$regime, target=$populace)]
+  then:
+    $crush [+PoliceState]
+}
+
+
+// === CONCRETE VIGNETTE: The Handmaid's Tale — Gilead (novel/TV, 1985/2017) ===
+// The Republic of Gilead rules by total control: the Eyes watching every street, the Aunts and Guardians
+// enforcing scripture with cattle prods and the noose, public executions on the Wall, women stripped of
+// names, money, and reading. Dissent is disappearance. The regime is not one cruel ruler but an entire
+// apparatus of surveillance and terror, pressed down on the populace day after day — a police state in
+// its purest theocratic form.
+
+// GILEAD — the theocratic regime of Eyes, Aunts, and Guardians
+char gilead [+Authoritarian] [+Antagonist]
+
+// THE PEOPLE OF GILEAD — watched, silenced, repressed
+char the_populace [+Collective]
+
+scene the_apparatus {
+  beat 1 {
+    // not one tyrant but the whole machine: surveillance, the Wall, disappearances
+    evt the_repression [&Represses(agent=gilead, target=the_populace)]
+    // Police_State -> the_repression [+PoliceState]
+  }
+}
