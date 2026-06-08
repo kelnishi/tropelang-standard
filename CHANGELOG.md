@@ -262,6 +262,35 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   `verb Recasts(target)`.)
   Corpus **277 → 284 tropes**; self-recognition steady at **284/284 (100%)**. (Capability-gap batch 4/5:
   balancing the frontier — Power → 22, Arc → 25, Bonds → 24, Meta → 21 — across the recognition scales.)
+- **Deadly Decadent Court** (Politics / Settings) — https://allthetropes.org/wiki/Deadly_Decadent_Court
+  (A Game of Thrones, King's Landing — a [+Courtier] `[&Intrigues]` against a rival in a [+Decadent] court
+  (a `set`); the whole-court web of schemers, vs a lone Evil Chancellor. Founds `prop Courtier`/`prop
+  Decadent` + `verb Intrigues(against)`.)
+- **Villain with Good Publicity** (Politics / Villains) — https://allthetropes.org/wiki/Villain_with_Good_Publicity
+  (Superman, Lex Luthor — an [+Antagonist] [+Esteemed] `[&Charms]` the public; villainy shielded by public
+  esteem, vs a private hypocrite. Founds `prop Esteemed` + `verb Charms(audience)`.)
+- **Taking the Bullet** (Death Tropes / Sacrifice) — https://allthetropes.org/wiki/Taking_the_Bullet
+  (The Bodyguard, Frank Farmer — a protector `[&Intercepts]` an attack for a beneficiary, taking the harm
+  meant for them; the intercepted blow, vs a general Heroic Sacrifice. Founds `verb Intercepts(beneficiary)`.)
+- **Killed Off for Real** (Death Tropes) — https://allthetropes.org/wiki/Killed_Off_for_Real
+  (Psycho, Marion Crane — a [+Major] character `[&KillsForGood]`-ed; a permanent killing founded as its own
+  verb class (so it does not collapse into the [&Slays] death cluster), vs a Disney Death / Back from the
+  Dead. Founds `verb KillsForGood(victim)`; reuses `[+Major]`.)
+- **Undying Loyalty** (Friendship / Loyalty) — https://allthetropes.org/wiki/Undying_Loyalty
+  (The Lord of the Rings, Samwise Gamgee — a [+Steadfast] character `[&StandsBy]` another through anything;
+  loyalty as the unbreakable defining trait, vs an ally of convenience. Founds `prop Steadfast` + `verb
+  StandsBy(other)`.)
+- **Heterosexual Life Partners** (Friendship / Bonds) — https://allthetropes.org/wiki/Heterosexual_Life_Partners
+  (Scrubs, J.D. & Turk — two [+Inseparable] friends mutually [@Bonded_To] who `[&Cherishes]` one another;
+  couple-level closeness, platonic, vs Childhood Friend Romance (love). Founds `prop Inseparable` + `verb
+  Cherishes(other)`; reuses `[@Bonded_To]`.)
+- **Redemption Quest** (Character Development / Redemption) — https://allthetropes.org/wiki/Redemption_Quest
+  (Red Dead Redemption, John Marston — a [+Penitent] character `[&Undertakes]` a [+Redemptive] task offered
+  as his path back; the assigned redemptive quest, vs a gradual Redemption Arc. Founds `prop Penitent`/`prop
+  Redemptive` + `verb Undertakes(quest)`.)
+  Corpus **284 → 291 tropes**; self-recognition steady at **291/291 (100%)**. (Capability-gap batch 5/5,
+  final: lifting the thinnest spokes — Power → 24, Death → 25, Bonds → 26, Arc → 26. Killed Off for Real
+  founds a fresh verb class to avoid a [&Slays] verb-class collision with Dropped a Bridge on Him.)
 
 ## [1.7.4] — 2026-06-08
 

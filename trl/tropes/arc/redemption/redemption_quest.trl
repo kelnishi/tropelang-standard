@@ -1,0 +1,75 @@
+// === PREAMBLE ===
+// @trope    Redemption Quest
+// @category Character Development / Redemption
+// @source   https://allthetropes.org/wiki/Redemption_Quest
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): a character who has fallen — a Fallen Hero, an Anti-Villain, a repentant Villain
+// Protagonist — is granted one final chance to do better, usually a grand, nearly impossible task by which
+// they may atone. FRONTIER: redemption as an undertaken quest. The discriminator is a [+Penitent] character
+// bound on the agent of an [&Undertakes] event whose object is the [+Redemptive] task offered to them.
+// Distinct from a Redemption Arc (the gradual inward turn) by the explicit assigned quest, and from Atonement
+// (the payment) by being the setting-out, the chance taken.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/arc/redemption/redemption_arc.trl"   // the gradual inward turn this externalizes as a task
+
+assoc redemption_quest -> [
+  redemption_arc : "the assigned-task form of",
+  the_quest : "a redemption-stakes form of",
+  heel_face_turn : "the deed that follows a"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the penitent setting out on the offered task is the discriminator; promotion model) —
+prop Penitent   [+Narrative]        // one with a stain to wipe clean — fallen, and seeking to atone
+prop Redemptive [+Narrative]        // (of a task) the grand chance offered to earn redemption
+verb Undertakes(quest) [+Intentional] // takes on the offered task as the path back to grace
+
+imply RedemptionQuest -> [Transformation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a [+Penitent] character UNDERTAKES a [+Redemptive] task — the seeker bound on the
+// agent and the offered task on the `quest=` role of an [&Undertakes] event, so phase-2 re-checks [+Penitent]
+// on the seeker and [+Redemptive] on the task (STYLE §8). Binding the fallen-and-atoning status to the taking
+// of the grand offered task is the discriminator: the chance to earn one's way back, parting it from a
+// Redemption Arc (the gradual inward turn) and from a plain Quest (no redemption at stake).
+rule Redemption_Quest {
+  when:
+    char $seeker [+Penitent]
+    obj  $task [+Redemptive]
+    evt  $quest [&Undertakes(agent=$seeker, quest=$task)]
+  then:
+    $quest [+RedemptionQuest]
+}
+
+
+// === CONCRETE VIGNETTE: Red Dead Redemption — John Marston (game, 2010) ===
+// John Marston was an outlaw; now the government holds his wife and son and gives him one way to buy them —
+// and himself — back: hunt down and bring in the members of his own old gang, the men he rode and killed
+// with. It is a grand, bloody, nearly impossible task, and it is laid on him explicitly as the price of his
+// redemption. He takes it. The title says the shape of it outright: a redemption, made into a quest.
+
+// JOHN MARSTON — the former outlaw given one last task to atone and win his family back
+char john [+Penitent] [+Protagonist]
+
+// THE HUNT FOR THE GANG — the grand, near-impossible task offered as his path to redemption
+obj the_hunt [+Redemptive]
+
+// EXT. THE WESTERN FRONTIER - the long road after his old gang
+set the_frontier [+Exterior]
+
+scene the_bargain {
+  beat 1 {
+    john @ the_frontier
+    // he takes on the offered task — hunt down his own old gang — as the price of redemption
+    evt the_undertaking [&Undertakes(agent=john, quest=the_hunt)]
+    // Redemption_Quest -> the_undertaking [+RedemptionQuest]
+  }
+}

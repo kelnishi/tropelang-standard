@@ -1,0 +1,74 @@
+// === PREAMBLE ===
+// @trope    Deadly Decadent Court
+// @category Politics / Settings
+// @source   https://allthetropes.org/wiki/Deadly_Decadent_Court
+// @domain   Narrative
+// @scale    act
+// @version  1.3
+//
+// Laconic (per the wiki): a monarch's court rotten with intrigue, where the nobles climb by poison and the
+// dagger in the night rather than open rule — every smile hides a scheme. FRONTIER: power as covert
+// court-intrigue. The discriminator is a [+Courtier] who, in a [+Decadent] court, [&Intrigues] against a
+// rival [+Courtier] for position or favor — the milieu where murder is "like a fine wine." Distinct from a
+// lone Evil Chancellor (one traitor by the throne) by the ambient web of schemers all working each other.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc deadly_decadent_court -> [
+  evil_chancellor : "the whole-court milieu around a single",
+  klingon_promotion : "advancement by intrigue rather than open",
+  the_starscream : "breeds many a"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the court-schemer and the rotten milieu are the discriminator; promotion model) —
+prop Courtier  [+Political]        // a schemer at a royal court, climbing by intrigue and favor
+verb Intrigues(against) [+Political] // schemes covertly against a rival — poison, slander, the dagger by night
+
+imply DeadlyDecadentCourt -> [Usurpation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (act scale): in a [+Decadent] court, a [+Courtier] INTRIGUES against a rival [+Courtier] — the
+// schemer bound on the agent and the rival on the `against=` role of an [&Intrigues] event (setting=$court),
+// so phase-2 re-checks [+Courtier] on both and [+Decadent] on the court (STYLE §8). Binding the schemer and
+// rival inside a rotten court is the discriminator: advancement by covert knifework, parting it from a lone
+// Evil Chancellor (a single traitor) and from open warfare for a throne.
+rule Deadly_Decadent_Court {
+  when:
+    set  $court [+Decadent]
+    char $schemer [+Courtier]
+    char $rival [+Courtier]
+    $schemer != $rival
+    evt  $plot [&Intrigues(agent=$schemer, against=$rival, setting=$court)]
+  then:
+    $plot [+DeadlyDecadentCourt]
+}
+
+
+// === CONCRETE VIGNETTE: A Game of Thrones — King's Landing (novel/TV, 1996/2011) ===
+// The Red Keep is a nest of vipers. Littlefinger smiles, lends his help, and sells it the moment it pays
+// better — "I did warn you not to trust me." He plays the factions of the small council against one another,
+// whispers a king's bastards into a war, and climbs over every corpse he arranges. The court runs not on
+// law but on poison, perjury, and the knife between the shoulder blades. Decadent and deadly in equal measure.
+
+// THE RED KEEP — the court where rule is done by poison and whisper, not law (a `set`: the decadent court)
+set the_red_keep [+Decadent] [+Interior]
+
+// LITTLEFINGER — the master schemer who climbs by intrigue
+char littlefinger [+Courtier] [+Antagonist]
+
+// NED STARK — the rival at court, the honest Hand he undoes
+char ned [+Courtier]
+
+scene the_small_council {
+  beat 1 {
+    littlefinger @ the_red_keep
+    // he plays his rival false and climbs over the ruin he arranges — the court's true currency
+    evt the_betrayal [&Intrigues(agent=littlefinger, against=ned, setting=the_red_keep)]
+    // Deadly_Decadent_Court -> the_betrayal [+DeadlyDecadentCourt]
+  }
+}

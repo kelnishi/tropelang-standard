@@ -1,0 +1,72 @@
+// === PREAMBLE ===
+// @trope    Killed Off for Real
+// @category Death Tropes
+// @source   https://allthetropes.org/wiki/Killed_Off_for_Real
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): a major character is killed and STAYS dead — no Reset Button, no "All Just a
+// Dream," no resurrection plot device. The death is permanent and counts. FRONTIER: the death with no
+// take-backs. The discriminator is a [+Major] character bound on the `victim=` role of a [&KillsForGood]
+// event — a permanent killing, founded as its own verb class so it does not collapse into the [&Slays]
+// death cluster. Distinct from a Disney Death / Back from the Dead (an apparent or undone death): here the
+// grave is final, the character gone for the rest of the work.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/death/sacrificial_lion.trl"   // where [+Major] is founded
+
+assoc killed_off_for_real -> [
+  back_from_the_dead : "the permanent counter to",
+  disney_death : "the no-take-backs opposite of",
+  dropped_a_bridge_on_him : "the abrupt form of"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (irreversibility IS the discriminator; founds its own verb class so it does not share
+//   [&Slays] recall with the rest of the death cluster — the event-tag [+Permanent] alone is invisible to
+//   phase-2 coverage, which re-checks tags on event-bound ENTITIES, not on the event) —
+verb KillsForGood(victim) [+Interpersonal]   // kills permanently — a death no reset, dream, or resurrection undoes
+
+imply KilledOffForReal -> [Final, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a [+Major] character is KILLED FOR GOOD — the established figure bound on the
+// `victim=` role of a [&KillsForGood] event, so phase-2 re-checks [+Major] on the slain (STYLE §8). The
+// discriminator is the verb itself: a permanent killing, a distinct verb class from the [&Slays] cluster, so
+// it does not co-fire Dropped a Bridge on Him (an [+Anticlimactic] [&Slays]) or the Sacrificial Lion — the
+// character is gone for good, parting it from a Disney Death / Back from the Dead (an apparent or undone death).
+rule Killed_Off_for_Real {
+  when:
+    char $character [+Major]
+    evt  $death [&KillsForGood(agent=$killer, victim=$character)]
+  then:
+    $death [+KilledOffForReal]
+}
+
+
+// === CONCRETE VIGNETTE: Psycho — Marion Crane (film, 1960) ===
+// For forty minutes Psycho follows Marion Crane: her theft, her flight, her arrival at the Bates Motel. She
+// is the protagonist — and protagonists do not die a third of the way through a film. Then the shower
+// curtain is torn back and the knife comes down, and she is simply, shockingly, gone — no rescue, no
+// reveal that she survived, no coming back. Hitchcock killed off his lead for real, and the audience never
+// recovered its footing. The permanent death that broke the rule of who is safe.
+
+// MARION CRANE — the apparent protagonist, killed a third of the way in and never restored
+char marion [+Major]
+
+// INT. THE BATES MOTEL - the shower, the curtain torn back
+set the_motel [+Interior]
+
+scene the_shower {
+  beat 1 {
+    marion @ the_motel
+    // the knife comes down and she is gone — no rescue, no reveal, no resurrection: killed for good
+    evt the_murder [&KillsForGood(agent=norman, victim=marion)]
+    // Killed_Off_for_Real -> the_murder [+KilledOffForReal]
+  }
+}

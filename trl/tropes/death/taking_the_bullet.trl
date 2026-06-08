@@ -1,0 +1,74 @@
+// === PREAMBLE ===
+// @trope    Taking the Bullet
+// @category Death Tropes / Sacrifice
+// @source   https://allthetropes.org/wiki/Taking_the_Bullet
+// @domain   Narrative
+// @scale    scene
+// @version  1.3
+//
+// Laconic (per the wiki): a form of Heroic Sacrifice where a character leaps into the path of an attack
+// aimed at someone else, taking the wound (or death) meant for them. FRONTIER: the intercepted blow. The
+// discriminator is a protector bound on the agent of an [&Intercepts] event whose beneficiary is the one the
+// attack was meant for — the harm taken in another's place. Distinct from a general Heroic Sacrifice (dying
+// for a cause) by the specific shape: throwing oneself bodily between a victim and the blow.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/death/heroic_sacrifice.trl"   // the broader sacrifice this is a specific shape of
+
+assoc taking_the_bullet -> [
+  heroic_sacrifice : "a specific intercepted-blow form of",
+  undying_loyalty : "the deed that proves",
+  disposable_woman : "the grim inverse when the shielded one fails to save the"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (leaping into the path of an attack meant for another is the discriminator; promotion model) —
+verb Intercepts(beneficiary) [+Interpersonal]  // leaps into the path of an attack meant for another, taking the harm
+
+imply TakingTheBullet -> [Final, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (scene scale): a protector INTERCEPTS an attack for a beneficiary — the shield bound on the
+// agent and the one saved on the `beneficiary=` role of an [&Intercepts] event, so phase-2 re-checks the
+// interception against the bound pair (STYLE §8). Binding the harm-taken-in-another's-place on the leaper is
+// the discriminator: the blow meant for one lands on the other who threw themselves in its path, parting it
+// from a general Heroic Sacrifice (a death for a cause, not an intercepted blow).
+rule Taking_the_Bullet {
+  when:
+    char $protector
+    char $beneficiary
+    $protector != $beneficiary
+    evt  $leap [&Intercepts(agent=$protector, beneficiary=$beneficiary)]
+  then:
+    $leap [+TakingTheBullet]
+}
+
+
+// === CONCRETE VIGNETTE: The Bodyguard — Frank Farmer (film, 1992) ===
+// At the Academy Awards, as the assassin in the crowd fires at the singer Rachel Marron, her bodyguard
+// Frank Farmer does the one thing he was hired and trained to do: he throws himself across her, taking the
+// bullet meant for her into his own body. She lives because the shot found him instead. The intercepted
+// blow, in its purest form — the body put between the victim and the gun.
+
+// FRANK FARMER — the bodyguard who throws himself across his charge
+char frank [+Protagonist]
+
+// RACHEL MARRON — the one the bullet was meant for, who lives because he intercepts it
+char rachel [+LoveInterest]
+
+// INT. THE AWARDS STAGE - the shot from the crowd
+set the_awards [+Interior] [+Crowded]
+
+scene the_shot {
+  beat 1 {
+    frank @ the_awards
+    rachel @ the_awards
+    // he throws himself across her and takes the bullet meant for her
+    evt the_leap [&Intercepts(agent=frank, beneficiary=rachel)]
+    // Taking_the_Bullet -> the_leap [+TakingTheBullet]
+  }
+}

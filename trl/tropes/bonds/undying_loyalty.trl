@@ -1,0 +1,74 @@
+// === PREAMBLE ===
+// @trope    Undying Loyalty
+// @category Friendship / Loyalty
+// @source   https://allthetropes.org/wiki/Undying_Loyalty
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): a character defined by unwavering loyalty — faithful to a person or cause through
+// every hardship, when anyone else would abandon them. FRONTIER: loyalty as the defining, unbreakable
+// trait. The discriminator is a [+Steadfast] character bound on the agent of a [&StandsBy] event toward the
+// one they will not forsake — devotion proven at cost. Distinct from a mere ally (loyalty of convenience) by
+// the through-anything constancy, and from Conflicting Loyalty (a loyalty torn) by its singleness.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc undying_loyalty -> [
+  i_gave_my_word : "the standing-trait form of",
+  power_of_friendship : "the constancy that fuels",
+  conflicting_loyalty : "the undivided opposite of"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the through-anything faithful one is the discriminator; promotion model) —
+prop Steadfast [+Social]            // unwavering in loyalty — faithful through any hardship, when others would quit
+verb StandsBy(other) [+Interpersonal] // remains loyal to another at great cost, refusing to abandon them
+
+imply UndyingLoyalty -> [Devotion, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a [+Steadfast] character STANDS BY another — the faithful one bound on the agent
+// role of a [&StandsBy] event (other=$liege), so phase-2 re-checks [+Steadfast] on the loyal one (STYLE §8).
+// Binding the through-anything constancy on the one who refuses to abandon is the discriminator: loyalty as
+// the unbreakable defining trait, parting it from an ally of convenience and from a divided, conflicted loyalty.
+rule Undying_Loyalty {
+  when:
+    char $loyal [+Steadfast]
+    char $liege
+    $loyal != $liege
+    evt  $devotion [&StandsBy(agent=$loyal, other=$liege)]
+  then:
+    $devotion [+UndyingLoyalty]
+}
+
+
+// === CONCRETE VIGNETTE: The Lord of the Rings — Samwise Gamgee (novel/film) ===
+// Sam follows Frodo out of the Shire and never once turns back. Through Moria, through Shelob's lair, through
+// the ash of Mordor where the quest grinds them both to ruin, he carries the food, the gear, the hope — and
+// at the last, on the slopes of Mount Doom when Frodo can go no further, he carries Frodo himself: "I can't
+// carry it for you, but I can carry you!" No hardship breaks him; no horror makes him leave. The truest
+// undying loyalty in the canon.
+
+// SAMWISE GAMGEE — faithful to Frodo through Mordor and beyond, who will not abandon him
+char sam [+Steadfast] [+Protagonist]
+
+// FRODO BAGGINS — the one he will not forsake, carried at the last
+char frodo [+Protagonist]
+
+// EXT. MOUNT DOOM - the ash slopes, the end of the road
+set mount_doom [+Exterior]
+
+scene the_slopes {
+  beat 1 {
+    sam @ mount_doom
+    frodo @ mount_doom
+    // when Frodo can go no further, Sam carries him — loyalty no horror could break
+    evt the_carrying [&StandsBy(agent=sam, other=frodo)]
+    // Undying_Loyalty -> the_carrying [+UndyingLoyalty]
+  }
+}
