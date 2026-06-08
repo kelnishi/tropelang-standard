@@ -115,6 +115,59 @@ discriminator worked out first (tonal/structural/setting), so pair at most one w
 
 ---
 
+## Capability gaps & forward guidance (2026-06 — steering the next few batches)
+
+With self-recognition at 100% and the marquee high-profile gaps largely closed, the forward work shifts
+from "convert any famous trope" to **closing specific capability gaps**. Four, in rough priority:
+
+**1. Arena balance — fill the thin spokes.** A coverage starplot (tropes per top-level arena) shows the
+corpus heavy on **Character** and **Conflict** and thin on **Power** and **Meta**. Round out the star —
+prioritize **Power** (Kingmaker · The Quisling · Government Conspiracy · Praetorian intrigue · The Coup
+variants) and **Meta** (Wham Episode · Sequel Hook · The Stinger · Medium Awareness · Leaning on the
+Fourth Wall). Re-measure before each batch:
+```sh
+git ls-files 'trl/tropes/**/*.trl' | grep -v index.trl | sed -E 's#trl/tropes/([^/]+)/.*#\1#' | sort | uniq -c | sort -rn
+```
+
+**2. Persuasion depth — the leverage cluster.** For persuasive-storytelling capability the leverage runs
+**Rhetoric (the toolkit) → Epistemic (belief/expectation) → Structure (attention) → the pathos triad
+(Arc/Death/Bonds)**, riding the `persuasion` / `cognitive_biases` / `theory_of_mind` modules. Rhetoric is
+high-leverage-per-trope; keep deepening it. By classical lever:
+- **ethos** → Character (Paragon, Big Good, The Host) · Power (legitimacy)
+- **logos** → Rhetoric (Debate, Courtroom Summation) · Epistemic (the evidentiary Reveal)
+- **pathos** → Bonds · Death · Arc · Rhetoric (Tear Jerker, Rousing Speech)
+- **attention** (precondition) → Structure (Cliffhanger, curiosity gap) · Conflict
+  Remaining rhetoric veins: Hope Speech · World of Cardboard / Kirk Summation · Ironic Echo · Author
+  Filibuster · Perp Sweating · the appeal/fallacy family.
+
+**3. Recognition-scale coverage — tools at every temporal grain.** Technique should be recognizable at
+**scene** (one beat), **act** (a confrontation/exchange across beats), and **arc** (a standing
+role/position across the work). Tag new tropes `// @scale scene|act|arc` and aim for a mix per batch (the
+rhetoric push shipped 3 scene · 2 act · 2 arc). The richest scene-scale vein is **ground-level
+loaded-meaning tropes** — an object/action/behavior whose sense comes from history / tradition / genre /
+comedy, where the loaded thing IS the discriminator (Only the Chosen May Wield · Holy Halo · Tsundere ·
+Spit Take · Red String of Fate). Queued: Empathic Weapon · Right Hand of Doom · Yandere · Burying the
+Hatchet · Last-Second Word Swap · Glowing Eyes of Doom.
+
+**4. Hard recognition shapes — the recognizer's weak spots (a real capability gap, not just coverage).**
+Some high-profile tropes resist clean event-anchored recognition and expose encoding/engine limits:
+**Mood Whiplash** (tonal juxtaposition across adjacent beats), **Idiot Plot** (a counterfactual — the
+plot only holds if everyone acts stupidly), **Crapsack World** (a setting-property, not an event). Each
+needs a deliberate discriminator-design pass *before* authoring — e.g. Mood Whiplash via two adjacent
+opposite-tone events; Crapsack World via a normalized-atrocity event whose horror goes unremarked.
+
+**Working defaults (this session's learnings):**
+- **Batch size 6–7**, with a **one-per-arena spread** — keeps intra-batch cross-fire away and eases the
+  per-trope specificity check (`shape --corpus`; no cousin should also confirm at 1.00).
+- **Verb-class collisions are real**: a new verb can be classed with an existing one in recall (e.g.
+  `[&Refutes]`→`[&Debunks]` spuriously fired propaganda's `Entrench`). Spot-check `shape --corpus` and
+  pick a non-colliding verb when a sibling co-confirms.
+- Every conversion PR updates **this ledger + CHANGELOG**; bot-authored via `convert/**` → CI opens the
+  PR; **request review from the maintainer**; reply to review threads via the `bot-comment.yml` dispatch
+  path; transient CLI-download CI failures (HTTP 504) are **re-kicked**, not "fixed".
+
+---
+
 ## Systems (the modules in `trl/modules/`)
 Each is a forward-chaining dynamic that tropes ride on.
 
