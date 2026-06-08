@@ -8,9 +8,10 @@
 //
 // Laconic (per the wiki): a conqueror (often alien) defeats humanity and decides to RUN the planet —
 // hostile but not genocidal, installing itself over a subjugated, collaborator-administered Earth (named
-// for Vichy France). FRONTIER: the whole world as occupied territory. The discriminator is an [+Occupier]
-// bound on the agent of a [&Subjugates] event over the world. Distinct from a homegrown Police State (the
-// regime is foreign/external) and The Quisling (the collaborator, not the conqueror).
+// for Vichy France). FRONTIER: the whole world as occupied territory. The discriminator is a [+Foreign]
+// power (a conqueror not native to the land — a foreign nation or an alien invader) bound on the agent of a
+// [&Subjugates] event over the world. Distinct from a homegrown Police State (this regime is foreign, not
+// native) and The Quisling (the collaborator, not the conqueror).
 
 
 // === IMPORTS & ASSOCIATIONS ===
@@ -25,21 +26,21 @@ assoc vichy_earth -> [
 
 
 // === ONTOLOGY ===
-// — founded here (the external conqueror ruling the world is the discriminator; promotion model) —
-prop Occupier   [+Political]        // a foreign/alien conqueror that rules a defeated land as its master
+// — founded here (the external/foreign conqueror ruling the world is the discriminator; promotion model) —
+prop Foreign            [+Political] // an external power, not native to the land it rules (a foreign nation or alien invader)
 verb Subjugates(target) [+Political] // conquers and installs itself as the ruling power over a territory
 
 imply VichyEarth -> [Usurpation, Narrative]
 
 
 // === ABSTRACT RULE ===
-// Naming rule (arc scale): an [+Occupier] SUBJUGATES the world — the conqueror bound on the agent role of
-// a [&Subjugates] event (target=$world), so phase-2 re-checks [+Occupier] on the conqueror (STYLE §8).
-// Binding the external-conqueror status on the act of ruling is the discriminator: a defeated planet run
-// by a foreign power, parting it from a homegrown Police State and from the collaborating Quisling.
+// Naming rule (arc scale): a [+Foreign] power SUBJUGATES the world — the conqueror bound on the agent role
+// of a [&Subjugates] event (target=$world), so phase-2 re-checks [+Foreign] on the conqueror (STYLE §8).
+// Binding the not-native status on the act of ruling is the discriminator: a defeated planet run by a
+// foreign power, parting it from a homegrown Police State and from the collaborating Quisling.
 rule Vichy_Earth {
   when:
-    char $occupier [+Occupier]
+    char $occupier [+Foreign]
     evt  $conquest [&Subjugates(agent=$occupier, target=$world)]
   then:
     $conquest [+VichyEarth]
@@ -54,7 +55,7 @@ rule Vichy_Earth {
 // administered, and held.
 
 // THE GREATER REICH — the foreign conqueror ruling the defeated land
-char the_reich [+Occupier] [+Antagonist]
+char the_reich [+Foreign] [+Antagonist]
 
 // OCCUPIED AMERICA — the subjugated world run by its conquerors
 char america [+Collective]

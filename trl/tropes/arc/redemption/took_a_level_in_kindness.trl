@@ -27,7 +27,8 @@ assoc took_a_level_in_kindness -> [
 
 // === ONTOLOGY ===
 // — founded here (the default-cold jerk who warms is the discriminator; promotion model) —
-prop Harsh   [+Social]        // a jerkass — cold, cutting, cruel by default
+prop Harsh   [+Social]        // a jerkass — cold, cutting, cruel by default (the BEFORE state)
+prop Warm    [+Social]        // softened into kindness and warmth (the AFTER state — the level taken)
 verb Mellows [+Intentional]   // softens over time into warmth and kindness
 
 imply TookALevelInKindness -> [Transformation, Narrative]
@@ -37,7 +38,9 @@ imply TookALevelInKindness -> [Transformation, Narrative]
 // Naming rule (arc scale): a [+Harsh] character MELLOWS — the default-cold jerk bound on the agent role of
 // a [&Mellows] event, so phase-2 re-checks [+Harsh] on the one who warms (STYLE §8). Binding the prior
 // jerkishness on the one who softens is the discriminator: the change is a thaw on the VIRTUE axis, parting
-// it from Took a Level in Badass (capability) and from a Heel Face Turn (an alignment crossing).
+// it from Took a Level in Badass (capability) and from a Heel Face Turn (an alignment crossing). The level
+// taken lands as a gained trait — the jerk sheds [-Harsh] and gains [+Warm] — mirroring the badass sibling,
+// which asserts a positive [+Formidable] outcome (not just the loss of weakness).
 rule Took_a_Level_in_Kindness {
   when:
     char $jerk [+Harsh]
@@ -45,6 +48,7 @@ rule Took_a_Level_in_Kindness {
   then:
     $thaw [+TookALevelInKindness]
     $jerk [-Harsh]
+    $jerk [+Warm]
 }
 
 
@@ -69,6 +73,6 @@ scene the_heart_grows {
     the_grinch @ mount_crumpit
     // the Whos sing with nothing left to unwrap, and the cold heart thaws three sizes
     evt the_thaw [&Mellows(agent=the_grinch)]
-    // Took_a_Level_in_Kindness -> the_thaw [+TookALevelInKindness]; the_grinch [-Harsh]
+    // Took_a_Level_in_Kindness -> the_thaw [+TookALevelInKindness]; the_grinch [-Harsh] [+Warm]
   }
 }
