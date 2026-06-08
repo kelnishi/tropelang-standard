@@ -191,6 +191,7 @@ import "trl/tropes/power/the_starscream.trl"
 import "trl/tropes/rhetoric/an_aesop.trl"
 import "trl/tropes/rhetoric/breaking_speech.trl"
 import "trl/tropes/rhetoric/courtroom_summation.trl"
+import "trl/tropes/rhetoric/just_between_you_and_me.trl"
 import "trl/tropes/rhetoric/moment_of_awesome.trl"
 import "trl/tropes/rhetoric/motive_rant.trl"
 import "trl/tropes/rhetoric/pratfall.trl"
@@ -223,12 +224,14 @@ import "trl/tropes/structure/in_medias_res.trl"
 import "trl/tropes/structure/macguffin.trl"
 import "trl/tropes/structure/or_was_it_a_dream.trl"
 import "trl/tropes/structure/plot_armor.trl"
+import "trl/tropes/structure/plot_coupon.trl"
 import "trl/tropes/structure/race_against_the_clock.trl"
 import "trl/tropes/structure/status_quo_is_god.trl"
 import "trl/tropes/structure/take_a_third_option.trl"
 import "trl/tropes/structure/the_climax.trl"
 import "trl/tropes/structure/the_quest.trl"
 import "trl/tropes/structure/three_act_structure.trl"
+import "trl/tropes/structure/time_bomb.trl"
 
 // === TROPE TITLE ENTRIES ===
 
@@ -515,6 +518,7 @@ concept idiot_ball [+Trope(category="Plotting Devices", source="https://allthetr
 concept in_medias_res [+Trope(category="Narrative Devices", source="https://allthetropes.org/wiki/In_Medias_Res")] [%Narrative]
 concept internal_reveal [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Internal_Reveal")] [%Narrative]
 concept jerk_with_a_heart_of_gold [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Jerk_with_a_Heart_of_Gold")] [%Narrative]
+concept just_between_you_and_me [+Trope(category="Villains", source="https://allthetropes.org/wiki/Just_Between_You_and_Me")] [%Narrative]
 concept karma_houdini [+Trope(category="Karma Tropes", source="https://allthetropes.org/wiki/Karma_Houdini")] [%Narrative]
 concept karmic_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Karmic_Death")] [%Narrative]
 concept kick_the_dog [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Kick_the_Dog")] [%Narrative]
@@ -531,6 +535,7 @@ concept motive_rant [+Trope(category="Oratory", source="https://allthetropes.org
 concept not_so_different [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Not_So_Different")] [%Interpersonal]
 concept pet_the_dog [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Pet_the_Dog")] [%Narrative]
 concept plot_armor [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Plot_Armor")] [%Narrative]
+concept plot_coupon [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/Plot_Coupon")] [%Narrative]
 concept plot_twist [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Plot_Twist")] [%Narrative]
 concept power_of_friendship [+Trope(category="Friendship Tropes", source="https://allthetropes.org/wiki/The_Power_of_Friendship")] [%Interpersonal]
 concept pratfall [+Trope(category="Slapstick", source="https://allthetropes.org/wiki/The_Pratfall")] [%Narrative]
@@ -570,6 +575,7 @@ concept the_summation [+Trope(category="Mystery Tropes", source="https://allthet
 concept the_trickster [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/The_Trickster")] [%Narrative]
 concept the_wizard [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Wizard_Classic")] [%Narrative]
 concept the_worf_effect [+Trope(category="Combat", source="https://allthetropes.org/wiki/The_Worf_Effect")] [%Narrative]
+concept time_bomb [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/Time_Bomb")] [%Narrative]
 concept title_drop [+Trope(category="Title Tropes", source="https://allthetropes.org/wiki/Title_Drop")] [%Narrative]
 concept together_in_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Together_in_Death")] [%Interpersonal]
 concept tomato_in_the_mirror [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Tomato_in_the_Mirror")] [%Mind]

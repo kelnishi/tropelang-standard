@@ -1,0 +1,79 @@
+// === PREAMBLE ===
+// @trope    Just Between You and Me
+// @category Villains / Stock Villain Behaviors
+// @source   https://allthetropes.org/wiki/Just_Between_You_and_Me
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): rather than finish the cornered hero at once, the villain pauses to outline
+// their PLAN to him — often including how to stop it — giving the hero what he needs (and the audience
+// the exposition). FRONTIER: the plan-disclosure to the doomed hero. The discriminator is a [+Scheme]
+// bound on the `secret=` role of a [&Confides] event from villain to hero — distinct from Bond Villain
+// Stupidity (the forgone kill itself) and from a Motive Rant (ranting one's MOTIVES, not laying out the
+// operational plan): here the villain hands over the workings of the scheme.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/conflict/tactics/bond_villain_stupidity.trl"   // the blunder this exposition rides
+
+assoc just_between_you_and_me -> [
+  bond_villain_stupidity : "the talking half of",
+  motive_rant            : "lays out the plan where this rants the",
+  the_reveal             : "an in-story disclosure like"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the disclosed scheme is the discriminator; promotion model) —
+prop Scheme       [+Epistemic]      // the villain's operational plan, laid bare to the doomed hero
+verb Confides(to) [+Interpersonal]  // shares a secret/plan with another — the gloating exposition
+
+imply JustBetweenYouAndMe -> [Disclosure, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: an [+Antagonist] CONFIDES a [+Scheme] to a [+Protagonist] — the plan bound on the
+// `secret=` role and the hero on `to=` of a [&Confides] event (agent=$villain), so phase-2 re-checks
+// [+Scheme] on the disclosed plan and [+Protagonist] on the recipient (STYLE §8). Binding the laid-bare
+// scheme on the disclosure is the discriminator: this is the villain handing over the plan to the
+// cornered hero, not the forgone kill (Bond Villain Stupidity) nor a rant of motives (Motive Rant).
+rule Just_Between_You_And_Me {
+  when:
+    char $villain [+Antagonist]
+    char $hero [+Protagonist]
+    obj  $plan [+Scheme]
+    evt  $monologue [&Confides(agent=$villain, to=$hero, secret=$plan)]
+  then:
+    $monologue [+JustBetweenYouAndMe]
+}
+
+
+// === CONCRETE VIGNETTE: The Incredibles — Syndrome monologues (animated film, 2004) ===
+// Syndrome has Mr. Incredible cornered, and cannot resist: he lays out the whole of Operation Kronos —
+// the killer robot, the staged attacks, the plan to sell superpowers so that "when everyone's super, no
+// one will be." Mid-gloat he catches himself: "You sly dog! You got me monologuing!" — the trope naming
+// itself. By laying the scheme bare to the man he means to beat, he hands the hero the very shape of how
+// to stop it.
+
+// SYNDROME — the villain who cannot resist explaining the plan
+char syndrome [+Antagonist]
+
+// MR. INCREDIBLE — cornered, and handed the whole scheme
+char mr_incredible [+Protagonist]
+
+// OPERATION KRONOS — the operational plan, laid bare
+obj operation_kronos [+Scheme]
+
+// INT. SYNDROME'S ISLAND LAIR - the monitors and the trap
+set the_lair [+Interior]
+
+scene the_monologue {
+  beat 1 {
+    syndrome @ the_lair
+    mr_incredible @ the_lair
+    // SYNDROME: lays out Operation Kronos in full — "You got me monologuing!"
+    evt the_exposition [&Confides(agent=syndrome, to=mr_incredible, secret=operation_kronos)]
+    // Just_Between_You_And_Me -> the_exposition [+JustBetweenYouAndMe]
+  }
+}

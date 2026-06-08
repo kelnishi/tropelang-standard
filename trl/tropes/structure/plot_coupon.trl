@@ -1,0 +1,66 @@
+// === PREAMBLE ===
+// @trope    Plot Coupon
+// @category Plot Devices
+// @source   https://allthetropes.org/wiki/Plot_Coupon
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a thing a character must OBTAIN in order to cash it in later for a plot
+// resolution — often one of several pieces to collect (Gotta Catch Them All). FRONTIER: the MacGuffin
+// specialized to the COLLECTED token. A MacGuffin is a single sought object whose nature is irrelevant;
+// a Plot Coupon is a piece GATHERED to advance — the seeking is the plot. The discriminator is a
+// [+PlotCoupon] token bound on the `token=` role of a [&Collects] event, so it fires on the act of
+// gathering a plot-gating piece, not on merely desiring one object.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/tropes/structure/macguffin.trl"   // the genus: a sought object that moves the plot
+
+assoc plot_coupon -> [
+  macguffin : "the collectible specialization of",
+  the_quest : "the pieces a quest is mounted to gather"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the collectible plot-gating token is the discriminator; promotion model) —
+prop PlotCoupon    [+Narrative]   // a piece that must be gathered and cashed in for plot progress
+verb Collects(token) [+Narrative]  // gathers a plot-gating piece — the act that advances the story
+
+imply PlotCoupon_T -> [Object, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a seeker COLLECTS a [+PlotCoupon] — the token bound on the `token=` role of a [&Collects]
+// event (agent=$seeker), so phase-2 re-checks [+PlotCoupon] on the gathered piece (STYLE §8). Binding
+// the plot-gating token on the act of gathering is the discriminator: this fires on the SEEKING that
+// moves the story, parting it from a static MacGuffin (a single object merely desired, nature irrelevant).
+rule Plot_Coupon {
+  when:
+    char $seeker [+Protagonist]
+    obj  $coupon [+PlotCoupon]
+    evt  $gather [&Collects(agent=$seeker, token=$coupon)]
+  then:
+    $gather [+PlotCoupon_T]
+}
+
+
+// === CONCRETE VIGNETTE: Dragon Ball — the seven Dragon Balls (manga/anime, 1984) ===
+// The whole engine of the early saga is a fetch: seven orange Dragon Balls, scattered across the world,
+// that summon the wish-granting dragon Shenron only when all seven are brought together. Goku and Bulma
+// chase them one by one — each ball a piece to gather, the gathering itself the plot. No single ball
+// matters for what it is; they matter because collecting them all is what moves the story to its wish.
+
+// GOKU — the seeker gathering the scattered pieces
+char goku [+Protagonist]
+
+// A DRAGON BALL — one of the seven; valuable only as a piece to collect
+obj a_dragon_ball [+PlotCoupon]
+
+scene the_hunt_for_the_balls {
+  beat 1 {
+    // he gathers another of the seven — the seeking is the plot
+    evt the_gathering [&Collects(agent=goku, token=a_dragon_ball)]
+    // Plot_Coupon -> the_gathering [+PlotCoupon_T]
+  }
+}
