@@ -1,0 +1,71 @@
+// === PREAMBLE ===
+// @trope    The Evil Prince
+// @category Politics / Villains
+// @source   https://allthetropes.org/wiki/The_Evil_Prince
+// @domain   Narrative
+// @scale    scene
+// @version  1.3
+//
+// Laconic (per the wiki): a royal, usually not first in line, who hurries the heirs ahead of him to their
+// graves so the throne falls to him. FRONTIER: succession by murder of one's own blood. The discriminator
+// is a [+Pretender] (a scheming royal heir) bound on the agent of a [&Slays] event whose target is the
+// [+Royalty] kin ahead of him. Distinct from Klingon Promotion (kill a superior for any post) by the
+// royal-bloodline succession motive, and from The Starscream (betray an evil master) by the lawful line.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc the_evil_prince -> [
+  rightful_king_returns : "the usurper the true heir must displace",
+  klingon_promotion : "a royal-succession cousin of",
+  evil_chancellor : "the in-the-bloodline counterpart to"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the throne-coveting royal kin-slayer is the discriminator; reuses [&Slays]/[+Royalty]) —
+prop Pretender [+Political]   // a royal heir scheming to seize a throne not yet his
+
+imply TheEvilPrince -> [Usurpation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (scene scale): a [+Pretender] SLAYS a [+Royalty] kinsman ahead of him — the schemer bound on
+// the agent and the rival heir on the target of a [&Slays] event, so phase-2 re-checks [+Pretender] on the
+// killer and [+Royalty] on the victim (STYLE §8). Binding the throne-coveting heir against royal blood is
+// the discriminator, parting it from Klingon Promotion (any post) and a generic murder.
+rule The_Evil_Prince {
+  when:
+    char $prince [+Pretender]
+    char $kin [+Royalty]
+    $prince != $kin
+    evt  $murder [&Slays(agent=$prince, target=$kin)]
+  then:
+    $murder [+TheEvilPrince]
+}
+
+
+// === CONCRETE VIGNETTE: The Lion King — Scar (animated film, 1994) ===
+// Scar is second in line behind his brother Mufasa and Mufasa's heir Simba, and he means to fix that. He
+// engineers the wildebeest stampede, lures Mufasa into the gorge, and — as his brother clings to the cliff
+// begging for help — throws him to his death, then drives the cub Simba into exile. The crown taken by the
+// murder of one's own blood: the Evil Prince in full.
+
+// SCAR — the second-in-line who murders for the throne
+char scar [+Pretender] [+Antagonist]
+
+// MUFASA — the king and brother, the blood ahead of him
+char mufasa [+Royalty]
+
+// EXT. THE GORGE - the stampede, the cliff
+set the_gorge [+Exterior]
+
+scene the_murder_at_the_gorge {
+  beat 1 {
+    mufasa @ the_gorge
+    // he throws his own brother and king to his death to take the crown
+    evt the_betrayal [&Slays(agent=scar, target=mufasa)]
+    // The_Evil_Prince -> the_betrayal [+TheEvilPrince]
+  }
+}

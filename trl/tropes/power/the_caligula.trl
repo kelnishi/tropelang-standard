@@ -1,0 +1,64 @@
+// === PREAMBLE ===
+// @trope    The Caligula
+// @category Politics / Villains
+// @source   https://allthetropes.org/wiki/The_Caligula
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): a hereditary sovereign who is genuinely insane yet wields the full power of the
+// state — wildly irrational, violently moody, god-complexed, lethal to displease. FRONTIER: madness armed
+// with absolute authority. The discriminator is a ruler who is both [+Royalty] and [+Mad] bound on the
+// agent of a [&Tyrannizes] event. Distinct from a Police State (an apparatus) and a calculating tyrant:
+// here the danger is one unhinged mind holding the crown.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc the_caligula -> [
+  deadly_decadent_court : "rules the",
+  the_starscream : "breeds the conspiracy of",
+  police_state : "a mad-individual counterpart to the apparatus of"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the insane absolute ruler is the discriminator; reuses [+Royalty]) —
+prop Mad        [+Psychological]   // genuinely unhinged — irrational, capricious, god-complexed
+verb Tyrannizes [+Political]       // wields absolute power with capricious cruelty
+
+imply TheCaligula -> [Usurpation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a [+Royalty] [+Mad] sovereign TYRANNIZES — the ruler bound on the agent of a
+// [&Tyrannizes] event, so phase-2 re-checks both [+Royalty] and [+Mad] on him (STYLE §8). Binding madness
+// AND sovereignty on the same figure is the discriminator: an unhinged mind with absolute power, parting
+// it from a calculating tyrant (sane) and a Police State (an apparatus, not a person).
+rule The_Caligula {
+  when:
+    char $ruler [+Royalty] [+Mad]
+    evt  $reign [&Tyrannizes(agent=$ruler)]
+  then:
+    $reign [+TheCaligula]
+}
+
+
+// === CONCRETE VIGNETTE: Caligula — emperor of Rome (history, 1st c.) ===
+// The young emperor Gaius — "Caligula" — holds the absolute power of Rome and is, by every account,
+// stark mad: he executes senators on whim, talks to the moon, has citizens fed to the beasts for sport,
+// declares himself a living god, and reportedly plans to make his horse Incitatus a consul. The state's
+// full machinery answers to a mind unmoored from reason, and no one near him is safe. The trope's
+// namesake — insanity wearing the purple.
+
+// CALIGULA — the mad emperor with the full power of Rome
+char caligula [+Royalty] [+Mad]
+
+scene the_mad_reign {
+  beat 1 {
+    // absolute power in an unhinged mind: executions on whim, a god-complex, the horse for consul
+    evt the_reign [&Tyrannizes(agent=caligula)]
+    // The_Caligula -> the_reign [+TheCaligula]
+  }
+}

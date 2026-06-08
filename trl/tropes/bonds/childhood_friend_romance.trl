@@ -1,0 +1,77 @@
+// === PREAMBLE ===
+// @trope    Childhood Friend Romance
+// @category Relationships / Romance
+// @source   https://allthetropes.org/wiki/Childhood_Friend_Romance
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): two characters who spent their childhood years together develop romantic feelings
+// for each other — the friend you grew up with turns out to be the one. FRONTIER: love whose foundation is
+// a shared past, not a first meeting. The discriminator is a [+ChildhoodTie] character (one bound to
+// another since childhood) bound on the agent of a [&Loves] event whose target ALSO carries [+ChildhoodTie]
+// — so it fires when the love runs between two who grew up together, parting it from Star-Crossed Lovers
+// (love thwarted by circumstance) and Love at First Sight (love sparked at the first meeting, no shared past).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc childhood_friend_romance -> [
+  star_crossed_lovers : "a shared-past cousin of",
+  like_brother_and_sister : "the romantic counterpart to the platonic",
+  unrequited_love : "becomes one-sided when the feeling is not returned"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the grew-up-together bond is the discriminator; reuses [&Loves] from the prelude) —
+prop ChildhoodTie [+Social]   // bound to another since childhood — the friend one grew up with
+
+imply ChildhoodFriendRomance -> [Affection, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a [+ChildhoodTie] character LOVES another [+ChildhoodTie] — each grew-up-together
+// friend bound on a role of a [&Loves] event, so phase-2 re-checks [+ChildhoodTie] on BOTH the lover and
+// the beloved (STYLE §8). Binding the shared-childhood tie on both ends of the love is the discriminator:
+// the romance runs between two who grew up together — parting it from Love at First Sight (no shared past)
+// and Star-Crossed Lovers (love thwarted by circumstance, not founded on childhood).
+rule Childhood_Friend_Romance {
+  when:
+    char $a [+ChildhoodTie]
+    char $b [+ChildhoodTie]
+    $a != $b
+    evt  $confession [&Loves(agent=$a, target=$b)]
+  then:
+    $confession [+ChildhoodFriendRomance]
+}
+
+
+// === CONCRETE VIGNETTE: The Lion King — Simba & Nala (animated film, 1994) ===
+// As cubs Simba and Nala are inseparable playmates — pinned in the wrestling games, dragged off on the
+// elephant-graveyard adventure, betrothed by Zazu to their shared horror ("I can't marry her, she's my
+// friend!"). Years apart, Simba in exile and Nala grown, they meet again in the jungle and the old
+// friendship turns into something else under the stars — "Can You Feel the Love Tonight." The friend he
+// grew up with was the one all along. The textbook childhood friend romance.
+
+// SIMBA — the cub who grew up wrestling his best friend
+char simba [+ChildhoodTie] [+Protagonist]
+
+// NALA — the friend from the den, the one he loves grown
+char nala [+ChildhoodTie]
+
+// EXT. THE JUNGLE - NIGHT (the reunion under the stars)
+set the_jungle [+Exterior] [+Night]
+
+arc simba_and_nala [+ChildhoodFriendRomance]
+
+scene the_reunion {
+  beat 1 {
+    simba @ the_jungle
+    nala @ the_jungle
+    // the childhood playmates meet grown, and the old friendship turns to love
+    evt the_confession [&Loves(agent=simba, target=nala)]
+    // Childhood_Friend_Romance -> the_confession [+ChildhoodFriendRomance]
+  }
+}

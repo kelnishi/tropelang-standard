@@ -238,6 +238,30 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   cracked the **hard recognition shapes** — tonal juxtaposition (Mood Whiplash), tonal arc (Cerebus
   Syndrome), and setting-as-property (Crapsack World) — each via a linked-event discriminator. Power → 19,
   Death → 23, Meta → 20.)
+- **The Caligula** (Politics / Villains) — https://allthetropes.org/wiki/The_Caligula
+  (Caligula, history — a [+Royalty][+Mad] ruler `[&Tyrannizes]`; the insane despot, vs a merely cruel
+  tyrant, by the madness bound on the throne. Founds `prop Mad` + `verb Tyrannizes`.)
+- **The Evil Prince** (Politics / Villains) — https://allthetropes.org/wiki/The_Evil_Prince
+  (The Lion King, Scar — a [+Pretender] `[&Slays]` the [+Royalty] kin ahead of him; succession by
+  kin-murder, vs Klingon Promotion (any post). Founds `prop Pretender`; reuses `[&Slays]`/`[+Royalty]`.)
+- **Vichy Earth** (Politics / Worldbuilding) — https://allthetropes.org/wiki/Vichy_Earth
+  (The Man in the High Castle — an [+Occupier] `[&Subjugates]` a conquered world under collaborator rule.
+  Founds `prop Occupier` + `verb Subjugates(target)`.)
+- **Then Let Me Be Evil** (Character Development / Alignment) — https://allthetropes.org/wiki/Then_Let_Me_Be_Evil
+  (Wicked, Elphaba — a [+Maligned] outcast `[&EmbracesEvil]`, accepting the label forced on them; villainy
+  as self-fulfilling prophecy, vs a wound-driven Face Heel Turn. Founds `prop Maligned` + `verb EmbracesEvil`.)
+- **Took a Level in Kindness** (Character Development / Transformation) — https://allthetropes.org/wiki/Took_a_Level_in_Kindness
+  (How the Grinch Stole Christmas, the Grinch — a [+Harsh] jerk `[&Mellows]` into warmth; the virtue-axis
+  sibling of Took a Level in Badass (competence). Founds `prop Harsh` + `verb Mellows`.)
+- **Childhood Friend Romance** (Relationships / Romance) — https://allthetropes.org/wiki/Childhood_Friend_Romance
+  (The Lion King, Simba & Nala — a [+ChildhoodTie] character `[&Loves]` another [+ChildhoodTie]; love
+  founded on a shared past, vs Love at First Sight. Founds `prop ChildhoodTie`; reuses `[&Loves]`.)
+- **Recursive Canon** (Metafiction) — https://allthetropes.org/wiki/Recursive_Canon
+  (Supernatural, the "Supernatural" books — an in-world maker `[&Recasts]` the universe's real history into
+  an [+InUniverseFiction] work, vs an unrelated Show Within a Show. Founds `prop InUniverseFiction` +
+  `verb Recasts(target)`.)
+  Corpus **277 → 284 tropes**; self-recognition steady at **284/284 (100%)**. (Capability-gap batch 4/5:
+  balancing the frontier — Power → 22, Arc → 25, Bonds → 24, Meta → 21 — across the recognition scales.)
 
 ## [1.7.4] — 2026-06-08
 

@@ -82,7 +82,7 @@ Universal + the cast & plot-structure indexes). This is the live ledger — **ev
 it** (the finalize step in `CONVERSION_BOT.md`). The *recipe* for re-running the review (corpus inventory
 vs. the indexes, archive access) lives in `CONVERSION_BOT.md`; the *state* lives here.
 
-**Corpus: 277 tropes · self-recognition 277/277 (100%).** (Re-measure: `tropelang selfcheck
+**Corpus: 284 tropes · self-recognition 284/284 (100%).** (Re-measure: `tropelang selfcheck
 trl/tropes/corpus.toml --corpus file://trl`.)
 
 **Converted batches (done):**
@@ -103,7 +103,8 @@ trl/tropes/corpus.toml --corpus file://trl`.)
 - `convert/loaded-meaning-batch` (#55, 7) — **ground-level loaded-meaning tropes** (object/action/behavior gets meaning from legend/religion/anime/chivalry/comedy/myth/ritual): Only the Chosen May Wield · Holy Halo · Tsundere · Throwing Down the Gauntlet · Spit Take · Red String of Fate · Pinky Swear.
 - `convert/power-meta-balance-1` (#56, 7) — **capability-gap batch 1/5 (Power+4, Meta+2)**: Kingmaker Scenario · La Resistance · Government Conspiracy · The Quisling · The Stinger · Medium Awareness · Sequel Hook.
 - `convert/power-meta-balance-2` (#57, 7) — **batch 2/5**: Asskicking Equals Authority · Police State · A House Divided · Author Avatar · Literary Agent Hypothesis · Trapped in TV Land · Disposable Woman.
-- `convert/power-meta-balance-3` (this PR, 7) — **batch 3/5, cracked the hard recognition shapes**: Enemy Civil War (power) · Dropped a Bridge on Him · Death Seeker (death) · Painting the Medium (meta) · Mood Whiplash · Cerebus Syndrome · Crapsack World (tonal-juxtaposition / tonal-arc / setting-property, via linked-event discriminators).
+- `convert/power-meta-balance-3` (#58, 7) — **batch 3/5, cracked the hard recognition shapes**: Enemy Civil War (power) · Dropped a Bridge on Him · Death Seeker (death) · Painting the Medium (meta) · Mood Whiplash · Cerebus Syndrome · Crapsack World (tonal-juxtaposition / tonal-arc / setting-property, via linked-event discriminators).
+- `convert/power-meta-balance-4` (this PR, 7) — **batch 4/5, frontier-balancing across scales**: The Caligula · The Evil Prince · Vichy Earth (power) · Then Let Me Be Evil · Took a Level in Kindness (arc) · Childhood Friend Romance (bonds) · Recursive Canon (meta). Power → 22, Arc → 25, Bonds → 24, Meta → 21.
 
 **Remaining gaps (archive-verified; the next-batch candidates):**
 - [ ] Mood Whiplash · [ ] Idiot Plot · [ ] Crapsack World (each harder to event-anchor —

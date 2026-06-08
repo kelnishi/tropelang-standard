@@ -1,0 +1,75 @@
+// === PREAMBLE ===
+// @trope    Recursive Canon
+// @category Metafiction
+// @source   https://allthetropes.org/wiki/Recursive_Canon
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): a work that appeared to stand on its own turns out to be fiction — loosely based
+// on "real" events — INSIDE its own greater universe; the show exists, as a show, within the world it
+// depicts. FRONTIER: canon folding back on itself in onion-like layers. The discriminator is an
+// [+InUniverseFiction] work (a fiction that exists inside its own setting) bound on the target of a
+// [&Recasts] event whose agent is the in-world maker — so it fires when a universe's "real" history is
+// recast as a fiction within that same universe, parting it from Show Within a Show (an UNrelated fiction
+// nested inside) and Literary Agent Hypothesis (the work framed as a true account, not as fiction).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc recursive_canon -> [
+  show_within_a_show : "differs from (the nested work is the SAME universe's own story)",
+  literary_agent_hypothesis : "the inverse framing of (fiction-of-the-real, not true-account)",
+  reality_bleed : "the layered canon often leads to"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the in-universe fiction-of-the-real is the discriminator; promotion model) —
+prop InUniverseFiction [+Narrative]    // a work that exists, as fiction, inside its own greater universe
+verb Recasts(target) [+Intentional]    // recasts the universe's "real" history as a fiction within that universe
+
+imply RecursiveCanon -> [Metafiction, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): an in-world maker RECASTS the universe's real history into an [+InUniverseFiction]
+// work — the maker bound on the agent role and the resulting in-universe fiction on the target of a
+// [&Recasts] event, so phase-2 re-checks [+InUniverseFiction] on the work that results (STYLE §8). Binding
+// the in-universe-fiction tag on the recast work is the discriminator: the universe's own "real" events
+// become a fiction inside it — parting it from Show Within a Show (an unrelated nested work).
+rule Recursive_Canon {
+  when:
+    char $maker
+    obj  $work [+InUniverseFiction]
+    evt  $tiein [&Recasts(agent=$maker, target=$work)]
+  then:
+    $tiein [+RecursiveCanon]
+}
+
+
+// === CONCRETE VIGNETTE: Supernatural — the "Supernatural" books (TV, 2005–2020) ===
+// Within the show's own world, the prophet Chuck Shurley has been writing a pulp novel series — titled
+// "Supernatural" — that chronicles, beat for beat, the real lives of the Winchester brothers as they hunt
+// across America. Sam and Dean stumble onto the books (and later a fan convention) and read their own
+// "real" history packaged and sold as cheap fiction inside their universe. The series folds its canon back
+// on itself: the actual show, the in-world books of the same name, and the real world that holds both.
+
+// CHUCK SHURLEY — the in-world prophet who writes the brothers' real lives as the "Supernatural" novels
+char chuck [+Author]
+
+// THE "SUPERNATURAL" BOOKS — the in-universe fiction recast from the Winchesters' real history
+obj the_books [+InUniverseFiction]
+
+// INT. A ROADSIDE BOOKSTORE - the brothers find their own lives on the shelf
+set the_bookstore [+Interior]
+
+scene the_brothers_find_the_books {
+  beat 1 {
+    chuck @ the_bookstore
+    // the prophet recasts the Winchesters' real history into a fiction sold inside their own world
+    evt the_tiein [&Recasts(agent=chuck, target=the_books)]
+    // Recursive_Canon -> the_tiein [+RecursiveCanon]
+  }
+}

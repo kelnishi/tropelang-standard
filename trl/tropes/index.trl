@@ -22,6 +22,7 @@ import "trl/tropes/arc/fall/fall_from_grace.trl"
 import "trl/tropes/arc/fall/heroic_bsod.trl"
 import "trl/tropes/arc/fall/kick_the_dog.trl"
 import "trl/tropes/arc/fall/the_dog_bites_back.trl"
+import "trl/tropes/arc/fall/then_let_me_be_evil.trl"
 import "trl/tropes/arc/fall/trauma_conga_line.trl"
 import "trl/tropes/arc/fall/villainous_breakdown.trl"
 import "trl/tropes/arc/growth/call_to_adventure.trl"
@@ -36,7 +37,9 @@ import "trl/tropes/arc/redemption/heel_realization.trl"
 import "trl/tropes/arc/redemption/pet_the_dog.trl"
 import "trl/tropes/arc/redemption/redemption_arc.trl"
 import "trl/tropes/arc/redemption/redemption_rejection.trl"
+import "trl/tropes/arc/redemption/took_a_level_in_kindness.trl"
 import "trl/tropes/bonds/a_house_divided.trl"
+import "trl/tropes/bonds/childhood_friend_romance.trl"
 import "trl/tropes/bonds/conflicting_loyalty.trl"
 import "trl/tropes/bonds/cooldown_hug.trl"
 import "trl/tropes/bonds/damsel_in_distress.trl"
@@ -201,6 +204,7 @@ import "trl/tropes/meta/metafiction/medium_awareness.trl"
 import "trl/tropes/meta/metafiction/mockumentary.trl"
 import "trl/tropes/meta/metafiction/painting_the_medium.trl"
 import "trl/tropes/meta/metafiction/reality_bleed.trl"
+import "trl/tropes/meta/metafiction/recursive_canon.trl"
 import "trl/tropes/meta/metafiction/show_within_a_show.trl"
 import "trl/tropes/meta/metafiction/the_stinger.trl"
 import "trl/tropes/meta/metafiction/title_drop.trl"
@@ -226,10 +230,13 @@ import "trl/tropes/power/police_state.trl"
 import "trl/tropes/power/puppet_king.trl"
 import "trl/tropes/power/rightful_king_returns.trl"
 import "trl/tropes/power/smear_campaign.trl"
+import "trl/tropes/power/the_caligula.trl"
 import "trl/tropes/power/the_coup.trl"
+import "trl/tropes/power/the_evil_prince.trl"
 import "trl/tropes/power/the_purge.trl"
 import "trl/tropes/power/the_quisling.trl"
 import "trl/tropes/power/the_starscream.trl"
+import "trl/tropes/power/vichy_earth.trl"
 import "trl/tropes/rhetoric/an_aesop.trl"
 import "trl/tropes/rhetoric/armor_piercing_question.trl"
 import "trl/tropes/rhetoric/audience_surrogate.trl"
@@ -549,6 +556,7 @@ concept character_development [+Trope(category="Characterization Tropes", source
 concept chekhovs_boomerang [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Boomerang")] [%Narrative]
 concept chekhovs_gunman [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Gunman")] [%Narrative]
 concept chekhovs_skill [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Skill")] [%Narrative]
+concept childhood_friend_romance [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Childhood_Friend_Romance")] [%Narrative]
 concept combat_pragmatist [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Combat_Pragmatist")] [%Interpersonal]
 concept conflicting_loyalty [+Trope(category="Internal Conflict", source="https://allthetropes.org/wiki/Conflicting_Loyalty")] [%Interpersonal]
 concept cooldown_hug [+Trope(category="Friendship", source="https://allthetropes.org/wiki/Cooldown_Hug")] [%Narrative]
@@ -639,6 +647,7 @@ concept pre_mortem_one_liner [+Trope(category="Combat Tropes", source="https://a
 concept puppet_king [+Trope(category="Political", source="https://allthetropes.org/wiki/Puppet_King")] [%Political]
 concept race_against_the_clock [+Trope(category="Plots", source="https://allthetropes.org/wiki/Race_Against_the_Clock")] [%Narrative]
 concept reality_bleed [+Trope(category="Metafiction", source="https://allthetropes.org/wiki/Reality_Bleed")] [%Narrative]
+concept recursive_canon [+Trope(category="Metafiction", source="https://allthetropes.org/wiki/Recursive_Canon")] [%Narrative]
 concept red_shirt [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Red_Shirt")] [%Narrative]
 concept red_string_of_fate [+Trope(category="Romance", source="https://allthetropes.org/wiki/Red_String_of_Fate")] [%Narrative]
 concept redemption_equals_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Redemption_Equals_Death")] [%Narrative]
@@ -667,11 +676,13 @@ concept talking_the_monster_to_death [+Trope(category="Rhetoric", source="https:
 concept tear_jerker [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Tear_Jerker")] [%Narrative]
 concept the_ace [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/The_Ace")] [%Narrative]
 concept the_big_damn_kiss [+Trope(category="Romance", source="https://allthetropes.org/wiki/The_Big_Damn_Kiss")] [%Narrative]
+concept the_caligula [+Trope(category="Politics", source="https://allthetropes.org/wiki/The_Caligula")] [%Narrative]
 concept the_climax [+Trope(category="Story Structure", source="https://allthetropes.org/wiki/Climax")] [%Narrative]
 concept the_dilemma [+Trope(category="Drama", source="https://allthetropes.org/wiki/Sadistic_Choice")] [%Mind]
 concept the_dog_bites_back [+Trope(category="Character Tropes", source="https://allthetropes.org/wiki/The_Dog_Bites_Back")] [%Interpersonal]
 concept the_dragon [+Trope(category="Characterization", source="https://allthetropes.org/wiki/The_Dragon")] [%Interpersonal]
 concept the_drifter [+Trope(category="Character Tropes", source="https://allthetropes.org/wiki/The_Drifter")] [%Narrative]
+concept the_evil_prince [+Trope(category="Politics", source="https://allthetropes.org/wiki/The_Evil_Prince")] [%Narrative]
 concept the_lancer [+Trope(category="Characterization", source="https://allthetropes.org/wiki/The_Lancer")] [%Interpersonal]
 concept the_love_interest [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Love_Interest")] [%Interpersonal]
 concept the_man_behind_the_man [+Trope(category="Reveal", source="https://allthetropes.org/wiki/The_Man_Behind_the_Man")] [%Narrative]
@@ -686,18 +697,21 @@ concept the_summation [+Trope(category="Mystery Tropes", source="https://allthet
 concept the_trickster [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/The_Trickster")] [%Narrative]
 concept the_wizard [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Wizard_Classic")] [%Narrative]
 concept the_worf_effect [+Trope(category="Combat", source="https://allthetropes.org/wiki/The_Worf_Effect")] [%Narrative]
+concept then_let_me_be_evil [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Then_Let_Me_Be_Evil")] [%Narrative]
 concept throwing_down_the_gauntlet [+Trope(category="Combat", source="https://allthetropes.org/wiki/Throwing_Down_the_Gauntlet")] [%Narrative]
 concept time_bomb [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/Time_Bomb")] [%Narrative]
 concept title_drop [+Trope(category="Title Tropes", source="https://allthetropes.org/wiki/Title_Drop")] [%Narrative]
 concept together_in_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Together_in_Death")] [%Interpersonal]
 concept tomato_in_the_mirror [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Tomato_in_the_Mirror")] [%Mind]
 concept took_a_level_in_badass [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Took_a_Level_in_Badass")] [%Mind]
+concept took_a_level_in_kindness [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Took_a_Level_in_Kindness")] [%Narrative]
 concept tragic_hero [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Tragic_Hero")] [%Narrative]
 concept trapped_in_tv_land [+Trope(category="Metafiction", source="https://allthetropes.org/wiki/Trapped_in_TV_Land")] [%Narrative]
 concept trash_talk [+Trope(category="Combat", source="https://allthetropes.org/wiki/Trash_Talk")] [%Narrative]
 concept trauma_conga_line [+Trope(category="Tragedy", source="https://allthetropes.org/wiki/Trauma_Conga_Line")] [%Narrative]
 concept trojan_horse [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Trojan_Horse")] [%Interpersonal]
 concept tsundere [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Tsundere")] [%Narrative]
+concept vichy_earth [+Trope(category="Politics", source="https://allthetropes.org/wiki/Vichy_Earth")] [%Narrative]
 concept villain_protagonist [+Trope(category="Character Roles", source="https://allthetropes.org/wiki/Villain_Protagonist")] [%Narrative]
 concept villainous_breakdown [+Trope(category="Villains", source="https://allthetropes.org/wiki/Villainous_Breakdown")] [%Narrative]
 concept well_intentioned_extremist [+Trope(category="Villains", source="https://allthetropes.org/wiki/Well-Intentioned_Extremist")] [%Narrative]
