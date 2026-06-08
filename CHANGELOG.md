@@ -99,6 +99,19 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   clash) keeps it off Conflict / The Climax and parts it from a villain's taunt. Founds `prop
   Questionable`/`prop Ally` + `verb Rebukes(other)`.)
   Corpus **210 → 213 tropes**; self-recognition steady at **213/213 (100%)**.
+- **Bond Villain Stupidity** (Villains / Stock Villain Behaviors) — https://allthetropes.org/wiki/Bond_Villain_Stupidity
+  (Goldfinger's laser table — an [+Antagonist] `[&Gloats]` over a [+Protagonist] who is [+AtMercy] instead
+  of finishing him, so the hero is [+Spared]; the at-mercy hero bound on the gloat parts it from a plain
+  Motive Rant. Founds `prop AtMercy` + `verb Gloats(target)`.)
+- **Race Against the Clock** (Plots / Plot Devices) — https://allthetropes.org/wiki/Race_Against_the_Clock
+  (Around the World in Eighty Days, Phileas Fogg — a [+Protagonist] `[&Races]` against a [+Deadline]; the
+  fixed-moment clock bound on the race parts it from a plain conflict or pursuit. Founds `prop Deadline`
+  + `verb Races(against)`.)
+- **I Am Your Father** (Reveal / Plot Twists) — https://allthetropes.org/wiki/Luke,_I_Am_Your_Father
+  (The Empire Strikes Back, Vader & Luke — a [&Reveals] whose disclosed fact is tagged [+Parentage]; the
+  bloodline content specializes it off the generic The Reveal (co-confirms with Dramatic_Irony as the
+  whole reveal family does). Founds `prop Parentage`.)
+  Corpus **213 → 216 tropes**; self-recognition steady at **216/216 (100%)**.
 
 ### Fixed
 - Self-recognition (§4b): event-anchored the last 4 `bonds` tropes so they confirm their own vignette,
