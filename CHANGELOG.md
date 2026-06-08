@@ -286,6 +286,11 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   atonement) and a gradual Redemption Arc. Founds `prop Penitent`/`prop Redemptive`; reuses `[&Quests]`.)
   Corpus **281 → 288 tropes**; self-recognition steady at **288/288 (100%)**. (Capability-gap batch 5/5,
   final: lifting the thinnest spokes — Power → 24, Death → 25, Bonds → 26, Arc → 26.)
+- **Painting the Medium** (Metafiction) — https://allthetropes.org/wiki/Painting_the_Medium
+  (Schindler's List, the girl in the red coat — within a `work schindlers_list [%Film]` (medium on the Essence
+  facet), the author `[&Employs]` a [+MediumArtifact] (the red coat) to convey story; the author-side
+  counterpart to Medium Awareness. **Un-deferred** and re-founded on the work skeleton (engine ≥ 0.6.0).
+  Founds `verb Employs(artifact)`; reuses `[+MediumArtifact]`.) Corpus **288 → 289 tropes**; selfcheck **289/289**.
 
 ### Changed
 - **Klingon Promotion** (Political / Power) — refined to the LETHAL usurpation. The rule now requires the
@@ -293,6 +298,12 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   `verb Usurps` in `power_dynamics` from "seize by killing" to "seize a position **by force**" (depose, not
   necessarily kill), so The Evil Prince can reuse `[&Usurps]` for bloodless royal succession (Fire Lord Ozai),
   with the kill being the discriminator that keeps Klingon Promotion distinct. (Review of #59.)
+- **The Stinger** (Metafiction / Paratext) — re-founded on the **work skeleton** (engine ≥ 0.6.0). Was a
+  `[+PostCredits]` prop on a stand-in `obj` scene + a `char` "film"; now the work is a first-class `work
+  iron_man [%Film]` (medium on the Essence facet) and the scene occupies a `post_credits` **slot** (`scene …
+  @ post_credits`). The slot placement is the discriminator; a char-agent `[&Appends]` event is the recall
+  anchor (a pure slot edge alone does not recall). First adopter of the work/slot model; **`engine_min`
+  raised `0.4.1 → 0.6.0`**.
 
 ## [1.7.4] — 2026-06-08
 

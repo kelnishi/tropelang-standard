@@ -1,0 +1,74 @@
+// === PREAMBLE ===
+// @trope    Painting the Medium
+// @category Metafiction
+// @source   https://allthetropes.org/wiki/Painting_the_Medium
+// @domain   Narrative
+// @scale    scene
+// @version  1.4
+//
+// Laconic (per the wiki): the AUTHOR modifies the presentation itself to convey story — a B&W flashback,
+// character-specific speech bubbles, a GUI that shifts with the character. FRONTIER: the medium used as a
+// storytelling instrument. The work's medium rides on the Essence facet of a `work` (`[%Film]`; engine ≥
+// 0.6.0), and the discriminator is the author who `[&Employs]` a [+MediumArtifact] — a deviation in that
+// medium — to convey story. Distinct from Medium Awareness (a CHARACTER who [&Notices] the artifact): here
+// the author wields the medium and the characters never know — the meaning is in the presentation.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/meta/metafiction/medium_awareness.trl"   // the character-side counterpart (reuses [+MediumArtifact])
+
+assoc painting_the_medium -> [
+  medium_awareness : "the author-side counterpart of",
+  lampshade_hanging : "conveys silently what others"
+]
+
+
+// === ONTOLOGY ===
+// — the medium is the work's Essence (`work … [%Film]`; S01 §3 `work`, medium-as-essence; engine ≥ 0.6.0).
+//   The author EMPLOYS a [+MediumArtifact] (reused from Medium Awareness) — a deliberate deviation in that
+//   medium. No bespoke medium prop; the artifact rides on the author's char-agent event (the recall anchor). —
+verb Employs(artifact) [+Narrative]   // the author bends a medium element to convey story
+
+imply PaintingTheMedium -> [Metafictional, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (scene scale): within a `work` (whose medium is its `[%…]` essence), the author EMPLOYS a
+// [+MediumArtifact] to convey story — the artifact bound on the `artifact=` role of an [&Employs] event
+// (agent=$author, the recall anchor), so phase-2 re-checks [+MediumArtifact] on it (STYLE §8). Binding the
+// artifact on the AUTHOR's use of the work's own medium is the discriminator: the presentation carries the
+// meaning, parting it from Medium Awareness (a character noticing the artifact in-world).
+rule Painting_The_Medium {
+  when:
+    work $w [%Film]
+    obj  $artifact [+MediumArtifact]
+    evt  $use [&Employs(agent=$author, artifact=$artifact)]
+  then:
+    $use [+PaintingTheMedium]
+}
+
+
+// === CONCRETE VIGNETTE: Schindler's List — the girl in the red coat (film, 1993) ===
+// The film is shot in stark black and white — and then, in the horror of the liquidation of the ghetto,
+// one small girl's coat is rendered in red. No character remarks on it; no one in 1943 Kraków sees color
+// where there is none. It is Spielberg speaking directly through the medium: the single spot of color
+// makes the eye, and the conscience, follow that one child through the slaughter, and later find her coat
+// on a cart of the dead. The presentation itself tells the story.
+
+// SCHINDLER'S LIST — the work-as-artifact, a (monochrome) film; the medium rides on its Essence facet
+work schindlers_list [%Film] [%Monochrome]
+
+// THE RED COAT — color in a black-and-white film, a deviation in the medium used to carry meaning
+obj the_red_coat [+MediumArtifact]
+
+// THE DIRECTOR — who bends the medium to make us follow the child
+char spielberg [+Author]
+
+scene the_liquidation {
+  beat 1 {
+    // the author paints the medium itself — one red coat in a monochrome world
+    evt the_color [&Employs(agent=spielberg, artifact=the_red_coat)]
+    // Painting_The_Medium -> the_color [+PaintingTheMedium]
+  }
+}
