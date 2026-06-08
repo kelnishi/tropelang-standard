@@ -1,0 +1,75 @@
+// === PREAMBLE ===
+// @trope    Then Let Me Be Evil
+// @category Character Development / Alignment
+// @source   https://allthetropes.org/wiki/Then_Let_Me_Be_Evil
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): the "forces of good" treat a character as evil long enough — branding, shunning,
+// assuming the worst — that the character finally shrugs and decides to be exactly what they were accused
+// of being. FRONTIER: villainy as a self-fulfilling prophecy, chosen because it was imposed. The
+// discriminator is a [+Maligned] character (branded wicked by the moral order before any wrong) bound on
+// the agent of an [&EmbracesEvil] event — so it fires when the unjustly-branded one ACCEPTS the label,
+// parting it from a plain Face Heel Turn (a wound or temptation curdles a trusted hero) by the cause: here
+// the cruelty of being PRE-judged is what makes the villain.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/arc/fall/face_heel_turn.trl"   // the broader crossing; this is its prophecy-fulfilling case
+
+assoc then_let_me_be_evil -> [
+  face_heel_turn : "a self-fulfilling-prophecy case of",
+  fantastic_racism : "the branding that drives it is often",
+  self_fulfilling_prophecy : "is the villain-making form of"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the pre-branded outcast who accepts the label is the discriminator; promotion model) —
+prop Maligned     [+Social]        // branded wicked by the moral order before any wrong — shunned, assumed evil
+verb EmbracesEvil [+Intentional]   // accepts the imposed label and chooses to become what one was accused of being
+
+imply ThenLetMeBeEvil -> [Reversal, corruption, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a [+Maligned] character EMBRACES EVIL — the pre-branded outcast bound on the
+// agent role of an [&EmbracesEvil] event, so phase-2 re-checks [+Maligned] on the one who turns (STYLE §8).
+// Binding the unjust branding on the one who accepts it is the discriminator: villainy chosen BECAUSE it was
+// imposed — parting it from a Face Heel Turn driven by a wound or a temptation rather than a verdict.
+rule Then_Let_Me_Be_Evil {
+  when:
+    char $outcast [+Maligned]
+    evt  $turn [&EmbracesEvil(agent=$outcast)]
+  then:
+    $turn [+ThenLetMeBeEvil]
+    $outcast [+Antagonist]
+}
+
+
+// === CONCRETE VIGNETTE: Wicked — Elphaba (musical, 2003) ===
+// Elphaba is green-skinned from birth and treated as a wonder of ugliness for it: feared by her father,
+// mocked at school, suspected of malice she never intends. When she uncovers the Wizard's persecution of
+// the Animals and refuses to serve it, the regime brands her the "Wicked Witch of the West" and turns all
+// of Oz against her. Denounced as evil for doing right, hunted as a monster, she at last takes the name
+// they forced on her: "So if I'm flying solo, at least I'm flying free... I'm defying gravity." The good
+// folk of Oz made their witch — and then she let herself be one.
+
+// ELPHABA — green-skinned, feared and branded wicked long before any wrong
+char elphaba [+Maligned] [+Protagonist]
+
+// EXT. THE EMERALD CITY - the regime that names her the Wicked Witch
+set the_emerald_city [+Exterior] [+Crowded]
+
+arc elphabas_arc [+ThenLetMeBeEvil]
+
+scene defying_gravity {
+  beat 1 {
+    elphaba @ the_emerald_city
+    // branded wicked for refusing to serve injustice, she takes the name they forced on her
+    evt the_turn [&EmbracesEvil(agent=elphaba)]
+    // Then_Let_Me_Be_Evil -> the_turn [+ThenLetMeBeEvil]; elphaba [+Antagonist]
+  }
+}

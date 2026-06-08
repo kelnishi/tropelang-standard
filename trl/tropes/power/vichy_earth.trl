@@ -1,0 +1,69 @@
+// === PREAMBLE ===
+// @trope    Vichy Earth
+// @category Politics / Occupation
+// @source   https://allthetropes.org/wiki/Vichy_Earth
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): a conqueror (often alien) defeats humanity and decides to RUN the planet —
+// hostile but not genocidal, installing itself over a subjugated, collaborator-administered Earth (named
+// for Vichy France). FRONTIER: the whole world as occupied territory. The discriminator is a [+Foreign]
+// power (a conqueror not native to the land — a foreign nation or an alien invader) bound on the agent of a
+// [&Subjugates] event over the world. Distinct from a homegrown Police State (this regime is foreign, not
+// native) and The Quisling (the collaborator, not the conqueror).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/power/the_quisling.trl"   // the collaborator who serves the occupier
+
+assoc vichy_earth -> [
+  the_quisling : "administered for the conqueror by",
+  la_resistance : "resisted by",
+  police_state : "enforced as a"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the external/foreign conqueror ruling the world is the discriminator; promotion model) —
+prop Foreign            [+Political] // an external power, not native to the land it rules (a foreign nation or alien invader)
+verb Subjugates(target) [+Political] // conquers and installs itself as the ruling power over a territory
+
+imply VichyEarth -> [Usurpation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a [+Foreign] power SUBJUGATES the world — the conqueror bound on the agent role
+// of a [&Subjugates] event (target=$world), so phase-2 re-checks [+Foreign] on the conqueror (STYLE §8).
+// Binding the not-native status on the act of ruling is the discriminator: a defeated planet run by a
+// foreign power, parting it from a homegrown Police State and from the collaborating Quisling.
+rule Vichy_Earth {
+  when:
+    char $occupier [+Foreign]
+    evt  $conquest [&Subjugates(agent=$occupier, target=$world)]
+  then:
+    $conquest [+VichyEarth]
+}
+
+
+// === CONCRETE VIGNETTE: The Man in the High Castle — occupied America (novel/TV, 1962/2015) ===
+// The Axis won the war, and America is a conquered land run by its conquerors: the Greater Nazi Reich
+// administers the East, the Japanese Pacific States the West, a thin neutral zone between. American
+// collaborators staff the new order, the swastika flies over Times Square, and the population lives under
+// an occupying power that rules rather than exterminates. The whole nation a Vichy state — defeated,
+// administered, and held.
+
+// THE GREATER REICH — the foreign conqueror ruling the defeated land
+char the_reich [+Foreign] [+Antagonist]
+
+// OCCUPIED AMERICA — the subjugated world run by its conquerors
+char america [+Collective]
+
+scene the_occupation {
+  beat 1 {
+    // the external conqueror rules the defeated nation rather than destroying it
+    evt the_conquest [&Subjugates(agent=the_reich, target=america)]
+    // Vichy_Earth -> the_conquest [+VichyEarth]
+  }
+}

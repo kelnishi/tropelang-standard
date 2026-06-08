@@ -1,0 +1,70 @@
+// === PREAMBLE ===
+// @trope    Author Avatar
+// @category Metafiction
+// @source   https://allthetropes.org/wiki/Author_Avatar
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): a fictionalized version of the author appears in the story as a character, often
+// to comment and deliver the author's verdict. FRONTIER: the author embedded as a figure in the work. The
+// discriminator is an [+AuthorStandIn] character bound on the agent of an [&Interjects] event — the
+// writer's stand-in speaking into the tale. Distinct from Breaking the Fourth Wall (a character addresses
+// the AUDIENCE): the avatar is in-story, the author wearing a character's mask.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc author_avatar -> [
+  fourth_wall : "an in-story cousin of",
+  the_narrator : "often doubles as",
+  audience_surrogate : "the author-side counterpart to the reader-side"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the embedded author-figure is the discriminator; promotion model) —
+prop AuthorStandIn [+Narrative]   // a fictionalized version of the author, present as a character
+verb Interjects    [+Interpersonal] // the author-figure speaks his verdict into the story
+
+imply AuthorAvatar -> [Metafictional, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): an [+AuthorStandIn] character INTERJECTS — the author-figure bound on the agent
+// role of an [&Interjects] event, so phase-2 re-checks [+AuthorStandIn] on the speaker (STYLE §8). Binding
+// author-identity on the in-story figure is the discriminator: the author appears as a character and
+// comments, parting it from a Fourth-Wall address to the audience (the avatar speaks within the tale).
+rule Author_Avatar {
+  when:
+    char $avatar [+AuthorStandIn]
+    evt  $aside [&Interjects(agent=$avatar)]
+  then:
+    $aside [+AuthorAvatar]
+}
+
+
+// === CONCRETE VIGNETTE: Breakfast of Champions — Kurt Vonnegut (novel, 1973) ===
+// Near the end of the novel, Kurt Vonnegut writes himself into it: he sits in the cocktail lounge in
+// dark glasses, watching his own characters, and finally confronts Kilgore Trout to tell him he is his
+// creator and to set him free. The author is a figure inside his own story, stepping in to pass judgment
+// and grant mercy — not addressing us, but walking among the people he made.
+
+// KURT VONNEGUT (the avatar) — the author, present as a character in his own book
+char vonnegut [+AuthorStandIn]
+
+// KILGORE TROUT — the character he steps in to address
+char trout [+Deuteragonist]
+
+// INT. THE COCKTAIL LOUNGE - the author in dark glasses
+set the_lounge [+Interior]
+
+scene the_creator_appears {
+  beat 1 {
+    vonnegut @ the_lounge
+    // the author, as a character, speaks his verdict into the tale
+    evt the_interjection [&Interjects(agent=vonnegut)]
+    // Author_Avatar -> the_interjection [+AuthorAvatar]
+  }
+}

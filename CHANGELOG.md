@@ -189,6 +189,81 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   MediumArtifact` + `verb Notices(artifact)`.)
   Corpus **256 → 263 tropes**; self-recognition steady at **263/263 (100%)**. (Capability-gap batch 1/5:
   Power 12 → 16, Meta 14 → 16 — lifting the two thinnest spokes.)
+- **Asskicking Equals Authority** (Politics / Power) — https://allthetropes.org/wiki/Asskicking_Equals_Authority
+  (Black Panther, Warrior Falls — a challenger `[&Bests]` a [+MightIsRight] chief and takes the rule;
+  by-combat (not by-kill) succession. Founds `prop MightIsRight`; reuses `[&Bests]`.)
+- **Police State** (Politics / Dystopia) — https://allthetropes.org/wiki/Police_State
+  (The Handmaid's Tale, Gilead — an [+Authoritarian] regime `[&Represses]` its populace; the apparatus of
+  control, vs a lone tyrant. Founds `prop Authoritarian` + `verb Represses(target)`.)
+- **A House Divided** (Friendship / Group Dynamics) — https://allthetropes.org/wiki/A_House_Divided
+  (Night of the Living Dead — a [+Besieged] member `[&TurnsOn]` a fellow; cohesion collapsing inward under
+  threat, the inverse of Enemy Mine. Founds `prop Besieged` + `verb TurnsOn(target)`.)
+- **Disposable Woman** (Death Tropes) — https://allthetropes.org/wiki/Disposable_Woman
+  (Green Lantern, Alexandra DeWitt — a [+Disposable] love interest `[&Slays]`-ed to fuel the hero's
+  revenge ("fridging"), vs the Sacrificial Lion/Lamb tiers. Founds `prop Disposable`; reuses `[&Slays]`.)
+- **Author Avatar** (Metafiction) — https://allthetropes.org/wiki/Author_Avatar
+  (Breakfast of Champions, Vonnegut — an [+AuthorStandIn] character `[&Interjects]` into the tale; the
+  author embedded as a figure, vs a Fourth-Wall address. Founds `prop AuthorStandIn` + `verb Interjects`.)
+- **Literary Agent Hypothesis** (Metafiction / Framing) — https://allthetropes.org/wiki/Literary_Agent_Hypothesis
+  (The Princess Bride, Goldman's "abridgement" — an agent `[&Relays]` a [+RealAccount]; the work framed as
+  true, vs a Frame Story. Founds `prop RealAccount` + `verb Relays(account)`.)
+- **Trapped in TV Land** (Metafiction / Diegetic Levels) — https://allthetropes.org/wiki/Trapped_in_TV_Land
+  (Pleasantville — a force `[&PulledInto]` a [+FictionalWorld] carries a person inward, vs Reality Bleed's
+  outward leak. Founds `prop FictionalWorld` + `verb PulledInto(subject)`.)
+  Corpus **263 → 270 tropes**; self-recognition steady at **270/270 (100%)**. (Capability-gap batch 2/5:
+  Power → 18, Meta → 19, Bonds → 23, Death → 21 — balancing the bottom of the frontier.)
+- **Enemy Civil War** (Politics / Villains) — https://allthetropes.org/wiki/Enemy_Civil_War
+  (The Dark Knight, Joker vs the mob — one [+Antagonist] faction `[&TurnsOn]` another; villain-on-villain,
+  vs A House Divided (besieged allies). Reuses `[&TurnsOn]` — no new vocab.)
+- **Dropped a Bridge on Him** (Death Tropes) — https://allthetropes.org/wiki/Dropped_a_Bridge_on_Him
+  (Star Trek TNG, Tasha Yar — a [+Major] character [&Slays]-ed in an [+Anticlimactic] beat; withheld
+  drama, vs the Sacrificial Lion's weighty death. Founds `prop Anticlimactic`; reuses `[+Major]`/`[&Slays]`.)
+- **Death Seeker** (Death Tropes / Character) — https://allthetropes.org/wiki/Death_Seeker
+  (Logan — a [+DeathWish] character `[&CourtsDeath]`, fighting to die; the inverted will of a Determinator.
+  Founds `prop DeathWish` + `verb CourtsDeath`.)
+- **Crapsack World** (Settings / Worldbuilding) — https://allthetropes.org/wiki/Crapsack_World *(hard
+  recognition shape)* — (Warhammer 40,000 — in a [+Crapsack] world (a `set`) an [+Unremarked] [&Brutalizes]
+  cruelty passes normalized; bleakness shown by atrocity met with a shrug. Founds `prop Crapsack`/`prop
+  Unremarked` + `verb Brutalizes(target)`.)
+  Corpus **270 → 274 tropes**; self-recognition steady at **274/274 (100%)**. (Capability-gap batch 3/5:
+  Crapsack World lands the **setting-as-property** recognition shape via a linked-event discriminator.
+  Painting the Medium, Mood Whiplash, and Cerebus Syndrome were **demoted from this batch** — deferred
+  pending the Medium/work-skeleton + Tone-promotion design pass. Power → 19, Death → 23.)
+- **The Caligula** (Politics / Villains) — https://allthetropes.org/wiki/The_Caligula
+  (Caligula, history — a [+Royalty][+Mad] ruler `[&Tyrannizes]`; the insane despot, vs a merely cruel
+  tyrant, by the madness bound on the throne. Founds `prop Mad` + `verb Tyrannizes`.)
+- **The Evil Prince** (Politics / Villains) — https://allthetropes.org/wiki/The_Evil_Prince
+  (The Lion King, Scar — a [+Pretender] `[&Usurps]` the [+Royalty] kin ahead of him; seizing the succession
+  by force, lethal (Scar) or bloodless (Fire Lord Ozai), vs Klingon Promotion (the lethal seizure of a
+  [+Ruler]). Founds `prop Pretender`; reuses the generalized `[&Usurps]`/`[+Royalty]`.)
+- **Vichy Earth** (Politics / Worldbuilding) — https://allthetropes.org/wiki/Vichy_Earth
+  (The Man in the High Castle — a [+Foreign] power `[&Subjugates]` a conquered world under collaborator rule;
+  the not-native discriminator parts it from a homegrown Police State. Founds `prop Foreign` + `verb
+  Subjugates(target)`.)
+- **Then Let Me Be Evil** (Character Development / Alignment) — https://allthetropes.org/wiki/Then_Let_Me_Be_Evil
+  (Wicked, Elphaba — a [+Maligned] outcast `[&EmbracesEvil]`, accepting the label forced on them; villainy
+  as self-fulfilling prophecy, vs a wound-driven Face Heel Turn. Founds `prop Maligned` + `verb EmbracesEvil`.)
+- **Took a Level in Kindness** (Character Development / Transformation) — https://allthetropes.org/wiki/Took_a_Level_in_Kindness
+  (How the Grinch Stole Christmas, the Grinch — a [+Harsh] jerk `[&Mellows]` into `[+Warm]`; the virtue-axis
+  sibling of Took a Level in Badass (competence), asserting a positive end-state as that sibling does
+  ([+Formidable]). Founds `prop Harsh`/`prop Warm` + `verb Mellows`.)
+- **Childhood Friend Romance** (Relationships / Romance) — https://allthetropes.org/wiki/Childhood_Friend_Romance
+  (The Lion King, Simba & Nala — two characters mutually `[@ChildhoodBond]`-ed `[&Loves]` each other; love
+  founded on a shared past, vs Love at First Sight. Founds `rel ChildhoodBond` as a childhood-qualified
+  refinement of the prelude's `Bonded_To`; reuses `[&Loves]`.)
+- **Recursive Canon** (Metafiction) — https://allthetropes.org/wiki/Recursive_Canon
+  (Supernatural, the "Supernatural" books — an in-world maker `[&Recasts]` the universe's real history into
+  an [+InUniverseFiction] work, vs an unrelated Show Within a Show. Founds `prop InUniverseFiction` +
+  `verb Recasts(target)`.)
+  Corpus **274 → 281 tropes**; self-recognition steady at **281/281 (100%)**. (Capability-gap batch 4/5:
+  balancing the frontier — Power → 22, Arc → 25, Bonds → 24, Meta → 20 — across the recognition scales.)
+
+### Changed
+- **Klingon Promotion** (Political / Power) — refined to the LETHAL usurpation. The rule now requires the
+  claimant to both `[&Usurps]` (seize by force) AND `[&Slays]` the [+Ruler] holder. Paired with generalizing
+  `verb Usurps` in `power_dynamics` from "seize by killing" to "seize a position **by force**" (depose, not
+  necessarily kill), so The Evil Prince can reuse `[&Usurps]` for bloodless royal succession (Fire Lord Ozai),
+  with the kill being the discriminator that keeps Klingon Promotion distinct. (Review of #59.)
 
 ## [1.7.4] — 2026-06-08
 

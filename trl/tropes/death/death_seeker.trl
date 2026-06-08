@@ -1,0 +1,64 @@
+// === PREAMBLE ===
+// @trope    Death Seeker
+// @category Death Tropes / Character
+// @source   https://allthetropes.org/wiki/Death_Seeker
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): after loss, dishonor, or guilt they cannot repay, a character courts death —
+// throwing themselves into battle after battle hoping for an honorable end — but proves far too good at
+// surviving. FRONTIER: the will to die that won't be granted. The discriminator is a [+DeathWish]
+// character bound on the agent of a [&CourtsDeath] event: actively seeking the end. Distinct from the
+// suicidal (who would just do it) and the Determinator (who fights TO live): this one fights to die.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc death_seeker -> [
+  redemption_equals_death : "often hopes for a",
+  determinator : "the inverted will of",
+  despair_event_horizon : "a standing aftermath of a"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the will to die, sought in battle, is the discriminator; promotion model) —
+prop DeathWish   [+Psychological]   // longing for one's own (honorable) death after loss or guilt
+verb CourtsDeath [+Psychological]   // throws oneself into mortal danger hoping to be killed
+
+imply DeathSeeker -> [Psychological, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a [+DeathWish] character COURTS DEATH — the death-seeker bound on the agent
+// role of a [&CourtsDeath] event, so phase-2 re-checks [+DeathWish] on the seeker (STYLE §8). Binding the
+// will-to-die on the one hurling himself at danger is the discriminator: he fights to be killed, parting
+// it from the Determinator (who fights to live) and a plain suicide (who would not need the battle).
+rule Death_Seeker {
+  when:
+    char $c [+DeathWish]
+    evt  $charge [&CourtsDeath(agent=$c)]
+  then:
+    $charge [+DeathSeeker]
+}
+
+
+// === CONCRETE VIGNETTE: Logan — the weary Wolverine (film, 2017) ===
+// Logan is old, poisoned by his own adamantium, everyone he loved long dead; the healing factor that
+// once made him immortal is failing, and part of him welcomes it. He drinks, he picks fights he half
+// hopes to lose, he throws his ruined body into battles a younger man would avoid — courting the death
+// that has been denied him for two centuries. He is not suicidal so much as ready, hurling himself at the
+// end and, to his weary frustration, surviving anyway.
+
+// LOGAN / WOLVERINE — old, failing, half in love with his own end
+char logan [+Protagonist] [+DeathWish]
+
+scene the_last_fight {
+  beat 1 {
+    // he throws his ruined body into a battle, half-hoping not to walk away
+    evt the_charge [&CourtsDeath(agent=logan)]
+    // Death_Seeker -> the_charge [+DeathSeeker]
+  }
+}

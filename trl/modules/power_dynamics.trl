@@ -23,7 +23,7 @@ imply Power -> [Authority, Collective, Political]
 verb  Pledges(to)        [+Political]      // swear allegiance to a power
 verb  Commands(subject)  [+Political]      // issue an order expecting compliance
 verb  Defects(from)      [+Political]      // withdraw allegiance
-verb  Usurps(target)     [+Political]      // seize a position by killing its holder
+verb  Usurps(target)     [+Political]      // seize a position by force — depose its holder (not necessarily by killing)
 verb  Divides(targets)   [+Political]      // set rivals against each other so no coalition forms
 prop  Ruler              [+Political]
 prop  Tyrant             [+Political]
@@ -64,7 +64,8 @@ rule Command_Obeyed {
 
 // === POWER SEIZED, LOST, AND KEPT ===
 
-// Usurpation: kill the holder of a position to take it — the violent shortcut to the throne.
+// Usurpation: remove the holder of a position BY FORCE to take it — the violent shortcut to the throne
+// (lethal or not; killing is one means, exile or a coerced abdication another).
 rule Usurp {
   when:
     char $holder [+Ruler]

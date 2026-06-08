@@ -1,0 +1,78 @@
+// === PREAMBLE ===
+// @trope    Took a Level in Kindness
+// @category Character Development / Transformation
+// @source   https://allthetropes.org/wiki/Took_a_Level_in_Kindness
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): a Jerkass softens over time and becomes a Jerk With a Heart of Gold — or not a
+// jerk at all. The warming counterpart of Took a Level in Jerkass. FRONTIER: the VIRTUE axis of the
+// "took a level" family — distinct from Took a Level in Badass (the competence axis: weak -> formidable).
+// The discriminator is a [+Harsh] character (a cold/cruel jerk by default) bound on the agent of a
+// [&Mellows] event — so it fires on the softening of a jerk into warmth, parting it from a full Heel Face
+// Turn (an alignment flip, not a thaw) and from Took a Level in Badass (more capable, not kinder).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/arc/growth/took_a_level_in_badass.trl"   // the competence-axis sibling of the same family
+
+assoc took_a_level_in_kindness -> [
+  took_a_level_in_badass : "the virtue-axis sibling of (kindness vs. capability)",
+  jerk_with_a_heart_of_gold : "what the softened jerk becomes",
+  defrosting_ice_queen : "a love-interest-specific cousin of"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the default-cold jerk who warms is the discriminator; promotion model) —
+prop Harsh   [+Social]        // a jerkass — cold, cutting, cruel by default (the BEFORE state)
+prop Warm    [+Social]        // softened into kindness and warmth (the AFTER state — the level taken)
+verb Mellows [+Intentional]   // softens over time into warmth and kindness
+
+imply TookALevelInKindness -> [Transformation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a [+Harsh] character MELLOWS — the default-cold jerk bound on the agent role of
+// a [&Mellows] event, so phase-2 re-checks [+Harsh] on the one who warms (STYLE §8). Binding the prior
+// jerkishness on the one who softens is the discriminator: the change is a thaw on the VIRTUE axis, parting
+// it from Took a Level in Badass (capability) and from a Heel Face Turn (an alignment crossing). The level
+// taken lands as a gained trait — the jerk sheds [-Harsh] and gains [+Warm] — mirroring the badass sibling,
+// which asserts a positive [+Formidable] outcome (not just the loss of weakness).
+rule Took_a_Level_in_Kindness {
+  when:
+    char $jerk [+Harsh]
+    evt  $thaw [&Mellows(agent=$jerk)]
+  then:
+    $thaw [+TookALevelInKindness]
+    $jerk [-Harsh]
+    $jerk [+Warm]
+}
+
+
+// === CONCRETE VIGNETTE: How the Grinch Stole Christmas! — the Grinch (Seuss, 1957) ===
+// The Grinch begins as the definitive cold heart: a green misanthrope on Mount Crumpit whose heart is
+// "two sizes too small," who hates the Whos and their Christmas enough to steal every present, tree, and
+// crumb of roast beast in Whoville. But when the morning comes and the Whos sing anyway — joyful with
+// nothing left to unwrap — the cruelty thaws: "the Grinch's small heart grew three sizes that day." He
+// hauls the sleigh of stolen Christmas back down the mountain and carves the roast beast himself. The
+// definitive softening of a jerk.
+
+// THE GRINCH — the misanthrope of Mount Crumpit, heart two sizes too small
+char the_grinch [+Harsh] [+Protagonist]
+
+// EXT. MOUNT CRUMPIT - dawn over Whoville, the morning the Whos sing anyway
+set mount_crumpit [+Exterior] [+Day]
+
+arc grinchs_arc [+TookALevelInKindness]
+
+scene the_heart_grows {
+  beat 1 {
+    the_grinch @ mount_crumpit
+    // the Whos sing with nothing left to unwrap, and the cold heart thaws three sizes
+    evt the_thaw [&Mellows(agent=the_grinch)]
+    // Took_a_Level_in_Kindness -> the_thaw [+TookALevelInKindness]; the_grinch [-Harsh] [+Warm]
+  }
+}
