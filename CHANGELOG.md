@@ -164,6 +164,31 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   Corpus **249 → 256 tropes**; self-recognition steady at **256/256 (100%)**. (Loaded-meaning batch:
   objects/actions/behaviors whose sense comes from legend / religious art / anime / chivalry / slapstick /
   myth / childhood ritual.)
+- **Kingmaker Scenario** (Politics / Power) — https://allthetropes.org/wiki/Kingmaker_Scenario
+  (Warwick, Wars of the Roses — a [+Kingmaker] `[&Tips]` the balance to one side; decisive but unwinnable.
+  Founds `prop Kingmaker` + `verb Tips(toward)`.)
+- **La Resistance** (Politics / Rebellion) — https://allthetropes.org/wiki/La_Resistance
+  (The Hunger Games, District 13 — a [+Resistance] movement `[&Resists]` an [+Oppressive] regime. Founds
+  `prop Resistance` + `verb Resists(target)`.)
+- **Government Conspiracy** (Politics / Conspiracy) — https://allthetropes.org/wiki/Government_Conspiracy
+  (The X-Files, the Syndicate — a [+Statal] body `[&Conceals]` a [+Damning] truth; the state apparatus as
+  conspirator. Founds `prop Statal` + `verb Conceals(secret)`.)
+- **The Quisling** (Politics / Villains) — https://allthetropes.org/wiki/The_Quisling
+  (Vidkun Quisling, occupied Norway — a [+Collaborator] `[&Collaborates]` with an [+Oppressive] occupier
+  against his own people; distinct from Evil Chancellor / The Starscream. Founds `prop Collaborator` +
+  `verb Collaborates(with)`.)
+- **The Stinger** (Metafiction / Paratext) — https://allthetropes.org/wiki/The_Stinger
+  (Iron Man, Nick Fury — a [+PostCredits] scene `[&Appends]`-ed after the credits; defined by placement,
+  vs the content-defined Sequel Hook. Founds `prop PostCredits` + `verb Appends(scene)`.)
+- **Sequel Hook** (Plot Devices / Endings) — https://allthetropes.org/wiki/Sequel_Hook
+  (Back to the Future, the flying DeLorean — a [+SequelBait] thread `[&Teases]`-ed at the close, pointing
+  to more. Founds `prop SequelBait` + `verb Teases(hook)`.)
+- **Medium Awareness** (Metafiction) — https://allthetropes.org/wiki/Medium_Awareness
+  (Blazing Saddles, the Count Basie Orchestra — a character `[&Notices]` a [+MediumArtifact] (the
+  soundtrack); reacts to the apparatus, not the audience, vs Fourth Wall / Aside Glance. Founds `prop
+  MediumArtifact` + `verb Notices(artifact)`.)
+  Corpus **256 → 263 tropes**; self-recognition steady at **263/263 (100%)**. (Capability-gap batch 1/5:
+  Power 12 → 16, Meta 14 → 16 — lifting the two thinnest spokes.)
 
 ## [1.7.4] — 2026-06-08
 

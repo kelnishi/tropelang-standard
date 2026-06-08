@@ -1,0 +1,67 @@
+// === PREAMBLE ===
+// @trope    La Resistance
+// @category Politics / Rebellion
+// @source   https://allthetropes.org/wiki/La_Resistance
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): the organized underground movement that fights an occupying or tyrannical power
+// from within — the rebel cell, the resistance, the rebellion. FRONTIER: the arc-scale struggle of the
+// few against the regime. The discriminator is a [+Resistance] movement bound on the agent of a [&Resists]
+// event against an [+Oppressive] power. Distinct from a lone hero or a single battle: a standing movement
+// set against the occupier across the work.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc la_resistance -> [
+  full_circle_revolution : "the movement that can become a",
+  the_quisling : "betrayed by a",
+  bread_and_circuses : "fights the pacification of"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the organized movement against the regime is the discriminator; reuses [+Oppressive]) —
+prop Resistance  [+Political]   // an organized underground movement against an occupier or tyranny
+verb Resists(target) [+Political] // fights the ruling power from within, by sabotage and defiance
+
+imply LaResistance -> [Opposition, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a [+Resistance] movement RESISTS an [+Oppressive] power — the movement bound on
+// the agent role and the regime on the target role of a [&Resists] event, so phase-2 re-checks
+// [+Resistance] on the movement and [+Oppressive] on the regime (STYLE §8). The standing-movement-against-
+// the-occupier pairing is the discriminator, parting it from a lone rebel or a single skirmish.
+rule La_Resistance {
+  when:
+    char $cell [+Resistance]
+    char $regime [+Oppressive]
+    evt  $fight [&Resists(agent=$cell, target=$regime)]
+  then:
+    $fight [+LaResistance]
+}
+
+
+// === CONCRETE VIGNETTE: The Hunger Games — District 13 and the rebellion (novel/film, 2008–) ===
+// The Capitol rules Panem by fear, starvation, and the annual blood-tribute of the Games — until the
+// districts, rallying around the hidden survivors of District 13 and the symbol of the Mockingjay, build
+// an organized rebellion. Sabotage, propaganda broadcasts, coordinated uprisings district by district:
+// not one hero but a movement, set against the oppressive regime from within, fighting to bring it down.
+
+// DISTRICT 13 / THE REBELLION — the organized underground movement
+char district_thirteen [+Resistance]
+
+// THE CAPITOL — the oppressive regime it fights
+char the_capitol [+Oppressive] [+Antagonist]
+
+scene the_uprising {
+  beat 1 {
+    // a movement, not a lone hero, fights the regime from within — sabotage, broadcasts, uprisings
+    evt the_rebellion [&Resists(agent=district_thirteen, target=the_capitol)]
+    // La_Resistance -> the_rebellion [+LaResistance]
+  }
+}

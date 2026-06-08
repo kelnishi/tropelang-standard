@@ -1,0 +1,67 @@
+// === PREAMBLE ===
+// @trope    Sequel Hook
+// @category Plot Devices / Endings
+// @source   https://allthetropes.org/wiki/Sequel_Hook
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): something in a work that points to a clear next story — the Big Bad Not Quite
+// Dead, a MacGuffin still missing, a new adventure visibly beginning as this one ends. FRONTIER: the
+// ending that promises more. The discriminator is a [+SequelBait] element (a deliberately-unresolved
+// thread) bound on the `hook=` role of a [&Teases] event at the close. Distinct from The Stinger (a
+// paratext placement after the credits): a Sequel Hook is CONTENT promising more, wherever it sits.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc sequel_hook -> [
+  the_stinger : "often delivered as",
+  cliffhanger : "a softer, work-ending cousin of",
+  downer_ending : "may darken a"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the deliberately-open thread promising more is the discriminator; promotion model) —
+prop SequelBait [+Narrative]   // a thread left deliberately open to promise another story
+verb Teases(hook) [+Narrative]  // leaves a loose end dangling at the close, pointing to more
+
+imply SequelHook -> [Suspense, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a work TEASES a [+SequelBait] thread — the open thread bound on the `hook=`
+// role of a [&Teases] event (agent=$author), so phase-2 re-checks [+SequelBait] on the bound thread
+// (STYLE §8). Binding the deliberately-unresolved-promise on the thread is the discriminator: it points
+// past the ending to more story, parting it from a clean resolution and from The Stinger (a placement).
+rule Sequel_Hook {
+  when:
+    obj  $thread [+SequelBait]
+    evt  $tease [&Teases(agent=$author, hook=$thread)]
+  then:
+    $tease [+SequelHook]
+}
+
+
+// === CONCRETE VIGNETTE: Back to the Future — the flying DeLorean (film, 1985) ===
+// The story is won: Marty is home, the timeline mended, his family thriving. Then Doc screeches back into
+// the driveway in the DeLorean, frantic — "It's your kids, Marty! Something's got to be done about your
+// kids!" — bundles them in, and the car lifts off the asphalt: "Roads? Where we're going, we don't need
+// roads." A finished adventure, capped by a new one visibly taking off — the open thread that became
+// Part II.
+
+// THE DIRECTOR — who leaves the thread dangling
+char the_director
+
+// THE FUTURE ADVENTURE — Marty's kids, a whole new problem taking off
+obj the_future_adventure [+SequelBait]
+
+scene the_driveway {
+  beat 1 {
+    // the won story is capped by a new one visibly beginning — the deliberate open thread
+    evt the_tease [&Teases(agent=the_director, hook=the_future_adventure)]
+    // Sequel_Hook -> the_tease [+SequelHook]
+  }
+}

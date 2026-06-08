@@ -1,0 +1,68 @@
+// === PREAMBLE ===
+// @trope    Government Conspiracy
+// @category Politics / Conspiracy
+// @source   https://allthetropes.org/wiki/Government_Conspiracy
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): the government or Powers That Be are secretly evil — orchestrating from the
+// shadows and, with remarkable competence, covering it up. FRONTIER: conspiracy from the SEAT OF THE
+// STATE. The discriminator is a [+Statal] body (an arm of the government) bound on the agent of a
+// [&Conceals] event hiding a damning truth — distinct from a lone schemer (The Man Behind the Man) or a
+// private cabal by who conspires: the official apparatus itself.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc government_conspiracy -> [
+  the_man_behind_the_man : "an institutional version of",
+  open_secret : "the truth it works to keep from becoming an",
+  smear_campaign : "a tool of the"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the state apparatus as conspirator is the discriminator; promotion model) —
+prop Statal     [+Political]    // an arm of the government / Powers That Be — official authority
+verb Conceals(secret) [+Political] // covers up a damning truth from the public
+
+imply GovernmentConspiracy -> [Manipulation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a [+Statal] body CONCEALS a damning truth — the state arm bound on the agent
+// role of a [&Conceals] event (secret=$truth), so phase-2 re-checks [+Statal] on the concealer (STYLE §8).
+// Binding the official-apparatus status on the conspirator is the discriminator: it is the GOVERNMENT
+// covering up, parting it from a lone Man Behind the Man or a private cabal.
+rule Government_Conspiracy {
+  when:
+    char $state [+Statal]
+    obj  $truth [+Damning]
+    evt  $coverup [&Conceals(agent=$state, secret=$truth)]
+  then:
+    $coverup [+GovernmentConspiracy]
+}
+
+
+// === CONCRETE VIGNETTE: The X-Files — the Syndicate (TV, 1993) ===
+// Mulder chases the truth and keeps hitting the same wall: a shadow group inside the government — the
+// Syndicate, men in cigarette smoke and back rooms with full official cover — that has known about
+// extraterrestrial contact for decades and buried it under forged records, murdered witnesses, and
+// disavowed agents. The conspiracy isn't a rogue cabal outside the state; it IS the state, concealing
+// what it must never let the public learn.
+
+// THE SYNDICATE — the shadow group inside the government, with official cover
+char the_syndicate [+Statal] [+Antagonist]
+
+// THE TRUTH — extraterrestrial contact, buried for decades
+obj the_truth [+Damning]
+
+scene the_cover_up {
+  beat 1 {
+    // the official apparatus itself buries the damning truth — forged records, silenced witnesses
+    evt the_burial [&Conceals(agent=the_syndicate, secret=the_truth)]
+    // Government_Conspiracy -> the_burial [+GovernmentConspiracy]
+  }
+}
