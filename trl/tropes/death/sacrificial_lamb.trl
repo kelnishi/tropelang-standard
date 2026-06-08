@@ -1,0 +1,71 @@
+// === PREAMBLE ===
+// @trope    Sacrificial Lamb
+// @category Death Tropes
+// @source   https://allthetropes.org/wiki/Sacrificial_Lamb
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a MINOR character given just enough likability to matter, killed off early to
+// announce "anyone can die" — this character exists to die. FRONTIER: the calibrated-weight death. The
+// discriminator is a [+Minor] [+Sympathetic] character bound on the target of a [&Slays] event — between
+// the Red Shirt (an [+Expendable] nobody) and the Sacrificial Lion (a [+Major] established lead): the
+// Lamb is lesser than the Lion but likable unlike the Red Shirt, so the early loss still stings.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/death/sacrificial_lion.trl"   // the heavier-weight counterpart
+import "trl/tropes/death/red_shirt.trl"          // the no-weight counterpart
+
+assoc sacrificial_lamb -> [
+  sacrificial_lion : "a lighter-weight counterpart to",
+  red_shirt        : "the likable step up from",
+  wham_line        : "the early shock that often carries a"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the likable-but-minor victim is the discriminator; promotion model) —
+prop Minor [+Narrative]   // a lesser character given just enough likability to be mourned
+
+imply SacrificialLamb -> [Final, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a [+Minor] [+Sympathetic] character is the TARGET of a [&Slays] event (agent=$killer), so
+// phase-2 re-checks both calibrated-weight tags on the slain (STYLE §8). Binding lesser-status AND
+// likability on the victim is the discriminator: a small but likable character is killed to set the tone,
+// parting it from the Sacrificial Lion ([+Major]) and the Red Shirt ([+Expendable], not likable).
+rule Sacrificial_Lamb {
+  when:
+    char $lamb [+Minor] [+Sympathetic]
+    evt  $death [&Slays(agent=$killer, target=$lamb)]
+  then:
+    $death [+SacrificialLamb]
+}
+
+
+// === CONCRETE VIGNETTE: Deep Blue Sea — Russell Franklin (film, 1999) ===
+// Russell Franklin is the warm, steady financier the survivors rally around; mid-disaster he delivers a
+// rousing speech about pulling together, sympathy and hope in every line — exactly the likable
+// supporting figure you expect to make it. Then, without warning, a shark lunges from the flooded
+// laboratory and takes him in one bite, mid-sentence. The shock is the point: a character we'd just
+// learned to like, gone in an instant, announcing that no one here is safe.
+
+// RUSSELL FRANKLIN — the warm financier rallying the survivors, just made likable
+char franklin [+Minor] [+Sympathetic]
+
+// THE MAKO SHARK — the menace that takes him mid-speech
+char the_shark [+Antagonist]
+
+// INT. FLOODED LABORATORY - the wrecked research station
+set the_lab [+Interior]
+
+scene the_rallying_speech {
+  beat 1 {
+    franklin @ the_lab
+    // mid-speech, without warning — the likable minor character is gone in one bite
+    evt the_lunge [&Slays(agent=the_shark, target=franklin)]
+    // Sacrificial_Lamb -> the_lunge [+SacrificialLamb]
+  }
+}

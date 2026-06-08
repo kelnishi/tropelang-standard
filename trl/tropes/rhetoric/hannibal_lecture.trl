@@ -1,0 +1,77 @@
+// === PREAMBLE ===
+// @trope    Hannibal Lecture
+// @category Rhetoric / Villains
+// @source   https://allthetropes.org/wiki/Hannibal_Lecture
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a captive villain turns the interrogation around — armor-piercing questions
+// become deconstructions become a lecture on what a pathetic failure the captor is, until the interrogator
+// is the one unsettled. FRONTIER: the prisoner who dominates from the cell. The discriminator is a
+// [+Captive] speaker bound on the agent of an [&Unnerves] event aimed at the captor — so it fires when the
+// RESTRAINED party gets inside the free one's head, parting it from a Breaking Speech (a free villain
+// aiming a hero's soft point) and "The Reason You Suck" Speech (a fault-catalogue, not a captive's
+// table-turn).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/bonds/damsel_in_distress.trl"   // where [+Captive] is founded
+
+assoc hannibal_lecture -> [
+  breaking_speech : "the captive-side counterpart to",
+  the_reason_you_suck_speech : "a table-turning cousin of",
+  not_so_different : "lands the charge of"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the captive who turns the tables is the discriminator; reuses [+Captive]) —
+verb Unnerves(target) [+Interpersonal]   // psychologically dissects another, turning interrogation around
+
+imply HannibalLecture -> [Manipulation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a [+Captive] speaker UNNERVES their captor — the prisoner bound on the agent role of an
+// [&Unnerves] event (target=$captor), so phase-2 re-checks [+Captive] on the speaker (STYLE §8). Binding
+// the captivity on the one doing the dissecting is the discriminator: the RESTRAINED party dominates the
+// free one, parting it from a Breaking Speech (a free villain) and a Reason You Suck Speech (no captivity).
+// The captor comes away [+Unsettled].
+rule Hannibal_Lecture {
+  when:
+    char $prisoner [+Captive]
+    char $captor
+    $prisoner != $captor
+    evt  $lecture [&Unnerves(agent=$prisoner, target=$captor)]
+  then:
+    $lecture [+HannibalLecture]
+    $captor [+Unsettled]
+}
+
+
+// === CONCRETE VIGNETTE: The Silence of the Lambs — Hannibal Lecter (film, 1991) ===
+// Clarice Starling comes to the cell to question the caged Dr. Lecter, and within minutes he has reversed
+// every role. He reads her off her accent and her shoes — "you look like a rube, a well-scrubbed hustling
+// rube with a little taste" — then carves into the dead trooper of her childhood, the screaming lambs, the
+// father she lost. Behind glass, restrained, he conducts the entire exchange; she leaves shaken, having
+// answered far more than she asked. The trope's namesake, in full.
+
+// HANNIBAL LECTER — caged, restrained, and entirely in command
+char lecter [+Captive]
+
+// CLARICE STARLING — the interrogator he turns inside out
+char clarice [+Protagonist]
+
+// INT. THE ASYLUM CELLS - the glass, the gurney
+set the_asylum [+Interior]
+
+scene the_interview {
+  beat 1 {
+    lecter @ the_asylum
+    clarice @ the_asylum
+    // from behind the glass he dissects her until she is the one unsettled
+    evt the_lecture [&Unnerves(agent=lecter, target=clarice)]
+    // Hannibal_Lecture -> the_lecture [+HannibalLecture]; clarice [+Unsettled]
+  }
+}

@@ -37,6 +37,7 @@ import "trl/tropes/arc/redemption/pet_the_dog.trl"
 import "trl/tropes/arc/redemption/redemption_arc.trl"
 import "trl/tropes/arc/redemption/redemption_rejection.trl"
 import "trl/tropes/bonds/conflicting_loyalty.trl"
+import "trl/tropes/bonds/cooldown_hug.trl"
 import "trl/tropes/bonds/damsel_in_distress.trl"
 import "trl/tropes/bonds/defeat_means_friendship.trl"
 import "trl/tropes/bonds/enemies_to_lovers.trl"
@@ -64,6 +65,7 @@ import "trl/tropes/character/archetypes/fatal_flaw.trl"
 import "trl/tropes/character/archetypes/femme_fatale.trl"
 import "trl/tropes/character/archetypes/hope_bringer.trl"
 import "trl/tropes/character/archetypes/jerk_with_a_heart_of_gold.trl"
+import "trl/tropes/character/archetypes/lovable_rogue.trl"
 import "trl/tropes/character/archetypes/magnificent_bastard.trl"
 import "trl/tropes/character/archetypes/mama_bear.trl"
 import "trl/tropes/character/archetypes/reluctant_hero.trl"
@@ -94,6 +96,7 @@ import "trl/tropes/character/roles/the_rival.trl"
 import "trl/tropes/character/roles/the_sidekick.trl"
 import "trl/tropes/character/roles/villain_protagonist.trl"
 import "trl/tropes/conflict/combat/achilles_heel.trl"
+import "trl/tropes/conflict/combat/calling_your_attacks.trl"
 import "trl/tropes/conflict/combat/david_versus_goliath.trl"
 import "trl/tropes/conflict/combat/finishing_move.trl"
 import "trl/tropes/conflict/combat/heroic_second_wind.trl"
@@ -144,6 +147,7 @@ import "trl/tropes/death/mercy_kill.trl"
 import "trl/tropes/death/red_shirt.trl"
 import "trl/tropes/death/redemption_equals_death.trl"
 import "trl/tropes/death/revenge.trl"
+import "trl/tropes/death/sacrificial_lamb.trl"
 import "trl/tropes/death/sacrificial_lion.trl"
 import "trl/tropes/death/senseless_sacrifice.trl"
 import "trl/tropes/death/survivors_guilt.trl"
@@ -199,11 +203,13 @@ import "trl/tropes/power/puppet_king.trl"
 import "trl/tropes/power/rightful_king_returns.trl"
 import "trl/tropes/power/smear_campaign.trl"
 import "trl/tropes/power/the_coup.trl"
+import "trl/tropes/power/the_purge.trl"
 import "trl/tropes/power/the_starscream.trl"
 import "trl/tropes/rhetoric/an_aesop.trl"
 import "trl/tropes/rhetoric/badass_boast.trl"
 import "trl/tropes/rhetoric/breaking_speech.trl"
 import "trl/tropes/rhetoric/courtroom_summation.trl"
+import "trl/tropes/rhetoric/hannibal_lecture.trl"
 import "trl/tropes/rhetoric/just_between_you_and_me.trl"
 import "trl/tropes/rhetoric/moment_of_awesome.trl"
 import "trl/tropes/rhetoric/motive_rant.trl"
@@ -228,6 +234,7 @@ import "trl/tropes/structure/cliffhanger.trl"
 import "trl/tropes/structure/conflict.trl"
 import "trl/tropes/structure/deus_ex_machina.trl"
 import "trl/tropes/structure/diabolus_ex_machina.trl"
+import "trl/tropes/structure/downer_ending.trl"
 import "trl/tropes/structure/dream_sequence.trl"
 import "trl/tropes/structure/dream_within_a_dream.trl"
 import "trl/tropes/structure/eucatastrophe.trl"
@@ -495,12 +502,14 @@ concept bread_and_circuses [+Trope(category="Political", source="https://allthet
 concept break_the_cutie [+Trope(category="Tragedy", source="https://allthetropes.org/wiki/Break_the_Cutie")] [%Narrative]
 concept break_the_haughty [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Break_the_Haughty")] [%Narrative]
 concept breaking_speech [+Trope(category="Oratory", source="https://allthetropes.org/wiki/%22The_Reason_You_Suck%22_Speech")] [%Narrative]
+concept calling_your_attacks [+Trope(category="Combat Tropes", source="https://allthetropes.org/wiki/Calling_Your_Attacks")] [%Narrative]
 concept character_development [+Trope(category="Characterization Tropes", source="https://allthetropes.org/wiki/Character_Development")] [%Mind]
 concept chekhovs_boomerang [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Boomerang")] [%Narrative]
 concept chekhovs_gunman [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Gunman")] [%Narrative]
 concept chekhovs_skill [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Skill")] [%Narrative]
 concept combat_pragmatist [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Combat_Pragmatist")] [%Interpersonal]
 concept conflicting_loyalty [+Trope(category="Internal Conflict", source="https://allthetropes.org/wiki/Conflicting_Loyalty")] [%Interpersonal]
+concept cooldown_hug [+Trope(category="Friendship", source="https://allthetropes.org/wiki/Cooldown_Hug")] [%Narrative]
 concept courtroom_summation [+Trope(category="Oratory", source="https://allthetropes.org/wiki/Simple_Country_Lawyer")] [%Narrative]
 concept curb_stomp_battle [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Curb_Stomp_Battle")] [%Interpersonal]
 concept damsel_in_distress [+Trope(category="Characters As Device", source="https://allthetropes.org/wiki/Damsel_in_Distress")] [%Narrative]
@@ -515,6 +524,7 @@ concept determinator [+Trope(category="Heroic Spirit", source="https://allthetro
 concept diabolus_ex_machina [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Diabolus_Ex_Machina")] [%Narrative]
 concept disney_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Disney_Death")] [%Narrative]
 concept disney_villain_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Disney_Villain_Death")] [%Narrative]
+concept downer_ending [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/Downer_Ending")] [%Narrative]
 concept enemy_mine [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Enemy_Mine")] [%Interpersonal]
 concept eucatastrophe [+Trope(category="Happy Endings", source="https://allthetropes.org/wiki/Eucatastrophe")] [%Narrative]
 concept even_evil_has_standards [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Even_Evil_Has_Standards")] [%Psychological]
@@ -528,6 +538,7 @@ concept five_man_band [+Trope(category="Cast", source="https://allthetropes.org/
 concept flashback [+Trope(category="Flashbacks and Chronology", source="https://allthetropes.org/wiki/Flashback_(trope)")] [%Narrative]
 concept gaslighting [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Gaslighting")] [%Epistemic]
 concept genre_savvy [+Trope(category="Metafiction", source="https://allthetropes.org/wiki/Genre_Savvy")] [%Epistemic]
+concept hannibal_lecture [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Hannibal_Lecture")] [%Narrative]
 concept heel_face_door_slam [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Heel_Face_Door-Slam")] [%Narrative]
 concept heel_realization [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Heel_Realization")] [%Mind]
 concept heist [+Trope(category="Crime", source="https://allthetropes.org/wiki/The_Caper")] [%Social]
@@ -546,6 +557,7 @@ concept karma_houdini [+Trope(category="Karma Tropes", source="https://allthetro
 concept karmic_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Karmic_Death")] [%Narrative]
 concept kick_the_dog [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Kick_the_Dog")] [%Narrative]
 concept like_brother_and_sister [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Like_Brother_and_Sister")] [%Interpersonal]
+concept lovable_rogue [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Lovable_Rogue")] [%Narrative]
 concept love_dodecahedron [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Love_Dodecahedron")] [%Interpersonal]
 concept macguffin [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/MacGuffin")] [%Narrative]
 concept magnificent_bastard [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Magnificent_Bastard")] [%Narrative]
@@ -573,6 +585,7 @@ concept redemption_rejection [+Trope(category="Character Development", source="h
 concept reenactment [+Trope(category="Non-Fiction", source="https://allthetropes.org/wiki/Dramatization")] [%Narrative]
 concept reluctant_hero [+Trope(category="Character Tropes", source="https://allthetropes.org/wiki/Reluctant_Hero")] [%Narrative]
 concept rule_of_drama [+Trope(category="Drama", source="https://allthetropes.org/wiki/Rule_of_Drama")] [%Narrative]
+concept sacrificial_lamb [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Sacrificial_Lamb")] [%Narrative]
 concept sacrificial_lion [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Sacrificial_Lion")] [%Narrative]
 concept sales_pitch [+Trope(category="Oratory", source="https://en.wikipedia.org/wiki/Sales_pitch")] [%Narrative]
 concept secret_legacy [+Trope(category="Heritage", source="https://allthetropes.org/wiki/Secret_Legacy")] [%Epistemic]
@@ -598,6 +611,7 @@ concept the_lancer [+Trope(category="Characterization", source="https://allthetr
 concept the_love_interest [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Love_Interest")] [%Interpersonal]
 concept the_man_behind_the_man [+Trope(category="Reveal", source="https://allthetropes.org/wiki/The_Man_Behind_the_Man")] [%Narrative]
 concept the_mole [+Trope(category="Spy Fiction", source="https://allthetropes.org/wiki/The_Mole")] [%Mind]
+concept the_purge [+Trope(category="Politics", source="https://allthetropes.org/wiki/The_Purge")] [%Narrative]
 concept the_quest [+Trope(category="Plots", source="https://allthetropes.org/wiki/The_Quest")] [%Narrative]
 concept the_reason_you_suck_speech [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/The_Reason_You_Suck_Speech")] [%Narrative]
 concept the_starscream [+Trope(category="Political", source="https://allthetropes.org/wiki/The_Starscream")] [%Political]

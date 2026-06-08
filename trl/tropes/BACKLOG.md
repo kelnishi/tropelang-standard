@@ -82,7 +82,7 @@ Universal + the cast & plot-structure indexes). This is the live ledger — **ev
 it** (the finalize step in `CONVERSION_BOT.md`). The *recipe* for re-running the review (corpus inventory
 vs. the indexes, archive access) lives in `CONVERSION_BOT.md`; the *state* lives here.
 
-**Corpus: 235 tropes · self-recognition 235/235 (100%).** (Re-measure: `tropelang selfcheck
+**Corpus: 242 tropes · self-recognition 242/242 (100%).** (Re-measure: `tropelang selfcheck
 trl/tropes/corpus.toml --corpus file://trl`.)
 
 **Converted batches (done):**
@@ -97,7 +97,8 @@ trl/tropes/corpus.toml --corpus file://trl`.)
 - `convert/backfromdead-bigkiss-ace` (#49) — Back from the Dead · The Big Damn Kiss · The Ace.
 - `convert/rysspeech-premortem-bittersweet` (#50) — Pre-Mortem One-Liner · The Reason You Suck Speech · Bittersweet Ending.
 - `convert/berserkbutton-defeatfriend-boast` (#51) — Berserk Button · Defeat Means Friendship · Badass Boast.
-- `convert/seven-villainy-bonds-batch` (this PR, 7) — Well-Intentioned Extremist · Sacrificial Lion · Evil Chancellor · Mook · The Man Behind the Man · Fire-Forged Friends · Trash Talk.
+- `convert/seven-villainy-bonds-batch` (#52, 7) — Well-Intentioned Extremist · Sacrificial Lion · Evil Chancellor · Mook · The Man Behind the Man · Fire-Forged Friends · Trash Talk.
+- `convert/seven-archetypes-batch` (this PR, 7) — Lovable Rogue · Sacrificial Lamb · Downer Ending · Calling Your Attacks · Cooldown Hug · The Purge · Hannibal Lecture.
 
 **Remaining gaps (archive-verified; the next-batch candidates):**
 - [ ] Mood Whiplash · [ ] Idiot Plot · [ ] Crapsack World (each harder to event-anchor —

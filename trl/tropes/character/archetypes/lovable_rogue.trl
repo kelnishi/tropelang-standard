@@ -1,0 +1,69 @@
+// === PREAMBLE ===
+// @trope    Lovable Rogue
+// @category Character Archetypes
+// @source   https://allthetropes.org/wiki/Lovable_Rogue
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a lawbreaker who steals for personal profit but is charming enough — and
+// honorable enough, with victims who are jerks or strangers — that the audience roots for them. FRONTIER:
+// the charming criminal we forgive. The discriminator is a [+Roguish] [+Sympathetic] character bound on
+// the agent of a [&Steals] event — so it fires on a likable rogue plying their trade, parting it from the
+// rough Anti-Hero (defined by a crossed line, [&Crosses]) and a plain villain (not [+Sympathetic]).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/character/archetypes/anti_hero.trl"   // a click up the idealism scale from the rough anti-hero
+
+assoc lovable_rogue -> [
+  anti_hero   : "a lighter, code-bound cousin of",
+  the_trickster : "the larcenous kin of"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the charming-criminal-we-root-for is the discriminator; promotion model) —
+prop Roguish     [+Social]          // a charming lawbreaker with a code — the rascal the audience forgives
+verb Steals(loot) [+Interpersonal]  // takes what isn't his — the rogue's trade
+
+imply LovableRogue -> [Contrast, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a [+Roguish] [+Sympathetic] character STEALS — the charming rogue bound on the agent role
+// of a [&Steals] event, so phase-2 re-checks both tags on the thief (STYLE §8). Binding charm-plus-sympathy
+// on the one who steals is the discriminator: we root for this criminal, parting it from the Anti-Hero
+// (a crossed line) and a plain thief (not sympathetic).
+rule Lovable_Rogue {
+  when:
+    char $rogue [+Roguish] [+Sympathetic]
+    evt  $caper [&Steals(agent=$rogue, loot=$prize)]
+  then:
+    $caper [+LovableRogue]
+}
+
+
+// === CONCRETE VIGNETTE: Robin Hood — the greenwood outlaw (English legend, medieval) ===
+// Robin Hood robs the roads of Sherwood, but never a poor traveller — only the fat purses of the corrupt:
+// the Sheriff of Nottingham's tax gold, wrung from the people and now lifted right back off him on the
+// king's highway. He is an outlaw and a thief by the letter of the law, and the audience cheers every
+// theft, because the victims are tyrants and the loot goes to the hungry. The original lovable rogue.
+
+// ROBIN HOOD — the charming outlaw of Sherwood, robbing only the wicked
+char robin_hood [+Roguish] [+Sympathetic]
+
+// THE SHERIFF'S TAX GOLD — wrung from the poor, and lifted right back
+obj the_tax_gold [+Prize]
+
+// EXT. SHERWOOD FOREST - DAY (the king's road through the greenwood)
+set sherwood [+Exterior] [+Day]
+
+scene the_road_robbery {
+  beat 1 {
+    robin_hood @ sherwood
+    // he lifts the Sheriff's ill-gotten gold on the highway — a crime we cheer
+    evt the_robbery [&Steals(agent=robin_hood, loot=the_tax_gold)]
+    // Lovable_Rogue -> the_robbery [+LovableRogue]
+  }
+}

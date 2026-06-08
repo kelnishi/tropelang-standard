@@ -1,0 +1,73 @@
+// === PREAMBLE ===
+// @trope    Cooldown Hug
+// @category Friendship / Emotion
+// @source   https://allthetropes.org/wiki/Cooldown_Hug
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): the way to stop someone mid-rampage or meltdown is to hug them — the Power of
+// Trust/Love reaching through the rage, however much danger the hugger braves to get there. FRONTIER: the
+// embrace as de-escalation. The discriminator is an [+Enraged] character bound on the target of an
+// [&Embraces] event — so it fires when a hug is given to someone consumed by rage/meltdown, who then
+// [+Calmed] — parting it from an ordinary affectionate hug (no rage to quell).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/character/archetypes/berserk_button.trl"   // the rage a cooldown hug answers
+
+assoc cooldown_hug -> [
+  berserk_button : "the de-escalation of a pressed",
+  power_of_friendship : "the trust reaching through rage feeds"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the embrace that quells rage is the discriminator; declares Enraged, used by Berserk Button) —
+prop Enraged     [+Psychological]   // consumed by rage or meltdown — the rampage to be calmed
+verb Embraces(other) [+Interpersonal] // holds another close — here, to calm a rampage
+
+imply CooldownHug -> [Investment, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a comforter EMBRACES an [+Enraged] character — the rager bound on the target role of an
+// [&Embraces] event (agent=$comforter), so phase-2 re-checks [+Enraged] on the bound rager (STYLE §8).
+// Binding the rage on the embraced party is the discriminator: the hug reaches through a meltdown and the
+// rager comes away [+Calmed], parting it from an ordinary hug (no rage to quell).
+rule Cooldown_Hug {
+  when:
+    char $rager [+Enraged]
+    evt  $hug [&Embraces(agent=$comforter, target=$rager)]
+  then:
+    $rager [-Enraged]
+    $rager [+Calmed]
+    $hug [+CooldownHug]
+}
+
+
+// === CONCRETE VIGNETTE: Steven Universe — calming a corrupted Gem (animated TV, 2013) ===
+// A corrupted Gem thrashes through the field, blind with pain and rage, lashing at anything near — and
+// where the others draw weapons, Steven walks straight into the danger with his arms open. He wraps the
+// monstrous, flailing creature in a hug and holds on, murmuring that it's okay, that he's there. The rage
+// drains out of it under the embrace; the thrashing stops. Trust reached through the meltdown where force
+// could not.
+
+// STEVEN — who answers a rampage with open arms
+char steven [+Protagonist]
+
+// THE CORRUPTED GEM — thrashing, blind with rage and pain
+char the_gem [+Enraged]
+
+// EXT. THE FIELD - NIGHT (the rampage)
+set the_field [+Exterior] [+Night]
+
+scene the_embrace {
+  beat 1 {
+    steven @ the_field
+    the_gem @ the_field
+    // he walks into the danger and holds the raging creature until the rage drains away
+    evt the_hug [&Embraces(agent=steven, target=the_gem)]
+    // Cooldown_Hug -> the_gem [-Enraged] [+Calmed]; the_hug [+CooldownHug]
+  }
+}

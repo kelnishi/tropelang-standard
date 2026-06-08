@@ -1,0 +1,65 @@
+// === PREAMBLE ===
+// @trope    Downer Ending
+// @category Plot Devices / Endings
+// @source   https://allthetropes.org/wiki/Downer_Ending
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): the story ends sad to tragic — the protagonist loses, the cause fails, no loose
+// end tied up happily. FRONTIER: the unredeemed close. The discriminator is a [+Final] [&Fails] event by
+// the [+Protagonist] — the terminal beat is a defeat, not a win. Distinct from a Bittersweet Ending (a
+// [+Costly] victory ATTAINED beside a loss) and a mid-story setback (not [+Final]): here the last word is
+// failure, full stop.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/structure/bittersweet_ending.trl"   // the win-bearing counterpart
+
+assoc downer_ending -> [
+  bittersweet_ending : "the no-victory counterpart to",
+  despair_event_horizon : "the structural close that often follows a"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the terminal failure is the discriminator; reuses [+Final]) —
+verb Fails(goal) [+Narrative]   // does not achieve the goal — the effort comes to nothing
+
+imply DownerEnding -> [Final, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a [+Protagonist] FAILS at a [+Final] beat — the terminal failure bound by a [&Fails] event
+// (agent=$hero) carrying [+Final], so phase-2 re-checks [+Final] on the bound event (STYLE §8). Binding the
+// terminality on the failure is the discriminator: the LAST beat is a defeat, parting it from a mid-story
+// setback (not [+Final]) and a Bittersweet Ending (a victory is attained). Reuses [+Final].
+rule Downer_Ending {
+  when:
+    char $hero [+Protagonist]
+    evt  $end [+Final] [&Fails(agent=$hero, goal=$aim)]
+  then:
+    $end [+DownerEnding]
+}
+
+
+// === CONCRETE VIGNETTE: Nineteen Eighty-Four — Winston Smith (Orwell, novel, 1949) ===
+// Winston spends the novel resisting the Party in the small ways he can — a forbidden diary, a forbidden
+// love, a dream of the proles rising. Room 101 ends all of it. Broken by his own worst fear, he betrays
+// Julia and is remade; in the last lines he sits in the Chestnut Tree Café, gin-soaked and hollow, and
+// feels the final, total defeat as love: "He had won the victory over himself. He loved Big Brother."
+// The resistance fails utterly, and that is where the book stops.
+
+// WINSTON SMITH — who resisted, and is broken
+char winston [+Protagonist]
+
+// THE RESISTANCE — his rebellion against the Party, the goal that comes to nothing
+obj the_resistance [+Aim]
+
+scene the_chestnut_tree_cafe {
+  beat 1 {
+    // the last beat: total, unredeemed defeat — he loves Big Brother
+    evt the_breaking [+Final] [&Fails(agent=winston, goal=the_resistance)]
+    // Downer_Ending -> the_breaking [+DownerEnding]
+  }
+}

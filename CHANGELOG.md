@@ -94,6 +94,29 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   it from a Badass Boast (self-praise) and "The Reason You Suck" Speech. Founds `prop Opponent` + `verb
   Taunts(target)`.)
   Corpus **228 → 235 tropes**; self-recognition steady at **235/235 (100%)**.
+- **Lovable Rogue** (Character Archetypes) — https://allthetropes.org/wiki/Lovable_Rogue
+  (Robin Hood — a [+Roguish] [+Sympathetic] character `[&Steals]`; charm-plus-sympathy on the thief parts
+  it from the rough Anti-Hero. Founds `prop Roguish` + `verb Steals(loot)`.)
+- **Sacrificial Lamb** (Death Tropes) — https://allthetropes.org/wiki/Sacrificial_Lamb
+  (Deep Blue Sea, Russell Franklin — a [+Minor] [+Sympathetic] character `[&Slays]`-ed early; calibrated
+  between the Sacrificial Lion ([+Major]) and the Red Shirt ([+Expendable]). Founds `prop Minor`.)
+- **Downer Ending** (Plot Devices / Endings) — https://allthetropes.org/wiki/Downer_Ending
+  (Nineteen Eighty-Four, Winston — a [+Protagonist] `[&Fails]` at a [+Final] beat; the terminal defeat
+  parts it from a Bittersweet Ending (a victory attained). Founds `verb Fails(goal)`; reuses `[+Final]`.)
+- **Calling Your Attacks** (Combat Tropes) — https://allthetropes.org/wiki/Calling_Your_Attacks
+  (Street Fighter, Ryu's "Hadouken!" — a fighter `[&Announces]` a [+Technique] and `[&Strikes]`; the named
+  move shouted at the blow. Founds `prop Technique` + `verb Announces(move)`; reuses `[&Strikes]`.)
+- **Cooldown Hug** (Friendship / Emotion) — https://allthetropes.org/wiki/Cooldown_Hug
+  (Steven Universe — a comforter `[&Embraces]` an [+Enraged] character, who comes away [+Calmed]; the hug
+  that quells a rampage. Founds `prop Enraged` (now shared with Berserk Button) + `verb Embraces(other)`.)
+- **The Purge** (Politics / Villains) — https://allthetropes.org/wiki/The_Purge
+  (The Godfather, the baptism montage — a power-holder `[&Purges]` a [+Collective] of rivals; the wholesale
+  consolidation parts it from a single Klingon Promotion. Founds `verb Purges(faction)`; reuses `[+Collective]`.)
+- **Hannibal Lecture** (Rhetoric / Villains) — https://allthetropes.org/wiki/Hannibal_Lecture
+  (The Silence of the Lambs, Lecter & Clarice — a [+Captive] speaker `[&Unnerves]` their captor; the
+  restrained party turning the tables parts it from a Breaking Speech (a free villain). Founds `verb
+  Unnerves(target)`; reuses `[+Captive]`.)
+  Corpus **235 → 242 tropes**; self-recognition steady at **242/242 (100%)**.
 
 ## [1.7.4] — 2026-06-08
 

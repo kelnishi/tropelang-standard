@@ -1,0 +1,69 @@
+// === PREAMBLE ===
+// @trope    The Purge
+// @category Politics / Villains
+// @source   https://allthetropes.org/wiki/The_Purge
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): on seizing power, a character's first act is ordering the deaths of many — and
+// not nameless extras, but figures we knew — cut down in a swift montage to show just how absolute their
+// power now is. FRONTIER: the consolidating mass-killing. The discriminator is a [&Purges] event whose
+// `faction=` role is a [+Collective] of rivals, by the one who took power — so it fires on the wholesale
+// elimination of a known group, parting it from a single Klingon Promotion or the seizure itself (The
+// Coup).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/power/the_coup.trl"   // the seizure this consolidation follows
+
+assoc the_purge -> [
+  the_coup    : "the bloody consolidation after",
+  klingon_promotion : "the wholesale version of a single",
+  deadly_decadent_court : "thins the rivals of a"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the wholesale elimination of rivals is the discriminator; reuses [+Collective]) —
+verb Purges(faction) [+Political]   // orders the mass killing of rivals to consolidate power
+
+imply ThePurge -> [Usurpation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a power-holder PURGES a [+Collective] of rivals — the targeted group bound on the
+// `faction=` role of a [&Purges] event (agent=$tyrant), so phase-2 re-checks [+Collective] on the bound
+// group (STYLE §8). Binding the wholesale group-elimination on the purge is the discriminator: many known
+// rivals fall at once to consolidate power, parting it from a single murder (Klingon Promotion) and the
+// seizure (The Coup). Reuses [+Collective].
+rule The_Purge {
+  when:
+    char $tyrant [+Antagonist]
+    obj  $rivals [+Collective]
+    evt  $purge [&Purges(agent=$tyrant, faction=$rivals)]
+  then:
+    $purge [+ThePurge]
+}
+
+
+// === CONCRETE VIGNETTE: The Godfather — the baptism montage (film, 1972) ===
+// Michael Corleone stands at the font as godfather to his nephew, calmly renouncing Satan and all his
+// works — and intercut with every solemn vow, his men are gunning down the heads of the Five Families
+// across the city: in a barber's chair, on the courthouse steps, in a revolving door, in bed. By the time
+// the priest finishes, every rival don is dead and Michael's power is absolute. The new head of the
+// family announces himself with a purge.
+
+// MICHAEL CORLEONE — the new Don, consolidating in one stroke
+char michael [+Antagonist]
+
+// THE HEADS OF THE FIVE FAMILIES — the rival dons, wiped out together
+obj the_rival_dons [+Collective]
+
+scene the_baptism {
+  beat 1 {
+    // intercut with the baptismal vows, the rival heads are all killed at once
+    evt the_montage [&Purges(agent=michael, faction=the_rival_dons)]
+    // The_Purge -> the_montage [+ThePurge]
+  }
+}
