@@ -17,6 +17,8 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 
 ## [Unreleased]
 
+## [1.8.0] — 2026-06-08
+
 ### Added
 - **Plot Coupon** (Plot Devices) — https://allthetropes.org/wiki/Plot_Coupon
   (Dragon Ball, the seven Dragon Balls — a [+Protagonist] `[&Collects]` a [+PlotCoupon] token; the
