@@ -2,7 +2,7 @@
   "schema": 1,
   "id": "standard",
   "channel": "stable",
-  "version": "1.7.4",
-  "manifest": "/standard/1.7.4/manifest.json",
-  "updatedAt": "2026-06-08T03:09:56Z"
+  "version": "1.8.0",
+  "manifest": "/standard/1.8.0/manifest.json",
+  "updatedAt": "2026-06-08T22:06:47Z"
 }
