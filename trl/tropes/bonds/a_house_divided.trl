@@ -1,0 +1,73 @@
+// === PREAMBLE ===
+// @trope    A House Divided
+// @category Friendship / Group Dynamics
+// @source   https://allthetropes.org/wiki/A_House_Divided
+// @domain   Narrative
+// @scale    act
+// @version  1.3
+//
+// Laconic (per the wiki): a group penned together under an external threat starts to turn on each other —
+// paranoia, blame, and infighting do what the besiegers couldn't ("scorpions in a box"). FRONTIER: the
+// bond that breaks inward under pressure. The discriminator is a [+Besieged] member bound on the agent of
+// a [&TurnsOn] event against a fellow — the cohesion collapsing from within. Distinct from a rivalry
+// (the besieged context) and from Enemy Mine (which forges a bond under threat; this dissolves one).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc a_house_divided -> [
+  enemy_mine  : "the cohesion-collapse inverse of",
+  fire_forged_friends : "the dark mirror of",
+  the_siege   : "the human cost inside a"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the besieged group turning inward is the discriminator; promotion model) —
+prop Besieged   [+Social]          // penned together under an external threat — pressure with no exit
+verb TurnsOn(target) [+Interpersonal] // turns against a fellow of one's own group
+
+imply AHouseDivided -> [Opposition, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (act scale): two who were TOGETHER — a [+Besieged] member [@Ally_Of] a fellow of his own
+// side — and one TURNS ON the other; the pressured ally bound on the agent role of a [&TurnsOn] event
+// (target=$b), so phase-2 re-checks [+Besieged] on the turner AND the togetherness ([@Ally_Of]) that the
+// turning betrays (STYLE §8). The prior togetherness is the point: the cohesion collapses from WITHIN under
+// threat, parting it from a plain rivalry (never allied) and from Enemy Mine (a bond forged, not broken).
+rule A_House_Divided {
+  when:
+    char $a [+Besieged] [@Ally_Of(other=$b)]
+    char $b
+    $a != $b
+    evt  $strife [&TurnsOn(agent=$a, target=$b)]
+  then:
+    $strife [+AHouseDivided]
+}
+
+
+// === CONCRETE VIGNETTE: Night of the Living Dead — the farmhouse (film, 1968) ===
+// Seven strangers are trapped in a boarded-up farmhouse as the dead claw at the windows — and instead of
+// uniting, they tear each other apart. Ben and Harry feud bitterly over the cellar versus the upstairs;
+// the group splinters into factions, decisions collapse into shouting, and the infighting gets people
+// killed as surely as the ghouls do. The siege outside is survivable; the house divided inside is not.
+
+// BEN — penned in the besieged farmhouse, an ally of the others before the cohesion breaks
+char ben [+Protagonist] [+Besieged] [@Ally_Of(other=harry)]
+
+// HARRY — the fellow survivor, together with Ben against the siege — until they turn on each other
+char harry [+Deuteragonist] [@Ally_Of(other=ben)]
+
+// INT. FARMHOUSE - NIGHT (boarded windows, the dead outside)
+set the_farmhouse [+Interior] [+Night]
+
+scene the_infighting {
+  beat 1 {
+    ben @ the_farmhouse
+    // the threat is outside; the group destroys itself within
+    evt the_feud [&TurnsOn(agent=ben, target=harry)]
+    // A_House_Divided -> the_feud [+AHouseDivided]
+  }
+}

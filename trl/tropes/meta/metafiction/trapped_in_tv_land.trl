@@ -1,0 +1,68 @@
+// === PREAMBLE ===
+// @trope    Trapped in TV Land
+// @category Metafiction / Diegetic Levels
+// @source   https://allthetropes.org/wiki/Trapped_in_TV_Land
+// @domain   Narrative
+// @scale    act
+// @version  1.3
+//
+// Laconic (per the wiki): characters from the real world are pulled by some phlebotinum INTO the world of
+// a TV show, film, game, or book, and must cope with (or escape) its conventions. FRONTIER: a crossing
+// INWARD across diegetic levels. The discriminator is a [+FictionalWorld] bound on the `world=` role of a
+// [&PulledInto] event carrying a person from outside. Distinct from Reality Bleed (fiction leaking OUT
+// into the real): here a real person is dragged IN.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/meta/metafiction/reality_bleed.trl"   // the outward-leak counterpart
+
+assoc trapped_in_tv_land -> [
+  reality_bleed : "the inward-crossing inverse of",
+  genre_savvy : "survived by a character who is",
+  show_within_a_show : "drops a person into a"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the inward crossing into a fiction is the discriminator; promotion model) —
+prop FictionalWorld [+Narrative]   // the world of a show/film/game/book — a diegetic level below the real
+verb PulledInto(subject) [+Narrative] // drags a person from outside into a fictional world
+
+imply TrappedInTVLand -> [Metafictional, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (act scale): a force PULLS a person INTO a [+FictionalWorld] — the fiction bound on the
+// `world=` role and the person on the `subject=` role of a [&PulledInto] event, so phase-2 re-checks
+// [+FictionalWorld] on the world (STYLE §8). Binding the destination-fiction on the crossing is the
+// discriminator: a real person dragged inward, parting it from Reality Bleed (fiction leaking outward).
+rule Trapped_In_TV_Land {
+  when:
+    char $person
+    obj  $world [+FictionalWorld]
+    evt  $warp [&PulledInto(agent=$force, subject=$person, world=$world)]
+  then:
+    $warp [+TrappedInTVLand]
+}
+
+
+// === CONCRETE VIGNETTE: Pleasantville — into the sitcom (film, 1998) ===
+// Squabbling 1990s siblings David and Jennifer fight over the remote and are zapped by a mysterious
+// repairman's gadget out of their living room and INTO "Pleasantville," the black-and-white 1950s sitcom
+// David loves — trapped inside its perfect, monochrome world, playing Bud and Mary Sue, learning its
+// rules from the inside. The real teenagers, pulled bodily into the television show.
+
+// DAVID — the real-world teen dragged into the show
+char david [+Protagonist]
+
+// PLEASANTVILLE — the black-and-white sitcom world he is pulled into
+obj pleasantville [+FictionalWorld]
+
+scene into_the_screen {
+  beat 1 {
+    // the gadget drags the real teens inward, into the television show
+    evt the_zap [&PulledInto(agent=the_remote, subject=david, world=pleasantville)]
+    // Trapped_In_TV_Land -> the_zap [+TrappedInTVLand]
+  }
+}

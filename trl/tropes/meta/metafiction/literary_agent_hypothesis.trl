@@ -1,0 +1,67 @@
+// === PREAMBLE ===
+// @trope    Literary Agent Hypothesis
+// @category Metafiction / Framing
+// @source   https://allthetropes.org/wiki/Literary_Agent_Hypothesis
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): the conceit that the work is a TRUE account and the credited author is merely
+// the "literary agent" relaying it — a covert re-telling of real events. FRONTIER: the work framed as
+// fact. The discriminator is a [+RealAccount] (a story presented as genuinely true) bound on the
+// `account=` role of a [&Relays] event by an in-universe agent. Distinct from a Frame Story (a tale nested
+// in a tale): here the framing asserts the whole work is real and the author only transmits it.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc literary_agent_hypothesis -> [
+  frame_story : "an as-if-true cousin of",
+  based_on_a_true_story : "the fictional inversion of",
+  unreliable_narrator : "rests its truth-claim where the doubt of"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the work-presented-as-true is the discriminator; promotion model) —
+prop RealAccount [+Narrative]   // a work framed as a genuinely true story, merely transmitted
+verb Relays(account) [+Narrative] // presents another's "real" account as its credited transmitter
+
+imply LiteraryAgentHypothesis -> [Metafictional, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): an agent RELAYS a [+RealAccount] — the as-if-true work bound on the `account=`
+// role of a [&Relays] event (agent=$agent), so phase-2 re-checks [+RealAccount] on the work (STYLE §8).
+// Binding the presented-as-true framing on the relayed work is the discriminator: the author is cast as a
+// mere transmitter of a real story, parting it from a Frame Story (a fiction openly nested in a fiction).
+rule Literary_Agent_Hypothesis {
+  when:
+    obj  $account [+RealAccount]
+    evt  $frame [&Relays(agent=$agent, account=$account)]
+  then:
+    $frame [+LiteraryAgentHypothesis]
+}
+
+
+// === CONCRETE VIGNETTE: The Princess Bride — Goldman's "abridgement" (novel, 1973) ===
+// William Goldman presents the book not as his invention but as S. Morgenstern's classic history of
+// Florin, which he is merely abridging to "the good parts" his father read him as a boy. There is no
+// Morgenstern; Goldman wrote every word — but the conceit of the credited author as mere editor-agent of
+// a real older chronicle frames the whole novel. We are told, straight-faced, that this really happened
+// and he is only passing it on.
+
+// WILLIAM GOLDMAN (the agent) — credited author posing as mere abridger
+char goldman [+Narrator]
+
+// S. MORGENSTERN'S CHRONICLE — the "real" history Goldman claims only to relay
+obj the_chronicle [+RealAccount]
+
+scene the_good_parts_version {
+  beat 1 {
+    // the author casts himself as the agent of a real older account he merely transmits
+    evt the_framing [&Relays(agent=goldman, account=the_chronicle)]
+    // Literary_Agent_Hypothesis -> the_framing [+LiteraryAgentHypothesis]
+  }
+}

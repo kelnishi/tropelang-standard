@@ -1,0 +1,72 @@
+// === PREAMBLE ===
+// @trope    Disposable Woman
+// @category Death Tropes
+// @source   https://allthetropes.org/wiki/Disposable_Woman
+// @domain   Narrative
+// @scale    scene
+// @version  1.3
+//
+// Laconic (per the wiki): a female character — usually the hero's love — who exists just so she can be
+// killed (or taken), handing the protagonist a pretext for revenge, then conveniently forgotten ("Stuffed
+// Into the Fridge"). FRONTIER: death AS the hero's motivation-fuel. The discriminator is a [+Disposable]
+// character (a love interest present only to die for the hero's arc) bound on the target of a [&Slays]
+// event. Distinct from the Sacrificial Lion/Lamb (weight tiers) and the Lost Lenore (who keeps mattering):
+// the Disposable Woman is fuel, then dropped.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc disposable_woman -> [
+  revenge     : "the cheap pretext for",
+  sacrificial_lamb : "a fridging cousin of",
+  damsel_in_distress : "the killed (not rescued) form of a"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the love-interest-as-fuel is the discriminator; promotion model) —
+prop Disposable [+Narrative]   // present only to be killed for the hero's motivation, then forgotten
+
+imply DisposableWoman -> [Final, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (scene scale): a [+Disposable] character who is the love [@Beloved_Of] a [+Protagonist] is the
+// TARGET of a [&Slays] event (agent=$killer), so phase-2 re-checks [+Disposable] on the slain AND the
+// relative relationship to the hero (STYLE §8). The bond is the point: binding the love-of-the-hero on the
+// victim is what makes her death FUEL — she dies to power his revenge and is then dropped, parting it from
+// the Sacrificial Lion/Lamb (narrative-weight tiers) and the Lost Lenore (who keeps mattering). Reuses [&Slays].
+rule Disposable_Woman {
+  when:
+    char $hero  [+Protagonist]
+    char $woman [+Disposable] [@Beloved_Of(other=$hero)]
+    evt  $death [&Slays(agent=$killer, target=$woman)]
+  then:
+    $death [+DisposableWoman]
+}
+
+
+// === CONCRETE VIGNETTE: Green Lantern — Alexandra DeWitt (comic, 1994) ===
+// Kyle Rayner comes home to find his girlfriend Alex murdered by the villain Major Force and her body
+// stuffed into the refrigerator — killed for no reason but to devastate the new Green Lantern and set him
+// on his path. She had barely been a character in her own right; she existed to be found in that fridge.
+// The death named the whole pattern — "Women in Refrigerators" — the love interest disposed of to fuel
+// the hero.
+
+// KYLE RAYNER — the new Green Lantern; the hero whose arc her death fuels
+char kyle [+Protagonist]
+
+// ALEXANDRA DeWITT — Kyle's girlfriend, present only to be killed for his arc (the relative relationship)
+char alex [+Disposable] [@Beloved_Of(other=kyle)]
+
+// MAJOR FORCE — the villain who kills her to devastate the hero
+char major_force [+Antagonist]
+
+scene the_refrigerator {
+  beat 1 {
+    // the hero's love, killed and discarded purely to set him on his path
+    evt the_murder [&Slays(agent=major_force, target=alex)]
+    // Disposable_Woman -> the_murder [+DisposableWoman]
+  }
+}

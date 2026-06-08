@@ -189,6 +189,29 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   MediumArtifact` + `verb Notices(artifact)`.)
   Corpus **256 → 263 tropes**; self-recognition steady at **263/263 (100%)**. (Capability-gap batch 1/5:
   Power 12 → 16, Meta 14 → 16 — lifting the two thinnest spokes.)
+- **Asskicking Equals Authority** (Politics / Power) — https://allthetropes.org/wiki/Asskicking_Equals_Authority
+  (Black Panther, Warrior Falls — a challenger `[&Bests]` a [+MightIsRight] chief and takes the rule;
+  by-combat (not by-kill) succession. Founds `prop MightIsRight`; reuses `[&Bests]`.)
+- **Police State** (Politics / Dystopia) — https://allthetropes.org/wiki/Police_State
+  (The Handmaid's Tale, Gilead — an [+Authoritarian] regime `[&Represses]` its populace; the apparatus of
+  control, vs a lone tyrant. Founds `prop Authoritarian` + `verb Represses(target)`.)
+- **A House Divided** (Friendship / Group Dynamics) — https://allthetropes.org/wiki/A_House_Divided
+  (Night of the Living Dead — a [+Besieged] member `[&TurnsOn]` a fellow; cohesion collapsing inward under
+  threat, the inverse of Enemy Mine. Founds `prop Besieged` + `verb TurnsOn(target)`.)
+- **Disposable Woman** (Death Tropes) — https://allthetropes.org/wiki/Disposable_Woman
+  (Green Lantern, Alexandra DeWitt — a [+Disposable] love interest `[&Slays]`-ed to fuel the hero's
+  revenge ("fridging"), vs the Sacrificial Lion/Lamb tiers. Founds `prop Disposable`; reuses `[&Slays]`.)
+- **Author Avatar** (Metafiction) — https://allthetropes.org/wiki/Author_Avatar
+  (Breakfast of Champions, Vonnegut — an [+AuthorStandIn] character `[&Interjects]` into the tale; the
+  author embedded as a figure, vs a Fourth-Wall address. Founds `prop AuthorStandIn` + `verb Interjects`.)
+- **Literary Agent Hypothesis** (Metafiction / Framing) — https://allthetropes.org/wiki/Literary_Agent_Hypothesis
+  (The Princess Bride, Goldman's "abridgement" — an agent `[&Relays]` a [+RealAccount]; the work framed as
+  true, vs a Frame Story. Founds `prop RealAccount` + `verb Relays(account)`.)
+- **Trapped in TV Land** (Metafiction / Diegetic Levels) — https://allthetropes.org/wiki/Trapped_in_TV_Land
+  (Pleasantville — a force `[&PulledInto]` a [+FictionalWorld] carries a person inward, vs Reality Bleed's
+  outward leak. Founds `prop FictionalWorld` + `verb PulledInto(subject)`.)
+  Corpus **263 → 270 tropes**; self-recognition steady at **270/270 (100%)**. (Capability-gap batch 2/5:
+  Power → 18, Meta → 19, Bonds → 23, Death → 21 — balancing the bottom of the frontier.)
 
 ## [1.7.4] — 2026-06-08
 

@@ -1,0 +1,70 @@
+// === PREAMBLE ===
+// @trope    Asskicking Equals Authority
+// @category Politics / Power
+// @source   https://allthetropes.org/wiki/Asskicking_Equals_Authority
+// @domain   Narrative
+// @scale    scene
+// @version  1.3
+//
+// Laconic (per the wiki): a culture whose social order is "the strongest rules" — defeat the leader in
+// combat and the leadership is yours. FRONTIER: authority FROM prowess. The discriminator is a deposed
+// chief who held power by might ([+MightIsRight]) bound on the target of a [&Bests] event: the challenger
+// wins the combat and thereby the rule. Distinct from Klingon Promotion (a KILL for a post) and Defeat
+// Means Friendship (a [&Bests] followed by alliance): here besting the might-ruler IS the succession.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/bonds/defeat_means_friendship.trl"   // reuses [&Bests]
+
+assoc asskicking_equals_authority -> [
+  klingon_promotion : "the by-combat (not by-kill) cousin of",
+  the_starscream : "breeds endless"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the might-makes-right social order is the discriminator; reuses [&Bests]) —
+prop MightIsRight [+Political]   // a culture where the strongest rules — leadership won in combat
+
+imply AsskickingEqualsAuthority -> [Usurpation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (scene scale): a challenger BESTS a [+MightIsRight] chief — the might-ruler bound on the
+// target role of a [&Bests] event (agent=$challenger), so phase-2 re-checks [+MightIsRight] on the
+// deposed (STYLE §8); the winner takes the rule. Binding might-as-title on the chief is the discriminator,
+// parting it from Klingon Promotion (a kill) and Defeat Means Friendship (a besting that ends in alliance).
+rule Asskicking_Equals_Authority {
+  when:
+    char $chief [+MightIsRight]
+    evt  $duel [&Bests(agent=$challenger, target=$chief)]
+  then:
+    $challenger [+Leader]
+    $duel [+AsskickingEqualsAuthority]
+}
+
+
+// === CONCRETE VIGNETTE: Black Panther — the ritual combat at the falls (film, 2018) ===
+// Wakanda's throne is not simply inherited; it is held by right of combat at Warrior Falls, where any
+// challenger of royal blood may fight the king for it. Killmonger invokes that very law, faces T'Challa —
+// who holds the throne by the same combat right — and throws him from the falls. By Wakanda's own rule,
+// defeating the king makes Killmonger king. The strongest rules; the crown follows the fist.
+
+// T'CHALLA — the king who holds the throne by combat right
+char tchalla [+Protagonist] [+MightIsRight]
+
+// KILLMONGER — the challenger who bests him by Wakanda's own law
+char killmonger [+Antagonist]
+
+// EXT. WARRIOR FALLS - DAY (the ritual combat ground)
+set warrior_falls [+Exterior] [+Day]
+
+scene the_ritual_combat {
+  beat 1 {
+    tchalla @ warrior_falls
+    // by the law of combat, besting the king is taking the throne
+    evt the_challenge [&Bests(agent=killmonger, target=tchalla)]
+    // Asskicking_Equals_Authority -> killmonger [+Leader]; the_challenge [+AsskickingEqualsAuthority]
+  }
+}
