@@ -17,6 +17,8 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 
 ## [Unreleased]
 
+## [1.7.4] — 2026-06-08
+
 ### Added
 - **The Wizard** (Character Archetypes) — https://allthetropes.org/wiki/Wizard_Classic
   (The Tempest, Prospero — the wielder of arcane power, distinct from the Mentor by the casting itself.
