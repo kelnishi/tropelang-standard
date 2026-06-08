@@ -1,0 +1,76 @@
+// === PREAMBLE ===
+// @trope    Badass Boast
+// @category Rhetoric / Speeches
+// @source   https://allthetropes.org/wiki/Badass_Boast
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a character rattles off their titles, deeds, and battle honours in style —
+// impressing allies and intimidating enemies, sounding mythic rather than conceited. It works only if the
+// boaster is actually badass enough to back it. FRONTIER: the boast that lands because it is TRUE. The
+// discriminator is a [+Formidable] boaster bound on the agent of a [&Boasts] event — so it fires on a
+// proven badass declaring their prowess, parting it from empty bragging (Miles Gloriosus / a Boisterous
+// Weakling), whose boaster is not formidable and gets undercut.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/arc/growth/took_a_level_in_badass.trl"   // where [+Formidable] is founded
+
+assoc badass_boast -> [
+  the_reason_you_suck_speech : "may form part of a",
+  rousing_speech : "the self-directed cousin of",
+  took_a_level_in_badass : "the formidability that backs it comes from"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the boast of genuine prowess is the discriminator; reuses [+Formidable]) —
+verb Boasts(prowess) [+Interpersonal]   // grandly declares one's own titles, deeds, and battle honours
+
+imply BadassBoast -> [Pathos, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a [+Formidable] character BOASTS of their prowess — the proven badass bound on the agent
+// role of a [&Boasts] event, so phase-2 re-checks [+Formidable] on the boaster (STYLE §8). Binding genuine
+// formidability on the boaster is the discriminator: the boast is backed, so it intimidates rather than
+// invites a comeuppance, parting it from empty bragging (a weakling's boast, promptly undercut).
+rule Badass_Boast {
+  when:
+    char $boaster [+Formidable]
+    evt  $boast [&Boasts(agent=$boaster, prowess=$claim)]
+  then:
+    $boast [+BadassBoast]
+}
+
+
+// === CONCRETE VIGNETTE: Gladiator — Maximus unmasks (film, 2000) ===
+// Made to fight for the crowd's amusement, the masked slave is ordered by the new emperor to give his
+// name. He turns, removes his helmet, and answers with the full weight of who he is: "My name is Maximus
+// Decimus Meridius, commander of the Armies of the North, General of the Felix Legions, loyal servant to
+// the true emperor Marcus Aurelius. Father to a murdered son, husband to a murdered wife. And I will have
+// my vengeance, in this life or the next." Every title is earned; the boast lands like a sentence, and
+// Commodus goes pale.
+
+// MAXIMUS — the proven general, every honour in the boast earned
+char maximus [+Protagonist] [+Formidable]
+
+// COMMODUS — the emperor the boast is aimed at, and intimidates
+char commodus [+Antagonist]
+
+// THE TITLES — commander, general, loyal servant, avenger: the string of earned honours
+obj his_titles [+Honorific]
+
+// INT. THE COLOSSEUM - DAY (the arena floor, the imperial box above)
+set the_colosseum [+Interior] [+Day] [+Crowded]
+
+scene the_unmasking {
+  beat 1 {
+    maximus @ the_colosseum
+    commodus @ the_colosseum
+    // MAXIMUS: "My name is Maximus Decimus Meridius..." — the earned boast, aimed up at the box
+    evt the_boast [&Boasts(agent=maximus, prowess=his_titles)]
+    // Badass_Boast -> the_boast [+BadassBoast]
+  }
+}

@@ -55,6 +55,19 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   co-present part it from a clean Happy Ending and a Downer Ending. Founds `prop Lost`; reuses
   `[&Attains]`/`[+Costly]`.)
   Corpus **222 → 225 tropes**; self-recognition steady at **225/225 (100%)**.
+- **Berserk Button** (Characterization Tropes / Triggers) — https://allthetropes.org/wiki/Berserk_Button
+  (The Incredible Hulk, Bruce Banner — a provoker `[&Provokes]` a [+HairTrigger] character, who goes
+  [+Enraged]; the standing rage-trigger bound on the provoked party parts it from ordinary anger. Founds
+  `prop HairTrigger` + `verb Provokes(target)`.)
+- **Defeat Means Friendship** (Combat / Friendship) — https://allthetropes.org/wiki/Defeat_Means_Friendship
+  (Rocky & Apollo Creed — a hero `[&Bests]` a foe who then `[&Allies_With]` him; the defeat→alliance
+  pairing between the same two parties parts it from Enemy Mine (a truce) and a plain Worthy Opponent.
+  Founds `verb Bests(target)`; reuses `[&Allies_With]`.)
+- **Badass Boast** (Rhetoric / Speeches) — https://allthetropes.org/wiki/Badass_Boast
+  (Gladiator, Maximus unmasks — a [+Formidable] character `[&Boasts]` of their prowess; genuine
+  formidability parts it from empty bragging (a weakling's boast, undercut). Founds `verb Boasts(prowess)`;
+  reuses `[+Formidable]`.)
+  Corpus **225 → 228 tropes**; self-recognition steady at **228/228 (100%)**.
 
 ## [1.7.4] — 2026-06-08
 

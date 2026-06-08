@@ -1,0 +1,73 @@
+// === PREAMBLE ===
+// @trope    Defeat Means Friendship
+// @category Combat / Friendship
+// @source   https://allthetropes.org/wiki/Defeat_Means_Friendship
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a defeated Worthy Opponent or Rival converts to the hero's side — beaten, then
+// (moved by the hero's magnanimity) welcomed in as an ally. FRONTIER: the defeat→alliance turn. The
+// discriminator is a structural pairing: the same foe is the TARGET of a [&Bests] event by the hero and
+// then the AGENT of an [&Allies_With] toward that same hero — so it fires only when an alliance FOLLOWS a
+// defeat between the same two parties. Distinct from Enemy Mine (a truce against a common threat, no
+// defeat) and a plain Worthy Opponent (mutual respect, no conversion).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc defeat_means_friendship -> [
+  worthy_opponent : "the conversion of a",
+  enemy_mine      : "a lasting turn unlike the truce of",
+  the_power_of_friendship : "swells the ranks behind"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the non-lethal defeat that precedes the alliance is the discriminator; promotion model) —
+verb Bests(target) [+Interpersonal]   // defeats another in single combat without killing them
+
+imply DefeatMeansFriendship -> [Social, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a hero BESTS a foe, and that same foe then ALLIES WITH the hero — the foe bound on the
+// `target=` of a [&Bests] event (agent=$hero) and the `agent=` of an [&Allies_With] toward $hero (STYLE
+// §8). The defeat-then-alliance pairing between the SAME two parties is the discriminator: the foe joins
+// BECAUSE he was beaten and spared, parting it from a truce of convenience (Enemy Mine) or a mutual-
+// respect rivalry that never converts.
+rule Defeat_Means_Friendship {
+  when:
+    char $hero [+Protagonist]
+    char $foe [+Antagonist]
+    evt  $defeat [&Bests(agent=$hero, target=$foe)]
+    evt  $join   [&Allies_With(agent=$foe, other=$hero)]
+  then:
+    $join [+DefeatMeansFriendship]
+}
+
+
+// === CONCRETE VIGNETTE: Rocky — Rocky Balboa and Apollo Creed (film, 1976–1982) ===
+// Apollo Creed and Rocky batter each other through two films of bitter rivalry, until Rocky finally bests
+// the champ in the rematch. But the war earns a strange respect, and when a deadlier threat rises, the
+// beaten champion crosses the line for good: Apollo becomes Rocky's trainer and friend, in his corner
+// instead of across the ring. The man Rocky defeated is the man who stands with him — defeat turned to
+// friendship.
+
+// ROCKY BALBOA — the hero who bested the champ
+char rocky [+Protagonist]
+
+// APOLLO CREED — the rival, beaten, who then crosses to his side
+char apollo [+Antagonist]
+
+scene from_rivals_to_corner_men {
+  beat 1 {
+    // Rocky takes the rematch — the defeat
+    evt the_rematch [&Bests(agent=rocky, target=apollo)]
+  }
+  beat 2 {
+    // the beaten champion becomes his trainer and friend — the alliance that follows
+    evt the_alliance [&Allies_With(agent=apollo, other=rocky)]
+    // Defeat_Means_Friendship -> the_alliance [+DefeatMeansFriendship]
+  }
+}
