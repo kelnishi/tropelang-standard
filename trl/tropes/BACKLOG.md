@@ -82,7 +82,7 @@ Universal + the cast & plot-structure indexes). This is the live ledger — **ev
 it** (the finalize step in `CONVERSION_BOT.md`). The *recipe* for re-running the review (corpus inventory
 vs. the indexes, archive access) lives in `CONVERSION_BOT.md`; the *state* lives here.
 
-**Corpus: 270 tropes · self-recognition 270/270 (100%).** (Re-measure: `tropelang selfcheck
+**Corpus: 277 tropes · self-recognition 277/277 (100%).** (Re-measure: `tropelang selfcheck
 trl/tropes/corpus.toml --corpus file://trl`.)
 
 **Converted batches (done):**
@@ -102,7 +102,8 @@ trl/tropes/corpus.toml --corpus file://trl`.)
 - `convert/rhetoric-scales-batch` (#54, 7) — **Rhetoric push, scene/act/arc mix**: Armor-Piercing Question · Lampshade Hanging · Aside Glance (scene) · Talking the Monster to Death · Patrick Stewart Speech (act) · Strawman Political · Audience Surrogate (arc).
 - `convert/loaded-meaning-batch` (#55, 7) — **ground-level loaded-meaning tropes** (object/action/behavior gets meaning from legend/religion/anime/chivalry/comedy/myth/ritual): Only the Chosen May Wield · Holy Halo · Tsundere · Throwing Down the Gauntlet · Spit Take · Red String of Fate · Pinky Swear.
 - `convert/power-meta-balance-1` (#56, 7) — **capability-gap batch 1/5 (Power+4, Meta+2)**: Kingmaker Scenario · La Resistance · Government Conspiracy · The Quisling · The Stinger · Medium Awareness · Sequel Hook.
-- `convert/power-meta-balance-2` (this PR, 7) — **capability-gap batch 2/5 (Power→18, Meta→19, Bonds→23, Death→21)**: Asskicking Equals Authority · Police State (power) · A House Divided (bonds) · Author Avatar · Literary Agent Hypothesis · Trapped in TV Land (meta) · Disposable Woman (death).
+- `convert/power-meta-balance-2` (#57, 7) — **batch 2/5**: Asskicking Equals Authority · Police State · A House Divided · Author Avatar · Literary Agent Hypothesis · Trapped in TV Land · Disposable Woman.
+- `convert/power-meta-balance-3` (this PR, 7) — **batch 3/5, cracked the hard recognition shapes**: Enemy Civil War (power) · Dropped a Bridge on Him · Death Seeker (death) · Painting the Medium (meta) · Mood Whiplash · Cerebus Syndrome · Crapsack World (tonal-juxtaposition / tonal-arc / setting-property, via linked-event discriminators).
 
 **Remaining gaps (archive-verified; the next-batch candidates):**
 - [ ] Mood Whiplash · [ ] Idiot Plot · [ ] Crapsack World (each harder to event-anchor —

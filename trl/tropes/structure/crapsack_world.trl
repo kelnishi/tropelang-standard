@@ -1,0 +1,73 @@
+// === PREAMBLE ===
+// @trope    Crapsack World
+// @category Settings / Worldbuilding
+// @source   https://allthetropes.org/wiki/Crapsack_World
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): a relentlessly bleak setting where anything that can go wrong does, horribly,
+// and the misery corrupts its inhabitants into perpetuating it. FRONTIER: a SETTING-property — the
+// recognizer's weak spot, since bleakness is not an event. Modeled here by its symptom: a [+Crapsack]
+// world in which an act of [&Brutalizes] cruelty passes [+Unremarked], normalized by everyone around it.
+// The world's nature is shown by atrocity met with a shrug. Distinct from a single villain's evil: here
+// horror is the ambient default.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc crapsack_world -> [
+  police_state : "the kind of regime that thrives in",
+  deadpan_snarker : "breeds the cynicism of",
+  anti_hero : "the only kind of hero that survives"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the bleak world shown by normalized cruelty is the discriminator; promotion model) —
+prop Crapsack    [+Spatial]       // a relentlessly bleak, hostile world that corrupts its inhabitants
+prop Unremarked  [+Narrative]     // met with indifference — normalized, no one reacts
+verb Brutalizes(target) [+Interpersonal] // commits casual cruelty as a matter of course
+
+imply CrapsackWorld -> [Object, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): in a [+Crapsack] world, an [+Unremarked] act of [&Brutalizes] cruelty occurs —
+// the world bound on the `setting=` role and the act marked [+Unremarked], so phase-2 re-checks [+Crapsack]
+// on the world and [+Unremarked] on the event (STYLE §8). Binding ambient bleakness to NORMALIZED cruelty
+// is the discriminator: horror that no one reacts to reveals the world's nature, parting it from a single
+// villain's atrocity (which the world would still condemn).
+rule Crapsack_World {
+  when:
+    obj  $world [+Crapsack]
+    evt  $cruelty [+Unremarked] [&Brutalizes(agent=$x, target=$y, setting=$world)]
+  then:
+    $cruelty [+CrapsackWorld]
+}
+
+
+// === CONCRETE VIGNETTE: Warhammer 40,000 — the Imperium (game/franchise, 1987) ===
+// "In the grim darkness of the far future, there is only war." The Imperium of Man is a galaxy-spanning
+// theocratic nightmare where a thousand worlds die a day, where an Inquisitor will order an entire planet
+// of loyal citizens incinerated — Exterminatus — to stop a single heresy, and no one questions it; it is
+// simply Tuesday. The atrocity is doctrine, the horror ambient, the cruelty unremarked. The setting itself
+// is the antagonist.
+
+// THE IMPERIUM OF MAN — the relentlessly bleak galaxy where horror is routine
+obj the_imperium [+Crapsack]
+
+// THE INQUISITION — which incinerates a world without a second thought
+char the_inquisition [+Antagonist]
+
+// A LOYAL WORLD — exterminated to stop one heresy, and never mourned
+char a_loyal_world [+Collective]
+
+scene exterminatus {
+  beat 1 {
+    // a whole world burned to stop one heresy — and no one blinks; it is simply how the galaxy works
+    evt the_atrocity [+Unremarked] [&Brutalizes(agent=the_inquisition, target=a_loyal_world, setting=the_imperium)]
+    // Crapsack_World -> the_atrocity [+CrapsackWorld]
+  }
+}

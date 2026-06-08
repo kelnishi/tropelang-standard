@@ -140,10 +140,12 @@ import "trl/tropes/conflict/war/you_shall_not_pass.trl"
 import "trl/tropes/conflict/war/zerg_rush.trl"
 import "trl/tropes/death/back_from_the_dead.trl"
 import "trl/tropes/death/death_by_origin_story.trl"
+import "trl/tropes/death/death_seeker.trl"
 import "trl/tropes/death/defiant_to_the_end.trl"
 import "trl/tropes/death/disney_death.trl"
 import "trl/tropes/death/disney_villain_death.trl"
 import "trl/tropes/death/disposable_woman.trl"
+import "trl/tropes/death/dropped_a_bridge_on_him.trl"
 import "trl/tropes/death/famous_last_words.trl"
 import "trl/tropes/death/heroic_sacrifice.trl"
 import "trl/tropes/death/hoist_by_his_own_petard.trl"
@@ -197,6 +199,7 @@ import "trl/tropes/meta/metafiction/lampshade_hanging.trl"
 import "trl/tropes/meta/metafiction/literary_agent_hypothesis.trl"
 import "trl/tropes/meta/metafiction/medium_awareness.trl"
 import "trl/tropes/meta/metafiction/mockumentary.trl"
+import "trl/tropes/meta/metafiction/painting_the_medium.trl"
 import "trl/tropes/meta/metafiction/reality_bleed.trl"
 import "trl/tropes/meta/metafiction/show_within_a_show.trl"
 import "trl/tropes/meta/metafiction/the_stinger.trl"
@@ -211,6 +214,7 @@ import "trl/tropes/meta/nonfiction/the_host.trl"
 import "trl/tropes/power/asskicking_equals_authority.trl"
 import "trl/tropes/power/bread_and_circuses.trl"
 import "trl/tropes/power/decadent_court.trl"
+import "trl/tropes/power/enemy_civil_war.trl"
 import "trl/tropes/power/evil_chancellor.trl"
 import "trl/tropes/power/full_circle_revolution.trl"
 import "trl/tropes/power/government_conspiracy.trl"
@@ -235,6 +239,7 @@ import "trl/tropes/rhetoric/courtroom_summation.trl"
 import "trl/tropes/rhetoric/hannibal_lecture.trl"
 import "trl/tropes/rhetoric/just_between_you_and_me.trl"
 import "trl/tropes/rhetoric/moment_of_awesome.trl"
+import "trl/tropes/rhetoric/mood_whiplash.trl"
 import "trl/tropes/rhetoric/motive_rant.trl"
 import "trl/tropes/rhetoric/patrick_stewart_speech.trl"
 import "trl/tropes/rhetoric/pratfall.trl"
@@ -257,8 +262,10 @@ import "trl/tropes/rhetoric/the_reason_you_suck_speech.trl"
 import "trl/tropes/rhetoric/trash_talk.trl"
 import "trl/tropes/structure/bittersweet_ending.trl"
 import "trl/tropes/structure/bookends.trl"
+import "trl/tropes/structure/cerebus_syndrome.trl"
 import "trl/tropes/structure/cliffhanger.trl"
 import "trl/tropes/structure/conflict.trl"
+import "trl/tropes/structure/crapsack_world.trl"
 import "trl/tropes/structure/deus_ex_machina.trl"
 import "trl/tropes/structure/diabolus_ex_machina.trl"
 import "trl/tropes/structure/downer_ending.trl"
@@ -537,6 +544,7 @@ concept break_the_cutie [+Trope(category="Tragedy", source="https://allthetropes
 concept break_the_haughty [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Break_the_Haughty")] [%Narrative]
 concept breaking_speech [+Trope(category="Oratory", source="https://allthetropes.org/wiki/%22The_Reason_You_Suck%22_Speech")] [%Narrative]
 concept calling_your_attacks [+Trope(category="Combat Tropes", source="https://allthetropes.org/wiki/Calling_Your_Attacks")] [%Narrative]
+concept cerebus_syndrome [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/Cerebus_Syndrome")] [%Narrative]
 concept character_development [+Trope(category="Characterization Tropes", source="https://allthetropes.org/wiki/Character_Development")] [%Mind]
 concept chekhovs_boomerang [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Boomerang")] [%Narrative]
 concept chekhovs_gunman [+Trope(category="Foreshadowing", source="https://allthetropes.org/wiki/Chekhov's_Gunman")] [%Narrative]
@@ -545,12 +553,14 @@ concept combat_pragmatist [+Trope(category="Conflict", source="https://allthetro
 concept conflicting_loyalty [+Trope(category="Internal Conflict", source="https://allthetropes.org/wiki/Conflicting_Loyalty")] [%Interpersonal]
 concept cooldown_hug [+Trope(category="Friendship", source="https://allthetropes.org/wiki/Cooldown_Hug")] [%Narrative]
 concept courtroom_summation [+Trope(category="Oratory", source="https://allthetropes.org/wiki/Simple_Country_Lawyer")] [%Narrative]
+concept crapsack_world [+Trope(category="Settings", source="https://allthetropes.org/wiki/Crapsack_World")] [%Narrative]
 concept curb_stomp_battle [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Curb_Stomp_Battle")] [%Interpersonal]
 concept damsel_in_distress [+Trope(category="Characters As Device", source="https://allthetropes.org/wiki/Damsel_in_Distress")] [%Narrative]
 concept david_versus_goliath [+Trope(category="Combat Tropes", source="https://allthetropes.org/wiki/David_Versus_Goliath")] [%Interpersonal]
 concept deadpan_snarker [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Deadpan_Snarker")] [%Narrative]
 concept deal_with_the_devil [+Trope(category="Drama", source="https://allthetropes.org/wiki/Deal_with_the_Devil")] [%Mind]
 concept death_by_origin_story [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Death_by_Origin_Story")] [%Narrative]
+concept death_seeker [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Death_Seeker")] [%Narrative]
 concept decapitated_army [+Trope(category="Military and Warfare", source="https://allthetropes.org/wiki/Decapitated_Army")] [%Political]
 concept defeat_means_friendship [+Trope(category="Combat", source="https://allthetropes.org/wiki/Defeat_Means_Friendship")] [%Narrative]
 concept defiant_to_the_end [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Defiant_to_the_End")] [%Narrative]
@@ -560,6 +570,8 @@ concept disney_death [+Trope(category="Death Tropes", source="https://allthetrop
 concept disney_villain_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Disney_Villain_Death")] [%Narrative]
 concept disposable_woman [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Disposable_Woman")] [%Narrative]
 concept downer_ending [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/Downer_Ending")] [%Narrative]
+concept dropped_a_bridge_on_him [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Dropped_a_Bridge_on_Him")] [%Narrative]
+concept enemy_civil_war [+Trope(category="Politics", source="https://allthetropes.org/wiki/Enemy_Civil_War")] [%Narrative]
 concept enemy_mine [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Enemy_Mine")] [%Interpersonal]
 concept eucatastrophe [+Trope(category="Happy Endings", source="https://allthetropes.org/wiki/Eucatastrophe")] [%Narrative]
 concept even_evil_has_standards [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Even_Evil_Has_Standards")] [%Psychological]
@@ -608,10 +620,12 @@ concept mercy_kill [+Trope(category="Death Tropes", source="https://allthetropes
 concept mexican_standoff [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Mexican_Standoff")] [%Interpersonal]
 concept mockumentary [+Trope(category="Non-Fiction", source="https://allthetropes.org/wiki/Mockumentary")] [%Narrative]
 concept moment_of_awesome [+Trope(category="Audience Reactions", source="https://allthetropes.org/wiki/Moment_of_Awesome_(Sugar_Wiki)")] [%Narrative]
+concept mood_whiplash [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Mood_Whiplash")] [%Narrative]
 concept mook [+Trope(category="Combat", source="https://allthetropes.org/wiki/Mooks")] [%Narrative]
 concept motive_rant [+Trope(category="Oratory", source="https://allthetropes.org/wiki/Motive_Rant")] [%Narrative]
 concept not_so_different [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Not_So_Different")] [%Interpersonal]
 concept only_the_chosen_may_wield [+Trope(category="Artifacts", source="https://allthetropes.org/wiki/Only_the_Chosen_May_Wield")] [%Narrative]
+concept painting_the_medium [+Trope(category="Metafiction", source="https://allthetropes.org/wiki/Painting_the_Medium")] [%Narrative]
 concept patrick_stewart_speech [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Patrick_Stewart_Speech")] [%Narrative]
 concept pet_the_dog [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Pet_the_Dog")] [%Narrative]
 concept pinky_swear [+Trope(category="Friendship", source="https://allthetropes.org/wiki/Pinky_Swear")] [%Narrative]

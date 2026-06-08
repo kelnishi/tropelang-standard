@@ -212,6 +212,32 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   outward leak. Founds `prop FictionalWorld` + `verb PulledInto(subject)`.)
   Corpus **263 → 270 tropes**; self-recognition steady at **270/270 (100%)**. (Capability-gap batch 2/5:
   Power → 18, Meta → 19, Bonds → 23, Death → 21 — balancing the bottom of the frontier.)
+- **Enemy Civil War** (Politics / Villains) — https://allthetropes.org/wiki/Enemy_Civil_War
+  (The Dark Knight, Joker vs the mob — one [+Antagonist] faction `[&TurnsOn]` another; villain-on-villain,
+  vs A House Divided (besieged allies). Reuses `[&TurnsOn]` — no new vocab.)
+- **Dropped a Bridge on Him** (Death Tropes) — https://allthetropes.org/wiki/Dropped_a_Bridge_on_Him
+  (Star Trek TNG, Tasha Yar — a [+Major] character [&Slays]-ed in an [+Anticlimactic] beat; withheld
+  drama, vs the Sacrificial Lion's weighty death. Founds `prop Anticlimactic`; reuses `[+Major]`/`[&Slays]`.)
+- **Death Seeker** (Death Tropes / Character) — https://allthetropes.org/wiki/Death_Seeker
+  (Logan — a [+DeathWish] character `[&CourtsDeath]`, fighting to die; the inverted will of a Determinator.
+  Founds `prop DeathWish` + `verb CourtsDeath`.)
+- **Painting the Medium** (Metafiction) — https://allthetropes.org/wiki/Painting_the_Medium
+  (Schindler's List, the red coat — the author `[&Employs]` a [+MediumArtifact] to convey story; the
+  author-side counterpart to Medium Awareness. Founds `verb Employs(artifact)`; reuses `[+MediumArtifact]`.)
+- **Mood Whiplash** (Rhetoric / Tone) — https://allthetropes.org/wiki/Mood_Whiplash *(hard recognition
+  shape)* — (Up's opening — a [&Shatters] event breaks a [+Levity] moment; the second beat links to the
+  first's tone, binding the juxtaposition. Founds `prop Levity` + `verb Shatters(mood)`.)
+- **Cerebus Syndrome** (Plot Devices / Tone) — https://allthetropes.org/wiki/Cerebus_Syndrome
+  (M*A*S*H — a [+Lighthearted] work `[&Darkens]` across its run; the slow-arc counterpart to Mood
+  Whiplash's spike. Founds `prop Lighthearted` + `verb Darkens(subject)`.)
+- **Crapsack World** (Settings / Worldbuilding) — https://allthetropes.org/wiki/Crapsack_World *(hard
+  recognition shape)* — (Warhammer 40,000 — in a [+Crapsack] world an [+Unremarked] [&Brutalizes] cruelty
+  passes normalized; bleakness shown by atrocity met with a shrug. Founds `prop Crapsack`/`prop Unremarked`
+  + `verb Brutalizes(target)`.)
+  Corpus **270 → 277 tropes**; self-recognition steady at **277/277 (100%)**. (Capability-gap batch 3/5:
+  cracked the **hard recognition shapes** — tonal juxtaposition (Mood Whiplash), tonal arc (Cerebus
+  Syndrome), and setting-as-property (Crapsack World) — each via a linked-event discriminator. Power → 19,
+  Death → 23, Meta → 20.)
 
 ## [1.7.4] — 2026-06-08
 
