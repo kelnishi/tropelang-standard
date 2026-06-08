@@ -5,11 +5,14 @@
 // @domain   Narrative
 // @version  1.3
 //
-// Laconic (per the wiki): the moment awesomeness and romance meet — an epic scene topped with an epic
-// kiss, often the long-awaited end of Unresolved Sexual Tension. FRONTIER: the kiss as PAYOFF. The
-// discriminator is two characters both carrying [+Yearning] (the held, unspoken tension) bound on a
-// [&Kisses] event — so it fires on the release of long-simmering tension, not on a casual peck or a
-// Smooch of Victory between parties with nothing riding on it.
+// Laconic (per the wiki): the moment awesomeness and romance meet — an otherwise epic scene topped with
+// a kiss that is epic in its own right, often the long-awaited end of Unresolved Sexual Tension (stuff
+// blowing up in the background optional). FRONTIER: the kiss as PAYOFF at the PEAK. Two things make it
+// the *big damn* kiss, and the rule binds both: the pair carry mutual [+Yearning] (the held tension), and
+// the kiss itself is [+Climactic] — it lands on an epic/high-stakes beat, not a quiet one. The climactic
+// tag rides the kiss EVENT so phase-2 re-checks it; that is what parts this from an ordinary mutual kiss
+// (pining, but not at the dramatic peak) and from a Smooch of Victory between parties with nothing riding
+// on it.
 
 
 // === IMPORTS & ASSOCIATIONS ===
@@ -18,55 +21,73 @@ import "trl/concepts/index.trl"
 assoc the_big_damn_kiss -> [
   star_crossed_lovers : "the release of tension held by",
   unrequited_love     : "the requital denied in",
-  the_climax          : "often lands at"
+  the_climax          : "lands at the peak that is",
+  damsel_in_distress  : "often tops the rescue of a",
+  spectacle           : "the romance half of a crafted"
 ]
 
 
 // === ONTOLOGY ===
-// — founded here (the mutual yearning released in the kiss is the discriminator; promotion model) —
+// — founded here (the climactic peak + the mutual yearning released are the discriminator) —
 prop Yearning    [+Psychological]   // holding unspoken romantic tension — the UST awaiting release
+prop Climactic   [+Narrative]       // landing on the dramatic peak — the epic/high-stakes beat
 verb Kisses(other) [+Interpersonal] // shares a romantic kiss
 
 imply TheBigDamnKiss -> [Investment, Narrative]
 
 
 // === ABSTRACT RULE ===
-// Naming rule: two [+Yearning] characters KISS — both bound on a [&Kisses] event (agent + other), so
-// phase-2 re-checks [+Yearning] on each (STYLE §8); the binding-inequality ($a != $b, engine ≥ 0.4.3)
-// keeps it from matching one person against themselves. The mutual held tension is the discriminator:
-// the kiss is the PAYOFF of UST, not a casual or one-sided kiss.
+// Naming rule: two [+Yearning] characters share a [+Climactic] KISS — both kissers bound on a [&Kisses]
+// event that itself carries [+Climactic], so phase-2 re-checks [+Yearning] on each kisser AND [+Climactic]
+// on the bound kiss event (STYLE §8); the binding-inequality ($a != $b, engine ≥ 0.4.3) bars matching a
+// person against themselves. Two discriminators, both bound: the mutual held tension (it is a PAYOFF, not
+// a casual or one-sided kiss) and the dramatic peak (it is the BIG one, not a quiet kiss). The pair come
+// away [+Requited].
 rule The_Big_Damn_Kiss {
   when:
     char $a [+Yearning]
     char $b [+Yearning]
     $a != $b
-    evt  $kiss [&Kisses(agent=$a, other=$b)]
+    evt  $kiss [+Climactic] [&Kisses(agent=$a, other=$b)]
   then:
     $kiss [+TheBigDamnKiss]
+    $a [+Requited]
+    $b [+Requited]
 }
 
 
 // === CONCRETE VIGNETTE: Spider-Man — the upside-down rain kiss (film, 2002) ===
-// Mary Jane, walking home in the downpour, is cornered by muggers and saved by Spider-Man, who drops to
-// hang inverted above her in the alley. The tension between them has simmered the whole film, each
-// half-knowing, neither saying it. She peels his mask down to the nose — and kisses him in the rain, the
-// long-held wanting finally let go in one upside-down, rain-soaked, very damn big kiss.
+// The whole film has held the wanting between them, each half-knowing, neither saying it. It pays off at
+// the worst/best moment: Mary Jane, walking home in the downpour, is cornered by muggers — until
+// Spider-Man drops from above, beats them off, and hangs inverted in the rain before her. There, at the
+// adrenaline peak of the rescue, she peels his mask down to the nose and kisses him. Romance tops the
+// epic beat; the long-held tension is let go in one upside-down, rain-soaked, very damn big kiss.
 
-// MARY JANE WATSON — half-knowing, wanting, unspoken
+// MARY JANE WATSON — cornered, wanting, unspoken
 char mary_jane [+Yearning]
 
-// PETER PARKER (SPIDER-MAN) — the same tension held from the other side
-char peter [+Yearning]
+// PETER PARKER (SPIDER-MAN) — the same tension, held from the other side
+char peter [+Protagonist] [+Yearning]
 
-// EXT. ALLEY - NIGHT (rain, the inverted hero)
+// THE MUGGERS — the peril that charges the alley
+char the_muggers [+Threat]
+
+// EXT. ALLEY - NIGHT (rain, danger, the inverted hero)
 set the_alley [+Exterior] [+Night] [+Raining]
 
 scene the_upside_down_kiss {
   beat 1 {
     mary_jane @ the_alley
+    the_muggers -> mary_jane : "corner her in the downpour"
+  }
+  beat 2 {
     peter @ the_alley
-    // she pulls the mask to his nose and kisses him — the UST released
-    evt the_kiss [&Kisses(agent=mary_jane, other=peter)]
-    // The_Big_Damn_Kiss -> the_kiss [+TheBigDamnKiss]
+    // he drops in, beats them off, and hangs inverted before her — the epic beat
+    evt the_rescue [&Rescues(agent=peter, target=mary_jane)]
+  }
+  beat 3 {
+    // at the peak of the rescue she peels his mask to the nose and kisses him — the climactic payoff
+    evt the_kiss [+Climactic] [&Kisses(agent=mary_jane, other=peter)]
+    // The_Big_Damn_Kiss -> the_kiss [+TheBigDamnKiss]; mary_jane [+Requited]; peter [+Requited]
   }
 }
