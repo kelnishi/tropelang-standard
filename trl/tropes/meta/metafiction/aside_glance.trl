@@ -1,0 +1,65 @@
+// === PREAMBLE ===
+// @trope    Aside Glance
+// @category Metafiction / Narrative Devices
+// @source   https://allthetropes.org/wiki/Aside_Glance
+// @domain   Narrative
+// @scale    scene
+// @version  1.3
+//
+// Laconic (per the wiki): a brief, SILENT glance to the camera acknowledging that the situation (or the
+// person being spoken to) is absurd — without ever speaking to the audience. FRONTIER: the non-verbal
+// fourth-wall flicker, scene-scale. The discriminator is a [&Glances] event whose `at=` role is the
+// [+Spectator] (the audience) — distinct from Breaking the Fourth Wall, which keys on a spoken
+// [&Addresses]: a glance is not an address, so the two recognize on different verbs and never collide.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/meta/metafiction/fourth_wall.trl"   // the spoken-address sibling this stays just shy of
+
+assoc aside_glance -> [
+  fourth_wall : "the silent, glance-only cousin of",
+  lampshade_hanging : "a wordless way of"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the silent glance to the audience is the discriminator; reuses [+Spectator]) —
+verb Glances(at) [+Interpersonal]   // shoots a brief, silent look — here, to the audience
+
+imply AsideGlance -> [Metafictional, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (scene scale): a character GLANCES at the [+Spectator] — the audience-figure bound on the
+// `at=` role of a [&Glances] event (agent=$x), so phase-2 re-checks [+Spectator] on the bound addressee
+// (STYLE §8). One beat, no words: the silent look to camera. The dedicated [&Glances] verb (not a spoken
+// [&Addresses]) is the discriminator that keeps it distinct from Breaking the Fourth Wall.
+rule Aside_Glance {
+  when:
+    char $viewer [+Spectator]
+    evt  $look [&Glances(agent=$x, at=$viewer)]
+  then:
+    $look [+AsideGlance]
+}
+
+
+// === CONCRETE VIGNETTE: The Office — Jim Halpert to the camera (TV, 2005) ===
+// Dwight says something gloriously absurd, or Michael blunders into another disaster, and Jim does the
+// thing the show is built on: he turns his head a few degrees and looks, silently, straight into the
+// documentary camera. He never says a word to us; he doesn't have to. The glance says "are you seeing
+// this?" and trusts the audience to share the joke. The deadpan look to camera, the purest aside glance.
+
+// JIM HALPERT — who lets the camera in on the absurdity, wordlessly
+char jim [+Protagonist]
+
+// THE CAMERA / AUDIENCE — the documentary lens he glances at
+char viewer [+Spectator]
+
+scene the_look_to_camera {
+  beat 1 {
+    // a silent glance to the lens — never a word, just "are you seeing this?"
+    evt the_glance [&Glances(agent=jim, at=viewer)]
+    // Aside_Glance -> the_glance [+AsideGlance]
+  }
+}

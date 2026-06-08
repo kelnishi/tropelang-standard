@@ -117,6 +117,29 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   restrained party turning the tables parts it from a Breaking Speech (a free villain). Founds `verb
   Unnerves(target)`; reuses `[+Captive]`.)
   Corpus **235 → 242 tropes**; self-recognition steady at **242/242 (100%)**.
+- **Armor-Piercing Question** (Rhetoric / Persuasion) — https://allthetropes.org/wiki/Armor-Piercing_Question
+  (Army–McCarthy hearings, Welch — *scene scale*: a [+Piercing] question on the `question=` role of an
+  `[&Asks]` event; target [#Shaken]. Founds `prop Piercing` + `verb Asks(question)`.)
+- **Lampshade Hanging** (Metafiction) — https://allthetropes.org/wiki/Lampshade_Hanging
+  (Age of Ultron, Hawkeye — *scene scale*: a character `[&Lampshades]` a [+Contrived] element; in-story,
+  not an audience address. Founds `prop Contrived` + `verb Lampshades(element)`.)
+- **Aside Glance** (Metafiction) — https://allthetropes.org/wiki/Aside_Glance
+  (The Office, Jim — *scene scale*: a silent `[&Glances]` at the [+Spectator]; the dedicated glance verb
+  (not a spoken `[&Addresses]`) keeps it distinct from Breaking the Fourth Wall. Founds `verb Glances(at)`.)
+- **Talking the Monster to Death** (Rhetoric / Persuasion) — https://allthetropes.org/wiki/Talking_the_Monster_to_Death
+  (Star Trek, Kirk & Nomad — *act scale*: a hero `[&TalksDown]` an [+Invincible] [+Antagonist], undone by
+  argument alone. Founds `verb TalksDown(target)`; reuses `[+Invincible]`.)
+- **Patrick Stewart Speech** (Rhetoric / Persuasion) — https://allthetropes.org/wiki/Patrick_Stewart_Speech
+  (The Great Dictator — *act scale*: [+Humankind] is `[&Disparages]`-ed then `[&Extols]`-ed, a two-event
+  dismissal-and-rebuttal. Founds `prop Humankind` + `verb Disparages(subject)`/`verb Extols(subject)`.)
+- **Strawman Political** (Rhetoric / Persuasion) — https://allthetropes.org/wiki/Strawman_Political
+  (Captain Planet — *arc scale*: a [+Strawman] (rigged opposing-view character) `[&KnocksDown]`-ed; the
+  standing role surfaces when routed. Founds `prop Strawman` + `verb KnocksDown(target)`.)
+- **Audience Surrogate** (Rhetoric / Persuasion) — https://allthetropes.org/wiki/Audience_Surrogate
+  (Dr. Watson — *arc scale*: a [+Surrogate] character bound on the agent of an `[&Asks]` event, voicing the
+  audience's question. Founds `prop Surrogate`; reuses `[&Asks]`.)
+  Corpus **242 → 249 tropes**; self-recognition steady at **249/249 (100%)**. (Rhetoric arena 23 → 28; the
+  batch spans recognition scales: 3 scene · 2 act · 2 arc.)
 
 ## [1.7.4] — 2026-06-08
 

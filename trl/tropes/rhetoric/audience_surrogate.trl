@@ -1,0 +1,68 @@
+// === PREAMBLE ===
+// @trope    Audience Surrogate
+// @category Rhetoric / Persuasion
+// @source   https://allthetropes.org/wiki/Audience_Surrogate
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): a character who asks the questions the audience would ask and reacts as the
+// audience would — the viewpoint anchor through whom we enter the story (classically "The Watson").
+// FRONTIER: an arc-scale rhetorical anchor — a STANDING role held across the work, surfaced whenever the
+// surrogate voices our question. The discriminator is a [+Surrogate] character bound on the agent of an
+// [&Asks] event: the one asking on our behalf. Reuses the [&Asks] of Armor-Piercing Question, but keys on
+// WHO asks ([+Surrogate]) rather than the question's edge.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/rhetoric/armor_piercing_question.trl"   // reuses [&Asks]
+
+assoc audience_surrogate -> [
+  the_everyman : "the viewpoint role often filled by",
+  lampshade_hanging : "voices the audience's doubt like"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the audience's viewpoint character is the discriminator; reuses [&Asks]) —
+prop Surrogate [+Narrative]   // the audience's stand-in — asks what we'd ask, reacts as we would
+
+imply AudienceSurrogate -> [Investment, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a [+Surrogate] character ASKS the question the audience is asking — the
+// stand-in bound on the agent role of an [&Asks] event, so phase-2 re-checks [+Surrogate] on the asker
+// (STYLE §8). The standing surrogate role (held across the work) surfaces each time they voice our
+// question. Binding the audience-stand-in quality on the ASKER is the discriminator (vs Armor-Piercing
+// Question, which keys on the [+Piercing] question itself).
+rule Audience_Surrogate {
+  when:
+    char $surrogate [+Surrogate]
+    evt  $q [&Asks(agent=$surrogate, question=$query)]
+  then:
+    $q [+AudienceSurrogate]
+}
+
+
+// === CONCRETE VIGNETTE: Sherlock Holmes — Dr. Watson (Doyle, novel, Victorian) ===
+// Holmes sees everything at a glance and explains nothing until pressed — so Conan Doyle gives us Watson,
+// who watches the same scene we do and asks, on our behalf, the question burning in every reader: "But
+// Holmes, how could you possibly know?" His bafflement is ours, his questions are ours, and Holmes's
+// answers — addressed to Watson — are really addressed to us. The original audience surrogate, the role the
+// trope "The Watson" is named for.
+
+// DR. WATSON — the reader's stand-in, asking what we'd ask
+char watson [+Surrogate]
+
+// THE QUESTION — "how could you possibly know?" — the reader's own
+obj the_readers_question [+Query]
+
+scene the_explanation {
+  beat 1 {
+    // he asks, on our behalf, the question the whole audience is holding
+    evt the_asking [&Asks(agent=watson, question=the_readers_question)]
+    // Audience_Surrogate -> the_asking [+AudienceSurrogate]
+  }
+}

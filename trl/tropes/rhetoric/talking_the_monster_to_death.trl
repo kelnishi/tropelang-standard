@@ -1,0 +1,74 @@
+// === PREAMBLE ===
+// @trope    Talking the Monster to Death
+// @category Rhetoric / Persuasion
+// @source   https://allthetropes.org/wiki/Talking_the_Monster_to_Death
+// @domain   Narrative
+// @scale    act
+// @version  1.3
+//
+// Laconic (per the wiki): the hero defeats a foe who has beaten everyone else using WORDS alone — an
+// argument or insight that undoes the monster without a blow struck. FRONTIER: an act-scale persuasion
+// set-piece — the confrontation is won by speech. The discriminator is an [+Invincible] [+Antagonist]
+// (the foe nothing else could stop) bound on the target of a [&TalksDown] event, after which it is
+// [+Undone]. Distinct from a Breaking Speech (aimed at a [+Vulnerable] hero, to despair): here the target
+// is the unbeatable monster, and the weapon is reason.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc talking_the_monster_to_death -> [
+  breaking_speech : "the monster-facing inverse of",
+  the_reason_you_suck_speech : "a fatal-by-logic cousin of",
+  take_a_third_option : "defeats by words where others reached for force"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the foe undone by argument alone is the discriminator; reuses [+Invincible]) —
+verb TalksDown(target) [+Interpersonal]   // defeats or undoes a foe through argument alone, no violence
+
+imply TalkingTheMonsterToDeath -> [Manipulation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (act scale): a hero TALKS DOWN an [+Invincible] [+Antagonist] — the unbeatable foe bound on
+// the target role of a [&TalksDown] event (agent=$hero), so phase-2 re-checks [+Invincible] on the bound
+// foe (STYLE §8). The confrontation everyone else lost is resolved by argument: the foe ends [+Undone].
+// Binding invincibility-then-undone-by-words on the foe is the discriminator (vs a Breaking Speech, which
+// breaks a hero).
+rule Talking_The_Monster_To_Death {
+  when:
+    char $foe [+Antagonist] [+Invincible]
+    evt  $speech [&TalksDown(agent=$hero, target=$foe)]
+  then:
+    $foe [+Undone]
+    $speech [+TalkingTheMonsterToDeath]
+}
+
+
+// === CONCRETE VIGNETTE: Star Trek — Kirk and Nomad (TV, 1967) ===
+// Nomad is an unstoppable space probe that has wiped out billions and shrugged off every weapon the
+// Enterprise has; its mission is to sterilize anything imperfect. Kirk doesn't fire a shot. He makes it
+// confront its own logic: it mistook him for its creator Roman Kirk, it has therefore made an error, and
+// its prime directive is to destroy imperfection — including itself. Caught in the contradiction, Nomad
+// overloads and is beamed into space to explode. The monster nothing could touch, argued into its own
+// destruction.
+
+// CAPTAIN KIRK — who fights the unbeatable machine with a contradiction
+char kirk [+Protagonist]
+
+// NOMAD — the unstoppable probe that sterilizes the imperfect
+char nomad [+Antagonist] [+Invincible]
+
+// INT. ENGINEERING - the cornered probe
+set engineering [+Interior]
+
+scene the_logic_trap {
+  beat 1 {
+    kirk @ engineering
+    // no weapon worked; Kirk turns its own logic against it until it must destroy itself
+    evt the_contradiction [&TalksDown(agent=kirk, target=nomad)]
+    // Talking_The_Monster_To_Death -> nomad [+Undone]; the_contradiction [+TalkingTheMonsterToDeath]
+  }
+}

@@ -182,8 +182,10 @@ import "trl/tropes/epistemic/reveal/tomato_in_the_mirror.trl"
 import "trl/tropes/epistemic/reveal/tomato_surprise.trl"
 import "trl/tropes/epistemic/reveal/unreliable_narrator.trl"
 import "trl/tropes/epistemic/reveal/wham_line.trl"
+import "trl/tropes/meta/metafiction/aside_glance.trl"
 import "trl/tropes/meta/metafiction/fourth_wall.trl"
 import "trl/tropes/meta/metafiction/genre_savvy.trl"
+import "trl/tropes/meta/metafiction/lampshade_hanging.trl"
 import "trl/tropes/meta/metafiction/mockumentary.trl"
 import "trl/tropes/meta/metafiction/reality_bleed.trl"
 import "trl/tropes/meta/metafiction/show_within_a_show.trl"
@@ -206,6 +208,8 @@ import "trl/tropes/power/the_coup.trl"
 import "trl/tropes/power/the_purge.trl"
 import "trl/tropes/power/the_starscream.trl"
 import "trl/tropes/rhetoric/an_aesop.trl"
+import "trl/tropes/rhetoric/armor_piercing_question.trl"
+import "trl/tropes/rhetoric/audience_surrogate.trl"
 import "trl/tropes/rhetoric/badass_boast.trl"
 import "trl/tropes/rhetoric/breaking_speech.trl"
 import "trl/tropes/rhetoric/courtroom_summation.trl"
@@ -213,6 +217,7 @@ import "trl/tropes/rhetoric/hannibal_lecture.trl"
 import "trl/tropes/rhetoric/just_between_you_and_me.trl"
 import "trl/tropes/rhetoric/moment_of_awesome.trl"
 import "trl/tropes/rhetoric/motive_rant.trl"
+import "trl/tropes/rhetoric/patrick_stewart_speech.trl"
 import "trl/tropes/rhetoric/pratfall.trl"
 import "trl/tropes/rhetoric/propaganda.trl"
 import "trl/tropes/rhetoric/rogue_juror.trl"
@@ -222,7 +227,9 @@ import "trl/tropes/rhetoric/rule_of_drama.trl"
 import "trl/tropes/rhetoric/rule_of_funny.trl"
 import "trl/tropes/rhetoric/sales_pitch.trl"
 import "trl/tropes/rhetoric/spectacle.trl"
+import "trl/tropes/rhetoric/strawman_political.trl"
 import "trl/tropes/rhetoric/stump_speech.trl"
+import "trl/tropes/rhetoric/talking_the_monster_to_death.trl"
 import "trl/tropes/rhetoric/tear_jerker.trl"
 import "trl/tropes/rhetoric/the_debate.trl"
 import "trl/tropes/rhetoric/the_dilemma.trl"
@@ -487,6 +494,9 @@ concept achilles_heel [+Trope(category="Combat Tropes", source="https://allthetr
 concept an_aesop [+Trope(category="Morality", source="https://allthetropes.org/wiki/An_Aesop")] [%Narrative]
 concept anagnorisis [+Trope(category="Narrative Devices", source="https://allthetropes.org/wiki/Anagnorisis")] [%Narrative]
 concept anti_hero [+Trope(category="Cast", source="https://allthetropes.org/wiki/Anti-Hero")] [%Narrative]
+concept armor_piercing_question [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Armor-Piercing_Question")] [%Narrative]
+concept aside_glance [+Trope(category="Metafiction", source="https://allthetropes.org/wiki/Aside_Glance")] [%Narrative]
+concept audience_surrogate [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Audience_Surrogate")] [%Narrative]
 concept back_from_the_dead [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Back_from_the_Dead")] [%Narrative]
 concept badass_boast [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Badass_Boast")] [%Narrative]
 concept batman_gambit [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Batman_Gambit")] [%Epistemic]
@@ -556,6 +566,7 @@ concept just_between_you_and_me [+Trope(category="Villains", source="https://all
 concept karma_houdini [+Trope(category="Karma Tropes", source="https://allthetropes.org/wiki/Karma_Houdini")] [%Narrative]
 concept karmic_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Karmic_Death")] [%Narrative]
 concept kick_the_dog [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Kick_the_Dog")] [%Narrative]
+concept lampshade_hanging [+Trope(category="Metafiction", source="https://allthetropes.org/wiki/Lampshade_Hanging")] [%Narrative]
 concept like_brother_and_sister [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Like_Brother_and_Sister")] [%Interpersonal]
 concept lovable_rogue [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Lovable_Rogue")] [%Narrative]
 concept love_dodecahedron [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Love_Dodecahedron")] [%Interpersonal]
@@ -569,6 +580,7 @@ concept moment_of_awesome [+Trope(category="Audience Reactions", source="https:/
 concept mook [+Trope(category="Combat", source="https://allthetropes.org/wiki/Mooks")] [%Narrative]
 concept motive_rant [+Trope(category="Oratory", source="https://allthetropes.org/wiki/Motive_Rant")] [%Narrative]
 concept not_so_different [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Not_So_Different")] [%Interpersonal]
+concept patrick_stewart_speech [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Patrick_Stewart_Speech")] [%Narrative]
 concept pet_the_dog [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Pet_the_Dog")] [%Narrative]
 concept plot_armor [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Plot_Armor")] [%Narrative]
 concept plot_coupon [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/Plot_Coupon")] [%Narrative]
@@ -595,10 +607,12 @@ concept siege [+Trope(category="Military and Warfare Tropes", source="https://al
 concept spanner_in_the_works [+Trope(category="Plot", source="https://allthetropes.org/wiki/Spanner_in_the_Works")] [%Epistemic]
 concept spectacle [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Visual_Effects_of_Awesome_(Sugar_Wiki)")] [%Narrative]
 concept status_quo_is_god [+Trope(category="Narrative Devices", source="https://allthetropes.org/wiki/Status_Quo_Is_God")] [%Narrative]
+concept strawman_political [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Strawman_Political")] [%Narrative]
 concept stump_speech [+Trope(category="Oratory", source="https://en.wikipedia.org/wiki/Stump_speech")] [%Narrative]
 concept take_a_third_option [+Trope(category="Plotting Devices", source="https://allthetropes.org/wiki/Take_a_Third_Option")] [%Narrative]
 concept taking_you_with_me [+Trope(category="Combat", source="https://allthetropes.org/wiki/Taking_You_with_Me")] [%Interpersonal]
 concept talking_head [+Trope(category="Non-Fiction", source="https://allthetropes.org/wiki/Talking_Heads")] [%Narrative]
+concept talking_the_monster_to_death [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Talking_the_Monster_to_Death")] [%Narrative]
 concept tear_jerker [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Tear_Jerker")] [%Narrative]
 concept the_ace [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/The_Ace")] [%Narrative]
 concept the_big_damn_kiss [+Trope(category="Romance", source="https://allthetropes.org/wiki/The_Big_Damn_Kiss")] [%Narrative]

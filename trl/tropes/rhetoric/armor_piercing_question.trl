@@ -1,0 +1,71 @@
+// === PREAMBLE ===
+// @trope    Armor-Piercing Question
+// @category Rhetoric / Persuasion
+// @source   https://allthetropes.org/wiki/Armor-Piercing_Question
+// @domain   Narrative
+// @scale    scene
+// @version  1.3
+//
+// Laconic (per the wiki): a single, precisely-aimed question whose answer forces the target to face
+// something they've been avoiding — asked and not let up on, it cracks their defenses. FRONTIER: the
+// scene-scale persuasive jab — recognition fits in ONE beat. The discriminator is a [+Piercing] question
+// bound on the `question=` role of an [&Asks] event; the target comes away [#Shaken]. Distinct from a
+// Breaking Speech (a sustained address aimed at a [+Vulnerable] hero): this is one question, one beat.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc armor_piercing_question -> [
+  breaking_speech : "the single-beat cousin of",
+  the_reason_you_suck_speech : "one question where the speech is a"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the defense-piercing question is the discriminator; promotion model) —
+prop Piercing   [+Epistemic]        // a question whose answer forces a hard, avoided truth
+verb Asks(question) [+Interpersonal] // puts a question to another
+
+imply ArmorPiercingQuestion -> [Pathos, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (scene scale): a [+Piercing] question is put to a target — the question bound on the
+// `question=` role of an [&Asks] event (agent=$asker, target=$target), so phase-2 re-checks [+Piercing] on
+// the bound question (STYLE §8). One event, one beat: the pointed question lands and the target is
+// [#Shaken]. Binding the piercing quality on the asked question is the discriminator.
+rule Armor_Piercing_Question {
+  when:
+    char $target
+    obj  $question [+Piercing]
+    evt  $put [&Asks(agent=$asker, target=$target, question=$question)]
+  then:
+    $put [+ArmorPiercingQuestion]
+    $target [#Shaken]
+}
+
+
+// === CONCRETE VIGNETTE: the Army–McCarthy hearings — Joseph Welch (non-fiction, 1954) ===
+// Senator Joseph McCarthy has spent years destroying careers with insinuation, and in the televised
+// hearings he reaches for a young lawyer in Welch's firm. Welch stops him with one question that needs no
+// follow-up: "Have you no sense of decency, sir, at long last? Have you left no sense of decency?" The room
+// goes silent; McCarthy has no answer, and the question — broadcast to millions — breaks the spell of his
+// authority for good. One question, aimed at the bone.
+
+// JOSEPH WELCH — who stops the demagogue with a single question
+char welch [+Protagonist]
+
+// SENATOR McCARTHY — the target, left without an answer
+char mccarthy [+Antagonist]
+
+// THE QUESTION — "Have you no sense of decency?" — its answer he cannot face
+obj the_decency_question [+Piercing]
+
+scene the_hearing {
+  beat 1 {
+    // one question, not let up on — and the demagogue has no answer
+    evt the_question [&Asks(agent=welch, target=mccarthy, question=the_decency_question)]
+    // Armor_Piercing_Question -> the_question [+ArmorPiercingQuestion]; mccarthy [#Shaken]
+  }
+}
