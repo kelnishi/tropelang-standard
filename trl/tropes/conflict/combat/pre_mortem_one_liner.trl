@@ -1,0 +1,72 @@
+// === PREAMBLE ===
+// @trope    Pre-Mortem One-Liner
+// @category Combat Tropes / Death Tropes
+// @source   https://allthetropes.org/wiki/Pre-Mortem_One-Liner
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a finishing quote delivered TO the enemy as (or just before) the killing blow
+// lands — your voice in their ears as they go. FRONTIER: the quip bound to the kill. The discriminator is
+// a [+Doomed] foe who is both the target of a [&Quips] line and of the [&Slays] that ends them, by the
+// same hero — so it fires on a line delivered AT the imminent kill, parting it from a Bond One-Liner
+// (post-mortem, an aside for the audience), a Pre-Ass-Kicking One-Liner (the start of the fight), and
+// Defiant to the End (the victim, not the killer, speaking).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc pre_mortem_one_liner -> [
+  finishing_move    : "the line that crowns a",
+  defiant_to_the_end : "the killer's-side counterpart to",
+  deadpan_snarker   : "borrows the wisecrack of"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the foe marked for the imminent blow is the discriminator; promotion model) —
+prop Doomed [+Vital]   // marked for the killing blow about to land — about to die, and told so
+
+imply PreMortemOneLiner -> [Utterance, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a hero QUIPS at a [+Doomed] foe and SLAYS them — the foe bound on the `at=` role of a
+// [&Quips] line and the `target=` role of a [&Slays], both by the same agent, so phase-2 re-checks
+// [+Doomed] on the foe (STYLE §8). Binding the line and the kill to the same doomed foe is the
+// discriminator: the quip lands AT the killing blow, not after it (Bond One-Liner) or before the fight
+// (Pre-Ass-Kicking One-Liner). Reuses the snarker's [&Quips]; the foe's [+Doomed] state is what makes it
+// pre-MORTEM.
+rule Pre_Mortem_One_Liner {
+  when:
+    char $hero [+Protagonist]
+    char $foe [+Doomed]
+    evt  $line [&Quips(agent=$hero, at=$foe)]
+    evt  $kill [&Slays(agent=$hero, target=$foe)]
+  then:
+    $line [+PreMortemOneLiner]
+}
+
+
+// === CONCRETE VIGNETTE: Fist of the North Star — Kenshiro (manga/anime, 1983) ===
+// Kenshiro has already struck the thug with Hokuto Shinken, hitting the secret pressure points — the man
+// just doesn't know it yet. Ken turns away and delivers the line that became the series' signature:
+// "Omae wa mou shindeiru." You are already dead. A beat later the foe's body bursts. The quip is the
+// kill's herald, spoken to the doomed man with the blow already in him: the pre-mortem one-liner in its
+// purest, most-quoted form.
+
+// KENSHIRO — the successor of Hokuto Shinken, the blow already landed
+char kenshiro [+Protagonist]
+
+// THE THUG — struck at the pressure points; dead and not yet aware
+char the_thug [+Antagonist] [+Doomed]
+
+scene you_are_already_dead {
+  beat 1 {
+    // KENSHIRO: "Omae wa mou shindeiru." — the line, to the doomed foe
+    evt the_line [&Quips(agent=kenshiro, at=the_thug)]
+    // a beat later the strike completes and the foe bursts
+    evt the_burst [&Slays(agent=kenshiro, target=the_thug)]
+    // Pre_Mortem_One_Liner -> the_line [+PreMortemOneLiner]
+  }
+}

@@ -42,6 +42,19 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   (Sherlock Holmes — an [+Ace] `[&Excels]` at a challenge; the standing reputation for effortless mastery
   parts it from a Determinator (who wins by grinding struggle). Founds `prop Ace` + `verb Excels(at)`.)
   Corpus **219 → 222 tropes**; self-recognition steady at **222/222 (100%)**.
+- **Pre-Mortem One-Liner** (Combat Tropes / Death Tropes) — https://allthetropes.org/wiki/Pre-Mortem_One-Liner
+  (Fist of the North Star, Kenshiro's "you are already dead" — a hero `[&Quips]` at a [+Doomed] foe and
+  `[&Slays]` them; line and kill bound to the same doomed foe part it from a Bond One-Liner (post-mortem)
+  and Defiant to the End. Founds `prop Doomed`; reuses `[&Quips]`/`[&Slays]`.)
+- **The Reason You Suck Speech** (Rhetoric / Speeches) — https://allthetropes.org/wiki/The_Reason_You_Suck_Speech
+  (The Social Network, Erica's breakup — a speaker `[&Excoriates]` a [+Culpable] target, cataloguing real
+  faults; the deserving target parts it from a Breaking Speech (a [+Vulnerable] soft point aimed for
+  despair). Founds `prop Culpable` + `verb Excoriates(target)`.)
+- **Bittersweet Ending** (Plot Devices / Endings) — https://allthetropes.org/wiki/Bittersweet_Ending
+  (Casablanca, the airport — a hero `[&Attains]` a [+Costly] victory beside a [+Lost] cost; the win-and-loss
+  co-present part it from a clean Happy Ending and a Downer Ending. Founds `prop Lost`; reuses
+  `[&Attains]`/`[+Costly]`.)
+  Corpus **222 → 225 tropes**; self-recognition steady at **225/225 (100%)**.
 
 ## [1.7.4] — 2026-06-08
 
