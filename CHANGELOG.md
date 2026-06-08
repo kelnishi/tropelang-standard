@@ -276,9 +276,10 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   loyalty as the unbreakable defining trait, vs an ally of convenience. Founds `prop Steadfast` + `verb
   StandsBy(other)`.)
 - **Heterosexual Life Partners** (Friendship / Bonds) — https://allthetropes.org/wiki/Heterosexual_Life_Partners
-  (Scrubs, J.D. & Turk — two [+Inseparable] friends mutually [@Bonded_To] who `[&Cherishes]` one another;
-  couple-level closeness, platonic, vs Childhood Friend Romance (love). Founds `prop Inseparable` + `verb
-  Cherishes(other)`; reuses `[@Bonded_To]`.)
+  (Scrubs, J.D. & Turk — two SAME-gender [+Inseparable] friends mutually [@Bonded_To] who `[&Cherishes]` one
+  another; couple-level closeness, platonic, vs Childhood Friend Romance (love). The matching-gender pairing
+  is split across a [+Masculine] and a [+Feminine] rule (no single "same gender" predicate). Founds `prop
+  Inseparable` + `verb Cherishes(other)`; reuses `[@Bonded_To]`.)
 - **Redemption Quest** (Character Development / Redemption) — https://allthetropes.org/wiki/Redemption_Quest
   (Red Dead Redemption, John Marston — a [+Penitent] character `[&Quests]` for a [+Redemptive] task offered as
   his path back; REFINES The Quest (reuses `[&Quests(for)]`) by the redemption tags, vs a plain Quest (no
