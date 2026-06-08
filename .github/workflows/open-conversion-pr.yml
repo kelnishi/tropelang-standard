@@ -39,12 +39,17 @@ jobs:
           REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
-          # Idempotent: don't duplicate a PR that already exists for this branch.
+          # The review ruleset on main needs a requested reviewer (a human approval that is not the
+          # bot author). Request the maintainer on every bot-opened PR.
+          REVIEWER=kelnishi
+          # Idempotent: if the PR already exists, just back-fill the review request, then stop.
           if gh pr view "$BRANCH" --repo "$REPO" >/dev/null 2>&1; then
-            echo "PR already open for $BRANCH — nothing to do."
+            echo "PR already open for $BRANCH — ensuring $REVIEWER is requested for review."
+            gh pr edit "$BRANCH" --repo "$REPO" --add-reviewer "$REVIEWER" || true
             exit 0
           fi
           title="Convert ${BRANCH#convert/}"
           gh pr create --repo "$REPO" --base main --head "$BRANCH" \
             --title "$title" \
+            --reviewer "$REVIEWER" \
             --body "Automated conversion batch from \`$BRANCH\`. The \`gate\` workflow runs \`tropelang gate\` on each changed trope; \`index.trl\` is regenerated and committed by the run. Authored by the conversion bot so a human maintainer can approve (the review gate stays intact)."
