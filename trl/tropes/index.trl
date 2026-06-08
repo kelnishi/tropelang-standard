@@ -38,6 +38,7 @@ import "trl/tropes/arc/redemption/redemption_arc.trl"
 import "trl/tropes/arc/redemption/redemption_rejection.trl"
 import "trl/tropes/bonds/conflicting_loyalty.trl"
 import "trl/tropes/bonds/damsel_in_distress.trl"
+import "trl/tropes/bonds/defeat_means_friendship.trl"
 import "trl/tropes/bonds/enemies_to_lovers.trl"
 import "trl/tropes/bonds/found_family.trl"
 import "trl/tropes/bonds/i_gave_my_word.trl"
@@ -54,6 +55,7 @@ import "trl/tropes/bonds/unrequited_love.trl"
 import "trl/tropes/bonds/what_the_hell_hero.trl"
 import "trl/tropes/bonds/worthy_opponent.trl"
 import "trl/tropes/character/archetypes/anti_hero.trl"
+import "trl/tropes/character/archetypes/berserk_button.trl"
 import "trl/tropes/character/archetypes/beware_the_nice_ones.trl"
 import "trl/tropes/character/archetypes/deadpan_snarker.trl"
 import "trl/tropes/character/archetypes/determinator.trl"
@@ -193,6 +195,7 @@ import "trl/tropes/power/smear_campaign.trl"
 import "trl/tropes/power/the_coup.trl"
 import "trl/tropes/power/the_starscream.trl"
 import "trl/tropes/rhetoric/an_aesop.trl"
+import "trl/tropes/rhetoric/badass_boast.trl"
 import "trl/tropes/rhetoric/breaking_speech.trl"
 import "trl/tropes/rhetoric/courtroom_summation.trl"
 import "trl/tropes/rhetoric/just_between_you_and_me.trl"
@@ -471,8 +474,10 @@ concept an_aesop [+Trope(category="Morality", source="https://allthetropes.org/w
 concept anagnorisis [+Trope(category="Narrative Devices", source="https://allthetropes.org/wiki/Anagnorisis")] [%Narrative]
 concept anti_hero [+Trope(category="Cast", source="https://allthetropes.org/wiki/Anti-Hero")] [%Narrative]
 concept back_from_the_dead [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Back_from_the_Dead")] [%Narrative]
+concept badass_boast [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Badass_Boast")] [%Narrative]
 concept batman_gambit [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Batman_Gambit")] [%Epistemic]
 concept be_careful_what_you_wish_for [+Trope(category="Wishplots", source="https://allthetropes.org/wiki/Be_Careful_What_You_Wish_For")] [%Narrative]
+concept berserk_button [+Trope(category="Characterization Tropes", source="https://allthetropes.org/wiki/Berserk_Button")] [%Narrative]
 concept beware_the_nice_ones [+Trope(category="Character Tropes", source="https://allthetropes.org/wiki/Beware_the_Nice_Ones")] [%Interpersonal]
 concept big_damn_heroes [+Trope(category="Heroism", source="https://allthetropes.org/wiki/Big_Damn_Heroes")] [%Narrative]
 concept big_good [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Big_Good")] [%Interpersonal]
@@ -497,6 +502,7 @@ concept deadpan_snarker [+Trope(category="Character Archetypes", source="https:/
 concept deal_with_the_devil [+Trope(category="Drama", source="https://allthetropes.org/wiki/Deal_with_the_Devil")] [%Mind]
 concept death_by_origin_story [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Death_by_Origin_Story")] [%Narrative]
 concept decapitated_army [+Trope(category="Military and Warfare", source="https://allthetropes.org/wiki/Decapitated_Army")] [%Political]
+concept defeat_means_friendship [+Trope(category="Combat", source="https://allthetropes.org/wiki/Defeat_Means_Friendship")] [%Narrative]
 concept defiant_to_the_end [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Defiant_to_the_End")] [%Narrative]
 concept determinator [+Trope(category="Heroic Spirit", source="https://allthetropes.org/wiki/Determinator")] [%Narrative]
 concept diabolus_ex_machina [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Diabolus_Ex_Machina")] [%Narrative]
