@@ -1,0 +1,85 @@
+// === PREAMBLE ===
+// @trope    Cerebus Syndrome
+// @category Plot Devices / Tone
+// @source   https://allthetropes.org/wiki/Cerebus_Syndrome
+// @domain   Narrative
+// @scale    arc
+// @version  1.4
+//
+// Laconic (per the wiki): a work that begins light or comedic and, OVER ITS RUN, gradually grows serious,
+// dramatic, and dark — named for the comic Cerebus. FRONTIER: the slow tonal ARC, recognized BY POSITION on
+// the work skeleton (engine ≥ 0.6.0). Built on the promoted first-class Tone: a scene in the work's `opening`
+// slot carries [+Levity] and a scene in its `finale` slot carries [+Gravity], with a [&Darkens] event spanning
+// the run. Distinct from Mood Whiplash (a single scene-scale collision): this is the long darkening of the
+// whole, read from the tones at the two ends of the same work.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/rhetoric/mood_whiplash.trl"   // the abrupt scene-scale counterpart (shares the Tone poles)
+
+assoc cerebus_syndrome -> [
+  mood_whiplash : "the slow-arc counterpart to the spike of",
+  character_development : "often rides deepening"
+]
+
+
+// === ONTOLOGY ===
+// — reuses the promoted Tone poles; the arc is read POSITIONALLY from the work skeleton's end slots —
+concept opening [+Narrative]        // the early slot of a work's skeleton — how it begins
+concept finale  [+Narrative]        // the late slot of a work's skeleton — how it ends
+verb Darkens(subject) [+Narrative]  // grows steadily more serious and grim across the run
+
+imply CerebusSyndrome -> [Transformation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a `work` opens [+Levity] and ends [+Gravity] — a scene in the `opening` slot is
+// [+Levity], a scene in the `finale` slot is [+Gravity], and a [&Darkens] event (agent=$author, the recall
+// anchor) spans the run; phase-2 re-checks the two end-slot tones (STYLE §8). The tonal ARC BY POSITION
+// (light at the open, grave at the close, of the same work) is the discriminator — parting it from Mood
+// Whiplash (a single scene-scale seam) and from a work that is merely grim throughout.
+rule Cerebus_Syndrome {
+  when:
+    work  $w
+    scene $early @ opening
+    $early [+Levity]
+    scene $late @ finale
+    $late [+Gravity]
+    evt   $shift [&Darkens(agent=$author, subject=$w)]
+  then:
+    $shift [+CerebusSyndrome]
+}
+
+
+// === CONCRETE VIGNETTE: M*A*S*H — comedy to anti-war drama (TV, 1972–83) ===
+// The series begins as a broad service comedy — pranks in the Swamp, martinis, hijinks between surgeries.
+// But season by season the laughter thins and the war presses in: the jokes give way to exhaustion, moral
+// injury, and grief, until the finale is a feature-length meditation on trauma with barely a punch line. The
+// same show that opened on farce closes on a man's breakdown. A whole work, darkened by degrees.
+
+// M*A*S*H — the work-as-artifact (a TV series); its skeleton spans opening farce to grave finale
+work mash [%TV]
+
+// THE WRITERS — who let the war press in, season by season (the darkening agency)
+char the_writers
+
+// THE 4077th — the camp the show lives in
+set the_4077 [+Exterior]
+
+scene early_seasons @ opening {
+  beat 1 {
+    the_writers @ the_4077
+    // broad service comedy — pranks in the Swamp, martinis between surgeries
+  }
+}
+early_seasons [+Levity]
+
+scene the_final_season @ finale {
+  beat 1 {
+    // the war has pressed in; the same show has darkened by degrees across its whole run
+    evt the_darkening [&Darkens(agent=the_writers, subject=mash)]
+    // Cerebus_Syndrome -> the_darkening [+CerebusSyndrome]
+  }
+}
+the_final_season [+Gravity]
