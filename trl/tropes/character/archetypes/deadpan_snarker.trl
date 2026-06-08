@@ -1,0 +1,75 @@
+// === PREAMBLE ===
+// @trope    Deadpan Snarker
+// @category Character Archetypes / Character Flaw Index
+// @source   https://allthetropes.org/wiki/Deadpan_Snarker
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a character given to dry, sarcastic, sometimes bitter asides — the wisecrack
+// is their trusted sidearm. They exist to deflate pomposity and point out the unlikelihood of a plan,
+// usually the most cynical supporting character (often The Lancer / Only Sane Man). FRONTIER: a
+// character archetype recognized through the ACT that defines it — the snark itself. The discriminator
+// is a [+Sardonic] character bound on the agent of a [&Quips] event, the same act-anchored shape that
+// recognizes a trait-by-utterance (cf. Title Drop's [&Utters]). Parts from a Motive Rant / Breaking
+// Speech (a villain's monologue at length) — this is the brief, deflating aside of a cynical ally.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/character/roles/the_lancer.trl"   // the snarker's most common slot in an ensemble
+
+assoc deadpan_snarker -> [
+  the_lancer  : "in a Five-Man Band is almost certainly",
+  genre_savvy : "the snark often springs from being",
+  the_foil    : "the dry wit throws the earnest lead into relief like"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the sardonic wit is the discriminator; promotion model, cf. the_wizard) —
+prop Sardonic    [+Psychological]   // given to dry, cynical wit — the snarker's standing temperament
+verb Quips(at)   [+Interpersonal]   // delivers a brief, deflating wisecrack — the snarker's sidearm
+
+imply DeadpanSnarker -> [Contrast, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a [+Sardonic] character is the AGENT of a [&Quips] event (at=$folly), so phase-2
+// re-checks [+Sardonic] on the quipping agent (STYLE §8). Anchoring the standing temperament on the act
+// of snarking is what makes the archetype bind: a one-off sarcastic line from a non-sardonic character
+// is not the trope, and the [+Sardonic] tag distinguishes the snarker from any other speaker. The deed
+// IS the Deadpan Snarker (tags the quip).
+rule Deadpan_Snarker {
+  when:
+    char $snarker [+Sardonic]
+    evt  $quip [&Quips(agent=$snarker, at=$folly)]
+  then:
+    $quip [+DeadpanSnarker]
+}
+
+
+// === CONCRETE VIGNETTE: The Big Sleep — Philip Marlowe (Chandler, novel, 1939) ===
+// Summoned to the Sternwood mansion, the private eye Marlowe sits in the sweltering orchid house while
+// the dying General lays out his ruinous, blackmail-tangled family and the impossible job. Marlowe — too
+// cynical to be impressed by wealth or self-pity — answers the grand, hopeless situation the way he
+// answers everything: with a dry, flattening wisecrack that says he's seen the shape of this story
+// before and isn't buying the romance of it. The wit deflates the pomp; that aside IS the snark.
+
+// PHILIP MARLOWE — the hardboiled PI whose default register is dry contempt
+char marlowe [+Sardonic]
+marlowe [+Cynical]
+
+// THE STERNWOOD COMMISSION — the grand, doomed, self-pitying job laid before him
+obj the_commission [+Pretentious]
+
+// INT. STERNWOOD ORCHID HOUSE - DAY (hot, airless, overripe)
+set the_orchid_house [+Interior] [+Day]
+
+scene the_hothouse_interview {
+  beat 1 {
+    marlowe @ the_orchid_house
+    // MARLOWE (flat, dry): deflating the grandeur of the General's ruinous tale
+    evt the_wisecrack [&Quips(agent=marlowe, at=the_commission)]
+    // Deadpan_Snarker -> the_wisecrack [+DeadpanSnarker]
+  }
+}

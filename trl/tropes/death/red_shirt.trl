@@ -1,0 +1,77 @@
+// === PREAMBLE ===
+// @trope    Red Shirt
+// @category Death Tropes / Cast Filler
+// @source   https://allthetropes.org/wiki/Red_Shirt
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): the nameless, set-filler crew member (named for the original Star Trek
+// security officers) whose only job is to die — killed off to show the menace is deadly without losing
+// anyone important. FRONTIER: the EXPENDABLE death — recognized by who dies, not how. The discriminator
+// is the [+Expendable] tag on the slain party, bound on the target of a kill, which separates it from
+// the death tropes that key on a SIGNIFICANT death (Death by Origin Story's loved one, Heroic Sacrifice's
+// willing hero, Mercy Kill's loved one spared). A nobody dies so the threat is proven and a main lives.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc red_shirt -> [
+  death_by_origin_story : "the expendable inverse of (a nobody, not a loved one)",
+  the_worf_effect       : "kills to prove the menace where Worf only wounds to",
+  heroic_sacrifice      : "an unchosen death unlike the willing"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the expendable filler character is the discriminator; promotion model, cf. the_wizard) —
+prop Expendable   [+Narrative]   // set-filler — a nameless character who exists to be killed off
+prop Lethal       [+Narrative]   // proven deadly — the menace the expendable death establishes
+
+imply RedShirt -> [Object, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: an [+Expendable] character is the TARGET of a kill ([&Slays], agent=$threat), so phase-2
+// re-checks [+Expendable] on the slain party (STYLE §8). Binding expendability on the victim is what
+// parts this from every significant-death trope (which kill a loved one / a hero / a main): a Red Shirt
+// is a nobody, and the death's job is to prove the threat — so the rule also tags the killer [+Lethal].
+rule Red_Shirt {
+  when:
+    char $redshirt [+Expendable]
+    evt  $death [&Slays(agent=$threat, target=$redshirt)]
+  then:
+    $death [+RedShirt]
+    $threat [+Lethal]
+}
+
+
+// === CONCRETE VIGNETTE: Star Trek — the landing party (TV, 1966) ===
+// The transporter shimmers and a landing party steps onto the alien surface: the Captain, the Doctor —
+// and an ensign in a red security shirt nobody has met before. Within the minute the creature takes him:
+// a flash, a scream, and he crumples while the named officers look on, unharmed. "He's dead, Jim." The
+// nameless crewman existed for exactly this — to show the thing on this planet can kill, so the audience
+// fears for the heroes who can't be. He is mourned for a beat and never mentioned again.
+
+// ENSIGN RICKY — the nameless security crewman in the red shirt, met moments ago
+char ensign_ricky [+Expendable]
+
+// THE CREATURE — the planet's menace, deadliness yet unproven
+char the_creature [+Monster]
+
+// CAPTAIN KIRK — a main character, present and pointedly unharmed
+char kirk [+Protagonist]
+
+// EXT. ALIEN SURFACE - DAY (the landing site)
+set alien_surface [+Exterior] [+Day]
+
+scene the_landing_party {
+  beat 1 {
+    ensign_ricky @ alien_surface
+    kirk @ alien_surface
+  }
+  beat 2 {
+    evt the_kill [&Slays(agent=the_creature, target=ensign_ricky)]
+    // Red_Shirt -> the_kill [+RedShirt]; the_creature [+Lethal] (the menace is proven, no main lost)
+  }
+}
