@@ -32,13 +32,14 @@ imply AHouseDivided -> [Opposition, Narrative]
 
 
 // === ABSTRACT RULE ===
-// Naming rule (act scale): a [+Besieged] member TURNS ON a fellow — the pressured member bound on the
-// agent role of a [&TurnsOn] event (target=$ally), so phase-2 re-checks [+Besieged] on the turner (STYLE
-// §8). Binding the under-siege context on the infighter is the discriminator: the group destroys itself
-// from within under threat, parting it from a plain rivalry and from Enemy Mine (a bond forged, not broken).
+// Naming rule (act scale): two who were TOGETHER — a [+Besieged] member [@Ally_Of] a fellow of his own
+// side — and one TURNS ON the other; the pressured ally bound on the agent role of a [&TurnsOn] event
+// (target=$b), so phase-2 re-checks [+Besieged] on the turner AND the togetherness ([@Ally_Of]) that the
+// turning betrays (STYLE §8). The prior togetherness is the point: the cohesion collapses from WITHIN under
+// threat, parting it from a plain rivalry (never allied) and from Enemy Mine (a bond forged, not broken).
 rule A_House_Divided {
   when:
-    char $a [+Besieged]
+    char $a [+Besieged] [@Ally_Of(other=$b)]
     char $b
     $a != $b
     evt  $strife [&TurnsOn(agent=$a, target=$b)]
@@ -53,11 +54,11 @@ rule A_House_Divided {
 // the group splinters into factions, decisions collapse into shouting, and the infighting gets people
 // killed as surely as the ghouls do. The siege outside is survivable; the house divided inside is not.
 
-// BEN — penned in the besieged farmhouse, at odds with the others
-char ben [+Protagonist] [+Besieged]
+// BEN — penned in the besieged farmhouse, an ally of the others before the cohesion breaks
+char ben [+Protagonist] [+Besieged] [@Ally_Of(other=harry)]
 
-// HARRY — the fellow survivor he turns against
-char harry [+Deuteragonist]
+// HARRY — the fellow survivor, together with Ben against the siege — until they turn on each other
+char harry [+Deuteragonist] [@Ally_Of(other=ben)]
 
 // INT. FARMHOUSE - NIGHT (boarded windows, the dead outside)
 set the_farmhouse [+Interior] [+Night]
