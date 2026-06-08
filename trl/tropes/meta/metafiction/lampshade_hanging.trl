@@ -1,0 +1,70 @@
+// === PREAMBLE ===
+// @trope    Lampshade Hanging
+// @category Metafiction / Narrative Devices
+// @source   https://allthetropes.org/wiki/Lampshade_Hanging
+// @domain   Narrative
+// @scale    scene
+// @version  1.3
+//
+// Laconic (per the wiki): the writer defuses a threat to suspension of disbelief by having a character
+// CALL ATTENTION to the implausible element — and then moving on. FRONTIER: a scene-scale metafictional
+// tool — one beat. The discriminator is a [+Contrived] element bound on the `element=` role of a
+// [&Lampshades] event; a character names the implausibility out loud. Distinct from Breaking the Fourth
+// Wall (which addresses the audience): here the remark stays in-story, aimed at the contrivance itself.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc lampshade_hanging -> [
+  fourth_wall : "leans on, without fully breaking, the",
+  genre_savvy : "often voiced by a character who is"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the acknowledged contrivance is the discriminator; promotion model) —
+prop Contrived     [+Narrative]      // an implausible element that threatens suspension of disbelief
+verb Lampshades(element) [+Narrative] // calls attention to a contrivance, then moves on
+
+imply LampshadeHanging -> [Metafictional, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (scene scale): a character LAMPSHADES a [+Contrived] element — the implausibility bound on
+// the `element=` role of a [&Lampshades] event (agent=$x), so phase-2 re-checks [+Contrived] on the bound
+// element (STYLE §8). One beat: the contrivance is named and the story carries on. Binding the
+// implausibility on the acknowledgment is the discriminator.
+rule Lampshade_Hanging {
+  when:
+    obj  $thing [+Contrived]
+    evt  $note [&Lampshades(agent=$x, element=$thing)]
+  then:
+    $note [+LampshadeHanging]
+}
+
+
+// === CONCRETE VIGNETTE: Avengers: Age of Ultron — Hawkeye on the bridge (film, 2015) ===
+// Mid-battle, pinned in a ruined building above a floating city as killer robots swarm, Hawkeye turns to
+// the terrified girl beside him and says it for the audience: "The city is flying, we're fighting an army
+// of robots, and I have a bow and arrow. None of this makes sense." He names exactly how absurd the
+// premise is — and then shrugs, "but I'm going back out there because it's my job," and goes. The
+// implausibility acknowledged, the story moves on.
+
+// HAWKEYE — who says the absurd part out loud
+char hawkeye [+Protagonist]
+
+// THE ABSURD PREMISE — a flying city, a robot army, a man with a bow
+obj the_absurd_premise [+Contrived]
+
+// INT. RUINED BUILDING - the floating city beyond the window
+set the_ruin [+Interior]
+
+scene the_pep_talk {
+  beat 1 {
+    hawkeye @ the_ruin
+    // he names how little sense the premise makes — then goes back out anyway
+    evt the_lampshade [&Lampshades(agent=hawkeye, element=the_absurd_premise)]
+    // Lampshade_Hanging -> the_lampshade [+LampshadeHanging]
+  }
+}

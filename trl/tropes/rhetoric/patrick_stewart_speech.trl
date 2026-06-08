@@ -1,0 +1,77 @@
+// === PREAMBLE ===
+// @trope    Patrick Stewart Speech
+// @category Rhetoric / Persuasion
+// @source   https://allthetropes.org/wiki/Patrick_Stewart_Speech
+// @domain   Narrative
+// @scale    act
+// @version  1.3
+//
+// Laconic (per the wiki): answering a claim that humanity is weak/worthless, the hero delivers an
+// impassioned speech naming the specific virtues — potential, love, courage — that make humankind worth
+// saving. FRONTIER: an act-scale rebuttal exchange. The discriminator is the PAIRING on the same subject:
+// [+Humankind] is [&Disparages]-ed by a doubter and then [&Extols]-ed by the hero — two events, a
+// dismissal answered. Distinct from a Rousing Speech (fear → resolve before battle): this argues the
+// worth of a disparaged people.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc patrick_stewart_speech -> [
+  rousing_speech : "the worth-affirming cousin of",
+  an_aesop       : "often delivers the work's",
+  not_so_different : "answers the charge behind"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (humanity disparaged then extolled is the discriminator; promotion model) —
+prop Humankind   [+Social]          // humanity itself — the people whose worth is in question
+verb Disparages(subject) [+Interpersonal] // dismisses as weak, worthless, not worth saving
+verb Extols(subject)     [+Interpersonal] // makes the impassioned case for the worth of
+
+imply PatrickStewartSpeech -> [Pathos, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (act scale): [+Humankind] is DISPARAGED then EXTOLLED — the subject bound on the `subject=`
+// role of both a [&Disparages] event (agent=$doubter) and a [&Extols] event (agent=$hero), so phase-2
+// re-checks [+Humankind] on the contested subject (STYLE §8). The two-event dismissal-and-rebuttal is the
+// discriminator: a doubter calls humanity worthless and the hero answers with its virtues — parting it
+// from a Rousing Speech (no disparaged subject to defend).
+rule Patrick_Stewart_Speech {
+  when:
+    obj  $humanity [+Humankind]
+    evt  $slight [&Disparages(agent=$doubter, subject=$humanity)]
+    evt  $speech [&Extols(agent=$hero, subject=$humanity)]
+  then:
+    $speech [+PatrickStewartSpeech]
+}
+
+
+// === CONCRETE VIGNETTE: The Great Dictator — the barber's speech (film, 1940) ===
+// The whole machinery of the film has reduced people to machines — "machine men, with machine minds and
+// machine hearts," cogs to be marched and discarded. Mistaken for the dictator, Chaplin's little barber
+// steps to the microphone and answers it: humanity is not the brutal, worthless thing the regime insists
+// it is — "you are not machines, you are not cattle, you are men, with the love of humanity in your
+// hearts," with the power to make life free and beautiful. The dismissal of humankind, answered by its
+// defense.
+
+// THE DICTATOR'S CREED — that people are worthless machines to be used
+char the_regime [+Antagonist]
+
+// THE BARBER — mistaken for the dictator, who answers with humanity's worth
+char the_barber [+Protagonist]
+
+// HUMANITY — the people, dismissed as machines, then affirmed as men
+obj humanity [+Humankind]
+
+scene the_microphone {
+  beat 1 {
+    // the regime has reduced people to worthless machines...
+    evt the_dehumanizing [&Disparages(agent=the_regime, subject=humanity)]
+    // ...and the barber answers with the case for humankind's noble worth
+    evt the_speech [&Extols(agent=the_barber, subject=humanity)]
+    // Patrick_Stewart_Speech -> the_speech [+PatrickStewartSpeech]
+  }
+}

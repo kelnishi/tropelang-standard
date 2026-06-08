@@ -1,0 +1,69 @@
+// === PREAMBLE ===
+// @trope    Strawman Political
+// @category Rhetoric / Persuasion
+// @source   https://allthetropes.org/wiki/Strawman_Political
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): an opposing viewpoint is embodied by a deliberately weak, foolish, or odious
+// character, built to be knocked down so the author's side looks right by contrast. FRONTIER: an
+// arc-scale rhetorical rig — the strawman is a STANDING role across the work, surfaced when refuted. The
+// discriminator is a [+Strawman] character (a rigged-to-lose embodiment of the opposing view) bound on
+// the target of a [&KnocksDown] event. Distinct from "The Reason You Suck" Speech (a [+Culpable] target who
+// actually has it coming): a strawman is rigged to be wrong, not shown to be.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc strawman_political -> [
+  propaganda : "a single-character version of the framing in",
+  the_reason_you_suck_speech : "demolishes a rigged target unlike the deserved",
+  an_aesop   : "rigs the contrast that drives an"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the rigged-to-lose embodiment of the opposing view is the discriminator; promotion model) —
+prop Strawman    [+Narrative]        // a deliberately weak embodiment of an opposing view, built to lose
+verb KnocksDown(target) [+Interpersonal] // routs the rigged opposing-view character, discrediting the view
+
+imply StrawmanPolitical -> [Manipulation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a [+Strawman] is REFUTED — the rigged opposing-view character bound on the
+// target role of a [&KnocksDown] event (agent=$voice), so phase-2 re-checks [+Strawman] on the bound target
+// (STYLE §8). The standing [+Strawman] role (held across the work) surfaces when demolished; binding the
+// rigged-to-lose quality on the refuted party is the discriminator — the view loses because it was built
+// to, parting it from a deserved takedown of a genuinely [+Culpable] target.
+rule Strawman_Political {
+  when:
+    char $strawman [+Strawman]
+    evt  $demolish [&KnocksDown(agent=$voice, target=$strawman)]
+  then:
+    $demolish [+StrawmanPolitical]
+}
+
+
+// === CONCRETE VIGNETTE: Captain Planet and the Planeteers — the eco-villains (animated TV, 1990) ===
+// The show's opposing viewpoint — that pollution and plunder are fine — never gets a fair hearing; it is
+// handed to grotesque cartoon villains like Hoggish Greedly and Looten Plunder, who despoil the planet
+// out of sheer greed and gloat about it. They exist to be wrong: every episode, Captain Planet routs them
+// and the lesson lands by contrast. A position rigged to lose, embodied in a fool built to be knocked
+// down — the strawman as policy.
+
+// HOGGISH GREEDLY — the cartoonish embodiment of "polluting is good," built to lose
+char hoggish_greedly [+Strawman] [+Antagonist]
+
+// CAPTAIN PLANET — the author's-view champion who demolishes him
+char captain_planet [+Protagonist]
+
+scene the_routing {
+  beat 1 {
+    // the rigged position, embodied in a gloating fool, is demolished — the message by contrast
+    evt the_defeat [&KnocksDown(agent=captain_planet, target=hoggish_greedly)]
+    // Strawman_Political -> the_defeat [+StrawmanPolitical]
+  }
+}
