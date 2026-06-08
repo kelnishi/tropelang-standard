@@ -31,6 +31,17 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   concrete device-form of Race Against the Clock (an abstract [+Deadline]). Founds `prop Ticking` +
   `verb Defuses(device)`.)
   Corpus **216 → 219 tropes**; self-recognition steady at **219/219 (100%)**.
+- **Back from the Dead** (Death Tropes / Resurrection) — https://allthetropes.org/wiki/Back_from_the_Dead
+  (The Lion, the Witch and the Wardrobe, Aslan — an agency `[&Resurrects]` a [+Dead] subject; binding
+  actual death on the returned party parts it from Disney Death (an apparent death that was never real).
+  Founds `verb Resurrects(subject)`.)
+- **The Big Damn Kiss** (Romance / Love Tropes) — https://allthetropes.org/wiki/The_Big_Damn_Kiss
+  (Spider-Man, the upside-down rain kiss — two [+Yearning] characters `[&Kisses]`; the mutual held tension
+  makes it the PAYOFF of UST, not a casual or one-sided kiss. Founds `prop Yearning` + `verb Kisses(other)`.)
+- **The Ace** (Character Archetypes) — https://allthetropes.org/wiki/The_Ace
+  (Sherlock Holmes — an [+Ace] `[&Excels]` at a challenge; the standing reputation for effortless mastery
+  parts it from a Determinator (who wins by grinding struggle). Founds `prop Ace` + `verb Excels(at)`.)
+  Corpus **219 → 222 tropes**; self-recognition steady at **222/222 (100%)**.
 
 ## [1.7.4] — 2026-06-08
 

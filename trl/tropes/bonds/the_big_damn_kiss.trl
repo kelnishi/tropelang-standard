@@ -1,0 +1,72 @@
+// === PREAMBLE ===
+// @trope    The Big Damn Kiss
+// @category Romance / Love Tropes
+// @source   https://allthetropes.org/wiki/The_Big_Damn_Kiss
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): the moment awesomeness and romance meet — an epic scene topped with an epic
+// kiss, often the long-awaited end of Unresolved Sexual Tension. FRONTIER: the kiss as PAYOFF. The
+// discriminator is two characters both carrying [+Yearning] (the held, unspoken tension) bound on a
+// [&Kisses] event — so it fires on the release of long-simmering tension, not on a casual peck or a
+// Smooch of Victory between parties with nothing riding on it.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc the_big_damn_kiss -> [
+  star_crossed_lovers : "the release of tension held by",
+  unrequited_love     : "the requital denied in",
+  the_climax          : "often lands at"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the mutual yearning released in the kiss is the discriminator; promotion model) —
+prop Yearning    [+Psychological]   // holding unspoken romantic tension — the UST awaiting release
+verb Kisses(other) [+Interpersonal] // shares a romantic kiss
+
+imply TheBigDamnKiss -> [Investment, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: two [+Yearning] characters KISS — both bound on a [&Kisses] event (agent + other), so
+// phase-2 re-checks [+Yearning] on each (STYLE §8); the binding-inequality ($a != $b, engine ≥ 0.4.3)
+// keeps it from matching one person against themselves. The mutual held tension is the discriminator:
+// the kiss is the PAYOFF of UST, not a casual or one-sided kiss.
+rule The_Big_Damn_Kiss {
+  when:
+    char $a [+Yearning]
+    char $b [+Yearning]
+    $a != $b
+    evt  $kiss [&Kisses(agent=$a, other=$b)]
+  then:
+    $kiss [+TheBigDamnKiss]
+}
+
+
+// === CONCRETE VIGNETTE: Spider-Man — the upside-down rain kiss (film, 2002) ===
+// Mary Jane, walking home in the downpour, is cornered by muggers and saved by Spider-Man, who drops to
+// hang inverted above her in the alley. The tension between them has simmered the whole film, each
+// half-knowing, neither saying it. She peels his mask down to the nose — and kisses him in the rain, the
+// long-held wanting finally let go in one upside-down, rain-soaked, very damn big kiss.
+
+// MARY JANE WATSON — half-knowing, wanting, unspoken
+char mary_jane [+Yearning]
+
+// PETER PARKER (SPIDER-MAN) — the same tension held from the other side
+char peter [+Yearning]
+
+// EXT. ALLEY - NIGHT (rain, the inverted hero)
+set the_alley [+Exterior] [+Night] [+Raining]
+
+scene the_upside_down_kiss {
+  beat 1 {
+    mary_jane @ the_alley
+    peter @ the_alley
+    // she pulls the mask to his nose and kisses him — the UST released
+    evt the_kiss [&Kisses(agent=mary_jane, other=peter)]
+    // The_Big_Damn_Kiss -> the_kiss [+TheBigDamnKiss]
+  }
+}

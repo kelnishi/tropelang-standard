@@ -1,0 +1,71 @@
+// === PREAMBLE ===
+// @trope    Back from the Dead
+// @category Death Tropes / Resurrection
+// @source   https://allthetropes.org/wiki/Back_from_the_Dead
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a character pronounced dead and buried is brought back to life by some agency
+// — magic, science, the divine. The death was real; the return undoes it. FRONTIER: actual resurrection,
+// distinct from the apparent death that was never real (Disney Death). The discriminator is a subject
+// who literally carries [+Dead] being bound on the `subject=` role of a [&Resurrects] event — so it fires
+// only when a genuinely dead character is returned, not on a fake-out, a near-death, or a death that
+// stays a death.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc back_from_the_dead -> [
+  disney_death  : "the real-death counterpart to the fake-out",
+  together_in_death : "undoes the death that"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the genuine resurrection is the discriminator; promotion model) —
+verb Resurrects(subject) [+Mythological]   // brings a genuinely dead character back to life
+
+imply BackFromTheDead -> [Twist, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: an agency RESURRECTS a [+Dead] subject — the dead character bound on the `subject=` role
+// of a [&Resurrects] event (agent=$agency), so phase-2 re-checks [+Dead] on the bound subject (STYLE §8).
+// Binding actual death on the returned party is the discriminator: this fires only on a genuine death
+// undone, parting it from Disney Death (an apparent death that was never real). The subject ends [+Alive].
+rule Back_From_The_Dead {
+  when:
+    char $char [+Dead]
+    evt  $return [&Resurrects(agent=$agency, subject=$char)]
+  then:
+    $char [-Dead]
+    $char [+Alive]
+    $return [+BackFromTheDead]
+}
+
+
+// === CONCRETE VIGNETTE: The Lion, the Witch and the Wardrobe — Aslan (Lewis, novel, 1950) ===
+// The White Witch binds Aslan to the Stone Table and kills him before her host, claiming the traitor's
+// blood the Deep Magic owes her — and he is truly dead, the girls weeping over the cold body through the
+// night. But there is a Deeper Magic from before the dawn of time: when a willing innocent is killed in a
+// traitor's place, Death itself works backward. At sunrise the Stone Table cracks and Aslan stands alive
+// again, larger than before. A real death, really undone.
+
+// ASLAN — slain on the Stone Table, truly dead
+char aslan [+Dead]
+
+// THE DEEPER MAGIC — the agency from before the dawn of time that works death backward
+char the_deeper_magic [+Primordial]
+
+// EXT. THE STONE TABLE - DAWN (the cracked slab, the risen lion)
+set the_stone_table [+Exterior] [+Dawn]
+
+scene the_breaking_of_the_table {
+  beat 1 {
+    aslan @ the_stone_table
+    // the Deeper Magic works death backward at sunrise
+    evt the_rising [&Resurrects(agent=the_deeper_magic, subject=aslan)]
+    // Back_From_The_Dead -> aslan [-Dead] [+Alive]; the_rising [+BackFromTheDead]
+  }
+}

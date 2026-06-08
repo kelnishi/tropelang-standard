@@ -49,6 +49,7 @@ import "trl/tropes/bonds/not_so_different.trl"
 import "trl/tropes/bonds/power_of_friendship.trl"
 import "trl/tropes/bonds/sibling_rivalry.trl"
 import "trl/tropes/bonds/star_crossed_lovers.trl"
+import "trl/tropes/bonds/the_big_damn_kiss.trl"
 import "trl/tropes/bonds/unrequited_love.trl"
 import "trl/tropes/bonds/what_the_hell_hero.trl"
 import "trl/tropes/bonds/worthy_opponent.trl"
@@ -63,6 +64,7 @@ import "trl/tropes/character/archetypes/jerk_with_a_heart_of_gold.trl"
 import "trl/tropes/character/archetypes/magnificent_bastard.trl"
 import "trl/tropes/character/archetypes/mama_bear.trl"
 import "trl/tropes/character/archetypes/reluctant_hero.trl"
+import "trl/tropes/character/archetypes/the_ace.trl"
 import "trl/tropes/character/archetypes/the_chosen_one.trl"
 import "trl/tropes/character/archetypes/the_drifter.trl"
 import "trl/tropes/character/archetypes/the_trickster.trl"
@@ -122,6 +124,7 @@ import "trl/tropes/conflict/war/the_cavalry.trl"
 import "trl/tropes/conflict/war/we_have_reserves.trl"
 import "trl/tropes/conflict/war/you_shall_not_pass.trl"
 import "trl/tropes/conflict/war/zerg_rush.trl"
+import "trl/tropes/death/back_from_the_dead.trl"
 import "trl/tropes/death/death_by_origin_story.trl"
 import "trl/tropes/death/defiant_to_the_end.trl"
 import "trl/tropes/death/disney_death.trl"
@@ -464,6 +467,7 @@ concept achilles_heel [+Trope(category="Combat Tropes", source="https://allthetr
 concept an_aesop [+Trope(category="Morality", source="https://allthetropes.org/wiki/An_Aesop")] [%Narrative]
 concept anagnorisis [+Trope(category="Narrative Devices", source="https://allthetropes.org/wiki/Anagnorisis")] [%Narrative]
 concept anti_hero [+Trope(category="Cast", source="https://allthetropes.org/wiki/Anti-Hero")] [%Narrative]
+concept back_from_the_dead [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Back_from_the_Dead")] [%Narrative]
 concept batman_gambit [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Batman_Gambit")] [%Epistemic]
 concept be_careful_what_you_wish_for [+Trope(category="Wishplots", source="https://allthetropes.org/wiki/Be_Careful_What_You_Wish_For")] [%Narrative]
 concept beware_the_nice_ones [+Trope(category="Character Tropes", source="https://allthetropes.org/wiki/Beware_the_Nice_Ones")] [%Interpersonal]
@@ -561,6 +565,8 @@ concept take_a_third_option [+Trope(category="Plotting Devices", source="https:/
 concept taking_you_with_me [+Trope(category="Combat", source="https://allthetropes.org/wiki/Taking_You_with_Me")] [%Interpersonal]
 concept talking_head [+Trope(category="Non-Fiction", source="https://allthetropes.org/wiki/Talking_Heads")] [%Narrative]
 concept tear_jerker [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Tear_Jerker")] [%Narrative]
+concept the_ace [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/The_Ace")] [%Narrative]
+concept the_big_damn_kiss [+Trope(category="Romance", source="https://allthetropes.org/wiki/The_Big_Damn_Kiss")] [%Narrative]
 concept the_climax [+Trope(category="Story Structure", source="https://allthetropes.org/wiki/Climax")] [%Narrative]
 concept the_dilemma [+Trope(category="Drama", source="https://allthetropes.org/wiki/Sadistic_Choice")] [%Mind]
 concept the_dog_bites_back [+Trope(category="Character Tropes", source="https://allthetropes.org/wiki/The_Dog_Bites_Back")] [%Interpersonal]
