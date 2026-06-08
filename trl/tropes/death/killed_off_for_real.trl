@@ -1,0 +1,78 @@
+// === PREAMBLE ===
+// @trope    Killed Off for Real
+// @category Death Tropes
+// @source   https://allthetropes.org/wiki/Killed_Off_for_Real
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): a major character is killed and STAYS dead — no Reset Button, no "All Just a
+// Dream," no resurrection plot device. The death is permanent and counts. FRONTIER: the death with no
+// take-backs. The discriminator is a [+Major] character slain ([&Slays]) and left ABSOLUTELY dead —
+// `![+Dead]!`, the immutable epistemic status (spec 01 §11) that no `resolve`/`retcon` can collapse. Distinct
+// from a Disney Death / Back from the Dead (a defeasible or undone [+Dead]): here the grave is final, the
+// character gone for the rest of the work.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/death/sacrificial_lion.trl"   // where [+Major] is founded
+
+assoc killed_off_for_real -> [
+  back_from_the_dead : "the permanent counter to",
+  disney_death : "the no-take-backs opposite of",
+  dropped_a_bridge_on_him : "the abrupt form of"
+]
+
+
+// === ONTOLOGY ===
+// — no new verb: the discriminator is the EPISTEMIC status of the death, not a bespoke kill verb. The killing
+//   rides the shared [&Slays] cluster (the recall anchor), and the irreversibility is carried by an absolute
+//   `![+Dead]!` on the victim — an immutable fact, re-checked literally on the slain entity in phase-2 — which
+//   a Disney Death / Back from the Dead (a defeasible [+Dead] that later flips) cannot satisfy. —
+
+imply KilledOffForReal -> [Final, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a [+Major] character is SLAIN and left ABSOLUTELY dead — the established figure
+// bound on the `target=` role of a [&Slays] event (the recall anchor), with an immutable `![+Dead]!` on the
+// slain, so phase-2 re-checks [+Major] and the absolute death on the victim (STYLE §8). The discriminator is
+// the epistemic status: `![+Dead]!` is ground truth no `resolve`/`retcon` can undo, so a Disney Death / Back
+// from the Dead (a defeasible [+Dead] that later flips) cannot match — and the absolute wrapper keeps it from
+// collapsing into Dropped a Bridge on Him (an [+Anticlimactic] [&Slays]) or the Sacrificial Lion.
+rule Killed_Off_for_Real {
+  when:
+    char $character [+Major]
+    evt  $death [&Slays(agent=$killer, target=$character)]
+    !$character [+Dead]!
+  then:
+    $death [+KilledOffForReal]
+}
+
+
+// === CONCRETE VIGNETTE: Psycho — Marion Crane (film, 1960) ===
+// For forty minutes Psycho follows Marion Crane: her theft, her flight, her arrival at the Bates Motel. She
+// is the protagonist — and protagonists do not die a third of the way through a film. Then the shower
+// curtain is torn back and the knife comes down, and she is simply, shockingly, gone — no rescue, no
+// reveal that she survived, no coming back. Hitchcock killed off his lead for real, and the audience never
+// recovered its footing. The permanent death that broke the rule of who is safe.
+
+// MARION CRANE — the apparent protagonist, killed a third of the way in and never restored
+char marion [+Major]
+
+// NORMAN BATES — the killer behind the curtain
+char norman [+Antagonist]
+
+// INT. THE BATES MOTEL - the shower, the curtain torn back
+set the_motel [+Interior]
+
+scene the_shower {
+  beat 1 {
+    marion @ the_motel
+    // the knife comes down and she is gone — no rescue, no reveal, no resurrection: killed for good
+    evt the_murder [&Slays(agent=norman, target=marion)]
+    !marion [+Dead]!          // absolute, immutable — no resolve/retcon can bring her back
+    // Killed_Off_for_Real -> the_murder [+KilledOffForReal]
+  }
+}

@@ -1,0 +1,88 @@
+// === PREAMBLE ===
+// @trope    Heterosexual Life Partners
+// @category Friendship / Bonds
+// @source   https://allthetropes.org/wiki/Heterosexual_Life_Partners
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): two extremely close friends of the same gender who are as close as — or closer
+// than — a romantic couple, yet not romantically linked. They suffer withdrawals apart, may have "break-up"
+// episodes, and a partner's new love sparks an epic Friend Versus Lover quarrel. FRONTIER: the platonic bond
+// pitched at couple intensity. The discriminator is two same-gender [+Inseparable] characters mutually
+// [@Bonded_To] who [&Cherishes] one another. The same-gender pairing parts it from Like Brother and Sister
+// (the opposite-gender platonic bond); the platonic intensity parts it from Childhood Friend Romance (love)
+// and from a plain friendship.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc heterosexual_life_partners -> [
+  childhood_friend_romance : "the platonic counterpart to",
+  fire_forged_friends : "a deeper, couple-level form of",
+  like_brother_and_sister : "the same-gender version of"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the same-gender, couple-close-yet-platonic pair is the discriminator; reuses [@Bonded_To]) —
+prop Inseparable [+Social]          // bonded as close as a couple, yet platonically — withdrawals apart
+verb Cherishes(other) [+Interpersonal] // holds a friend as dear as a partner — the platonic life-bond
+
+imply HeterosexualLifePartners -> [Affection, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): two same-gender [+Inseparable] friends, mutually [@Bonded_To], CHERISH one another
+// — each bound on a role of a [&Cherishes] event, so phase-2 re-checks [+Inseparable], the shared gender, and
+// the mutual bond on BOTH (STYLE §8). The same-gender pairing is the discriminator that parts it from Like
+// Brother and Sister (the opposite-gender platonic bond); couple-level closeness without romance parts it
+// from Childhood Friend Romance (love). The engine has no "same gender" predicate, so the pairing is split
+// across two gendered rules — a [+Masculine] pair and a [+Feminine] pair — both naming the trope.
+rule Heterosexual_Life_Partners {
+  when:
+    char $a [+Inseparable] [+Masculine] [@Bonded_To(other=$b)]
+    char $b [+Inseparable] [+Masculine] [@Bonded_To(other=$a)]
+    $a != $b
+    evt  $bond [&Cherishes(agent=$a, other=$b)]
+  then:
+    $bond [+HeterosexualLifePartners]
+}
+
+// the distaff pairing — two [+Feminine] life partners (e.g. Romy & Michele); same shape, other gender
+rule Heterosexual_Life_Partners_Distaff {
+  when:
+    char $a [+Inseparable] [+Feminine] [@Bonded_To(other=$b)]
+    char $b [+Inseparable] [+Feminine] [@Bonded_To(other=$a)]
+    $a != $b
+    evt  $bond [&Cherishes(agent=$a, other=$b)]
+  then:
+    $bond [+HeterosexualLifePartners]
+}
+
+
+// === CONCRETE VIGNETTE: Scrubs — J.D. & Turk (TV, 2001) ===
+// J.D. and Turk are roommates, best men, and the great love story of the show — minus the romance. They
+// finish each other's sentences, pine when apart, weather a jealous "break-up" when Turk marries Carla, and
+// literally sing a duet about it: "It's Guy Love, between two guys!" Two men as close as any couple, devoted
+// and inseparable, and entirely platonic. The trope's poster pair.
+
+// J.D. — half of the platonic life-bond, inseparable from Turk
+char jd [+Inseparable] [+Masculine] [@Bonded_To(other=turk)]
+
+// TURK — the other half, as dear to J.D. as any partner
+char turk [+Inseparable] [+Masculine] [@Bonded_To(other=jd)]
+
+// INT. SACRED HEART HOSPITAL - the pair as ever side by side
+set sacred_heart [+Interior]
+
+scene guy_love {
+  beat 1 {
+    jd @ sacred_heart
+    turk @ sacred_heart
+    // as close as any couple, devoted and platonic — "It's Guy Love, between two guys"
+    evt the_duet [&Cherishes(agent=jd, other=turk)]
+    // Heterosexual_Life_Partners -> the_duet [+HeterosexualLifePartners]
+  }
+}

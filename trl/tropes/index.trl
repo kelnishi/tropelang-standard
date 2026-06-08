@@ -36,6 +36,7 @@ import "trl/tropes/arc/redemption/heel_face_turn.trl"
 import "trl/tropes/arc/redemption/heel_realization.trl"
 import "trl/tropes/arc/redemption/pet_the_dog.trl"
 import "trl/tropes/arc/redemption/redemption_arc.trl"
+import "trl/tropes/arc/redemption/redemption_quest.trl"
 import "trl/tropes/arc/redemption/redemption_rejection.trl"
 import "trl/tropes/arc/redemption/took_a_level_in_kindness.trl"
 import "trl/tropes/bonds/a_house_divided.trl"
@@ -47,6 +48,7 @@ import "trl/tropes/bonds/defeat_means_friendship.trl"
 import "trl/tropes/bonds/enemies_to_lovers.trl"
 import "trl/tropes/bonds/fire_forged_friends.trl"
 import "trl/tropes/bonds/found_family.trl"
+import "trl/tropes/bonds/heterosexual_life_partners.trl"
 import "trl/tropes/bonds/i_gave_my_word.trl"
 import "trl/tropes/bonds/like_brother_and_sister.trl"
 import "trl/tropes/bonds/love_dodecahedron.trl"
@@ -59,6 +61,7 @@ import "trl/tropes/bonds/red_string_of_fate.trl"
 import "trl/tropes/bonds/sibling_rivalry.trl"
 import "trl/tropes/bonds/star_crossed_lovers.trl"
 import "trl/tropes/bonds/the_big_damn_kiss.trl"
+import "trl/tropes/bonds/undying_loyalty.trl"
 import "trl/tropes/bonds/unrequited_love.trl"
 import "trl/tropes/bonds/what_the_hell_hero.trl"
 import "trl/tropes/bonds/worthy_opponent.trl"
@@ -154,6 +157,7 @@ import "trl/tropes/death/heroic_sacrifice.trl"
 import "trl/tropes/death/hoist_by_his_own_petard.trl"
 import "trl/tropes/death/karma_houdini.trl"
 import "trl/tropes/death/karmic_death.trl"
+import "trl/tropes/death/killed_off_for_real.trl"
 import "trl/tropes/death/mercy_kill.trl"
 import "trl/tropes/death/red_shirt.trl"
 import "trl/tropes/death/redemption_equals_death.trl"
@@ -162,6 +166,7 @@ import "trl/tropes/death/sacrificial_lamb.trl"
 import "trl/tropes/death/sacrificial_lion.trl"
 import "trl/tropes/death/senseless_sacrifice.trl"
 import "trl/tropes/death/survivors_guilt.trl"
+import "trl/tropes/death/taking_the_bullet.trl"
 import "trl/tropes/death/taking_you_with_me.trl"
 import "trl/tropes/death/together_in_death.trl"
 import "trl/tropes/epistemic/foreshadowing/chekhovs_boomerang.trl"
@@ -216,6 +221,7 @@ import "trl/tropes/meta/nonfiction/talking_head.trl"
 import "trl/tropes/meta/nonfiction/the_host.trl"
 import "trl/tropes/power/asskicking_equals_authority.trl"
 import "trl/tropes/power/bread_and_circuses.trl"
+import "trl/tropes/power/deadly_decadent_court.trl"
 import "trl/tropes/power/decadent_court.trl"
 import "trl/tropes/power/enemy_civil_war.trl"
 import "trl/tropes/power/evil_chancellor.trl"
@@ -236,6 +242,7 @@ import "trl/tropes/power/the_purge.trl"
 import "trl/tropes/power/the_quisling.trl"
 import "trl/tropes/power/the_starscream.trl"
 import "trl/tropes/power/vichy_earth.trl"
+import "trl/tropes/power/villain_with_good_publicity.trl"
 import "trl/tropes/rhetoric/an_aesop.trl"
 import "trl/tropes/rhetoric/armor_piercing_question.trl"
 import "trl/tropes/rhetoric/audience_surrogate.trl"
@@ -561,6 +568,7 @@ concept crapsack_world [+Trope(category="Settings", source="https://allthetropes
 concept curb_stomp_battle [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Curb_Stomp_Battle")] [%Interpersonal]
 concept damsel_in_distress [+Trope(category="Characters As Device", source="https://allthetropes.org/wiki/Damsel_in_Distress")] [%Narrative]
 concept david_versus_goliath [+Trope(category="Combat Tropes", source="https://allthetropes.org/wiki/David_Versus_Goliath")] [%Interpersonal]
+concept deadly_decadent_court [+Trope(category="Politics", source="https://allthetropes.org/wiki/Deadly_Decadent_Court")] [%Narrative]
 concept deadpan_snarker [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Deadpan_Snarker")] [%Narrative]
 concept deal_with_the_devil [+Trope(category="Drama", source="https://allthetropes.org/wiki/Deal_with_the_Devil")] [%Mind]
 concept death_by_origin_story [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Death_by_Origin_Story")] [%Narrative]
@@ -596,6 +604,7 @@ concept heel_realization [+Trope(category="Character Development", source="https
 concept heist [+Trope(category="Crime", source="https://allthetropes.org/wiki/The_Caper")] [%Social]
 concept heroic_bsod [+Trope(category="Trauma", source="https://allthetropes.org/wiki/Heroic_BSOD")] [%Psychological]
 concept heroic_second_wind [+Trope(category="Heroic Spirit", source="https://allthetropes.org/wiki/Heroic_Second_Wind")] [%Narrative]
+concept heterosexual_life_partners [+Trope(category="Friendship", source="https://allthetropes.org/wiki/Heterosexual_Life_Partners")] [%Narrative]
 concept hoist_by_his_own_petard [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Hoist_by_His_Own_Petard")] [%Narrative]
 concept holy_halo [+Trope(category="Iconography", source="https://allthetropes.org/wiki/Holy_Halo")] [%Narrative]
 concept hope_bringer [+Trope(category="Heroes", source="https://allthetropes.org/wiki/Hope_Bringer")] [%Narrative]
@@ -609,6 +618,7 @@ concept just_between_you_and_me [+Trope(category="Villains", source="https://all
 concept karma_houdini [+Trope(category="Karma Tropes", source="https://allthetropes.org/wiki/Karma_Houdini")] [%Narrative]
 concept karmic_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Karmic_Death")] [%Narrative]
 concept kick_the_dog [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Kick_the_Dog")] [%Narrative]
+concept killed_off_for_real [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Killed_Off_for_Real")] [%Narrative]
 concept kingmaker_scenario [+Trope(category="Politics", source="https://allthetropes.org/wiki/Kingmaker_Scenario")] [%Narrative]
 concept la_resistance [+Trope(category="Politics", source="https://allthetropes.org/wiki/La_Resistance")] [%Narrative]
 concept lampshade_hanging [+Trope(category="Metafiction", source="https://allthetropes.org/wiki/Lampshade_Hanging")] [%Narrative]
@@ -645,6 +655,7 @@ concept recursive_canon [+Trope(category="Metafiction", source="https://allthetr
 concept red_shirt [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Red_Shirt")] [%Narrative]
 concept red_string_of_fate [+Trope(category="Romance", source="https://allthetropes.org/wiki/Red_String_of_Fate")] [%Narrative]
 concept redemption_equals_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Redemption_Equals_Death")] [%Narrative]
+concept redemption_quest [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Redemption_Quest")] [%Narrative]
 concept redemption_rejection [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Redemption_Rejection")] [%Mind]
 concept reenactment [+Trope(category="Non-Fiction", source="https://allthetropes.org/wiki/Dramatization")] [%Narrative]
 concept reluctant_hero [+Trope(category="Character Tropes", source="https://allthetropes.org/wiki/Reluctant_Hero")] [%Narrative]
@@ -664,6 +675,7 @@ concept status_quo_is_god [+Trope(category="Narrative Devices", source="https://
 concept strawman_political [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Strawman_Political")] [%Narrative]
 concept stump_speech [+Trope(category="Oratory", source="https://en.wikipedia.org/wiki/Stump_speech")] [%Narrative]
 concept take_a_third_option [+Trope(category="Plotting Devices", source="https://allthetropes.org/wiki/Take_a_Third_Option")] [%Narrative]
+concept taking_the_bullet [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Taking_the_Bullet")] [%Narrative]
 concept taking_you_with_me [+Trope(category="Combat", source="https://allthetropes.org/wiki/Taking_You_with_Me")] [%Interpersonal]
 concept talking_head [+Trope(category="Non-Fiction", source="https://allthetropes.org/wiki/Talking_Heads")] [%Narrative]
 concept talking_the_monster_to_death [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Talking_the_Monster_to_Death")] [%Narrative]
@@ -705,8 +717,10 @@ concept trash_talk [+Trope(category="Combat", source="https://allthetropes.org/w
 concept trauma_conga_line [+Trope(category="Tragedy", source="https://allthetropes.org/wiki/Trauma_Conga_Line")] [%Narrative]
 concept trojan_horse [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Trojan_Horse")] [%Interpersonal]
 concept tsundere [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Tsundere")] [%Narrative]
+concept undying_loyalty [+Trope(category="Friendship", source="https://allthetropes.org/wiki/Undying_Loyalty")] [%Narrative]
 concept vichy_earth [+Trope(category="Politics", source="https://allthetropes.org/wiki/Vichy_Earth")] [%Narrative]
 concept villain_protagonist [+Trope(category="Character Roles", source="https://allthetropes.org/wiki/Villain_Protagonist")] [%Narrative]
+concept villain_with_good_publicity [+Trope(category="Politics", source="https://allthetropes.org/wiki/Villain_with_Good_Publicity")] [%Narrative]
 concept villainous_breakdown [+Trope(category="Villains", source="https://allthetropes.org/wiki/Villainous_Breakdown")] [%Narrative]
 concept well_intentioned_extremist [+Trope(category="Villains", source="https://allthetropes.org/wiki/Well-Intentioned_Extremist")] [%Narrative]
 concept wham_line [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Wham!_Line")] [%Narrative]

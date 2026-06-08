@@ -1,0 +1,70 @@
+// === PREAMBLE ===
+// @trope    Villain with Good Publicity
+// @category Politics / Villains
+// @source   https://allthetropes.org/wiki/Villain_with_Good_Publicity
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): a villain who clothes themselves in good deeds — a beloved philanthropist,
+// statesman, or hero in the public eye — so that no one believes the accusations against them. "Those who
+// clothe themselves in good deeds are well-camouflaged." FRONTIER: villainy shielded by reputation. The
+// discriminator is an [+Antagonist] who is [+Esteemed] (publicly admired) and [&Charms] the public,
+// managing the benevolent image. Distinct from a Bitch in Sheep's Clothing (a private two-face): here the
+// camouflage is PUBLIC esteem, the whole world fooled.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc villain_with_good_publicity -> [
+  bitch_in_sheeps_clothing : "the public-stage version of",
+  the_mole : "trusted for the same reason as",
+  smear_campaign : "turns the press the opposite way from a"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the publicly-admired villain is the discriminator; promotion model) —
+prop Esteemed [+Social]            // publicly admired and respected — a sterling, trusted reputation
+verb Charms(audience) [+Interpersonal] // cultivates public goodwill, managing a benevolent image
+
+imply VillainWithGoodPublicity -> [Manipulation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): an [+Antagonist] who is [+Esteemed] CHARMS the public — the villain bound on the
+// agent role of a [&Charms] event (audience=$public), so phase-2 re-checks [+Antagonist] AND [+Esteemed] on
+// the same figure (STYLE §8). Binding villainy and public esteem on one person is the discriminator: the
+// accusations cannot stick because the world adores them, parting it from a plain villain (no cover) and a
+// private hypocrite (no public stage).
+rule Villain_With_Good_Publicity {
+  when:
+    char $villain [+Antagonist] [+Esteemed]
+    evt  $spin [&Charms(agent=$villain, audience=$public)]
+  then:
+    $spin [+VillainWithGoodPublicity]
+}
+
+
+// === CONCRETE VIGNETTE: Superman — Lex Luthor (comics, esp. modern era) ===
+// To Metropolis, Lex Luthor is a visionary: the genius billionaire whose LexCorp builds the city, endows
+// its hospitals, and signs its paychecks — a philanthropist so beloved he is elected President of the United
+// States. Only Superman knows the truth beneath the ribbon-cuttings: the sabotage, the murders, the schemes.
+// But Luthor "tells the media what to believe," and the public adores him, so the hero's every warning
+// sounds like a grudge. The good press is the armor no punch can dent.
+
+// LEX LUTHOR — the beloved philanthropist of Metropolis, secretly its greatest criminal
+char lex [+Antagonist] [+Esteemed]
+
+// INT. THE LEXCORP GALA - the cameras, the applauding crowd
+set the_gala [+Interior] [+Crowded]
+
+scene the_ribbon_cutting {
+  beat 1 {
+    lex @ the_gala
+    // ribbon-cuttings and endowments — he tells the media what to believe, and the city loves him for it
+    evt the_image [&Charms(agent=lex, audience=metropolis)]
+    // Villain_With_Good_Publicity -> the_image [+VillainWithGoodPublicity]
+  }
+}

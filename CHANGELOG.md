@@ -257,6 +257,35 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   `verb Recasts(target)`.)
   Corpus **274 → 281 tropes**; self-recognition steady at **281/281 (100%)**. (Capability-gap batch 4/5:
   balancing the frontier — Power → 22, Arc → 25, Bonds → 24, Meta → 20 — across the recognition scales.)
+- **Deadly Decadent Court** (Politics / Settings) — https://allthetropes.org/wiki/Deadly_Decadent_Court
+  (A Game of Thrones, King's Landing — a [+Courtier] `[&Intrigues]` against a rival in a [+Decadent] court
+  (a `set`); the whole-court web of schemers, vs a lone Evil Chancellor. Founds `prop Courtier`/`prop
+  Decadent` + `verb Intrigues(against)`.)
+- **Villain with Good Publicity** (Politics / Villains) — https://allthetropes.org/wiki/Villain_with_Good_Publicity
+  (Superman, Lex Luthor — an [+Antagonist] [+Esteemed] `[&Charms]` the public; villainy shielded by public
+  esteem, vs a private hypocrite. Founds `prop Esteemed` + `verb Charms(audience)`.)
+- **Taking the Bullet** (Death Tropes / Sacrifice) — https://allthetropes.org/wiki/Taking_the_Bullet
+  (The Bodyguard, Frank Farmer — a protector `[&Intercepts]` an attack for a beneficiary, taking the harm
+  meant for them; the intercepted blow, vs a general Heroic Sacrifice. Founds `verb Intercepts(beneficiary)`.)
+- **Killed Off for Real** (Death Tropes) — https://allthetropes.org/wiki/Killed_Off_for_Real
+  (Psycho, Marion Crane — a [+Major] character `[&Slays]`-ed and left `![+Dead]!` (absolute, immutable); the
+  discriminator is the EPISTEMIC status — a death no `resolve`/`retcon` can undo — vs a Disney Death / Back
+  from the Dead (a defeasible [+Dead]). No new verb; reuses `[&Slays]`/`[+Major]`.)
+- **Undying Loyalty** (Friendship / Loyalty) — https://allthetropes.org/wiki/Undying_Loyalty
+  (The Lord of the Rings, Samwise Gamgee — a [+Steadfast] character `[&StandsBy]` another through anything;
+  loyalty as the unbreakable defining trait, vs an ally of convenience. Founds `prop Steadfast` + `verb
+  StandsBy(other)`.)
+- **Heterosexual Life Partners** (Friendship / Bonds) — https://allthetropes.org/wiki/Heterosexual_Life_Partners
+  (Scrubs, J.D. & Turk — two SAME-gender [+Inseparable] friends mutually [@Bonded_To] who `[&Cherishes]` one
+  another; couple-level closeness, platonic, vs Childhood Friend Romance (love). The matching-gender pairing
+  is split across a [+Masculine] and a [+Feminine] rule (no single "same gender" predicate). Founds `prop
+  Inseparable` + `verb Cherishes(other)`; reuses `[@Bonded_To]`.)
+- **Redemption Quest** (Character Development / Redemption) — https://allthetropes.org/wiki/Redemption_Quest
+  (Red Dead Redemption, John Marston — a [+Penitent] character `[&Quests]` for a [+Redemptive] task offered as
+  his path back; REFINES The Quest (reuses `[&Quests(for)]`) by the redemption tags, vs a plain Quest (no
+  atonement) and a gradual Redemption Arc. Founds `prop Penitent`/`prop Redemptive`; reuses `[&Quests]`.)
+  Corpus **281 → 288 tropes**; self-recognition steady at **288/288 (100%)**. (Capability-gap batch 5/5,
+  final: lifting the thinnest spokes — Power → 24, Death → 25, Bonds → 26, Arc → 26.)
 
 ### Changed
 - **Klingon Promotion** (Political / Power) — refined to the LETHAL usurpation. The rule now requires the
