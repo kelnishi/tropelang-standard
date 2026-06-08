@@ -82,7 +82,7 @@ Universal + the cast & plot-structure indexes). This is the live ledger — **ev
 it** (the finalize step in `CONVERSION_BOT.md`). The *recipe* for re-running the review (corpus inventory
 vs. the indexes, archive access) lives in `CONVERSION_BOT.md`; the *state* lives here.
 
-**Corpus: 216 tropes · self-recognition 216/216 (100%).** (Re-measure: `tropelang selfcheck
+**Corpus: 219 tropes · self-recognition 219/219 (100%).** (Re-measure: `tropelang selfcheck
 trl/tropes/corpus.toml --corpus file://trl`.)
 
 **Converted batches (done):**
@@ -91,21 +91,21 @@ trl/tropes/corpus.toml --corpus file://trl`.)
 - `convert/character-development-batch` (#42) — Character Development · Title Drop · Genre Savvy.
 - `convert/damsel-redshirt-snarker` (#44) — Damsel in Distress · Red Shirt · Deadpan Snarker.
 - `convert/quest-villaindeath-wth-hero` (#45) — The Quest · Disney Villain Death · What the Hell, Hero?
-- `convert/bondvillain-raceclock-father` (this PR) — Bond Villain Stupidity · Race Against the Clock ·
+- `convert/bondvillain-raceclock-father` (#47) — Bond Villain Stupidity · Race Against the Clock ·
   I Am Your Father.
+- `convert/plotcoupon-jbyam-timebomb` (this PR) — Plot Coupon · Just Between You and Me · Time Bomb.
 
 **Remaining gaps (archive-verified; the next-batch candidates):**
 - [ ] Mood Whiplash · [ ] Idiot Plot · [ ] Crapsack World (each harder to event-anchor —
   tonal/structural/setting; design the discriminator carefully).
-- [ ] Plot Coupon · [ ] Just Between You and Me · [ ] Time Bomb (clean, event-shaped — surfaced in the
-  pass-5 review; good near-term picks).
 - [ ] (re-run the coverage recipe against the live high-profile indexes for fresh candidates — the
   archive dump exposes `/page`, `/search`, `/titles`, `/exists`).
 - Smaller leftovers: further Love Triangle variants · "Within a Frame Story" · the cross-repo eval-side
   drams gap (below) · the low-value fantastic-species framing.
 
-**Suggested next batch:** Plot Coupon · Just Between You and Me · Time Bomb (all event-shaped); or fold in
-a tonal/structural one (Mood Whiplash / Idiot Plot) once its event-anchored discriminator is worked out.
+**Suggested next batch:** re-run the coverage recipe against the live indexes for a fresh, varied trio.
+The remaining logged gaps (Mood Whiplash / Idiot Plot / Crapsack World) each need an event-anchored
+discriminator worked out first (tonal/structural/setting), so pair at most one with two clean fresh finds.
 
 ---
 

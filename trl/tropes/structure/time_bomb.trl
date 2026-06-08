@@ -1,0 +1,71 @@
+// === PREAMBLE ===
+// @trope    Time Bomb
+// @category Plot Devices
+// @source   https://allthetropes.org/wiki/Time_Bomb
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a bomb on a countdown — the characters must act within the time limit or it
+// goes off; the hero defuses it within seconds of the deadline (0:07, if you're Bond). FRONTIER: the
+// concrete DEVICE form of the Race Against the Clock. Race Against the Clock keys on an abstract
+// [+Deadline] being outrun ([&Races]); Time Bomb keys on a [+Ticking] explosive being neutralized
+// ([&Defuses]) — the physical ticking device is the discriminator, bound on the `device=` role, so it
+// fires on the defusal of a live bomb, not on any deadline tension.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/tropes/structure/race_against_the_clock.trl"   // the abstract deadline this is the device of
+
+assoc time_bomb -> [
+  race_against_the_clock : "the concrete ticking-device form of",
+  cliffhanger            : "the countdown shares the suspense of"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the live ticking device + its defusal are the discriminator; promotion model) —
+prop Ticking      [+Temporal]    // counting down to detonation — the live timer
+verb Defuses(device) [+Narrative] // neutralizes the bomb before the count reaches zero
+
+imply TimeBomb -> [Suspense, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a hero DEFUSES a [+Ticking] device — the live bomb bound on the `device=` role of a
+// [&Defuses] event (agent=$hero), so phase-2 re-checks [+Ticking] on the bound device (STYLE §8). Binding
+// the live countdown on the defusal is the discriminator: a concrete ticking explosive is neutralized,
+// parting it from the abstract Race Against the Clock (a [+Deadline] outrun, no device defused).
+rule Time_Bomb {
+  when:
+    char $hero [+Protagonist]
+    obj  $bomb [+Ticking]
+    evt  $defusal [&Defuses(agent=$hero, device=$bomb)]
+  then:
+    $defusal [+TimeBomb]
+}
+
+
+// === CONCRETE VIGNETTE: 24 — Jack Bauer and the countdown (TV, 2001) ===
+// The show runs in real time, and its signature image is the ticking readout: a bomb wired to a digital
+// timer, the red seconds falling while Jack Bauer works the wires. He cuts it with the count in the
+// single digits — the whole hour built so the device reaches zero at the exact moment of the defusal.
+// The live timer, not an abstract clock, is the threat: a bomb counting down, and a hand on the wire.
+
+// JACK BAUER — racing the wires against the readout
+char jack_bauer [+Protagonist]
+
+// THE BOMB — wired to a live countdown timer, seconds falling
+obj the_bomb [+Ticking]
+the_bomb [+Explosive]
+
+// INT. WAREHOUSE - the device on its timer
+set the_warehouse [+Interior]
+
+scene the_defusal {
+  beat 1 {
+    jack_bauer @ the_warehouse
+    // he cuts the wire with the count in single digits
+    evt the_cut [&Defuses(agent=jack_bauer, device=the_bomb)]
+    // Time_Bomb -> the_cut [+TimeBomb]
+  }
+}

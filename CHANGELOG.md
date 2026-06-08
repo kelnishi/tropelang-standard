@@ -17,6 +17,21 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 
 ## [Unreleased]
 
+### Added
+- **Plot Coupon** (Plot Devices) — https://allthetropes.org/wiki/Plot_Coupon
+  (Dragon Ball, the seven Dragon Balls — a [+Protagonist] `[&Collects]` a [+PlotCoupon] token; the
+  plot-gating piece bound on the gather event specializes it off a static MacGuffin (the seeking is the
+  plot). Founds `prop PlotCoupon` + `verb Collects(token)`.)
+- **Just Between You and Me** (Villains / Stock Villain Behaviors) — https://allthetropes.org/wiki/Just_Between_You_and_Me
+  (The Incredibles, Syndrome — an [+Antagonist] `[&Confides]` a [+Scheme] to a cornered [+Protagonist];
+  the laid-bare plan parts it from Bond Villain Stupidity (the forgone kill) and a Motive Rant (motives,
+  not the plan). Founds `prop Scheme` + `verb Confides(to)`.)
+- **Time Bomb** (Plot Devices) — https://allthetropes.org/wiki/Time_Bomb
+  (24, Jack Bauer — a [+Protagonist] `[&Defuses]` a [+Ticking] device; the live ticking explosive is the
+  concrete device-form of Race Against the Clock (an abstract [+Deadline]). Founds `prop Ticking` +
+  `verb Defuses(device)`.)
+  Corpus **216 → 219 tropes**; self-recognition steady at **219/219 (100%)**.
+
 ## [1.7.4] — 2026-06-08
 
 ### Added
