@@ -1,0 +1,74 @@
+// === PREAMBLE ===
+// @trope    Medium Awareness
+// @category Metafiction / Narrative Devices
+// @source   https://allthetropes.org/wiki/Medium_Awareness
+// @domain   Narrative
+// @scale    scene
+// @version  1.3
+//
+// Laconic (per the wiki): a character notices and interacts with elements of the MEDIUM that shouldn't
+// exist in-universe — the background music, the subtitles, the impending commercial break. FRONTIER: a
+// fourth-wall subtrope keyed not on addressing the audience but on perceiving the medium's artifacts. The
+// discriminator is a [+MediumArtifact] (a paratextual element) bound on the `artifact=` role of a
+// [&Notices] event. Distinct from Breaking the Fourth Wall (a spoken [&Addresses] to the audience) and
+// the Aside Glance (a silent [&Glances]): here the character reacts to the apparatus itself.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/meta/metafiction/fourth_wall.trl"   // the parent it specializes
+
+assoc medium_awareness -> [
+  fourth_wall : "a medium-artifact subtrope of",
+  lampshade_hanging : "lampshades the paratext like",
+  genre_savvy : "story-aware but medium-aware unlike"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (perceiving the medium's own artifacts is the discriminator; promotion model) —
+prop MediumArtifact [+Narrative]   // a paratextual element — soundtrack, subtitles, credits — not in-world
+verb Notices(artifact) [+Interpersonal] // perceives and reacts to a medium artifact that shouldn't exist in-universe
+
+imply MediumAwareness -> [Metafictional, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (scene scale): a character NOTICES a [+MediumArtifact] — the paratextual element bound on
+// the `artifact=` role of a [&Notices] event (agent=$x), so phase-2 re-checks [+MediumArtifact] on the
+// bound artifact (STYLE §8). Binding the medium-artifact on the act of noticing is the discriminator: the
+// character interacts with the apparatus (music, subtitles), not the audience — parting it from a spoken
+// Fourth-Wall address or a silent Aside Glance.
+rule Medium_Awareness {
+  when:
+    obj  $artifact [+MediumArtifact]
+    evt  $beat [&Notices(agent=$x, artifact=$artifact)]
+  then:
+    $beat [+MediumAwareness]
+}
+
+
+// === CONCRETE VIGNETTE: Blazing Saddles — the Count Basie Orchestra (film, 1974) ===
+// Sheriff Bart rides his horse across the open Western desert to a swelling big-band score — and then
+// crests a dune and rides straight past the Count Basie Orchestra, in full white-tie, playing that very
+// soundtrack on a bandstand in the middle of nowhere. The music the audience hears was never supposed to
+// exist inside the movie; Bart rides right into it. The character meets the soundtrack — pure medium
+// awareness.
+
+// SHERIFF BART — who rides into the film's own soundtrack
+char bart [+Protagonist]
+
+// THE SOUNDTRACK — the non-diegetic score, made suddenly physical
+obj the_soundtrack [+MediumArtifact]
+
+// EXT. DESERT - DAY (the open plain, a bandstand impossibly there)
+set the_desert [+Exterior] [+Day]
+
+scene riding_into_the_music {
+  beat 1 {
+    bart @ the_desert
+    // the swelling score turns out to be a band playing in the desert — he rides into the soundtrack
+    evt the_encounter [&Notices(agent=bart, artifact=the_soundtrack)]
+    // Medium_Awareness -> the_encounter [+MediumAwareness]
+  }
+}

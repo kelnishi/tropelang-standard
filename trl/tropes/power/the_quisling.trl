@@ -1,0 +1,71 @@
+// === PREAMBLE ===
+// @trope    The Quisling
+// @category Politics / Villains
+// @source   https://allthetropes.org/wiki/The_Quisling
+// @domain   Narrative
+// @scale    arc
+// @version  1.3
+//
+// Laconic (per the wiki): named for Vidkun Quisling — a collaborator who helps a foreign conqueror rule
+// his OWN conquered people, taking a position of authority under the occupier (and never seen as their
+// equal). FRONTIER: betrayal of one's own people to the invader. The discriminator is a [+Collaborator]
+// bound on the agent of a [&Collaborates] event with an [+Oppressive] occupier. Distinct from the Evil
+// Chancellor (betrays his own lawful ruler) and The Starscream (betrays his evil master): the Quisling
+// serves the foreign conqueror against his own.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/power/la_resistance.trl"   // the movement he betrays to the occupier
+
+assoc the_quisling -> [
+  la_resistance : "the traitor working against",
+  evil_chancellor : "an occupier's-tool counterpart to",
+  puppet_king : "often installed alongside a"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (collaboration-with-the-conqueror is the discriminator; reuses [+Oppressive]) —
+prop Collaborator [+Political]   // one who serves a foreign conqueror against his own people, for power
+verb Collaborates(with) [+Political] // curries favor with and serves the occupying power
+
+imply TheQuisling -> [Usurpation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a [+Collaborator] COLLABORATES with an [+Oppressive] occupier — the traitor
+// bound on the agent role and the conqueror on the `with=` role of a [&Collaborates] event, so phase-2
+// re-checks [+Collaborator] on the traitor and [+Oppressive] on the occupier (STYLE §8). Binding
+// collaboration-with-the-foreign-conqueror is the discriminator, parting it from the Evil Chancellor
+// (his own ruler) and The Starscream (his own evil master).
+rule The_Quisling {
+  when:
+    char $quisling [+Collaborator]
+    char $occupier [+Oppressive]
+    evt  $serve [&Collaborates(agent=$quisling, with=$occupier)]
+  then:
+    $serve [+TheQuisling]
+}
+
+
+// === CONCRETE VIGNETTE: Vidkun Quisling — occupied Norway (history, WWII) ===
+// When Germany invades Norway, Vidkun Quisling — not a German, but a Norwegian — proclaims himself head
+// of government and places his nation's administration at the occupier's service, hunting the resistance
+// and delivering his own countrymen to the Reich to secure his position. The Germans use him to keep the
+// Norwegians in line and never once treat him as an equal. His name becomes the very word for a traitor
+// who serves the conqueror against his own people.
+
+// VIDKUN QUISLING — the Norwegian who serves the occupier against Norway
+char quisling [+Collaborator] [+Antagonist]
+
+// THE OCCUPATION — the foreign conqueror he curries favor with
+char the_reich [+Oppressive]
+
+scene the_collaboration {
+  beat 1 {
+    // a son of the conquered nation puts its government at the occupier's service, for his own position
+    evt the_service [&Collaborates(agent=quisling, with=the_reich)]
+    // The_Quisling -> the_service [+TheQuisling]
+  }
+}

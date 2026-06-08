@@ -1,0 +1,69 @@
+// === PREAMBLE ===
+// @trope    Kingmaker Scenario
+// @category Politics / Power
+// @source   https://allthetropes.org/wiki/Kingmaker_Scenario
+// @domain   Narrative
+// @scale    act
+// @version  1.3
+//
+// Laconic (per the wiki): two sides are evenly matched and a third — too weak to win itself — becomes the
+// Kingmaker: by allying with one, it breaks the stalemate and crowns the winner. Named for Warwick the
+// Kingmaker. FRONTIER: power through the decisive third party. The discriminator is a [+Kingmaker] actor
+// bound on the agent of a [&Tips] event toward one side: cannot win, but decides who does. Distinct from
+// the contenders themselves — the leverage is the tipping, not the throne.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc kingmaker_scenario -> [
+  divide_and_conquer : "the balance-of-power cousin of",
+  rightful_king_returns : "can install a"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the decisive-but-unwinnable third party is the discriminator; promotion model) —
+prop Kingmaker  [+Political]   // too weak to win, but able to decide who does — the balance-tipper
+verb Tips(toward) [+Political]  // throws decisive weight to one side of a deadlock
+
+imply KingmakerScenario -> [Usurpation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (act scale): a [+Kingmaker] TIPS the balance toward a side — the balance-tipper bound on the
+// agent role of a [&Tips] event (toward=$side), so phase-2 re-checks [+Kingmaker] on the agent (STYLE §8).
+// Binding the decisive-but-unwinnable status on the tipper is the discriminator: it crowns a winner it
+// cannot itself be, parting it from a contender who wins on its own strength.
+rule Kingmaker_Scenario {
+  when:
+    char $kingmaker [+Kingmaker]
+    char $side
+    $kingmaker != $side
+    evt  $tip [&Tips(agent=$kingmaker, toward=$side)]
+  then:
+    $tip [+KingmakerScenario]
+    $side [+Victorious]
+}
+
+
+// === CONCRETE VIGNETTE: the Wars of the Roses — Warwick the Kingmaker (history, 15th c.) ===
+// Richard Neville, Earl of Warwick, has no claim to the throne himself — but in a realm split evenly
+// between York and Lancaster, his armies and wealth are the deciding weight. He throws his support behind
+// Edward of York and puts him on the throne; later, falling out with Edward, he switches sides and
+// restores the Lancastrian Henry VI instead. He cannot be king, so he makes them: the original Kingmaker,
+// crowning and uncrowning sovereigns by where he leans.
+
+// THE EARL OF WARWICK — no claim of his own, but the decisive weight
+char warwick [+Kingmaker]
+
+// EDWARD OF YORK — the claimant Warwick's weight crowns
+char edward [+Protagonist]
+
+scene the_crowning {
+  beat 1 {
+    // unable to take the throne himself, he throws his decisive weight behind one claimant
+    evt the_backing [&Tips(agent=warwick, toward=edward)]
+    // Kingmaker_Scenario -> the_backing [+KingmakerScenario]; edward [+Victorious]
+  }
+}

@@ -191,9 +191,11 @@ import "trl/tropes/meta/metafiction/aside_glance.trl"
 import "trl/tropes/meta/metafiction/fourth_wall.trl"
 import "trl/tropes/meta/metafiction/genre_savvy.trl"
 import "trl/tropes/meta/metafiction/lampshade_hanging.trl"
+import "trl/tropes/meta/metafiction/medium_awareness.trl"
 import "trl/tropes/meta/metafiction/mockumentary.trl"
 import "trl/tropes/meta/metafiction/reality_bleed.trl"
 import "trl/tropes/meta/metafiction/show_within_a_show.trl"
+import "trl/tropes/meta/metafiction/the_stinger.trl"
 import "trl/tropes/meta/metafiction/title_drop.trl"
 import "trl/tropes/meta/nonfiction/based_on_a_true_story.trl"
 import "trl/tropes/meta/nonfiction/human_interest_story.trl"
@@ -205,13 +207,17 @@ import "trl/tropes/power/bread_and_circuses.trl"
 import "trl/tropes/power/decadent_court.trl"
 import "trl/tropes/power/evil_chancellor.trl"
 import "trl/tropes/power/full_circle_revolution.trl"
+import "trl/tropes/power/government_conspiracy.trl"
+import "trl/tropes/power/kingmaker_scenario.trl"
 import "trl/tropes/power/klingon_promotion.trl"
+import "trl/tropes/power/la_resistance.trl"
 import "trl/tropes/power/only_the_chosen_may_wield.trl"
 import "trl/tropes/power/puppet_king.trl"
 import "trl/tropes/power/rightful_king_returns.trl"
 import "trl/tropes/power/smear_campaign.trl"
 import "trl/tropes/power/the_coup.trl"
 import "trl/tropes/power/the_purge.trl"
+import "trl/tropes/power/the_quisling.trl"
 import "trl/tropes/power/the_starscream.trl"
 import "trl/tropes/rhetoric/an_aesop.trl"
 import "trl/tropes/rhetoric/armor_piercing_question.trl"
@@ -263,6 +269,7 @@ import "trl/tropes/structure/or_was_it_a_dream.trl"
 import "trl/tropes/structure/plot_armor.trl"
 import "trl/tropes/structure/plot_coupon.trl"
 import "trl/tropes/structure/race_against_the_clock.trl"
+import "trl/tropes/structure/sequel_hook.trl"
 import "trl/tropes/structure/status_quo_is_god.trl"
 import "trl/tropes/structure/take_a_third_option.trl"
 import "trl/tropes/structure/the_climax.trl"
@@ -555,6 +562,7 @@ concept five_man_band [+Trope(category="Cast", source="https://allthetropes.org/
 concept flashback [+Trope(category="Flashbacks and Chronology", source="https://allthetropes.org/wiki/Flashback_(trope)")] [%Narrative]
 concept gaslighting [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Gaslighting")] [%Epistemic]
 concept genre_savvy [+Trope(category="Metafiction", source="https://allthetropes.org/wiki/Genre_Savvy")] [%Epistemic]
+concept government_conspiracy [+Trope(category="Politics", source="https://allthetropes.org/wiki/Government_Conspiracy")] [%Narrative]
 concept hannibal_lecture [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Hannibal_Lecture")] [%Narrative]
 concept heel_face_door_slam [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Heel_Face_Door-Slam")] [%Narrative]
 concept heel_realization [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Heel_Realization")] [%Mind]
@@ -574,6 +582,8 @@ concept just_between_you_and_me [+Trope(category="Villains", source="https://all
 concept karma_houdini [+Trope(category="Karma Tropes", source="https://allthetropes.org/wiki/Karma_Houdini")] [%Narrative]
 concept karmic_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Karmic_Death")] [%Narrative]
 concept kick_the_dog [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Kick_the_Dog")] [%Narrative]
+concept kingmaker_scenario [+Trope(category="Politics", source="https://allthetropes.org/wiki/Kingmaker_Scenario")] [%Narrative]
+concept la_resistance [+Trope(category="Politics", source="https://allthetropes.org/wiki/La_Resistance")] [%Narrative]
 concept lampshade_hanging [+Trope(category="Metafiction", source="https://allthetropes.org/wiki/Lampshade_Hanging")] [%Narrative]
 concept like_brother_and_sister [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Like_Brother_and_Sister")] [%Interpersonal]
 concept lovable_rogue [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Lovable_Rogue")] [%Narrative]
@@ -581,6 +591,7 @@ concept love_dodecahedron [+Trope(category="Relationships", source="https://allt
 concept macguffin [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/MacGuffin")] [%Narrative]
 concept magnificent_bastard [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Magnificent_Bastard")] [%Narrative]
 concept mama_bear [+Trope(category="Character Tropes", source="https://allthetropes.org/wiki/Mama_Bear")] [%Interpersonal]
+concept medium_awareness [+Trope(category="Metafiction", source="https://allthetropes.org/wiki/Medium_Awareness")] [%Narrative]
 concept mercy_kill [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Mercy_Kill")] [%Interpersonal]
 concept mexican_standoff [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Mexican_Standoff")] [%Interpersonal]
 concept mockumentary [+Trope(category="Non-Fiction", source="https://allthetropes.org/wiki/Mockumentary")] [%Narrative]
@@ -613,6 +624,7 @@ concept sacrificial_lion [+Trope(category="Death Tropes", source="https://allthe
 concept sales_pitch [+Trope(category="Oratory", source="https://en.wikipedia.org/wiki/Sales_pitch")] [%Narrative]
 concept secret_legacy [+Trope(category="Heritage", source="https://allthetropes.org/wiki/Secret_Legacy")] [%Epistemic]
 concept senseless_sacrifice [+Trope(category="Heroic Sacrifice Tropes", source="https://allthetropes.org/wiki/Senseless_Sacrifice")] [%Interpersonal]
+concept sequel_hook [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/Sequel_Hook")] [%Narrative]
 concept sibling_rivalry [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Sibling_Rivalry")] [%Interpersonal]
 concept siege [+Trope(category="Military and Warfare Tropes", source="https://allthetropes.org/wiki/The_Siege")] [%Political]
 concept spanner_in_the_works [+Trope(category="Plot", source="https://allthetropes.org/wiki/Spanner_in_the_Works")] [%Epistemic]
@@ -639,8 +651,10 @@ concept the_man_behind_the_man [+Trope(category="Reveal", source="https://allthe
 concept the_mole [+Trope(category="Spy Fiction", source="https://allthetropes.org/wiki/The_Mole")] [%Mind]
 concept the_purge [+Trope(category="Politics", source="https://allthetropes.org/wiki/The_Purge")] [%Narrative]
 concept the_quest [+Trope(category="Plots", source="https://allthetropes.org/wiki/The_Quest")] [%Narrative]
+concept the_quisling [+Trope(category="Politics", source="https://allthetropes.org/wiki/The_Quisling")] [%Narrative]
 concept the_reason_you_suck_speech [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/The_Reason_You_Suck_Speech")] [%Narrative]
 concept the_starscream [+Trope(category="Political", source="https://allthetropes.org/wiki/The_Starscream")] [%Political]
+concept the_stinger [+Trope(category="Metafiction", source="https://allthetropes.org/wiki/The_Stinger")] [%Narrative]
 concept the_summation [+Trope(category="Mystery Tropes", source="https://allthetropes.org/wiki/The_Summation")] [%Epistemic]
 concept the_trickster [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/The_Trickster")] [%Narrative]
 concept the_wizard [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Wizard_Classic")] [%Narrative]
