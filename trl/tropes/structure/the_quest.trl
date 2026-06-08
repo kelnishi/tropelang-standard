@@ -1,0 +1,70 @@
+// === PREAMBLE ===
+// @trope    The Quest
+// @category Plots
+// @source   https://allthetropes.org/wiki/The_Quest
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): the defining High Fantasy storyline — the hero (and a supporting cast) travel
+// across the world toward a firm goal: recover a MacGuffin, save the princess, defeat the Big Bad.
+// FRONTIER: the goal-directed JOURNEY as a plot type. Distinct from the Call to Adventure (the summons
+// that begins it) and the Hero's Journey (the inward arc beneath it): The Quest is the outward
+// undertaking toward an [+Objective]. Booker separates it from Overcoming the Monster — the Quest is the
+// journey-with-obstacles toward a sought thing, not the straight line to the Big Bad.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/modules/heros_journey.trl"          // the inward arc the outward journey often carries
+import "trl/tropes/arc/growth/call_to_adventure.trl"   // the summons that sets the quest in motion
+
+assoc the_quest -> [
+  call_to_adventure : "the journey that answers",
+  heros_journey     : "the outward face of",
+  macguffin         : "often undertaken to recover a"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the sought objective + the undertaking is the discriminator; promotion model) —
+prop Objective    [+Narrative]   // the firm goal a quest is mounted to reach — the thing sought
+verb Quests(for)  [+Narrative]   // undertakes a goal-directed journey toward a sought objective
+
+imply TheQuest -> [Structure, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a [+Protagonist] QUESTS for an [+Objective] — the objective bound on the `for=` role of a
+// [&Quests] event (agent=$hero), so phase-2 re-checks [+Objective] on the bound goal (STYLE §8). Binding
+// the sought thing on the journey event is what parts this from a bare Call to Adventure (a summons, no
+// goal undertaken) and from the inward Hero's Journey: here a firm objective is actively pursued across
+// a journey.
+rule The_Quest {
+  when:
+    char $hero [+Protagonist]
+    obj  $goal [+Objective]
+    evt  $journey [&Quests(agent=$hero, for=$goal)]
+  then:
+    $journey [+TheQuest]
+}
+
+
+// === CONCRETE VIGNETTE: Raiders of the Lost Ark — Indiana Jones (film, 1981) ===
+// Indiana Jones is sent after the Ark of the Covenant before the Nazis can claim it, and the firm goal
+// drives him clear across the world: a Nepalese tavern, the markets and dig sites of Cairo, a desert
+// chase, an island in the Aegean. Every obstacle — the rival Belloq, the Nazi dig, the snake-filled Well
+// of Souls — is a station on the way to the one sought thing. The objective is fixed and the journey is
+// the story: a quest in the adventure key.
+
+// INDIANA JONES — the archaeologist sent to find the Ark
+char indiana_jones [+Protagonist]
+
+// THE ARK OF THE COVENANT — the firm goal that drives the whole journey
+obj the_ark [+Objective] [+MacGuffin]
+
+scene the_search_for_the_ark {
+  beat 1 {
+    // the goal is set; he sets out across the world to reach it
+    evt the_pursuit [&Quests(agent=indiana_jones, for=the_ark)]
+    // The_Quest -> the_pursuit [+TheQuest]
+  }
+}

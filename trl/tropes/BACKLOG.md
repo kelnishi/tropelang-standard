@@ -75,6 +75,36 @@ character 13/30 · conflict 10/34 · structure 5/17 · epistemic 4/27 · death 3
 
 ---
 
+## High-profile coverage (the conversion worklist — updated each PR)
+
+The forward target: convert the **allthetropes high-profile gaps** (Tropes of Legend / Omnipresent /
+Universal + the cast & plot-structure indexes). This is the live ledger — **every conversion PR updates
+it** (the finalize step in `CONVERSION_BOT.md`). The *recipe* for re-running the review (corpus inventory
+vs. the indexes, archive access) lives in `CONVERSION_BOT.md`; the *state* lives here.
+
+**Corpus: 213 tropes · self-recognition 213/213 (100%).** (Re-measure: `tropelang selfcheck
+trl/tropes/corpus.toml --corpus file://trl`.)
+
+**Converted batches (done):**
+- `convert/high-profile-gaps` (#38) — An Aesop · Big Good · Villain Protagonist · Five-Man Band ·
+  Status Quo Is God · Failure Is the Only Option · Idiot Ball · Take a Third Option.
+- `convert/character-development-batch` (#42) — Character Development · Title Drop · Genre Savvy.
+- `convert/damsel-redshirt-snarker` (#44) — Damsel in Distress · Red Shirt · Deadpan Snarker.
+- `convert/quest-villaindeath-wth-hero` (this PR) — The Quest · Disney Villain Death · What the Hell, Hero?
+
+**Remaining gaps (archive-verified; the next-batch candidates):**
+- [ ] Mood Whiplash · [ ] Idiot Plot · [ ] Plot Coupon · [ ] Crapsack World (each harder to event-anchor —
+  tonal/structural/setting; design the discriminator carefully).
+- [ ] (re-run the coverage recipe against the live high-profile indexes for fresh candidates — the
+  archive dump exposes `/page`, `/search`, `/titles`, `/exists`).
+- Smaller leftovers: further Love Triangle variants · "Within a Frame Story" · the cross-repo eval-side
+  drams gap (below) · the low-value fantastic-species framing.
+
+**Suggested next batch:** pick 3 with arena variety from the remaining gaps after a fresh review; the
+tonal/structural ones (Mood Whiplash, Idiot Plot) need an event-anchored discriminator worked out first.
+
+---
+
 ## Systems (the modules in `trl/modules/`)
 Each is a forward-chaining dynamic that tropes ride on.
 
@@ -236,14 +266,10 @@ The **1.10** round ground down the remaining 2–3× tail: props `Betrayer(of)`,
 - A long tail of genuinely one-off bespoke flavor tags (`KeyserSoze`, `Pawn`, `Phantom`, `Unmasked`, …)
   — keep broken per the closed-vocabulary decision unless one recurs and earns promotion.
 
-With founding exhausted **and self-recognition complete (`204/204`, 100%)**, the forward target is
-**converting new tropes**. The richest vein is the **allthetropes high-profile coverage gaps** — see
-the coverage-review recipe and the current gap list in **`CONVERSION_BOT.md` → "Sourcing & coverage
-review"**. Done on the `convert/high-profile-gaps` branch: An Aesop, Big Good, Villain Protagonist,
-Five-Man Band, Status Quo Is God, Failure Is the Only Option, Idiot Ball, Take a Third Option. Next
-candidates: Character Development, Title Drop, Genre Savvy (+ re-run the coverage review for fresh
-ones). Smaller leftovers: further Love Triangle variants, "Within a Frame Story", the cross-repo
-eval-side drams gap above, and the low-value fantastic-species framing.
+With founding exhausted **and self-recognition complete (100%)**, the forward target is **converting
+new tropes** — the **allthetropes high-profile coverage gaps**. The live worklist, done batches, and
+next-batch candidates are tracked in **"High-profile coverage" at the top of this file** (updated every
+PR); the review *recipe* (how to run it, archive access) is in `CONVERSION_BOT.md`.
 
 ### Domain libraries & structural tropes (done — kept for provenance)
 - **P2 domain vocab:** `modules/siege.trl` + `modules/heist.trl` declare the siege/military and

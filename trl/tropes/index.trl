@@ -50,6 +50,7 @@ import "trl/tropes/bonds/power_of_friendship.trl"
 import "trl/tropes/bonds/sibling_rivalry.trl"
 import "trl/tropes/bonds/star_crossed_lovers.trl"
 import "trl/tropes/bonds/unrequited_love.trl"
+import "trl/tropes/bonds/what_the_hell_hero.trl"
 import "trl/tropes/bonds/worthy_opponent.trl"
 import "trl/tropes/character/archetypes/anti_hero.trl"
 import "trl/tropes/character/archetypes/beware_the_nice_ones.trl"
@@ -123,6 +124,7 @@ import "trl/tropes/conflict/war/zerg_rush.trl"
 import "trl/tropes/death/death_by_origin_story.trl"
 import "trl/tropes/death/defiant_to_the_end.trl"
 import "trl/tropes/death/disney_death.trl"
+import "trl/tropes/death/disney_villain_death.trl"
 import "trl/tropes/death/famous_last_words.trl"
 import "trl/tropes/death/heroic_sacrifice.trl"
 import "trl/tropes/death/hoist_by_his_own_petard.trl"
@@ -222,6 +224,7 @@ import "trl/tropes/structure/plot_armor.trl"
 import "trl/tropes/structure/status_quo_is_god.trl"
 import "trl/tropes/structure/take_a_third_option.trl"
 import "trl/tropes/structure/the_climax.trl"
+import "trl/tropes/structure/the_quest.trl"
 import "trl/tropes/structure/three_act_structure.trl"
 
 // === TROPE TITLE ENTRIES ===
@@ -483,6 +486,7 @@ concept defiant_to_the_end [+Trope(category="Characterization", source="https://
 concept determinator [+Trope(category="Heroic Spirit", source="https://allthetropes.org/wiki/Determinator")] [%Narrative]
 concept diabolus_ex_machina [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Diabolus_Ex_Machina")] [%Narrative]
 concept disney_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Disney_Death")] [%Narrative]
+concept disney_villain_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Disney_Villain_Death")] [%Narrative]
 concept enemy_mine [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Enemy_Mine")] [%Interpersonal]
 concept eucatastrophe [+Trope(category="Happy Endings", source="https://allthetropes.org/wiki/Eucatastrophe")] [%Narrative]
 concept even_evil_has_standards [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Even_Evil_Has_Standards")] [%Psychological]
@@ -554,6 +558,7 @@ concept the_drifter [+Trope(category="Character Tropes", source="https://allthet
 concept the_lancer [+Trope(category="Characterization", source="https://allthetropes.org/wiki/The_Lancer")] [%Interpersonal]
 concept the_love_interest [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Love_Interest")] [%Interpersonal]
 concept the_mole [+Trope(category="Spy Fiction", source="https://allthetropes.org/wiki/The_Mole")] [%Mind]
+concept the_quest [+Trope(category="Plots", source="https://allthetropes.org/wiki/The_Quest")] [%Narrative]
 concept the_starscream [+Trope(category="Political", source="https://allthetropes.org/wiki/The_Starscream")] [%Political]
 concept the_summation [+Trope(category="Mystery Tropes", source="https://allthetropes.org/wiki/The_Summation")] [%Epistemic]
 concept the_trickster [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/The_Trickster")] [%Narrative]
@@ -569,6 +574,7 @@ concept trojan_horse [+Trope(category="Conflict", source="https://allthetropes.o
 concept villain_protagonist [+Trope(category="Character Roles", source="https://allthetropes.org/wiki/Villain_Protagonist")] [%Narrative]
 concept villainous_breakdown [+Trope(category="Villains", source="https://allthetropes.org/wiki/Villainous_Breakdown")] [%Narrative]
 concept wham_line [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Wham!_Line")] [%Narrative]
+concept what_the_hell_hero [+Trope(category="Morality", source="https://allthetropes.org/wiki/What_the_Hell,_Hero%3F")] [%Narrative]
 concept worthy_opponent [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Worthy_Opponent")] [%Interpersonal]
 concept wounded_gazelle_gambit [+Trope(category="Manipulation", source="https://allthetropes.org/wiki/Wounded_Gazelle_Gambit")] [%Mind]
 concept xanatos_gambit [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Xanatos_Gambit")] [%Epistemic]

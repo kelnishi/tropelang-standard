@@ -1,0 +1,75 @@
+// === PREAMBLE ===
+// @trope    What the Hell, Hero?
+// @category Morality / Heroism
+// @source   https://allthetropes.org/wiki/What_the_Hell,_Hero%3F
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): characters IN-UNIVERSE call out one of the heroes for doing something clearly
+// unheroic, if not heinous — the opposite of Protagonist-Centered Morality. FRONTIER: the moral check
+// applied to the hero from WITHIN the story. The discriminator is the confronted party: a [+Protagonist]
+// who has done something [+Questionable], called out by an [+Ally] (not a gloating villain — that would
+// be a Hannibal Lecture / Not So Different). Distinct from a Breaking Speech or Motive Rant (a foe's
+// manipulation) by who confronts whom and why: a friend, naming the hero's wrong.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc what_the_hell_hero -> [
+  redemption_arc : "the in-story call that can begin a",
+  heel_realization : "the external mirror of an internal",
+  not_so_different : "the heroic-side counterpart to"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the called-out wrong + the allied caller are the discriminator; promotion model) —
+prop Questionable [+Psychological]   // staining its doer — a morally dubious or outright wrong act
+prop Ally         [+Social]          // on the hero's side — the in-story voice, not a gloating foe
+verb Rebukes(other) [+Interpersonal] // names another's wrong to their face — a moral callout, not a clash
+
+imply WhatTheHellHero -> [Contrast, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: an [+Ally] REBUKES a [+Protagonist] who is [+Questionable] — the hero bound on the
+// `other=` role and the caller on `agent=` of a [&Rebukes] event, so phase-2 re-checks [+Questionable]
+// + [+Protagonist] on the called-out hero and [+Ally] on the caller (STYLE §8). The dedicated [&Rebukes]
+// verb (a moral callout, NOT a hostile [&Confronted] clash) is deliberate: the caller is a friend, so
+// this is not Conflict / a Climax confrontation — it parts from a villain's taunt (the foe is no ally)
+// and from a callout of an actual villain (the target is the protagonist).
+rule What_The_Hell_Hero {
+  when:
+    char $hero [+Protagonist] [+Questionable]
+    char $caller [+Ally]
+    evt  $callout [&Rebukes(agent=$caller, other=$hero)]
+  then:
+    $callout [+WhatTheHellHero]
+}
+
+
+// === CONCRETE VIGNETTE: Avatar: The Last Airbender — "The Southern Raiders" (animated TV, 2008) ===
+// Katara has found the Fire Nation soldier who murdered her mother, and she sets out to kill him —
+// borrowing Zuko's help and her own bloodbending rage to do it. Aang, the pacifist, blocks her path and
+// names it for what it is: "Katara, you sound like Jet now. ... It's not the right path." He is her
+// friend, not her enemy, and he calls the hero out for the unheroic thing she means to do. The in-story
+// conscience, telling a protagonist she has crossed a line.
+
+// KATARA — a hero, set on a murderous revenge: the questionable path
+char katara [+Protagonist] [+Questionable]
+
+// AANG — her friend and ally, the one who calls her out
+char aang [+Ally]
+
+// INT. STOLEN WAR BALLOON - NIGHT (en route to the hunt)
+set the_war_balloon [+Interior] [+Night]
+
+scene the_confrontation {
+  beat 1 {
+    katara @ the_war_balloon
+    aang @ the_war_balloon
+    evt the_callout [&Rebukes(agent=aang, other=katara)]
+    // What_The_Hell_Hero -> the_callout [+WhatTheHellHero]
+  }
+}

@@ -83,6 +83,20 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   temperament anchored on the act of snarking (cf. Title Drop's act-by-utterance) parts it from a
   villain's Motive Rant / Breaking Speech. Founds `prop Sardonic` + `verb Quips(at)`.)
   Corpus **207 → 210 tropes**; self-recognition steady at **210/210 (100%)**.
+- **The Quest** (Plots) — https://allthetropes.org/wiki/The_Quest
+  (Raiders of the Lost Ark, Indiana Jones — a [+Protagonist] `[&Quests]` for an [+Objective]; the sought
+  goal bound on the journey event parts it from a bare Call to Adventure (a summons) and the inward
+  Hero's Journey. Founds `prop Objective` + `verb Quests(for)`.)
+- **Disney Villain Death** (Death Tropes / Evil Tropes) — https://allthetropes.org/wiki/Disney_Villain_Death
+  (Beauty and the Beast, Gaston — an [+Antagonist] is the AGENT of a fatal `[&Plummets]` self-fall, not
+  the target of a slaying, so the hero's hands stay clean; parts from the kill-tropes by manner and
+  agent. Founds `verb Plummets(from)`.)
+- **What the Hell, Hero?** (Morality / Heroism) — https://allthetropes.org/wiki/What_the_Hell,_Hero%3F
+  (Avatar: The Last Airbender, Aang & Katara — an [+Ally] `[&Rebukes]` a [+Protagonist] who is
+  [+Questionable]; the dedicated rebuke verb (a friend's moral callout, not a hostile [&Confronted]
+  clash) keeps it off Conflict / The Climax and parts it from a villain's taunt. Founds `prop
+  Questionable`/`prop Ally` + `verb Rebukes(other)`.)
+  Corpus **210 → 213 tropes**; self-recognition steady at **213/213 (100%)**.
 
 ### Fixed
 - Self-recognition (§4b): event-anchored the last 4 `bonds` tropes so they confirm their own vignette,
