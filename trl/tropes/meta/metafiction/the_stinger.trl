@@ -4,13 +4,14 @@
 // @source   https://allthetropes.org/wiki/The_Stinger
 // @domain   Narrative
 // @scale    scene
-// @version  1.3
+// @version  1.4
 //
 // Laconic (per the wiki): a scene placed AFTER the credits — the "credit cookie," the monk's reward — a
 // final joke, a sequel hook, or a survivor revealed, for those who stay. FRONTIER: a paratext-PLACEMENT
-// trope; meaning comes from where the scene sits. The discriminator is a [+PostCredits] scene bound on an
-// [&Appends] event — a beat hung after the credits roll. Distinct from a Sequel Hook (which is about the
-// CONTENT promising more, wherever it sits): the Stinger is defined by the after-the-credits slot.
+// trope; meaning comes from where the scene sits. The discriminator is a `scene` occupying the `post_credits`
+// SLOT on a work's skeleton (the medium-format structure of S01 §7; engine ≥ 0.6.0) — structural placement,
+// not a prop on a stand-in object. Distinct from a Sequel Hook (about the CONTENT promising more, wherever it
+// sits): the Stinger is defined by the after-the-credits slot.
 
 
 // === IMPORTS & ASSOCIATIONS ===
@@ -23,24 +24,29 @@ assoc the_stinger -> [
 
 
 // === ONTOLOGY ===
-// — founded here (the after-the-credits placement is the discriminator; promotion model) —
-prop PostCredits  [+Narrative]   // a scene placed after the credits roll — the credit cookie
-verb Appends(scene) [+Narrative] // hangs a beat after the work has formally ended
+// — the discriminator is PLACEMENT on the work skeleton (S01 §3 `work`, §7 slot-occupancy; engine ≥ 0.6.0):
+//   a SCENE occupies the after-the-credits slot (`scene … @ post_credits`). The medium rides on the work's
+//   `[%…]` essence; no stand-in object, no bespoke placement prop — the slot concept IS the structure. The
+//   recall anchor is a separate char-agent event in that scene: the makers `[&Appends]` a final beat (recall
+//   keeps only agent-named events, STYLE §8 / S15 — a pure slot edge alone does not recall). —
+concept post_credits [+Narrative]   // a structural slot on a work's skeleton — the after-the-credits position
+verb Appends [+Narrative]           // the makers hang a final beat past the work's formal end
 
 imply TheStinger -> [Metafictional, Narrative]
 
 
 // === ABSTRACT RULE ===
-// Naming rule (scene scale): a work APPENDS a [+PostCredits] scene — the scene bound on the `scene=` role
-// of an [&Appends] event (agent=$work), so phase-2 re-checks [+PostCredits] on the bound scene (STYLE §8).
-// Binding the after-the-credits placement on the scene is the discriminator: the meaning is the slot it
-// occupies, parting it from a Sequel Hook (defined by content, anywhere in the work).
+// Naming rule (scene scale): a `scene` sits in the `post_credits` slot of a work's skeleton, and its makers
+// `[&Appends]` a beat there. The scene's `@ post_credits` placement (S01 §7) is the DISCRIMINATOR, re-checked
+// in phase-2 (STYLE §8); the agent-named `[&Appends]` event is the RECALL ANCHOR (a slot edge alone does not
+// recall). Meaning is the after-the-credits position it occupies, parting it from a Sequel Hook (defined by
+// content, anywhere in the work).
 rule The_Stinger {
   when:
-    obj  $scene [+PostCredits]
-    evt  $tag [&Appends(agent=$work, scene=$scene)]
+    scene $s @ post_credits
+    evt   $beat [&Appends(agent=$creator)]
   then:
-    $tag [+TheStinger]
+    $beat [+TheStinger]
 }
 
 
@@ -51,16 +57,23 @@ rule The_Stinger {
 // film, seen only by the devoted who waited. The Stinger that taught a generation to never leave before
 // the lights are up.
 
-// THE FILM — which hangs a scene past its own ending
-char the_film
+// IRON MAN — the work-as-artifact (a film); its skeleton carries the post-credits slot
+work iron_man [%Film]
 
-// THE POST-CREDITS SCENE — Nick Fury in the living room, after the credits
-obj the_fury_scene [+PostCredits]
+// THE FILMMAKERS — the creators who hang the beat past the formal end (the appending agency)
+char the_filmmakers
 
-scene after_the_credits {
+// NICK FURY — the man in the dark, revealed only to those who stayed
+char nick_fury [+Mysterious]
+
+// INT. STARK'S LIVING ROOM - after the credits
+set the_living_room [+Interior]
+
+scene after_the_credits @ post_credits {
   beat 1 {
-    // a full beat hung after the credits roll — the reward for those who stayed
-    evt the_tag [&Appends(agent=the_film, scene=the_fury_scene)]
-    // The_Stinger -> the_tag [+TheStinger]
+    nick_fury @ the_living_room
+    // the makers hang a full beat in the post-credits slot — "the Avenger Initiative"
+    evt the_reveal [&Appends(agent=the_filmmakers)]
+    // The_Stinger -> the_reveal [+TheStinger]
   }
 }
