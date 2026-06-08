@@ -82,7 +82,7 @@ Universal + the cast & plot-structure indexes). This is the live ledger — **ev
 it** (the finalize step in `CONVERSION_BOT.md`). The *recipe* for re-running the review (corpus inventory
 vs. the indexes, archive access) lives in `CONVERSION_BOT.md`; the *state* lives here.
 
-**Corpus: 213 tropes · self-recognition 213/213 (100%).** (Re-measure: `tropelang selfcheck
+**Corpus: 216 tropes · self-recognition 216/216 (100%).** (Re-measure: `tropelang selfcheck
 trl/tropes/corpus.toml --corpus file://trl`.)
 
 **Converted batches (done):**
@@ -90,18 +90,22 @@ trl/tropes/corpus.toml --corpus file://trl`.)
   Status Quo Is God · Failure Is the Only Option · Idiot Ball · Take a Third Option.
 - `convert/character-development-batch` (#42) — Character Development · Title Drop · Genre Savvy.
 - `convert/damsel-redshirt-snarker` (#44) — Damsel in Distress · Red Shirt · Deadpan Snarker.
-- `convert/quest-villaindeath-wth-hero` (this PR) — The Quest · Disney Villain Death · What the Hell, Hero?
+- `convert/quest-villaindeath-wth-hero` (#45) — The Quest · Disney Villain Death · What the Hell, Hero?
+- `convert/bondvillain-raceclock-father` (this PR) — Bond Villain Stupidity · Race Against the Clock ·
+  I Am Your Father.
 
 **Remaining gaps (archive-verified; the next-batch candidates):**
-- [ ] Mood Whiplash · [ ] Idiot Plot · [ ] Plot Coupon · [ ] Crapsack World (each harder to event-anchor —
+- [ ] Mood Whiplash · [ ] Idiot Plot · [ ] Crapsack World (each harder to event-anchor —
   tonal/structural/setting; design the discriminator carefully).
+- [ ] Plot Coupon · [ ] Just Between You and Me · [ ] Time Bomb (clean, event-shaped — surfaced in the
+  pass-5 review; good near-term picks).
 - [ ] (re-run the coverage recipe against the live high-profile indexes for fresh candidates — the
   archive dump exposes `/page`, `/search`, `/titles`, `/exists`).
 - Smaller leftovers: further Love Triangle variants · "Within a Frame Story" · the cross-repo eval-side
   drams gap (below) · the low-value fantastic-species framing.
 
-**Suggested next batch:** pick 3 with arena variety from the remaining gaps after a fresh review; the
-tonal/structural ones (Mood Whiplash, Idiot Plot) need an event-anchored discriminator worked out first.
+**Suggested next batch:** Plot Coupon · Just Between You and Me · Time Bomb (all event-shaped); or fold in
+a tonal/structural one (Mood Whiplash / Idiot Plot) once its event-anchored discriminator is worked out.
 
 ---
 

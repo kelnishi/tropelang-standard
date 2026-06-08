@@ -1,0 +1,68 @@
+// === PREAMBLE ===
+// @trope    Race Against the Clock
+// @category Plots / Plot Devices
+// @source   https://allthetropes.org/wiki/Race_Against_the_Clock
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): the threat is time-sensitive — a bomb, a deadline, an "you have one hour"
+// ultimatum — and the hero has until that fixed moment to stop it, foiling the scheme at the last
+// possible second. FRONTIER: tension sourced from a DEADLINE. The discriminator is a [+Deadline] bound
+// on the `against=` role of a [&Races] event — a fixed moment of failure the hero strives to beat.
+// Distinct from a generic conflict or pursuit by the clock itself: it is time, not only the foe, that
+// the hero is running to outpace.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc race_against_the_clock -> [
+  cliffhanger : "the deadline tension shares the suspense of",
+  the_climax  : "the last-second foiling often lands at",
+  conflict    : "adds a ticking clock to a"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the deadline + the race are the discriminator; promotion model) —
+prop Deadline     [+Temporal]    // a fixed moment past which the threat succeeds — the ticking clock
+verb Races(against) [+Narrative]  // strives to reach a goal before a deadline elapses
+
+imply RaceAgainstTheClock -> [Suspense, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a [+Protagonist] RACES against a [+Deadline] — the clock bound on the `against=` role of
+// a [&Races] event (agent=$hero), so phase-2 re-checks [+Deadline] on the bound clock (STYLE §8). Binding
+// the fixed-moment-of-failure on the race is the discriminator: it is the clock, not merely the foe,
+// being outrun — so this is recognized where a plain conflict or pursuit is not.
+rule Race_Against_The_Clock {
+  when:
+    char $hero [+Protagonist]
+    obj  $clock [+Deadline]
+    evt  $race [&Races(agent=$hero, against=$clock)]
+  then:
+    $race [+RaceAgainstTheClock]
+}
+
+
+// === CONCRETE VIGNETTE: Around the World in Eighty Days — Phileas Fogg (Verne, novel, 1872) ===
+// Phileas Fogg wagers his fortune that he can circle the globe in exactly eighty days, and from that
+// moment the clock is the antagonist: every missed steamer, monsoon, and arrest in the Wild West eats
+// hours he cannot spare. He drives himself and Passepartout across continents not to defeat a villain
+// but to beat the calendar — arriving, by a saved day he didn't know he had, at the Reform Club with
+// seconds to spare. The deadline is the whole engine of the tension.
+
+// PHILEAS FOGG — the punctual Englishman racing his own wager
+char phileas_fogg [+Protagonist]
+
+// THE EIGHTY-DAY WAGER — the fixed deadline he must beat to win his fortune
+obj the_wager_deadline [+Deadline]
+
+scene the_circumnavigation {
+  beat 1 {
+    // not a foe but the calendar: he drives across the world to beat the fixed moment
+    evt the_dash [&Races(agent=phileas_fogg, against=the_wager_deadline)]
+    // Race_Against_The_Clock -> the_dash [+RaceAgainstTheClock]
+  }
+}

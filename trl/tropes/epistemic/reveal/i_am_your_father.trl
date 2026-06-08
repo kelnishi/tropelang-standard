@@ -1,0 +1,77 @@
+// === PREAMBLE ===
+// @trope    I Am Your Father
+// @category Reveal / Plot Twists
+// @source   https://allthetropes.org/wiki/Luke,_I_Am_Your_Father
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a specific variety of The Reveal — a parent-child relationship between two
+// characters thought unrelated is disclosed, made famous by Star Wars (often the villain turns out to
+// be the hero's parent). FRONTIER: the kinship reveal, specialized off the generic disclosure. The
+// discriminator is the disclosed fact tagged [+Parentage] (a parent-child truth) bound on the `fact=`
+// role of a [&Reveals] event — distinct from The Reveal at large (any withheld fact) by the SPECIFIC
+// content: bloodline. The anguish when the revealer is the antagonist is the famous case.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/epistemic/reveal/the_reveal.trl"   // the genus this is a species of
+
+assoc i_am_your_father -> [
+  the_reveal      : "a specific variety of",
+  hidden_identity : "the bloodline kin of",
+  the_big_bad     : "lands hardest when the revealer is"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the disclosed bloodline is the discriminator; promotion model) —
+prop Parentage [+Epistemic]   // a concealed parent-child truth — the bloodline a reveal discloses
+
+imply IAmYourFather -> [Twist, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: a revealer DISCLOSES a [+Parentage] fact — the bloodline truth bound on the `fact=` role
+// of a [&Reveals] event (agent=$revealer), so phase-2 re-checks [+Parentage] on the bound fact (STYLE
+// §8). Binding the parent-child content on the disclosed fact is the discriminator: this fires where the
+// revealed fact is specifically a bloodline, not on a generic reveal. The famous variety names an
+// [+Antagonist] as the revealer; the rule keeps the revealer open (an ally or mentor also qualifies).
+rule I_Am_Your_Father {
+  when:
+    char $revealer
+    obj  $truth [+Parentage]
+    evt  $reveal [&Reveals(agent=$revealer, fact=$truth)]
+  then:
+    $reveal [+IAmYourFather]
+}
+
+
+// === CONCRETE VIGNETTE: The Empire Strikes Back — Vader and Luke (film, 1980) ===
+// On the gantry above Cloud City's reactor shaft, beaten and one hand gone, Luke spits that Vader killed
+// his father. Vader answers with the line that rewrote the saga: "No. I am your father." The villain the
+// hero has sworn to destroy is revealed to be his own blood — a parent-child truth disclosed by the
+// worst possible mouth, and Luke's anguished "No — that's not true, that's impossible!" is the trope in
+// one breath. The most infamous of all kinship reveals.
+
+// DARTH VADER — the antagonist who is, it turns out, the hero's father
+char vader [+Antagonist]
+
+// LUKE SKYWALKER — the hero given the reveal
+char luke [+Protagonist]
+
+// THE PATERNITY — the concealed bloodline: Vader is Luke's father
+obj the_paternity [+Parentage]
+
+// INT. CLOUD CITY GANTRY - the reactor shaft below
+set the_gantry [+Interior]
+
+scene the_gantry_reveal {
+  beat 1 {
+    luke @ the_gantry
+    vader @ the_gantry
+    // VADER: "No. I am your father." — the bloodline disclosed by the worst possible mouth
+    evt the_revelation [&Reveals(agent=vader, fact=the_paternity)]
+    // I_Am_Your_Father -> the_revelation [+IAmYourFather]
+  }
+}

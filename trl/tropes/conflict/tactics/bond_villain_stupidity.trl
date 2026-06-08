@@ -1,0 +1,77 @@
+// === PREAMBLE ===
+// @trope    Bond Villain Stupidity
+// @category Villains / Stock Villain Behaviors
+// @source   https://allthetropes.org/wiki/Bond_Villain_Stupidity
+// @domain   Narrative
+// @version  1.3
+//
+// Laconic (per the wiki): a villain who has the hero cornered and defenseless FAILS to just kill him —
+// gloating, monologuing, or rigging an elaborate escapable death trap instead — giving the hero the
+// chance to escape and return to win. Named for James Bond. FRONTIER: the not-finishing blunder, keyed
+// on a captor who SAVORS the moment over a helpless hero rather than ending it. The discriminator is the
+// hero bound [+AtMercy] on the target of a [&Gloats] event — distinct from a plain Motive Rant (a
+// villain explaining himself, not necessarily over a defenseless foe he could kill now) by the
+// at-mercy hero and the forgone kill.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc bond_villain_stupidity -> [
+  motive_rant   : "the self-savoring delay often carries a",
+  idiot_ball    : "a villain-specific grip on the",
+  the_trickster : "the opening a wit exploits, the mirror of"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the at-mercy hero + the forgone kill are the discriminator; promotion model) —
+prop AtMercy      [+Vital]          // cornered and defenseless — the villain could finish him now
+verb Gloats(target) [+Interpersonal] // savors victory over a helpless foe instead of finishing it
+
+imply BondVillainStupidity -> [Object, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule: an [+Antagonist] GLOATS over a [+Protagonist] who is [+AtMercy] — the hero bound on the
+// target role of a [&Gloats] event (agent=$villain), so phase-2 re-checks [+AtMercy] on the bound hero
+// (STYLE §8). Binding the defenselessness on the gloated-over hero is the discriminator: the villain has
+// the kill in hand and spends the moment savoring it instead — so the hero is [+Spared] the immediate
+// end and lives to escape. Parts from Motive Rant (no at-mercy hero required) by that bound state.
+rule Bond_Villain_Stupidity {
+  when:
+    char $villain [+Antagonist]
+    char $hero [+Protagonist] [+AtMercy]
+    evt  $delay [&Gloats(agent=$villain, target=$hero)]
+  then:
+    $delay [+BondVillainStupidity]
+    $hero [+Spared]
+}
+
+
+// === CONCRETE VIGNETTE: Goldfinger — the laser table (film, 1964) ===
+// Bond is strapped spread-eagled to a gold table while an industrial laser inches up between his legs,
+// utterly at Goldfinger's mercy. Goldfinger has every means to end him on the spot — and instead he
+// savors it: "Choose your next witticism carefully, Mr. Bond, it may be your last." When Bond bluffs,
+// Goldfinger doesn't shoot; he switches off the laser and leaves him alive under guard to attend to his
+// scheme. The trope's namesake: the kill in hand, traded for the pleasure of the moment, and Bond walks
+// out of the film to beat him.
+
+// AURIC GOLDFINGER — the gloating villain who will not simply finish it
+char goldfinger [+Antagonist]
+
+// JAMES BOND — strapped to the table, wholly at his mercy
+char bond [+Protagonist] [+AtMercy]
+
+// INT. GOLDFINGER'S VAULT - the gold table, the rising laser
+set the_vault [+Interior]
+
+scene the_laser_table {
+  beat 1 {
+    bond @ the_vault
+    goldfinger @ the_vault
+    // the kill is his for the taking — instead he savors the moment and leaves Bond alive
+    evt the_savoring [&Gloats(agent=goldfinger, target=bond)]
+    // Bond_Villain_Stupidity -> the_savoring [+BondVillainStupidity]; bond [+Spared]
+  }
+}
