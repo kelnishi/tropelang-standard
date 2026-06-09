@@ -18,6 +18,7 @@
 import "trl/concepts/index.trl"
 
 assoc villain_with_good_publicity -> [
+  // bitch_in_sheeps_clothing : "the public-stage version of"   // unconverted att-archive trope — re-enable on conversion
   the_mole : "trusted for the same reason as",
   smear_campaign : "turns the press the opposite way from a"
 ]

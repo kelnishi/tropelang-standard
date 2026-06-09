@@ -22,6 +22,7 @@ import "trl/tropes/arc/fall/face_heel_turn.trl"   // the broader crossing; this 
 assoc then_let_me_be_evil -> [
   face_heel_turn : "a self-fulfilling-prophecy case of",
   self_fulfilling_prophecy : "is the villain-making form of"
+  // fantastic_racism : "the branding that drives it is often"   // unconverted att-archive trope — re-enable on conversion
 ]
 
 
