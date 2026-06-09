@@ -8,6 +8,26 @@
 
 
 // =============================================================================
+// THE TELLING — the literal frame around a story
+// The metafictional participants and the story-as-artifact. Promoted to the
+// concept layer so any trope (rhetoric, metafiction, paratext) names one shared node.
+// =============================================================================
+
+// The literal story observer — the one the telling is for (reader, viewer, player).
+concept audience       [%Narrative]   // the one whose attention the telling is built around
+
+// The literal writer — the maker behind the telling, outside the story's own world.
+concept author         [%Narrative]   // the one playing god over the telling
+
+// The lesson a story imparts — its didactic takeaway, the point the events add up to.
+concept moral          [%Timeless] [+Abstract]
+
+// The structured sequence of events a story tells — its causal spine, distinct from
+// the raw chronology (fabula) and from theme.
+concept plot           [%Narrative] [+Abstract] [+Generative]
+
+
+// =============================================================================
 // OBLIGATION AND CALLING
 // =============================================================================
 

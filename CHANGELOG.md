@@ -42,6 +42,12 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   The Vamp, Manipulative Bastard) are **commented out** in place as future-conversion pointers; only the 3
   non-trope targets (`awe`, `timing` — prelude attrs; `defiance`) were deleted outright. Corpus integrity now
   clean: 0 broken assoc targets, 0 parse errors, 291/291 selfcheck.
+- **Founded the "telling"-frame concepts** in `trl/concepts/narrative.trl` (the canonical, always-imported
+  layer): `concept audience` (the literal story observer) and `concept author` (the literal writer) —
+  centralized out of `rhetoric.trl` so any trope names one shared node — plus new `concept moral` (a story's
+  didactic takeaway) and `concept plot` (the structured event-spine). Resolves previously-unfounded param
+  references — e.g. Idiot Ball's `[&Blunders(… for=plot)]` and An Aesop's `agent=author` / `as=moral`.
+  Selfcheck steady at 291/291.
 
 ## [1.8.0] — 2026-06-08
 
