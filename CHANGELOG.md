@@ -33,6 +33,15 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   / `attr Gravity [+Tone]`, so a moment or a work carries a tone and rules key on the broad `[+Tone]` or a
   specific pole. Mood Whiplash and Cerebus Syndrome are founded on it (replacing the old per-trope tonal props
   `Levity`/`Lighthearted`). Foundational change — full-corpus selfcheck steady at **291/291**.
+- **`assoc` integrity sweep — fixed 32 dangling discovery links** (no recognition impact; assoc is a soft
+  link the validator doesn't resolve). Definite-article rename casualties (`the_siege`→`siege`,
+  `the_power_of_friendship`→`power_of_friendship`); founded `concept theory_of_mind` (the module lacked its
+  own system node — cleared 18 links) and `concept trauma` (kept the Heroic BSOD / Survivor's Guilt links).
+  The remaining targets were checked against the AllTheTropes archive (`/exists`): the 6 that are **real but
+  unconverted** tropes (Hilarious Outtakes, Bitch in Sheep's Clothing, Defrosting Ice Queen, Fantastic Racism,
+  The Vamp, Manipulative Bastard) are **commented out** in place as future-conversion pointers; only the 3
+  non-trope targets (`awe`, `timing` — prelude attrs; `defiance`) were deleted outright. Corpus integrity now
+  clean: 0 broken assoc targets, 0 parse errors, 291/291 selfcheck.
 
 ## [1.8.0] — 2026-06-08
 

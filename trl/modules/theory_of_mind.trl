@@ -11,6 +11,11 @@
 // Import: import "trl/modules/theory_of_mind.trl"
 
 
+// The system node — the module's own concept, so tropes can `assoc -> theory_of_mind`
+// (the discovery link many epistemic/reveal tropes reach for). Mirrors `concept power_dynamics`.
+concept theory_of_mind [+System]
+
+
 // =============================================================================
 // VOCABULARY — mental-state attribution as first-class structure
 // =============================================================================

@@ -26,9 +26,7 @@ import "trl/modules/propp.trl"   // founds edge targets
 assoc big_damn_heroes -> [
   the_cavalry  : "the last-second, spectacle-framed staging of",
   hope_spot    : "the relieving mirror of",
-  audience     : "turns from despair to awe, the",
-  awe          : "lands the rescue on the room as",
-  timing       : "is defined by its"
+  audience     : "turns from despair to awe, the"
 ]
 
 
