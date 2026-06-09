@@ -34,6 +34,11 @@ concept hope           [%Timeless] [+Aspirational] [+Abstract] [+Fragile]
 // Despair as concept: something a character may fall into, resist, or transmit to others.
 concept despair        [%Timeless] [#Painful] [+Abstract] [+Corrupting]
 
+// A wounding that persists past its cause — the lingering psychic injury of overwhelming harm.
+// Trauma as concept: something a character carries, relives, or is undone by (the discovery node the
+// trauma-arc tropes — Heroic BSOD, Survivor's Guilt — reach for; cf. the `Trauma` attr).
+concept trauma         [%Timeless] [#Painful] [+Abstract] [+Corrupting]
+
 // The directed desire toward another being or thing; an orientation of wanting and care.
 // Love as concept: distinct from love as a state — here it is something pursued, lost, or built.
 concept love           [%Timeless] [+Abstract] [+Generative] [+Fragile]

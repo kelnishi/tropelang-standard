@@ -20,8 +20,7 @@ import "trl/tropes/arc/growth/took_a_level_in_badass.trl"   // the competence-ax
 
 assoc took_a_level_in_kindness -> [
   took_a_level_in_badass : "the virtue-axis sibling of (kindness vs. capability)",
-  jerk_with_a_heart_of_gold : "what the softened jerk becomes",
-  defrosting_ice_queen : "a love-interest-specific cousin of"
+  jerk_with_a_heart_of_gold : "what the softened jerk becomes"
 ]
 
 
