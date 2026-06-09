@@ -33,9 +33,8 @@ import "trl/modules/emotion_dynamics.trl"     // audience appraisal is its mirro
 concept rhetoric [+System] [%Narrative]
 imply Rhetoric -> [audience, Effect, Narrative]
 
-// the two agents of the transaction — above the story, not in it
-concept author   [%Narrative]   // the one playing god
-concept audience [%Narrative]   // the one whose attention is the whole point
+// the two agents of the transaction — `author` / `audience` are founded in trl/concepts/narrative.trl
+// (the canonical "telling" concepts), reached here via the concepts/index import above.
 
 
 // === THE RHETORICAL VOCABULARY ===
