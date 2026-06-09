@@ -25,7 +25,7 @@ assoc zerg_rush -> [
   action_dynamics  : "a counted flood of Strikes in",
   conflict         : "wins by numbers, not skill, a",
   we_have_reserves : "the tactic to the commander's callous attitude in",
-  the_siege        : "an assault-by-mass rather than the slow encirclement of",
+  siege            : "an assault-by-mass rather than the slow encirclement of",
   curb_stomp_battle : "the underdog-per-unit inverse of the rout in",
   last_stand       : "the swarm that finally swamps a"
 ]

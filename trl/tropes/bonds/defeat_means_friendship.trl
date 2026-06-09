@@ -19,7 +19,7 @@ import "trl/concepts/index.trl"
 assoc defeat_means_friendship -> [
   worthy_opponent : "the conversion of a",
   enemy_mine      : "a lasting turn unlike the truce of",
-  the_power_of_friendship : "swells the ranks behind"
+  power_of_friendship : "swells the ranks behind"
 ]
 
 

@@ -19,7 +19,7 @@ import "trl/concepts/index.trl"
 assoc a_house_divided -> [
   enemy_mine  : "the cohesion-collapse inverse of",
   fire_forged_friends : "the dark mirror of",
-  the_siege   : "the human cost inside a"
+  siege       : "the human cost inside a"
 ]
 
 
