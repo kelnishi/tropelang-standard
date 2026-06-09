@@ -17,6 +17,8 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 
 ## [Unreleased]
 
+## [1.8.1] — 2026-06-09
+
 ### Added
 - **Mood Whiplash** (Rhetoric / Tone) — https://allthetropes.org/wiki/Mood_Whiplash
   (Up's opening montage — a [+Levity] moment `[&Shatters]`-ed beside a [+Gravity] one; the discriminator is
