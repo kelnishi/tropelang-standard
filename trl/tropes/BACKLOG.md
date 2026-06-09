@@ -129,16 +129,22 @@ same-gender *romantic* couple can over-match. Acceptable for now; if it starts f
 negated romance guard (a [~Loves]/[~Devoted_To] between the pair, the way Like Brother and Sister does).
 
 **Remaining gaps (archive-verified; the next-batch candidates):**
-- [ ] Mood Whiplash · [ ] Idiot Plot · [ ] Crapsack World (each harder to event-anchor —
-  tonal/structural/setting; design the discriminator carefully).
+- [ ] **Assoc future-pointers** — archive-verified (`/exists`); each already has a *commented* `assoc` link
+  in a shipped trope (from the 2026-06 integrity sweep), ready to re-enable on conversion:
+  [ ] **Hilarious Outtakes** (← the_stinger) · [ ] **Bitch in Sheep's Clothing** (← villain_with_good_publicity)
+  · [ ] **Defrosting Ice Queen** (← took_a_level_in_kindness) · [ ] **Fantastic Racism** (← then_let_me_be_evil)
+  · [ ] **The Vamp** & [ ] **Manipulative Bastard** (← femme_fatale).
+- [ ] Idiot Plot (harder to event-anchor; design the discriminator carefully). *(Mood Whiplash & Crapsack
+  World — now DONE.)*
 - [ ] (re-run the coverage recipe against the live high-profile indexes for fresh candidates — the
   archive dump exposes `/page`, `/search`, `/titles`, `/exists`).
 - Smaller leftovers: further Love Triangle variants · "Within a Frame Story" · the cross-repo eval-side
   drams gap (below) · the low-value fantastic-species framing.
 
-**Suggested next batch:** re-run the coverage recipe against the live indexes for a fresh, varied trio.
-The remaining logged gaps (Mood Whiplash / Idiot Plot / Crapsack World) each need an event-anchored
-discriminator worked out first (tonal/structural/setting), so pair at most one with two clean fresh finds.
+**Suggested next batch:** the six assoc future-pointers above are the most concrete candidates (already
+referenced, archive-verified) — a clean themed batch (e.g. the femme_fatale/manipulative_bastard villainy
+cluster, or the comedy-paratext pair Hilarious Outtakes + the_stinger). Idiot Plot still needs an
+event-anchored discriminator worked out first, so pair it with cleaner finds rather than leading on it.
 
 ---
 
