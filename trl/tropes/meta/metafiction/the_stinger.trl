@@ -18,8 +18,8 @@
 import "trl/concepts/index.trl"
 
 assoc the_stinger -> [
-  sequel_hook : "a common payload of"
-  // hilarious_outtakes : "may instead carry"   // unconverted att-archive trope — re-enable on conversion
+  sequel_hook : "a common payload of",
+  hilarious_outtakes : "may instead carry"
 ]
 
 

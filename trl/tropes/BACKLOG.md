@@ -82,7 +82,7 @@ Universal + the cast & plot-structure indexes). This is the live ledger — **ev
 it** (the finalize step in `CONVERSION_BOT.md`). The *recipe* for re-running the review (corpus inventory
 vs. the indexes, archive access) lives in `CONVERSION_BOT.md`; the *state* lives here.
 
-**Corpus: 291 tropes · self-recognition 291/291 (100%).** (Re-measure: `tropelang selfcheck
+**Corpus: 297 tropes · self-recognition 297/297 (100%).** (Re-measure: `tropelang selfcheck
 trl/tropes/corpus.toml --corpus file://trl`.)
 
 **Converted batches (done):**
@@ -106,6 +106,8 @@ trl/tropes/corpus.toml --corpus file://trl`.)
 - `convert/power-meta-balance-3` (#58, 4) — **batch 3/5**: Enemy Civil War (power) · Dropped a Bridge on Him · Death Seeker (death) · Crapsack World (setting-as-property, via a linked-event discriminator). **Demoted from this batch** (deferred pending the Medium/work-skeleton + Tone-promotion design pass): Painting the Medium, Mood Whiplash, Cerebus Syndrome — see the design note below.
 - `convert/power-meta-balance-4` (#59, 7) — **batch 4/5, frontier-balancing across scales**: The Caligula · The Evil Prince · Vichy Earth (power) · Then Let Me Be Evil · Took a Level in Kindness (arc) · Childhood Friend Romance (bonds) · Recursive Canon (meta). Power → 22, Arc → 25, Bonds → 24, Meta → 20.
 - `convert/power-meta-balance-5` (this PR, 7) — **batch 5/5, final: lifting the thinnest spokes**: Deadly Decadent Court · Villain with Good Publicity (power) · Taking the Bullet · Killed Off for Real (death) · Undying Loyalty · Heterosexual Life Partners (bonds) · Redemption Quest (arc). Power → 24, Death → 25, Bonds → 26, Arc → 26. (Review: Killed Off for Real uses an absolute `![+Dead]!` epistemic discriminator over `[&Slays]` (no bespoke verb); Redemption Quest refines The Quest's `[&Quests]`; Heterosexual Life Partners matches gender via paired [+Masculine]/[+Feminine] rules.)
+- *(work-skeleton rollup, merged across #62/#65/#68 → 1.8.0–1.8.1)* — un-deferred the demoted batch-3 tropes on engine 0.6.0: **The Stinger** & **Painting the Medium** (medium cluster, work skeleton); **Mood Whiplash** & **Cerebus Syndrome** (Tone cluster — promoted a first-class `Tone` to the prelude); plus the integrity sweep and the founded "telling" concepts (`audience`/`author`/`moral`/`plot`).
+- `convert/villainy-paratext-six` (this PR, 6) — **the assoc future-pointers**: Hilarious Outtakes (paratext) · Bitch in Sheep's Clothing · The Vamp · Manipulative Bastard (villainy archetypes) · Defrosting Ice Queen (romance arc) · Fantastic Racism (worldbuilding). Each re-enables a commented `assoc` link in its source trope. Corpus 291 → 297.
 
 **Work-skeleton rollup (engine ≥ 0.6.0).** The 0.6.0 `work` entity + slot-edge desugar (`scene … @ slot`)
 landed; the deferred tropes are being un-deferred on it. **Recognition pattern (de-risked):** a scope
@@ -129,11 +131,9 @@ same-gender *romantic* couple can over-match. Acceptable for now; if it starts f
 negated romance guard (a [~Loves]/[~Devoted_To] between the pair, the way Like Brother and Sister does).
 
 **Remaining gaps (archive-verified; the next-batch candidates):**
-- [ ] **Assoc future-pointers** — archive-verified (`/exists`); each already has a *commented* `assoc` link
-  in a shipped trope (from the 2026-06 integrity sweep), ready to re-enable on conversion:
-  [ ] **Hilarious Outtakes** (← the_stinger) · [ ] **Bitch in Sheep's Clothing** (← villain_with_good_publicity)
-  · [ ] **Defrosting Ice Queen** (← took_a_level_in_kindness) · [ ] **Fantastic Racism** (← then_let_me_be_evil)
-  · [ ] **The Vamp** & [ ] **Manipulative Bastard** (← femme_fatale).
+- [x] **Assoc future-pointers** — ✅ DONE (converted as the villainy-paratext-six batch): Hilarious Outtakes,
+  Bitch in Sheep's Clothing, Defrosting Ice Queen, Fantastic Racism, The Vamp, Manipulative Bastard. Each
+  source trope's commented `assoc` link is re-enabled.
 - [ ] Idiot Plot (harder to event-anchor; design the discriminator carefully). *(Mood Whiplash & Crapsack
   World — now DONE.)*
 - [ ] (re-run the coverage recipe against the live high-profile indexes for fresh candidates — the

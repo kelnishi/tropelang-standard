@@ -1,0 +1,68 @@
+// === PREAMBLE ===
+// @trope    Hilarious Outtakes
+// @category Metafiction / Paratext
+// @source   https://allthetropes.org/wiki/Hilarious_Outtakes
+// @domain   Narrative
+// @scale    scene
+// @version  1.0
+//
+// Laconic (per the wiki): outtakes from a production deemed funny enough to stand on their own — flubbed
+// lines, corpsing (breaking into laughter), pratfalls on set — assembled as a gag reel, usually run over the
+// credits or shipped as a DVD extra. FRONTIER: a paratext whose content is the PRODUCTION breaking its own
+// fiction — the performers as themselves, not the characters. The discriminator is a [+GagReel] (the assembled
+// bloopers) plus a performer who [&Flubs] a take. Distinct from The Stinger (a true post-credits story scene):
+// here the "scene" is the making-of seam showing through.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/meta/metafiction/the_stinger.trl"   // a sibling post-credits payload (a scene there; flubs here)
+
+assoc hilarious_outtakes -> [
+  the_stinger : "a making-of payload of the post-credits slot, vs the story scene of",
+  fourth_wall : "the performers, not the characters, slip through — a break of the"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the assembled production-flubs reel is the discriminator; promotion model) —
+prop GagReel    [+Metafictional]   // a reel of real production flubs, assembled as a stand-alone paratext
+verb Flubs(take) [+Narrative]      // a performer breaks or muffs a take — corpsing, a fluffed line, a pratfall on set
+
+imply HilariousOuttakes -> [Metafictional, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (scene scale): a performer FLUBS a take and the muffs are gathered into a [+GagReel] — the
+// performer bound on the agent role of a [&Flubs] event (the recall anchor) with the assembled reel co-present,
+// so phase-2 re-checks [+GagReel] (STYLE §8). The reel of real production breakage is the discriminator: the
+// fiction's own making shown for laughs, parting it from The Stinger (an in-story post-credits scene).
+rule Hilarious_Outtakes {
+  when:
+    char $performer
+    obj  $reel [+GagReel]
+    evt  $blooper [&Flubs(agent=$performer)]
+  then:
+    $blooper [+HilariousOuttakes]
+}
+
+
+// === CONCRETE VIGNETTE: The Cannonball Run — the end-credits gag reel (film, 1981) ===
+// The credits roll over a string of bloopers: Burt Reynolds and Dom DeLuise cracking each other up, blown
+// lines, the cast collapsing into laughter mid-take. The flubs the editors would normally bury are the reward
+// instead — the actors, plainly themselves, falling apart on the set everyone pretended was a story. The reel
+// that popularized hanging the outtakes after the film.
+
+// BURT REYNOLDS — a lead, here caught as himself, corpsing between takes
+char burt_reynolds
+
+// THE GAG REEL — the bloopers gathered to run over the credits
+obj the_gag_reel [+GagReel]
+
+scene over_the_credits {
+  beat 1 {
+    // he blows the line and collapses laughing — a flub kept, not buried
+    evt the_corpsing [&Flubs(agent=burt_reynolds)]
+    // Hilarious_Outtakes -> the_corpsing [+HilariousOuttakes]
+  }
+}

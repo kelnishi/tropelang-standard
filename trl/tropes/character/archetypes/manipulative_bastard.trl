@@ -1,0 +1,69 @@
+// === PREAMBLE ===
+// @trope    Manipulative Bastard
+// @category Character Archetypes / Villains
+// @source   https://allthetropes.org/wiki/Manipulative_Bastard
+// @domain   Narrative
+// @scale    arc
+// @version  1.0
+//
+// Laconic (per the wiki): the master manipulator of EMOTIONS and perspectives — where The Chessmaster moves
+// events, this one moves people, finding what a mark is emotionally invested in and exploiting it. Clever,
+// dangerous, no comedic overtones. FRONTIER: control worked through a victim's own feelings. The discriminator
+// is a [+Calculating] character bound on the agent of an [&Exploits] event against a target — playing on what
+// the mark cares about to make them act. Distinct from The Man Behind the Man (covert control of a puppet) by
+// working the emotions in the open, and from the Femme Fatale (the allure-borne, gendered form of this).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/epistemic/reveal/the_man_behind_the_man.trl"   // covert puppet-control, vs open emotional play
+
+assoc manipulative_bastard -> [
+  the_man_behind_the_man : "works in the open on feelings, not as the hidden hand of",
+  femme_fatale : "the allure-borne, gendered form of"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the cold player of others' feelings is the discriminator; promotion model) —
+prop Calculating     [+Psychological]  // coldly plotting — runs head games, no comedic overtones
+verb Exploits(target) [+Interpersonal] // plays on what a mark is emotionally invested in, to make them act
+
+imply ManipulativeBastard -> [Manipulation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a [+Calculating] character EXPLOITS a target — the cold player bound on the agent
+// of an [&Exploits] event (the recall anchor), so phase-2 re-checks [+Calculating] on the manipulator (STYLE
+// §8). Binding the calculating coldness on the act of exploiting another's feelings is the discriminator:
+// control worked through the mark's own emotions — parting it from The Man Behind the Man (a concealed hand on
+// a puppet) and a blunt schemer who moves only events.
+rule Manipulative_Bastard {
+  when:
+    char $manipulator [+Calculating]
+    char $victim
+    evt  $play [&Exploits(agent=$manipulator, target=$victim)]
+  then:
+    $play [+ManipulativeBastard]
+}
+
+
+// === CONCRETE VIGNETTE: Othello — Iago (play, c. 1603) ===
+// Iago never raises a hand; he raises doubts. Reading Othello's love for Desdemona and his pride as a outsider
+// general, he drips poison through a dropped handkerchief and careful insinuation until the Moor strangles the
+// wife who never wronged him. "I am not what I am" — every move is a played emotion, every ally a tool worked
+// through what they most fear and want. The head game as murder weapon.
+
+// IAGO — the ensign who moves people, not swords
+char iago [+Calculating] [+Antagonist]
+
+// OTHELLO — the general whose love and pride are turned against him
+char othello [+Protagonist]
+
+scene the_poisoning_of_the_mind {
+  beat 1 {
+    // he plays on Othello's love and jealousy — the handkerchief, the insinuation — to make him destroy himself
+    evt the_head_game [&Exploits(agent=iago, target=othello)]
+    // Manipulative_Bastard -> the_head_game [+ManipulativeBastard]
+  }
+}

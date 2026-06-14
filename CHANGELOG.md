@@ -17,6 +17,33 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 
 ## [Unreleased]
 
+### Added
+- **Hilarious Outtakes** (Metafiction / Paratext) — https://allthetropes.org/wiki/Hilarious_Outtakes
+  (The Cannonball Run gag reel — a performer `[&Flubs]` a take, the muffs gathered into a [+GagReel]; the
+  production breaking its own fiction, vs The Stinger (an in-story post-credits scene). Founds `prop GagReel`
+  + `verb Flubs(take)`.)
+- **Bitch in Sheep's Clothing** (Character Archetypes / Villains) — https://allthetropes.org/wiki/Bitch_in_Sheep's_Clothing
+  (Harry Potter, Dolores Umbridge — a [+Saccharine] character `[&Mistreats]` a victim behind the pleasant
+  face; the polar opposite of Jerk with a Heart of Gold, the public-stage scale-up being Villain with Good
+  Publicity. Founds `prop Saccharine` + `verb Mistreats(target)`.)
+- **Defrosting Ice Queen** (Relationships / Romance) — https://allthetropes.org/wiki/Defrosting_Ice_Queen
+  (10 Things I Hate About You, Kat & Patrick — a suitor `[&Thaws]` an [+Icy] love interest through patient
+  courtship; the love-interest-specific cousin of Took a Level in Kindness. Founds `prop Icy` + `verb
+  Thaws(target)`.)
+- **Fantastic Racism** (Settings / Worldbuilding) — https://allthetropes.org/wiki/Fantastic_Racism
+  (X-Men, humanity vs mutantkind — a bigot `[&Reviles]` an [+Unnatural] kind for what they are; real bigotry
+  refracted through a fantastical metaphor. Founds `prop Unnatural` + `verb Reviles(target)`.)
+- **The Vamp** (Character Archetypes / Villains) — https://allthetropes.org/wiki/The_Vamp
+  (A Fool There Was, Theda Bara's "The Vampire" — an [+Irredeemable] seductress `[&Seduces]` a victim to ruin
+  him; to-the-core evil never swayed by love, vs the Femme Fatale (allure that might turn). Founds `prop
+  Irredeemable` + `verb Seduces(target)`.)
+- **Manipulative Bastard** (Character Archetypes / Villains) — https://allthetropes.org/wiki/Manipulative_Bastard
+  (Othello, Iago — a [+Calculating] character `[&Exploits]` a victim's own emotions to make them act; the
+  master of feelings (vs The Chessmaster's events), the open form of The Man Behind the Man's covert control.
+  Founds `prop Calculating` + `verb Exploits(target)`.)
+  Corpus **291 → 297 tropes**; self-recognition steady at **297/297 (100%)**. (Converts the six commented
+  assoc future-pointers from the 2026-06 integrity sweep, re-enabling each source trope's discovery link.)
+
 ## [1.8.1] — 2026-06-09
 
 ### Added

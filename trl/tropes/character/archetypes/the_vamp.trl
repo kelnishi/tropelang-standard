@@ -1,0 +1,67 @@
+// === PREAMBLE ===
+// @trope    The Vamp
+// @category Character Archetypes / Villains
+// @source   https://allthetropes.org/wiki/The_Vamp
+// @domain   Narrative
+// @scale    arc
+// @version  1.0
+//
+// Laconic (per the wiki): a completely evil seductress — the beauty who uses her feminine wiles to undermine
+// and ruin a moral, upright man for evil ends. Unlike the Femme Fatale, she is rotten to the core and will
+// NEVER be swayed from darkness by love. FRONTIER: seduction as a weapon wielded by the irredeemable. The
+// discriminator is an [+Irredeemable] seductress bound on the agent of a [&Seduces] event aimed to ruin her
+// victim. Distinct from the Femme Fatale (allure that may yet turn good) by the unswayable, to-the-core evil.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/character/archetypes/femme_fatale.trl"   // the swayable, allure-as-means sibling
+
+assoc the_vamp -> [
+  femme_fatale : "the irredeemable, never-swayed extreme of",
+  manipulative_bastard : "the allure-borne weapon of the emotional manipulation in"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the to-the-core-evil seductress is the discriminator; promotion model) —
+prop Irredeemable    [+Social]        // rotten to the core — never swayed from evil, not even by love
+verb Seduces(target) [+Interpersonal] // uses allure to undo and ruin a chosen victim
+
+imply TheVamp -> [Manipulation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): an [+Irredeemable] seductress SEDUCES a victim to ruin him — the unswayable evil
+// bound on the agent of a [&Seduces] event (the recall anchor), so phase-2 re-checks [+Irredeemable] on the
+// seductress (STYLE §8). Binding the to-the-core evil on the seduction is the discriminator: allure as a
+// weapon that love can never redeem — parting it from the Femme Fatale, whose allure is a means she might yet
+// turn from.
+rule The_Vamp {
+  when:
+    char $vamp [+Irredeemable]
+    evt  $seduction [&Seduces(agent=$vamp, target=$victim)]
+  then:
+    $seduction [+TheVamp]
+}
+
+
+// === CONCRETE VIGNETTE: A Fool There Was — Theda Bara's "The Vampire" (film, 1915) ===
+// The trope's namesake. Theda Bara's character — credited only as "The Vampire" — fixes on a respectable,
+// married diplomat and sets out to ruin him for sport: she draws him from his wife and child, drains his
+// fortune and his will, and discards the wreck of him with a contemptuous "Kiss me, my fool!" She is never
+// tempted toward decency, never softened — the destruction is the point, and love has no purchase on her.
+
+// THE VAMPIRE — Theda Bara's seductress, rotten to the core
+char the_vampire [+Irredeemable] [+Antagonist]
+
+// THE DIPLOMAT — the upright married man she fixes on to ruin
+char the_diplomat [+Protagonist]
+
+scene a_fool_there_was {
+  beat 1 {
+    // she draws the respectable man from his family and drains him for sport — to ruin, not to gain
+    evt the_ruin [&Seduces(agent=the_vampire, target=the_diplomat)]
+    // The_Vamp -> the_ruin [+TheVamp]
+  }
+}
