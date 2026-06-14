@@ -45,6 +45,7 @@ import "trl/tropes/bonds/conflicting_loyalty.trl"
 import "trl/tropes/bonds/cooldown_hug.trl"
 import "trl/tropes/bonds/damsel_in_distress.trl"
 import "trl/tropes/bonds/defeat_means_friendship.trl"
+import "trl/tropes/bonds/defrosting_ice_queen.trl"
 import "trl/tropes/bonds/enemies_to_lovers.trl"
 import "trl/tropes/bonds/fire_forged_friends.trl"
 import "trl/tropes/bonds/found_family.trl"
@@ -68,6 +69,7 @@ import "trl/tropes/bonds/worthy_opponent.trl"
 import "trl/tropes/character/archetypes/anti_hero.trl"
 import "trl/tropes/character/archetypes/berserk_button.trl"
 import "trl/tropes/character/archetypes/beware_the_nice_ones.trl"
+import "trl/tropes/character/archetypes/bitch_in_sheeps_clothing.trl"
 import "trl/tropes/character/archetypes/deadpan_snarker.trl"
 import "trl/tropes/character/archetypes/determinator.trl"
 import "trl/tropes/character/archetypes/fatal_flaw.trl"
@@ -77,11 +79,13 @@ import "trl/tropes/character/archetypes/jerk_with_a_heart_of_gold.trl"
 import "trl/tropes/character/archetypes/lovable_rogue.trl"
 import "trl/tropes/character/archetypes/magnificent_bastard.trl"
 import "trl/tropes/character/archetypes/mama_bear.trl"
+import "trl/tropes/character/archetypes/manipulative_bastard.trl"
 import "trl/tropes/character/archetypes/reluctant_hero.trl"
 import "trl/tropes/character/archetypes/the_ace.trl"
 import "trl/tropes/character/archetypes/the_chosen_one.trl"
 import "trl/tropes/character/archetypes/the_drifter.trl"
 import "trl/tropes/character/archetypes/the_trickster.trl"
+import "trl/tropes/character/archetypes/the_vamp.trl"
 import "trl/tropes/character/archetypes/the_wizard.trl"
 import "trl/tropes/character/archetypes/tragic_hero.trl"
 import "trl/tropes/character/archetypes/tsundere.trl"
@@ -203,6 +207,7 @@ import "trl/tropes/meta/metafiction/aside_glance.trl"
 import "trl/tropes/meta/metafiction/author_avatar.trl"
 import "trl/tropes/meta/metafiction/fourth_wall.trl"
 import "trl/tropes/meta/metafiction/genre_savvy.trl"
+import "trl/tropes/meta/metafiction/hilarious_outtakes.trl"
 import "trl/tropes/meta/metafiction/lampshade_hanging.trl"
 import "trl/tropes/meta/metafiction/literary_agent_hypothesis.trl"
 import "trl/tropes/meta/metafiction/medium_awareness.trl"
@@ -287,6 +292,7 @@ import "trl/tropes/structure/dream_sequence.trl"
 import "trl/tropes/structure/dream_within_a_dream.trl"
 import "trl/tropes/structure/eucatastrophe.trl"
 import "trl/tropes/structure/failure_is_the_only_option.trl"
+import "trl/tropes/structure/fantastic_racism.trl"
 import "trl/tropes/structure/flashback.trl"
 import "trl/tropes/structure/frame_story.trl"
 import "trl/tropes/structure/hope_spot.trl"
@@ -550,6 +556,7 @@ concept berserk_button [+Trope(category="Characterization Tropes", source="https
 concept beware_the_nice_ones [+Trope(category="Character Tropes", source="https://allthetropes.org/wiki/Beware_the_Nice_Ones")] [%Interpersonal]
 concept big_damn_heroes [+Trope(category="Heroism", source="https://allthetropes.org/wiki/Big_Damn_Heroes")] [%Narrative]
 concept big_good [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Big_Good")] [%Interpersonal]
+concept bitch_in_sheeps_clothing [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Bitch_in_Sheep's_Clothing")] [%Narrative]
 concept bittersweet_ending [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/Bittersweet_Ending")] [%Narrative]
 concept bond_villain_stupidity [+Trope(category="Villains", source="https://allthetropes.org/wiki/Bond_Villain_Stupidity")] [%Narrative]
 concept bookends [+Trope(category="Narrative Devices", source="https://allthetropes.org/wiki/Book_Ends")] [%Narrative]
@@ -580,6 +587,7 @@ concept death_seeker [+Trope(category="Death Tropes", source="https://allthetrop
 concept decapitated_army [+Trope(category="Military and Warfare", source="https://allthetropes.org/wiki/Decapitated_Army")] [%Political]
 concept defeat_means_friendship [+Trope(category="Combat", source="https://allthetropes.org/wiki/Defeat_Means_Friendship")] [%Narrative]
 concept defiant_to_the_end [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Defiant_to_the_End")] [%Narrative]
+concept defrosting_ice_queen [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Defrosting_Ice_Queen")] [%Narrative]
 concept determinator [+Trope(category="Heroic Spirit", source="https://allthetropes.org/wiki/Determinator")] [%Narrative]
 concept diabolus_ex_machina [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Diabolus_Ex_Machina")] [%Narrative]
 concept disney_death [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Disney_Death")] [%Narrative]
@@ -594,6 +602,7 @@ concept even_evil_has_standards [+Trope(category="Characterization", source="htt
 concept evil_chancellor [+Trope(category="Villains", source="https://allthetropes.org/wiki/Evil_Chancellor")] [%Narrative]
 concept failure_is_the_only_option [+Trope(category="Narrative Devices", source="https://allthetropes.org/wiki/Failure_Is_the_Only_Option")] [%Narrative]
 concept famous_last_words [+Trope(category="Death", source="https://allthetropes.org/wiki/Famous_Last_Words")] [%Narrative]
+concept fantastic_racism [+Trope(category="Settings", source="https://allthetropes.org/wiki/Fantastic_Racism")] [%Narrative]
 concept fatal_flaw [+Trope(category="Characterization", source="https://allthetropes.org/wiki/Fatal_Flaw")] [%Mind]
 concept femme_fatale [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Femme_Fatale")] [%Interpersonal]
 concept fire_forged_friends [+Trope(category="Friendship", source="https://allthetropes.org/wiki/Fire-Forged_Friends")] [%Narrative]
@@ -609,6 +618,7 @@ concept heist [+Trope(category="Crime", source="https://allthetropes.org/wiki/Th
 concept heroic_bsod [+Trope(category="Trauma", source="https://allthetropes.org/wiki/Heroic_BSOD")] [%Psychological]
 concept heroic_second_wind [+Trope(category="Heroic Spirit", source="https://allthetropes.org/wiki/Heroic_Second_Wind")] [%Narrative]
 concept heterosexual_life_partners [+Trope(category="Friendship", source="https://allthetropes.org/wiki/Heterosexual_Life_Partners")] [%Narrative]
+concept hilarious_outtakes [+Trope(category="Metafiction", source="https://allthetropes.org/wiki/Hilarious_Outtakes")] [%Narrative]
 concept hoist_by_his_own_petard [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Hoist_by_His_Own_Petard")] [%Narrative]
 concept holy_halo [+Trope(category="Iconography", source="https://allthetropes.org/wiki/Holy_Halo")] [%Narrative]
 concept hope_bringer [+Trope(category="Heroes", source="https://allthetropes.org/wiki/Hope_Bringer")] [%Narrative]
@@ -633,6 +643,7 @@ concept love_dodecahedron [+Trope(category="Relationships", source="https://allt
 concept macguffin [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/MacGuffin")] [%Narrative]
 concept magnificent_bastard [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Magnificent_Bastard")] [%Narrative]
 concept mama_bear [+Trope(category="Character Tropes", source="https://allthetropes.org/wiki/Mama_Bear")] [%Interpersonal]
+concept manipulative_bastard [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Manipulative_Bastard")] [%Narrative]
 concept medium_awareness [+Trope(category="Metafiction", source="https://allthetropes.org/wiki/Medium_Awareness")] [%Narrative]
 concept mercy_kill [+Trope(category="Death Tropes", source="https://allthetropes.org/wiki/Mercy_Kill")] [%Interpersonal]
 concept mexican_standoff [+Trope(category="Conflict", source="https://allthetropes.org/wiki/Mexican_Standoff")] [%Interpersonal]
@@ -707,6 +718,7 @@ concept the_starscream [+Trope(category="Political", source="https://allthetrope
 concept the_stinger [+Trope(category="Metafiction", source="https://allthetropes.org/wiki/The_Stinger")] [%Narrative]
 concept the_summation [+Trope(category="Mystery Tropes", source="https://allthetropes.org/wiki/The_Summation")] [%Epistemic]
 concept the_trickster [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/The_Trickster")] [%Narrative]
+concept the_vamp [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/The_Vamp")] [%Narrative]
 concept the_wizard [+Trope(category="Character Archetypes", source="https://allthetropes.org/wiki/Wizard_Classic")] [%Narrative]
 concept the_worf_effect [+Trope(category="Combat", source="https://allthetropes.org/wiki/The_Worf_Effect")] [%Narrative]
 concept then_let_me_be_evil [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Then_Let_Me_Be_Evil")] [%Narrative]

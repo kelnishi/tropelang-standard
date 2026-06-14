@@ -1,0 +1,67 @@
+// === PREAMBLE ===
+// @trope    Fantastic Racism
+// @category Settings / Worldbuilding
+// @source   https://allthetropes.org/wiki/Fantastic_Racism
+// @domain   Narrative
+// @scale    arc
+// @version  1.0
+//
+// Laconic (per the wiki): prejudice against unnatural individuals — real-world bigotry refracted through
+// metaphor, so the hatred runs between humans and mutants, elves and dwarves, or men and intelligent machines
+// rather than real ethnic groups. FRONTIER: bigotry keyed on a FANTASTICAL kind. The discriminator is a
+// [+Unnatural] kind (a non-baseline species: mutant, alien, synthetic, beast-folk) bound on the target of a
+// [&Reviles] event — scorned and persecuted FOR what they are. Distinct from a personal grudge by being
+// directed at the kind, not the individual.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc fantastic_racism -> [
+  then_let_me_be_evil : "the branding whose self-fulfilling acceptance drives",
+  crapsack_world : "the normalized cruelty that often pervades a"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the persecuted fantastical kind is the discriminator; promotion model) —
+prop Unnatural      [+Ontological]    // a fantastical, non-baseline kind — mutant, alien, synthetic, beast-folk
+verb Reviles(target) [+Interpersonal] // scorns and persecutes another as inferior for the kind they are
+
+imply FantasticRacism -> [Contrast, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a bigot REVILES an [+Unnatural] kind — the persecuted fantastical other bound on
+// the target role of a [&Reviles] event (agent=$bigot, the recall anchor), so phase-2 re-checks [+Unnatural]
+// on the reviled (STYLE §8). Binding the prejudice on the fantastical kind is the discriminator: the metaphor
+// that lets a story stage real bigotry between invented peoples, parting it from an ordinary personal enmity.
+rule Fantastic_Racism {
+  when:
+    char $bigot
+    char $other [+Unnatural]
+    evt  $hate [&Reviles(agent=$bigot, target=$other)]
+  then:
+    $hate [+FantasticRacism]
+}
+
+
+// === CONCRETE VIGNETTE: X-Men — humanity vs mutantkind (comics/film, 1963– ) ===
+// Born different through no choice of their own, mutants are feared and hated by the humanity they live among:
+// the Mutant Registration Act, Sentinels built to hunt them, mobs and senators alike branding them a menace to
+// "real" people. Magneto's militancy and Xavier's dream are both answers to the same fact — that the baseline
+// world reviles them simply for being what they are. The genre's clearest mirror of real prejudice.
+
+// HUMANITY — the baseline majority that fears what it cannot become
+char humanity [+Collective]
+
+// MUTANTKIND — the fantastical kind, hated for its nature
+char mutantkind [+Collective] [+Unnatural]
+
+scene the_registration {
+  beat 1 {
+    // the majority brands the mutant kind a menace and moves to register and hunt them
+    evt the_persecution [&Reviles(agent=humanity, target=mutantkind)]
+    // Fantastic_Racism -> the_persecution [+FantasticRacism]
+  }
+}

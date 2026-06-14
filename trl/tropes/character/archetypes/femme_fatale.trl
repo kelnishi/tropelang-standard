@@ -23,9 +23,9 @@ import "trl/modules/theory_of_mind.trl"        // deception — she models the m
 
 assoc femme_fatale -> [
   motivation_dynamics : "aims a scheme at the mark via",
-  deception           : "induces the mark's infatuation as a false promise, per"
-  // the_vamp             : "is the seductive-weapon sibling of"        // unconverted att-archive trope — re-enable on conversion
-  // manipulative_bastard : "is the gendered, allure-borne form of"     // unconverted att-archive trope — re-enable on conversion
+  deception           : "induces the mark's infatuation as a false promise, per",
+  the_vamp             : "is the seductive-weapon sibling of",
+  manipulative_bastard : "is the gendered, allure-borne form of"
 ]
 
 

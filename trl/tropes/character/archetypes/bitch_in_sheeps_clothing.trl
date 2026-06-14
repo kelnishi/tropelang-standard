@@ -1,0 +1,68 @@
+// === PREAMBLE ===
+// @trope    Bitch in Sheep's Clothing
+// @category Character Archetypes / Villains
+// @source   https://allthetropes.org/wiki/Bitch_in_Sheep's_Clothing
+// @domain   Narrative
+// @scale    arc
+// @version  1.0
+//
+// Laconic (per the wiki): sweet and harmless on the outside, horrible and cruel on the inside — the polar
+// opposite of a Jerk with a Heart of Gold. The pleasant face is a front; the True Colors show in private
+// cruelty. FRONTIER: the gap between a saccharine public manner and private viciousness. The discriminator is
+// a [+Saccharine] character bound on the agent of a [&Mistreats] event against a vulnerable target — the
+// sweetness is the cover, the cruelty the reality. Distinct from a plain Jerkass (cruel openly) by the
+// disarming front, and from Villain with Good Publicity (the same at public scale).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/character/archetypes/jerk_with_a_heart_of_gold.trl"   // the exact inverse: harsh outside, kind within
+
+assoc bitch_in_sheeps_clothing -> [
+  jerk_with_a_heart_of_gold : "the polar opposite of",
+  villain_with_good_publicity : "the same front, scaled to the public stage in"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the sweet front over private cruelty is the discriminator; promotion model) —
+prop Saccharine      [+Social]        // a sweet, harmless, ingratiating public front
+verb Mistreats(target) [+Interpersonal] // treats with cruelty once the pleasant face is off
+
+imply BitchInSheepsClothing -> [Pretense, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a [+Saccharine] character MISTREATS a target — the sweet front bound on the agent
+// of a [&Mistreats] event (the recall anchor), so phase-2 re-checks [+Saccharine] on the one whose pleasant
+// manner hides the cruelty (STYLE §8). Binding the saccharine front on the act of cruelty is the
+// discriminator: nice to your face, vicious underneath — parting it from an open Jerkass and from its mirror,
+// Jerk with a Heart of Gold (gruff outside, good within).
+rule Bitch_In_Sheeps_Clothing {
+  when:
+    char $front [+Saccharine]
+    evt  $cruelty [&Mistreats(agent=$front, target=$victim)]
+  then:
+    $cruelty [+BitchInSheepsClothing]
+}
+
+
+// === CONCRETE VIGNETTE: Harry Potter — Dolores Umbridge (novel/film, 2003) ===
+// Dolores Umbridge arrives all girlish giggles, pink cardigans, and a desk full of mewing kitten plates,
+// her office sweeter than a tea shop. The voice stays honeyed as she forces a student to carve lines into the
+// back of his own hand with a cursed quill, bans and tortures by the rulebook, and smiles the whole way. The
+// saccharine surface never cracks — which is exactly what makes the cruelty beneath it monstrous.
+
+// DOLORES UMBRIDGE — all pink cardigans and kitten plates, honey-voiced
+char umbridge [+Saccharine] [+Antagonist]
+
+// HARRY — the student made to carve lines into his own hand, sweetly
+char harry [+Protagonist]
+
+scene the_detention {
+  beat 1 {
+    // the honeyed voice never wavers as she sets the cursed quill to his hand
+    evt the_blood_quill [&Mistreats(agent=umbridge, target=harry)]
+    // Bitch_In_Sheeps_Clothing -> the_blood_quill [+BitchInSheepsClothing]
+  }
+}

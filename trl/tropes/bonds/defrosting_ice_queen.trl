@@ -1,0 +1,67 @@
+// === PREAMBLE ===
+// @trope    Defrosting Ice Queen
+// @category Relationships / Romance
+// @source   https://allthetropes.org/wiki/Defrosting_Ice_Queen
+// @domain   Narrative
+// @scale    arc
+// @version  1.0
+//
+// Laconic (per the wiki): given time and affection, her cold, uncaring facade melts to reveal a softer side —
+// the romance hero warms a haughty, frosty, or aloof love interest into Character Development toward warmth.
+// FRONTIER: the thaw of a cold heart driven by ROMANCE. The discriminator is an [+Icy] character bound on the
+// target of a [&Thaws] event by a patient suitor — the cold reserve melted through affection. Distinct from
+// Took a Level in Kindness (a general virtue-axis softening) by the love-interest-specific, courtship-driven thaw.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/arc/redemption/took_a_level_in_kindness.trl"   // the general virtue-axis softening this specializes for romance
+
+assoc defrosting_ice_queen -> [
+  took_a_level_in_kindness : "the love-interest-specific, courtship-driven cousin of",
+  childhood_friend_romance : "a romance whose warmth must be earned, unlike the shared-past ease of"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the cold love interest melted by affection is the discriminator; promotion model) —
+prop Icy           [+Social]          // a cold, haughty, aloof romantic reserve
+verb Thaws(target) [+Interpersonal]   // melts another's cold reserve through patient affection
+
+imply DefrostingIceQueen -> [Transformation, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a suitor THAWS an [+Icy] love interest — the cold one bound on the target of a
+// [&Thaws] event (agent=$suitor, the recall anchor), so phase-2 re-checks [+Icy] on the one who melts (STYLE
+// §8). Binding the cold reserve on the courtship-driven thaw is the discriminator: warmth earned through
+// affection over the story — parting it from Took a Level in Kindness (a general softening, no romance) and a
+// love kindled at first sight.
+rule Defrosting_Ice_Queen {
+  when:
+    char $icequeen [+Icy]
+    evt  $melt [&Thaws(agent=$suitor, target=$icequeen)]
+  then:
+    $melt [+DefrostingIceQueen]
+}
+
+
+// === CONCRETE VIGNETTE: 10 Things I Hate About You — Kat & Patrick (film, 1999) ===
+// Kat Stratford is the school's cold shrew: barbed, contemptuous, walled off, scaring suitors away on sight.
+// Patrick is paid to pursue her — but the persistence turns real, and across paintball, a sung serenade on the
+// bleachers, and patience under her every rebuff, the reserve cracks. The girl who hated everyone ends up
+// reading a poem about how she doesn't hate him. The frost melted by courtship, in the Shrew key.
+
+// KAT STRATFORD — the barbed, walled-off shrew who scares suitors off
+char kat [+Icy] [+Protagonist]
+
+// PATRICK — the suitor whose persistence turns from paid to real
+char patrick
+
+scene the_courtship {
+  beat 1 {
+    // serenade, paintball, patience under every rebuff — the cold reserve cracks into warmth
+    evt the_thaw [&Thaws(agent=patrick, target=kat)]
+    // Defrosting_Ice_Queen -> the_thaw [+DefrostingIceQueen]
+  }
+}
