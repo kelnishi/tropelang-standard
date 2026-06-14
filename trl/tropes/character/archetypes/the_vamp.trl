@@ -39,7 +39,7 @@ imply TheVamp -> [Manipulation, Narrative]
 // turn from.
 rule The_Vamp {
   when:
-    char $vamp [+Irredeemable]
+    char $vamp [+Irredeemable] [+Feminine]
     evt  $seduction [&Seduces(agent=$vamp, target=$victim)]
   then:
     $seduction [+TheVamp]
@@ -53,7 +53,7 @@ rule The_Vamp {
 // tempted toward decency, never softened — the destruction is the point, and love has no purchase on her.
 
 // THE VAMPIRE — Theda Bara's seductress, rotten to the core
-char the_vampire [+Irredeemable] [+Antagonist]
+char the_vampire [+Irredeemable] [+Antagonist] [+Feminine]
 
 // THE DIPLOMAT — the upright married man she fixes on to ruin
 char the_diplomat [+Protagonist]

@@ -40,7 +40,7 @@ imply DamselInDistress -> [Object, Narrative]
 // recognize the arrival, not the captive) and from a rescue of an able ally (no [+Helpless] → no fire).
 rule Damsel_In_Distress {
   when:
-    char $damsel [+Captive] [+Helpless]
+    char $damsel [+Captive] [+Helpless] [+Feminine]
     evt  $rescue [&Rescues(agent=$hero, target=$damsel)]
   then:
     $damsel [+Rescued]
@@ -56,7 +56,7 @@ rule Damsel_In_Distress {
 // monster. The chained princess whose peril sets the hero in motion: the oldest damsel there is.
 
 // ANDROMEDA — chained to the sea cliff as a sacrifice, unable to free herself
-char andromeda [+Captive] [+Helpless]
+char andromeda [+Captive] [+Helpless] [+Feminine]
 
 // PERSEUS — the hero who spots her on the rock and turns aside to save her
 char perseus [+Protagonist]

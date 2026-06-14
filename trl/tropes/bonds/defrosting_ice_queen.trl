@@ -39,7 +39,7 @@ imply DefrostingIceQueen -> [Transformation, Narrative]
 // love kindled at first sight.
 rule Defrosting_Ice_Queen {
   when:
-    char $icequeen [+Icy]
+    char $icequeen [+Icy] [+Feminine]
     evt  $melt [&Thaws(agent=$suitor, target=$icequeen)]
   then:
     $melt [+DefrostingIceQueen]
@@ -53,7 +53,7 @@ rule Defrosting_Ice_Queen {
 // reading a poem about how she doesn't hate him. The frost melted by courtship, in the Shrew key.
 
 // KAT STRATFORD — the barbed, walled-off shrew who scares suitors off
-char kat [+Icy] [+Protagonist]
+char kat [+Icy] [+Protagonist] [+Feminine]
 
 // PATRICK — the suitor whose persistence turns from paid to real
 char patrick
