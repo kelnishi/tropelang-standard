@@ -40,7 +40,7 @@ imply DisposableWoman -> [Final, Narrative]
 rule Disposable_Woman {
   when:
     char $hero  [+Protagonist]
-    char $woman [+Disposable] [@Beloved_Of(other=$hero)]
+    char $woman [+Disposable] [+Feminine] [@Beloved_Of(other=$hero)]
     evt  $death [&Slays(agent=$killer, target=$woman)]
   then:
     $death [+DisposableWoman]
@@ -58,7 +58,7 @@ rule Disposable_Woman {
 char kyle [+Protagonist]
 
 // ALEXANDRA DeWITT — Kyle's girlfriend, present only to be killed for his arc (the relative relationship)
-char alex [+Disposable] [@Beloved_Of(other=kyle)]
+char alex [+Disposable] [+Feminine] [@Beloved_Of(other=kyle)]
 
 // MAJOR FORCE — the villain who kills her to devastate the hero
 char major_force [+Antagonist]

@@ -44,6 +44,13 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   Corpus **291 → 297 tropes**; self-recognition steady at **297/297 (100%)**. (Converts the six commented
   assoc future-pointers from the 2026-06 integrity sweep, re-enabling each source trope's discovery link.)
 
+### Changed
+- **Gender pass — tagged the female-definitional archetypes.** Added `[+Feminine]` to the discriminator (and
+  vignette) of tropes whose gender is part of their identity, where it was missing: **Femme Fatale**, **The
+  Vamp**, **Defrosting Ice Queen**, **Damsel in Distress**, **Disposable Woman**. (Mirrors the gender-in-rule
+  precedent set by Heterosexual Life Partners.) Gender-neutral tropes (e.g. Manipulative Bastard — "he or
+  she") were left untagged. Selfcheck steady at 297/297.
+
 ## [1.8.1] — 2026-06-09
 
 ### Added
