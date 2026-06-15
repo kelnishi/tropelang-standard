@@ -136,6 +136,11 @@ negated romance guard (a [~Loves]/[~Devoted_To] between the pair, the way Like B
   source trope's commented `assoc` link is re-enabled.
 - [ ] Idiot Plot (harder to event-anchor; design the discriminator carefully). *(Mood Whiplash & Crapsack
   World — now DONE.)*
+- [ ] **Equivalent Exchange** (magic system / cost) — https://allthetropes.org/wiki/Equivalent_Exchange
+  (Fullmetal Alchemist: "to obtain, something of equal value must be lost"). Discriminator: a gain bound to a
+  proportionate loss in the *same* act — anchor recall on the obtaining event and re-check the paid price as a
+  bound counter-cost (likely founds `verb Obtains(boon)` + a `[+Costly]`/price relation; the magic-has-a-price
+  / worldbuilding arena).
 - [ ] (re-run the coverage recipe against the live high-profile indexes for fresh candidates — the
   archive dump exposes `/page`, `/search`, `/titles`, `/exists`).
 - Smaller leftovers: further Love Triangle variants · "Within a Frame Story" · the cross-repo eval-side
