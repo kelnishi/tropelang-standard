@@ -17,6 +17,18 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 
 ## [Unreleased]
 
+### Added
+- **Culture-balance example stories** (`examples/`) — the first corpus-side story files: standalone narratives
+  (no `rule`; read by `drams`) that ground recognizable patterns in non-default traditions, so no single
+  culture reads as the baseline. Phase 1 of the culture & representation initiative (see
+  `examples/README.md` and `trl/tropes/BACKLOG.md`):
+  - `theogony_succession.trl` — Greek (Hesiod): the usurping heir, the self-fulfilling prophecy, the hidden
+    child who returns. Fires the succession cluster (The Evil Prince, Klingon Promotion, Full-Circle Revolution).
+  - `the_passion.trl` — Christian (the Gospels): betrayal by a trusted intimate, willing sacrifice,
+    resurrection. Fires the betrayal cluster (Evil Chancellor, The Mole Springs, Face-Heel Turn).
+  - `amaterasu_and_the_cave.trl` — Shinto (the *Kojiki*): the sibling's offense, the withdrawn god, the
+    clever lure that restores the world. Thinner coverage — a flagged signal for later phases.
+
 ## [1.8.1] — 2026-06-09
 
 ### Added

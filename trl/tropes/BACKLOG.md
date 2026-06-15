@@ -148,6 +148,25 @@ event-anchored discriminator worked out first, so pair it with cleaner finds rat
 
 ---
 
+## Culture & representation initiative
+
+The corpus's worked examples lean **Western, secular/Christian-adjacent** (Star Wars, Shakespeare, comics),
+which makes one culture read as the unmarked default. A parallel pass to the gender work: ensure the corpus
+does not assume a default culture. **Phased** (steered by the maintainer):
+
+- [x] **Phase 1 — culture-balance example stories.** A corpus-side `examples/` of standalone story `.trl`
+  files (narratives, no `rule`; read by `drams`) grounding recognizable patterns in different traditions:
+  `theogony_succession` (Greek), `the_passion` (Christian), `amaterasu_and_the_cave` (Shinto). See
+  `examples/README.md`. Lowest-risk: adds files, touches no settled trope.
+- [ ] **Phase 2 — diversify trope vignettes.** Re-author a batch of Western trope vignettes onto these
+  traditions (each must re-pass `selfcheck`). Candidates: vignettes that currently default to Hollywood.
+- [ ] **Phase 3 — myth-grounded tropes.** Mine the traditions for tropes the corpus lacks — `dying_and_rising_god`
+  (Christ, Osiris, Persephone), `psychopomp` (Hermes, Charon, shinigami), `theomachy` (Titanomachy, Ragnarök),
+  `kami`/animism. The Shinto story's thin coverage (a withdrawal-and-restoration shape the corpus underserves)
+  is an early pointer here.
+
+---
+
 ## Systems (the modules in `trl/modules/`)
 Each is a forward-chaining dynamic that tropes ride on.
 
