@@ -1,0 +1,75 @@
+// === STORY ===
+// @title    The Passion — Betrayal, Sacrifice, Resurrection
+// @tradition Christian — the Passion narrative of the canonical Gospels, 1st century CE
+// @kind     story (a narrative for `drams` to read; carries chars/scenes/events, NO rule)
+// @note     One of the corpus's culture-balancing example stories (see examples/README.md). Public-domain
+//           text. The Passion grounds the dying-and-rising pattern — the trusted intimate who betrays, the
+//           innocent who lays down his life for others, the empty tomb — that so much Western story quietly
+//           inherits; naming it explicitly keeps it one tradition among several, not the unmarked default.
+
+import "trl/tropes/index.trl"   // the full corpus: all vocabulary + the trope overlay drams fires
+
+
+// === CAST ===
+// JESUS — the teacher who foresees his betrayal and gives himself up willingly, for others
+char jesus [+Protagonist] [+Divine] [+Innocent] [+Masculine]
+
+// JUDAS — one of the twelve, trusted at the same table, who sells his master for silver
+char judas [+Ally] [+Trusted] [+Deceptive] [+Betrayer] [+Masculine]
+
+// HUMANITY — those the sacrifice is for; the saved
+char humanity [+Collective] [+Mortal]
+
+// THE AUTHORITIES — the council and the prefect who condemn him
+char the_authorities [+Authority] [+Collective]
+
+// THE SILVER — thirty pieces, the price of the betrayal
+obj the_silver [+Coveted]
+
+// THE TOMB — sealed with a stone, found empty on the third day
+set the_tomb [+Interior] [+Sealed]
+
+
+// === ACT I — THE LAST SUPPER ===
+scene the_last_supper {
+  beat 1 {
+    // At the table he names what is coming: one who breaks bread with him will hand him over.
+    obj the_foretelling [+Prophesied]
+    evt the_prediction [&Predicts(agent=jesus, target=judas)]
+  }
+  beat 2 {
+    // The trusted disciple takes the price and goes out into the night to deliver him.
+    evt the_bargain [&Entrusted(agent=the_authorities, to=judas, item=the_silver)]
+    judas [#Resolved]
+  }
+}
+
+
+// === ACT II — THE BETRAYAL AND THE CROSS ===
+scene the_garden {
+  beat 1 {
+    // The trusted intimate marks his master with a kiss — the friend at the table is the informer.
+    evt the_kiss [&Betrays(agent=judas, target=jesus)]
+    jesus [+Betrayed]
+  }
+}
+
+scene golgotha {
+  beat 1 {
+    // Innocent, he does not resist; he gives his life so that the others might be spared.
+    evt the_crucifixion [&Sacrificed(agent=jesus, for=humanity)]
+    jesus [+Fallen] [+Dead]
+    humanity [+Saved]
+  }
+}
+
+
+// === ACT III — THE EMPTY TOMB ===
+scene the_third_day {
+  beat 1 {
+    // The stone is rolled back at dawn and the grave is empty: the one who died is alive again.
+    evt the_rising [&Resurrects(subject=jesus)]
+    jesus [-Dead] [+Alive]
+    the_tomb [+Empty]
+  }
+}

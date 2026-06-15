@@ -1,0 +1,104 @@
+// === STORY ===
+// @title    The Succession of Heaven — Ouranos, Kronos, Zeus
+// @tradition Greek (Hellenic polytheism) — the Theogony of Hesiod, c. 700 BCE
+// @kind     story (a narrative for `drams` to read; carries chars/scenes/events, NO rule)
+// @note     One of the corpus's culture-balancing example stories (see examples/README.md). Public-domain
+//           myth. The succession myth of the Greek pantheon: each sky-father is overthrown by his own son,
+//           the prophecy fulfilling itself through the tyrant's own dread of it.
+//
+// Why this story: the corpus's worked examples lean Western-secular/Christian-adjacent; the Greek
+// theogony grounds the same recognizable patterns — the usurping heir, the self-fulfilling prophecy, the
+// hidden child who returns to claim the throne — in a polytheistic cosmogony, so no single culture reads
+// as the default.
+
+import "trl/tropes/index.trl"   // the full corpus: all vocabulary + the trope overlay drams fires
+
+
+// === STORY-LOCAL VOCABULARY ===
+// No prelude verb fits a father swallowing his children whole, so the story founds one (a story may
+// declare vocab just as a trope file does); it is plot colour, not a trope discriminator.
+verb Devours(prey) [+Mythological]   // consumes another whole, holding them captive within
+
+
+// === CAST ===
+// OURANOS — the Sky, first to rule the cosmos; he dreads his own children and cages them in the Earth
+char ouranos [+Primordial] [+Ruler] [+Divine] [+Masculine]
+
+// GAIA — the Earth, mother of the Titans, groaning under the children Ouranos has buried in her
+char gaia [+Primordial] [+Divine] [+Feminine]
+
+// KRONOS — the youngest Titan, who takes his mother's sickle and seizes his father's throne
+char kronos [+Pretender] [+Divine] [+Antagonist] [+Masculine]
+
+// RHEA — Kronos's sister-wife, who will not lose another child to his fear
+char rhea [+Divine] [+Feminine]
+
+// ZEUS — the hidden son, raised in secret, who returns to cast his father down
+char zeus [+Divine] [+Protagonist] [+Masculine] [@Son_Of(parent=kronos)]
+
+// THE SICKLE — Gaia's adamant blade, the instrument of the first overthrow
+obj the_sickle [+Coveted]
+
+// THE ELDER GODS — Hestia, Demeter, Hera, Hades, Poseidon: swallowed at birth, captive within their father
+char the_elder_gods [+Divine] [+Collective]
+
+// THE STONE — the swaddled rock Rhea feeds Kronos in place of the infant Zeus
+obj the_stone [+Counterfeit]
+
+// THE HEAVENS — the throne of the cosmos, won and lost by force across three generations
+set the_heavens [+Divine]
+
+
+// === ACT I — THE CASTRATION OF HEAVEN ===
+scene the_first_overthrow {
+  beat 1 {
+    // Ouranos buries each newborn deep in Gaia; the Earth, in agony, forges the sickle and begs a son to act.
+    gaia [#Affronted]
+    evt the_arming [&Entrusted(agent=gaia, to=kronos, item=the_sickle)]
+  }
+  beat 2 {
+    // The youngest Titan ambushes the Sky and unseats him — the son seizing the throne ahead of all his kin.
+    evt the_castration [&Usurps(agent=kronos, target=ouranos)]
+    ouranos [+Deposed]
+  }
+  beat 3 {
+    // The fallen Sky lays a curse that is also a prophecy: as you did to me, so shall your own child do to you.
+    obj the_prophecy [+Prophesied]
+    evt the_curse [&Predicts(agent=ouranos, target=kronos)]
+  }
+}
+
+
+// === ACT II — THE SWALLOWING ===
+scene the_devouring_father {
+  beat 1 {
+    // Dreading the prophecy, Kronos swallows each child Rhea bears, holding them captive within himself —
+    // the tyrant's own terror of the foretelling is what sets the foretelling in motion.
+    kronos [#Afraid]
+    evt the_swallowing [&Devours(agent=kronos, prey=the_elder_gods)]
+    the_elder_gods [+Captive]
+  }
+  beat 2 {
+    // Rhea, grieving, hides her last-born on Crete and gives Kronos a swaddled stone to swallow instead.
+    rhea [#Grieving]
+    evt the_deception [&Deceives(agent=rhea, other=kronos)]
+    zeus [+Concealed] [+Heir]
+  }
+}
+
+
+// === ACT III — THE RETURN AND THE TITANOMACHY ===
+scene the_son_returns {
+  beat 1 {
+    // Grown in secret, the hidden heir comes back to the heavens to claim what his father usurped.
+    zeus [+Exiled]
+    evt the_homecoming [&Returned(agent=zeus, to=the_heavens)]
+  }
+  beat 2 {
+    // He frees the swallowed siblings from Kronos and, with them, casts the father down — the curse come true.
+    evt the_disgorging [&Rescues(agent=zeus, target=the_elder_gods)]
+    evt the_fall_of_kronos [&Usurps(agent=zeus, target=kronos)]
+    kronos [+Deposed] [+Fallen]
+    zeus [+Ruler] [+Crowned]
+  }
+}

@@ -1,0 +1,90 @@
+// === STORY ===
+// @title    Amaterasu and the Heavenly Rock Cave
+// @tradition Shinto (Japanese kami worship) — the Ama-no-Iwato myth of the Kojiki, 712 CE
+// @kind     story (a narrative for `drams` to read; carries chars/scenes/events, NO rule)
+// @note     One of the corpus's culture-balancing example stories (see examples/README.md). Public-domain
+//           myth. The sun-kami, offended by her brother, withdraws into a cave and takes the world's light
+//           with her; the assembled kami win her back not by force but by a trick — laughter and a mirror.
+//           A non-Western cosmology whose shape (the sibling's offense, the withdrawal, the clever lure that
+//           restores the world) the corpus's tropes can read just as readily as a Greek or Christian one.
+
+import "trl/tropes/index.trl"   // the full corpus: all vocabulary + the trope overlay drams fires
+
+
+// === STORY-LOCAL VOCABULARY ===
+// The lure is a performance, not a prelude deed — the story founds a verb for it (plot colour, not a
+// trope discriminator).
+verb Dances(before) [+Mythological]   // performs to draw a watcher out
+prop Radiant       [+Mythological]    // light-giving — the sun-kami's defining nature
+
+
+// === CAST ===
+// AMATERASU — the sun-kami, ruler of the High Plain of Heaven; her light IS the day
+char amaterasu [+Divine] [+Ruler] [+Feminine] [+Radiant]
+
+// SUSANOO — the storm-kami, her wild brother, whose rampage drives her into the dark
+char susanoo [+Divine] [+Volatile] [+Antagonist] [+Masculine] [@Brother_Of(other=amaterasu)]
+
+// AME-NO-UZUME — the kami of mirth, whose bawdy dance is the heart of the ruse
+char ame_no_uzume [+Divine] [+Cunning] [+Feminine]
+
+// THE MYRIAD KAMI — the eight hundred gods who gather to council and contrive her return
+char the_myriad_kami [+Divine] [+Collective]
+
+// THE MIRROR — the eight-span mirror in which she will mistake her own light for a rival sun
+obj the_mirror [+Sacred]
+
+// THE SACRED HALL — her weaving hall and rice fields, the domain Susanoo defiles
+set the_sacred_hall [+Divine] [+Interior]
+
+// THE ROCK CAVE — Ama-no-Iwato, the cave she seals behind her, plunging heaven and earth into night
+set the_rock_cave [+Interior] [+Sealed]
+
+
+// === ACT I — SUSANOO'S RAMPAGE ===
+scene the_offense {
+  beat 1 {
+    // Her brother lays waste her rice fields and defiles her weaving hall — an outrage against her domain.
+    evt the_rampage [&Destroyed(agent=susanoo, entity=the_sacred_hall)]
+    amaterasu [#Affronted] [#Grieving]
+  }
+}
+
+
+// === ACT II — THE WITHDRAWAL ===
+scene the_heavenly_cave {
+  beat 1 {
+    // Wounded by the insult, the sun-kami withdraws into the rock cave and seals the door behind her.
+    evt the_hiding [&Departs(agent=amaterasu, from=the_rock_cave)]
+    amaterasu [+Withdrawn] [+Concealed]
+  }
+  beat 2 {
+    // With her light shut away, heaven and earth fall into endless night and every evil stirs in the dark.
+    the_rock_cave [+Sealed]
+    amaterasu [#Night]
+  }
+}
+
+
+// === ACT III — THE LURING-OUT ===
+scene the_ruse_at_the_door {
+  beat 1 {
+    // The eight hundred kami gather in council and contrive a plan to draw the light back into the world.
+    the_myriad_kami [#Determined]
+    evt the_council [&Negotiates(agent=the_myriad_kami, with=ame_no_uzume)]
+  }
+  beat 2 {
+    // Uzume dances wild and bawdy on an overturned tub; the assembled kami roar with laughter.
+    evt the_dance [&Dances(agent=ame_no_uzume, before=the_myriad_kami)]
+    the_myriad_kami [#Joyful]
+  }
+  beat 3 {
+    // Curious why they laugh without her, the sun peers out — and the kami trick her with her own reflection,
+    // holding the mirror so she takes her radiance for a rival, then draw her clear and seal the cave behind.
+    amaterasu [#Curious]
+    evt the_lure [&Deceives(agent=the_myriad_kami, other=amaterasu)]
+    evt the_drawing_out [&Rescues(agent=the_myriad_kami, target=amaterasu)]
+    amaterasu [-Withdrawn] [-Concealed] [+Radiant]
+    amaterasu [#Day]
+  }
+}
