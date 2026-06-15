@@ -279,6 +279,7 @@ import "trl/tropes/rhetoric/the_debate.trl"
 import "trl/tropes/rhetoric/the_dilemma.trl"
 import "trl/tropes/rhetoric/the_reason_you_suck_speech.trl"
 import "trl/tropes/rhetoric/trash_talk.trl"
+import "trl/tropes/structure/alternate_timeline.trl"
 import "trl/tropes/structure/bittersweet_ending.trl"
 import "trl/tropes/structure/bookends.trl"
 import "trl/tropes/structure/cerebus_syndrome.trl"
@@ -294,7 +295,10 @@ import "trl/tropes/structure/eucatastrophe.trl"
 import "trl/tropes/structure/failure_is_the_only_option.trl"
 import "trl/tropes/structure/fantastic_racism.trl"
 import "trl/tropes/structure/flashback.trl"
+import "trl/tropes/structure/for_want_of_a_nail.trl"
 import "trl/tropes/structure/frame_story.trl"
+import "trl/tropes/structure/grandfather_paradox.trl"
+import "trl/tropes/structure/groundhog_day_loop.trl"
 import "trl/tropes/structure/hope_spot.trl"
 import "trl/tropes/structure/idiot_ball.trl"
 import "trl/tropes/structure/in_medias_res.trl"
@@ -304,6 +308,8 @@ import "trl/tropes/structure/plot_armor.trl"
 import "trl/tropes/structure/plot_coupon.trl"
 import "trl/tropes/structure/race_against_the_clock.trl"
 import "trl/tropes/structure/sequel_hook.trl"
+import "trl/tropes/structure/set_right_what_once_went_wrong.trl"
+import "trl/tropes/structure/stable_time_loop.trl"
 import "trl/tropes/structure/status_quo_is_god.trl"
 import "trl/tropes/structure/take_a_third_option.trl"
 import "trl/tropes/structure/the_climax.trl"
@@ -540,6 +546,7 @@ refusal_of_the_call [+Trope(category="Universal", source="allthetropes.org/wiki/
 
 concept a_house_divided [+Trope(category="Friendship", source="https://allthetropes.org/wiki/A_House_Divided")] [%Narrative]
 concept achilles_heel [+Trope(category="Combat Tropes", source="https://allthetropes.org/wiki/Achilles%27_Heel")] [%Narrative]
+concept alternate_timeline [+Trope(category="Time Travel", source="https://allthetropes.org/wiki/Alternate_Timeline")] [%Narrative]
 concept an_aesop [+Trope(category="Morality", source="https://allthetropes.org/wiki/An_Aesop")] [%Narrative]
 concept anagnorisis [+Trope(category="Narrative Devices", source="https://allthetropes.org/wiki/Anagnorisis")] [%Narrative]
 concept anti_hero [+Trope(category="Cast", source="https://allthetropes.org/wiki/Anti-Hero")] [%Narrative]
@@ -608,9 +615,12 @@ concept femme_fatale [+Trope(category="Character Archetypes", source="https://al
 concept fire_forged_friends [+Trope(category="Friendship", source="https://allthetropes.org/wiki/Fire-Forged_Friends")] [%Narrative]
 concept five_man_band [+Trope(category="Cast", source="https://allthetropes.org/wiki/Category:Five-Man_Band")] [%Narrative]
 concept flashback [+Trope(category="Flashbacks and Chronology", source="https://allthetropes.org/wiki/Flashback_(trope)")] [%Narrative]
+concept for_want_of_a_nail [+Trope(category="Time Travel", source="https://allthetropes.org/wiki/For_Want_of_a_Nail")] [%Narrative]
 concept gaslighting [+Trope(category="Epistemic", source="https://allthetropes.org/wiki/Gaslighting")] [%Epistemic]
 concept genre_savvy [+Trope(category="Metafiction", source="https://allthetropes.org/wiki/Genre_Savvy")] [%Epistemic]
 concept government_conspiracy [+Trope(category="Politics", source="https://allthetropes.org/wiki/Government_Conspiracy")] [%Narrative]
+concept grandfather_paradox [+Trope(category="Time Travel", source="https://allthetropes.org/wiki/Grandfather_Paradox")] [%Narrative]
+concept groundhog_day_loop [+Trope(category="Time Travel", source="https://allthetropes.org/wiki/Groundhog_Day_Loop")] [%Narrative]
 concept hannibal_lecture [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Hannibal_Lecture")] [%Narrative]
 concept heel_face_door_slam [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Heel_Face_Door-Slam")] [%Narrative]
 concept heel_realization [+Trope(category="Character Development", source="https://allthetropes.org/wiki/Heel_Realization")] [%Mind]
@@ -683,11 +693,13 @@ concept sales_pitch [+Trope(category="Oratory", source="https://en.wikipedia.org
 concept secret_legacy [+Trope(category="Heritage", source="https://allthetropes.org/wiki/Secret_Legacy")] [%Epistemic]
 concept senseless_sacrifice [+Trope(category="Heroic Sacrifice Tropes", source="https://allthetropes.org/wiki/Senseless_Sacrifice")] [%Interpersonal]
 concept sequel_hook [+Trope(category="Plot Devices", source="https://allthetropes.org/wiki/Sequel_Hook")] [%Narrative]
+concept set_right_what_once_went_wrong [+Trope(category="Time Travel", source="https://allthetropes.org/wiki/Set_Right_What_Once_Went_Wrong")] [%Narrative]
 concept sibling_rivalry [+Trope(category="Relationships", source="https://allthetropes.org/wiki/Sibling_Rivalry")] [%Interpersonal]
 concept siege [+Trope(category="Military and Warfare Tropes", source="https://allthetropes.org/wiki/The_Siege")] [%Political]
 concept spanner_in_the_works [+Trope(category="Plot", source="https://allthetropes.org/wiki/Spanner_in_the_Works")] [%Epistemic]
 concept spectacle [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Visual_Effects_of_Awesome_(Sugar_Wiki)")] [%Narrative]
 concept spit_take [+Trope(category="Comedy", source="https://allthetropes.org/wiki/Spit_Take")] [%Narrative]
+concept stable_time_loop [+Trope(category="Time Travel", source="https://allthetropes.org/wiki/Stable_Time_Loop")] [%Narrative]
 concept status_quo_is_god [+Trope(category="Narrative Devices", source="https://allthetropes.org/wiki/Status_Quo_Is_God")] [%Narrative]
 concept strawman_political [+Trope(category="Rhetoric", source="https://allthetropes.org/wiki/Strawman_Political")] [%Narrative]
 concept stump_speech [+Trope(category="Oratory", source="https://en.wikipedia.org/wiki/Stump_speech")] [%Narrative]

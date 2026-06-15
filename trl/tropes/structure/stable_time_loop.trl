@@ -1,0 +1,88 @@
+// === PREAMBLE ===
+// @trope    Stable Time Loop
+// @category Time Travel / Speculative Fiction
+// @source   https://allthetropes.org/wiki/Stable_Time_Loop
+// @domain   Narrative
+// @scale    arc
+// @version  1.0
+// @engine   >= 0.8.1   (S23 story-time: chron / @@ / [+Loop])
+//
+// Laconic (per the wiki): "It happened because you went back in time. And vice-versa." The FIXED-timeline
+// model: nothing can be changed because the trip into the past was always part of history — the traveller's
+// own act is the cause of the very situation that sent them. (Bootstrap / Ontological Paradox redirects here.)
+//
+// @model    Presentation-time is the spine; the character EVOLVES (Harry-overwhelmed → Harry-the-caster are
+//           two states the engine already distinguishes). `chron`/`@@` only supply WORLD-LINE CONTINUITY —
+//           binding those states to one in-world person across a closed loop ([+Loop]), not duplicate Harrys.
+//           Discriminator: the deed and its own outcome are MUTUALLY ordered (`before` AND `after`) — a closed
+//           loop, which a linear cause→effect (one direction) and a chron-less story (neither) are not.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/epistemic/irony/self_fulfilling_prophecy.trl"   // the non-time-travel sibling: a fate sealed by averting it
+
+assoc stable_time_loop -> [
+  self_fulfilling_prophecy : "the time-travel form of",
+  grandfather_paradox : "the consistent timeline whose mutable opposite is"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the closed-loop causation is the discriminator; promotion model) —
+verb Causes(outcome) [+Temporal]   // an act brings about a condition — here, across the loop, its own precondition
+
+imply StableTimeLoop -> [Temporal, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a traveller CAUSES an outcome that is BOTH `before` AND `after` the deed in
+// story-time — the agent bound on a [&Causes] event (the recall anchor), then the deed and its own outcome
+// re-checked as MUTUALLY ordered over a [+Loop] chron (S23). Mutual order is the loop's signature: in a
+// closed cycle the cause precedes the effect *and* the effect precedes the cause; a plain linear consequence
+// satisfies only one direction, and a chron-less story neither. That asymmetric-pair-made-cyclic is the
+// discriminator — it parts the Stable Loop from an ordinary cause→effect and from the Grandfather Paradox
+// (a one-way MUTABLE unmaking). Engine ≥ 0.8.1 (story-time predicates gate recognition; STYLE §8).
+rule Stable_Time_Loop {
+  when:
+    char $traveller
+    obj  $outcome
+    evt  $deed [&Causes(agent=$traveller, outcome=$outcome)]
+    before($deed, $outcome)
+    after($deed, $outcome)        // …and the outcome also precedes the deed: a closed loop, not a line
+  then:
+    $deed [+StableTimeLoop]
+}
+
+
+// === CONCRETE VIGNETTE: Prisoner of Azkaban — the Time-Turner Patronus (novel/film, 1999/2004) ===
+// The same three hours by the lake, lived twice. First traversal: Harry collapses under the dementors and a
+// stag Patronus saves him from across the water, caster unseen. Turned back, on the second traversal he
+// realises the distant saviour was always himself and casts the stag — the rescue that let him live to come
+// back and cast it. The cause sits inside the loop; nothing was changed, only completed. (`[+Loop]` chron;
+// `harry` is one evolving world-line, not two boys.)
+
+// the three hours as a closed cycle: the casting loops back to the peril it answers
+chron the_casting [+Loop] ~> the_rescue ~> the_casting
+
+// HARRY — one world-line across the loop: overwhelmed, then (evolved) the knowing caster
+char harry [+Protagonist]
+
+// HIS SURVIVAL — the outcome his own later act produces, which in turn produces that later act
+obj his_survival
+
+// THE CASTING (second pass) — he sends the stag across the water; its outcome is his own earlier survival
+scene by_the_lake @@ the_casting {
+  beat 1 {
+    // anchored at the casting, the stag he sends across the water is the cause of his own survival
+    evt the_stag [&Causes(agent=harry, outcome=his_survival)]
+  }
+}
+
+// THE RESCUE (first pass) — that survival comes to pass; downstream of the casting, yet looping back to seed it
+scene the_far_bank @@ the_rescue {
+  beat 1 {
+    his_survival [+Sealed]     // the outcome stands — and the [+Loop] closes it back onto the casting
+    // Stable_Time_Loop -> the_stag [+StableTimeLoop]  (the_stag is both before AND after his_survival: a closed loop)
+  }
+}

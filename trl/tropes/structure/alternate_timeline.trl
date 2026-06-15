@@ -1,0 +1,74 @@
+// === PREAMBLE ===
+// @trope    Alternate Timeline
+// @category Time Travel / Speculative Fiction
+// @source   https://allthetropes.org/wiki/Alternate_Timeline
+// @domain   Narrative
+// @scale    arc
+// @version  1.0
+// @engine   >= 0.8.1   (S23 story-time: a chron FORK — one point, two divergent continuations)
+//
+// Laconic (per the wiki): the BRANCHING model — interfering with the past does not overwrite history, it
+// splits a NEW timeline off it; the original persists, uncontradicted, alongside the divergent branch. (Star
+// Trek 2009: Nero's incursion "altered the flow of history... creating an entire new chain of events" — the
+// Kelvin timeline beside the Prime.)
+//
+// @model    Presentation-time is the spine; chron supplies world-line continuity — here a FORK: one in-world
+//           point precedes two continuations that do not order against each other. The discriminator is a
+//           divergence event off an origin timeline that, unlike the Grandfather Paradox, leaves the origin
+//           intact (no paradox — you branch instead of erasing).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc alternate_timeline -> [
+  grandfather_paradox : "the branching escape from the self-erasure of",
+  for_want_of_a_nail : "a tiny-cause cascade down the branch in"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the timeline-splitting divergence is the discriminator; promotion model) —
+verb Diverges(from) [+Temporal]   // an act splits a new timeline off the original, which persists
+
+imply AlternateTimeline -> [Temporal, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): an agent DIVERGES a new timeline off an origin — the agent bound on a [&Diverges]
+// event (the recall anchor) whose `from=` names the origin timeline that survives the split. The chron FORK
+// (one point `~>` two continuations) carries the world-line continuity (S23). Branching rather than
+// overwriting is the discriminator: parts it from the Grandfather Paradox (the one timeline unmade) and the
+// Stable Time Loop (no change at all).
+rule Alternate_Timeline {
+  when:
+    char $agent
+    obj  $origin
+    evt  $split [&Diverges(agent=$agent, from=$origin)]
+  then:
+    $split [+AlternateTimeline]
+}
+
+
+// === CONCRETE VIGNETTE: Star Trek — Nero's incursion (film, 2009) ===
+// Nero, hurled back from the future, destroys the USS Kelvin and with it the history that was to come. But
+// the Prime timeline is not erased — as Spock Prime explains, the incursion spawns "an entire new chain of
+// events," a parallel reality (the Kelvin timeline) running alongside the original. The crew's futures
+// diverge without contradicting the world they came from: a branch, not a paradox.
+
+// NERO — the time-displaced agent whose incursion splits the timeline
+char nero [+Antagonist]
+
+// THE PRIME TIMELINE — the original history, which persists after the split
+obj the_prime_timeline
+
+// the FORK: one in-world point, two continuations that do not order against each other
+chron the_incursion ~> prime_history, the_incursion ~> kelvin_history
+
+scene the_split @@ the_incursion {
+  beat 1 {
+    // his arrival splits a new chain of events off the original, which is not thereby erased
+    evt the_kelvin_branch [&Diverges(agent=nero, from=the_prime_timeline)]
+    // Alternate_Timeline -> the_kelvin_branch [+AlternateTimeline]
+  }
+}

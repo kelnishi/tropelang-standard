@@ -15,7 +15,7 @@ description  = "The canonical TropeLang trope corpus."
 version      = "1.8.1"
 # Minimum engine that can parse this corpus (the compatibility gate). Conservative floor = the engine
 # this corpus is built/tested against; lower it only once older engines are verified to parse the grammar.
-engine_min   = "0.6.0"   # the work-skeleton tropes use the `work` entity + slot-edge desugar (`scene … @ slot`), a 0.6.0 feature
+engine_min   = "0.8.1"   # the time-travel tropes key on S23 story-time predicates (`before`/`after`), which only GATE recognition on engine >= 0.8.1
 author       = "tropelang"
 homepage     = "https://tropelang.com"
 # CC0 — the tropes are original encodings; the underlying source material is public. Public-domain

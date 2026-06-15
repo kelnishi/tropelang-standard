@@ -53,6 +53,28 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
     resurrection. Fires the betrayal cluster (Evil Chancellor, The Mole Springs, Face-Heel Turn).
   - `amaterasu_and_the_cave.trl` — Shinto (the *Kojiki*): the sibling's offense, the withdrawn god, the
     clever lure that restores the world. Thinner coverage — a flagged signal for later phases.
+- **Time-travel tropes (the first chron / story-time batch)** — vanguard + subgenre across the three Temporal
+  Mutability models, each keyed on the S23 story-time layer (engine ≥ 0.8.1 — `before`/`after` GATE
+  recognition). The story-time predicates are genuine discriminators: every vignette places its ordered
+  operands in distinct `@@`-stamped scenes, and each is verified BOTH ways (forward confirms 1.00; a reversed
+  or chron-less variant does not — STYLE §8). Presentation-time stays the spine; `chron`/`@@` supply
+  world-line continuity over a character's evolving states.
+  - **Stable Time Loop** (Fixed) — https://allthetropes.org/wiki/Stable_Time_Loop
+    (Prisoner of Azkaban time-turner — a `[&Causes]` deed MUTUALLY ordered with its own outcome
+    (`before` AND `after`, the closed-loop signature) over a `[+Loop]` chron. Founds `verb Causes(outcome)`.)
+  - **Groundhog Day Loop** (Fixed, subgenre) — https://allthetropes.org/wiki/Groundhog_Day_Loop
+    (Groundhog Day — a [+Protagonist] `[&Relives]` a `[+Loop]` span, memory intact. Founds `verb Relives(span)`.)
+  - **Grandfather Paradox** (Mutable) — https://allthetropes.org/wiki/Grandfather_Paradox
+    (Back to the Future, the fading photo — an `[&Unmakes]` act erases its own later precondition;
+    `after($existence,$deed)`. Founds `verb Unmakes(precondition)`.)
+  - **Set Right What Once Went Wrong** (Mutable, subgenre) — https://allthetropes.org/wiki/Set_Right_What_Once_Went_Wrong
+    (Quantum Leap — a verb PAIR: a later `[&Mends]` undoes the earlier `[&Wrongs]` act it targets;
+    `before($wrong,$fix)`. Founds `verb Wrongs(victim)` + `verb Mends(wrong)`.)
+  - **Alternate Timeline** (Branching) — https://allthetropes.org/wiki/Alternate_Timeline
+    (Star Trek 2009, Nero — a `[&Diverges]` split off an origin that persists, over a chron FORK. Founds `verb Diverges(from)`.)
+  - **For Want of a Nail** (Branching, subgenre) — https://allthetropes.org/wiki/For_Want_of_a_Nail
+    (A Sound of Thunder — a trivial `[&Cascades]` act remakes the later world; `after($outcome,$change)`. Founds `verb Cascades(into)`.)
+  Corpus **297 → 303 tropes**; self-recognition steady at **303/303 (100%)**.
 
 ### Changed
 - **Culture pass (phase 2) — diversified six trope vignettes off the Hollywood default.** Re-authored the
@@ -63,7 +85,6 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   binding of Fenrir**, Norse), The Paragon (Atticus Finch → **Rama and the forest sages**, Hindu/Ramayana).
   Continues the culture & representation initiative begun in the `examples/` story set.
 
-### Changed
 - **Gender pass — tagged the gender-definitional archetypes.** Added a gender prop to the discriminator (and
   vignette) of tropes whose gender carries distinct connotation, where it was missing — a gendered form is
   not interchangeable with its neutral concept (a Deadbeat Dad ≠ a deadbeat parent; "I am your father" ≠
@@ -78,6 +99,9 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   shift with gender were deliberately left neutral: Manipulative Bastard ("he or she"), Magnificent Bastard,
   The Caligula (a mad ruler of any gender), Puppet King / Rightful King Returns / The Man Behind the Man
   ("king"/"man" idiomatic for ruler/person). Selfcheck steady at 297/297.
+- **`engine_min` 0.6.0 → 0.8.1.** The corpus now contains chron / story-time tropes (S23: `chron`/`@@`/`~~`/
+  `before`/`after`). Their `before`/`after` discriminators only **gate recognition** on engine ≥ 0.8.1 (on
+  0.8.0 the predicates parse but are ignored, so the rules would over-fire); consumers must be on 0.8.1+.
 
 ## [1.8.1] — 2026-06-09
 
