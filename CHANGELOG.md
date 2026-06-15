@@ -45,11 +45,20 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   assoc future-pointers from the 2026-06 integrity sweep, re-enabling each source trope's discovery link.)
 
 ### Changed
-- **Gender pass — tagged the female-definitional archetypes.** Added `[+Feminine]` to the discriminator (and
-  vignette) of tropes whose gender is part of their identity, where it was missing: **Femme Fatale**, **The
-  Vamp**, **Defrosting Ice Queen**, **Damsel in Distress**, **Disposable Woman**. (Mirrors the gender-in-rule
-  precedent set by Heterosexual Life Partners.) Gender-neutral tropes (e.g. Manipulative Bastard — "he or
-  she") were left untagged. Selfcheck steady at 297/297.
+- **Gender pass — tagged the gender-definitional archetypes.** Added a gender prop to the discriminator (and
+  vignette) of tropes whose gender carries distinct connotation, where it was missing — a gendered form is
+  not interchangeable with its neutral concept (a Deadbeat Dad ≠ a deadbeat parent; "I am your father" ≠
+  revealing motherhood):
+  - `[+Feminine]`: **Femme Fatale**, **The Vamp**, **Defrosting Ice Queen**, **Damsel in Distress**,
+    **Disposable Woman**.
+  - `[+Masculine]`: **I Am Your Father** (the paternal reveal, distinct from a mother's — the revealer is now
+    fixed `[+Masculine]`), **The Evil Prince** (vs the Evil Queen / wicked stepmother), **The Wizard** (vs
+    the Witch).
+
+  Mirrors the gender-in-rule precedent set by Heterosexual Life Partners. Tropes whose concept does *not*
+  shift with gender were deliberately left neutral: Manipulative Bastard ("he or she"), Magnificent Bastard,
+  The Caligula (a mad ruler of any gender), Puppet King / Rightful King Returns / The Man Behind the Man
+  ("king"/"man" idiomatic for ruler/person). Selfcheck steady at 297/297.
 
 ## [1.8.1] — 2026-06-09
 

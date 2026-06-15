@@ -42,7 +42,7 @@ imply TheEvilPrince -> [Usurpation, Narrative]
 // the succession-grab itself is recognized.
 rule The_Evil_Prince {
   when:
-    char $prince [+Pretender]
+    char $prince [+Pretender] [+Masculine]
     char $kin [+Royalty]
     $prince != $kin
     evt  $coup [&Usurps(agent=$prince, target=$kin)]
@@ -59,7 +59,7 @@ rule The_Evil_Prince {
 // walks the bloodless one — supplanting Iroh's birthright by his father's decree — and matches the same rule.)
 
 // SCAR — the second-in-line who seizes the throne ahead of his blood
-char scar [+Pretender] [+Antagonist]
+char scar [+Pretender] [+Antagonist] [+Masculine]
 
 // MUFASA — the king and brother, the blood ahead of him
 char mufasa [+Royalty]
