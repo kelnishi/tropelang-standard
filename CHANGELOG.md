@@ -44,6 +44,15 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   Corpus **291 → 297 tropes**; self-recognition steady at **297/297 (100%)**. (Converts the six commented
   assoc future-pointers from the 2026-06 integrity sweep, re-enabling each source trope's discovery link.)
 
+### Changed
+- **Culture pass (phase 2) — diversified six trope vignettes off the Hollywood default.** Re-authored the
+  CONCRETE VIGNETTE of six tropes onto religious/mythological traditions (rules untouched; each still
+  self-recognizes at 297/297): The Mentor (Karate Kid → **Krishna & Arjuna**, Hindu), The Quest (Indiana Jones
+  → **Journey to the West / Xuanzang**, Chinese), Back from the Dead (Aslan → **Osiris & Isis**, Egyptian),
+  The Hero (Beowulf → **the Hungry Tigress Jataka**, Buddhist), Self-Fulfilling Prophecy (Oedipus → **the
+  binding of Fenrir**, Norse), The Paragon (Atticus Finch → **Rama and the forest sages**, Hindu/Ramayana).
+  Continues the culture & representation initiative begun in the `examples/` story set.
+
 ## [1.8.1] — 2026-06-09
 
 ### Added

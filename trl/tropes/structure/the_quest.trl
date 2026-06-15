@@ -48,23 +48,22 @@ rule The_Quest {
 }
 
 
-// === CONCRETE VIGNETTE: Raiders of the Lost Ark — Indiana Jones (film, 1981) ===
-// Indiana Jones is sent after the Ark of the Covenant before the Nazis can claim it, and the firm goal
-// drives him clear across the world: a Nepalese tavern, the markets and dig sites of Cairo, a desert
-// chase, an island in the Aegean. Every obstacle — the rival Belloq, the Nazi dig, the snake-filled Well
-// of Souls — is a station on the way to the one sought thing. The objective is fixed and the journey is
-// the story: a quest in the adventure key.
+// === CONCRETE VIGNETTE: Journey to the West — Xuanzang's pilgrimage (Chinese, Wu Cheng'en, 16th c.) ===
+// The monk Xuanzang is sent west out of Tang China to fetch the true Buddhist scriptures from India, and the
+// firm goal drives the whole road: mountains and rivers, demon-haunted passes, eighty-one ordeals, with Sun
+// Wukong and his fellow disciples guarding him every step. The sutras are the one fixed thing every trial
+// stands between him and: the objective is set, and the journey is the story.
 
-// INDIANA JONES — the archaeologist sent to find the Ark
-char indiana_jones [+Protagonist]
+// XUANZANG — the monk sent west to fetch the scriptures
+char xuanzang [+Protagonist]
 
-// THE ARK OF THE COVENANT — the firm goal that drives the whole journey
-obj the_ark [+Objective] [+MacGuffin]
+// THE SUTRAS — the true scriptures in the West, the firm goal that drives the whole journey
+obj the_sutras [+Objective] [+Sacred]
 
-scene the_search_for_the_ark {
+scene the_pilgrimage_west {
   beat 1 {
     // the goal is set; he sets out across the world to reach it
-    evt the_pursuit [&Quests(agent=indiana_jones, for=the_ark)]
-    // The_Quest -> the_pursuit [+TheQuest]
+    evt the_journey_west [&Quests(agent=xuanzang, for=the_sutras)]
+    // The_Quest -> the_journey_west [+TheQuest]
   }
 }

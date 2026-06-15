@@ -44,27 +44,28 @@ rule TheHero {
 }
 
 
-// === CONCRETE VIGNETTE: Beowulf — the hero against Grendel (Old English epic poem) ===
+// === CONCRETE VIGNETTE: The Hungry Tigress Jataka — Prince Mahasattva (Buddhist, the Jatakamala) ===
+// Walking in the forest, Prince Mahasattva — a former life of the Buddha — comes upon a tigress so starved
+// she is about to devour her own newborn cubs. Moved by compassion, and finding no other food to give, he
+// lays his own body down before her so that she may feed and the cubs may live. The supreme self-giving: a
+// life laid down, for another's.
 
-// BEOWULF
-char beowulf [+Protagonist] [+Courageous] [+Warrior]
+// PRINCE MAHASATTVA — a former life of the Buddha, who lays down his body out of compassion
+char mahasattva [+Protagonist] [+Courageous]
 
-// GRENDEL
-char grendel [+Monster]
+// THE TIGRESS — starving, about to devour her own cubs but for his gift
+char the_tigress [+Mortal]
 
-// THE DANES
-char danes [+Folk] [+Besieged]
+// EXT. THE FOREST CLIFF (the famished tigress and her cubs, the prince's descent)
+set the_forest_cliff [+Exterior]
 
-// HEOROT, THE MEAD-HALL
-set heorot [+Interior] [+Besieged]
-
-scene the_deed {
+scene the_gift_of_the_body {
   beat 1 {
-    beowulf @ heorot
-    grendel @ heorot
-    evt fight [&Sacrificed_For(agent=beowulf, other=danes)]
-    fight -> beowulf > grendel : "Faces The Monster Bare-Handed"
-    beowulf [+Hero]
-    beowulf -- sacrifice
+    mahasattva @ the_forest_cliff
+    the_tigress @ the_forest_cliff
+    evt the_offering [&Sacrificed_For(agent=mahasattva, other=the_tigress)]
+    the_offering -> mahasattva > the_tigress : "Lays Down His Body"
+    mahasattva [+Hero]
+    mahasattva -- sacrifice
   }
 }

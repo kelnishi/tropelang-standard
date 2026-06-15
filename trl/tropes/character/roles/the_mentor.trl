@@ -47,18 +47,22 @@ rule TheMentor {
 }
 
 
-// === CONCRETE VIGNETTE: The Karate Kid — Mr. Miyagi and Daniel (film) ===
+// === CONCRETE VIGNETTE: The Bhagavad Gita — Krishna and Arjuna (Hindu, the Mahabharata) ===
+// On the eve of battle at Kurukshetra the warrior Arjuna falters: he cannot bring himself to fight kinsmen,
+// teachers, and friends, and lays down his bow in despair. His charioteer is Krishna — the divine in human
+// form — who across the length of the field instructs him in duty and detachment, action and the self, until
+// Arjuna takes up the bow again, taught. The act of teaching is the discriminator.
 
-// DANIEL LARUSSO
-char daniel [+Protagonist] [+Untrained]
+// ARJUNA — the warrior who falters on the field and must be taught his way
+char arjuna [+Protagonist] [+Untrained]
 
-// MR. MIYAGI
-char miyagi [+Wise] [+Elder]
+// KRISHNA — the divine charioteer whose counsel is the Gita itself
+char krishna [+Wise] [+Divine]
 
-scene the_lessons {
+scene the_field_of_kurukshetra {
   beat 1 {
-    // "Wax on, wax off" — the chores were the training; the act of teaching is the discriminator.
-    evt discipline [&Taught(agent=miyagi, to=daniel)]
-    // TheMentor derives: miyagi [+Mentor], daniel [@Student_Of(mentor=miyagi)]
+    // Krishna instructs the despairing warrior in duty and the self — the act of teaching is the discriminator.
+    evt the_counsel [&Taught(agent=krishna, to=arjuna)]
+    // TheMentor derives: krishna [+Mentor], arjuna [@Student_Of(mentor=krishna)]
   }
 }

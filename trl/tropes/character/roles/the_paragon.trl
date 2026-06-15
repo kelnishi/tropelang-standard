@@ -33,17 +33,18 @@ rule The_Paragon {
     $c -- honor
 }
 
-// === CONCRETE VIGNETTE: To Kill a Mockingbird — Atticus Finch (novel, 1960) ===
-// A small-town lawyer who defends a man he knows the town will convict regardless, because it is
-// right — and does it with a courtesy and steadiness that make him the moral centre the whole book
-// is measured against.
-char atticus [+Protagonist] [+Virtuous] [+Incorruptible]
-char tom     [+Accused]   // the man the town will convict regardless
+// === CONCRETE VIGNETTE: The Ramayana — Rama protects the forest sages (Hindu, Valmiki) ===
+// In exile in the Dandaka forest, Rama — Maryada Purushottama, the perfect man — finds the ascetics living
+// in terror, preyed upon by the rakshasas who haunt the woods. Though it is not his own quarrel, and though
+// it draws the demons' wrath down upon himself, he vows to rid the forest of them and stands as the sages'
+// shield. He does right because it is right, at cost: the moral standard the epic is measured against.
+char rama         [+Protagonist] [+Virtuous] [+Incorruptible]
+char the_ascetics [+Innocent]   // the forest sages, preyed upon by the rakshasas
 
-scene the_courthouse {
+scene the_dandaka_forest {
   beat 1 {
-    // Does right when right cannot win — defends the man the town has already condemned.
-    evt the_defense [&Protected(agent=atticus, other=tom)]
-    // The_Paragon derives: atticus [+Paragon] -- honor
+    // Stands as shield for the persecuted sages though it is not his quarrel and draws the demons' wrath.
+    evt the_vow [&Protected(agent=rama, other=the_ascetics)]
+    // The_Paragon derives: rama [+Paragon] -- honor
   }
 }
