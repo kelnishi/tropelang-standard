@@ -46,7 +46,7 @@ imply FemmeFatale -> [Antagonist, Manipulation, deception, Narrative]
 // no target and no ruin: no bound, infatuated mark -> no derivation.)
 rule Femme_Fatale {
   when:
-    char $femme [+Seductive] [+Manipulative]
+    char $femme [+Seductive] [+Manipulative] [+Feminine]
     char $mark  [#Infatuated]
     evt  $lure  [&Schemes(agent=$femme, target=$mark)]
     evt  $turn  [&Betrays(agent=$femme, target=$mark)]
@@ -69,7 +69,7 @@ rule Femme_Fatale {
 // never desire for its own sake; it was a blade pointed at his ruin from the first soft word.
 
 // MILADY DE WINTER — the agent; allure is her instrument, not her appetite
-char milady [+Antagonist] [+Seductive] [+Manipulative] [+Deceptive] [+Cunning] [+Lethal]
+char milady [+Antagonist] [+Seductive] [+Manipulative] [+Deceptive] [+Cunning] [+Lethal] [+Feminine]
 
 // JOHN FELTON — the jailer she turns into the murder weapon, undone by his own infatuation
 char felton [+Victim]

@@ -29,7 +29,7 @@ imply Wizard -> [Arcane, Wise, Narrative]
 // arcane nature on the caster (STYLE §8). The casting is what parts the Wizard from the plain Mentor.
 rule The_Wizard {
   when:
-    char $c [+Arcane] [+Wise]
+    char $c [+Arcane] [+Wise] [+Masculine]
     evt  $feat [&Casts(agent=$c, spell=$s)]
   then:
     $c [+Wizard]
@@ -42,7 +42,7 @@ rule The_Wizard {
 // sea and the azured vault set roaring war." Learning turned to power: the magus, not the counsellor.
 
 // PROSPERO — the exiled duke, master of the secret arts
-char prospero [+Arcane] [+Wise]
+char prospero [+Arcane] [+Wise] [+Masculine]
 
 // EXT. THE ENCHANTED ISLE — A TEMPEST
 set the_isle [+Exterior] [+Remote]

@@ -36,10 +36,11 @@ imply IAmYourFather -> [Twist, Narrative]
 // of a [&Reveals] event (agent=$revealer), so phase-2 re-checks [+Parentage] on the bound fact (STYLE
 // §8). Binding the parent-child content on the disclosed fact is the discriminator: this fires where the
 // revealed fact is specifically a bloodline, not on a generic reveal. The famous variety names an
-// [+Antagonist] as the revealer; the rule keeps the revealer open (an ally or mentor also qualifies).
+// [+Antagonist] as the revealer; the rule fixes the revealer [+Masculine] — this is the first-person
+// paternal declaration the trope is named for, distinct from a mother's reveal (which is its own variety).
 rule I_Am_Your_Father {
   when:
-    char $revealer
+    char $revealer [+Masculine]
     obj  $truth [+Parentage]
     evt  $reveal [&Reveals(agent=$revealer, fact=$truth)]
   then:
@@ -55,7 +56,7 @@ rule I_Am_Your_Father {
 // one breath. The most infamous of all kinship reveals.
 
 // DARTH VADER — the antagonist who is, it turns out, the hero's father
-char vader [+Antagonist]
+char vader [+Antagonist] [+Masculine]
 
 // LUKE SKYWALKER — the hero given the reveal
 char luke [+Protagonist]
