@@ -37,18 +37,22 @@ rule Self_Fulfilling_Prophecy {
 }
 
 
-// === CONCRETE VIGNETTE: Oedipus Rex — the flight that arrives (play, ~429 BCE) ===
+// === CONCRETE VIGNETTE: The binding of Fenrir — the doom the gods seal (Norse, the Prose Edda) ===
 
-char oedipus [+Protagonist]
+char odin [+Protagonist] [+Divine]
+char the_norns [+Divine]
 
-scene the_oracle {
+scene the_wolf_and_the_doom {
   beat 1 {
-    evt foretold [&Foretells(agent=delphi, subject=oedipus, fate=patricide)]
-    ?oedipus [+Fated(to=patricide)]?            // the fate hangs latent over him
+    // The Norns foretell that the wolf Fenrir will swallow Odin at the world's end.
+    evt foretold [&Foretells(agent=the_norns, subject=odin, fate=ragnarok)]
+    ?odin [+Fated(to=ragnarok)]?                 // the doom hangs latent over him
   }
   beat 2 {
-    evt flight [&Averts(agent=oedipus, target=patricide)]   // he flees Corinth to spare his "father"
-    !oedipus [+Fated(to=patricide)]!            // the road out of Corinth runs to Thebes — now absolute
-    // Self_Fulfilling_Prophecy -> flight [+SelfFulfillingProphecy]
+    // To cheat the doom the Aesir trick Fenrir into the fetter Gleipnir and bind him — and that betrayal
+    // earns the wolf's vengeance when he breaks free at the end. The aversion is what seals the fate.
+    evt the_binding [&Averts(agent=odin, target=ragnarok)]
+    !odin [+Fated(to=ragnarok)]!                 // the binding makes the foretold end absolute
+    // Self_Fulfilling_Prophecy -> the_binding [+SelfFulfillingProphecy]
   }
 }

@@ -45,27 +45,26 @@ rule Back_From_The_Dead {
 }
 
 
-// === CONCRETE VIGNETTE: The Lion, the Witch and the Wardrobe — Aslan (Lewis, novel, 1950) ===
-// The White Witch binds Aslan to the Stone Table and kills him before her host, claiming the traitor's
-// blood the Deep Magic owes her — and he is truly dead, the girls weeping over the cold body through the
-// night. But there is a Deeper Magic from before the dawn of time: when a willing innocent is killed in a
-// traitor's place, Death itself works backward. At sunrise the Stone Table cracks and Aslan stands alive
-// again, larger than before. A real death, really undone.
+// === CONCRETE VIGNETTE: The Osiris myth — slain by Set, restored by Isis (Egyptian, the Pyramid Texts) ===
+// Osiris, the good king, is murdered by his envious brother Set — sealed in a coffer, then hacked into
+// fourteen pieces and scattered the length of Egypt. He is truly dead. But his wife Isis searches out every
+// scattered piece, binds the body whole in linen, and with her magic breathes the breath of life back into
+// him — long enough to conceive Horus, and to rise as lord and judge of the dead. A real death, really undone.
 
-// ASLAN — slain on the Stone Table, truly dead
-char aslan [+Dead]
+// OSIRIS — murdered and dismembered by his brother Set, truly dead
+char osiris [+Dead]
 
-// THE DEEPER MAGIC — the agency from before the dawn of time that works death backward
-char the_deeper_magic [+Primordial]
+// ISIS — the goddess whose magic gathers the scattered body and works death backward
+char isis [+Divine] [+Primordial]
 
-// EXT. THE STONE TABLE - DAWN (the cracked slab, the risen lion)
-set the_stone_table [+Exterior] [+Dawn]
+// EXT. THE BANKS OF THE NILE - DAWN (the body bound in linen, the breath returning)
+set the_nile [+Exterior] [+Dawn]
 
-scene the_breaking_of_the_table {
+scene the_rejoining {
   beat 1 {
-    aslan @ the_stone_table
-    // the Deeper Magic works death backward at sunrise
-    evt the_rising [&Resurrects(agent=the_deeper_magic, subject=aslan)]
-    // Back_From_The_Dead -> aslan [-Dead] [+Alive]; the_rising [+BackFromTheDead]
+    osiris @ the_nile
+    // Isis gathers the scattered body and breathes the breath of life back into it
+    evt the_revival [&Resurrects(agent=isis, subject=osiris)]
+    // Back_From_The_Dead -> osiris [-Dead] [+Alive]; the_revival [+BackFromTheDead]
   }
 }
