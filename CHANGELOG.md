@@ -17,6 +17,8 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 
 ## [Unreleased]
 
+## [1.9.0] — 2026-06-15
+
 ### Added
 - **Hilarious Outtakes** (Metafiction / Paratext) — https://allthetropes.org/wiki/Hilarious_Outtakes
   (The Cannonball Run gag reel — a performer `[&Flubs]` a take, the muffs gathered into a [+GagReel]; the
