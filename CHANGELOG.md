@@ -68,7 +68,8 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
     (Back to the Future, the fading photo — an `[&Unmakes]` act erases its own later precondition;
     `after($existence,$deed)`. Founds `verb Unmakes(precondition)`.)
   - **Set Right What Once Went Wrong** (Mutable, subgenre) — https://allthetropes.org/wiki/Set_Right_What_Once_Went_Wrong
-    (Quantum Leap — a traveller `[&Mends]` an earlier wrong; `before($wrong,$fix)`. Founds `verb Mends(wrong)`.)
+    (Quantum Leap — a verb PAIR: a later `[&Mends]` undoes the earlier `[&Wrongs]` act it targets;
+    `before($wrong,$fix)`. Founds `verb Wrongs(victim)` + `verb Mends(wrong)`.)
   - **Alternate Timeline** (Branching) — https://allthetropes.org/wiki/Alternate_Timeline
     (Star Trek 2009, Nero — a `[&Diverges]` split off an origin that persists, over a chron FORK. Founds `verb Diverges(from)`.)
   - **For Want of a Nail** (Branching, subgenre) — https://allthetropes.org/wiki/For_Want_of_a_Nail

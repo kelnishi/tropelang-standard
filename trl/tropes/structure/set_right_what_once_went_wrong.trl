@@ -5,15 +5,16 @@
 // @domain   Narrative
 // @scale    arc
 // @version  1.0
-// @engine   >= 0.8.1   (S23 story-time: chron `~>` + before())
+// @engine   >= 0.8.1   (S23 story-time: chron `~>` + before() over a verb pair)
 //
 // Laconic (per the wiki): the heroic MUTABLE-timeline subgenre — a traveller reaches into the past on purpose
 // to repair a wrong, bettering the present that follows. (Quantum Leap: "to put right what once went wrong.")
 //
-// @model    Presentation-time is the spine; chron supplies world-line continuity. The discriminator is a
-//           deliberate repair of an EARLIER wrong — `before($wrong, $fix)` re-checks that the mended wrong
-//           precedes the mending in story-time. The benevolent inverse of the Grandfather Paradox (a change
-//           that betters the one timeline, rather than self-erasing it).
+// @model    Presentation-time is the spine; chron supplies world-line continuity. The "wrong" is an ACT, not a
+//           thing — so the discriminator is a VERB PAIR: an earlier [&Wrongs] event that the later [&Mends]
+//           event reaches back to undo, with `before($wrong, $fix)` ordering the two in story-time. Distinct
+//           event classes mean no permuted binding (STYLE §8). The benevolent inverse of the Grandfather
+//           Paradox (a change that betters the one timeline, rather than self-erasing it).
 
 
 // === IMPORTS & ASSOCIATIONS ===
@@ -26,22 +27,25 @@ assoc set_right_what_once_went_wrong -> [
 
 
 // === ONTOLOGY ===
-// — founded here (the purposeful repair of a past wrong is the discriminator; promotion model) —
-verb Mends(wrong) [+Temporal]   // reaches into the past to repair a wrong, changing the timeline for the better
+// — founded here (the purposeful repair of a past wrong ACT is the discriminator; promotion model) —
+verb Wrongs(victim) [+Temporal]   // the past harm: an act that wrongs someone, later reached back to
+verb Mends(wrong)   [+Temporal]   // reaches into the past to undo an earlier wrong act, bettering the timeline
 
 imply SetRightWhatOnceWentWrong -> [Temporal, Redemption, Narrative]
 
 
 // === ABSTRACT RULE ===
-// Naming rule (arc scale): a traveller MENDS an earlier wrong — the agent bound on a [&Mends] event (the
-// recall anchor) whose `wrong=` names a past harm that `before($wrong, $fix)` places earlier in story-time
-// (S23). Reaching back ON PURPOSE to better the present is the discriminator: parts it from the Grandfather
-// Paradox (an accidental self-erasing change) and from any ordinary present-tense fix (no past reached into).
+// Naming rule (arc scale): a traveller MENDS an earlier WRONG ACT — a verb pair. The agent is bound on a
+// [&Mends] event (the recall anchor) whose `wrong=` names the earlier [&Wrongs] event that `before($wrong,
+// $fix)` places earlier in story-time (S23). Two distinct event classes — the harm and its repair — so there
+// is no permuted binding; the order truly separates the mend-the-past act from the harm it undoes. Reaching
+// back ON PURPOSE is the discriminator: it differs from the Grandfather Paradox (an accidental self-erasing
+// change) and from any ordinary present-tense fix (no earlier act reached into).
 rule Set_Right_What_Once_Went_Wrong {
   when:
-    char $traveller
-    obj  $wrong
-    evt  $fix [&Mends(agent=$traveller, wrong=$wrong)]
+    char $traveller [+Protagonist]
+    evt  $wrong [&Wrongs(agent=$wrongdoer, victim=$victim)]
+    evt  $fix   [&Mends(agent=$traveller, wrong=$wrong)]
     before($wrong, $fix)
   then:
     $fix [+SetRightWhatOnceWentWrong]
@@ -54,26 +58,27 @@ rule Set_Right_What_Once_Went_Wrong {
 // and cannot leap onward until he has reached in and set it right, bettering the history that follows. "Putting
 // right what once went wrong," week after week.
 
+// in-world order: the wrong act lies earlier than the mending that reaches back to undo it
+chron the_wrong_done ~> the_leap_in
+
 // SAM BECKETT — the traveller who lands at the hinge of a past wrong to repair it
 char sam [+Protagonist]
 
-// THE WRONG — the past harm he reaches back to mend
-obj the_wrong
+// the wrongdoer and the wronged — the participants the earlier act is defined by
+char the_wrongdoer
+char the_victim
 
-// in-world order: the wrong lies earlier than the mending that reaches back to it
-chron the_wrong_done ~> the_leap_in
-
-// THE WRONG AS IT FELL — positioned earlier than the leap-in that reaches back to mend it
-scene the_wrong_itself @@ the_wrong_done {
+// THE WRONG AS IT FELL — the harming act, positioned earlier than the leap-in that reaches back to it
+scene the_original_wrong @@ the_wrong_done {
   beat 1 {
-    the_wrong [#Doomed]   // the harm as it first happened — earlier in story-time than Sam's mending
+    evt the_harm [&Wrongs(agent=the_wrongdoer, victim=the_victim)]
   }
 }
 
+// THE LEAP-IN — Sam reaches into that earlier act and sets it right, bettering the present that follows
 scene the_repair @@ the_leap_in {
   beat 1 {
-    // he reaches into the earlier wrong and sets it right, bettering the present that follows
-    evt the_setting_right [&Mends(agent=sam, wrong=the_wrong)]
+    evt the_setting_right [&Mends(agent=sam, wrong=the_harm)]
     // Set_Right_What_Once_Went_Wrong -> the_setting_right [+SetRightWhatOnceWentWrong]
   }
 }
