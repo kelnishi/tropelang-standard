@@ -1,0 +1,31 @@
+// === STORY ===
+// @title    Groundhog Day — the looping day (a Time Loop)
+// @kind     story (narrative for `drams`; chron/story-time demo, engine >= 0.8.0)
+// @feature  S23 story-time: a `[+Loop]` cycle on a recurring `chron` marker
+//
+// Phil wakes to the same February 2nd again and again. The world resets each dawn; only he carries memory
+// across the turn of the loop — first baffled, then despairing, then finally using the repetition to become
+// someone worth waking beside. The day is a genuine cycle: the `reveille` marker recurs, carrying [+Loop].
+
+import "trl/tropes/index.trl"   // full corpus vocabulary + trope overlay
+
+// A single day that loops: the marker recurs, and [+Loop] makes the ~> cycle loud (not an error).
+chron reveille [+Loop] ~> the_day ~> reveille
+
+char phil [+Protagonist]
+char rita [+LoveInterest]
+
+// FIRST TURN — the loop is invisible to him; he lives the day as if it were the only one.
+scene the_first_february @@ reveille {
+  beat 1 {
+    phil [#Ignorant]
+  }
+}
+
+// LATER TURNS — the world resets but his memory does not: the lone fixed point in a repeating day.
+scene the_repeating_day @@ the_day {
+  beat 1 {
+    phil [#Aware]                 // he alone retains the previous iterations as the day resets around him
+    phil -- rita : "Learns To Deserve"
+  }
+}

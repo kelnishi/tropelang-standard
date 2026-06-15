@@ -1,0 +1,43 @@
+// === STORY ===
+// @title    Back to the Future — the fading photograph (a Temporal Paradox / Grandfather)
+// @kind     story (narrative for `drams`; chron/story-time demo, engine >= 0.8.0)
+// @feature  S23 story-time: `chron … ~> …` (in-world succession) + `@@` anchors; a past act
+//           jeopardising its own future precondition (the paradox depicted as the fading photo)
+//
+// Thrown back to 1955, Marty accidentally derails the meeting of his teenage parents — and since their
+// romance is the precondition of his own existence, he begins to be erased: the photograph of him and his
+// siblings fades from the edges in. He has to repair the very past that produced him, pushing the two
+// together again before the photo (and he) wink out. The grandfather paradox, with a Polaroid for a readout.
+
+import "trl/tropes/index.trl"   // full corpus vocabulary + trope overlay
+
+state Fading [+Temporal]        // an existence unravelling as its own past precondition comes undone
+
+// in-world succession: his parents' youth precedes the present he was thrown back from
+chron nineteen_fifty_five ~> nineteen_eighty_five
+
+char marty    [+Protagonist]
+char george   [+Masculine]      // his father, as a teenager
+char lorraine [+Feminine]       // his mother, as a teenager
+obj  the_photograph [+MacGuffin]   // Marty and his siblings — the live readout of his own existence
+
+// THE PAST — thrown back, Marty derails the meeting that was to make him exist; he starts to be erased.
+scene hill_valley_1955 @@ nineteen_fifty_five {
+  beat 1 {
+    marty >< george                  // his interference displaces his parents' first meeting
+    the_photograph [#Fading]         // his own existence, unravelling from the past forward
+  }
+  beat 2 {
+    // he must repair the very precondition of his present self before the window closes
+    marty -> george : "Pushes Toward Lorraine"
+    george -- lorraine : "Falls For"
+    the_photograph [-Fading]         // the timeline re-coheres; the readout steadies
+  }
+}
+
+// THE PRESENT — the world-line he came from, contingent on a past he is now inside and had to protect.
+scene present_day @@ nineteen_eighty_five {
+  beat 1 {
+    marty [#Safe]
+  }
+}

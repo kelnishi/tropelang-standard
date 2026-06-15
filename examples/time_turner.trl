@@ -1,0 +1,41 @@
+// === STORY ===
+// @title    The Time-Turner — Prisoner of Azkaban (stable loop + self-encounter)
+// @kind     story (narrative for `drams`; chron/story-time demo, engine >= 0.8.0)
+// @feature  S23 story-time: `chron … ~~ …` (co-presence), `@@` anchors, `~~` self-encounter
+//
+// The climax of Prisoner of Azkaban: the same three hours by the lake, lived twice. On the FIRST traversal
+// Harry collapses under the dementors and a stag Patronus saves him from across the water, cast by a figure
+// he cannot make out. Turned back by the Time-Turner, on the SECOND traversal he watches his earlier self
+// about to die, realises the distant saviour was always himself, and casts the stag. A STABLE loop — he was
+// only ever saved because he had already, later, saved himself.
+
+import "trl/tropes/index.trl"   // full corpus vocabulary + trope overlay
+
+// The three hours are ONE external instant, traversed twice: co-presence (~~), not succession (~>).
+chron first_pass ~~ second_pass
+
+char harry      [+Protagonist]
+char dementors  [+Antagonist] [+Collective]
+obj  the_time_turner [+MacGuffin]
+concept expecto_patronum
+
+// FIRST TRAVERSAL — Harry, overwhelmed by the dementors, is saved by a stag from across the lake.
+scene the_lake_first @@ first_pass {
+  beat 1 {
+    harry [#Overwhelmed]
+    dementors >< harry            // the dementors close on him; the caster is, as yet, unseen
+  }
+}
+
+// SECOND TRAVERSAL — turned back by the Time-Turner, he meets the moment again and closes the loop.
+scene the_lake_second @@ second_pass {
+  beat 1 {
+    // two traversals of one boy, co-present across the water: a self-encounter
+    harry @@ second_pass ~~ harry @@ first_pass
+  }
+  beat 2 {
+    // he casts the stag that saves his earlier self — the cause was always inside the loop
+    evt the_patronus [&Casts(agent=harry, spell=expecto_patronum)]
+    harry -> harry @@ first_pass : "Saves"
+  }
+}
