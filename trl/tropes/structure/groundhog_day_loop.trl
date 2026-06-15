@@ -1,0 +1,66 @@
+// === PREAMBLE ===
+// @trope    Groundhog Day Loop
+// @category Time Travel / Speculative Fiction
+// @source   https://allthetropes.org/wiki/Groundhog_Day_Loop
+// @domain   Narrative
+// @scale    arc
+// @version  1.0
+// @engine   >= 0.8.0   (S23 story-time: a [+Loop] cycle the protagonist relives)
+//
+// Laconic (per the wiki): "Time repeats itself" — a character is trapped reliving the same span over and
+// over; the world resets each turn while they alone carry memory across it. A FIXED-model subgenre: the loop
+// cannot be escaped by changing things, only by changing oneself.
+//
+// @model    Presentation-time is the spine; the protagonist EVOLVES (ignorant → aware → grown) — those are
+//           distinct states the engine already tracks. `chron … [+Loop] …` supplies the world-line continuity
+//           (the cycle). The discriminator is a protagonist who RELIVES the looped span, retaining memory.
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+import "trl/tropes/structure/stable_time_loop.trl"   // the other Fixed-model loop (causal closure vs lived repetition)
+
+assoc groundhog_day_loop -> [
+  stable_time_loop : "a consciously-relived cousin of the causal loop in"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (reliving a reset span with retained memory is the discriminator; promotion model) —
+verb Relives(span) [+Temporal]   // lives a looped span again, keeping memory as the world resets around one
+
+imply GroundhogDayLoop -> [Temporal, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a [+Protagonist] RELIVES the looped span — the protagonist bound on the agent of a
+// [&Relives] event (the recall anchor), while a `[+Loop]` chron carries the cycle (S23). The lone fixed point
+// in a resetting world is the discriminator: parts it from the Stable Time Loop (a closed CAUSAL chain, not a
+// consciously-relived one) and from ordinary repetition (no reset, no retained memory).
+rule Groundhog_Day_Loop {
+  when:
+    char $c [+Protagonist]
+    evt  $iteration [&Relives(agent=$c)]
+  then:
+    $iteration [+GroundhogDayLoop]
+}
+
+
+// === CONCRETE VIGNETTE: Groundhog Day — Phil Connors (film, 1993) ===
+// Phil wakes to the same February 2nd again and again. The town resets each dawn; only he carries the
+// previous days forward — baffled, then despairing, then finally using the repetition to become someone worth
+// waking beside. He cannot break the day by altering it; the loop ends only when he changes himself.
+
+// PHIL — one evolving world-line: the lone memory in a resetting day
+char phil [+Protagonist]
+
+// the day as a genuine cycle: the waking marker recurs, carrying [+Loop]
+chron reveille [+Loop] ~> the_day ~> reveille
+
+scene the_repeating_february @@ the_day {
+  beat 1 {
+    // he lives the reset day again, his memory the one thing that does not roll back
+    evt the_iteration [&Relives(agent=phil)]
+    // Groundhog_Day_Loop -> the_iteration [+GroundhogDayLoop]
+  }
+}

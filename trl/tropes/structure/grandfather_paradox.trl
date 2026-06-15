@@ -1,0 +1,77 @@
+// === PREAMBLE ===
+// @trope    Grandfather Paradox
+// @category Time Travel / Speculative Fiction
+// @source   https://allthetropes.org/wiki/Grandfather_Paradox
+// @domain   Narrative
+// @scale    arc
+// @version  1.0
+// @engine   >= 0.8.0   (S23 story-time: chron / @@ / after())
+//
+// Laconic (per the wiki): the MUTABLE-timeline model's signature contradiction — a traveller changes the
+// past in a way that removes the precondition of their own later existence (kill your grandfather; you are
+// never born; so who killed him?). The single timeline is overwritten, and the actor is threatened by their
+// own act.
+//
+// @model    Presentation-time is the spine; chron supplies world-line continuity. The discriminator is an act
+//           at an EARLIER story-time that unmakes a condition the actor's OWN LATER story-time depends on —
+//           `after($existence, $deed)` re-checks that the threatened thing lies later than the unmaking act.
+//           Opposite of the Stable Time Loop (a FIXED timeline that cannot be changed).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc grandfather_paradox -> [
+  stable_time_loop : "the mutable-timeline opposite of the fixed loop in",
+  set_right_what_once_went_wrong : "the same mutable timeline, changed on purpose for good, in",
+  alternate_timeline : "averts the paradox by branching, per"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the self-negating change is the discriminator; promotion model) —
+verb Unmakes(precondition) [+Temporal]   // an act undoes a condition a later state depends on
+
+imply GrandfatherParadox -> [Temporal, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a traveller UNMAKES, at an earlier story-time, the very precondition of their own
+// later existence — the agent bound on an [&Unmakes] event (the recall anchor) against an `$existence` that
+// `after($existence, $deed)` places later in story-time (S23). Binding the threatened later existence on the
+// earlier unmaking act is the discriminator: the timeline is mutable and self-negating, parting it from the
+// Stable Time Loop (nothing can change) and the heroic Set Right (a change for the better, not self-erasure).
+rule Grandfather_Paradox {
+  when:
+    char $traveller
+    obj  $existence
+    evt  $deed [&Unmakes(agent=$traveller, precondition=$existence)]
+    after($existence, $deed)
+  then:
+    $existence [+Imperiled]
+    $deed [+GrandfatherParadox]
+}
+
+
+// === CONCRETE VIGNETTE: Back to the Future — the fading photograph (film, 1985) ===
+// Thrown back to 1955, Marty derails the meeting of his teenage parents — and since their romance is the
+// precondition of his own existence, he begins to wink out: the photograph of him and his siblings fades from
+// the edges in. The single timeline is being overwritten by his own blunder; he has to repair the past that
+// made him before the readout (and he) vanish. (`past ~> present` chron; `marty` is one evolving world-line.)
+
+// MARTY — the traveller whose own earlier act threatens his later existence
+char marty [+Protagonist]
+
+// THE PHOTOGRAPH — the live readout of his existence, fading as its precondition comes undone
+obj the_photograph [+MacGuffin]
+
+// in-world succession: the disruption (1955) lies earlier than the existence it imperils (1985)
+chron nineteen_fifty_five ~> nineteen_eighty_five
+
+scene the_unmaking @@ nineteen_fifty_five {
+  beat 1 {
+    // his interference undoes the meeting that was to make him — the precondition of his later self
+    evt the_disruption [&Unmakes(agent=marty, precondition=the_photograph)]
+    // Grandfather_Paradox -> the_photograph [+Imperiled]; the_disruption [+GrandfatherParadox]
+  }
+}

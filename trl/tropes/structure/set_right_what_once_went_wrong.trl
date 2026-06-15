@@ -1,0 +1,72 @@
+// === PREAMBLE ===
+// @trope    Set Right What Once Went Wrong
+// @category Time Travel / Speculative Fiction
+// @source   https://allthetropes.org/wiki/Set_Right_What_Once_Went_Wrong
+// @domain   Narrative
+// @scale    arc
+// @version  1.0
+// @engine   >= 0.8.0   (S23 story-time: chron `~>` + before())
+//
+// Laconic (per the wiki): the heroic MUTABLE-timeline subgenre — a traveller reaches into the past on purpose
+// to repair a wrong, bettering the present that follows. (Quantum Leap: "to put right what once went wrong.")
+//
+// @model    Presentation-time is the spine; chron supplies world-line continuity. The discriminator is a
+//           deliberate repair of an EARLIER wrong — `before($wrong, $fix)` re-checks that the mended wrong
+//           precedes the mending in story-time. The benevolent inverse of the Grandfather Paradox (a change
+//           that betters the one timeline, rather than self-erasing it).
+
+
+// === IMPORTS & ASSOCIATIONS ===
+import "trl/concepts/index.trl"
+
+assoc set_right_what_once_went_wrong -> [
+  grandfather_paradox : "the benevolent inverse of the self-negating change in",
+  alternate_timeline : "betters the one timeline rather than branching, unlike"
+]
+
+
+// === ONTOLOGY ===
+// — founded here (the purposeful repair of a past wrong is the discriminator; promotion model) —
+verb Mends(wrong) [+Temporal]   // reaches into the past to repair a wrong, changing the timeline for the better
+
+imply SetRightWhatOnceWentWrong -> [Temporal, Redemption, Narrative]
+
+
+// === ABSTRACT RULE ===
+// Naming rule (arc scale): a traveller MENDS an earlier wrong — the agent bound on a [&Mends] event (the
+// recall anchor) whose `wrong=` names a past harm that `before($wrong, $fix)` places earlier in story-time
+// (S23). Reaching back ON PURPOSE to better the present is the discriminator: parts it from the Grandfather
+// Paradox (an accidental self-erasing change) and from any ordinary present-tense fix (no past reached into).
+rule Set_Right_What_Once_Went_Wrong {
+  when:
+    char $traveller
+    obj  $wrong
+    evt  $fix [&Mends(agent=$traveller, wrong=$wrong)]
+    before($wrong, $fix)
+  then:
+    $fix [+SetRightWhatOnceWentWrong]
+}
+
+
+// === CONCRETE VIGNETTE: Quantum Leap — Sam Beckett (TV, 1989–1993) ===
+// Sam Beckett leaps from life to life through his own lifetime, landing in another person's shoes at the
+// hinge of some past wrong — a marriage about to break, a death about to happen, an injustice about to land —
+// and cannot leap onward until he has reached in and set it right, bettering the history that follows. "Putting
+// right what once went wrong," week after week.
+
+// SAM BECKETT — the traveller who lands at the hinge of a past wrong to repair it
+char sam [+Protagonist]
+
+// THE WRONG — the past harm he reaches back to mend
+obj the_wrong
+
+// in-world order: the wrong lies earlier than the mending that reaches back to it
+chron the_wrong_done ~> the_leap_in
+
+scene the_repair @@ the_leap_in {
+  beat 1 {
+    // he reaches into the earlier wrong and sets it right, bettering the present that follows
+    evt the_setting_right [&Mends(agent=sam, wrong=the_wrong)]
+    // Set_Right_What_Once_Went_Wrong -> the_setting_right [+SetRightWhatOnceWentWrong]
+  }
+}

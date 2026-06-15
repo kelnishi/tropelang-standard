@@ -82,7 +82,7 @@ Universal + the cast & plot-structure indexes). This is the live ledger — **ev
 it** (the finalize step in `CONVERSION_BOT.md`). The *recipe* for re-running the review (corpus inventory
 vs. the indexes, archive access) lives in `CONVERSION_BOT.md`; the *state* lives here.
 
-**Corpus: 297 tropes · self-recognition 297/297 (100%).** (Re-measure: `tropelang selfcheck
+**Corpus: 303 tropes · self-recognition 303/303 (100%).** (Re-measure: `tropelang selfcheck
 trl/tropes/corpus.toml --corpus file://trl`.)
 
 **Converted batches (done):**
@@ -108,6 +108,7 @@ trl/tropes/corpus.toml --corpus file://trl`.)
 - `convert/power-meta-balance-5` (this PR, 7) — **batch 5/5, final: lifting the thinnest spokes**: Deadly Decadent Court · Villain with Good Publicity (power) · Taking the Bullet · Killed Off for Real (death) · Undying Loyalty · Heterosexual Life Partners (bonds) · Redemption Quest (arc). Power → 24, Death → 25, Bonds → 26, Arc → 26. (Review: Killed Off for Real uses an absolute `![+Dead]!` epistemic discriminator over `[&Slays]` (no bespoke verb); Redemption Quest refines The Quest's `[&Quests]`; Heterosexual Life Partners matches gender via paired [+Masculine]/[+Feminine] rules.)
 - *(work-skeleton rollup, merged across #62/#65/#68 → 1.8.0–1.8.1)* — un-deferred the demoted batch-3 tropes on engine 0.6.0: **The Stinger** & **Painting the Medium** (medium cluster, work skeleton); **Mood Whiplash** & **Cerebus Syndrome** (Tone cluster — promoted a first-class `Tone` to the prelude); plus the integrity sweep and the founded "telling" concepts (`audience`/`author`/`moral`/`plot`).
 - `convert/villainy-paratext-six` (this PR, 6) — **the assoc future-pointers**: Hilarious Outtakes (paratext) · Bitch in Sheep's Clothing · The Vamp · Manipulative Bastard (villainy archetypes) · Defrosting Ice Queen (romance arc) · Fantastic Racism (worldbuilding). Each re-enables a commented `assoc` link in its source trope. Corpus 291 → 297.
+- `convert/time-travel-tropes` (this PR, 6) — **first chron / story-time batch (engine ≥ 0.8.0); bumped `engine_min` 0.6.0 → 0.8.0.** Vanguard + subgenre across the three Temporal Mutability models: **Fixed** — Stable Time Loop + Groundhog Day Loop; **Mutable** — Grandfather Paradox + Set Right What Once Went Wrong; **Branching** — Alternate Timeline + For Want of a Nail (all `structure/`). Each keyed on S23 story-time (`chron`/`@@`/`before`/`after`/`[+Loop]`/fork) with presentation-time as the spine. Corpus 297 → 303. (The Fixed/Mutable/Branching demo narratives — time-turner, Groundhog Day, Back to the Future — are embedded as the tropes' own vignettes, superseding the standalone `examples/` drafts.)
 
 **Work-skeleton rollup (engine ≥ 0.6.0).** The 0.6.0 `work` entity + slot-edge desugar (`scene … @ slot`)
 landed; the deferred tropes are being un-deferred on it. **Recognition pattern (de-risked):** a scope
