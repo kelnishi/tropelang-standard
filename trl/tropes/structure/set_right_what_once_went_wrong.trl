@@ -5,7 +5,7 @@
 // @domain   Narrative
 // @scale    arc
 // @version  1.0
-// @engine   >= 0.8.0   (S23 story-time: chron `~>` + before())
+// @engine   >= 0.8.1   (S23 story-time: chron `~>` + before())
 //
 // Laconic (per the wiki): the heroic MUTABLE-timeline subgenre — a traveller reaches into the past on purpose
 // to repair a wrong, bettering the present that follows. (Quantum Leap: "to put right what once went wrong.")
@@ -62,6 +62,13 @@ obj the_wrong
 
 // in-world order: the wrong lies earlier than the mending that reaches back to it
 chron the_wrong_done ~> the_leap_in
+
+// THE WRONG AS IT FELL — positioned earlier than the leap-in that reaches back to mend it
+scene the_wrong_itself @@ the_wrong_done {
+  beat 1 {
+    the_wrong [#Doomed]   // the harm as it first happened — earlier in story-time than Sam's mending
+  }
+}
 
 scene the_repair @@ the_leap_in {
   beat 1 {

@@ -5,7 +5,7 @@
 // @domain   Narrative
 // @scale    arc
 // @version  1.0
-// @engine   >= 0.8.0   (S23 story-time: chron / @@ / after())
+// @engine   >= 0.8.1   (S23 story-time: chron / @@ / after())
 //
 // Laconic (per the wiki): the MUTABLE-timeline model's signature contradiction — a traveller changes the
 // past in a way that removes the precondition of their own later existence (kill your grandfather; you are
@@ -72,6 +72,13 @@ scene the_unmaking @@ nineteen_fifty_five {
   beat 1 {
     // his interference undoes the meeting that was to make him — the precondition of his later self
     evt the_disruption [&Unmakes(agent=marty, precondition=the_photograph)]
+  }
+}
+
+// THE PRESENT (1985) — his existence, the readout he carries, positioned later than the act that undoes it
+scene the_present_day @@ nineteen_eighty_five {
+  beat 1 {
+    the_photograph [#Vulnerable]   // fading from the edges in — later in story-time than the 1955 unmaking
     // Grandfather_Paradox -> the_photograph [+Imperiled]; the_disruption [+GrandfatherParadox]
   }
 }

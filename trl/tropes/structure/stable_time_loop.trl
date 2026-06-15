@@ -5,7 +5,7 @@
 // @domain   Narrative
 // @scale    arc
 // @version  1.0
-// @engine   >= 0.8.0   (S23 story-time: chron / @@ / [+Loop])
+// @engine   >= 0.8.1   (S23 story-time: chron / @@ / [+Loop])
 //
 // Laconic (per the wiki): "It happened because you went back in time. And vice-versa." The FIXED-timeline
 // model: nothing can be changed because the trip into the past was always part of history — the traveller's
@@ -14,7 +14,8 @@
 // @model    Presentation-time is the spine; the character EVOLVES (Harry-overwhelmed → Harry-the-caster are
 //           two states the engine already distinguishes). `chron`/`@@` only supply WORLD-LINE CONTINUITY —
 //           binding those states to one in-world person across a closed loop ([+Loop]), not duplicate Harrys.
-//           FRONTIER: the discriminator is a deed whose own consequence, looped back, is what produced it.
+//           Discriminator: the deed and its own outcome are MUTUALLY ordered (`before` AND `after`) — a closed
+//           loop, which a linear cause→effect (one direction) and a chron-less story (neither) are not.
 
 
 // === IMPORTS & ASSOCIATIONS ===
@@ -35,17 +36,20 @@ imply StableTimeLoop -> [Temporal, Narrative]
 
 
 // === ABSTRACT RULE ===
-// Naming rule (arc scale): a traveller CAUSES an outcome whose story-time the deed precedes on a closed
-// world-line — the agent bound on a [&Causes] event (the recall anchor) with `before($deed, $outcome)`
-// re-checking the story-order over a [+Loop] chron (S23). The cause lying inside the loop is the
-// discriminator: parts it from a plain consequence (no loop) and from the Grandfather Paradox (a MUTABLE
-// timeline the act unmakes). Story-time is the overlay; the deed/agent event is the spine.
+// Naming rule (arc scale): a traveller CAUSES an outcome that is BOTH `before` AND `after` the deed in
+// story-time — the agent bound on a [&Causes] event (the recall anchor), then the deed and its own outcome
+// re-checked as MUTUALLY ordered over a [+Loop] chron (S23). Mutual order is the loop's signature: in a
+// closed cycle the cause precedes the effect *and* the effect precedes the cause; a plain linear consequence
+// satisfies only one direction, and a chron-less story neither. That asymmetric-pair-made-cyclic is the
+// discriminator — it parts the Stable Loop from an ordinary cause→effect and from the Grandfather Paradox
+// (a one-way MUTABLE unmaking). Engine ≥ 0.8.1 (story-time predicates gate recognition; STYLE §8).
 rule Stable_Time_Loop {
   when:
     char $traveller
     obj  $outcome
     evt  $deed [&Causes(agent=$traveller, outcome=$outcome)]
     before($deed, $outcome)
+    after($deed, $outcome)        // …and the outcome also precedes the deed: a closed loop, not a line
   then:
     $deed [+StableTimeLoop]
 }
@@ -58,19 +62,27 @@ rule Stable_Time_Loop {
 // back and cast it. The cause sits inside the loop; nothing was changed, only completed. (`[+Loop]` chron;
 // `harry` is one evolving world-line, not two boys.)
 
+// the three hours as a closed cycle: the casting loops back to the peril it answers
+chron the_casting [+Loop] ~> the_rescue ~> the_casting
+
 // HARRY — one world-line across the loop: overwhelmed, then (evolved) the knowing caster
 char harry [+Protagonist]
 
 // HIS SURVIVAL — the outcome his own later act produces, which in turn produces that later act
 obj his_survival
 
-// the three hours as a closed cycle: the casting loops back to the peril it answers
-chron the_casting [+Loop] ~> the_rescue ~> the_casting
-
+// THE CASTING (second pass) — he sends the stag across the water; its outcome is his own earlier survival
 scene by_the_lake @@ the_casting {
   beat 1 {
     // anchored at the casting, the stag he sends across the water is the cause of his own survival
     evt the_stag [&Causes(agent=harry, outcome=his_survival)]
-    // Stable_Time_Loop -> the_stag [+StableTimeLoop]
+  }
+}
+
+// THE RESCUE (first pass) — that survival comes to pass; downstream of the casting, yet looping back to seed it
+scene the_far_bank @@ the_rescue {
+  beat 1 {
+    his_survival [+Sealed]     // the outcome stands — and the [+Loop] closes it back onto the casting
+    // Stable_Time_Loop -> the_stag [+StableTimeLoop]  (the_stag is both before AND after his_survival: a closed loop)
   }
 }

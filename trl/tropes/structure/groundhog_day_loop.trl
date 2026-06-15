@@ -5,7 +5,7 @@
 // @domain   Narrative
 // @scale    arc
 // @version  1.0
-// @engine   >= 0.8.0   (S23 story-time: a [+Loop] cycle the protagonist relives)
+// @engine   >= 0.8.1   (S23 story-time: a [+Loop] cycle the protagonist relives)
 //
 // Laconic (per the wiki): "Time repeats itself" — a character is trapped reliving the same span over and
 // over; the world resets each turn while they alone carry memory across it. A FIXED-model subgenre: the loop

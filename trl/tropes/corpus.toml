@@ -15,7 +15,7 @@ description  = "The canonical TropeLang trope corpus."
 version      = "1.8.1"
 # Minimum engine that can parse this corpus (the compatibility gate). Conservative floor = the engine
 # this corpus is built/tested against; lower it only once older engines are verified to parse the grammar.
-engine_min   = "0.8.0"   # the time-travel tropes use S23 story-time: `chron`/`@@`/`~~`/`before`/`after` (a 0.8.0 feature; work-skeleton `@`-slots need 0.6.0)
+engine_min   = "0.8.1"   # the time-travel tropes key on S23 story-time predicates (`before`/`after`), which only GATE recognition on engine >= 0.8.1
 author       = "tropelang"
 homepage     = "https://tropelang.com"
 # CC0 — the tropes are original encodings; the underlying source material is public. Public-domain

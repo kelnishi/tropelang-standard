@@ -5,7 +5,7 @@
 // @domain   Narrative
 // @scale    arc
 // @version  1.0
-// @engine   >= 0.8.0   (S23 story-time: a chron FORK — one point, two divergent continuations)
+// @engine   >= 0.8.1   (S23 story-time: a chron FORK — one point, two divergent continuations)
 //
 // Laconic (per the wiki): the BRANCHING model — interfering with the past does not overwrite history, it
 // splits a NEW timeline off it; the original persists, uncontradicted, alongside the divergent branch. (Star

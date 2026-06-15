@@ -5,7 +5,7 @@
 // @domain   Narrative
 // @scale    arc
 // @version  1.0
-// @engine   >= 0.8.0   (S23 story-time: chron `~>` + after())
+// @engine   >= 0.8.1   (S23 story-time: chron `~>` + after())
 //
 // Laconic (per the wiki): a tiny change in the past amplifies into a wholly divergent present — "step on a
 // butterfly" and mammals never evolve. The BRANCHING/cascade subgenre: the smallest divergence is enough to
@@ -69,6 +69,13 @@ scene the_misstep @@ the_safari {
   beat 1 {
     // one crushed butterfly cascades into a remade present out of all proportion to the act
     evt the_crushed_butterfly [&Cascades(agent=eckels, into=the_altered_present)]
+  }
+}
+
+// THE RETURN — the wholly divergent present, positioned later than the trivial act that bred it
+scene the_changed_world @@ the_return {
+  beat 1 {
+    the_altered_present [#Revealed]   // the remade world, later in story-time than the crushed butterfly
     // For_Want_Of_A_Nail -> the_altered_present [+Transformed]; the_crushed_butterfly [+ForWantOfANail]
   }
 }

@@ -54,11 +54,14 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   - `amaterasu_and_the_cave.trl` — Shinto (the *Kojiki*): the sibling's offense, the withdrawn god, the
     clever lure that restores the world. Thinner coverage — a flagged signal for later phases.
 - **Time-travel tropes (the first chron / story-time batch)** — vanguard + subgenre across the three Temporal
-  Mutability models, each keyed on the S23 story-time layer (engine ≥ 0.8.0). Presentation-time stays the
-  spine; `chron`/`@@` supply world-line continuity over a character's evolving states.
+  Mutability models, each keyed on the S23 story-time layer (engine ≥ 0.8.1 — `before`/`after` GATE
+  recognition). The story-time predicates are genuine discriminators: every vignette places its ordered
+  operands in distinct `@@`-stamped scenes, and each is verified BOTH ways (forward confirms 1.00; a reversed
+  or chron-less variant does not — STYLE §8). Presentation-time stays the spine; `chron`/`@@` supply
+  world-line continuity over a character's evolving states.
   - **Stable Time Loop** (Fixed) — https://allthetropes.org/wiki/Stable_Time_Loop
-    (Prisoner of Azkaban time-turner — a `[&Causes]` deed whose own consequence loops back to produce it;
-    `before($deed,$outcome)` over a `[+Loop]` chron. Founds `verb Causes(outcome)`.)
+    (Prisoner of Azkaban time-turner — a `[&Causes]` deed MUTUALLY ordered with its own outcome
+    (`before` AND `after`, the closed-loop signature) over a `[+Loop]` chron. Founds `verb Causes(outcome)`.)
   - **Groundhog Day Loop** (Fixed, subgenre) — https://allthetropes.org/wiki/Groundhog_Day_Loop
     (Groundhog Day — a [+Protagonist] `[&Relives]` a `[+Loop]` span, memory intact. Founds `verb Relives(span)`.)
   - **Grandfather Paradox** (Mutable) — https://allthetropes.org/wiki/Grandfather_Paradox
@@ -95,8 +98,9 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
   shift with gender were deliberately left neutral: Manipulative Bastard ("he or she"), Magnificent Bastard,
   The Caligula (a mad ruler of any gender), Puppet King / Rightful King Returns / The Man Behind the Man
   ("king"/"man" idiomatic for ruler/person). Selfcheck steady at 297/297.
-- **`engine_min` 0.6.0 → 0.8.0.** The corpus now contains chron / story-time tropes (S23: `chron`/`@@`/`~~`/
-  `before`/`after`), which only parse on engine ≥ 0.8.0. Consumers must be on 0.8.0+ for this corpus version.
+- **`engine_min` 0.6.0 → 0.8.1.** The corpus now contains chron / story-time tropes (S23: `chron`/`@@`/`~~`/
+  `before`/`after`). Their `before`/`after` discriminators only **gate recognition** on engine ≥ 0.8.1 (on
+  0.8.0 the predicates parse but are ignored, so the rules would over-fire); consumers must be on 0.8.1+.
 
 ## [1.8.1] — 2026-06-09
 
