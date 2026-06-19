@@ -121,9 +121,9 @@ asserted in the beat each becomes true, retracted in the beat it stops:
 
 ✓ Pride doesn't shrink; it shatters in stages, each a different *kind* of state:
 ```trl
-scene the_shedding  { beat 3 { … sam [+Defensive]                } }  // the joke armor goes on
-scene the_herding   { beat 5 { … sam [-Defensive]  sam [#Doubting] } }  // the armor cracks
-scene the_breaking  { beat 8 { … /* BreakTheHaughty derives [+Humbled] [+Teachable] */ } }
+scene the_shedding  { beat the_armor_goes_on  { … sam [+Defensive]                } }
+scene the_herding   { beat the_armor_cracks   { … sam [-Defensive]  sam [#Doubting] } }
+scene the_breaking  { beat the_breaking_point { … /* BreakTheHaughty derives [+Humbled] [+Teachable] */ } }
 ```
 
 Each transition is an event the story can witness, a fact a rule can read, a moment a
@@ -228,12 +228,12 @@ goes quiet. The last addition is the collision.
 
 ## 9. The workflow, revised
 
-**Before step 1 — inventory the source.** For an adaptation or a known story, do one pass
-of the material as plain notes: props, gags, character quirks, motifs, the moment a
-relationship shifts, every callback. The encoding pass fires on more tropes and compresses
-fewer scenes when the inventory exists. Skipping this step produces premature beat
-compression — you fold three story moments into one beat and the evidence that would fire
-recognition is silently lost.
+0. **Inventory the source.** For an adaptation or known story, do one pass of the material
+   as plain notes before writing any TropeLang: props, gags, character quirks, motifs, the
+   moment a relationship shifts, every callback. The encoding pass fires on more tropes and
+   compresses fewer scenes when the inventory exists. Skipping this step produces premature
+   beat compression — you fold three story moments into one beat and the evidence that would
+   fire recognition is silently lost. For original work, this pass is your outline.
 
 1. **Premise and cast first.** Who wants what; what stands in the way; what the
    audience should carry away. Pick the *spine* trope (the one the story IS) and
@@ -256,16 +256,20 @@ recognition is silently lost.
    (`STYLE §10`). Writing the header before the outline inverts the dependency and
    produces a registry of every prop the author imagined — most of which get no log
    footprint.
+
+   **For non-linear narratives**, declare the `chron` spine before the arc and anchor
+   scenes with `@@`. See `STYLE §11` for the full rules: `@@` inside verb parameter
+   expressions is illegal; chron markers must be declared nodes; every displaced
+   worldline needs an explicit closing edge.
 4. **Draft. Then verify three ways:**
    `validate` (legal) → `suggest` (the targets fire, at full confidence, with the
    *right bindings*) → `drams` (coverage; read the gap list).
 
-   **Check three defects per scene as you finish it**, not at file end: (a) `concept`
-   where `char [+Collective]` is correct — if the entity takes edges, accretes tags, or
-   anchors a seed, it is a `char` (`STYLE §1`); (b) double `resolve` — a second resolve
-   of the same ambiguity name is a defect, not a confirmation (`STYLE §3`); (c) inline
-   declarations buried after `evt` lines in the same block — declarations lead the block
-   (`STYLE §10`). These compound across a long file; catching them per-scene costs nothing.
+   **Per-scene integrity check.** Before moving to the next scene: (a) every beat braids
+   ≥2 threads — if a beat does only one thing, either add a thread or merge it (§3);
+   (b) every seed planted in this scene has a watering path — if the payoff isn't written
+   yet, add a latent middle touch now (§5); (c) run the STYLE per-scene defect check
+   (`STYLE §12 step 4`) for structural errors that compound across a long file.
 5. **Revise against the gap list** — develop or cut every dead thread; deepen
    gauges; water seeds. Re-run drams; the score should rise.
 6. **Prose pass last.** `dialog(inline="""…""")` annotations on the events that
@@ -276,6 +280,5 @@ recognition is silently lost.
 ---
 
 *Companion documents: `tropelang grammar` for the language, `STYLE.md` for authoring
-protocol. The worked narratives this guide was distilled from used corpus `standard`
-1.8.0, CLI 0.7.2. Cold-start workflow notes (`§5`, `§9`) added from corpus `standard`
-1.9.0 narrative work.*
+protocol. The worked narratives in `narratives/` are the primary examples — read them
+alongside this guide.*
