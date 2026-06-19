@@ -94,10 +94,12 @@ san_dimas_slogan [+Conspicuous] [+Ambient]  // graffiti on walls; chanted in the
 //   is unambiguous, self-documenting, and never needs renumbering when beats are
 //   added or removed. Global numbers are a maintenance liability.
 //
-// Inline declarations: declare obj/set at first use when they appear in only one
-//   scene. Reserve the header for things that span multiple scenes or that need
-//   to be visible as part of the work's overall vocabulary (chron markers, major
-//   MacGuffins, recurring concepts). The header is a reading aid, not a registry.
+// Inline declarations: declare obj/set at the TOP of the scene or beat block
+//   where they first appear, grouped before any facts or events — mirroring the
+//   header's declare-before-use rule (STYLE §1) at block scope. Reserve the header
+//   for entities that span multiple scenes or belong to the work's top-level
+//   vocabulary (chron markers, major MacGuffins, recurring concepts). The header
+//   is a reading aid, not a registry; block-scoped declarations keep it lean.
 //
 // Seeds before the log: latent threads (?entity [~verb]?) declared before the arc
 //   are surfaced by plain re-assertion inside beats — no special syntax required.
@@ -244,6 +246,7 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
 
     scene the_herald_arrives @@ san_dimas_1988 {
       beat rufus_arrives {
+        obj the_keypad [+Mundane] [+Conspicuous]   // dial the year; simple; the whole of time-travel is a phone number
         // Rufus arrives; the phrase is planted; the booth is delivered
         evt rufus_descends [&Arrives(agent=rufus, location=san_dimas_1988)]
             dialog(inject=[speaker=rufus],
@@ -278,7 +281,6 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
 
         evt rufus_teaches [&Teaches(agent=rufus, target=bill)]
         // MentorAndStudent — rufus shows them how the booth works; the keypad mechanism; the lesson that unlocks the quest
-        obj the_keypad [+Mundane] [+Conspicuous]   // dial the year; simple; the whole of time-travel is a phone number
         the_keypad [+Lesson]
 
         evt the_phrase_planted [&Introduces(object=being_excellent)]
@@ -387,10 +389,10 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
     scene napoleon_goes_wild @@ san_dimas_1988 {
       // Napoleon's solo B-plot: three beats track his spiral from wonder to conquest
       beat ice_cream {
+        obj the_ice_cream [+Mundane]
         // First contact with modernity — ice cream at the Circle K;
         // the conqueror encounters something he cannot defeat
         evt napoleon_solo [&Wanders(agent=napoleon, location=san_dimas_1988)]
-        obj the_ice_cream [+Mundane]
         evt napoleon_ice_cream [&Discovers(agent=napoleon, obj=the_ice_cream)]
             dialog(inject=[speaker=napoleon],
                    inline="""
@@ -411,6 +413,8 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
       }
 
       beat bowling_and_jersey {
+        obj the_bowling_pins [+Mundane]
+        obj napoleons_hat [+IconicItem]
         // Escalation: the bowling alley; Napoleon discovers competition and an unfortunate jersey number
         evt napoleon_bowling [&Wanders(agent=napoleon, location=the_mall)]
             dialog(inject=[speaker=napoleon],
@@ -421,11 +425,9 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
                    text: "Napoleon moves through the world like a man who has conquered it before and is now doing it again for fun. Bowling pins go down. He expects applause. He receives none. He demands it. He receives some."
                    motivation: "the B-plot gathering momentum — each venue a new kingdom; the bowling alley is the warm-up"
                    """)
-        obj the_bowling_pins [+Mundane]
         napoleon -- the_bowling_pins : "Defeats"
 
         // Napoleon selects jersey #69; the boys see the number; he has no idea why this is funny
-        obj napoleons_hat [+IconicItem]
         evt napoleon_jersey [&Discovers(agent=napoleon, obj=napoleons_hat)]
             dialog(inject=[speaker=napoleon],
                    inline="""
@@ -541,6 +543,7 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
       }
 
       beat genghis {
+        obj a_twinkie [+Mundane] [+Conspicuous]   // junk food as diplomatic currency; the empire falls to a cream-filled sponge cake
         // Genghis Khan — medieval Asia
         // Ted's negotiation technique: one Twinkie; junk food defeats empire
         evt collect_genghis [&Captures(agent=ted, target=genghis_khan)] @@ medieval_england
@@ -554,7 +557,6 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
                    """)
         genghis_khan @@ medieval_england -- genghis_khan @@ san_dimas_1988 : "Displaced"
         genghis_khan [+Displaced]
-        obj a_twinkie [+Mundane] [+Conspicuous]   // junk food as diplomatic currency; the empire falls to a cream-filled sponge cake
         genghis_khan -- a_twinkie : "Accepts"
       }
 
@@ -747,6 +749,9 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
 
     scene the_escape @@ san_dimas_1988 {
       beat temporal_loop {
+        set the_jail [+Interior] [+Isolated]
+        obj jail_keys [+Mundane] [+Conspicuous]   // the temporal self-rescue MacGuffin; hidden behind a trash can
+        obj chewing_gum [+Mundane] [+Conspicuous]   // the repair medium; the phone booth is literally held together with gum
         // The temporal self-rescue: the boys use the booth to set up their own escape retroactively
         // The bootstrapped loop — past-Bill-and-Ted must go hide what present-Bill-and-Ted just found
         evt bill_remembers_plan [&Reveals(agent=bill, target=ted)]
@@ -760,8 +765,6 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
                    text: "Dude — all we gotta do is go back, steal the keys from that guard, hide 'em behind the trash can — then go back to the future — uh, the present — and get 'em."
                    motivation: "the temporal paradox is presented with absolute sincerity; the audience is ahead but charmed; the bootstrapped loop IS the joke"
                    """)
-        set the_jail [+Interior] [+Isolated]
-        obj jail_keys [+Mundane] [+Conspicuous]   // the temporal self-rescue MacGuffin; hidden behind a trash can
         evt keys_hidden [&Conceals(agent=bill, obj=jail_keys)]
             dialog(inject=[speaker=ted],
                    inline="""
@@ -786,7 +789,6 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
                    text: "Dude — gum."
                    motivation: "the joke is the ratio: the machine that will found a utopia is held together with a stick of Wrigley's; the sincerity with which this is accepted is the film's entire thesis about competence"
                    """)
-        obj chewing_gum [+Mundane] [+Conspicuous]   // the repair medium; the phone booth is literally held together with gum
         chewing_gum -- the_phone_booth : "Holds together"
         the_phone_booth [-Damaged] [+Repaired]
         // The gum gag encodes a latent rule: wyld_stallyns will always find exactly enough to get through;
@@ -999,8 +1001,8 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
       }
 
       beat utopia_shown {
+        obj rufus_guitar [+Symbolic]
         // The utopia in motion — what the world built from this afternoon in San Dimas
-        // Rufus plays; the guitar object that was declared symbolic in the header is finally used
         evt rufus_plays [&Performs(agent=rufus, location=san_dimas_future_2688)]
             dialog(inject=[speaker=rufus],
                    inline="""
@@ -1010,7 +1012,6 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
                    text: "Rufus picks up the guitar and plays. Not a demonstration. Not a lesson. Just music. The future doesn't need to be told what this is."
                    motivation: "the guitar was declared symbolic at the top; it is used here — the mentor's own relationship to the thing he taught; he is not Mentor here, just a man who loves music"
                    """)
-        obj rufus_guitar [+Symbolic]
         rufus -- rufus_guitar : "Plays"
         rufus_guitar [+Resolved]
 
@@ -1036,13 +1037,13 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
 
   scene the_stinger @ post_credits @@ san_dimas_1988 {
     beat evil_doubles {
+      obj the_bogus_journey [+SequelBait]
       // The threat that will become Part II; the mirror of the thesis
       evt evil_doubles_appear [&Arrives(agent=evil_bill, location=san_dimas_1988)]
       evt evil_doubles_appear_2 [&Arrives(agent=evil_ted, location=san_dimas_1988)]
       evil_bill -- bill : "Mirror"
       evil_ted  -- ted  : "Mirror"
 
-      obj the_bogus_journey [+SequelBait]
       evt the_sequel_hook [&Teases(agent=the_film, hook=the_bogus_journey)]
       // SequelHook — the Bogus Journey threat is the open thread; confirmed by the evil doubles
 

@@ -350,7 +350,7 @@ the time to review what has earned promotion:
 - Every `$variable` in `then:` was bound in `when:`
 - No sidecar labels (`char name "Label"` form is banned)
 - Every top-level entity has a `//` annotation above it
-- `set` entities have `[+Interior]`/`[+Exterior]` and time-of-day tags
+- `set` entities in film/screenplay vignettes have `[+Interior]`/`[+Exterior]` and time-of-day tags — these are screenplay header conventions, not universal requirements; omit or adapt for non-film media
 - Tags: `[+Name]` — modifier immediately before name, no space
 - Params: `key=value` inside parens — `[+Fear(target="Snakes")]`
 - Scene blocks contain only flat references and edges, no multi-line TagMuts
