@@ -39,8 +39,6 @@ char captain_logan  [+Antagonist] [+Authority] [+Paternal] [+Uniformed]
                     // Ted's father; police captain; military-school threat; uniform signals institutional power
 char elizabeth      [+LoveInterest] [+Stranger]             // Bill's destined princess; medieval England
 char joanna         [+LoveInterest] [+Stranger]             // Ted's destined princess; medieval England
-char station        [+Mentor]
-char death          [+Antagonist]
 char evil_bill      [+Antagonist] [+Foil]               // Bogus Journey; mirror of bill
 char evil_ted       [+Antagonist] [+Foil]               // Bogus Journey; mirror of ted
 
@@ -68,7 +66,7 @@ concept being_excellent     [+Abstract] [+Lesson] [+Conspicuous]   // the phrase
 concept party_on            [+Abstract] [+Conspicuous]             // Rufus's second instruction; echoed by Lincoln
 concept the_journey         [+Abstract]             // the time-travel ordeal that forges the boys
 concept the_utopia          [+Abstract]             // the future society predicated on B&T's music
-concept wyld_stallyns       [+Abstract] [+Weak]     // the band — private dream; they cannot actually play yet
+char wyld_stallyns          [+Collective] [+Weak]   // the band — private dream; they cannot actually play yet
 concept the_prophecy        [+Abstract] [+Lesson]   // wyld_stallyns' music will unite humanity; stated by Rufus
 concept san_dimas_slogan    [+Abstract] [+Conspicuous]  // "San Dimas High School Football Rules!" — graffiti, chant, ambient truth
 
@@ -143,7 +141,6 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
                    text: "You have one week to pass history. Fail, and Ted goes to military school. Wyld Stallyns ends."
                    motivation: "{speaker} is removing the safety net — the boys have to care about history now"
                    """)
-        the_report [+MacGuffin]
         bill [~Pursues(goal=the_report)]   // latent seed surfaces
         ted  [~Pursues(goal=the_report)]
       }
@@ -260,7 +257,6 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
                    """)
         rufus > the_phone_booth : "Delivers"
         resolve booth_nature -> the_phone_booth [+Gift]
-        !the_phone_booth [+Gift]!
 
         evt rufus_prophesies [&Reveals(agent=rufus, target=the_prophecy)]
             dialog(inject=[speaker=rufus],
@@ -997,7 +993,6 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
 
         bill [~Pursues(goal=being_excellent)]
         ted  [~Pursues(goal=being_excellent)]
-        resolve booth_nature -> the_phone_booth [+Gift]   // re-confirm: the booth was never a trap
       }
 
       beat utopia_shown {
@@ -1024,8 +1019,6 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
                    text: "The city is not built from their music. It's built from what their music taught: that being excellent is a practice, not a talent. Rufus watches it. He has been here every day for seven hundred years."
                    motivation: "the utopia is a moral argument made concrete — the visual thesis of the franchise; competence was never the criterion; the gum held"
                    """)
-        bill [+GenreLiterate]
-        ted  [+GenreLiterate]
         the_utopia -- being_excellent : "Built from"
         wyld_stallyns -- the_utopia : "Founded"
       }
