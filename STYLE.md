@@ -395,13 +395,53 @@ napoleon @@ san_dimas_1988 -- napoleon @@ paris_1815 : "Returns"     // closure
 An open worldline — extracted but never returned — is an unresolved thread, which may be intentional
 (a sequel hook) but should be deliberate, not an oversight.
 
-## 12. S14 levels: home plane, loud crossings
+## 12. Cold-start authoring workflow
+
+Writing a narrative from scratch — without a reference screenplay or existing beat sheet — requires a
+different order of operations than encoding a known story. Follow this sequence to avoid the most
+common traps.
+
+**1. Inventory first, encode second.** Before writing any TropeLang, do one pass of the source
+material (or, for original work, your outline) to log every expositional detail as plain notes:
+props, gags, character quirks, repeated motifs, payoffs for planted setups. The encoding pass goes
+faster and fires on more tropes when the inventory exists. Skipping this step leads to premature
+scene compression — you write one beat where three belong, and the evidence that would fire
+recognition gets silently dropped.
+
+**2. Sketch the beat outline before writing the header.** Draft scene and beat labels for the whole
+work first. Then look at what spans scenes (recurring characters, the main MacGuffin, cross-story
+concepts) and what is local (a single-scene prop, a throwaway set). That scan determines what belongs
+in the file header vs. what should be declared inline at the top of its beat. Writing the header
+before the outline inverts this and produces a registry of every prop the author can imagine — most
+of which never appear in the log.
+
+**3. Plant seeds for unresolved material.** When you introduce an element that should pay off later
+but haven't written the beat yet, add a latent seed (`?entity [~Verb]?`) immediately. It is a
+commitment device: the seed forces the payoff rather than letting it get silently dropped. Without
+it, the planted element accumulates no meaning in the log — and you won't notice it was dropped
+until the fidelity check.
+
+**4. Run a per-scene defect check, not a whole-file review.** Three defects recur in cold-start
+work and compound across a long file if caught only at the end:
+
+- **`concept` where `char [+Collective]` is correct.** If the entity takes `--` edges, receives
+  mid-log tag mutations, or is the subject of a latent seed, it is a `char`. Catch it at declaration
+  time, not after thirty beats reference it.
+- **Double `resolve`.** A second `resolve` of the same ambiguity name is a defect (§3). If the
+  story pays off an ambiguity in beat 5, don't "confirm" it again in beat 22.
+- **Inline declarations buried after events.** A declaration that follows an `evt` line in the same
+  block violates declare-before-use within that scope (§10). Check each beat as you finish it.
+
+Checking these per-scene costs nothing; fixing them across a 1,000-line file after the fact is
+expensive and error-prone.
+
+## 13. S14 levels: home plane, loud crossings
 
 - Declare a node on its **home plane** (the cast lives on the canon mainline, e.g. `<<heist>>`).
 - Reference a node from another plane via a **loud crossing** `<<home|name>>` — never a bare silent
   reference. A plane change is always visible in the source (`specs/14 §7`).
 
-## 10. Validate
+## 14. Validate
 
 Every file should:
 - `gate` clean — preamble ✓, validates ✓, round-trips ✓ (`skills/trope-to-tropelang/scripts/gate.sh`);
