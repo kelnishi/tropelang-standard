@@ -143,6 +143,10 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
                    """)
         bill [~Pursues(goal=the_report)]   // latent seed surfaces
         ted  [~Pursues(goal=the_report)]
+
+        evt slogan_ambient [&Appears(object=san_dimas_slogan, location=san_dimas_1988)]
+        // the slogan is everywhere — spraypainted on the overpass visible from the garage window;
+        //   the town's only firm belief; the ambient substrate that makes "be excellent" land
       }
 
       beat air_guitar {
@@ -236,8 +240,14 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
                    motivation: "{speaker} is the only adult who isn't an obstacle — her kindness is the inverse of {target}'s father's coldness"
                    """)
         missy [+Ally]
+        missy -- bill : "Warmth offered"
+        missy -- ted  : "Warmth offered"
         // The ParentalSubstitute thread: Missy is the warm adult the boys actually have,
         //   despite — or because of — the impossible family geometry she occupies
+
+        // The warmth lands on the geometry: receiving kindness from missy sharpens the latent attraction
+        bill [~Loves(target=missy)]   // middle touch — the seed is live; the warmth makes it harder to ignore
+        ted  [~Loves(target=missy)]   // same; the sandwich is the problem
       }
     }
 
@@ -379,6 +389,11 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
         napoleon [#Enraged]
         bill [+Embattled]
         // Thread: the boys have no plan for what happens once they have a figure in the booth
+
+        // The overcrowding is already beginning to strain the machine — Napoleon thrashing
+        //   in a six-by-four box designed for two; the damage that will need gum starts here
+        the_phone_booth [+Stressed]
+        // Thread: structural fragility seeded; the gum repair in beat temporal_loop is born here
       }
     }
 
@@ -422,6 +437,7 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
                    motivation: "the B-plot gathering momentum — each venue a new kingdom; the bowling alley is the warm-up"
                    """)
         napoleon -- the_bowling_pins : "Defeats"
+        napoleon [+Competitive]   // a new identity discovered: the Conqueror finds there are scoreboards in 1988
 
         // Napoleon selects jersey #69; the boys see the number; he has no idea why this is funny
         evt napoleon_jersey [&Discovers(agent=napoleon, obj=napoleons_hat)]
@@ -439,6 +455,7 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
       beat waterpark {
         // Peak: the waterpark — grandiosity meets the most childish venue possible
         obj the_waterslide [+Mundane]
+        obj the_floaty_ring [+Mundane] [+Conspicuous]   // origin unknown; he has it by run 18; it follows him home
         evt napoleon_waterpark [&Discovers(agent=napoleon, obj=the_waterslide)]
             dialog(inject=[speaker=napoleon],
                    inline="""
@@ -448,9 +465,10 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
                    text: "Napoleon conquers the waterpark — sliding the same chute seventeen times, shouting in French, soaking everyone within ten feet. On the eighteenth run he has acquired a floaty ring. He doesn't know where it came from."
                    motivation: "the pratfall peak: grandiosity applied to the most childish venue possible; the floaty ring is the detail that perfects it"
                    """)
-        napoleon [+Obsessed]
+        napoleon [+Obsessed] [#Delighted]
         the_waterslide [+Contested]
         napoleon -- the_waterslide : "Claims"
+        napoleon -- the_floaty_ring : "Acquires"   // the detail that perfects it; provenance: none
 
         evt napoleon_pratfall [&Frames(agent=author, target=napoleon, as=comic)]
         // Pratfall — the Emperor of France, in full regalia, soaked and shrieking on a waterslide:
@@ -482,6 +500,10 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
 
         evt billy_transgresses [&Transgresses(agent=billy_the_kid)]
         // LovableRogue — Billy is a wanted outlaw; the boys recruit him anyway because he's charming
+
+        // Thread B: the bond — bill and billy recognise each other immediately; same frequency, different century
+        bill -- billy_the_kid : "Kindred"
+        wyld_stallyns [~Grows(into=the_utopia)]   // first middle touch: every figure recruited is evidence the seed is viable
       }
 
       beat socrates {
@@ -500,6 +522,10 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
                    """)
         socrates @@ ancient_greece -- socrates @@ san_dimas_1988 : "Displaced"
         socrates [+Displaced]
+
+        // Thread B: ted's misquotation lands correctly — the philosophy works because ted means it
+        ted [#Proud]   // he quoted a philosopher and was not laughed at; this is new
+        ted -- socrates : "Recognises"   // the student who doesn't know he's a student; Socrates knows
       }
 
       beat joan_and_princesses {
@@ -570,6 +596,11 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
                    """)
         freud @@ renaissance_austria -- freud @@ san_dimas_1988 : "Displaced"
         freud [+Displaced]
+
+        // Thread B: Freud's observation is already active — the diagnosis has begun before the booth door closes
+        freud -- bill : "Observes"
+        freud -- ted  : "Observes"
+        freud [+Observing]   // the clinical distance that will become the diagnosis in beat freud_diagnoses
       }
 
       beat beethoven {
@@ -633,6 +664,10 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
         evt beethoven_shreds [&Frames(agent=author, target=beethoven, as=cool)]
         // RuleOfCool — a deaf 18th-century composer sits at a synthesizer and immediately shreds;
         //   [+Weak] wyld_stallyns' language is vindicated by someone who can actually play
+
+        wyld_stallyns [~Grows(into=the_utopia)]   // second middle touch: Beethoven is fluent in the language wyld_stallyns invented;
+        // the air guitar mime from beat beethoven was wyld_stallyns' first export — it worked;
+        //   the seed is alive; the utopia is less hypothetical than it was
       }
 
       beat joan_and_genghis {
@@ -949,6 +984,11 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
 
         bill [~Pursues(goal=being_excellent)]  // latent seed surfaces at triumph
         ted  [~Pursues(goal=being_excellent)]
+
+        // The triumph surfaces what's unresolved: the princesses are still across six centuries of time
+        // Middle touch — the romantic seeds are live; the film won't pay them off; the sequel will
+        *bill [~Loves(target=elizabeth)]*   // the contingent reading; he won and she's not here
+        *ted  [~Loves(target=joanna)]*      // same; the gap between triumph and fullness
       }
 
       beat returns {
@@ -963,6 +1003,8 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
                    text: "Napoleon is the last to go. He pauses at the door of the booth, looks back once at the direction of the waterpark, and is gone."
                    motivation: "the button on his solo arc — even a conqueror was conquered by ice cream and centrifugal force; the floaty ring is presumably still in san_dimas_1988"
                    """)
+        napoleon [#Wistful]   // the conqueror who found his heaven in a waterpark; he will not find it again
+        napoleon -- the_floaty_ring : "Leaves behind"   // the floaty ring stays in 1988; its provenance remains unknown
         napoleon @@ san_dimas_1988 -- napoleon @@ napoleon_paris_1815 : "Returns"
         billy_the_kid @@ san_dimas_1988 -- billy_the_kid @@ american_frontier : "Returns"
         socrates @@ san_dimas_1988 -- socrates @@ ancient_greece : "Returns"
