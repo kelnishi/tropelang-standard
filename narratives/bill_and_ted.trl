@@ -32,8 +32,11 @@ char billy_the_kid  [+Historical] [+Roguish] [+Sympathetic] [+Ally] [+Stranger]
 char freud          [+Historical] [+Stranger]
 char beethoven      [+Historical] [+Stranger]
 char lincoln        [+Historical] [+Authority] [+Ally] [+Stranger]
-char missy          [+Ally]
+char missy          [+Ally] [+ParentalSubstitute]
 char mr_ryan        [+Antagonist] [+Authority]
+char captain_logan  [+Antagonist] [+Authority] [+Paternal]  // Ted's father; military-school threat
+char elizabeth      [+LoveInterest] [+Stranger]             // Bill's destined princess; medieval England
+char joanna         [+LoveInterest] [+Stranger]             // Ted's destined princess; medieval England
 char station        [+Mentor]
 char death          [+Antagonist]
 char evil_bill      [+Antagonist] [+Foil]               // Bogus Journey; mirror of bill
@@ -80,6 +83,11 @@ concept wyld_stallyns       [+Abstract]             // the band — the private 
 *(the_phone_booth [+Trap] | the_phone_booth [+Gift])* as booth_nature
 ?bill [~Pursues(goal=being_excellent)]?
 ?ted  [~Pursues(goal=being_excellent)]?
+// Romantic seeds — planted early, never resolved in this film; the sequel's payoff
+?bill [~Loves(target=missy)]?       // the faux-Oedipal attraction; Freud will name it
+?ted  [~Loves(target=missy)]?       // his own father's partner; same dynamic, worse geometry
+?bill [~Loves(target=elizabeth)]?   // the princess seen through the window; surfaces in Bogus Journey
+?ted  [~Loves(target=joanna)]?      // same
 
 // ===== LOG =====
 
@@ -144,8 +152,70 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
       }
     }
 
-    scene the_herald_arrives @@ san_dimas_1988 {
+    scene the_family_web @@ san_dimas_1988 {
+      // The geometry of the obstacle: two authority figures, one shared woman, one impossible attraction
       beat 3 {
+        // Thread A: Captain Logan — the paternal obstacle who actually holds the Alaska threat
+        captain_logan @ san_dimas_1988
+        captain_logan -- ted : "Father"
+        captain_logan [~Desires(target=the_report)]   // wants the boys to fail; confirms the threat
+
+        evt logan_threatens [&Reveals(agent=captain_logan, target=ted)]
+            dialog(inject=[speaker=captain_logan, target=ted],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the specific disappointment of a man who expected more and has stopped being surprised"
+                   tone: clipped
+                   text: "One week. History report. You fail, you're on a plane. I've already called the school."
+                   motivation: "{speaker} is not the villain — he's a reasonable man whose son has given him nothing to work with"
+                   """)
+
+        // Thread B: Missy — the family-web knot
+        // Missy was married to Bill's dad; now she's with Captain Logan; both boys call her something different
+        missy [@Married(partner=captain_logan)]
+        missy -- bill : "Former stepmom"
+        missy -- ted  : "Father's partner"
+
+        evt bill_sees_missy [&Meets(agent=bill, other=missy)]
+            dialog(inject=[speaker=bill, target=missy],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the specific discomfort of a teenage boy greeting his former stepmother who is now at his best friend's house"
+                   tone: awkward
+                   text: "'Oh. Hey. [pause] ...Mom.'"
+                   motivation: "one word; contains multitudes; the film's densest gag — the Oedipus complex already installed and acknowledged in a single syllable"
+                   """)
+        bill [~Loves(target=missy)]   // latent seed surfaces as acknowledgment; immediately suppressed
+        ted  [~Loves(target=missy)]   // same geometry; worse because captain_logan is his actual father
+        // LoveTriangle seeds: bill and ted both love missy; both suppress it; Freud will find it anyway
+      }
+
+      beat 4 {
+        // Thread C: Missy as ally — she's actually kind to the boys despite the geometry
+        // The ParentalSubstitute is genuine; the attraction is real but unspoken; both things are true
+        evt missy_helps [&Aided(other=bill)]
+            dialog(inject=[speaker=missy, target=bill],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the warmth of someone who doesn't hold the geometry against them"
+                   tone: kind
+                   text: "You boys need anything? I made sandwiches. [beat] The good kind."
+                   motivation: "{speaker} is the only adult who isn't an obstacle — her kindness is the inverse of {target}'s father's coldness"
+                   """)
+        missy [+Ally]
+        // The ParentalSubstitute thread: Missy is the warm adult the boys actually have,
+        //   despite — or because of — the impossible family geometry she occupies
+      }
+    }
+
+    scene the_herald_arrives @@ san_dimas_1988 {
+      beat 5 {
         // Rufus arrives; the phrase is planted; the booth is delivered
         evt rufus_descends [&Arrives(agent=rufus, location=san_dimas_1988)]
             dialog(inject=[speaker=rufus],
@@ -176,7 +246,7 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
         // RuleOfCool — the phone booth materialising out of nowhere, wires trailing: impossible and perfect
       }
 
-      beat 4 {
+      beat 6 {
         // The refusal collapses into demonstration; the boys cross the threshold
         evt skepticism [&Doubts(agent=bill, claim=time_travel)]
             dialog(inject=[speaker=bill, target=ted],
@@ -223,7 +293,7 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
 
     scene napoleon_extraction @@ napoleon_paris_1815 {
       // Story-time: 1815 Paris; syuzhet intercuts with Napoleon's solo arc in san_dimas_1988
-      beat 5 {
+      beat 7 {
         // The capture — bill's blissful ignorance of military history in action
         evt arrive_napoleon [&Arrives(agent=bill, location=napoleon_paris_1815)]
         evt arrive_napoleon_ted [&Arrives(agent=ted, location=napoleon_paris_1815)]
@@ -242,7 +312,7 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
         napoleon [+Displaced] [+Stranger]
       }
 
-      beat 6 {
+      beat 8 {
         // Napoleon inside the booth — the gag is that confinement makes the Emperor maximally furious;
         // the boys attempt communication; the booth becomes a diplomatic incident at 55 mph through time
         evt napoleon_in_booth [&Wanders(agent=napoleon, location=the_phone_booth)]
@@ -266,7 +336,7 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
 
     scene napoleon_goes_wild @@ san_dimas_1988 {
       // Napoleon's solo B-plot: two beats track his spiral from wonder to conquest
-      beat 7 {
+      beat 9 {
         // First contact with modernity — ice cream; the conqueror encounters something he cannot defeat
         evt napoleon_solo [&Wanders(agent=napoleon, location=san_dimas_1988)]
         evt napoleon_ice_cream [&Discovers(agent=napoleon, obj=the_ice_cream)]
@@ -286,7 +356,7 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
         //   the dignity gap between subject and reaction IS the gag
       }
 
-      beat 8 {
+      beat 10 {
         // Escalation: bowling → waterpark; the pratfall apex
         evt napoleon_bowling [&Wanders(agent=napoleon, location=the_mall)]
             dialog(inject=[speaker=napoleon],
@@ -321,7 +391,7 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
     // ── Leg 2: Historical collection — two beats, split by era ──────────────
 
     scene collecting_the_figures {
-      beat 9 {
+      beat 11 {
         // Early stops: the frontier and the ancient world
         // Billy the Kid — american_frontier
         evt collect_billy [&Captures(agent=bill, target=billy_the_kid)] @@ american_frontier
@@ -370,9 +440,26 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
                    """)
         joan_of_arc @@ medieval_england -- joan_of_arc @@ san_dimas_1988 : "Displaced"
         joan_of_arc [+Displaced]
+
+        // Thread B: the princess sighting — through a window in the castle; the romantic seeds planted
+        evt princess_sighting [&Meets(agent=bill, other=elizabeth)] @@ medieval_england
+        evt princess_sighting_2 [&Meets(agent=ted, other=joanna)] @@ medieval_england
+            dialog(inject=[speaker=bill, target=ted],
+                   inline="""
+                   kind: narration
+                   cue: "the camera slows; the comedy register lifts for exactly four seconds"
+                   tone: hushed
+                   text: "Through the window: two women. They look down. The boys look up. Nobody moves. Then Rufus, without looking, closes the booth door."
+                   motivation: "the romantic subplot in embryo — a glimpse through glass across six centuries; the sequel's entire premise fits in four seconds"
+                   """)
+        bill [~Loves(target=elizabeth)]   // latent seed surfaces; immediately sealed in the booth
+        ted  [~Loves(target=joanna)]      // same
+        // StarCrossed seeds: across time, across history; they can't stay — and they both know it
+        elizabeth [+Stranger] [+LoveInterest]
+        joanna    [+Stranger] [+LoveInterest]
       }
 
-      beat 10 {
+      beat 12 {
         // Later stops: medieval Asia, Renaissance Europe, the American frontier again
         evt collect_genghis [&Captures(agent=ted, target=genghis_khan)] @@ medieval_england
             dialog(inject=[speaker=ted, target=genghis_khan],
@@ -418,7 +505,7 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
     // ── Leg 3: Mall sequence — the figures loose in 1988 ─────────────────
 
     scene the_mall_sequence @@ san_dimas_1988 {
-      beat 11 {
+      beat 13 {
         // All displaced figures co-present; three comedy set-pieces run simultaneously
         evt figures_loose [&Wanders(agent=billy_the_kid, location=the_mall_interiors)]
         evt figures_loose_2 [&Wanders(agent=beethoven, location=the_mall_interiors)]
@@ -454,9 +541,28 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
         evt genghis_framed_comic [&Frames(agent=author, target=genghis_khan, as=comic)]
         // RuleOfFunny — the Great Khan rampaging through a toy aisle: [+Dignified] conqueror
         //   humiliated by bright plastic; the harm is conspicuously not the point
+
+        // Thread B: Freud observes; the diagnosis arrives
+        // Freud has been silently watching all of this. He has been taking notes.
+        evt freud_observes [&Speaks(agent=freud, location=the_mall_interiors)]
+            dialog(inject=[speaker=freud, target=bill],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the specific serenity of a man who has just confirmed his entire life's work"
+                   tone: satisfied
+                   text: "Ze Oedipus complex."
+                   motivation: "{speaker} has watched bill and ted navigate the Missy geometry for two scenes; three words are sufficient; he resumes his notes"
+                   """)
+        // The diagnosis fires on what was planted in beat 3: bill and ted's latent loves
+        //   for missy, their shared quasi-parent, named by the one displaced figure whose
+        //   entire professional framework was built for exactly this situation
+        bill [#Confronted(other=freud)]   // the mirror is held up; he does not look at it
+        ted  [#Confronted(other=freud)]   // same
       }
 
-      beat 12 {
+      beat 14 {
         // The arrest — mid-act complication; figures rounded up; the quest seems over
         evt the_arrest [&Captures(agent=mr_ryan, target=bill)]
         evt the_arrest_2 [&Captures(agent=mr_ryan, target=ted)]
@@ -482,7 +588,7 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
     // ── Leg 4: Escape and the race to school ─────────────────────────────
 
     scene the_escape @@ san_dimas_1988 {
-      beat 13 {
+      beat 15 {
         // The displaced figures repay the boys; the role reversal completes
         evt billy_springs_them [&Liberates(agent=billy_the_kid, target=bill)]
         evt billy_springs_them_2 [&Liberates(agent=billy_the_kid, target=ted)]
@@ -502,7 +608,7 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
         ted  [+Determined]
       }
 
-      beat 14 {
+      beat 16 {
         // The race: the alliance in motion; all threads converging on the auditorium
         // The figures who were obstacles are now the rescue; the quest arrives at the climax
         evt the_race [&Pursues(agent=bill, other=the_auditorium)]
@@ -531,7 +637,7 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
   act the_ordeal_and_return {
 
     scene the_climax @@ san_dimas_1988 {
-      beat 15 {
+      beat 17 {
         // Assembly: the auditorium fills; mr_ryan's contempt is on display one last time
         evt the_assembly [&Arrives(agent=lincoln, location=the_auditorium)]
         evt mr_ryan_dismisses [&Doubts(agent=mr_ryan, claim=the_report)]
@@ -553,7 +659,7 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
         the_auditorium [+Crowded]
       }
 
-      beat 16 {
+      beat 18 {
         // The payoff: Lincoln speaks; the Aesop fires; the quest resolves
         evt lincoln_speaks [&Speaks(agent=lincoln, location=the_auditorium)]
             dialog(inject=[speaker=lincoln],
@@ -588,7 +694,7 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
         ted  [~Pursues(goal=being_excellent)]
       }
 
-      beat 17 {
+      beat 19 {
         // The return: each displaced figure's worldline closes back to its origin
         evt return_napoleon [&Returns(agent=napoleon, target=napoleon_paris_1815)]
             dialog(inject=[speaker=napoleon],
@@ -613,7 +719,7 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
 
     scene the_future_glimpsed @@ san_dimas_future_2688 {
       // Epilogue: after(san_dimas_1988, san_dimas_future_2688) — we jump forward
-      beat 18 {
+      beat 20 {
         // Rufus's reflection — the question the film never asked, now answered
         evt the_vision [&Reveals(agent=rufus, target=the_utopia)]
             dialog(inject=[speaker=rufus],
@@ -633,7 +739,7 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
         resolve booth_nature -> the_phone_booth [+Gift]   // re-confirm: the booth was never a trap
       }
 
-      beat 19 {
+      beat 21 {
         // The utopia in motion — what the world built from this afternoon in San Dimas
         evt the_utopia_shown [&Reveals(agent=rufus, target=san_dimas_future_2688)]
             dialog(inject=[speaker=rufus],
@@ -657,7 +763,7 @@ arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
   // ── POST-CREDITS — Bogus Journey tease ──────────────────────────────────
 
   scene the_stinger @ post_credits @@ san_dimas_1988 {
-    beat 20 {
+    beat 22 {
       // The threat that will become Part II; the mirror of the thesis
       evt evil_doubles_appear [&Arrives(agent=evil_bill, location=san_dimas_1988)]
       evt evil_doubles_appear_2 [&Arrives(agent=evil_ted, location=san_dimas_1988)]
