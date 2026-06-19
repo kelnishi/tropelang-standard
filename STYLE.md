@@ -68,6 +68,19 @@ The collective-agent tags form a small ontology — `Faction`, `Institution`, `N
 the recognition coverage). Reach for `[+Collective]` as the base; specialize only when the *kind* of
 collective drives the match.
 
+**The concept-vs-char diagnostic.** If a named thing takes `--` edges to characters, receives `[+Tag]`
+mutations mid-log, or is the subject of a `[~Verb]` latent seed, it is a `char` — possibly
+`[+Collective]` or `[+Abstract]` — not a `concept`. Concepts are referenced by identity; they are not
+actors in the log and do not accrete state. A *band* has co-founders; a *movement* has members who act
+in its name; a *guild* issues warrants. All three are `char [+Collective]`. The question is simple: does
+it *do* things? If yes, it's a `char`.
+
+**Every declaration needs a log footprint.** An entity declared in the header but absent from every
+event, edge, and seed is either missing its encoding or shouldn't be declared at all. The rule is not
+"declare everything you can imagine" but "declare everything that participates." A prospective sequel
+character belongs either as a latent seed (`?station [~Arrives]?`) — planting the future — or not yet,
+full stop.
+
 ## 2. Write accretively — build the palette early, even loosely
 
 Don't declare only what the next beat needs. **Lay out the whole table of pieces before you play.**
@@ -92,6 +105,11 @@ now, commit later, with the tools the language gives you (`specs/01 §11`):
 
 Declare `obj the_box` with no role; let scene four `resolve` it into the murder weapon or the red
 herring. Uncertainty is a first-class material — declare it early and sharpen it at your own pace.
+
+**`resolve` fires exactly once.** The log is accretive — a second `resolve` of the same ambiguity name
+is a defect, not a confirmation. Resolve when the story commits; the commitment stands. Similarly, don't
+immediately follow a `resolve` with `!…!` on the same fact — the resolve already writes it; the absolute
+wrapper is redundant noise.
 
 ## 4. The shape of a file
 
@@ -224,6 +242,9 @@ A `non_canon` plane cannot mint an `!absolute!` fact (`specs/14 §8`).
   scopes a tag's interval `[assert, retract)`, so don't pre-net a state to "off" by asserting then
   removing it in the same breath.
 - Reading order *is* time: `past scene {}` / `future scene {}` and `as_of` all read the file top-down.
+- **Don't re-assert header tags in the log.** An entity declared `[+MacGuffin]` at the top is
+  `[+MacGuffin]` throughout — the log reads as a diff on the setup state. Re-asserting the same tag
+  mid-timeline is noise that obscures what the beat is actually changing.
 
 ## 8. Vignettes: trigger, don't hardcode
 
@@ -290,7 +311,91 @@ This is the same trap behind every **Un-X / Not-X / Anti-X** archetype (Nominal 
 the un-reliable, the un-witnessed): the name is a negation, but the *trope* is a positive thing. Encode the
 positive thing.
 
-## 9. S14 levels: home plane, loud crossings
+## 9. Beat granularity and labels
+
+**Use descriptive beat labels, not sequence numbers.** A beat named `the_capture` inside
+`scene napoleon_extraction` is unambiguous, self-documenting, and never needs renumbering when beats
+are added or removed. A global counter (`beat 1`, `beat 2`, …) is a maintenance liability: inserting a
+beat anywhere requires renumbering everything downstream, and the number tells the reader nothing about
+what the beat contains.
+
+```trl
+// ❌ fragile, opaque
+beat 7 { … }
+beat 8 { … }
+
+// ✓ stable, self-describing
+beat the_capture { … }
+beat napoleon_in_booth { … }
+```
+
+Labels are scoped to their scene, so short names suffice — `beat assembly` inside `scene the_climax`
+is unambiguous without a prefix. The name should say what the beat *is*, not where it falls.
+
+**Beat granularity as a fidelity signal.** A useful rough check: aim for 2–3 screenplay pages (or
+equivalent prose) per beat. A beat covering 10+ pages is compressing multiple distinct story moments
+into one unit and will under-fire on recognition. When a scene has an ensemble of distinct set-pieces
+(characters introduced one by one, parallel action across locations), give each piece its own beat —
+the granularity is where the evidence lives.
+
+## 10. Block-scoped declarations for long narratives
+
+For long narrative files where front-loading every single-use object or set bloats the header and
+obscures the work's actual vocabulary, **declare entities at the top of the scene or beat block
+where they first appear** — before any events or edges in that block. This applies §1's
+declare-before-use rule at block scope rather than file scope.
+
+```trl
+beat the_capture {
+  obj jail_keys [+Mundane]       // ← declaration leads the block
+  obj chewing_gum [+Mundane]     // ← all declarations grouped here
+  evt plan_hatched [&Reveals(…)]
+  jail_keys -- the_jail : "Unlocks"
+  …
+}
+```
+
+Reserve the **file header** for entities that span multiple scenes or belong to the work's top-level
+vocabulary: major MacGuffins, recurring characters, cross-scene sets, chron markers, and concepts.
+The header is a reading aid — a summary of the work's cast and world — not a registry of every prop.
+
+Inline declarations inside a beat are still declarations-before-use within that block's reading order.
+The validator sees them in source order; the engine does too.
+
+## 11. Story-time: chron and @@
+
+`chron` and `@@` encode the *fabula* — the chronological order events happen in the world, independent
+of the *syuzhet* (the order the narrative presents them).
+
+```trl
+// Declare the fabula spine once, at the top
+chron act_one ~> act_two ~> act_three
+
+// @@ on a scene anchors all events within to that story-time moment
+scene the_flashback @@ act_one { … }
+
+// @@ on an entity reference anchors that reference to a moment
+napoleon @@ paris_1815 -- napoleon @@ san_dimas_1988 : "Displaced"
+```
+
+**`@@` inside verb parameter expressions is illegal.** `agent=napoleon @@ san_dimas_1988` inside a
+verb call fails with a parse error. Rely on the active scene's story-time context instead — events
+within a `scene s @@ moment { }` inherit that anchor automatically.
+
+**Chron markers must be declared nodes.** Every identifier named in a `chron` chain must exist as a
+declared `set` (or other node) before the chain. An undeclared marker silently breaks the fabula
+spine.
+
+**Close every displaced worldline.** When a character is extracted from their era and returned, encode
+both crossings explicitly:
+```trl
+napoleon @@ paris_1815 -- napoleon @@ san_dimas_1988 : "Displaced"   // extraction
+napoleon @@ san_dimas_1988 -- napoleon @@ paris_1815 : "Returns"     // closure
+```
+An open worldline — extracted but never returned — is an unresolved thread, which may be intentional
+(a sequel hook) but should be deliberate, not an oversight.
+
+## 12. S14 levels: home plane, loud crossings
 
 - Declare a node on its **home plane** (the cast lives on the canon mainline, e.g. `<<heist>>`).
 - Reference a node from another plane via a **loud crossing** `<<home|name>>` — never a bare silent
