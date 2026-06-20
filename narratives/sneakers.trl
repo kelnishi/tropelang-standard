@@ -1,0 +1,1115 @@
+// @title   Sneakers
+// @medium  Feature Film
+// @format  Heist thriller; three-act structure with prologue and counter-heist
+// @domain  Techno-thriller / Ensemble Heist / Paranoid Conspiracy
+// @version 1.0
+
+import "trl/modules/index.trl"
+
+// ===== WORK =====
+work the_film [%Feature]
+
+// ===== STORY-TIME (fabula) — the chronological spine =====
+// The film opens in 1969 then cuts to 1992 San Francisco; no displacement of characters,
+// but the chron spine encodes the wound that the present action reopens.
+
+set prologue_1969        [+Exterior] [+Liminal]      // Princeton campus, 1969; the origin of everything
+set san_francisco_1992   [+Urban] [+OrdinaryWorld]   // the team's present-day home
+
+chron prologue_1969 ~> san_francisco_1992
+
+// ===== CAST =====
+char bishop              [+Protagonist] [+Leader] [+Guarded] [+FalseIdentity] [+Dynamic]
+                         // born Martin Brice; fled under a false name; 23 years of distance from his real self
+char cosmo               [+Antagonist] [+Mirror] [+Idealist] [+Corrupted] [+Dynamic]
+                         // Bishop's oldest friend; thought dead; the wound walking back into Bishop's life
+char crease              [+Ally] [+ExCIA] [+Skeptic]
+                         // Donald Crease; ex-CIA; the voice of institutional distrust on the team
+char mother              [+Ally] [+Expert] [+Paranoid]
+                         // Darren "Mother" Roskow; tech specialist; conspiracy theorist; the van
+char whistler            [+Ally] [+Expert] [+Blind]
+                         // Erwin "Whistler" Emery; acoustic genius; his disability is the team's decisive edge
+char carl                [+Ally] [+Idealist] [+Young]
+                         // Carl Arbogast; phone phreak; still carries what Bishop and Cosmo once believed
+char liz                 [+Recruited] [+Competent]
+                         // Bishop's ex; brought in for one job; earns permanent membership
+char brandt              [+Antagonist] [+Deceiver] [+Uniformed]
+                         // Werner Brandt; fake NSA agent working for Cosmo; the lie that starts the story
+char janek_nsa           [+Authority] [+LeverageHolder]
+                         // NSA Agent Janek; the real NSA; holds Bishop's freedom as a chip
+char abbott              [+Authority] [+LeverageHolder]
+                         // NSA Agent Abbott; paired with Janek; institutional power with institutional patience
+char dr_janek            [+Innocent] [+Expert]
+                         // Dr. Gunter Janek; the mathematician who built the box; doesn't know what he built
+
+char the_team            [+Collective] [+Ensemble]
+                         // the full crew as a unit; their trust is the operating substrate
+
+// ===== OBJECTS =====
+obj the_black_box        [+MacGuffin] [+Unknown]
+                         // the NSA cryptography device; can break any encryption; meaning evolves across every act
+obj the_brice_file       [+MacGuffin] [+Coercive]
+                         // the FBI/NSA file on Martin Brice; the lever that traps Bishop
+obj bishop_false_id      [+Constructed] [+Protective]
+                         // the "Martin Bishop" identity; 23 years of careful distance; threatened by the file
+obj the_ransom_terms     [+Contractual]
+                         // deliver the box; Brice record erased; Bishop is free; the deal Bishop cannot refuse
+obj the_setec_file       [+Encrypted]
+                         // the Setec Astronomy project files; the trail that leads to the box
+
+// ===== SETS =====
+set the_team_van         [+Interior] [+Mobile] [+Isolated]   // Mother's operation center; the team's tactical brain
+set janek_lab            [+Interior] [+Secure] [+HighStakes]  // Dr. Janek's campus lab; the heist site
+set cosmo_facility       [+Interior] [+Hostile]               // Cosmo's hidden headquarters; the revelation site
+set the_exchange_site    [+Exterior] [+Liminal] [+HighStakes] // the handoff location; where everything resolves
+
+// ===== CONCEPTS =====
+concept information_power   [+Abstract] [+Thesis]
+                            // whoever controls secrets controls everything; the film's governing idea
+concept too_many_secrets    [+Abstract] [+Encrypted]
+                            // decoded from "Setec Astronomy"; the film's thesis word-for-word; accretes meaning
+concept false_identity      [+Abstract]
+                            // what protects Bishop and what traps him; the wound the film reopens
+concept the_cause           [+Abstract]
+                            // what young Brice and Cosmo believed; equality, transparency, speaking truth to power
+concept trust               [+Abstract]
+                            // the team's operating substrate; what the heist and the relationship both run on
+
+// ===== SEEDS — latent threads that surface later =====
+?bishop [~Confronts(target=false_identity)]?       // the wound that can't stay closed; surface 4-5 times
+?the_cause [~Perverted(by=cosmo)]?                 // surfaces in Cosmo's pitch; the idealism curdled into power
+?cosmo [~Betrays(target=bishop)]?                  // resolves when Cosmo takes the box
+*(cosmo [+Dead] | cosmo [+Alive])* as cosmo_status // planted in Act 1; resolved at the reveal
+*(the_black_box [+Tool] | the_black_box [+Weapon])* as box_nature  // resolved in the demonstration scene
+?whistler [~Decides(target=the_black_box)]?        // his wisdom closes the film's central question
+?carl [~Chooses(target=the_cause)]?                // the youngest member's idealism tested and affirmed
+?liz [~Joins(target=the_team)]?                    // recruited for one job; permanence is what she earns
+
+// ===== LOG =====
+
+arc sneakers_san_francisco [+Heist] [+Conspiracy] [+Paranoia] {
+
+  // ── PROLOGUE · 1969 ──────────────────────────────────────────────────────
+
+  act the_prologue @@ prologue_1969 {
+
+    scene young_hackers_princeton @@ prologue_1969 {
+
+      beat the_cause_is_born {
+        // Setup: two young men in a dorm room who believe information wants to be free —
+        // the cause in its pure, pre-corrupted form; the friendship that makes everything else hurt
+        char young_bishop    [+Young] [+Idealist]       // Martin Brice before the flight
+        char young_cosmo     [+Young] [+Idealist]       // the friend who will be thought dead
+        set princeton_dorm   [+Interior] [+Conspicuous]
+
+        evt hacking_begins [&Performs(agent=young_bishop, location=princeton_dorm)]
+            dialog(inject=[speaker=young_bishop, target=young_cosmo],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "two students in the blue-lit dark of a terminal; the tone is the urgency of true believers"
+                   tone: electric
+                   text: "The Republican National Committee account. Think of it — all that money, just sitting there. We could move it. To Amnesty International. Greenpeace. Anybody who's actually doing something."
+                   motivation: "{speaker} is not a criminal yet — he is a true believer; the action is transgressive but the ethics are coherent; the audience needs to understand this so the Cosmo betrayal lands"
+                   """)
+        young_bishop -- young_cosmo : "Believers in the same cause"
+        young_bishop -- the_cause : "Committed to"
+        young_cosmo  -- the_cause : "Committed to"
+        the_cause [+Pure] [+Shared]
+        too_many_secrets [+Encrypted]   // the thesis in embryo — secrets belong to no one; power corrupts them
+
+        evt the_cause_seeded [&Introduces(object=the_cause)]
+        // The cause is planted in its pure form; the film will track what happens to it
+      }
+
+      beat the_fbi_arrives {
+        // Turn: the FBI comes; Cosmo stays; Bishop runs; the identity split
+        // This is the originating wound: the moment Martin Brice became "Martin Bishop"
+        obj the_fbi_agents [+Authority] [+Institutional]   // unnamed; the institution, not a named individual
+        evt fbi_raid [&Strikes(agent=the_fbi_agents, target=princeton_dorm)]
+            dialog(inject=[speaker=young_cosmo, target=young_bishop],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "low, urgent — one door already rattling; the last words the best friends will say for twenty-three years"
+                   tone: sharp
+                   text: "Go. I'll handle it. Go — now."
+                   motivation: "{speaker} chooses to stay; it is an act of love and it destroys them both — Cosmo goes to prison and Bishop goes to a life that isn't his"
+                   """)
+        // Consequence: the split that defines everything
+        evt bishop_flees [&Flees(agent=young_bishop, location=princeton_dorm)]
+        bishop_false_id [+Created]      // the "Martin Bishop" identity is born in this instant of flight
+        young_bishop [+Fugitive]
+        young_cosmo  [+Arrested]
+
+        evt cosmo_caught [&Captures(agent=brandt, target=young_cosmo)]
+        // cosmo_status: cosmo is last seen being arrested; the file will say he died in prison
+        *cosmo [+Alive]*                // we the audience know what the file doesn't — yet
+        ?bishop [~Confronts(target=false_identity)]?   // first surface: the identity is born from flight; the wound opens here
+        bishop -- cosmo : "Oldest friend, last seen 1969"   // the relationship that will reopen everything
+        bishop -- false_identity : "Built to survive"
+      }
+
+    }
+
+  }
+
+  // ── ACT 1 · SAN FRANCISCO 1992 ───────────────────────────────────────────
+
+  act the_setup @@ san_francisco_1992 {
+
+    scene the_bank_opener @@ san_francisco_1992 {
+      // The team in operation: each member's skill introduced through action, not exposition
+      // One bank, one con, five members — the audience meets the crew mid-competence
+
+      beat the_team_assembles {
+        // Setup: the heist in its ordinary-world mode — a client hired them to test security
+        // Each member arrives at their station; the logistics of the team as organism
+        set the_target_bank  [+Interior] [+Secure]
+
+        bishop  @ san_francisco_1992
+        crease  @ san_francisco_1992
+        mother  @ the_team_van
+        whistler @ san_francisco_1992
+        carl    @ san_francisco_1992
+
+        evt bishop_briefs [&Leads(agent=bishop, group=the_team)]
+            dialog(inject=[speaker=bishop, target=the_team],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the cool precision of a man who has done this many times — not a drill, this is how he lives"
+                   tone: quiet authority
+                   text: "Crease, lobby. Carl, phones. Mother, you're eyes. Whistler — tell me what the building sounds like."
+                   motivation: "the team's operating grammar introduced in four instructions; Bishop leads by knowing exactly what each person can do; trust is in the delegation"
+                   """)
+        the_team [+Coordinated] [+Professional]
+        bishop [+FalseIdentity]   // he leads as Bishop; Brice is nowhere visible; this is his ordinary world
+      }
+
+      beat each_skill_fires {
+        // Turn: the heist unfolds; each member demonstrates their specific competence
+        // Whistler listening to the vault; Mother seeing everything; Carl phreak-routing the alarm;
+        // Crease holding the floor; Bishop making the approach — the ensemble as precision instrument
+
+        evt crease_holds_floor [&Performs(agent=crease, location=the_target_bank)]
+            dialog(inject=[speaker=crease, target=bishop],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the bone-dry skepticism of someone who has done exactly this in an actual hostile country"
+                   tone: flat
+                   text: "Three guards. Two cameras. One exit not on the blueprint. We're fine — unless we're not."
+                   motivation: "{speaker}'s pragmatic skepticism is what keeps Bishop's team alive; the ex-CIA man cannot stop reading threat angles"
+                   """)
+        crease [+Competent]
+
+        evt mother_eyes [&Observes(agent=mother, location=the_team_van)]
+            dialog(inject=[speaker=mother, target=bishop],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "voice through the earpiece; the van is his kingdom; conspiracies are just patterns he hasn't confirmed yet"
+                   tone: alert
+                   text: "Bishop — you know who owns this bank's security contractor? Same company that does the NSA's Maryland facility. Just noting it."
+                   motivation: "{speaker} connects everything to everything because that's what paranoia does — and sometimes he's right; the NSA thread is planted one beat before it needs to be"
+                   """)
+        mother [+Paranoid]   // seeds his own vindication; every paranoid observation is data about the world
+
+        evt carl_routes_alarm [&Performs(agent=carl, location=san_francisco_1992)]
+            dialog(inject=[speaker=carl, target=bishop],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the enthusiasm of someone who still finds the work interesting for its own sake"
+                   tone: delighted
+                   text: "Alarm's rerouted. They won't know for four minutes. Bishop, that's a personal best."
+                   motivation: "{speaker}'s joy is the job; he is Carl Arbogast, still idealist, still delighted — the youngest member carries the cause in its least tarnished form"
+                   """)
+        carl [+Idealist]
+
+        evt whistler_listens [&Hears(agent=whistler, location=san_francisco_1992)]
+            dialog(inject=[speaker=whistler, target=bishop],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the calm of someone for whom sound is a complete world; the blindness is not a deficit, it is a different frequency"
+                   tone: quiet precision
+                   text: "The vault combination is three-two-seven. They changed it this morning — the tumblers have less wear on those numbers. Also, the second guard had a cheeseburger for lunch. That's not relevant but I thought you should know."
+                   motivation: "{speaker}'s acoustic mastery introduced through absurd over-delivery; the cheeseburger is the tell that his hearing is not just functional but extraordinary; his disability is already an advantage"
+                   """)
+        whistler [+Expert]
+        whistler [+Indispensable]   // the team cannot operate without what he does; his blindness is their edge
+      }
+
+      beat heist_complete {
+        // Consequence: the bank job ends; the client is satisfied; the team is paid
+        // The ordinary-world rhythm of the team is established before it gets disrupted
+        evt bishop_delivers [&Delivers(agent=bishop, target=the_target_bank)]
+            dialog(inject=[speaker=bishop, target=crease],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the measured satisfaction of a professional at the end of a routine job"
+                   tone: even
+                   text: "Three entry points. Alarm response time: six minutes. Vault: twenty seconds. Tell them to change the combination."
+                   motivation: "{speaker} is reliable, precise, and honest — this is who Martin Bishop is now; the false identity has become a real person, and the real person is good at his work"
+                   """)
+        bishop [+Competent] [+Trustworthy]
+        the_team [+Successful]
+        bishop_false_id [+Stable] [+Ordinary]
+        // The false identity at rest: Bishop has made a life and it works; the next scene is where it cracks
+      }
+
+    }
+
+    scene the_nsa_approach @@ san_francisco_1992 {
+      // The false NSA agents come to Bishop's office; Brandt presents the leverage; the trap closes
+
+      beat brandt_presents {
+        // Setup: two men in suits who claim government authority; the offer that isn't one
+        set bishop_office   [+Interior] [+Neutral]
+
+        brandt @ bishop_office
+        bishop @ bishop_office
+
+        evt brandt_arrives [&Meets(agent=brandt, other=bishop)]
+            dialog(inject=[speaker=brandt, target=bishop],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the smoothness of an operative who has delivered this brief many times; the offer is wrapped in institutional weight"
+                   tone: bureaucratic warmth
+                   text: "Mr. Bishop. We work for the National Security Agency. We have a small job for your team. We're prepared to pay very well."
+                   motivation: "{speaker} is completely convincing — he is lying about everything except the payment; the audience and Bishop can't tell yet"
+                   """)
+        brandt [+Deceiver]
+        bishop [+Guarded]   // Bishop's internal alarm fires immediately; he is always wary of institutions
+        ?bishop [~Confronts(target=false_identity)]?   // second surface: institutions mean danger to Martin Brice
+      }
+
+      beat the_brice_file_revealed {
+        // Turn: Brandt opens the file; the false identity is threatened directly
+        // The wound from 1969 is in a folder on the table; 23 years of safety collapses in one paragraph
+        evt brice_file_opened [&Reveals(agent=brandt, target=bishop)]
+            dialog(inject=[speaker=brandt, target=bishop],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the quiet devastation of a bureaucrat reading a verdict; the file is almost gentle"
+                   tone: even
+                   text: "Martin Brice. Princeton, 1969. Federal charges — wire fraud, computer fraud, conspiracy. The file has been classified for twenty-three years. It can stay classified. Or it can be opened."
+                   motivation: "{speaker} is not threatening; he is informing; the threat is in the grammar — passive voice around a catastrophe; Bishop goes very still because stillness is the only available response"
+                   """)
+        the_brice_file [+Revealed] [+Coercive]
+        bishop_false_id [+Threatened]   // 23 years of careful distance: threatened in one sentence
+        bishop [#Trapped]    // the shift from [+Guarded] to [#Trapped]: now his mind, not his posture
+        ?bishop [~Confronts(target=false_identity)]?   // third surface: the file IS the false identity's death warrant
+
+        evt the_ransom_terms_delivered [&Delivers(agent=brandt, target=bishop)]
+            dialog(inject=[speaker=brandt, target=bishop],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the deal presented as professional courtesy; the coercion is complete; Bishop has no room to move"
+                   tone: collegial
+                   text: "Retrieve a device from a mathematician named Dr. Gunter Janek. Deliver it to us. In return, the Brice file is erased. Martin Bishop keeps his life."
+                   motivation: "{speaker} knows he has won before Bishop speaks; the deal is offered as a formality; the audience tracks that Bishop cannot refuse"
+                   """)
+        the_ransom_terms [+Delivered] [+Accepted]
+        bishop -- the_ransom_terms : "Coerced by"
+        bishop -- the_brice_file   : "Endangered by"
+        the_black_box [+Unknown]   // "a device" — Bishop doesn't know what it is yet; first accreted tag
+      }
+
+      beat bishop_briefs_the_team {
+        // Consequence: Bishop assembles the team; tells them everything except his personal stake
+        // The trust he withholds here is the seed that the beating will eventually pay off
+        evt bishop_recruits [&Leads(agent=bishop, group=the_team)]
+            dialog(inject=[speaker=bishop, target=the_team],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the controlled precision of a man disclosing exactly what he must and no more"
+                   tone: matter-of-fact
+                   text: "NSA contract. One job — retrieve an encryption device from a university lab. Clean in, clean out. Good money. I want everyone in."
+                   motivation: "{speaker} doesn't tell them about the Brice file; he tells himself it's to protect them; it is also to protect the secret he has kept from everyone for twenty-three years"
+                   """)
+        the_team [+Assembled] [+Briefed]
+        bishop -- the_team : "Leads with withheld truth"
+        // The withholding is not deception exactly — but it is the crack in trust
+        // that will matter when everything goes wrong
+      }
+
+    }
+
+    scene liz_recruited @@ san_francisco_1992 {
+      // Bishop approaches Liz; she is a social engineer; he needs her for the recon approach
+
+      beat bishop_and_liz {
+        // The ex-girlfriend dynamic; the professional ask; the personal subtext already present
+        set liz_apartment    [+Interior] [+Domestic]
+
+        liz @ liz_apartment
+        bishop @ liz_apartment
+
+        evt bishop_asks_liz [&Meets(agent=bishop, other=liz)]
+            dialog(inject=[speaker=bishop, target=liz],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the awkward fluency of someone who knows exactly how to ask for things except from this person"
+                   tone: careful
+                   text: "I need a social engineer. Specifically you. There's a mathematician — we need to know the layout of his lab. One meeting. Dinner, maybe. You'd be very good at it."
+                   motivation: "{speaker} is asking his ex-girlfriend to have dinner with another man as professional cover; the subtext of everything he doesn't say about why specifically her is the scene's real content"
+                   """)
+        liz [+Recruited]
+        bishop -- liz : "Former lovers / current professional ask"
+        ?liz [~Joins(target=the_team)]?   // planted: recruited for one job; permanence is what she'll earn
+      }
+
+      beat liz_agrees {
+        // Liz accepts; demonstrates she already knows more than Bishop expects
+        evt liz_accepts [&Agrees(agent=liz, target=bishop)]
+            dialog(inject=[speaker=liz, target=bishop],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the equanimity of a woman who has had twenty-three years to get comfortable with complicated"
+                   tone: dry
+                   text: "A mathematician. At a university. And you need me to be charming and ask questions and not let on that I'm asking them. [beat] Martin, you haven't changed at all."
+                   motivation: "{speaker}'s dry humor lands on 'Martin' — not 'Bishop'; she uses his real name; the intimacy is the tell; he notices; the audience notices"
+                   """)
+        liz [+Competent]   // she already understands the job before he's finished explaining it
+        liz -- bishop : "Knows his real name"
+        bishop [#Exposed] // briefly; the name in Liz's mouth is the false identity's first private crack
+        ?bishop [~Confronts(target=false_identity)]?   // fourth surface: Liz says "Martin"; the identity flickers
+      }
+
+    }
+
+  }
+
+  // ── ACT 2a · THE HEIST ───────────────────────────────────────────────────
+
+  act the_heist_sequence @@ san_francisco_1992 {
+
+    scene setec_astronomy_decoded @@ san_francisco_1992 {
+      // Research phase: the team decodes "Setec Astronomy"; the anagram reveal;
+      // the discovery that changes what the job is
+
+      beat research_begins {
+        // Setup: the team working the problem; the encrypted name is a wall
+        set team_headquarters  [+Interior] [+Isolated]
+
+        evt carl_decodes [&Performs(agent=carl, location=team_headquarters)]
+            dialog(inject=[speaker=carl, target=the_team],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the phone phreak at full intensity; the idealism is still there in how much he cares about the puzzle"
+                   tone: concentrated
+                   text: "Setec Astronomy. It's an anagram — I can feel it. The syllables are wrong for a project name. NSA doesn't name things that sound like astronomy."
+                   motivation: "{speaker}'s instinct for hidden structure in language is exactly the idealism of someone who believes information has intrinsic form; the anagram is the thesis in disguise"
+                   """)
+        the_setec_file [+Investigated]
+        carl [+Idealist]   // his delight in the puzzle is the cause in miniature
+
+        evt mother_crosslinks [&Observes(agent=mother, location=team_headquarters)]
+            dialog(inject=[speaker=mother, target=the_team],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the acceleration of a paranoid who has just had his paranoia confirmed"
+                   tone: rising
+                   text: "Bishop — every reference to this project inside the NSA internal registry goes to a black account. No oversight. No congressional reporting. This isn't a surveillance tool. This is something they don't want the government to know about."
+                   motivation: "{speaker}'s paranoia is the engine of the discovery; his willingness to assume the worst is exactly what the worst-case scenario requires"
+                   """)
+        mother [+Paranoid]   // the paranoia is productive; the conspiracy he smells is real
+        information_power [+Investigated]   // the team is triangulating the thesis without knowing the thesis yet
+      }
+
+      beat the_anagram_lands {
+        // Turn: Carl solves it; "Too Many Secrets" arrives in the room like a verdict
+        evt anagram_solved [&Reveals(agent=carl, target=the_team)]
+            dialog(inject=[speaker=carl, target=the_team],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the specific silence before something that matters; Carl says it quietly, which makes it louder"
+                   tone: hushed
+                   text: "Setec Astronomy. Rearrange the letters. [beat] Too many secrets."
+                   motivation: "the anagram is the film's thesis delivered by the character who still believes in the cause; Carl doesn't know yet what it means; neither does the audience; both will find out the same way"
+                   """)
+        too_many_secrets [-Encrypted] [+Decoded]   // first meaning shift: from cipher to phrase
+        the_setec_file [+Decoded]
+
+        evt bishop_processes [&Reacts(agent=bishop, target=too_many_secrets)]
+            dialog(inject=[speaker=bishop, target=crease],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the quiet of a man whose old self just moved in his chest"
+                   tone: distant
+                   text: "Too many secrets. [long pause] That's what we used to say."
+                   motivation: "{speaker} is remembering 1969; the cause; Cosmo; the dorm; the ideology they shared; the anagram is a ghost speaking; the audience sees Bishop's face and knows this is personal now"
+                   """)
+        bishop [#Haunted]   // the prologue's ideology arrives in 1992
+        bishop -- the_cause : "Once believed in"
+        ?the_cause [~Perverted(by=cosmo)]?   // first surface: the phrase is pure here; the perversion comes later
+        too_many_secrets [+Thesis]   // second meaning shift: from decoded phrase to conceptual weight
+      }
+
+      beat what_the_box_actually_is {
+        // Consequence: research reveals the device is not a tool but a weapon
+        // The box's nature starts to clarify; the team understands the stakes are larger than expected
+        evt crease_connects [&Reveals(agent=crease, target=the_team)]
+            dialog(inject=[speaker=crease, target=bishop],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the flat delivery of a man who has worked for the institution and knows how it thinks"
+                   tone: grave
+                   text: "If what Carl found is right — this device can break any encryption. Military. Financial. Government. Any system that runs on secure communication — phone calls, bank transfers, nuclear launch codes — it reads all of it. Whoever holds this box holds the world."
+                   motivation: "{speaker}'s CIA background gives the threat its institutional specificity; he is not being dramatic; he is being technical; the technician's affect makes it more terrifying"
+                   """)
+        the_black_box [-Unknown] [+Confirmed]   // second accreted tag: the box's nature confirmed by research
+        information_power [+Thesis]   // the film's governing idea crystallized into words for the first time
+      }
+
+    }
+
+    scene liz_and_dr_janek @@ san_francisco_1992 {
+      // Liz social-engineers Dr. Janek for the lab recon; the reconnaissance scene
+
+      beat the_dinner_approach {
+        // Setup: Liz in character; Dr. Janek delighted and oblivious
+        set the_restaurant   [+Interior] [+Public] [+Neutral]
+
+        liz      @ the_restaurant
+        dr_janek @ the_restaurant
+
+        evt liz_social_engineers [&Performs(agent=liz, location=the_restaurant)]
+            dialog(inject=[speaker=liz, target=dr_janek],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the warmth of someone who is very good at her work and is also genuinely curious about mathematicians"
+                   tone: engaged
+                   text: "The thing I keep wondering about cryptography — if you built something that was truly unbreakable, what would you use it for? What would you protect?"
+                   motivation: "{speaker} is asking the real question — what the box is for — wrapped in the language of academic admiration; Dr. Janek will answer honestly because he doesn't know the whole truth"
+                   """)
+        liz [+Competent] [+Ally]   // the competence is evident; the ally status is being earned
+        dr_janek [+Innocent]   // he hasn't thought about the weaponization; his innocence is the vulnerability
+      }
+
+      beat janek_reveals_the_lab {
+        // Turn: Dr. Janek describes his work; reveals the lab layout; doesn't know he's being reconnoitered
+        evt janek_describes [&Reveals(agent=dr_janek, target=liz)]
+            dialog(inject=[speaker=dr_janek, target=liz],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the pure delight of an academic who has been asked to explain his favorite thing"
+                   tone: enthusiastic
+                   text: "The mathematics is beautiful, really. A universal factoring algorithm — I never thought about application. The university lab is very small, very modest. We have one good machine, one safe. Very basic security. The problem was interesting. What people do with the solution, that's — that's not my department."
+                   motivation: "{speaker} has built a world-altering weapon and classified it under 'interesting problem'; his innocence is total; Liz's job is to extract the layout without confirming his innocence was misplaced"
+                   """)
+        janek_lab [+Mapped]   // the recon is complete
+        dr_janek [+Innocent] [+Unknowing]   // he doesn't know what he's built; this will haunt the film
+        liz -- dr_janek : "Social engineering; he doesn't know"
+
+        evt liz_reports [&Reveals(agent=liz, target=bishop)]
+            dialog(inject=[speaker=liz, target=bishop],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "post-mission professional; the warmth of the dinner hasn't quite left her face"
+                   tone: brisk
+                   text: "One entrance, one guard on rotation — fifteen-minute intervals. Safe is north wall, room B. He was very kind. He has no idea."
+                   motivation: "{speaker} is efficient but something in 'he was very kind, he has no idea' is the note of conscience that never quite leaves the scene; she did her job and it worked and it still feels like something"
+                   """)
+        liz [+Competent] [+Ally]   // confirmed twice now; the permanence seed is watering
+        ?liz [~Joins(target=the_team)]?   // second surface: she's operating like a full member already
+      }
+
+    }
+
+    scene the_janek_lab_heist @@ san_francisco_1992 {
+      // The heist itself: the team enters Janek's lab; Whistler navigates blind;
+      // the box is acquired; the climactic scene of Act 2a
+
+      beat team_deploys {
+        // Setup: the team positioned; Whistler's role in the heist made clear
+        the_team @ janek_lab
+
+        evt bishop_coordinates [&Leads(agent=bishop, group=the_team)]
+            dialog(inject=[speaker=bishop, target=the_team],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the compact authority of a team leader who trusts his people with the parts he can't handle himself"
+                   tone: precise
+                   text: "Crease, guard rotation. Carl, alarm panel — you have forty seconds from trigger to response. Mother, I need eyes on the south corridor. Whistler — the safe is in room B. I need you to tell me what it sounds like from outside the building."
+                   motivation: "{speaker} assigns Whistler the impossible task with complete confidence; the team's trust in Whistler's ability is enacted in the instruction; no explanation of how he does it — just the certainty that he can"
+                   """)
+        whistler [+Indispensable]   // the delegation makes his centrality explicit
+        the_team [+Coordinated]
+      }
+
+      beat whistler_navigates {
+        // Turn: Whistler guides Bishop through the lab using sound alone;
+        // his blindness becomes the decisive advantage — he can do what no sighted person could
+        evt whistler_guides [&Guides(agent=whistler, target=bishop)]
+            dialog(inject=[speaker=whistler, target=bishop],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the preternatural calm of someone for whom darkness is simply Tuesday; the voice in the earpiece that is also a complete map"
+                   tone: conversational
+                   text: "Turn left. Three steps. The cabinet is at your eleven — don't touch it, it echoes. The safe is directly ahead. The lock mechanism is a Sargent and Greenleaf 8500 — I can hear the wear on the third tumbler. Turn right slightly. The combination starts with four."
+                   motivation: "{speaker} is operating from what he hears through walls, through the earpiece Bishop holds up to surfaces; his disability gives him access to the building's interior that no sighted person could have; the scene's climax is built entirely on this inversion"
+                   """)
+        whistler [+Decisive]   // the disability as decisive edge: the first firm actualization of this tag
+        bishop @ janek_lab
+        // Bishop following a blind man's voice through a dark lab: the film's
+        // most elegant reversal — the man who can't see guides the man who can
+
+        evt box_located [&Discovers(agent=bishop, obj=the_black_box)]
+        the_black_box [+Located]
+      }
+
+      beat box_acquired {
+        // Consequence: box secured; team exits; the heist is clean
+        evt box_taken [&Takes(agent=bishop, obj=the_black_box)]
+            dialog(inject=[speaker=bishop, target=the_team],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the flat relief of a professional who has delivered; the satisfaction is technical, not emotional"
+                   tone: even
+                   text: "We have it. Everyone out. Mother, we need the route with the least traffic. Whistler — that was extraordinary."
+                   motivation: "{speaker} thanks Whistler directly and publicly; within the team's grammar of understatement this is the highest compliment available; Whistler says nothing but the team hears it"
+                   """)
+        the_black_box [-Located] [+Acquired]   // third accreted tag; the box is in their hands
+        the_team [+Successful]
+        whistler -- bishop : "Guided through the impossible"
+        bishop -- whistler : "Trusts completely"
+      }
+
+    }
+
+  }
+
+  // ── ACT 2b · REVELATION ──────────────────────────────────────────────────
+
+  act the_revelation @@ san_francisco_1992 {
+
+    scene the_box_demonstrated @@ san_francisco_1992 {
+      // The team tests the box; it works; the full weight of what they've stolen lands
+
+      beat demonstration {
+        // Setup: the box connected to a test system; the team watching
+        set team_headquarters  [+Interior] [+Isolated]
+
+        evt box_connected [&Performs(agent=carl, location=team_headquarters)]
+            dialog(inject=[speaker=carl, target=the_team],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the hacker's reverence for a tool that does what tools aren't supposed to be able to do"
+                   tone: hushed
+                   text: "It's reading the Federal Reserve encryption. Real-time. [pause] The Pentagon. The NSA's own internal network. [longer pause] Guys. It sees everything. It's reading everything."
+                   motivation: "{speaker} is the youngest, the most idealistic — his silence after the list is the scene's emotional center; he built his career on the idea that information wants to be free and now he is holding the thing that makes that literally true; and it is terrifying"
+                   """)
+        the_black_box [-Acquired] [+Proven]   // fourth accreted tag: the box's power confirmed empirically
+        resolve box_nature -> the_black_box [+Weapon]   // the ambiguity resolves: it is not a tool, it is a weapon
+        the_black_box [+WorldPower]   // fifth accreted tag: whoever holds this box holds the world
+        too_many_secrets [+Actualized]   // third meaning shift: from thesis to lived reality
+        information_power [+Actualized]   // the film's governing idea is now a physical object in the room
+      }
+
+      beat weight_of_the_weapon {
+        // Turn: the team understands the scope; Bishop articulates the problem
+        evt bishop_names_scope [&Reveals(agent=bishop, target=the_team)]
+            dialog(inject=[speaker=bishop, target=the_team],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the controlled voice of someone who needs the team to understand what they are holding without panicking"
+                   tone: very quiet
+                   text: "Every government. Every bank. Every military. Every encrypted system in the world. Whoever has this — whoever has this, gets to decide what is true. What is a crime. What happened. What didn't."
+                   motivation: "{speaker} is not being dramatic; he is being accurate; the team hears the grammar of what he's describing — this is not a weapon that destroys things; it is a weapon that controls meaning"
+                   """)
+        the_team [#Alarmed]
+        crease [+Skeptic]   // his ex-CIA training makes him process this as a threat assessment immediately
+        carl [#Conflicted]   // the idealist confronts the endpoint of his own idealism
+        ?carl [~Chooses(target=the_cause)]?   // first surface: the cause in its ugliest possible form is now in the room
+      }
+
+    }
+
+    scene cosmo_revealed @@ san_francisco_1992 {
+      // The delivery to Brandt goes wrong; Cosmo is alive; the world turns over
+      // The central revelation of the film
+
+      beat the_delivery_goes_wrong {
+        // Setup: Bishop arrives to deliver the box; something is off about the location
+        set the_warehouse    [+Interior] [+Isolated] [+Hostile]
+
+        bishop @ the_warehouse
+        brandt @ the_warehouse
+
+        evt bishop_delivers_box [&Delivers(agent=bishop, target=brandt)]
+            dialog(inject=[speaker=brandt, target=bishop],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the moment before the mask drops; the bureaucratic warmth has been turned off"
+                   tone: flat
+                   text: "Thank you, Mr. Bishop. We'll take it from here."
+                   motivation: "{speaker} says nothing wrong but everything is wrong; his warmth was a performance and now that the box is in hand he has stopped performing"
+                   """)
+        the_black_box [+Delivered]   // sixth accreted tag; but delivered to the wrong hands
+        bishop [#Suspicious]
+      }
+
+      beat cosmo_steps_forward {
+        // The central turn: the man behind Brandt is alive; is Cosmo; is the antagonist
+        // The ambiguity from the seeds collapses
+        evt cosmo_revealed [&Arrives(agent=cosmo, location=the_warehouse)]
+            dialog(inject=[speaker=cosmo, target=bishop],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the voice Bishop hasn't heard in twenty-three years; the affect that says 'I am not what you think' — not the Princeton friend but the man who has had twenty-three years to become someone else"
+                   tone: warm and wrong
+                   text: "Marty. [beat] You look well. I've been watching you — Martin Bishop, that's good. Very good. The name suits you."
+                   motivation: "{speaker} uses Bishop's real name and his fake name in the same breath; the possession of both is the threat; he is saying 'I know everything you've built and I know the foundation is mine to collapse'"
+                   """)
+        resolve cosmo_status -> cosmo [+Alive]   // the ambiguity resolves: Cosmo survived
+        cosmo [+Antagonist]   // the friend becomes the antagonist in the same revelation
+        bishop [#Betrayed]   // the wound from 1969 becomes something worse: the friend didn't die, he became this
+        ?cosmo [~Betrays(target=bishop)]?   // surfaces in this beat; not yet fully resolved — the taking of the box is the resolution
+        bishop -- cosmo : "Friend / Enemy; the same relationship rewritten"
+      }
+
+      beat cosmo_pitches {
+        // Cosmo's offer: join me; the cause perverted into power-seizure;
+        // the ideology of 1969 curdled into the ideology of 1992's Cosmo
+        evt cosmo_offers [&Speaks(agent=cosmo, target=bishop)]
+            dialog(inject=[speaker=cosmo, target=bishop],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the cadence of someone who has had twenty-three years to perfect this argument and believes every word"
+                   tone: missionary
+                   text: "Too many secrets, Marty. That's what we said. We were right. Information is power and it belongs to everyone — or to no one. I'm just making it no one. The governments fall. The banks fall. Everything that runs on secrets falls. [beat] And then we can start over."
+                   motivation: "{speaker}'s ideology is the cause of 1969 taken to its logical endpoint — not freedom, but erasure; not transparency, but collapse; the difference between young Brice and Cosmo now is that Cosmo believes power can be wielded for the cause without becoming the problem"
+                   """)
+        cosmo [+Idealist] [+Corrupted]   // both tags at once: the ideology is sincere and it is poison
+        ?the_cause [~Perverted(by=cosmo)]?   // full surface and near-resolution: the cause perverted in real time
+        too_many_secrets [+Thesis]   // Cosmo is living the thesis; but he has made it totalitarian
+        information_power [+Seized]   // Cosmo's project is to seize information power for the cause
+        ?cosmo [~Betrays(target=bishop)]?   // second surface: the pitch is the betrayal's intellectual form
+      }
+
+      beat bishop_refuses_and_beaten {
+        // Bishop refuses; Cosmo takes the box; Bishop is beaten;
+        // the relationship is broken; the worst is confirmed
+        evt bishop_refuses [&Refuses(agent=bishop, target=cosmo)]
+            dialog(inject=[speaker=bishop, target=cosmo],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the clarity that comes when you stop being afraid; Bishop is afraid but speaks anyway"
+                   tone: low
+                   text: "You're not ending secrets, Cosmo. You're just deciding which secrets get to survive. That's not too many secrets. That's one secret. Yours."
+                   motivation: "{speaker} names exactly what is wrong with Cosmo's argument and it is the most important line in the film; the cause demands transparency; Cosmo wants to be the one who controls the transparency; Bishop sees it"
+                   """)
+        bishop [+Determined]   // the clarity of the refusal: from [#Betrayed] to [+Determined]
+
+        evt cosmo_takes_box [&Takes(agent=cosmo, obj=the_black_box)]
+        ?cosmo [~Betrays(target=bishop)]?   // resolved: Cosmo takes the box; the betrayal is complete
+        the_black_box [-Proven] [+Seized] [+In_Enemy_Hands]   // seventh accreted tag: the box in Cosmo's hands
+
+        evt bishop_beaten [&Strikes(agent=cosmo, target=bishop)]
+            dialog(inject=[speaker=cosmo, target=bishop],
+                   inline="""
+                   kind: narration
+                   cue: "not rage — sadness, almost; Cosmo hits like someone who has already grieved the friendship"
+                   tone: cold
+                   text: "Cosmo doesn't shout. He nods to his men. Bishop is beaten methodically, efficiently, and left in the warehouse. Cosmo picks up the box. He doesn't look back."
+                   motivation: "{speaker}'s violence is the end of sentiment; the refusal of sentiment is what makes him the antagonist — the friend would have argued; Cosmo is past arguing"
+                   """)
+        bishop [+Beaten] [#Betrayed]   // both tags: the body and the soul of the wound
+        bishop_false_id [+Shattered]   // the identity has been cracked by events; he is Martin Brice lying in a warehouse
+        ?bishop [~Confronts(target=false_identity)]?   // fifth and final surface before resolution: Bishop is beaten under his false name; Brice's wounds
+      }
+
+    }
+
+    scene the_team_regroups @@ san_francisco_1992 {
+      // The team finds Bishop; recovers him; the trust issue surfaces; the problem of finding Cosmo
+
+      beat bishop_recovered {
+        // Setup: the team finds Bishop in the warehouse; aftermath and anger
+        evt team_finds_bishop [&Aids(agent=crease, target=bishop)]
+            dialog(inject=[speaker=crease, target=bishop],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the ex-CIA man's affect: controlled, but the anger is in the efficiency of the care"
+                   tone: flat
+                   text: "Don't move yet. [examines injuries] You're going to tell us everything now. The full story. Starting with why you accepted a contract from people you didn't verify."
+                   motivation: "{speaker}'s care and accusation are simultaneous; he is treating Bishop's wounds while naming what Bishop did wrong; the trust cost is immediate"
+                   """)
+        bishop [+Beaten]
+        bishop -- crease : "Trust breach acknowledged"
+        the_team [#Shaken]   // the team as collective: trust strained
+
+        evt bishop_tells_truth [&Reveals(agent=bishop, target=the_team)]
+            dialog(inject=[speaker=bishop, target=the_team],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the relief of a man who is too hurt to hold the secret anymore; the false identity has no armor left"
+                   tone: exhausted
+                   text: "My name is Martin Brice. I've been running from a 1969 federal charge for twenty-three years. They had the file. They used it to make me take the job. Cosmo is my oldest friend. He was supposed to be dead."
+                   motivation: "{speaker} tells them everything because the cost of secrets has just been demonstrated on his body; the false identity is collapsed here in the room; the team hears it and their reactions map exactly to who they are"
+                   """)
+        bishop_false_id [-Stable] [+Collapsed]   // the identity is not Bishop's private architecture anymore
+        bishop [+Whole] [+Honest]   // the tags accrue on the other side of the collapse: the false identity falling is the real self emerging
+        the_team [+Informed]
+      }
+
+      beat whistler_reconstructs {
+        // Turn: Whistler has the recording; he works the ambient sound to find the location
+        // His decisive contribution — the disability becomes the turn of the whole plot
+        evt whistler_works_recording [&Performs(agent=whistler, location=team_headquarters)]
+            dialog(inject=[speaker=whistler, target=the_team],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "Whistler with headphones and nothing else; the room watching a blind man listen his way to a location"
+                   tone: concentrated
+                   text: "The recording from Bishop's wire. There's traffic. A foghorn — Maritime frequency puts us in the industrial district. Fog pattern, two-count echo — I need the tide tables for last night. [pause] And there's a gull. Glaucous-winged. They don't come this far inland unless — it's near the old cannery piers. Pier 62."
+                   motivation: "{speaker}'s acoustic reconstruction of a location from ambient sound is the film's most pure expression of his ability; he has more information from what he can't see than anyone else in the room has from what they can"
+                   """)
+        whistler [+Decisive] [+Wise]   // the decisive and the wise: the acoustic reconstruction is both technical and interpretive
+        the_team [+Located]   // the team has what it needs to move
+
+        evt team_mobilizes [&Pursues(agent=the_team, target=cosmo_facility)]
+        mother [+Vindicated]   // first movement toward vindication: the paranoia that spotted the NSA thread now validates the operation
+      }
+
+    }
+
+  }
+
+  // ── ACT 3 · COUNTER-HEIST AND RESOLUTION ─────────────────────────────────
+
+  act the_counter_heist @@ san_francisco_1992 {
+
+    scene counter_heist_execution @@ san_francisco_1992 {
+      // Bishop uses what he knows about Cosmo — the friendship, the history, the ideology —
+      // to run a counter-heist on Cosmo's own facility
+
+      beat bishop_plans {
+        // Setup: Bishop designs the counter-heist; uses Cosmo's ideology as the vulnerability
+        evt bishop_plans [&Leads(agent=bishop, group=the_team)]
+            dialog(inject=[speaker=bishop, target=the_team],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the specific confidence of someone who knows the enemy's heart; not arrogance — grief put to use"
+                   tone: precise
+                   text: "Cosmo is a true believer. He believes in the cause — his version of it — completely. That's his vulnerability. He'll want to explain himself. He'll want me to understand. We use that."
+                   motivation: "{speaker} has twenty-three years of knowledge about who Cosmo is and what he wants; the friendship is the intelligence; the betrayal is the entry point; the counter-heist is built on intimacy"
+                   """)
+        bishop [+Determined]   // the beaten man who refused is now planning; the determination is continuity
+        bishop -- cosmo : "Knows him better than anyone; uses it"
+        the_team [+Coordinated]
+        liz [+Ally] [+Permanent]   // she is a full member of this planning session
+        ?liz [~Joins(target=the_team)]?   // third surface: she is already in; permanence is being confirmed by action
+      }
+
+      beat the_counter-heist_in_motion {
+        // Turn: the team hits Cosmo's facility; each member's contribution
+        // The heist's interior is about the team's trust reconstituted after the breach
+        evt carl_infiltrates [&Performs(agent=carl, location=cosmo_facility)]
+            dialog(inject=[speaker=carl, target=bishop],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the idealist at work in the cause's inverted form; Carl is here because the box can't stay with Cosmo"
+                   tone: focused
+                   text: "Communications are mine. They're running on a proprietary encryption layer — Bishop, it's the box. They're already using it to protect their own network. [pause] Cosmo's using a world-breaking encryption-cracker to encrypt himself. The irony, man."
+                   motivation: "{speaker} names the irony because his idealism makes him the one who feels it most; the cause of transparency, protected by perfect opacity; Carl's discomfort is the clearest moral reading in the film"
+                   """)
+        carl [#Conflicted]   // the cause as lived by Cosmo is exactly what Carl can't accept
+        ?carl [~Chooses(target=the_cause)]?   // second surface: Carl's conflict is the choice being approached
+
+        evt mother_drives [&Performs(agent=mother, location=the_team_van)]
+            dialog(inject=[speaker=mother, target=the_team],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "Mother in his element — the van, the screens, the verified conspiracy; he sounds the same as always but he is fighting"
+                   tone: rapid
+                   text: "Three vehicles patrolling. Pattern suggests twelve-minute rotation. There's a camera on the east wall that's on a separate circuit — they know about the main system's vulnerabilities. They built good security. Paranoid people build good security. [pause] I would know."
+                   motivation: "{speaker}'s self-aware aside is the most he's ever said about himself; the vindicated paranoid; he and Cosmo are the same kind of person pointed in different directions"
+                   """)
+        mother [+Vindicated]   // the paranoia is now operational knowledge; the conspiracy theorist was right all along
+
+        evt whistler_guides_counter [&Guides(agent=whistler, target=bishop)]
+            dialog(inject=[speaker=whistler, target=bishop],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "again: the calm voice of the man who can navigate by what he can't see"
+                   tone: quiet
+                   text: "Same layout as the recording. The box is in the interior room — I can hear the fan on the processor. Left corridor, four doors, third door. Bishop, you'll need the card from the second guard. He smokes. He'll be at the east corner in ninety seconds."
+                   motivation: "{speaker} has already been here acoustically; the second navigation by sound is the mirror of the first; the callback confirms his ability is not a one-time trick but a way of being in the world"
+                   """)
+        whistler [+Decisive] [+Wise]   // the tags deepen with the repetition; this is who he is, not what he did once
+      }
+
+      beat box_recovered {
+        // Consequence: the box is recovered; Cosmo and Bishop face each other last time
+        evt bishop_confronts_cosmo [&Confronts(agent=bishop, target=cosmo)]
+            dialog(inject=[speaker=bishop, target=cosmo],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the grief underneath the anger; the friendship is over but it deserves a proper ending"
+                   tone: sad and certain
+                   text: "You went to prison for the cause. I ran. We both ended up here — you with a weapon, me running errands for you. Cosmo — this isn't what we wanted. This isn't too many secrets. This is one man deciding he gets to know everything. That's not freedom."
+                   motivation: "{speaker} speaks for the friendship and the ideology simultaneously; the argument is the most honest thing Bishop has said since 1969; Cosmo hears it and cannot be moved; he has been too alone with his version too long"
+                   """)
+        bishop [+Whole] [+Honest] [+Determined]   // the whole self arrived: the real name, the real past, the real argument
+        cosmo [+Idealist] [+Corrupted]   // the corruption is not in the belief but in the isolation of the belief
+        ?the_cause [~Perverted(by=cosmo)]?   // resolved: the cause is named and its perversion named in the same speech
+
+        evt box_reclaimed [&Takes(agent=bishop, obj=the_black_box)]
+        the_black_box [-In_Enemy_Hands] [+Recovered]   // eighth accreted tag: back in Bishop's hands
+        cosmo [#Defeated]   // not physically — ideologically; the argument is the defeat
+        ?cosmo [~Betrays(target=bishop)]?   // fully resolved: the betrayal is complete and named; Bishop has closed it
+      }
+
+    }
+
+    scene the_nsa_negotiation @@ san_francisco_1992 {
+      // The real NSA; the negotiation; the exchange; the erasing of Martin Brice
+
+      beat janek_nsa_appears {
+        // Setup: the real NSA arrives; the stakes change shape; the box is the chip
+        set nsa_meeting_room  [+Interior] [+Formal] [+Hostile]
+
+        janek_nsa @ nsa_meeting_room
+        abbott    @ nsa_meeting_room
+        bishop    @ nsa_meeting_room
+
+        evt janek_nsa_arrives [&Meets(agent=janek_nsa, other=bishop)]
+            dialog(inject=[speaker=janek_nsa, target=bishop],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the institutional weight of someone who doesn't need to perform authority because he is authority"
+                   tone: even
+                   text: "Mr. Bishop. Or Mr. Brice, if you prefer. We know about the device. We know about Cosmo. We know about 1969. You have something we want. Let's discuss what you want in return."
+                   motivation: "{speaker} lays all the information on the table immediately — the real NSA plays differently than Brandt did; there is no warmth because there is no need for warmth; the leverage is acknowledged on both sides"
+                   """)
+        janek_nsa [+LeverageHolder]
+        bishop [#Trapped] [+Determined]   // the two tags simultaneously: trapped by circumstances, determined by choice
+      }
+
+      beat bishop_negotiates {
+        // Turn: Bishop names the terms; the exchange designed
+        evt bishop_demands [&Negotiates(agent=bishop, target=janek_nsa)]
+            dialog(inject=[speaker=bishop, target=janek_nsa],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the negotiation from strength: Bishop has the box; the NSA needs the box; this is the only moment of power he will have"
+                   tone: measured
+                   text: "The Brice file is erased. Not classified — erased. All of it. In return, you get the device, intact, and the information about Cosmo's network. [beat] There are also some specific requests from my team. I'll give you the list."
+                   motivation: "{speaker} negotiates not just for himself but for the team; the shift from 'I' to 'we' is small and carries everything; he has stopped running alone"
+                   """)
+        the_ransom_terms [+Renegotiated]   // the original coercive terms become Bishop's demands
+        bishop_false_id [+Threatened] [+Pending_Erasure]   // the identity is about to be resolved paradoxically
+        ?bishop [~Confronts(target=false_identity)]?   // the final confrontation: he is negotiating the end of Brice
+      }
+
+    }
+
+    scene the_exchange @@ san_francisco_1992 {
+      // The handoff; the file erased; the team's payoffs; resolution
+
+      beat the_handoff {
+        // Setup: the exchange location; the box delivered; the Brice file erased
+        bishop  @ the_exchange_site
+        the_team @ the_exchange_site
+        janek_nsa @ the_exchange_site
+
+        evt box_delivered [&Delivers(agent=bishop, target=janek_nsa)]
+            dialog(inject=[speaker=janek_nsa, target=bishop],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the institutional courtesy of someone completing a transaction; no warmth, no hostility, just conclusion"
+                   tone: formal
+                   text: "The Brice file. [hands over confirmation] As agreed. Mr. Brice no longer exists in any federal record. Mr. Bishop may continue his work."
+                   motivation: "{speaker} erases a man by completing paperwork; the paradox is the theme — the false identity becomes the real identity because the real identity has been officially unmade; Bishop is freed by erasure"
+                   """)
+        the_black_box [+Delivered] [+Neutralized]   // ninth accreted tag: the box out of play
+        the_brice_file [+Erased]   // the coercive instrument destroyed
+        bishop_false_id [+Legitimized]   // the paradox: Brice erased, Bishop legitimate; the false identity freed by the erasure of the real one
+        bishop [-#Trapped] [+Free]   // the mind state lifts; what replaces [#Trapped] is [+Free]
+        ?bishop [~Confronts(target=false_identity)]?   // fully resolved: the false identity is real now because the real one is gone
+      }
+
+      beat team_payoffs {
+        // The team's rewards negotiated; each character's wish maps to who they are
+        // The final beat that reveals character through desire
+
+        evt crease_paid [&Receives(agent=crease, target=janek_nsa)]
+            dialog(inject=[speaker=crease, target=janek_nsa],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the ex-CIA man names the one thing institutional authority actually has the power to give back"
+                   tone: flat
+                   text: "I want my NSA file. The one you kept on me after I left the Agency. The whole file."
+                   motivation: "{speaker} wants the secret they kept on him; the man who spent his career in secrets wants the secret about himself; the request is about dignity and surveillance simultaneously"
+                   """)
+        crease [+Vindicated]   // the skeptic gets the information; the skeptic was right about the surveillance
+
+        evt mother_paid [&Receives(agent=mother, target=janek_nsa)]
+            dialog(inject=[speaker=mother, target=janek_nsa],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the delivery of a man who has waited his whole life to say this and expected never to be taken seriously"
+                   tone: absolutely certain
+                   text: "I want to speak to the people at the Roswell facility. The real ones. Not a press release. I want an actual conversation."
+                   motivation: "{speaker}'s request is the film's warmest joke — the paranoid gets his audience with the conspiracy; the man who was right about everything gets access to the one theory nobody can confirm; his [+Vindicated] tag is complete"
+                   """)
+        mother [+Vindicated]   // fully vindicated: the conspiracy theorist right about everything
+        janek_nsa [#Discomfited]   // the one request that costs the NSA something personal
+
+        evt carl_paid [&Receives(agent=carl, target=janek_nsa)]
+            dialog(inject=[speaker=carl, target=janek_nsa],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the idealist names his price; it is not money and not information; it is the cause"
+                   tone: earnest
+                   text: "Peace in the Middle East. [beat] I know you can't do that. [beat] I just wanted you to know what I would have wanted."
+                   motivation: "{speaker} asks for the impossible because he is the youngest and still believes in impossible things; the request is a declaration of values; it's also the funniest line in the scene because it is completely sincere"
+                   """)
+        carl [-#Conflicted] [+Hopeful]   // the conflict resolves into hope: the idealist keeps the idealism
+        ?carl [~Chooses(target=the_cause)]?   // resolved: Carl keeps the cause; names it; it survives Cosmo
+
+        evt liz_paid [&Receives(agent=liz, target=bishop)]
+            dialog(inject=[speaker=liz, target=bishop],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the practical woman who knows exactly what she wants; the subtext of everything unsaid between them"
+                   tone: dry
+                   text: "I want a job. [beat] The real kind. On the team. Permanently. [beat to bishop] You were going to ask anyway."
+                   motivation: "{speaker} names what has been clear since the dinner with Janek; she is already on the team; the request makes it official; 'you were going to ask anyway' is the intimacy returning on her terms"
+                   """)
+        liz [+Permanent]   // the seed resolves: recruited for one job, permanence earned
+        ?liz [~Joins(target=the_team)]?   // fully resolved: she is on the team; she named herself there
+        bishop -- liz : "Team member and more"   // the 'and more' is in the subtext; the edge says enough
+
+        evt whistler_paid [&Receives(agent=whistler, target=janek_nsa)]
+            dialog(inject=[speaker=whistler, target=janek_nsa],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the quiet of someone who has thought about this and knows exactly what he wants; the wisdom is in the specificity"
+                   tone: calm
+                   text: "There's a satellite — NRO designation KH-12, covering the Middle East. I want it repositioned forty meters south and fourteen east. And I want access to its acoustic sensors for the next seventy-two hours."
+                   motivation: "{speaker}'s request is acoustic and precise and untranslatable to anyone who doesn't live in sound the way he does; the request IS who he is; the wisdom of the request is the wisdom of the character"
+                   """)
+        whistler [+Wise]   // the tag completes: Expert → Indispensable → Decisive → Wise
+        ?whistler [~Decides(target=the_black_box)]?   // resolved obliquely: his wisdom was always about sound, not the box; the acoustic request is the resolution
+      }
+
+      beat bishop_closes {
+        // The final beat: Bishop alone; the false identity now real; the wound closed
+        evt bishop_reflects [&Performs(agent=bishop, location=the_exchange_site)]
+            dialog(inject=[speaker=bishop, target=liz],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the quiet of a man who has been running for twenty-three years and just stopped; the exhaustion and the relief are the same thing"
+                   tone: quiet
+                   text: "Martin Brice is gone. [beat] I don't know what that makes me. [pause] Maybe just — Bishop."
+                   motivation: "{speaker} names the paradox the film has been building toward: the false identity is freed by the erasure of the real one; 'just Bishop' is not a loss but an arrival; the wound that the film opened in 1969 is closed here"
+                   """)
+        bishop [+Whole] [+Free]   // the final state: beyond [+FalseIdentity]; the self that was always underneath
+        bishop_false_id [+Legitimized] [+Real]   // the false identity resolved into a real one
+        too_many_secrets [+Acknowledged]   // fourth and final meaning shift: from concept to lived truth, acknowledged by the film
+        information_power [+Acknowledged]   // the thesis acknowledged: secrets shape the world; knowing this is the cost and the gift
+        the_cause [+Preserved]   // the cause survives Cosmo's perversion; Carl kept it; Bishop named it
+        ?the_cause [~Perverted(by=cosmo)]?   // fully resolved: the perversion named and the cause preserved despite it
+        bishop -- the_team : "Leads / belongs to"   // the closed loop: Bishop is not alone; the team is the ordinary world now
+      }
+
+    }
+
+  }
+
+}
