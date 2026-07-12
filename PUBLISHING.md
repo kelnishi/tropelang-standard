@@ -29,12 +29,18 @@ A published corpus is the output of one command hosted as static files:
 ```
 tropelang bundle trl/tropes/corpus.toml --out <dir>/<id>/<version>
 # → <dir>/<id>/<version>/corpus.json     the bundle ([{path,source}], canonical, sha256-stable)
-# → <dir>/<id>/<version>/manifest.json   spec-19 metadata (id, version, engineMin, sha256, …)
+# → <dir>/<id>/<version>/corpus.trlb     post-parse AST binary (engine spec 24) — the fast-load form
+# → <dir>/<id>/<version>/manifest.json   spec-19 metadata (id, version, engineMin, sha256, trlbSha256, …)
 ```
+
+`corpus.trlb` is the same file set as `corpus.json`, pre-parsed, so an eval engine / game loads it with no
+parsing (~2.7× smaller uncompressed; pinned by `trlbSha256`). `corpus.json` stays canonical/human-readable;
+serve both. It is uncompressed — let the host apply `gzip`/`br` transport compression.
 
 Host that under a base URL, optionally alongside:
 ```
 <base>/<id>/<version>/corpus.json        # immutable — cache forever
+<base>/<id>/<version>/corpus.trlb        # immutable — the binary fast-load bundle (optional)
 <base>/<id>/<version>/manifest.json      # immutable
 <base>/channels/<id>.<channel>.json      # mutable pointer: { id, channel, version, manifest, updatedAt }
 <base>/registry.json                     # optional discovery index (scripts/gen-registry.mjs)
