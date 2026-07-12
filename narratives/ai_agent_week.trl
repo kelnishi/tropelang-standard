@@ -1,0 +1,279 @@
+// @title   Vibes Check: My First Week With an AI Coding Agent
+// @medium  TikTok / Talking-Head Video
+// @format  Short-form retrospective (~90 s); three-attempt structure + stinger
+// @domain  Contemporary / Comedy
+// @version 1.1
+
+import "trl/modules/index.trl"
+
+// ===== WORK =====
+work the_video [%ShortForm]
+
+// ===== CAST =====
+char dev        [+Protagonist] [+Everyman] [+Clever] [+Sardonic] [+Dynamic] [+Weak] [+OrdinaryWorld]
+char the_herald [+TheHerald]
+char the_agent  [+Trickster]
+char colleague  [+Ally] [+Sardonic]
+
+// ===== OBJECTS / SETS =====
+obj the_feature     [+MacGuffin] [+Coveted]
+obj the_codebase    [+Coveted]
+obj the_rules       [+Convention] [+Lesson]
+obj the_moral       [+Lesson]
+set the_terminal    [+Interior] [+Isolated]
+
+// ===== CONCEPTS =====
+concept prompt_craft  [+Abstract]
+
+// ===== SEEDS =====
+?dev [~Pursues(goal=prompt_craft)]?
+*(the_agent [+Oracle] | the_agent [+Mirror])* as agent_nature
+
+// ===== LOG =====
+
+arc dev_journey [+TheQuest] {
+
+  // ── ACT 1 · THE ORDINARY WORLD ──────────────────────────────────────────
+
+  act the_ordinary_world {
+
+    scene the_call {
+      beat 1 {
+        dev @ the_terminal
+        dev [~Pursues(rank=3, salience=9)]
+
+        evt the_summons [&Calls(agent=the_herald, target=dev)]
+            dialog(inject=[speaker=dev],
+                   inline="""
+                   kind: monologue
+                   speaker: "{speaker}"
+                   cue: "to camera, settled — the voice of someone telling a story that ended well"
+                   tone: dry
+                   text: "Okay. So. Someone I genuinely respect — talented engineer, ships real things — posted that they'd used an AI coding agent to ship an entire feature in a single afternoon. Auth flow, unit tests, the deploy. The whole thing. [beat] I read it three times. I write code for a living. How different can it be."
+                   motivation: "dev narrates the false confidence — the reasonable-sounding assumption before the fall"
+                   """)
+        // CallToAdventure → dev [-OrdinaryWorld] [+Called] -- calling
+      }
+    }
+
+  }
+
+  // ── ACT 2 · THREE ATTEMPTS ──────────────────────────────────────────────
+
+  act the_attempts {
+
+    // ATTEMPT 1 — "Just go, how hard can it be?"
+    scene attempt_one [+Hook] {
+      beat 2 {
+        evt run_one [&Pursues(agent=dev, goal=the_feature)]
+            dialog(inject=[speaker=dev],
+                   inline="""
+                   kind: monologue
+                   speaker: "{speaker}"
+                   cue: "leaning in slightly — the setup before the punchline"
+                   tone: dry
+                   text: "I opened the terminal, spun up the agent, and typed — [beat] — 'make the auth flow better.' [beat] No context. No constraints. No list of files. No definition of 'better.' Just. Vibes."
+                   motivation: "dev recreates the moment of maximum overconfidence"
+                   """)
+
+        evt dumb_prompt [&Blunders(agent=dev, for=plot)]
+        // IdiotBall → dev [+IdiotBall], dumb_prompt [+IdiotBall]
+
+        evt disaster_one [&Strikes(agent=the_agent, target=dev)]
+            dialog(inject=[speaker=dev],
+                   inline="""
+                   kind: narration
+                   cue: "flat — let it land"
+                   tone: deadpan
+                   text: "It deleted the auth flow."
+                   """)
+        dev [#Lacks(rank=1, salience=5)]
+        the_codebase [=Damaged]
+
+        evt quip_one [&Quips(agent=dev, at=disaster_one)]
+            dialog(inject=[speaker=dev],
+                   inline="""
+                   kind: monologue
+                   speaker: "{speaker}"
+                   cue: "the slow nod of someone choosing to find this funny"
+                   tone: dry
+                   text: "To be fair. It WAS better after that. Fewer lines. Very clean. Nothing left to have bugs in."
+                   motivation: "dev defuses with the joke immediately — the sardonic wrapper goes on before the audience can feel bad for them"
+                   """)
+        // DeadpanSnarker → quip_one [+DeadpanSnarker]
+        // Determinator: [~Pursues rank=3 sal=9] [#Lacks rank=1 sal=5]; 1<3, 9>5 ✓
+      }
+    }
+
+    // ATTEMPT 2 — "More context. That was the problem."
+    scene attempt_two {
+      beat 3 {
+        evt run_two [&Pursues(agent=dev, goal=the_feature)]
+            dialog(inject=[speaker=dev],
+                   inline="""
+                   kind: monologue
+                   speaker: "{speaker}"
+                   cue: "earnest — they genuinely believed this would fix it"
+                   tone: wry
+                   text: "Second attempt. I wrote context. An actual paragraph. I explained what the auth flow did, what I wanted it to do differently, what framework we were using. I felt professional. I felt like an engineer who understood the tool."
+                   motivation: "dev performs the false competence of attempt two — lesson one learned, lesson two still incoming"
+                   """)
+
+        evt scope_blast [&Strikes(agent=the_agent, target=dev)]
+            dialog(inject=[speaker=dev],
+                   inline="""
+                   kind: narration
+                   cue: "a list delivered with increasing resignation"
+                   tone: dry
+                   text: "It rewrote the router. The session middleware. Three test files I hadn't touched in eight months. The README introduction. And then it tried to rename things. Stylistic preference. Unsolicited."
+                   """)
+        the_codebase [=Overwritten]
+
+        evt the_callout [&Rebukes(agent=colleague, other=dev)]
+            dialog(inject=[speaker=colleague, target=dev],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "appearing at dev's shoulder, reading the diff, tone of someone who needs an adult explanation"
+                   tone: flat
+                   text:
+                     - "{speaker} leans over the monitor. 'Did you just rewrite prod?'"
+                   motivation: "{speaker} needs a real answer and is not sure they want one"
+                   responses:
+                     deflect:
+                       kind: dialog
+                       speaker: "{target}"
+                       text: "'I'm iterating.'"
+                   """)
+        dev [+Questionable]
+        // WhatTheHellHero → the_callout [+WhatTheHellHero]
+
+        evt quip_two [&Quips(agent=dev, at=scope_blast)]
+            dialog(inject=[speaker=dev],
+                   inline="""
+                   kind: monologue
+                   speaker: "{speaker}"
+                   cue: "small shake of the head — fond, not bitter"
+                   tone: dry
+                   text: "She did not find that as funny as I did."
+                   motivation: "dev closes the beat — the deadpan lands the scene"
+                   """)
+        // DeadpanSnarker → quip_two [+DeadpanSnarker]
+        // Determinator: second blow, Inversion holds
+      }
+    }
+
+    // ATTEMPT 3 — "Context AND scope. Checkpoints. I've got this."
+    scene attempt_three {
+      beat 4 {
+        evt run_three [&Pursues(agent=dev, goal=the_feature)]
+            dialog(inject=[speaker=dev],
+                   inline="""
+                   kind: monologue
+                   speaker: "{speaker}"
+                   cue: "the focused energy of someone who has done their homework this time"
+                   tone: measured
+                   text: "Third attempt. Context. Scope. I wrote a literal list of files it was allowed to touch. I felt like I was drafting a legal contract with a language model. Permitted files. Prohibited files. Expected output format. Test criteria. [beat] It was genuinely working."
+                   motivation: "dev builds the hope before the near-miss — the audience should feel it almost made it this time"
+                   """)
+
+        evt edge_miss [&Strikes(agent=the_agent, target=dev)]
+            dialog(inject=[speaker=dev],
+                   inline="""
+                   kind: narration
+                   cue: "the sigh of someone who has been here before — tired, not broken"
+                   tone: resigned
+                   text: "One edge case. Eleven PM. Cascaded into three hours of git blame and a very apologetic Slack message to nobody in particular."
+                   """)
+        the_feature [+PendingPayoff]
+
+        evt quip_three [&Quips(agent=dev, at=edge_miss)]
+            dialog(inject=[speaker=dev],
+                   inline="""
+                   kind: monologue
+                   speaker: "{speaker}"
+                   cue: "the firm nod of someone retroactively declaring victory"
+                   tone: dry
+                   text: "I'm counting that as a near miss. Shipped at two AM. Two AM is still the same day if you haven't slept yet."
+                   motivation: "dev reframes the loss — the sardonic self-preservation mechanism doing its job"
+                   """)
+        // DeadpanSnarker → quip_three [+DeadpanSnarker]
+        // Determinator: third blow, toll stops growing — the arc is turning
+      }
+    }
+
+  }
+
+  // ── ACT 3 · THE INSIGHT ─────────────────────────────────────────────────
+
+  act the_insight {
+
+    scene the_leveling {
+      beat 5 {
+        evt the_forge [&Forged(subject=dev, by=edge_miss)]
+            dialog(inject=[speaker=dev],
+                   inline="""
+                   kind: monologue
+                   speaker: "{speaker}"
+                   cue: "slower now — the comedian voice drops; someone actually thinking out loud"
+                   tone: reflective
+                   text: "And somewhere between the second git reset and the third cup of coffee I had this moment where I looked at what had gone wrong each time and I — [beat] — kind of got it. The agent wasn't being stupid. It was doing exactly what I told it to. I just hadn't told it anything worth doing."
+                   motivation: "the pivot — dev drops the joke register for one beat to show the lesson actually landed"
+                   """)
+        // TookALevelInBadass → dev [-Weak] [+Formidable] [#Determined]
+
+        evt the_change [&Changes(subject=dev, by=the_forge)]
+        // CharacterDevelopment → dev [+Developed]
+
+        dev [+GenreLiterate]
+        evt the_read [&Anticipates(agent=dev, convention=the_rules)]
+        // GenreSavvy → the_read [+GenreSavvy]
+      }
+    }
+
+    scene the_win {
+      beat 6 {
+        evt the_ship [&Delivers(agent=dev, target=the_feature)]
+            dialog(inject=[speaker=dev],
+                   inline="""
+                   kind: monologue
+                   speaker: "{speaker}"
+                   cue: "quiet satisfaction — not triumphant, just done"
+                   tone: even
+                   text: "Fourth attempt. I spent twenty minutes writing the prompt before I ran anything. Described the system, the constraints, the expected output shape, the files in scope, the files explicitly out of scope, the three failure modes I'd already hit. [beat] It shipped clean. First try. No drama. [beat] And I sat there looking at the diff, and I thought: I have just become a very expensive rubber duck."
+                   motivation: "dev lands the win and immediately undercuts it — keeps the tone honest, earns the stinger"
+                   """)
+        the_feature [+Resolved]
+        dev -- the_agent : "Partners, finally"
+
+        resolve agent_nature -> the_agent [+Mirror]
+        !the_agent [+Mirror]!
+      }
+    }
+
+    // Post-credits — the corrective twist, delivered straight to camera
+    scene the_stinger @ post_credits {
+      beat 7 {
+        evt the_envoi [&Frames(agent=author, target=the_moral, as=moral)]
+        // AnAesop → audience [+Edified] -- the_moral; the_envoi [+Aesop]
+
+        evt the_last_quip [&Appends(agent=author)]
+            dialog(inject=[speaker=dev],
+                   inline="""
+                   kind: monologue
+                   speaker: "{speaker}"
+                   cue: "direct to camera after a half-second of silence — the stinger beat"
+                   tone: dry
+                   text: "The moral I walked away with: agentic AI isn't bad at coding. Your prompts are bad at specifying. [beat, almost to self] Which is just a very mean way to find out you didn't actually know what you wanted to build."
+                   motivation: "the corrective — turns the lesson back on the audience; the tool was a mirror all along"
+                   """)
+        // TheStinger → the_last_quip [+TheStinger]
+
+        dev [~Pursues(goal=prompt_craft)]   // the latent seed surfaces: this is what the week was really about
+      }
+    }
+
+  }
+
+}

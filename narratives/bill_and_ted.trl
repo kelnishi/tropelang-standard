@@ -1,0 +1,1104 @@
+// @title   Bill & Ted's Excellent Adventure
+// @medium  Feature Film
+// @format  Time-travel comedy; three-act structure + epilogue
+// @domain  Contemporary Comedy / Bildungsroman / Science Fiction
+// @version 2.2
+
+import "trl/modules/index.trl"
+
+// ===== WORK =====
+work the_film [%Feature]
+
+// ===== STORY-TIME (fabula) — the chronological spine =====
+// Each ~> link encodes "came before in the world"
+// The syuzhet visits these out of order; @@ anchors displace references
+
+// Fabula left-to-right, real-world time
+chron ancient_greece ~> medieval_england ~> renaissance_austria
+    ~> american_frontier ~> napoleon_paris_1815 ~> san_dimas_1988
+    ~> san_dimas_future_2688
+
+// ===== CAST =====
+char bill           [+Protagonist] [+Everyman] [+Innocent] [+Weak] [+Dynamic] [+OrdinaryWorld]
+                    [+Inseparable] [+Masculine] [@Bonded_To(other=ted)]
+char ted            [+Protagonist] [+Everyman] [+Innocent] [+Weak] [+Dynamic] [+OrdinaryWorld]
+                    [+Inseparable] [+Masculine] [@Bonded_To(other=bill)]
+char rufus          [+Mentor] [+TheHerald] [@Mentor_Of(student=bill)]
+char napoleon       [+Historical] [+Arrogant] [+Antagonist] [+Dignified] [+Hurt] [+Stranger] [+Diminutive]
+                    // "Napoleon was a short dude who lived a long time ago" — bill's entire historiography
+char socrates       [+Historical] [+Wise] [+Stranger]
+char joan_of_arc    [+Historical] [+Hero] [+Stranger]
+char genghis_khan   [+Historical] [+Antagonist] [+Dignified] [+Hurt] [+Stranger]
+char billy_the_kid  [+Historical] [+Roguish] [+Sympathetic] [+Ally] [+Stranger]
+char freud          [+Historical] [+Stranger]
+char beethoven      [+Historical] [+Stranger]
+char lincoln        [+Historical] [+Authority] [+Ally] [+Stranger]
+char missy          [+Ally] [+ParentalSubstitute]
+char mr_ryan        [+Antagonist] [+Authority]
+char captain_logan  [+Antagonist] [+Authority] [+Paternal] [+Uniformed]
+                    // Ted's father; police captain; military-school threat; uniform signals institutional power
+char elizabeth      [+LoveInterest] [+Stranger]             // Bill's destined princess; medieval England
+char joanna         [+LoveInterest] [+Stranger]             // Ted's destined princess; medieval England
+char evil_bill      [+Antagonist] [+Foil]               // Bogus Journey; mirror of bill
+char evil_ted       [+Antagonist] [+Foil]               // Bogus Journey; mirror of ted
+
+// ===== OBJECTS =====
+obj the_phone_booth     [+MacGuffin] [+Objective] [+Coveted]
+obj the_report          [+MacGuffin] [+Objective] [+Lesson] [+Coveted]
+
+// ===== SETS =====
+set the_circle_k            [+Exterior] [+Mundane] [+Conspicuous]  // recurring landmark; ice cream; Strange things afoot
+set san_dimas_1988          [+Suburban] [+OrdinaryWorld]
+set medieval_england        [+Exterior] [+Exotic]
+set ancient_greece          [+Exterior] [+Exotic]
+set renaissance_austria     [+Exterior] [+Exotic]
+set american_frontier       [+Exterior] [+Exotic]
+set napoleon_paris_1815     [+Exterior] [+Exotic]
+set san_dimas_future_2688   [+Utopia] [+Exterior]
+set the_mall                [+Exterior] [+Crowded]
+set the_mall_interiors      [+Interior] [+Crowded]
+set the_auditorium          [+Interior] [+HighStakes] [+Climax]
+
+// ===== CONCEPTS =====
+concept history             [+Abstract] [+Lesson]
+concept time_travel         [+Abstract]
+concept being_excellent     [+Abstract] [+Lesson] [+Conspicuous]   // the phrase that opens, recurs, and closes
+concept party_on            [+Abstract] [+Conspicuous]             // Rufus's second instruction; echoed by Lincoln
+concept the_journey         [+Abstract]             // the time-travel ordeal that forges the boys
+concept the_utopia          [+Abstract]             // the future society predicated on B&T's music
+char wyld_stallyns          [+Collective] [+Weak]   // the band — private dream; they cannot actually play yet
+concept the_prophecy        [+Abstract] [+Lesson]   // wyld_stallyns' music will unite humanity; stated by Rufus
+concept san_dimas_slogan    [+Abstract] [+Conspicuous]  // "San Dimas High School Football Rules!" — graffiti, chant, ambient truth
+
+// ===== SEEDS — latent threads that surface later =====
+?bill [~Pursues(goal=the_report)]?
+?ted  [~Pursues(goal=the_report)]?
+*(the_phone_booth [+Trap] | the_phone_booth [+Gift])* as booth_nature
+?bill [~Pursues(goal=being_excellent)]?
+?ted  [~Pursues(goal=being_excellent)]?
+?wyld_stallyns [~Grows(into=the_utopia)]?   // the band hasn't done anything yet; the prophecy precedes the talent
+// "San Dimas High School Football Rules!" — environmental slogan; ambient substrate of their world
+san_dimas_slogan [+Conspicuous] [+Ambient]  // graffiti on walls; chanted in the background; the town's only firm belief
+// Romantic seeds — planted early, never resolved in this film; the sequel's payoff
+?bill [~Loves(target=missy)]?       // the faux-Oedipal attraction; Freud will name it
+?ted  [~Loves(target=missy)]?       // his own father's partner; same dynamic, worse geometry
+?bill [~Loves(target=elizabeth)]?   // the princess seen through the window; surfaces in Bogus Journey
+?ted  [~Loves(target=joanna)]?      // same
+
+// ===== AUTHORING NOTES =====
+//
+// Beat labels: use short descriptive identifiers scoped to their scene rather than
+//   global sequence numbers. "beat the_capture" inside "scene napoleon_extraction"
+//   is unambiguous, self-documenting, and never needs renumbering when beats are
+//   added or removed. Global numbers are a maintenance liability.
+//
+// Inline declarations: declare obj/set at the TOP of the scene or beat block
+//   where they first appear, grouped before any facts or events — mirroring the
+//   header's declare-before-use rule (STYLE §1) at block scope. Reserve the header
+//   for entities that span multiple scenes or belong to the work's top-level
+//   vocabulary (chron markers, major MacGuffins, recurring concepts). The header
+//   is a reading aid, not a registry; block-scoped declarations keep it lean.
+//
+// Seeds before the log: latent threads (?entity [~verb]?) declared before the arc
+//   are surfaced by plain re-assertion inside beats — no special syntax required.
+//   The seed captures the possibility; the beat makes it actual.
+//
+// Inline dialog: dialog() annotations can carry details that don't fire any current
+//   corpus rule. Encode them anyway. The cue and motivation fields are particularly
+//   useful for this — they hold the "why" of a moment even when no trope is yet
+//   defined to receive it. Future corpus additions will find the evidence already
+//   present.
+
+// ===== LOG =====
+
+arc bill_and_ted_journey [+TheQuest] [+ComingOfAge] {
+
+  // ── ACT 1 · THE ORDINARY WORLD ──────────────────────────────────────────
+
+  act the_ordinary_world {
+
+    scene the_garage_scene @@ san_dimas_1988 {
+      beat bond_and_stakes {
+        // The bond and the stakes: two threads established simultaneously
+        bill @ san_dimas_1988
+        ted  @ san_dimas_1988
+        bill [+Dreamer]
+        ted  [+Dreamer]
+        bill [#Failing]
+        ted  [#Failing]
+
+        evt the_bond [&Cherishes(agent=bill, other=ted)]
+        // HeterosexualLifePartners — the Wyld Stallyns pact is the "couple" the stakes threaten
+
+        evt the_stakes [&Reveals(agent=mr_ryan, target=bill)]
+            dialog(inject=[speaker=mr_ryan, target=bill],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "flat authority — this is not a threat, it is a fact"
+                   tone: stern
+                   text: "You have one week to pass history. Fail, and Ted goes to military school. Wyld Stallyns ends."
+                   motivation: "{speaker} is removing the safety net — the boys have to care about history now"
+                   """)
+        bill [~Pursues(goal=the_report)]   // latent seed surfaces
+        ted  [~Pursues(goal=the_report)]
+
+        evt slogan_ambient [&Appears(object=san_dimas_slogan, location=san_dimas_1988)]
+        // the slogan is everywhere — spraypainted on the overpass visible from the garage window;
+        //   the town's only firm belief; the ambient substrate that makes "be excellent" land
+      }
+
+      beat air_guitar {
+        // Thread B: what Wyld Stallyns actually is — the private vision that makes the stakes matter
+        // The air guitar is RuleOfCool applied to nothing: the virtuosity is entirely imaginary,
+        // which is both the gag and the point
+        set the_garage_set [+Interior] [+Isolated]
+        evt the_air_guitar [&Performs(agent=bill, location=the_garage_set)]
+            dialog(inject=[speaker=bill, target=ted],
+                   inline="""
+                   kind: narration
+                   cue: "lit from below by the single bare bulb; the camera treats this with complete sincerity"
+                   tone: earnest
+                   text: "Bill picks up an invisible guitar. Ted nods. They play. No sound comes out. The performance is flawless."
+                   motivation: "the joke is that the camera doesn't blink — the movie believes in them, so we do too"
+                   """)
+        bill -- wyld_stallyns : "Co-founder"
+        ted  -- wyld_stallyns : "Co-founder"
+        wyld_stallyns [+Coveted] [+Symbolic]
+
+        evt air_guitar_framed [&Frames(agent=author, target=wyld_stallyns, as=cool)]
+        // RuleOfCool — the visual gag that establishes the film's entire tonal register:
+        //   nothing is happening and it is magnificent
+
+        // Critical encoding: they cannot play. The guitars are imaginary. The talent is entirely latent.
+        // The prophecy will be about music they haven't made; the world will be built from a song they
+        // haven't written; the air guitar IS the promise, not the product.
+        wyld_stallyns [+Weak] [-Conspicuous]  // no audience yet; the band exists only to themselves
+        bill [+Incompetent]   // confirmed: "most non-non-non-non-heinous" is the critical vocabulary available
+        ted  [+Incompetent]   // same; the journey will not fix their guitar playing — that's for later
+
+        evt wyld_stallyns_introduced [&Introduces(object=wyld_stallyns)]
+        // The band is the real Chekhov's Gun; the report is just the mechanism that forces them to grow
+      }
+    }
+
+    scene the_family_web @@ san_dimas_1988 {
+      // The geometry of the obstacle: two authority figures, one shared woman, one impossible attraction
+      beat logan_and_missy {
+        // Thread A: Captain Logan — the paternal obstacle who actually holds the Alaska threat
+        captain_logan @ san_dimas_1988
+        captain_logan -- ted : "Father"
+        captain_logan [~Desires(target=the_report)]   // wants the boys to fail; confirms the threat
+
+        evt logan_threatens [&Reveals(agent=captain_logan, target=ted)]
+            dialog(inject=[speaker=captain_logan, target=ted],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the specific disappointment of a man who expected more and has stopped being surprised"
+                   tone: clipped
+                   text: "One week. History report. You fail, you're on a plane. I've already called the school."
+                   motivation: "{speaker} is not the villain — he's a reasonable man whose son has given him nothing to work with"
+                   """)
+
+        // Thread B: Missy — the family-web knot
+        // Missy was married to Bill's dad; now she's with Captain Logan; both boys call her something different
+        missy [@Married(partner=captain_logan)]
+        missy -- bill : "Former stepmom"
+        missy -- ted  : "Father's partner"
+
+        evt bill_sees_missy [&Meets(agent=bill, other=missy)]
+            dialog(inject=[speaker=bill, target=missy],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the specific discomfort of a teenage boy greeting his former stepmother who is now at his best friend's house"
+                   tone: awkward
+                   text: "'Oh. Hey. [pause] ...Mom.'"
+                   motivation: "one word; contains multitudes; the film's densest gag — the Oedipus complex already installed and acknowledged in a single syllable"
+                   """)
+        bill [~Loves(target=missy)]   // latent seed surfaces as acknowledgment; immediately suppressed
+        ted  [~Loves(target=missy)]   // same geometry; worse because captain_logan is his actual father
+        // LoveTriangle seeds: bill and ted both love missy; both suppress it; Freud will find it anyway
+      }
+
+      beat missy_as_ally {
+        // Thread C: Missy as ally — she's actually kind to the boys despite the geometry
+        // The ParentalSubstitute is genuine; the attraction is real but unspoken; both things are true
+        evt missy_helps [&Aided(other=bill)]
+            dialog(inject=[speaker=missy, target=bill],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the warmth of someone who doesn't hold the geometry against them"
+                   tone: kind
+                   text: "You boys need anything? I made sandwiches. [beat] The good kind."
+                   motivation: "{speaker} is the only adult who isn't an obstacle — her kindness is the inverse of {target}'s father's coldness"
+                   """)
+        missy [+Ally]
+        missy -- bill : "Warmth offered"
+        missy -- ted  : "Warmth offered"
+        // The ParentalSubstitute thread: Missy is the warm adult the boys actually have,
+        //   despite — or because of — the impossible family geometry she occupies
+
+        // The warmth lands on the geometry: receiving kindness from missy sharpens the latent attraction
+        bill [~Loves(target=missy)]   // middle touch — the seed is live; the warmth makes it harder to ignore
+        ted  [~Loves(target=missy)]   // same; the sandwich is the problem
+      }
+    }
+
+    scene the_herald_arrives @@ san_dimas_1988 {
+      beat rufus_arrives {
+        obj the_keypad [+Mundane] [+Conspicuous]   // dial the year; simple; the whole of time-travel is a phone number
+        // Rufus arrives; the phrase is planted; the booth is delivered
+        evt rufus_descends [&Arrives(agent=rufus, location=san_dimas_1988)]
+            dialog(inject=[speaker=rufus],
+                   inline="""
+                   kind: monologue
+                   speaker: "{speaker}"
+                   cue: "low-key reverence — the future's most important mission, delivered like a routine errand"
+                   tone: warm
+                   text: "I can't tell you who I am or why I've come, but I can tell you that the future of the world is in your hands. Be excellent to each other. And party on, dudes."
+                   motivation: "{speaker} seeds the mission without explaining it — the audience is ahead of the boys"
+                   """)
+        rufus > the_phone_booth : "Delivers"
+        resolve booth_nature -> the_phone_booth [+Gift]
+
+        evt rufus_prophesies [&Reveals(agent=rufus, target=the_prophecy)]
+            dialog(inject=[speaker=rufus],
+                   inline="""
+                   kind: monologue
+                   speaker: "{speaker}"
+                   cue: "the gravity of a man delivering the film's entire premise in two sentences"
+                   tone: solemn
+                   text: "In the future, their music will be the foundation of our society. It will unite all peoples of the world in harmony. Eventually."
+                   motivation: "{speaker} encodes the stakes: wyld_stallyns hasn't made the music yet; the future is betting on potential, not product — the joke and the thesis are the same fact"
+                   """)
+        rufus -- the_prophecy : "Carries"
+        the_prophecy -- wyld_stallyns : "Rests on"
+        the_prophecy -- the_utopia   : "Predicts"
+
+        evt the_call [&Calls(agent=rufus, target=bill)]
+        // CallToAdventure
+
+        evt rufus_teaches [&Teaches(agent=rufus, target=bill)]
+        // MentorAndStudent — rufus shows them how the booth works; the keypad mechanism; the lesson that unlocks the quest
+        the_keypad [+Lesson]
+
+        evt the_phrase_planted [&Introduces(object=being_excellent)]
+        evt party_on_planted   [&Introduces(object=party_on)]
+        // ChekhovsGun — "Be excellent to each other" and "party on, dudes" introduced together; both guns loaded
+        evt be_excellent_opens [&Opens(motif=being_excellent)]
+        evt party_on_opens     [&Opens(motif=party_on)]
+        // BookEnds — motif planted at the structural open; will close at the stinger's inversion
+
+        evt the_booth_is_cool [&Frames(agent=author, target=the_phone_booth, as=cool)]
+        // RuleOfCool — the phone booth materialising out of nowhere, wires trailing: impossible and perfect
+      }
+
+      beat threshold_crossed {
+        // The refusal collapses into demonstration; the boys cross the threshold
+        evt skepticism [&Doubts(agent=bill, claim=time_travel)]
+            dialog(inject=[speaker=bill, target=ted],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the specific disbelief of someone who has never tried to think critically"
+                   tone: baffled
+                   text: "Dude — this is a phone booth."
+                   motivation: "the refusal beat; the tool is literally in front of them and they can't see it yet"
+                   """)
+
+        evt the_first_jump [&Arrives(agent=bill, location=napoleon_paris_1815)]
+            dialog(inject=[speaker=ted],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   cue: "the delivery that launched the franchise — absolute sincerity, no irony whatsoever"
+                   tone: reverent
+                   text: "Strange things are afoot at the Circle K."
+                   motivation: "the refusal is over; the boys have seen the booth work; Ted names what the film is now about; the Circle K is the mundane anchor for the extraordinary"
+                   """)
+        the_circle_k [+Conspicuous]  // the landmark that is always already there; the ordinary world's axis
+        bill [-OrdinaryWorld]
+        ted  [-OrdinaryWorld]
+        // RefusalOfTheCall → immediate collapse into first crossing; threshold crossed
+
+        evt the_quest_begins [&Quests(agent=bill, for=the_report)]
+        // TheQuest — the mission is active; the quest through time is underway
+
+        evt the_report_pursued [&Pursued(agent=bill, other=the_report)]
+        evt the_report_pursued_ted [&Pursued(agent=ted, other=the_report)]
+        // MacGuffin_Driver — two parties in pursuit of the same object
+      }
+    }
+
+  }
+
+  // ── ACT 2 · THE ROAD OF TRIALS ──────────────────────────────────────────
+
+  act the_road_of_trials {
+
+    // ── Leg 1: Napoleon ────────────────────────────────────────────────────
+
+    scene napoleon_extraction @@ napoleon_paris_1815 {
+      // Story-time: 1815 Paris; syuzhet intercuts with Napoleon's solo arc in san_dimas_1988
+      beat the_capture {
+        // The capture — bill's blissful ignorance of military history in action
+        evt arrive_napoleon [&Arrives(agent=bill, location=napoleon_paris_1815)]
+        evt arrive_napoleon_ted [&Arrives(agent=ted, location=napoleon_paris_1815)]
+        evt the_capture [&Captures(agent=bill, target=napoleon)]
+            dialog(inject=[speaker=bill, target=napoleon],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the confused sincerity of a total stranger treating a warlord like a buddy"
+                   tone: cheerful
+                   text: "Dude — you're coming with us. For a history report. You'll love it. San Dimas, California, 1988."
+                   motivation: "{speaker} has no idea he should be afraid; Napoleon has no idea what's happening"
+                   """)
+        // Bill's entire historiography of Napoleon: "He was a short dude who lived a long time ago."
+        // This line IS the history report on Napoleon; it is complete to Bill; the audience knows more.
+        napoleon [+Diminutive]  // re-assert: the height is the first fact Bill knows about him
+        napoleon @@ napoleon_paris_1815 -- napoleon @@ san_dimas_1988 : "Displaced"
+        napoleon [+Displaced] [+Stranger]
+      }
+
+      beat napoleon_in_booth {
+        // Napoleon inside the booth — the gag is that confinement makes the Emperor maximally furious;
+        // the boys attempt communication; the booth becomes a diplomatic incident at 55 mph through time
+        evt napoleon_in_booth [&Wanders(agent=napoleon, location=the_phone_booth)]
+            dialog(inject=[speaker=napoleon, target=bill],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "imperial displeasure in a six-by-four-foot box — Napoleon at maximum indignation"
+                   tone: furious
+                   text:
+                     - "Napoleon gestures at the walls, the ceiling, the impossible speed outside the windows. He shouts. None of it is in English."
+                     - "Bill nods along supportively. 'Totally, dude.'"
+                   motivation: "the language barrier is the joke — Napoleon's fury is completely reasonable and completely useless"
+                   """)
+        napoleon [#Enraged]
+        bill [+Embattled]
+        // Thread: the boys have no plan for what happens once they have a figure in the booth
+
+        // The overcrowding is already beginning to strain the machine — Napoleon thrashing
+        //   in a six-by-four box designed for two; the damage that will need gum starts here
+        the_phone_booth [+Stressed]
+        // Thread: structural fragility seeded; the gum repair in beat temporal_loop is born here
+      }
+    }
+
+    scene napoleon_goes_wild @@ san_dimas_1988 {
+      // Napoleon's solo B-plot: three beats track his spiral from wonder to conquest
+      beat ice_cream {
+        obj the_ice_cream [+Mundane]
+        // First contact with modernity — ice cream at the Circle K;
+        // the conqueror encounters something he cannot defeat
+        evt napoleon_solo [&Wanders(agent=napoleon, location=san_dimas_1988)]
+        evt napoleon_ice_cream [&Discovers(agent=napoleon, obj=the_ice_cream)]
+            dialog(inject=[speaker=napoleon],
+                   inline="""
+                   kind: narration
+                   cue: "the camera holds on his face for a full three seconds"
+                   tone: reverent
+                   text: "Napoleon is given a cup of vanilla ice cream at a Circle K. He takes a bite. He looks up. He has never made this face. This face says: I have conquered Europe and none of it was this."
+                   motivation: "the pure wonder beat before the comedy escalates — Napoleon as child, not tyrant"
+                   """)
+        napoleon -- the_circle_k : "Visits"
+        napoleon -- the_ice_cream : "First contact"
+        napoleon [-Enraged] [+Obsessed]
+        napoleon -- the_ice_cream : "Claims"
+
+        evt napoleon_discovery_framed [&Frames(agent=author, target=napoleon, as=comic)]
+        // RuleOfFunny — Napoleon's imperial face meeting a Styrofoam cup of soft-serve:
+        //   the dignity gap between subject and reaction IS the gag
+      }
+
+      beat bowling_and_jersey {
+        obj the_bowling_pins [+Mundane]
+        obj napoleons_hat [+IconicItem]
+        // Escalation: the bowling alley; Napoleon discovers competition and an unfortunate jersey number
+        evt napoleon_bowling [&Wanders(agent=napoleon, location=the_mall)]
+            dialog(inject=[speaker=napoleon],
+                   inline="""
+                   kind: narration
+                   cue: "rapid montage in the register of a nature documentary"
+                   tone: escalating
+                   text: "Napoleon moves through the world like a man who has conquered it before and is now doing it again for fun. Bowling pins go down. He expects applause. He receives none. He demands it. He receives some."
+                   motivation: "the B-plot gathering momentum — each venue a new kingdom; the bowling alley is the warm-up"
+                   """)
+        napoleon -- the_bowling_pins : "Defeats"
+        napoleon [+Competitive]   // a new identity discovered: the Conqueror finds there are scoreboards in 1988
+
+        // Napoleon selects jersey #69; the boys see the number; he has no idea why this is funny
+        evt napoleon_jersey [&Discovers(agent=napoleon, obj=napoleons_hat)]
+            dialog(inject=[speaker=napoleon],
+                   inline="""
+                   kind: narration
+                   cue: "Napoleon holds up the jersey. Bill and Ted see the number. They exchange a look. Napoleon puts it on with maximum dignity."
+                   tone: oblivious
+                   text: "Napoleon selects jersey number 69. He has chosen it because it is the largest number available. The boys do not explain. They cannot explain."
+                   motivation: "the gap between Napoleon's obliviousness and the boys' awareness is the gag; the dignity makes it perfect"
+                   """)
+        // RuleOfFunny: the joke depends entirely on Napoleon's complete sincerity
+      }
+
+      beat waterpark {
+        // Peak: the waterpark — grandiosity meets the most childish venue possible
+        obj the_waterslide [+Mundane]
+        obj the_floaty_ring [+Mundane] [+Conspicuous]   // origin unknown; he has it by run 18; it follows him home
+        evt napoleon_waterpark [&Discovers(agent=napoleon, obj=the_waterslide)]
+            dialog(inject=[speaker=napoleon],
+                   inline="""
+                   kind: narration
+                   cue: "silent comedy — wide-eyed awe of a conqueror who has found his heaven"
+                   tone: exhilarated
+                   text: "Napoleon conquers the waterpark — sliding the same chute seventeen times, shouting in French, soaking everyone within ten feet. On the eighteenth run he has acquired a floaty ring. He doesn't know where it came from."
+                   motivation: "the pratfall peak: grandiosity applied to the most childish venue possible; the floaty ring is the detail that perfects it"
+                   """)
+        napoleon [+Obsessed] [#Delighted]
+        the_waterslide [+Contested]
+        napoleon -- the_waterslide : "Claims"
+        napoleon -- the_floaty_ring : "Acquires"   // the detail that perfects it; provenance: none
+
+        evt napoleon_pratfall [&Frames(agent=author, target=napoleon, as=comic)]
+        // Pratfall — the Emperor of France, in full regalia, soaked and shrieking on a waterslide:
+        //   [+Dignified] + [+Hurt] + framed comic = the purest pratfall shape in the film
+        // Rule_Of_Funny fires on the same framing event
+      }
+    }
+
+    // ── Leg 2: Historical collection — one beat per era stop ───────────────
+
+    scene collecting_the_figures {
+
+      beat billy {
+        // Billy the Kid — american_frontier
+        // The first recruitment; bill's method is pure friendliness; it has no right to work
+        evt collect_billy [&Captures(agent=bill, target=billy_the_kid)] @@ american_frontier
+            dialog(inject=[speaker=bill, target=billy_the_kid],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "like recruiting for a garage band, not kidnapping a gunslinger"
+                   tone: breezy
+                   text: "Billy! Dude! Excellent! We're on a mission — you in?"
+                   motivation: "Bill's entire approach is friendliness; the audacity works because everyone is charmed; Billy has been waiting his whole life for someone to ask like this"
+                   """)
+        billy_the_kid @@ american_frontier -- billy_the_kid @@ san_dimas_1988 : "Displaced"
+        billy_the_kid [+Displaced]
+
+        evt billy_transgresses [&Transgresses(agent=billy_the_kid)]
+        // LovableRogue — Billy is a wanted outlaw; the boys recruit him anyway because he's charming
+
+        // Thread B: the bond — bill and billy recognise each other immediately; same frequency, different century
+        bill -- billy_the_kid : "Kindred"
+        wyld_stallyns [~Grows(into=the_utopia)]   // first middle touch: every figure recruited is evidence the seed is viable
+      }
+
+      beat socrates {
+        // Socrates — ancient_greece
+        // Ted attempts philosophy; the misquotation is sincere and, somehow, correct
+        evt collect_socrates [&Captures(agent=ted, target=socrates)] @@ ancient_greece
+            dialog(inject=[speaker=ted, target=socrates],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the most earnest misquotation in cinematic history"
+                   tone: solemn
+                   text: "Soh-crates — [beat] — 'The only true wisdom is in knowing you know nothing.' [beat] That's us, dude."
+                   motivation: "{speaker} is trying to speak philosophy; the misquotation is accidentally perfect; Socrates recognises something in it"
+                   """)
+        socrates @@ ancient_greece -- socrates @@ san_dimas_1988 : "Displaced"
+        socrates [+Displaced]
+
+        // Thread B: ted's misquotation lands correctly — the philosophy works because ted means it
+        ted [#Proud]   // he quoted a philosopher and was not laughed at; this is new
+        ted -- socrates : "Recognises"   // the student who doesn't know he's a student; Socrates knows
+      }
+
+      beat joan_and_princesses {
+        // Joan of Arc — medieval_england
+        // Bill's respectful ignorance; Ted's correction; the beat that defines their partnership dynamic
+        evt collect_joan [&Captures(agent=bill, target=joan_of_arc)] @@ medieval_england
+            dialog(inject=[speaker=bill, target=joan_of_arc],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "Bill addresses her with the specific reverence of someone who definitely doesn't remember who she is"
+                   tone: respectful
+                   text: "'Joan — of Arc — [long pause] — Noah's wife? [ted shakes head] Excellent warrior babe? [ted nods]'"
+                   motivation: "the joke lands via ted's correction; bill is guessing and somehow respectful about it; the partnership works because ted knows what bill doesn't"
+                   """)
+        joan_of_arc @@ medieval_england -- joan_of_arc @@ san_dimas_1988 : "Displaced"
+        joan_of_arc [+Displaced]
+
+        // Thread B: the princess sighting — through a window in the castle; the romantic seeds planted
+        // Rufus closes the booth door without looking; he has done this before
+        evt princess_sighting [&Meets(agent=bill, other=elizabeth)] @@ medieval_england
+        evt princess_sighting_2 [&Meets(agent=ted, other=joanna)] @@ medieval_england
+            dialog(inject=[speaker=bill, target=ted],
+                   inline="""
+                   kind: narration
+                   cue: "the camera slows; the comedy register lifts for exactly four seconds"
+                   tone: hushed
+                   text: "Through the window: two women. They look down. The boys look up. Nobody moves. Then Rufus, without looking, closes the booth door."
+                   motivation: "the romantic subplot in embryo — a glimpse through glass across six centuries; the sequel's entire premise fits in four seconds"
+                   """)
+        bill [~Loves(target=elizabeth)]   // latent seed surfaces; immediately sealed in the booth
+        ted  [~Loves(target=joanna)]      // same
+        // StarCrossed seeds: across time, across history; they can't stay — and they both know it
+        elizabeth [+Stranger] [+LoveInterest]
+        joanna    [+Stranger] [+LoveInterest]
+      }
+
+      beat genghis {
+        obj a_twinkie [+Mundane] [+Conspicuous]   // junk food as diplomatic currency; the empire falls to a cream-filled sponge cake
+        // Genghis Khan — medieval Asia
+        // Ted's negotiation technique: one Twinkie; junk food defeats empire
+        evt collect_genghis [&Captures(agent=ted, target=genghis_khan)] @@ medieval_england
+            dialog(inject=[speaker=ted, target=genghis_khan],
+                   inline="""
+                   kind: narration
+                   cue: "ted's face in close-up when he sees who he's picking up"
+                   tone: nervous
+                   text: "Ted finds Genghis Khan at the height of his power and offers him a Twinkie. Genghis Khan eats the Twinkie. This is, somehow, enough."
+                   motivation: "the gag is the negotiation technique: bribery via junk food; it shouldn't work; it does; the empire that levelled cities falls to a cream-filled sponge cake"
+                   """)
+        genghis_khan @@ medieval_england -- genghis_khan @@ san_dimas_1988 : "Displaced"
+        genghis_khan [+Displaced]
+        genghis_khan -- a_twinkie : "Accepts"
+      }
+
+      beat freud_boards {
+        // Freud — renaissance_austria
+        // No recruitment scene; Freud simply boards; he is already observing; he has been taking notes
+        evt collect_freud [&Captures(agent=bill, target=freud)] @@ renaissance_austria
+            dialog(inject=[speaker=freud],
+                   inline="""
+                   kind: narration
+                   cue: "Freud steps into the booth with the composure of a man who has seen stranger things in an afternoon's consulting"
+                   tone: clinical
+                   text: "Freud enters without being asked. He is already writing."
+                   motivation: "the joke is the absence of recruitment difficulty; Freud's entire skill set is pattern recognition; everything so far has been data"
+                   """)
+        freud @@ renaissance_austria -- freud @@ san_dimas_1988 : "Displaced"
+        freud [+Displaced]
+
+        // Thread B: Freud's observation is already active — the diagnosis has begun before the booth door closes
+        freud -- bill : "Observes"
+        freud -- ted  : "Observes"
+        freud [+Observing]   // the clinical distance that will become the diagnosis in beat freud_diagnoses
+      }
+
+      beat beethoven {
+        // Beethoven — renaissance_austria
+        // The air guitar callback: bill mimes; Beethoven mimes back — better
+        // The visual language the boys invented is the only language that works across two centuries
+        evt collect_beethoven [&Captures(agent=bill, target=beethoven)] @@ renaissance_austria
+            dialog(inject=[speaker=beethoven, target=bill],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "beethoven trying to lip-read bill; bill trying to mime a guitar; the pantomime of mutual incomprehension that somehow works"
+                   tone: earnest
+                   text: "Beethoven watches Bill's air guitar mime. He cocks his head. He mimes back. It's different — better. Bill is delighted."
+                   motivation: "the air guitar callback: the film's own visual language bridges the language barrier; Beethoven instantly speaks Wyld Stallyns; the deaf composer understands the mime for music that doesn't exist yet"
+                   """)
+        beethoven @@ renaissance_austria -- beethoven @@ san_dimas_1988 : "Displaced"
+        beethoven [+Displaced]
+        beethoven -- wyld_stallyns : "Fluent"
+      }
+
+      beat lincoln {
+        // Lincoln — american_frontier
+        // The final pick-up; the booth now carries seven figures plus the boys
+        // The overcrowding strains the machine; the damage that will require gum is beginning
+        evt collect_lincoln [&Captures(agent=ted, target=lincoln)] @@ american_frontier
+            dialog(inject=[speaker=ted, target=lincoln],
+                   inline="""
+                   kind: narration
+                   cue: "lincoln's height is immediately a logistical problem"
+                   tone: matter_of_fact
+                   text: "Lincoln boards. He has to fold himself into the booth. He does so with complete dignity. The booth groans. Ted pretends not to hear."
+                   motivation: "the physical comedy of Lincoln's stature in the booth; the damage to the machine is born here; the stakes are now structural"
+                   """)
+        lincoln @@ american_frontier -- lincoln @@ san_dimas_1988 : "Displaced"
+        lincoln [+Displaced]
+        // The booth is now carrying seven historical figures through time simultaneously
+        the_phone_booth [+Contested] [+Damaged]
+      }
+    }
+
+    // ── Leg 3: Mall sequence — the figures loose in 1988, one set-piece per beat ─
+
+    scene the_mall_sequence @@ san_dimas_1988 {
+
+      beat beethoven_shreds {
+        // Beethoven at the synthesizer — the deaf composer and the electric piano
+        // The air guitar callback completes: the visual language Beethoven learned in beat beethoven pays off here
+        evt beethoven_discovers_keyboards [&Discovers(agent=beethoven, obj=the_mall_interiors)]
+            dialog(inject=[speaker=beethoven],
+                   inline="""
+                   kind: narration
+                   cue: "pure joy — a deaf composer hearing himself for the first time in years through electric amplification"
+                   tone: exhilarated
+                   text: "Beethoven finds the music store. He sits at a synthesizer, plays one chord, and looks up — not with confusion but recognition. He proceeds to shred. A crowd gathers. They think it's a promotional event."
+                   motivation: "the joke is that Beethoven is not confused by the piano at all; his genius translates immediately — across two centuries, the Wyld Stallyns language worked"
+                   """)
+        beethoven [+Conspicuous]
+
+        evt beethoven_shreds [&Frames(agent=author, target=beethoven, as=cool)]
+        // RuleOfCool — a deaf 18th-century composer sits at a synthesizer and immediately shreds;
+        //   [+Weak] wyld_stallyns' language is vindicated by someone who can actually play
+
+        wyld_stallyns [~Grows(into=the_utopia)]   // second middle touch: Beethoven is fluent in the language wyld_stallyns invented;
+        // the air guitar mime from beat beethoven was wyld_stallyns' first export — it worked;
+        //   the seed is alive; the utopia is less hypothetical than it was
+      }
+
+      beat joan_and_genghis {
+        // Joan of Arc commandeers the aerobics studio; Genghis destroys the toy aisle
+        // Two figures, two venues, same underlying principle: each applies their native skill sideways
+        evt figures_loose [&Wanders(agent=billy_the_kid, location=the_mall_interiors)]
+        evt figures_loose_3 [&Wanders(agent=joan_of_arc, location=the_mall_interiors)]
+        evt figures_loose_4 [&Wanders(agent=genghis_khan, location=the_mall_interiors)]
+
+        evt joan_leads_aerobics [&Leads(agent=joan_of_arc, group=the_mall_interiors)]
+            dialog(inject=[speaker=joan_of_arc],
+                   inline="""
+                   kind: narration
+                   cue: "absolute authority — she has led armies; she can lead an aerobics class"
+                   tone: commanding
+                   text: "Joan commandeers an aerobics studio and runs it like a military drill. The class doesn't question her. She has that energy. She always had that energy."
+                   motivation: "Joan's warrior competence applied sideways — the joke is that she's not out of place at all, just in a different arena; the competence is the same; the venue is not"
+                   """)
+
+        evt genghis_destroys_toys [&Strikes(agent=genghis_khan, target=the_mall)]
+            dialog(inject=[speaker=genghis_khan],
+                   inline="""
+                   kind: narration
+                   cue: "the natural register of a man who has sacked cities finding himself in a toy aisle"
+                   tone: purposeful
+                   text: "Genghis Khan moves through the toy aisle with the efficiency of a man who has done this to cities. The toys are brightly coloured. He is not charmed. He is not confused. He is thorough."
+                   motivation: "the dignity gap: the Great Khan applies full military competence to a Walmart aisle; the harm is conspicuously not the point"
+                   """)
+        the_mall [=Damaged]
+
+        evt genghis_framed_comic [&Frames(agent=author, target=genghis_khan, as=comic)]
+        // RuleOfFunny — [+Dignified] conqueror humiliated by bright plastic
+      }
+
+      beat socrates_and_billy {
+        // Socrates and Billy the Kid find each other — the philosopher and the gunslinger
+        // The only cross-figure relationship the boys don't orchestrate; it happens despite them
+        evt socrates_billy_meet [&Meets(agent=socrates, other=billy_the_kid)]
+            dialog(inject=[speaker=billy_the_kid, target=socrates],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the gunslinger and the philosopher recognise a kindred outsider"
+                   tone: easy
+                   text: "Soh-crates. [tips hat] You talk funny. [pause] I like that."
+                   motivation: "across two millennia they find the same frequency — both men who lived by their own code in societies that didn't quite fit them; the most unlikely friendship in the film and the most inevitable"
+                   """)
+        billy_the_kid -- socrates : "Recognises"
+        // a latent Five_Man_Band cross-wire: the ensemble has internal relationships the boys don't manage
+
+        // Freud has been silently watching all of this from a bench. He has been taking notes.
+        // He does not find any of this surprising.
+        evt freud_observes_ensemble [&Speaks(agent=freud, location=the_mall_interiors)]
+            dialog(inject=[speaker=freud],
+                   inline="""
+                   kind: narration
+                   cue: "the serenity of a man whose notebook is almost full"
+                   tone: absorbed
+                   text: "Freud watches Billy and Socrates. He writes something. He underlines it twice."
+                   motivation: "Freud's data-gathering is complete; the diagnosis is imminent; the double-underline is the tell"
+                   """)
+      }
+
+      beat freud_diagnoses {
+        // Freud delivers the diagnosis — three words; the Missy thread named at last
+        // The planted Oedipus seed from beat logan_and_missy finds its analyst exactly when it was always going to
+        evt freud_diagnoses [&Speaks(agent=freud, location=the_mall_interiors)]
+            dialog(inject=[speaker=freud, target=bill],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the specific serenity of a man who has just confirmed his entire life's work"
+                   tone: satisfied
+                   text: "Ze Oedipus complex."
+                   motivation: "{speaker} has watched bill and ted navigate the Missy geometry for two scenes; three words are sufficient; he resumes his notes; the boys have no response"
+                   """)
+        // The diagnosis fires on what was planted in beat logan_and_missy: bill and ted's latent loves
+        //   for missy, their shared quasi-parent, named by the one displaced figure whose
+        //   entire professional framework was built for exactly this situation
+        bill [#Confronted(other=freud)]   // the mirror is held up; he does not look at it
+        ted  [#Confronted(other=freud)]   // same
+      }
+
+      beat the_arrest {
+        // The arrest — mid-act complication; the dark night of the soul
+        evt the_arrest [&Captures(agent=mr_ryan, target=bill)]
+        evt the_arrest_2 [&Captures(agent=mr_ryan, target=ted)]
+            dialog(inject=[speaker=mr_ryan, target=bill],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the cold satisfaction of an obstacle who has been waiting for this"
+                   tone: flat
+                   text: "The report is tomorrow. You will not be there. Ted will be on a plane to Alaska by morning."
+                   motivation: "{speaker} at maximum power — the dark night of the soul; the quest seems over; the obstacle has won on a technicality"
+                   """)
+        bill [#Jailed]
+        ted  [#Jailed]
+        the_report [+Threatened]
+
+        evt the_trial [&Tested(subject=bill, by=the_report)]
+        // ComingOfAge — the arrest is the ordeal that tests the boys' commitment; innocence ends here
+      }
+    }
+
+    // ── Leg 4: Escape and the race to school ─────────────────────────────
+
+    scene the_escape @@ san_dimas_1988 {
+      beat temporal_loop {
+        set the_jail [+Interior] [+Isolated]
+        obj jail_keys [+Mundane] [+Conspicuous]   // the temporal self-rescue MacGuffin; hidden behind a trash can
+        obj chewing_gum [+Mundane] [+Conspicuous]   // the repair medium; the phone booth is literally held together with gum
+        // The temporal self-rescue: the boys use the booth to set up their own escape retroactively
+        // The bootstrapped loop — past-Bill-and-Ted must go hide what present-Bill-and-Ted just found
+        evt bill_remembers_plan [&Reveals(agent=bill, target=ted)]
+            dialog(inject=[speaker=bill, target=ted],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the specific confidence of someone who has just invented a plan and somehow it works"
+                   tone: inspired
+                   text: "Dude — all we gotta do is go back, steal the keys from that guard, hide 'em behind the trash can — then go back to the future — uh, the present — and get 'em."
+                   motivation: "the temporal paradox is presented with absolute sincerity; the audience is ahead but charmed; the bootstrapped loop IS the joke"
+                   """)
+        evt keys_hidden [&Conceals(agent=bill, obj=jail_keys)]
+            dialog(inject=[speaker=ted],
+                   inline="""
+                   kind: narration
+                   cue: "the camera holds on the trash can long enough that we understand it was always there"
+                   tone: matter_of_fact
+                   text: "Past-Ted tapes the keys behind the trash can. Present-Ted finds them exactly there. The universe does not comment on this."
+                   motivation: "the gag lands because the film respects the logic; nothing winks; it just works"
+                   """)
+        jail_keys -- the_jail : "Unlocks"
+        // In_Medias_Res applied at micro-scale: we see the payoff (keys there) then learn the cause
+
+        // The phone booth is damaged from overcrowding — repaired with the only available material
+        evt booth_repair [&Repairs(agent=bill, obj=the_phone_booth)]
+            dialog(inject=[speaker=bill, target=ted],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the engineering confidence of someone with no engineering knowledge whatsoever"
+                   tone: breezy
+                   text: "Dude — gum."
+                   motivation: "the joke is the ratio: the machine that will found a utopia is held together with a stick of Wrigley's; the sincerity with which this is accepted is the film's entire thesis about competence"
+                   """)
+        chewing_gum -- the_phone_booth : "Holds together"
+        the_phone_booth [-Damaged] [+Repaired]
+        // The gum gag encodes a latent rule: wyld_stallyns will always find exactly enough to get through;
+        //   the adequacy of their resources is always absurd and always sufficient
+      }
+
+      beat billy_springs_them {
+        // Billy springs them; the alliance converges on the auditorium
+        // The displaced figures repay the boys; the role reversal completes
+        evt billy_springs_them [&Liberates(agent=billy_the_kid, target=bill)]
+        evt billy_springs_them_2 [&Liberates(agent=billy_the_kid, target=ted)]
+            dialog(inject=[speaker=billy_the_kid, target=bill],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the cheerful competence of someone who has broken out of actual frontier jails"
+                   tone: easy
+                   text: "Boys. Ready to go? [beat] I've broken out of worse."
+                   motivation: "Billy is in his element; the role reversal is complete — the historical figure saves the modern heroes; every figure is now an ally"
+                   """)
+        bill [-Jailed]
+        ted  [-Jailed]
+        bill [+Determined]
+        ted  [+Determined]
+
+        evt the_race [&Pursues(agent=bill, other=the_auditorium)]
+        evt the_race_2 [&Pursues(agent=ted, other=the_auditorium)]
+            dialog(inject=[speaker=bill, target=ted],
+                   inline="""
+                   kind: narration
+                   cue: "the montage of total commitment — the camera cranked to convey urgency; everyone running"
+                   tone: urgent
+                   text: "Bill and Ted sprint for the school with seven historical figures in tow. Napoleon is still carrying the floaty ring. Lincoln has to duck through every doorway. Freud is quietly taking notes on all of them."
+                   motivation: "the comedy of the chase: the figures are allies now but haven't stopped being themselves — the running gag runs while they run"
+                   """)
+        lincoln -- bill : "Running with"
+        socrates -- ted  : "Running with"
+        genghis_khan [+Determined]
+        joan_of_arc  [+Determined]
+        the_report [+PendingPayoff]
+      }
+    }
+
+  }
+
+  // ── ACT 3 · THE ORDEAL & RETURN ─────────────────────────────────────────
+
+  act the_ordeal_and_return {
+
+    scene the_climax @@ san_dimas_1988 {
+      beat assembly {
+        // Assembly: the auditorium fills; mr_ryan's contempt is on display one last time
+        evt the_assembly [&Arrives(agent=lincoln, location=the_auditorium)]
+        evt mr_ryan_dismisses [&Doubts(agent=mr_ryan, claim=the_report)]
+            dialog(inject=[speaker=mr_ryan, target=bill],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "{target}"
+                   cue: "the obstacle at maximum certainty — he knows what he's about to see"
+                   tone: dismissive
+                   text: "I'm going to give you this one minute, because the rules require it. Then Ted gets on a plane."
+                   motivation: "{speaker} is completely confident; the confidence is the setup for the fall"
+                   """)
+        mr_ryan [+Culpable]
+
+        evt the_presentation_starts [&Performs(agent=bill, location=the_auditorium)]
+        evt the_presentation_starts_2 [&Performs(agent=ted, location=the_auditorium)]
+        the_auditorium [+Crowded]
+      }
+
+      beat demonstrations {
+        // The demonstrations — each figure proves their identity; the report becomes empirical
+        // Billy draws; Joan commands; Socrates questions; Genghis threatens
+        evt billy_demonstrates [&Performs(agent=billy_the_kid, location=the_auditorium)]
+            dialog(inject=[speaker=billy_the_kid],
+                   inline="""
+                   kind: narration
+                   cue: "his draw is faster than the audience can follow"
+                   tone: casual
+                   text: "Billy draws. Returns. Holsters. The auditorium is silent. He winks."
+                   motivation: "proof of identity delivered as performance; the report is now empirical; the wink is the full stop"
+                   """)
+
+        evt joan_demonstrates [&Performs(agent=joan_of_arc, location=the_auditorium)]
+            dialog(inject=[speaker=joan_of_arc],
+                   inline="""
+                   kind: narration
+                   cue: "she does not perform; she simply is"
+                   tone: commanding
+                   text: "Joan stands at the front of the auditorium. She doesn't need to do anything. The auditorium goes quiet. She nods."
+                   motivation: "the warrior's presence is the proof; no demonstration necessary; authority is prior to action"
+                   """)
+
+        evt socrates_demonstrates [&Speaks(agent=socrates, location=the_auditorium)]
+            dialog(inject=[speaker=socrates],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "the auditorium"
+                   cue: "the Socratic method applied to a high school assembly"
+                   tone: patient
+                   text: "Is it not the case that you do not know what you do not know? [beat] Then you know something."
+                   motivation: "{speaker} teaches the same lesson to every room; the auditorium is just a new Agora; the students are, briefly, Athenians"
+                   """)
+
+        evt genghis_demonstrates [&Strikes(agent=genghis_khan, target=the_auditorium)]
+            dialog(inject=[speaker=genghis_khan],
+                   inline="""
+                   kind: narration
+                   cue: "the demonstration is necessarily non-verbal"
+                   tone: absolute
+                   text: "Genghis Khan's demonstration requires no introduction and leaves no ambiguity. Three rows of seats are briefly rearranged."
+                   motivation: "the Khan's proof of identity is structural; the auditorium itself is the evidence"
+                   """)
+        the_auditorium [=Threatened]
+      }
+
+      beat lincoln_speaks {
+        // Lincoln speaks; the Aesop fires; mr_ryan is silenced; the quest resolves
+        evt lincoln_speaks [&Speaks(agent=lincoln, location=the_auditorium)]
+            dialog(inject=[speaker=lincoln],
+                   inline="""
+                   kind: dialog
+                   speaker: "{speaker}"
+                   addressee: "the auditorium"
+                   cue: "Gettysburg register — he knows how to address a crowd and does not waste the opportunity"
+                   tone: solemn
+                   text: "Be excellent to each other. [beat] And party on, dudes."
+                   motivation: "the film's thesis spoken by its highest-authority voice — the echo of Rufus's opening charge; the Chekhov's Gun discharged at maximum weight"
+                   """)
+
+        evt lincoln_fires_the_phrase [&Uses(object=being_excellent)]
+        evt lincoln_fires_party_on   [&Uses(object=party_on)]
+        // ChekhovsGun_Fire — both phrases planted by Rufus in beat rufus_arrives, paid off here
+
+        evt the_aesop [&Frames(agent=author, target=being_excellent, as=moral)]
+        // An_Aesop — the moral is made explicit through Lincoln; audience is instructed not merely moved
+
+        // mr_ryan's certainty meets Abraham Lincoln; he has no response
+        evt mr_ryan_silenced [&Fails(agent=mr_ryan)]
+            dialog(inject=[speaker=mr_ryan],
+                   inline="""
+                   kind: narration
+                   cue: "the specific silence of a man whose objection has become absurd"
+                   tone: deflated
+                   text: "Mr. Ryan opens his mouth. He looks at Lincoln. He closes his mouth."
+                   motivation: "the comeuppance is wordless — the evidence is self-presenting; he cannot grade this; the institution he represents is simply smaller than what is standing in front of it"
+                   """)
+        mr_ryan [-Authority] [+Culpable]
+
+        evt the_triumph [&Delivers(agent=bill, target=the_report)]
+        evt the_triumph_2 [&Delivers(agent=ted, target=the_report)]
+        the_report [+Resolved]
+        bill [-Innocent] [+Mature] [+Triumphant]
+        ted  [-Innocent] [+Mature] [+Triumphant]
+
+        evt bill_forged [&Forged(subject=bill, by=the_journey)]
+        evt ted_forged  [&Forged(subject=ted,  by=the_journey)]
+        // TookALevelInBadass — [+Weak] failing students → flawless time-travel history presentation
+
+        bill [~Pursues(goal=being_excellent)]  // latent seed surfaces at triumph
+        ted  [~Pursues(goal=being_excellent)]
+
+        // The triumph surfaces what's unresolved: the princesses are still across six centuries of time
+        // Middle touch — the romantic seeds are live; the film won't pay them off; the sequel will
+        *bill [~Loves(target=elizabeth)]*   // the contingent reading; he won and she's not here
+        *ted  [~Loves(target=joanna)]*      // same; the gap between triumph and fullness
+      }
+
+      beat returns {
+        // The return: each displaced figure's worldline closes back to its origin
+        // Napoleon is last; the waterpark beat completes its arc
+        evt return_napoleon [&Returns(agent=napoleon, target=napoleon_paris_1815)]
+            dialog(inject=[speaker=napoleon],
+                   inline="""
+                   kind: narration
+                   cue: "the slightest suggestion of reluctance — the waterpark was good"
+                   tone: wistful
+                   text: "Napoleon is the last to go. He pauses at the door of the booth, looks back once at the direction of the waterpark, and is gone."
+                   motivation: "the button on his solo arc — even a conqueror was conquered by ice cream and centrifugal force; the floaty ring is presumably still in san_dimas_1988"
+                   """)
+        napoleon [#Wistful]   // the conqueror who found his heaven in a waterpark; he will not find it again
+        napoleon -- the_floaty_ring : "Leaves behind"   // the floaty ring stays in 1988; its provenance remains unknown
+        napoleon @@ san_dimas_1988 -- napoleon @@ napoleon_paris_1815 : "Returns"
+        billy_the_kid @@ san_dimas_1988 -- billy_the_kid @@ american_frontier : "Returns"
+        socrates @@ san_dimas_1988 -- socrates @@ ancient_greece : "Returns"
+        joan_of_arc @@ san_dimas_1988 -- joan_of_arc @@ medieval_england : "Returns"
+        genghis_khan @@ san_dimas_1988 -- genghis_khan @@ medieval_england : "Returns"
+        freud @@ san_dimas_1988 -- freud @@ renaissance_austria : "Returns"
+        beethoven @@ san_dimas_1988 -- beethoven @@ renaissance_austria : "Returns"
+        lincoln @@ san_dimas_1988 -- lincoln @@ american_frontier : "Returns"
+        // Every @@ worldline instance is now closed — the fabula resolves back to its origins
+      }
+    }
+
+    scene the_future_glimpsed @@ san_dimas_future_2688 {
+      // Epilogue: after(san_dimas_1988, san_dimas_future_2688) — we jump forward
+      beat rufus_reflects {
+        // Rufus's reflection — the question the film never asked, now answered
+        evt the_vision [&Reveals(agent=rufus, target=the_utopia)]
+            dialog(inject=[speaker=rufus],
+                   inline="""
+                   kind: monologue
+                   speaker: "{speaker}"
+                   cue: "warm, unhurried — the mission succeeded; he can finally say so"
+                   tone: quiet satisfaction
+                   text: "They did it. [beat] The music wasn't even that good yet. But they meant it. That was enough."
+                   motivation: "{speaker} resolves the question the film never explicitly asked: why these two? Because they meant it. Competence was never the criterion."
+                   """)
+        the_utopia [+Resolved]
+
+        bill [~Pursues(goal=being_excellent)]
+        ted  [~Pursues(goal=being_excellent)]
+      }
+
+      beat utopia_shown {
+        obj rufus_guitar [+Symbolic]
+        // The utopia in motion — what the world built from this afternoon in San Dimas
+        evt rufus_plays [&Performs(agent=rufus, location=san_dimas_future_2688)]
+            dialog(inject=[speaker=rufus],
+                   inline="""
+                   kind: narration
+                   cue: "he is very good; he always was; the guitar is the thing he loves most"
+                   tone: quiet joy
+                   text: "Rufus picks up the guitar and plays. Not a demonstration. Not a lesson. Just music. The future doesn't need to be told what this is."
+                   motivation: "the guitar was declared symbolic at the top; it is used here — the mentor's own relationship to the thing he taught; he is not Mentor here, just a man who loves music"
+                   """)
+        rufus -- rufus_guitar : "Plays"
+        rufus_guitar [+Resolved]
+
+        evt the_utopia_shown [&Reveals(agent=rufus, target=san_dimas_future_2688)]
+            dialog(inject=[speaker=rufus],
+                   inline="""
+                   kind: narration
+                   cue: "wide shot of the future city; the visual payoff of the entire mythology"
+                   tone: expansive
+                   text: "The city is not built from their music. It's built from what their music taught: that being excellent is a practice, not a talent. Rufus watches it. He has been here every day for seven hundred years."
+                   motivation: "the utopia is a moral argument made concrete — the visual thesis of the franchise; competence was never the criterion; the gum held"
+                   """)
+        the_utopia -- being_excellent : "Built from"
+        wyld_stallyns -- the_utopia : "Founded"
+      }
+    }
+
+  }
+
+  // ── POST-CREDITS — Bogus Journey tease ──────────────────────────────────
+
+  scene the_stinger @ post_credits @@ san_dimas_1988 {
+    beat evil_doubles {
+      obj the_bogus_journey [+SequelBait]
+      // The threat that will become Part II; the mirror of the thesis
+      evt evil_doubles_appear [&Arrives(agent=evil_bill, location=san_dimas_1988)]
+      evt evil_doubles_appear_2 [&Arrives(agent=evil_ted, location=san_dimas_1988)]
+      evil_bill -- bill : "Mirror"
+      evil_ted  -- ted  : "Mirror"
+
+      evt the_sequel_hook [&Teases(agent=the_film, hook=the_bogus_journey)]
+      // SequelHook — the Bogus Journey threat is the open thread; confirmed by the evil doubles
+
+      evt the_tease [&Threatens(agent=evil_bill, target=bill)]
+          dialog(inject=[speaker=evil_bill, target=bill],
+                 inline="""
+                 kind: dialog
+                 speaker: "{speaker}"
+                 addressee: "{target}"
+                 cue: "exactly like Bill — same voice, same cadence — except utterly cold"
+                 tone: menacing
+                 text: "Be excellent to each other. [beat, smile drops] We won't be."
+                 motivation: "the mirror of the thesis — same words, inverted ethics; sets up the sequel's stakes without exposition"
+                 """)
+      evt be_excellent_closes [&Closes(motif=being_excellent)]
+      evt party_on_closes [&Closes(motif=party_on)]
+      // BookEnds — Rufus planted both phrases (beat rufus_arrives); Lincoln fired both sincerely (beat lincoln_speaks);
+      //   evil_bill echoes "be excellent" in darkness here; "party on" is conspicuously absent —
+      //   the inversion is complete. The loop closes; the mirror shows what the phrases protect against.
+    }
+  }
+
+}
