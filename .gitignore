@@ -7,3 +7,6 @@ worker/node_modules/
 
 # local conversion binaries (built from the engine; never commit a platform binary)
 /bin/
+
+# macOS finder metadata
+.DS_Store
