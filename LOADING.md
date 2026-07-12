@@ -48,10 +48,29 @@ ontology / modules), so the walk is: conventional roots + transitive import clos
 Needs a **current `index.trl`** (the seed list) — keep it assembled (`tropelang assemble`; the `gate`
 enforces it). This is the one non-trivial loader; prefer a **bundle** for anything shared.
 
+### D. Binary bundle — a `corpus.trlb` URL
+
+The **post-parse AST binary** (engine spec 24): each file's already-parsed AST + header metadata, so the
+host loads it with **no lexing/parsing** — the fast path for an eval engine / game over a large corpus. It
+ships beside `corpus.json` (same file set; `corpus.json` stays canonical) and is pinned in the manifest by
+`trlb` / `trlbBytes` / `trlbSha256`.
+
+1. Resolve to a `manifest.json` (as form A); **engineMin gate** (§3).
+2. Fetch `corpus.trlb`; **verify `trlbSha256`**. It is uncompressed — rely on transport `gzip`/`br`
+   (`Content-Encoding`); a browser `fetch` inflates transparently, or inflate a `.trlb.gz` via
+   `DecompressionStream` before decoding.
+3. Decode in-engine: `load_corpus_trlb(bytes)` (WASM) — the parse-skip peer of `load_corpus`. Layer
+   further sources with `layer_corpus_trlb(bytes, strikes)`. A decoder rejects a `format_version` it
+   doesn't know; that check is independent of the `engineMin` gate.
+
+Best for a *shared, large* corpus where load latency matters. Falls back to form A (`corpus.json`) for any
+host that hasn't adopted the binary path.
+
 ### Input detection (from a single URL/handle)
 - a registry `id`, a channel/`resolve` URL, or `…/corpus.json` → **A**
 - `….tar.gz` / `….tgz` → **B**
 - `…/corpus.toml`, or a dropped local folder → **C**
+- `…/corpus.trlb` → **D**
 
 ## 2. Load sequence (spec 19 §9.2)
 channel `resolve` (short TTL) → `manifest` → **engineMin gate** → `corpus.json` (immutable, likely
