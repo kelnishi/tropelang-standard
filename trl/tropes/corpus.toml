@@ -12,7 +12,7 @@ display_name = "TropeLang Standard Corpus"
 description  = "The canonical TropeLang trope corpus."
 # Corpus version — its own number, distinct from the engine version. Bump per content change (point),
 # new arena/capability (minor), structural break (major). The publish tag is `corpus-v<version>`.
-version      = "1.9.0"
+version      = "1.10.0"
 # Minimum engine that can parse this corpus (the compatibility gate). Conservative floor = the engine
 # this corpus is built/tested against; lower it only once older engines are verified to parse the grammar.
 engine_min   = "0.8.1"   # the time-travel tropes key on S23 story-time predicates (`before`/`after`), which only GATE recognition on engine >= 0.8.1
