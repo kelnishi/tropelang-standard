@@ -6,6 +6,7 @@
 //
 // Routes:
 //   GET /:id/:version/corpus.json     immutable bundle      Cache-Control: public, max-age=1y, immutable
+//   GET /:id/:version/corpus.trlb     immutable fast-load   (same) — post-parse binary, pinned by trlbSha256
 //   GET /:id/:version/manifest.json   immutable manifest    (same)
 //   GET /channels/:id.:channel.json   mutable pointer       public, max-age=30, must-revalidate
 //   GET /:id/versions.json            version catalog       public, max-age=30, must-revalidate
@@ -90,8 +91,11 @@ export default {
       return serve(env, manifestKey, SHORT, request);
     }
 
-    // GET /:id/:version/corpus.json | manifest.json  (immutable)
-    if (parts.length === 3 && (parts[2] === "corpus.json" || parts[2] === "manifest.json")) {
+    // GET /:id/:version/corpus.json | corpus.trlb | manifest.json  (immutable)
+    // corpus.trlb is the post-parse binary fast-load form the manifest pins via trlbSha256; it is served
+    // with the same immutable cache policy as corpus.json (its Content-Type comes from R2 —
+    // application/octet-stream, set at upload).
+    if (parts.length === 3 && (parts[2] === "corpus.json" || parts[2] === "corpus.trlb" || parts[2] === "manifest.json")) {
       return serve(env, parts.join("/"), IMMUTABLE, request);
     }
 

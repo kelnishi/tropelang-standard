@@ -20,7 +20,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: production          # holds CLOUDFLARE_* ; gated by a required reviewer
     env:
-      CLI_TAG: cli-v0.4.0            # the engine CLI release whose `bundle` emits the spec-19 manifest
+      # `bundle` emits corpus.trlb + trlbSha256 (spec-24 post-parse binary) as of engine 0.12.0; the old
+      # cli-v0.4.0 pin predated it, so the trlb was never built and the manifest's `"trlb"` promise 404'd.
+      # For this single-corpus root the newer CLI produces a byte-identical corpus.json (sha 8fe02054…), so
+      # bumping the pin adds the trlb without churning the JSON.
+      CLI_TAG: cli-v0.24.11          # the engine CLI release whose `bundle` emits the spec-19 manifest + spec-24 trlb
       R2_BUCKET: tropelang-corpus
       CORPUS_BASE_URL: https://corpus.tropelang.com
       # R2 object I/O over the S3-compatible API (honors a bucket-scoped R2 token). The R2 token's S3
@@ -74,7 +78,13 @@ jobs:
       - name: upload immutable bundle
         run: |
           ID=${{ steps.bundle.outputs.id }}; VER=${{ steps.bundle.outputs.ver }}
+          # Payloads FIRST, manifest LAST. The manifest advertises corpus.trlb + pins its trlbSha256, and
+          # the immutability guard + version catalog key on manifest.json — so it must not become visible
+          # before the objects it references exist. corpus.trlb is the post-parse fast-load form the
+          # manifest has always named (`"trlb": "corpus.trlb"`); it was being built by `bundle` but never
+          # uploaded, so a client following the manifest 404'd on it.
           aws s3api put-object --endpoint-url "$R2_S3_ENDPOINT" --bucket "$R2_BUCKET" --key "$ID/$VER/corpus.json"   --body "dist/$ID/$VER/corpus.json"   --content-type application/json
+          aws s3api put-object --endpoint-url "$R2_S3_ENDPOINT" --bucket "$R2_BUCKET" --key "$ID/$VER/corpus.trlb"   --body "dist/$ID/$VER/corpus.trlb"   --content-type application/octet-stream
           aws s3api put-object --endpoint-url "$R2_S3_ENDPOINT" --bucket "$R2_BUCKET" --key "$ID/$VER/manifest.json" --body "dist/$ID/$VER/manifest.json" --content-type application/json
 
       # Add this version to the engine-aware discovery catalog (/<id>/versions.json) — every PUBLISHED
