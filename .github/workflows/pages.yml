@@ -65,8 +65,9 @@ jobs:
           BUILT_AT="$BUILT_AT" CORPUS_BASE_URL="$BASE_URL" node scripts/gen-registry.mjs _site/channels _site _site/registry.json
 
           echo "### Published \`$ID@$VER\`" >> "$GITHUB_STEP_SUMMARY"
-          echo "- registry: \`$BASE_URL/registry.json\`" >> "$GITHUB_STEP_SUMMARY"
-          echo "- bundle:   \`$BASE_URL/$ID/$VER/corpus.json\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- registry:  \`$BASE_URL/registry.json\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- bundle:    \`$BASE_URL/$ID/$VER/corpus.json\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- fast-load: \`$BASE_URL/$ID/$VER/corpus.trlb\` (post-parse binary)" >> "$GITHUB_STEP_SUMMARY"
 
       - uses: actions/upload-pages-artifact@v3
         with:

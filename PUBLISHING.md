@@ -40,7 +40,7 @@ serve both. It is uncompressed — let the host apply `gzip`/`br` transport comp
 Host that under a base URL, optionally alongside:
 ```
 <base>/<id>/<version>/corpus.json        # immutable — cache forever
-<base>/<id>/<version>/corpus.trlb        # immutable — the binary fast-load bundle (optional)
+<base>/<id>/<version>/corpus.trlb        # immutable — the binary fast-load bundle (a standard artifact: the upstream pipeline + the Worker always publish/serve it)
 <base>/<id>/<version>/manifest.json      # immutable
 <base>/channels/<id>.<channel>.json      # mutable pointer: { id, channel, version, manifest, updatedAt }
 <base>/registry.json                     # optional discovery index (scripts/gen-registry.mjs)
