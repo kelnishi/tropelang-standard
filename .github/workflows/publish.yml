@@ -8,9 +8,11 @@ on:
   push:
     tags: ['corpus-v*']
 
-# Least privilege: the job reads the repo and reaches Cloudflare only via the environment secret.
+# Least privilege: the job only READS the repo (checkout + the `git tag -l` catalog bootstrap) and reaches
+# Cloudflare via the environment secret. It publishes to R2, not to the repo — no GitHub Release, no push —
+# so it needs no write scope.
 permissions:
-  contents: write   # create/update the GitHub Release for the corpus-v* tag (auto-diff notes)
+  contents: read
 
 concurrency: publish
 
@@ -116,10 +118,11 @@ jobs:
           echo "### Cataloged \`$ID@$VER\` (engineMin $(jq -r '.versions[0].engineMin' cat/versions.json)) — $(jq '.versions|length' cat/versions.json) versions in \`/$ID/versions.json\`" >> "$GITHUB_STEP_SUMMARY"
 
       # Auto-diff the trope set vs the currently-live version (R2's stable pointer, read BEFORE we promote)
-      # → GitHub Release notes + run summary. Complements the curated CHANGELOG.md.
-      - name: release notes (auto-diff vs the live version)
-        env:
-          GH_TOKEN: ${{ github.token }}
+      # → run summary only. Complements the curated CHANGELOG.md. We deliberately do NOT cut a GitHub Release
+      # for the corpus-v* tag: nothing consumes it (the corpus is served from R2, keyed on the git tag + the
+      # immutable manifest), and a corpus Release would claim the repo's "Latest" badge — burying the cli-v*
+      # release that assemble/bundle/gate download from `releases/download/…`.
+      - name: auto-diff vs the live version (run summary)
         run: |
           ID=${{ steps.bundle.outputs.id }}; VER=${{ steps.bundle.outputs.ver }}
           stems() { jq -r '.[].path | select(contains("/tropes/")) | split("/") | last | sub("\\.trl$";"")' "$1" | sort; }
@@ -141,8 +144,6 @@ jobs:
           fi
           printf '\nSee `CHANGELOG.md` for the curated notes. Deployed (immutable) but NOT yet live — run the **Promote Stable and Sync** action to move `stable` to this version.\n' >> "$notes"
           cat "$notes" >> "$GITHUB_STEP_SUMMARY"
-          gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --verify-tag --title "$ID $VER" --notes-file "$notes" 2>/dev/null \
-            || gh release edit "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --notes-file "$notes"
 
       # NOTE: deploy stops here — it publishes the immutable bundle but does NOT move the `stable` channel.
       # Promotion is a separate, human-triggered step: run the "Promote Stable and Sync" action (promote.yml)
