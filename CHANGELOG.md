@@ -17,6 +17,8 @@ maintainer moves `[Unreleased]` under a new `## [x.y.z] — <date>` heading and 
 
 ## [Unreleased]
 
+## [1.10.0] — 2026-07-20
+
 ## [1.9.0] — 2026-06-15
 
 ### Added
